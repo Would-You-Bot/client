@@ -1,7 +1,7 @@
 {
-  "name": "discord-boilerplate-bot",
+  "name": "would-you",
   "version": "1.0.0",
-  "description": "Discord.js v13 boilerplate code. Ready for slash commands. Includes event and command handlers with good file structure!",
+  "description": "Would you rather die or use this bot. You got the choice",
   "main": "src/index.js",
   "scripts": {
     "test": "nodemon .",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mezotv/discord-boilerplate-bot.git"
+    "url": "git+https://github.com/mezotv/Would-You.git"
   },
   "keywords": [
     "Discordjs",
@@ -21,16 +21,17 @@
   "author": "Mezo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mezotv/discord-boilerplate-bot/issues"
+    "url": "https://github.com/mezotv/Would-You/issues"
   },
-  "homepage": "https://github.com/mezotv/discord-boilerplate-bot#readme",
+  "homepage": "https://github.com/mezotv/Would-You#readme",
   "dependencies": {
     "@discordjs/builders": "^0.13.0",
     "@discordjs/rest": "^0.4.1",
     "chalk-advanced": "^1.0.3",
     "discord-api-types": "^0.32.0",
     "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.3.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"

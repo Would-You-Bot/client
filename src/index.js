@@ -25,6 +25,7 @@ const client = new Client({
 
 /* Basically loading the event loader ironic right */
 require("./util/eventLoader")(client);
+require("./util/dbHandler")(client);
 
 /* It's creating a new collection for the commands. */
 client.commands = new Collection();
