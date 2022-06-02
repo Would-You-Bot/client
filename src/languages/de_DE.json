@@ -1,0 +1,15 @@
+{
+  "Ping": {
+    "embed": {
+      "title": "Pong!"
+    },
+    "button": {
+      "title": "Discord latenz"
+    }
+  },
+  "Language": {
+    "embed": {
+      "error": "Dir fehlt die `ADMINISTRATOR` permission!\nBitte kontaktiere denn server admin um die sprache zu ändern!"
+    }
+  }
+}

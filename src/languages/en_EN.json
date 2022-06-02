@@ -1,0 +1,15 @@
+{
+  "Ping": {
+    "embed": {
+      "title": "Pong!"
+    },
+    "button": {
+      "title": "Discord latency"
+    }
+  },
+  "Language": {
+    "embed": {
+      "error": "You are missing the `ADMINISTRATOR` permission!\nPlease contact an administrator to change the language!"
+    }
+  }
+}
