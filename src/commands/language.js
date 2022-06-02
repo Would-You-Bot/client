@@ -30,7 +30,6 @@ module.exports = {
                 .findOne({ guildID: interaction.guild.id })
                 .then(async () => {
                   await guildLang.findOneAndUpdate({
-                    guildID: interaction.guild.id,
                     language: "en_EN",
                   });
                 });
@@ -45,7 +44,6 @@ module.exports = {
                 .findOne({ guildID: interaction.guild.id })
                 .then(async () => {
                   await guildLang.findOneAndUpdate({
-                    guildID: interaction.guild.id,
                     language: "de_DE",
                   });
                 });

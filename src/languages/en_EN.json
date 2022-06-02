@@ -1,7 +1,9 @@
 {
   "Ping": {
     "embed": {
-      "title": "Pong!"
+      "title": "Pong!",
+      "api": "API Latency",
+      "client": "Client Latency"
     },
     "button": {
       "title": "Discord latency"

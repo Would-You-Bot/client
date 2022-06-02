@@ -1,10 +1,12 @@
 {
   "Ping": {
     "embed": {
-      "title": "Pong!"
+      "title": "Pong!",
+      "api": "API Latenz",
+      "client": "Client Latenz"
     },
     "button": {
-      "title": "Discord latenz"
+      "title": "Discord Latenz"
     }
   },
   "Language": {

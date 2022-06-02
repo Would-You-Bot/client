@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const guildLang = require("../util/Models/guildModel");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -7,27 +8,33 @@ module.exports = {
     .setDescription("Displays the clients ping"),
 
   async execute(interaction, client) {
+
+    guildLang
+    .findOne({ guildID: interaction.guild.id })
+    .then(async (result) => {
+       const { Ping } = require(`../languages/${result.language}.json`);
+
     const pingembed = new MessageEmbed()
 
       .setColor("#5865f4")
-      .setTitle("🏓" + Ping.title)
+      .setTitle("🏓" + Ping.embed.title)
       .addFields(
         {
-          name: "**Client** latency",
+          name: Ping.embed.client,
           value: `> **${Math.abs(
             Date.now() - interaction.createdTimestamp
           )}**ms`,
           inline: false,
         },
         {
-          name: "**Api** latency",
+          name: Ping.embed.api,
           value: `> **${Math.round(client.ws.ping)}**ms`,
           inline: false,
         }
       );
     const button = new MessageActionRow().addComponents(
       new MessageButton()
-        .setLabel("Discord latency")
+        .setLabel(Ping.button.title)
         .setStyle("LINK")
         .setEmoji("💻")
         .setURL("https://discordstatus.com/")
@@ -41,5 +48,6 @@ module.exports = {
       button.components[0].setDisabled(true);
       interaction.editReply({ embeds: [pingembed], components: [button] });
     }, 120000);
+  });
   },
 };

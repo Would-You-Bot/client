@@ -5,6 +5,7 @@ const guildProfile = new Schema(
     guildID: {
       type: String,
       required: true,
+      unique: true
     },
     language: {
       type: String,
