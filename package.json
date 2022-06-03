@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mezotv/Would-You.git"
+    "url": "git+https://github.com/Developer-Dungeon-Studio/Would-You.git"
   },
   "keywords": [
     "Discordjs",
@@ -21,9 +21,9 @@
   "author": "Mezo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mezotv/Would-You/issues"
+    "url": "https://github.com/Developer-Dungeon-Studio/Would-You/issues"
   },
-  "homepage": "https://github.com/mezotv/Would-You#readme",
+  "homepage": "https://github.com/Developer-Dungeon-Studio/Would-You#readme",
   "dependencies": {
     "@discordjs/builders": "^0.13.0",
     "@discordjs/rest": "^0.4.1",
