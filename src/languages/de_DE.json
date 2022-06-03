@@ -1,9 +1,10 @@
 {
   "Ping": {
     "embed": {
-      "title": "Pong!",
+      "title": "🏓 Pong!",
       "api": "API Latenz",
-      "client": "Client Latenz"
+      "client": "Client Latenz",
+      "footer": "Ein Developers Dungeon Studios bot"
     },
     "button": {
       "title": "Discord Latenz"
@@ -11,7 +12,29 @@
   },
   "Language": {
     "embed": {
-      "error": "Dir fehlt die `ADMINISTRATOR` permission!\nBitte kontaktiere denn server admin um die sprache zu ändern!"
+      "error": "Dir fehlt die `ADMINISTRATOR` permission!\nBitte kontaktiere denn server admin um die sprache zu ändern!",
+      "footer": "Ein Developers Dungeon Studios bot"
+    }
+  },
+  "WouldYou": {
+    "embed": {
+      "usefullname": "Würdest du diese Superkraft haben wollen?",
+      "uselessname": "Würdest du diese Superkraft haben wollen?",
+      "footer": "Ein Developers Dungeon Studios bot"
+    }
+  },
+  "Help": {
+    "embed": {
+      "title": "Info",
+      "description": "**Would You** ist ein lustiger kleiner bot. Unsere mission ist es discord server aktiver zu machen indem der bot euch unnütze und nützliche superpowers vorstellt um euch dabei zu helfen eine diskussion anzufangen.",
+      "footer": "Ein Developers Dungeon Studios bot",
+      "fields": {
+          "name": "**Meine befehle**",
+          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info"
+        }
+    },
+    "button": {
+      "title": "Unser Discord Server"
     }
   }
 }

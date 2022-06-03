@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const guildLang = require("../util/Models/guildModel");
 
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ping")
@@ -15,9 +16,15 @@ module.exports = {
        const { Ping } = require(`../languages/${result.language}.json`);
 
     const pingembed = new MessageEmbed()
-
-      .setColor("#5865f4")
-      .setTitle("🏓" + Ping.embed.title)
+    
+    .setColor("#0598F6")
+      .setAuthor({
+        name: `${client.user.username}`,
+        iconURL: client.user.avatarURL(),
+      })
+      .setFooter({ text: `${Ping.embed.footer}` })
+      .setTimestamp()
+      .setTitle(Ping.embed.title)
       .addFields(
         {
           name: Ping.embed.client,

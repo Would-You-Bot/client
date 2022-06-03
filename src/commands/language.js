@@ -11,7 +11,7 @@ module.exports = {
         .setName("english")
         .setDescription("Set the language to english")
     )
-    .addSubcommand((subcommand) =>
+    .addSubcommand((subcommand, client) =>
       subcommand.setName("german").setDescription("Set the language to english")
     ),
 
@@ -34,8 +34,13 @@ module.exports = {
                   });
                 });
               var languageembed = new MessageEmbed()
+              .setAuthor({
+                name: `${client.user.username}`,
+                iconURL: client.user.avatarURL(),
+              })
                 .setTitle("Language changed!")
-                .setDescription("English has been selected as the language!");
+                .setDescription("English has been selected as the language!")
+                .setFooter({ text: "A Developers Dungeon Studios bot" });
               break;
             }
 
@@ -48,8 +53,13 @@ module.exports = {
                   });
                 });
               var languageembed = new MessageEmbed()
+              .setAuthor({
+                name: `${client.user.username}`,
+                iconURL: client.user.avatarURL(),
+              })
                 .setTitle("Sprache bearbeitet!")
-                .setDescription("Deutsch wurde als Sprache ausgewählt!");
+                .setDescription("Deutsch wurde als Sprache ausgewählt!")
+                .setFooter({ text: "Ein Developers Dungeon Studios bot" });
             }
           }
           await interaction.reply({
@@ -58,6 +68,7 @@ module.exports = {
           });
         } else {
           var errorembed = new MessageEmbed()
+          .setColor("RED")
             .setTitle("Error!")
             .setDescription(Language.embed.error);
           await interaction.reply({

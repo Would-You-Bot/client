@@ -1,5 +1,5 @@
 {
-  "name": "would-you",
+  "name": "would-ou",
   "version": "1.0.0",
   "description": "Would you rather die or use this bot. You got the choice",
   "main": "src/index.js",
@@ -27,6 +27,7 @@
   "dependencies": {
     "@discordjs/builders": "^0.13.0",
     "@discordjs/rest": "^0.4.1",
+    "axios": "^0.27.2",
     "chalk-advanced": "^1.0.3",
     "discord-api-types": "^0.32.0",
     "discord.js": "^13.6.0",
