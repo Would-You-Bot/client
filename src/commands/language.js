@@ -11,15 +11,18 @@ module.exports = {
         .setName("english")
         .setDescription("Set the language to english")
     )
-    .addSubcommand((subcommand, client) =>
-      subcommand.setName("german").setDescription("Set the language to english")
+    .addSubcommand((subcommand) =>
+      subcommand.setName("german").setDescription("Set the language to german")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("dutch").setDescription("Set the language to dutch")
     ),
 
-  async execute(interaction) {
+  async execute(interaction, client) {
     guildLang
-    .findOne({ guildID: interaction.guild.id })
-    .then(async (result) => {
-       const { Language } = require(`../languages/${result.language}.json`);
+      .findOne({ guildID: interaction.guild.id })
+      .then(async (result) => {
+        const { Language } = require(`../languages/${result.language}.json`);
 
         if (
           interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)
@@ -34,10 +37,10 @@ module.exports = {
                   });
                 });
               var languageembed = new MessageEmbed()
-              .setAuthor({
-                name: `${client.user.username}`,
-                iconURL: client.user.avatarURL(),
-              })
+                .setAuthor({
+                  name: `${client.user.username}`,
+                  iconURL: client.user.avatarURL(),
+                })
                 .setTitle("Language changed!")
                 .setDescription("English has been selected as the language!")
                 .setFooter({ text: "A Developers Dungeon Studios bot" });
@@ -53,13 +56,31 @@ module.exports = {
                   });
                 });
               var languageembed = new MessageEmbed()
-              .setAuthor({
-                name: `${client.user.username}`,
-                iconURL: client.user.avatarURL(),
-              })
+                .setAuthor({
+                  name: `${client.user.username}`,
+                  iconURL: client.user.avatarURL(),
+                })
                 .setTitle("Sprache bearbeitet!")
                 .setDescription("Deutsch wurde als Sprache ausgewählt!")
                 .setFooter({ text: "Ein Developers Dungeon Studios bot" });
+              break;
+            }
+            case "dutch": {
+              guildLang
+                .findOne({ guildID: interaction.guild.id })
+                .then(async () => {
+                  await guildLang.findOneAndUpdate({
+                    language: "nl_NL",
+                  });
+                });
+              var languageembed = new MessageEmbed()
+                .setAuthor({
+                  name: `${client.user.username}`,
+                  iconURL: client.user.avatarURL(),
+                })
+                .setTitle("Taal aangepast!")
+                .setDescription("Nederlands is nu geselecteerd als taal")
+                .setFooter({ text: "Een Developers Dungeon Studios bot" });
             }
           }
           await interaction.reply({
@@ -68,7 +89,7 @@ module.exports = {
           });
         } else {
           var errorembed = new MessageEmbed()
-          .setColor("RED")
+            .setColor("RED")
             .setTitle("Error!")
             .setDescription(Language.embed.error);
           await interaction.reply({

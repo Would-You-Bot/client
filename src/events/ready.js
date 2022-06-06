@@ -3,6 +3,7 @@ const { Routes } = require("discord-api-types/v9");
 const { readdirSync } = require("fs");
 require("dotenv").config();
 const { ChalkAdvanced } = require("chalk-advanced");
+const { FetchWebsite } = require("../util/fetchWebsite");
 
 module.exports = async (client) => {
   const commandFiles = readdirSync("./src/commands/").filter((file) =>
@@ -37,6 +38,9 @@ module.exports = async (client) => {
             "Successfully registered commands globally"
           )}`
         );
+        FetchWebsite(client)
+
+
       } else {
         await rest.put(
           Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID),
@@ -50,6 +54,7 @@ module.exports = async (client) => {
             ">"
           )} ${ChalkAdvanced.green("Successfully registered commands locally")}`
         );
+        FetchWebsite(client)
       }
     } catch (err) {
       if (err) console.error(err);
