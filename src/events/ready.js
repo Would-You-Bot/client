@@ -54,7 +54,7 @@ module.exports = async (client) => {
             ">"
           )} ${ChalkAdvanced.green("Successfully registered commands locally")}`
         );
-        FetchWebsite(client)
+       // FetchWebsite(client)
       }
     } catch (err) {
       if (err) console.error(err);

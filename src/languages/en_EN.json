@@ -23,6 +23,13 @@
       "footer": "A Developers Dungeon Studios bot"
     }
   },
+  "Random": {
+    "embed": {
+      "text1": "Would you want this superpower but",
+      "text2": "can choose a Side effect?",
+      "footer": "A Developers Dungeon Studios bot"
+    }
+  },
   "Help": {
     "embed": {
       "title": "Info",
@@ -35,6 +42,12 @@
     },
     "button": {
       "title": "Our Discord"
+    }
+  },
+  "Info": {
+    "embed": {
+      "name1": "**<:right:983796624566399036>  Bot Joined:**",
+      "name2": "**<:right:983796624566399036>  Creation Date:** <t:1654106682:R>"
     }
   }
 }

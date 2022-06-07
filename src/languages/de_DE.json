@@ -23,6 +23,13 @@
       "footer": "Ein Developers Dungeon Studios bot"
     }
   },
+  "Random": {
+    "embed": {
+      "text1": "Würdest du diese Superkraft haben wollen aber ",
+      "text2": "kann eine nebenwirkung auswählen?",
+      "footer": "Ein Developers Dungeon Studios bot"
+    }
+  },
   "Help": {
     "embed": {
       "title": "Info",
@@ -35,6 +42,12 @@
     },
     "button": {
       "title": "Unser Discord Server"
+    }
+  },
+  "Info": {
+    "embed": {
+      "name1": "**<:right:983796624566399036>  Bot beigetreten:**",
+      "name2": "**<:right:983796624566399036>  Erstellungs datum:** <t:1654106682:R>"
     }
   }
 }
