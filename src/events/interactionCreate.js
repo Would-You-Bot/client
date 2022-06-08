@@ -1,11 +1,8 @@
-const { readdirSync } = require("fs");
+const { readdirSync } = require('fs');
 
 module.exports = (interaction) => {
-
-  const client = interaction.client;
-  const commandFiles = readdirSync("./src/commands/").filter((file) =>
-    file.endsWith(".js")
-  );
+  const { client } = interaction;
+  const commandFiles = readdirSync('./src/commands/').filter((file) => file.endsWith('.js'));
   const commands = [];
   for (const file of commandFiles) {
     const command = require(`../commands/${file}`);
@@ -20,7 +17,7 @@ module.exports = (interaction) => {
   } catch (err) {
     if (err) console.error(err);
     interaction.reply({
-      content: "An error occurred while executing that command.",
+      content: 'An error occurred while executing that command.',
       ephemeral: true,
     });
   }

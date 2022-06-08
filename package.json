@@ -1,11 +1,12 @@
 {
-  "name": "would-ou",
-  "version": "1.0.1",
+  "name": "would-you",
+  "version": "1.0.2",
   "description": "Would you rather die or use this bot. You got the choice",
   "main": "src/index.js",
   "scripts": {
     "test": "nodemon .",
-    "start": "node ."
+    "start": "node .",
+    "lint": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,9 @@
     "mongoose": "^6.3.5"
   },
   "devDependencies": {
+    "eslint": "^8.17.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.16"
   }
 }

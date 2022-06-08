@@ -1,11 +1,11 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed } = require("discord.js");
-const guildLang = require("../util/Models/guildModel");
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
+const guildLang = require('../util/Models/guildModel');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("sideeffect")
-    .setDescription("You get a superpower but with a sideeffect from a random user"),
+    .setName('sideeffect')
+    .setDescription('You get a superpower but with a sideeffect from a random user'),
 
   async execute(interaction, client) {
     guildLang
@@ -13,16 +13,16 @@ module.exports = {
       .then(async (result) => {
         const { Random } = require(`../languages/${result.language}.json`);
         const {
-          usefull_superpowers,
+          Usefull_Superpowers,
         } = require(`../data/superpower-${result.language}.json`);
 
         let randMember;
-        let members = await interaction.guild.members.fetch();
+        const members = await interaction.guild.members.fetch();
 
         randMember = members.random();
 
         const randomEmbed = new MessageEmbed()
-          .setColor("#0598F6")
+          .setColor('#0598F6')
           .setFooter({ text: `${Random.embed.footer}` })
           .setTimestamp()
           .setAuthor({
@@ -32,8 +32,8 @@ module.exports = {
           .addFields({
             name: `${Random.embed.text1} **${randMember.user.username}** ${Random.embed.text2}`,
             value: `${
-              usefull_superpowers[
-                Math.floor(Math.random() * (usefull_superpowers.length + 1))
+              Usefull_Superpowers[
+                Math.floor(Math.random() * (Usefull_Superpowers.length + 1))
               ]
             }`,
             inline: false,
