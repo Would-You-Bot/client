@@ -49,5 +49,12 @@
       "name1": "**<:right:983796624566399036>  Bot Joined:**",
       "name2": "**<:right:983796624566399036>  Creation Date:** <t:1654106682:R>"
     }
+  },
+  "Vote": {
+    "embed": {
+      "title": "Voting helps **Would You** gain more users! So make sure to vote every day!",
+      "value": "Click to vote",
+      "footer": "A Developers Dungeon Studios bot"
+    }
   }
 }

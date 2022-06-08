@@ -3,9 +3,27 @@ const { Routes } = require('discord-api-types/v9');
 const { readdirSync } = require('fs');
 require('dotenv').config();
 const { ChalkAdvanced } = require('chalk-advanced');
+const { AutoPoster } = require('topgg-autoposter');
 const { FetchWebsite } = require('../util/fetchWebsite');
 
 module.exports = async (client) => {
+  client.user.setPresence({
+    activities: [{ name: 'Booting up...' }],
+    status: 'idle',
+  });
+
+  const ap = AutoPoster(`${process.env.TOPGGTOKEN}`, client);
+
+  ap.on('posted', () => {
+    console.log(
+      `${ChalkAdvanced.white('Would You?')} ${ChalkAdvanced.gray(
+        '>',
+      )} ${ChalkAdvanced.green(
+        'Stats pushed to https://top.gg/bot/981649513427111957',
+      )}`,
+    );
+  });
+
   const commandFiles = readdirSync('./src/commands/').filter((file) => file.endsWith('.js'));
 
   const commands = [];

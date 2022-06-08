@@ -26,9 +26,9 @@ module.exports = {
               guildLang
                 .findOne({ guildID: interaction.guild.id })
                 .then(async () => {
-                  await guildLang.findOneAndUpdate({
+                  await guildLang.findOneAndUpdate({ guildID: interaction.guild.id }, {
                     language: 'en_EN',
-                  });
+                  }).catch();
                 });
               languageembed = new MessageEmbed()
                 .setAuthor({
@@ -45,9 +45,9 @@ module.exports = {
               guildLang
                 .findOne({ guildID: interaction.guild.id })
                 .then(async () => {
-                  await guildLang.findOneAndUpdate({
+                  await guildLang.findOneAndUpdate({ guildID: interaction.guild.id }, {
                     language: 'de_DE',
-                  });
+                  }).catch();
                 });
               languageembed = new MessageEmbed()
                 .setAuthor({

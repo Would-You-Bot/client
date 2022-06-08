@@ -7,7 +7,7 @@ module.exports = {
     .setName('wouldyou')
     .setDescription('Would you ?!')
     .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Useless superpower'))
-    .addSubcommand((subcommand) => subcommand.setName('usefull').setDescription('Usefull superpower')),
+    .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Useful superpower')),
 
   async execute(interaction, client) {
     let wouldyouembed;
@@ -21,7 +21,7 @@ module.exports = {
         } = require(`../data/superpower-${result.language}.json`);
 
         switch (interaction.options.getSubcommand()) {
-          case 'usefull': {
+          case 'useful': {
             wouldyouembed = new MessageEmbed()
               .setColor('#0598F6')
               .setFooter({ text: `${WouldYou.embed.footer}` })

@@ -49,5 +49,12 @@
       "name1": "**<:right:983796624566399036>  Bot beigetreten:**",
       "name2": "**<:right:983796624566399036>  Erstellungs datum:** <t:1654106682:R>"
     }
+  },
+  "Vote": {
+    "embed": {
+      "title": "Voten hilft **Would You** mehr server zu erreichen. Also denk daran jeden tag zu Voten!",
+      "value": "Klick um zu Voten",
+      "footer": "Ein Developers Dungeon Studios bot"
+    }
   }
 }
