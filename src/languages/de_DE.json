@@ -18,8 +18,8 @@
   },
   "WouldYou": {
     "embed": {
-      "usefullname": "Würdest du diese Superkraft haben wollen?",
-      "uselessname": "Würdest du diese Superkraft haben wollen?",
+      "Usefulname": "Würdest du diese Superkraft haben wollen?",
+      "Uselessname": "Würdest du diese Superkraft haben wollen?",
       "footer": "Ein Developers Dungeon Studios bot"
     }
   },
@@ -35,7 +35,7 @@
       "title": "Info",
       "description": "**Would You** ist ein lustiger kleiner bot. Unsere mission ist es discord server aktiver zu machen indem der bot euch unnütze und nützliche superpowers vorstellt um euch dabei zu helfen eine diskussion anzufangen.",
       "footer": "Ein Developers Dungeon Studios bot",
-      "fields": {
+      "Fields": {
           "name": "**Meine befehle**",
           "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info"
         }
@@ -46,8 +46,8 @@
   },
   "Info": {
     "embed": {
-      "name1": "**<:right:983796624566399036>  Bot beigetreten:**",
-      "name2": "**<:right:983796624566399036>  Erstellungs datum:** <t:1654106682:R>"
+      "name1": "**Bot beigetreten:**",
+      "name2": "**Erstellungs datum:** <t:1654106682:R>"
     }
   },
   "Vote": {

@@ -18,8 +18,8 @@
   },
   "WouldYou": {
     "embed": {
-      "usefulname": "Would you want this superpower?",
-      "uselessname": "Would you want this superpower?",
+      "Usefulname": "Would you want this superpower?",
+      "Uselessname": "Would you want this superpower?",
       "footer": "A Developers Dungeon Studios bot"
     }
   },
@@ -46,8 +46,8 @@
   },
   "Info": {
     "embed": {
-      "name1": "**<:right:983796624566399036>  Bot Joined:**",
-      "name2": "**<:right:983796624566399036>  Creation Date:** <t:1654106682:R>"
+      "name1": "**Bot Joined:**",
+      "name2": "**Creation Date:** <t:1654106682:R>"
     }
   },
   "Vote": {
