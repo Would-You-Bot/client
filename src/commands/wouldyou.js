@@ -17,7 +17,7 @@ module.exports = {
         const { WouldYou } = require(`../languages/${result.language}.json`);
         const {
           Useless_Superpowers,
-          Usefull_Superpowers,
+          Useful_Superpowers,
         } = require(`../data/superpower-${result.language}.json`);
 
         switch (interaction.options.getSubcommand()) {
@@ -33,8 +33,8 @@ module.exports = {
               .addFields({
                 name: WouldYou.embed.usefullname,
                 value: `${
-                  Usefull_Superpowers[
-                    Math.floor(Math.random() * (Usefull_Superpowers.length + 1))
+                  Useful_Superpowers[
+                    Math.floor(Math.random() * (Useful_Superpowers.length + 1))
                   ]
                 }`,
                 inline: false,

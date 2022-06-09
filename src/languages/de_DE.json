@@ -56,5 +56,14 @@
       "value": "Klick um zu Voten",
       "footer": "Ein Developers Dungeon Studios bot"
     }
+  },
+  "Rather": {
+    "embed": {
+      "uselessname": "Hätteste du lieber diese",
+      "uselessname2": "oder diese nutzlose Superkraft?",
+      "usefulname": "Hätteste du lieber diese",
+      "usefulname2": "oder diese nützliche Superkraft?",
+      "footer": "Ein Developers Dungeon Studios bot"
+    }
   }
 }

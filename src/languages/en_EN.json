@@ -56,5 +56,14 @@
       "value": "Click to vote",
       "footer": "A Developers Dungeon Studios bot"
     }
+  },
+  "Rather": {
+    "embed": {
+      "uselessname": "Would you rather have this",
+      "uselessname2": "or this useless superpower?",
+      "usefulname": "Would you rather have this",
+      "usefulname2": "or this useful superpower?",
+      "footer": "A Developers Dungeon Studios bot"
+    }
   }
 }

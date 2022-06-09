@@ -5,62 +5,76 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('rather')
-    .setDescription('Displays the clients ping')
-    .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Set the language to german'))
-    .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Set the language to german')),
+    .setDescription('Get a would you rather question.')
+    .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Get a useful would you rather'))
+    .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Get a useless would you rather')),
 
-  async execute(interaction, client) {
+  async execute(interaction) {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { Rather } = require(`../languages/${result.language}.json`);
+        const {
+          Useless_Superpowers,
+          Useful_Superpowers,
+        } = require(`../data/superpower-${result.language}.json`);
         let ratherEmebed;
+
         switch (interaction.options.getSubcommand()) {
           case 'useful': {
             ratherEmebed = new MessageEmbed()
-
               .setColor('#0598F6')
-              .setAuthor({
-                name: `${client.user.username}`,
-                iconURL: client.user.avatarURL(),
-              })
-              .setFooter({ text: `${Rather.embed.footer}` })
-              .setTimestamp()
-              .setTitle(Rather.embed.title)
               .addFields(
                 {
-                  name: Rather.embed.client,
-                  value: `> **${Math.abs(
-                    Date.now() - interaction.createdTimestamp,
-                  )}**ms`,
+                  name: Rather.embed.usefulname,
+                  value: Useful_Superpowers[
+                    Math.floor(Math.random() * (Useful_Superpowers.length + 1))
+                  ],
                   inline: false,
                 },
+              )
+              .addFields(
                 {
-                  name: Rather.embed.api,
-                  value: `> **${Math.round(client.ws.ping)}**ms`,
+                  name: Rather.embed.usefulname2,
+                  value: Useful_Superpowers[
+                    Math.floor(Math.random() * (Useful_Superpowers.length + 1))
+                  ],
                   inline: false,
                 },
-              );
+              )
+              .setFooter({ text: `${Rather.embed.footer}` })
+              .setTimestamp();
+            break;
+          }
+          case 'useless': {
+            ratherEmebed = new MessageEmbed()
+              .setColor('#F00505')
+              .addFields(
+                {
+                  name: Rather.embed.uselessname,
+                  value: Useless_Superpowers[
+                    Math.floor(Math.random() * (Useless_Superpowers.length + 1))
+                  ],
+                  inline: false,
+                },
+              )
+              .addFields(
+                {
+                  name: Rather.embed.uselessname2,
+                  value: Useless_Superpowers[
+                    Math.floor(Math.random() * (Useless_Superpowers.length + 1))
+                  ],
+                  inline: false,
+                },
+              )
+              .setFooter({ text: `${Rather.embed.footer}` })
+              .setTimestamp();
+            break;
           }
         }
-        const button = new MessageActionRow().addComponents(
-          new MessageButton()
-            .setLabel(Rather.button.title)
-            .setStyle('LINK')
-            .setEmoji('💻')
-            .setURL('https://discordstatus.com/'),
-        );
         await interaction.reply({
           embeds: [ratherEmebed],
-          components: [button],
         });
-        setTimeout(() => {
-          button.components[0].setDisabled(true);
-          interaction.editReply({
-            embeds: [ratherEmebed],
-            components: [button],
-          });
-        }, 120000);
       });
   },
 };
