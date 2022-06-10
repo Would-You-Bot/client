@@ -9,7 +9,6 @@ module.exports = (guild) => {
         botJoined: (Date.now() / 1000) | 0,
       });
     } else {
-
     }
   });
 };

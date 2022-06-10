@@ -5,7 +5,7 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('wouldyou')
-    .setDescription('Would you ?!')
+    .setDescription('Would you')
     .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Useless superpower'))
     .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Useful superpower')),
 
@@ -31,7 +31,7 @@ module.exports = {
                 iconURL: client.user.avatarURL(),
               })
               .addFields({
-                name: WouldYou.embed.usefullname,
+                name: WouldYou.embed.Usefulname,
                 value: `${
                   Useful_Superpowers[
                     Math.floor(Math.random() * (Useful_Superpowers.length + 1))
@@ -51,7 +51,7 @@ module.exports = {
               .setFooter({ text: `${WouldYou.embed.footer}` })
               .setTimestamp()
               .addFields({
-                name: WouldYou.embed.uselessname,
+                name: WouldYou.embed.Uselessname,
                 value: `${
                   Useless_Superpowers[
                     Math.floor(Math.random() * (Useless_Superpowers.length + 1))

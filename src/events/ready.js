@@ -16,7 +16,7 @@ module.exports = async (client) => {
 
   ap.on('posted', () => {
     console.log(
-      `${ChalkAdvanced.white('Would You?')} ${ChalkAdvanced.gray(
+      `${ChalkAdvanced.white('Top.gg')} ${ChalkAdvanced.gray(
         '>',
       )} ${ChalkAdvanced.green(
         'Stats pushed to https://top.gg/bot/981649513427111957',

@@ -13,7 +13,7 @@ module.exports = {
       .then(async (result) => {
         const { Random } = require(`../languages/${result.language}.json`);
         const {
-          Usefull_Superpowers,
+          Useful_Superpowers,
         } = require(`../data/superpower-${result.language}.json`);
 
         let randMember;
@@ -32,8 +32,8 @@ module.exports = {
           .addFields({
             name: `${Random.embed.text1} **${randMember.user.username}** ${Random.embed.text2}`,
             value: `${
-              Usefull_Superpowers[
-                Math.floor(Math.random() * (Usefull_Superpowers.length + 1))
+              Useful_Superpowers[
+                Math.floor(Math.random() * (Useful_Superpowers.length + 1))
               ]
             }`,
             inline: false,
