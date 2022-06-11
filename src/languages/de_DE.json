@@ -33,11 +33,11 @@
   "Help": {
     "embed": {
       "title": "Info",
-      "description": "**Would You** ist ein lustiger kleiner bot. Unsere mission ist es discord server aktiver zu machen indem der bot euch unnütze und nützliche superpowers vorstellt um euch dabei zu helfen eine diskussion anzufangen.",
+      "description": "**Would You** ist ein lustiger kleiner bot. Unsere mission ist es discord server aktiver zu machen indem der bot euch unnütze und nützliche super stärken vorstellt um euch dabei zu helfen eine diskussion anzufangen.",
       "footer": "Ein Developers Dungeon Studios bot",
       "Fields": {
           "name": "**Meine befehle**",
-          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info"
+          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei stärken aus denen du wählen kannst\n`/sideeffect` - Genau wie /wouldyou aber ein random nutzer darf eine nebenwirkung bestimmen."
         }
     },
     "button": {

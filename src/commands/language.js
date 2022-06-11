@@ -24,12 +24,12 @@ module.exports = {
           switch (interaction.options.getSubcommand()) {
             case 'english': {
               guildLang
-              .findOne({ guildID: interaction.guild.id })
-              .then(async () => {
-                await guildLang.findOneAndUpdate({ guildID: interaction.guild.id }, {
-                  language: 'en_EN',
-                }).catch();
-              }); 
+                .findOne({ guildID: interaction.guild.id })
+                .then(async () => {
+                  await guildLang.findOneAndUpdate({ guildID: interaction.guild.id }, {
+                    language: 'en_EN',
+                  }).catch();
+                });
               languageembed = new MessageEmbed()
                 .setAuthor({
                   name: `${client.user.username}`,
@@ -43,12 +43,12 @@ module.exports = {
 
             case 'german': {
               guildLang
-              .findOne({ guildID: interaction.guild.id })
-              .then(async () => {
-                await guildLang.findOneAndUpdate({ guildID: interaction.guild.id }, {
-                  language: 'de_DE',
-                }).catch();
-              }); 
+                .findOne({ guildID: interaction.guild.id })
+                .then(async () => {
+                  await guildLang.findOneAndUpdate({ guildID: interaction.guild.id }, {
+                    language: 'de_DE',
+                  }).catch();
+                });
               languageembed = new MessageEmbed()
                 .setAuthor({
                   name: `${client.user.username}`,
