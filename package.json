@@ -5,8 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "nodemon .",
-    "start": "node .",
-    "lint": "eslint ./ --fix"
+    "start": "node ."
   },
   "repository": {
     "type": "git",
@@ -33,6 +32,7 @@
     "discord-api-types": "^0.32.0",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
+    "dungeon-api": "^1.0.1",
     "mongoose": "^6.3.5",
     "topgg-autoposter": "^2.0.1"
   },

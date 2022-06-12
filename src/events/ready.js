@@ -4,13 +4,16 @@ const { readdirSync } = require('fs');
 require('dotenv').config();
 const { ChalkAdvanced } = require('chalk-advanced');
 const { AutoPoster } = require('topgg-autoposter');
-const { FetchWebsite } = require('../util/fetchWebsite');
+const { fetchDungeon, fetchDungeonSingle } = require('dungeon-api')
 
 module.exports = async (client) => {
   client.user.setPresence({
     activities: [{ name: 'Booting up...' }],
     status: 'idle',
   });
+  fetchDungeonSingle("wouldyou", process.env.DEVELOPERSDUNGEON, client)
+  fetchDungeon("wouldyou", process.env.DEVELOPERSDUNGEON, client)
+
 
   const ap = AutoPoster(`${process.env.TOPGGTOKEN}`, client);
 
@@ -54,8 +57,7 @@ module.exports = async (client) => {
             'Successfully registered commands globally',
           )}`,
         );
-        FetchWebsite(client);
-      } else {
+       } else {
         await rest.put(
           Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID),
           {
