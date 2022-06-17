@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, Permissions, version: djsversion } = require('discord.js');
 
 const os = require('os');
-const Guild = require('../util/Models/guildModel');
+const Guild = require('../util/Models/guildModel.ts');
 const { version } = require('../../package.json');
 
 module.exports = {

@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from'mongoose';
 
 const guildProfile = new Schema(
   {

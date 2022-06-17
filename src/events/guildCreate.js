@@ -1,4 +1,4 @@
-const guildcreate = require('../util/Models/guildModel');
+const guildcreate = require('../util/Models/guildModel.ts');
 
 module.exports = (guild) => {
   guildcreate.findOne({ guildID: guild.id }).then(async (result) => {

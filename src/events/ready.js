@@ -1,5 +1,5 @@
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+const { Routes } = require('discord-api-types/v10');
 const { readdirSync } = require('fs');
 require('dotenv').config();
 const { ChalkAdvanced } = require('chalk-advanced');
@@ -11,9 +11,6 @@ module.exports = async (client) => {
     activities: [{ name: 'Booting up...' }],
     status: 'idle',
   });
-  fetchDungeonSingle("wouldyou", process.env.DEVELOPERSDUNGEON, client)
-  fetchDungeon("wouldyou", process.env.DEVELOPERSDUNGEON, client)
-
 
   const ap = AutoPoster(`${process.env.TOPGGTOKEN}`, client);
 
@@ -37,8 +34,6 @@ module.exports = async (client) => {
     client.commands.set(command.data.name, command);
   }
 
-  const CLIENT_ID = client.user.id;
-
   const rest = new REST({
     version: '10',
   }).setToken(process.env.TOKEN);
@@ -47,7 +42,7 @@ module.exports = async (client) => {
     try {
       if (process.env.STATUS === 'PRODUCTION') {
         // If the bot is in production mode it will load slash commands for all guilds
-        await rest.put(Routes.applicationCommands(CLIENT_ID), {
+        await rest.put(Routes.applicationCommands(client.user.id), {
           body: commands,
         });
         console.log(
@@ -57,9 +52,12 @@ module.exports = async (client) => {
             'Successfully registered commands globally',
           )}`,
         );
+        fetchDungeonSingle("wouldyou", process.env.DEVELOPERSDUNGEON, client)
+        fetchDungeon("wouldyou", process.env.DEVELOPERSDUNGEON, client)
+      
        } else {
         await rest.put(
-          Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID),
+          Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID),
           {
             body: commands,
           },

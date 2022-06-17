@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
-const guildLang = require('../util/Models/guildModel');
+const guildLang = require('../util/Models/guildModel.ts');
 
 module.exports = {
   data: new SlashCommandBuilder()
