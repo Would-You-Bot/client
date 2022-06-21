@@ -33,31 +33,31 @@ module.exports = {
         .addField(
           '> General',
           [
-            `**<:right:983796624566399036> Dev Team:** [Developers Dungeon Studios](https://developersdungeon.xyz/)`,
-            `**<:right:983796624566399036>  Discord:** [Server Invite](https://discord.gg/KfBkKKydfg)`,
-            `**<:right:983796624566399036>  Client:** [Bot Invite](https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands)`,
-            `**<:right:983796624566399036>  Servers:** ${client.guilds.cache.size.toLocaleString()} `,
-            `<:right:983796624566399036> ${Info.embed.name1} <t:${botJoinInt}:f>`,
-            `**<:right:983796624566399036>  Users:** ${client.guilds.cache
+            `**❯ Dev Team:** [Developers Dungeon Studios](https://developersdungeon.xyz/)`,
+            `**❯  Discord:** [Server Invite](https://discord.gg/KfBkKKydfg)`,
+            `**❯  Client:** [Bot Invite](https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands)`,
+            `**❯  Servers:** ${client.guilds.cache.size.toLocaleString()} `,
+            `❯ ${Info.embed.name1} <t:${botJoinInt}:f>`,
+            `**❯  Users:** ${client.guilds.cache
               .reduce((a, b) => a + b.memberCount, 0)
               .toLocaleString()}`,
-            `**<:right:983796624566399036>  Channels:** ${client.channels.cache.size.toLocaleString()}`,
-            `<:right:983796624566399036>  ${Info.embed.name2}`,
-            `**<:right:983796624566399036>  Bot Version:** v${version}`,
-            `**<:right:983796624566399036>  Node.js:** ${process.version}`,
-            `**<:right:983796624566399036>  Discord.js:** v${djsversion}`,
+            `**❯  Channels:** ${client.channels.cache.size.toLocaleString()}`,
+            `❯  ${Info.embed.name2}`,
+            `**❯  Bot Version:** v${version}`,
+            `**❯  Node.js:** ${process.version}`,
+            `**❯  Discord.js:** v${djsversion}`,
           ].join('\n'),
         )
         .addField(
           '> System',
           [
-            `**<:right:983796624566399036>  Platform:** ${process.platform}`,
-            `**<:right:983796624566399036>  Uptime:** ${`${days}d ${hours}h ${minutes}m ${seconds}s`}`,
-            `**<:right:983796624566399036>  CPU:**`,
-            `<:right:983796624566399036>  Cores: ${os.cpus().length}`,
-            `<:right:983796624566399036>  Threads: ${os.cpus().length * 2}`,
-            `<:right:983796624566399036>  Model: ${core.model}`,
-            `<:right:983796624566399036>  Base Speed: ${core.speed}MHz`,
+            `**❯  Platform:** ${process.platform}`,
+            `**❯  Uptime:** ${`${days}d ${hours}h ${minutes}m ${seconds}s`}`,
+            `**❯  CPU:**`,
+            `❯  Cores: ${os.cpus().length}`,
+            `❯  Threads: ${os.cpus().length * 2}`,
+            `❯  Model: ${core.model}`,
+            `❯  Base Speed: ${core.speed}MHz`,
           ].join('\n'),
         )
 
