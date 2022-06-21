@@ -21,12 +21,6 @@ module.exports = {
 
       const core = os.cpus()[0];
 
-      let emojiright;
-      if (!interaction.guild.me.permissions.has([Permissions.FLAGS.USE_EXTERNAL_EMOJIS])) {
-        emojiright = '❯';
-      } else {
-        emojiright = '<:right:983796624566399036>';
-      }
 
       const infoEmbed = new MessageEmbed()
         .setAuthor({
@@ -39,31 +33,31 @@ module.exports = {
         .addField(
           '> General',
           [
-            `**${emojiright}  Dev Team:** [Developers Dungeon Studios](https://developersdungeon.xyz/)`,
-            `**${emojiright}  Discord:** [Server Invite](https://discord.gg/KfBkKKydfg)`,
-            `**${emojiright}  Client:** [Bot Invite](https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands)`,
-            `**${emojiright}  Servers:** ${client.guilds.cache.size.toLocaleString()} `,
-            `${emojiright} ${Info.embed.name1} <t:${botJoinInt}:f>`,
-            `**${emojiright}  Users:** ${client.guilds.cache
+            `**<:right:983796624566399036> Dev Team:** [Developers Dungeon Studios](https://developersdungeon.xyz/)`,
+            `**<:right:983796624566399036>  Discord:** [Server Invite](https://discord.gg/KfBkKKydfg)`,
+            `**<:right:983796624566399036>  Client:** [Bot Invite](https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands)`,
+            `**<:right:983796624566399036>  Servers:** ${client.guilds.cache.size.toLocaleString()} `,
+            `<:right:983796624566399036> ${Info.embed.name1} <t:${botJoinInt}:f>`,
+            `**<:right:983796624566399036>  Users:** ${client.guilds.cache
               .reduce((a, b) => a + b.memberCount, 0)
               .toLocaleString()}`,
-            `**${emojiright}  Channels:** ${client.channels.cache.size.toLocaleString()}`,
-            `${emojiright}  ${Info.embed.name2}`,
-            `**${emojiright}  Bot Version:** v${version}`,
-            `**${emojiright}  Node.js:** ${process.version}`,
-            `**${emojiright}  Discord.js:** v${djsversion}`,
+            `**<:right:983796624566399036>  Channels:** ${client.channels.cache.size.toLocaleString()}`,
+            `<:right:983796624566399036>  ${Info.embed.name2}`,
+            `**<:right:983796624566399036>  Bot Version:** v${version}`,
+            `**<:right:983796624566399036>  Node.js:** ${process.version}`,
+            `**<:right:983796624566399036>  Discord.js:** v${djsversion}`,
           ].join('\n'),
         )
         .addField(
           '> System',
           [
-            `**${emojiright}  Platform:** ${process.platform}`,
-            `**${emojiright}  Uptime:** ${`${days}d ${hours}h ${minutes}m ${seconds}s`}`,
-            `**${emojiright}  CPU:**`,
-            `${emojiright}  Cores: ${os.cpus().length}`,
-            `${emojiright}  Threads: ${os.cpus().length * 2}`,
-            `${emojiright}  Model: ${core.model}`,
-            `${emojiright}  Base Speed: ${core.speed}MHz`,
+            `**<:right:983796624566399036>  Platform:** ${process.platform}`,
+            `**<:right:983796624566399036>  Uptime:** ${`${days}d ${hours}h ${minutes}m ${seconds}s`}`,
+            `**<:right:983796624566399036>  CPU:**`,
+            `<:right:983796624566399036>  Cores: ${os.cpus().length}`,
+            `<:right:983796624566399036>  Threads: ${os.cpus().length * 2}`,
+            `<:right:983796624566399036>  Model: ${core.model}`,
+            `<:right:983796624566399036>  Base Speed: ${core.speed}MHz`,
           ].join('\n'),
         )
 
