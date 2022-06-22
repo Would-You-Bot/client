@@ -60,6 +60,7 @@ module.exports = {
             `❯  Base Speed: ${core.speed}MHz`,
           ].join('\n'),
         )
+        
 
         .setFooter({
           text: interaction.user.tag,

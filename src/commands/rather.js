@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const guildLang = require('../util/Models/guildModel.ts');
 
 module.exports = {
@@ -71,7 +71,7 @@ module.exports = {
               .setTimestamp();
             break;
           }
-        }
+        }        
         await interaction.reply({
           embeds: [ratherEmebed],
         });
