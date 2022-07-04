@@ -4,22 +4,22 @@ const guildLang = require('../util/Models/guildModel.ts');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('sideeffect')
+    .setName('sussyeffect')
     .setDescription('You get a superpower but with a sideeffect from a random user'),
 
   async execute(interaction, client) {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
-        const { Random } = require(`../languages/${result.language}.json`);
+        const { Random } = await require(`../languages/${result.language}.json`);
         const {
           Useful_Superpowers,
-        } = require(`../data/superpower-${result.language}.json`);
+        } = await require(`../data/superpower-${result.language}.json`);
 
         let randMember;
         const members = await interaction.guild.members.fetch();
 
-        randMember = members.random();
+        randMember = await members.random();
 
         const randomEmbed = new MessageEmbed()
           .setColor('#0598F6')

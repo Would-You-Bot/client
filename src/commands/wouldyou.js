@@ -14,11 +14,11 @@ module.exports = {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
-        const { WouldYou } = require(`../languages/${result.language}.json`);
+        const { WouldYou } = await require(`../languages/${result.language}.json`);
         const {
           Useless_Superpowers,
           Useful_Superpowers,
-        } = require(`../data/superpower-${result.language}.json`);
+        } = await require(`../data/superpower-${result.language}.json`);
 
         switch (interaction.options.getSubcommand()) {
           case 'useful': {

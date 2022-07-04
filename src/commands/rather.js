@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const guildLang = require('../util/Models/guildModel.ts');
 
 module.exports = {
@@ -13,11 +13,11 @@ module.exports = {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
-        const { Rather } = require(`../languages/${result.language}.json`);
+        const { Rather } = await require(`../languages/${result.language}.json`);
         const {
           Useless_Superpowers,
           Useful_Superpowers,
-        } = require(`../data/superpower-${result.language}.json`);
+        } = await require(`../data/superpower-${result.language}.json`);
         let ratherEmebed;
 
         switch (interaction.options.getSubcommand()) {
