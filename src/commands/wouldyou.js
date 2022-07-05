@@ -32,7 +32,7 @@ module.exports = {
               })
               .addFields({
                 name: WouldYou.embed.Usefulname,
-                value: `${
+                value: `> ${
                   Useful_Superpowers[
                     Math.floor(Math.random() * (Useful_Superpowers.length + 1))
                   ]
@@ -52,7 +52,7 @@ module.exports = {
               .setTimestamp()
               .addFields({
                 name: WouldYou.embed.Uselessname,
-                value: `${
+                value: `> ${
                   Useless_Superpowers[
                     Math.floor(Math.random() * (Useless_Superpowers.length + 1))
                   ]
@@ -61,9 +61,9 @@ module.exports = {
               });
           }
         }
-        await interaction.reply({
-          embeds: [wouldyouembed],
-        });
-      });
+        const message = await interaction.reply({ embeds: [wouldyouembed], fetchReply: true });
+        await message.react('✅');
+        await message.react('❌');
+     });
   },
 };

@@ -27,7 +27,7 @@ module.exports = {
               .addFields(
                 {
                   name: Rather.embed.usefulname,
-                  value: Useful_Superpowers[
+                  value: '> 1️⃣' + Useful_Superpowers[
                     Math.floor(Math.random() * (Useful_Superpowers.length + 1))
                   ],
                   inline: false,
@@ -36,7 +36,7 @@ module.exports = {
               .addFields(
                 {
                   name: Rather.embed.usefulname2,
-                  value: Useful_Superpowers[
+                  value: '> 2️⃣' + Useful_Superpowers[
                     Math.floor(Math.random() * (Useful_Superpowers.length + 1))
                   ],
                   inline: false,
@@ -52,7 +52,7 @@ module.exports = {
               .addFields(
                 {
                   name: Rather.embed.uselessname,
-                  value: Useless_Superpowers[
+                  value: '> 1️⃣' + Useless_Superpowers[
                     Math.floor(Math.random() * (Useless_Superpowers.length + 1))
                   ],
                   inline: false,
@@ -61,7 +61,7 @@ module.exports = {
               .addFields(
                 {
                   name: Rather.embed.uselessname2,
-                  value: Useless_Superpowers[
+                  value: '> 2️⃣' +Useless_Superpowers[
                     Math.floor(Math.random() * (Useless_Superpowers.length + 1))
                   ],
                   inline: false,
@@ -72,9 +72,9 @@ module.exports = {
             break;
           }
         }
-        await interaction.reply({
-          embeds: [ratherEmebed],
-        });
+        const message = await interaction.reply({ embeds: [ratherEmebed], fetchReply: true });
+         await message.react("1️⃣");
+         await message.react("2️⃣");
       });
   },
 };

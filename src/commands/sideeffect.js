@@ -4,7 +4,7 @@ const guildLang = require('../util/Models/guildModel.ts');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('sussyeffect')
+    .setName('sideeffect')
     .setDescription('You get a superpower but with a sideeffect from a random user'),
 
   async execute(interaction, client) {
@@ -31,7 +31,7 @@ module.exports = {
           })
           .addFields({
             name: `${Random.embed.text1} **${randMember.user.username}** ${Random.embed.text2}`,
-            value: `${
+            value: `> ${ 
               Useful_Superpowers[
                 Math.floor(Math.random() * (Useful_Superpowers.length + 1))
               ]
@@ -39,9 +39,9 @@ module.exports = {
             inline: false,
           });
 
-        await interaction.reply({
-          embeds: [randomEmbed],
-        });
-      });
+          const message = await interaction.reply({ embeds: [randomEmbed], fetchReply: true });
+          await message.react('✅');
+          await message.react('❌');
+       });
   },
 };
