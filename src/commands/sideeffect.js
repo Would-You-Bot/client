@@ -39,9 +39,13 @@ module.exports = {
             inline: false,
           });
 
-          const message = await interaction.reply({ embeds: [randomEmbed], fetchReply: true });
+          const message = await interaction.reply({ embeds: [randomEmbed], fetchReply: true })
+          try {
           await message.react('✅');
           await message.react('❌');
+        } catch (error) {
+          return;
+        }
        });
   },
 };

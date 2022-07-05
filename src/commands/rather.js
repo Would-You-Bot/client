@@ -72,9 +72,13 @@ module.exports = {
             break;
           }
         }
-        const message = await interaction.reply({ embeds: [ratherEmebed], fetchReply: true });
+        const message = await interaction.reply({ embeds: [ratherEmebed], fetchReply: true })
+          try {
          await message.react("1️⃣");
          await message.react("2️⃣");
+        } catch (error) {
+          return;
+        }
       });
   },
 };

@@ -61,9 +61,13 @@ module.exports = {
               });
           }
         }
-        const message = await interaction.reply({ embeds: [wouldyouembed], fetchReply: true });
+        const message = await interaction.reply({ embeds: [wouldyouembed], fetchReply: true })
+        try {
         await message.react('✅');
         await message.react('❌');
+        } catch (error) {
+          return;
+        }
      });
   },
 };
