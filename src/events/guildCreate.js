@@ -3,7 +3,7 @@ const config = require('../../config.json');
 
 const guildcreate = require('../util/Models/guildModel.ts');
 
-module.exports = (client, guild) => {
+module.exports = async(client, guild) => {
   guildcreate.findOne({ guildID: guild.id }).then(async (result) => {
     if (!result) {
       await guildcreate.create({
