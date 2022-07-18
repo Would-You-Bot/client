@@ -1,7 +1,5 @@
-import { connect } from 'mongoose'
-import dotenv from 'dotenv'
-
-dotenv.config();
+const { connect } = require('mongoose');
+require('dotenv').config()
 
 const { ChalkAdvanced } = require('chalk-advanced');
 

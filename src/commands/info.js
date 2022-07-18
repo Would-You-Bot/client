@@ -1,8 +1,7 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, Permissions, version: djsversion } = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder, version: djsversion } = require('discord.js');
 
 const os = require('os');
-const Guild = require('../util/Models/guildModel.ts');
+const Guild = require('../util/Models/guildModel.js');
 const { version } = require('../../package.json');
 
 module.exports = {
@@ -22,7 +21,7 @@ module.exports = {
       const core = os.cpus()[0];
 
 
-      const infoEmbed = new MessageEmbed()
+      const infoEmbed = new EmbedBuilder()
         .setAuthor({
           name: `${client.user.username}`,
           iconURL: client.user.avatarURL(),
@@ -30,7 +29,7 @@ module.exports = {
         .setColor('#5865f4')
         .setTitle('Bot Info')
         .setThumbnail(client.user.displayAvatarURL())
-        .addField(
+        .addFields(
           '> General',
           [
             `**❯ Dev Team:** [Developers Dungeon Studios](https://developersdungeon.xyz/)`,
@@ -48,7 +47,7 @@ module.exports = {
             `**❯  Discord.js:** v${djsversion}`,
           ].join('\n'),
         )
-        .addField(
+        .addFields(
           '> System',
           [
             `**❯  Platform:** ${process.platform}`,

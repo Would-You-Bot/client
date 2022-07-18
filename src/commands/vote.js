@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
-const guildLang = require('../util/Models/guildModel.ts');
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const guildLang = require('../util/Models/guildModel.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,7 +11,7 @@ module.exports = {
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { Vote } = require(`../languages/${result.language}.json`);
-        const votemebed = new MessageEmbed()
+        const votemebed = new EmbedBuilder()
           .setAuthor({
             name: `${client.user.username}`,
             iconURL: client.user.avatarURL(),

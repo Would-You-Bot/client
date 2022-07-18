@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
-const guildLang = require('../util/Models/guildModel.ts');
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const guildLang = require('../util/Models/guildModel.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -22,7 +21,7 @@ module.exports = {
 
         switch (interaction.options.getSubcommand()) {
           case 'useful': {
-            wouldyouembed = new MessageEmbed()
+            wouldyouembed = new EmbedBuilder()
               .setColor('#0598F6')
               .setFooter({ text: `${WouldYou.embed.footer}` })
               .setTimestamp()
@@ -42,7 +41,7 @@ module.exports = {
             break;
           }
           case 'useless': {
-            wouldyouembed = new MessageEmbed()
+            wouldyouembed = new EmbedBuilder()
               .setColor('#F00505')
               .setAuthor({
                 name: `${client.user.username}`,

@@ -1,4 +1,4 @@
-const guildcreate = require('../util/Models/guildModel.ts');
+const guildcreate = require('../util/Models/guildModel.js');
 
 module.exports = (interaction) => {
   if (!interaction.guild) {
@@ -18,7 +18,7 @@ module.exports = (interaction) => {
       }
 
       const { client } = interaction;
-      if (!interaction.isCommand()) return;
+      if (!interaction.isChatInputCommand()) return;
       const command = client.commands.get(interaction.commandName);
       if (!command) return;
       try {

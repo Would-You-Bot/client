@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
-const guildLang = require('../util/Models/guildModel.ts');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } = require('discord.js');
+const guildLang = require('../util/Models/guildModel.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -13,7 +12,7 @@ module.exports = {
       .then(async (result) => {
         const { Help } = require(`../languages/${result.language}.json`);
 
-        const helpembed = new MessageEmbed()
+        const helpembed = new EmbedBuilder()
           .setColor('#0598F6')
           .setAuthor({
             name: `${client.user.username}`,
@@ -30,15 +29,15 @@ module.exports = {
           )
           .setDescription(Help.embed.description);
 
-        const button = new MessageActionRow().addComponents(
-          new MessageButton()
+        const button = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
             .setLabel(Help.button.title)
-            .setStyle('LINK')
+            .setStyle(5)
             .setEmoji('💫')
             .setURL('https://discord.developersdungeon.xyz'),
-          new MessageButton()
+          new ButtonBuilder()
             .setLabel('Source code')
-            .setStyle('LINK')
+            .setStyle(5)
             .setEmoji('🤖')
             .setURL('https://github.com/Developer-Dungeon-Studio/Would-You'),
         );

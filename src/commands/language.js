@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, Permissions } = require('discord.js');
-const guildLang = require('../util/Models/guildModel.ts');
+const { EmbedBuilder, SlashCommandBuilder, Permissions } = require('discord.js');
+const guildLang = require('../util/Models/guildModel.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -30,7 +29,7 @@ module.exports = {
                     language: 'en_EN',
                   }).catch();
                 });
-              languageembed = new MessageEmbed()
+              languageembed = new EmbedBuilder()
                 .setAuthor({
                   name: `${client.user.username}`,
                   iconURL: client.user.avatarURL(),
@@ -49,7 +48,7 @@ module.exports = {
                     language: 'de_DE',
                   }).catch();
                 });
-              languageembed = new MessageEmbed()
+              languageembed = new EmbedBuilder()
                 .setAuthor({
                   name: `${client.user.username}`,
                   iconURL: client.user.avatarURL(),
@@ -65,7 +64,7 @@ module.exports = {
             ephemeral: true,
           });
         } else {
-          const errorembed = new MessageEmbed()
+          const errorembed = new EmbedBuilder()
             .setColor('RED')
             .setTitle('Error!')
             .setDescription(Language.embed.error);

@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
-const guildLang = require('../util/Models/guildModel.ts');
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const guildLang = require('../util/Models/guildModel.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -21,7 +20,7 @@ module.exports = {
 
         randMember = await members.random();
 
-        const randomEmbed = new MessageEmbed()
+        const randomEmbed = new EmbedBuilder()
           .setColor('#0598F6')
           .setFooter({ text: `${Random.embed.footer}` })
           .setTimestamp()

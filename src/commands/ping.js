@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
-const guildLang = require('../util/Models/guildModel.ts');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } = require('discord.js');
+const guildLang = require('../util/Models/guildModel.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -13,7 +12,7 @@ module.exports = {
       .then(async (result) => {
         const { Ping } = require(`../languages/${result.language}.json`);
 
-        const pingembed = new MessageEmbed()
+        const pingembed = new EmbedBuilder()
 
           .setColor('#0598F6')
           .setAuthor({
@@ -37,10 +36,10 @@ module.exports = {
               inline: false,
             },
           );
-        const button = new MessageActionRow().addComponents(
-          new MessageButton()
+        const button = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
             .setLabel(Ping.button.title)
-            .setStyle('LINK')
+            .setStyle(5)
             .setEmoji('💻')
             .setURL('https://discordstatus.com/'),
         );

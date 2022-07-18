@@ -1,4 +1,4 @@
-import { Client, Intents } from 'discord.js';
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
 /* Misc */
 console.clear();
@@ -6,15 +6,13 @@ console.clear();
 /* Initialize client */
 const client = new Client({
     intents: [
-      Intents.FLAGS.GUILDS,
-      Intents.FLAGS.GUILD_MEMBERS,
-      Intents.FLAGS.DIRECT_MESSAGES
+      GatewayIntentBits.Guilds,
     ],
 });
 
 const wouldyouComponents = async () => {
   await require('./util/wouldyouClient')(client);
-  await require('./util/dbHandler.ts');
+  await require('./util/dbHandler');
 }
 
 wouldyouComponents();
