@@ -29,9 +29,9 @@ module.exports = {
         .setColor('#5865f4')
         .setTitle('Bot Info')
         .setThumbnail(client.user.displayAvatarURL())
-        .addFields(
-          '> General',
-          [
+        .addFields( {
+          name: '> General',
+          value: [
             `**❯ Dev Team:** [Developers Dungeon Studios](https://developersdungeon.xyz/)`,
             `**❯  Discord:** [Server Invite](https://discord.gg/KfBkKKydfg)`,
             `**❯  Client:** [Bot Invite](https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands)`,
@@ -46,10 +46,10 @@ module.exports = {
             `**❯  Node.js:** ${process.version}`,
             `**❯  Discord.js:** v${djsversion}`,
           ].join('\n'),
-        )
-        .addFields(
-          '> System',
-          [
+      })
+        .addFields( {
+          name: '> System',
+          value: [
             `**❯  Platform:** ${process.platform}`,
             `**❯  Uptime:** ${`${days}d ${hours}h ${minutes}m ${seconds}s`}`,
             `**❯  CPU:**`,
@@ -58,8 +58,7 @@ module.exports = {
             `❯  Model: ${core.model}`,
             `❯  Base Speed: ${core.speed}MHz`,
           ].join('\n'),
-        )
-
+    })
         .setFooter({
           text: interaction.user.tag,
           iconURL: interaction.user.avatarURL({ dynamic: true }),
