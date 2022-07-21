@@ -37,7 +37,7 @@
       "footer": "Ein Developers Dungeon Studios bot",
       "Fields": {
           "name": "**Meine befehle**",
-          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei stärken aus denen du wählen kannst\n`/sideeffect` - Genau wie /wouldyou aber ein random nutzer darf eine nebenwirkung bestimmen."
+          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei stärken aus denen du wählen kannst\n`/sideeffect` - Genau wie /wouldyou aber ein random nutzer darf eine nebenwirkung bestimmen.\n`/howtoplay` - Guide zum spielen des spiels!"
         }
     },
     "button": {

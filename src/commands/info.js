@@ -32,7 +32,7 @@ module.exports = {
         .addFields( {
           name: '> General',
           value: [
-            `**❯ Dev Team:** [Developers Dungeon Studios](https://developersdungeon.xyz/)`,
+            `**❯ Dev Team:** Mezo from [Developers Dungeon Studios](https://developersdungeon.xyz/)`,
             `**❯  Discord:** [Server Invite](https://discord.gg/KfBkKKydfg)`,
             `**❯  Client:** [Bot Invite](https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands)`,
             `**❯  Servers:** ${client.guilds.cache.size.toLocaleString()} `,

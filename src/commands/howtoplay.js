@@ -3,15 +3,15 @@ const guildLang = require('../util/Models/guildModel.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('vote')
-    .setDescription('Vote for me!'),
+    .setName('howtoplay')
+    .setDescription('Guide on how to play the game!'),
 
   async execute(interaction, client) {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { Vote } = require(`../languages/${result.language}.json`);
-        const votemebed = new EmbedBuilder()
+        const howtoplayembed = new EmbedBuilder()
           .setAuthor({
             name: `${client.user.username}`,
             iconURL: client.user.avatarURL(),
@@ -32,11 +32,10 @@ module.exports = {
               inline: true,
             },
           )
-          .setThumbnail(client.user.displayAvatarURL())
           .setFooter({ text: `${Vote.embed.footer}` });
 
         await interaction.reply({
-          embeds: [votemebed],
+          embeds: [howtoplayembed],
         });
       });
   },

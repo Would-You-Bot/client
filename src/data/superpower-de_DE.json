@@ -50,7 +50,8 @@
     " Du kannst Metall essen, aber nur Osmium",
     " Du kannst jede beliebige Videospielfigur beschwören, aber nur, wenn du sie im Spiel benutzt. Außerdem sind sie auf das Spiel beschränkt, sie können nicht in die Realität entkommen. Sie werden freigelassen, wenn das Spiel endet (wenn man es verlässt, abstürzt, beschädigt wird, man verliert/gewinnt, usw.)",
     " Du kannst die Plätze von zwei fast identischen Objekten in deinem Blickfeld vertauschen",
-    " Du kannst Leute in dein Arschloch saugen"
+    " Du kannst Leute in dein Arschloch saugen",
+    " Wenn du eine tür öffnest spawnt hinter dir jemand"
   ],
   "Useful_Superpowers": [
     " Jeder erlittene Schaden wird bis zum nächsten Vergewaltiger negiert",
@@ -135,6 +136,7 @@
     " Jede Schusswaffe in deiner Hand hat unbegrenzte Munition und klemmt nie",
     " Jedes Mal, wenn Sie einschlafen, werden Sie den besten und lebendigsten Traum aller Zeiten erleben (einschließlich Nickerchen)",
     " Sie können einen Tag so oft wiederholen, wie Sie wollen, und Ihre Fehler korrigieren",
-    " Sie können einen universellen Werbeblocker auf jedem Telefon oder Computer installieren, den Sie anfassen"
+    " Sie können einen universellen Werbeblocker auf jedem Telefon oder Computer installieren, den Sie anfassen",
+    " Wenn du aufs klo gehst hörst du kein splash sound"
   ]
 }
