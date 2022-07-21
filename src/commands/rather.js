@@ -27,7 +27,7 @@ module.exports = {
                 {
                   name: Rather.embed.usefulname,
                   value: '> 1️⃣' + Useful_Superpowers[
-                    Math.floor(Math.random() * (Useful_Superpowers.length + 1))
+                    Math.floor(Math.random() * (Useful_Superpowers.length))
                   ],
                   inline: false,
                 },
@@ -36,7 +36,7 @@ module.exports = {
                 {
                   name: Rather.embed.usefulname2,
                   value: '> 2️⃣' + Useful_Superpowers[
-                    Math.floor(Math.random() * (Useful_Superpowers.length + 1))
+                    Math.floor(Math.random() * (Useful_Superpowers.length))
                   ],
                   inline: false,
                 },
@@ -52,7 +52,7 @@ module.exports = {
                 {
                   name: Rather.embed.uselessname,
                   value: '> 1️⃣' + Useless_Superpowers[
-                    Math.floor(Math.random() * (Useless_Superpowers.length + 1))
+                    Math.floor(Math.random() * (Useless_Superpowers.length))
                   ],
                   inline: false,
                 },
@@ -61,7 +61,7 @@ module.exports = {
                 {
                   name: Rather.embed.uselessname2,
                   value: '> 2️⃣' +Useless_Superpowers[
-                    Math.floor(Math.random() * (Useless_Superpowers.length + 1))
+                    Math.floor(Math.random() * (Useless_Superpowers.length))
                   ],
                   inline: false,
                 },

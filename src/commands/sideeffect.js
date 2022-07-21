@@ -32,7 +32,7 @@ module.exports = {
             name: `${Random.embed.text1} **${randMember.user.username}** ${Random.embed.text2}`,
             value: `> ${ 
               Useful_Superpowers[
-                Math.floor(Math.random() * (Useful_Superpowers.length + 1))
+                Math.floor(Math.random() * (Useful_Superpowers.length))
               ]
             }`,
             inline: false,

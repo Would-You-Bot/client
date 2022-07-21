@@ -33,7 +33,7 @@ module.exports = {
                 name: WouldYou.embed.Usefulname,
                 value: `> ${
                   Useful_Superpowers[
-                    Math.floor(Math.random() * (Useful_Superpowers.length + 1))
+                    Math.floor(Math.random() * (Useful_Superpowers.length))
                   ]
                 }`,
                 inline: false,
@@ -53,7 +53,7 @@ module.exports = {
                 name: WouldYou.embed.Uselessname,
                 value: `> ${
                   Useless_Superpowers[
-                    Math.floor(Math.random() * (Useless_Superpowers.length + 1))
+                    Math.floor(Math.random() * (Useless_Superpowers.length))
                   ]
                 }`,
                 inline: false,
