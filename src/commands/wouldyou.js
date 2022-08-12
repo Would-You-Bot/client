@@ -28,7 +28,7 @@ module.exports = {
         switch (interaction.options.getSubcommand()) {
           case "useful": {
 
-            let superpower;
+            var superpower;
 
             superpower = Useful_Superpowers[
               Math.floor(Math.random() * Useful_Superpowers.length)
