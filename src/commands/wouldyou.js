@@ -113,10 +113,12 @@ module.exports = {
             }
             );
 
+            try {
+                await message.reactions.removeAll()
+            } catch (error) {
+                console.log(error)
+            }
 
-            await message.reactions.removeAll()
-
-            // :D
             await interaction.editReply({
               embeds: [wouldyouembed],
             });
