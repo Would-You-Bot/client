@@ -12,10 +12,6 @@ module.exports = {
       .then(async (result) => {
         const { Vote } = require(`../languages/${result.language}.json`);
         const howtoplayembed = new EmbedBuilder()
-          .setAuthor({
-            name: `${client.user.username}`,
-            iconURL: client.user.avatarURL(),
-          })
           .setColor('#5865f4')
           .setTitle(
             `${Vote.embed.title}`,

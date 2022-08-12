@@ -15,10 +15,6 @@ module.exports = {
         const pingembed = new EmbedBuilder()
 
           .setColor('#0598F6')
-          .setAuthor({
-            name: `${client.user.username}`,
-            iconURL: client.user.avatarURL(),
-          })
           .setFooter({ text: `${Ping.embed.footer}` })
           .setTimestamp()
           .setTitle(Ping.embed.title)

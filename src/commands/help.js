@@ -14,10 +14,6 @@ module.exports = {
 
         const helpembed = new EmbedBuilder()
           .setColor('#0598F6')
-          .setAuthor({
-            name: `${client.user.username}`,
-            iconURL: client.user.avatarURL(),
-          })
           .setFooter({ text: `${Help.embed.footer}` })
           .setTimestamp()
           .setTitle(Help.embed.title)

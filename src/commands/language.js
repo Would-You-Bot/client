@@ -30,10 +30,6 @@ module.exports = {
                   }).catch();
                 });
               languageembed = new EmbedBuilder()
-                .setAuthor({
-                  name: `${client.user.username}`,
-                  iconURL: client.user.avatarURL(),
-                })
                 .setTitle('Language changed!')
                 .setDescription('English has been selected as the language!')
                 .setFooter({ text: 'A Developers Dungeon Studios bot' });
@@ -49,10 +45,6 @@ module.exports = {
                   }).catch();
                 });
               languageembed = new EmbedBuilder()
-                .setAuthor({
-                  name: `${client.user.username}`,
-                  iconURL: client.user.avatarURL(),
-                })
                 .setTitle('Sprache bearbeitet!')
                 .setDescription('Deutsch wurde als Sprache ausgewählt!')
                 .setFooter({ text: 'Ein Developers Dungeon Studios bot' });

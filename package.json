@@ -1,11 +1,11 @@
 {
   "name": "would-ou",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Would you rather die or use this bot. You got the choice",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "eslint . --fix && node src/index.js ",
+    "test": "nodemon src/index.js",
     "lint": "eslint . --fix"
   },
   "repository": {

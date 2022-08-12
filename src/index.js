@@ -1,12 +1,11 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 
-/* Misc */
-console.clear();
-
 /* Initialize client */
 const client = new Client({
     intents: [
       GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.GuildMessageReactions,
     ],
 });
 

@@ -1,64 +1,68 @@
-const { EmbedBuilder, SlashCommandBuilder, version: djsversion } = require('discord.js');
+const {
+  CommandInteraction,
+  Client,
+  EmbedBuilder,
+  SlashCommandBuilder,
+  version: djsversion,
+} = require("discord.js");
 
-const os = require('os');
-const Guild = require('../util/Models/guildModel.js');
-const { version } = require('../../package.json');
+const os = require("os");
+const Guild = require("../util/Models/guildModel.js");
+const { version } = require("../../package.json");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('info')
-    .setDescription('Shows some information about the bot.'),
+    .setName("info")
+    .setDescription("Shows some information about the bot."),
+  /**
+   * @param {CommandInteraction} interaction
+   * @param {Client} client
+   */
   async execute(interaction, client) {
     Guild.findOne({ id: interaction.guild.id }).then(async (result) => {
       const { Info } = require(`../languages/${result.language}.json`);
-      const botJoinInt = result.botJoined;
 
       const days = Math.floor(client.uptime / 86400000);
       const hours = Math.floor(client.uptime / 3600000) % 24;
       const minutes = Math.floor(client.uptime / 60000) % 60;
       const seconds = Math.floor(client.uptime / 1000) % 60;
 
-      const core = os.cpus()[0];
-
-
       const infoEmbed = new EmbedBuilder()
-        .setAuthor({
-          name: `${client.user.username}`,
-          iconURL: client.user.avatarURL(),
-        })
-        .setColor('#5865f4')
-        .setTitle('Bot Info')
-        .setThumbnail(client.user.displayAvatarURL())
-        .addFields( {
-          name: '> General',
-          value: [
-            `**❯ Dev Team:** Mezo from [Developers Dungeon Studios](https://developersdungeon.xyz/)`,
-            `**❯  Discord:** [Server Invite](https://discord.gg/KfBkKKydfg)`,
-            `**❯  Client:** [Bot Invite](https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands)`,
-            `**❯  Servers:** ${client.guilds.cache.size.toLocaleString()} `,
-            `❯ ${Info.embed.name1} <t:${botJoinInt}:f>`,
-            `**❯  Users:** ${client.guilds.cache
+        .setColor("#5865f4")
+        .setTitle("Bot Info")
+        .addFields(
+          {
+            name: "Uptime 🚀",
+            value: `
+          \`\`\`ansi\n[2;31m${days}[0m days, [2;31m${hours}[0m hours, [2;31m${minutes}[0m minutes, [2;31m${seconds}[0m seconds\n\`\`\``,
+            inline: true,
+          },
+          {
+            name: "Memory 🎇",
+            value: `\`\`\`ansi\n[2;31m${round(
+              process.memoryUsage().heapUsed / 1000000000
+            )}GB[0m Used Memory\n\`\`\``,
+            inline: true,
+          },
+          {
+            name: "Guilds 🏢",
+            value: `\`\`\`ansi\n[2;31m${client.guilds.cache.size}[0m Total Guilds\`\`\``,
+            inline: true,
+          },
+          {
+            name: "Users 🐧",
+            value: `\`\`\`ansi\n[2;31m${client.guilds.cache
               .reduce((a, b) => a + b.memberCount, 0)
-              .toLocaleString()}`,
-            `**❯  Channels:** ${client.channels.cache.size.toLocaleString()}`,
-            `❯  ${Info.embed.name2}`,
-            `**❯  Bot Version:** v${version}`,
-            `**❯  Node.js:** ${process.version}`,
-            `**❯  Discord.js:** v${djsversion}`,
-          ].join('\n'),
-      })
-        .addFields( {
-          name: '> System',
-          value: [
-            `**❯  Platform:** ${process.platform}`,
-            `**❯  Uptime:** ${`${days}d ${hours}h ${minutes}m ${seconds}s`}`,
-            `**❯  CPU:**`,
-            `❯  Cores: ${os.cpus().length}`,
-            `❯  Threads: ${os.cpus().length * 2}`,
-            `❯  Model: ${core.model}`,
-            `❯  Base Speed: ${core.speed}MHz`,
-          ].join('\n'),
-    })
+              .toLocaleString()}[0m Total Users\`\`\``,
+            inline: true,
+          },
+          {
+            name: "Bot Version 🧾",
+            value: `\`\`\`ansi\n[2;31mv.[0m${version}\`\`\``,
+            inline: true,
+          }
+        )
+        .setThumbnail(client.user.displayAvatarURL())
         .setFooter({
           text: interaction.user.tag,
           iconURL: interaction.user.avatarURL({ dynamic: true }),
@@ -69,3 +73,8 @@ module.exports = {
     });
   },
 };
+
+function round(num) {
+  var m = Number((Math.abs(num) * 100).toPrecision(15));
+  return (Math.round(m) / 100) * Math.sign(num);
+}
