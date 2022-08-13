@@ -4,7 +4,7 @@
       "title": "🏓 Pong!",
       "api": "API Latenz",
       "client": "Client Latenz",
-      "footer": "Ein Developers Dungeon Studios bot"
+      "footer": "Would You"
     },
     "button": {
       "title": "Discord Latenz"
@@ -13,31 +13,31 @@
   "Language": {
     "embed": {
       "error": "Dir fehlt die `ADMINISTRATOR` permission!\nBitte kontaktiere denn server admin um die sprache zu ändern!",
-      "footer": "Ein Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   },
   "WouldYou": {
     "embed": {
       "Usefulname": "Würdest du diese Superkraft haben wollen?",
       "Uselessname": "Würdest du diese Superkraft haben wollen?",
-      "footer": "Ein Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   },
   "Random": {
     "embed": {
       "text1": "Würdest du diese Superkraft haben wollen aber ",
       "text2": "kann eine nebenwirkung auswählen?",
-      "footer": "Ein Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   },
   "Help": {
     "embed": {
       "title": "Info",
       "description": "**Would You** ist ein lustiger kleiner bot. Unsere mission ist es discord server aktiver zu machen indem der bot euch unnütze und nützliche super stärken vorstellt um euch dabei zu helfen eine diskussion anzufangen.",
-      "footer": "Ein Developers Dungeon Studios bot",
+      "footer": "Would You",
       "Fields": {
           "name": "**Meine befehle**",
-          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei stärken aus denen du wählen kannst\n`/sideeffect` - Genau wie /wouldyou aber ein random nutzer darf eine nebenwirkung bestimmen.\n`/howtoplay` - Guide zum spielen des spiels!"
+          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei stärken aus denen du wählen kannst\n`/howtoplay` - Guide zum spielen des spiels!"
         }
     },
     "button": {
@@ -54,7 +54,7 @@
     "embed": {
       "title": "Voten hilft **Would You** mehr server zu erreichen. Also denk daran jeden tag zu Voten!",
       "value": "Klick um zu Voten",
-      "footer": "Ein Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   },
   "Rather": {
@@ -63,7 +63,7 @@
       "uselessname2": "oder diese nutzlose Superkraft?",
       "usefulname": "Hätteste du lieber diese",
       "usefulname2": "oder diese nützliche Superkraft?",
-      "footer": "Ein Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   }
 }

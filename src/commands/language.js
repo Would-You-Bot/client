@@ -32,7 +32,7 @@ module.exports = {
               languageembed = new EmbedBuilder()
                 .setTitle('Language changed!')
                 .setDescription('English has been selected as the language!')
-                .setFooter({ text: 'A Developers Dungeon Studios bot' });
+                .setFooter({ text: 'Would You' });
               break;
             }
 
@@ -47,7 +47,7 @@ module.exports = {
               languageembed = new EmbedBuilder()
                 .setTitle('Sprache bearbeitet!')
                 .setDescription('Deutsch wurde als Sprache ausgewählt!')
-                .setFooter({ text: 'Ein Developers Dungeon Studios bot' });
+                .setFooter({ text: 'Would You' });
               break;
             }
           }

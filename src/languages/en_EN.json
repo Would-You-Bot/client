@@ -4,7 +4,7 @@
       "title": "🏓 Pong!",
       "api": "API Latency",
       "client": "Client Latency",
-      "footer": "A Developers Dungeon Studios bot"
+      "footer": "Would You"
     },
     "button": {
       "title": "Discord latency"
@@ -13,31 +13,31 @@
   "Language": {
     "embed": {
       "error": "You are missing the `ADMINISTRATOR` permission!\nPlease contact an administrator to change the language!",
-      "footer": "A Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   },
   "WouldYou": {
     "embed": {
       "Usefulname": "Would you want this superpower?",
       "Uselessname": "Would you want this superpower?",
-      "footer": "A Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   },
   "Random": {
     "embed": {
       "text1": "Would you want this superpower but",
       "text2": "can choose a Side effect?",
-      "footer": "A Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   },
   "Help": {
     "embed": {
       "title": "Info",
       "description": "**Would You** is a fun little bot for every server. Our mission is it to keep discord servers active by giving them a bunch of useless and useful superpowers to start a conversation.",
-      "footer": "A Developers Dungeon Studios bot",
+      "footer": "Would You",
       "Fields": {
           "name": "**My Commands**",
-          "value": "`/wouldyou` -Start a discussion about superpowers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/sideeffect` - Same as /wouldyou but a random user can choose a sideeffect\n`/howtoplay` - Guide on how to play the game!"
+          "value": "`/wouldyou` -Start a discussion about superpowers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/howtoplay` - Guide on how to play the game!"
         }
     },
     "button": {
@@ -54,7 +54,7 @@
     "embed": {
       "title": "Voting helps **Would You** gain more users! So make sure to vote every day!",
       "value": "Click to vote",
-      "footer": "A Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   },
   "Rather": {
@@ -63,7 +63,7 @@
       "uselessname2": "or this useless superpower?",
       "usefulname": "Would you rather have this",
       "usefulname2": "or this useful superpower?",
-      "footer": "A Developers Dungeon Studios bot"
+      "footer": "Would You"
     }
   }
 }

@@ -52,8 +52,11 @@ module.exports = async (client) => {
             'Successfully registered commands globally',
           )}`,
         );
-        fetchDungeonSingle("wouldyou", process.env.DEVELOPERSDUNGEON, client)
+        try {
+                  fetchDungeonSingle("wouldyou", process.env.DEVELOPERSDUNGEON, client)
         fetchDungeon("wouldyou", process.env.DEVELOPERSDUNGEON, client)
+        } catch (err) {}
+
       
        } else {
         await rest.put(
@@ -68,7 +71,6 @@ module.exports = async (client) => {
             '>',
           )} ${ChalkAdvanced.green('Successfully registered commands locally')}`,
         );
-        // FetchWebsite(client)
       }
     } catch (err) {
       if (err) console.error(err);
