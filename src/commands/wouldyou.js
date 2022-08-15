@@ -74,7 +74,7 @@ module.exports = {
             return reaction.emoji.name == "✅" || reaction.emoji.name == "❌";
           };
 
-          const collector = message.createReactionCollector({filter, time: 2000});
+          const collector = message.createReactionCollector({filter, time: 20000});
           collector.on("collect", async () => {
           });
 
@@ -86,6 +86,13 @@ module.exports = {
             let color = null;
             let userstotal = (totalreactions < 2) ? `${WouldYou.stats.user}` : `${WouldYou.stats.users}`;
 
+
+            if (message.reactions.cache.get('✅').count -1 + message.reactions.cache.get('❌').count - 1 == 0) {
+              percentage = 0;
+              emoji = "🤷";
+              color = "#F0F0F0";
+            }
+
             if(percentage > 50) {
               color = "#0598F6"
               emoji = '✅'
@@ -95,14 +102,6 @@ module.exports = {
             } else {
               color = "#F0F0F0"
               emoji = '🤷'
-            }
-            
-            if (percentage = "NaN") {
-              percentage = 0;
-              emoji = "🤷";
-              color = "#F0F0F0";
-            } else {
-              percentage = percentage;
             }
 
             wouldyouembed = new EmbedBuilder()
