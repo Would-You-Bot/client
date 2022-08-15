@@ -74,7 +74,7 @@ module.exports = {
             return reaction.emoji.name == "✅" || reaction.emoji.name == "❌";
           };
 
-          const collector = message.createReactionCollector({filter, time: 60000});
+          const collector = message.createReactionCollector({filter, time: 15000});
           collector.on("collect", async () => {
           });
 
