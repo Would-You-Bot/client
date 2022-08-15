@@ -74,18 +74,17 @@ module.exports = {
             return reaction.emoji.name == "✅" || reaction.emoji.name == "❌";
           };
 
-          const collector = message.createReactionCollector({filter, time: 15000});
+          const collector = message.createReactionCollector({filter, time: 2000});
           collector.on("collect", async () => {
           });
 
           collector.on("end", async () => {
 
             let totalreactions = message.reactions.cache.get('✅').count -1 + message.reactions.cache.get('❌').count - 1;
-
             let percentage = Math.round(((message.reactions.cache.get('✅').count - 1) / (totalreactions)) * 100)
             let emoji = null;
             let color = null;
-            let userstotal = (totalreactions < 2) ? "user" : "users";
+            let userstotal = (totalreactions < 2) ? `${WouldYou.stats.user}` : `${WouldYou.stats.users}`;
 
             if(percentage > 50) {
               color = "#0598F6"
@@ -96,6 +95,14 @@ module.exports = {
             } else {
               color = "#F0F0F0"
               emoji = '🤷'
+            }
+            
+            if (percentage = "NaN") {
+              percentage = 0;
+              emoji = "🤷";
+              color = "#F0F0F0";
+            } else {
+              percentage = percentage;
             }
 
             wouldyouembed = new EmbedBuilder()
@@ -109,7 +116,7 @@ module.exports = {
             }, 
             {
               name: "Stats",
-              value: `> **${percentage}%** of **${totalreactions} ${userstotal}** would take this superpower. ${emoji}`,
+              value: `> **${percentage}%** ${WouldYou.stats.of} **${totalreactions} ${userstotal}** ${WouldYou.stats.taking} ${emoji}`,
             }
             );
 

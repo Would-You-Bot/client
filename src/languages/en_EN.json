@@ -21,6 +21,12 @@
       "Usefulname": "Would you want this superpower?",
       "Uselessname": "Would you want this superpower?",
       "footer": "Would You"
+    },
+    "stats": {
+      "of": "of",
+      "taking": " would take this superpower.",
+      "user": "user",
+      "users": "users"
     }
   },
   "Random": {

@@ -21,6 +21,12 @@
       "Usefulname": "Würdest du diese Superkraft haben wollen?",
       "Uselessname": "Würdest du diese Superkraft haben wollen?",
       "footer": "Would You"
+    },
+    "stats": {
+      "of": "von",
+      "taking": " würden diese superpower nutzen.",
+      "user": "nutzern",
+      "users": "nutzern"
     }
   },
   "Random": {

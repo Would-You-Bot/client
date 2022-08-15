@@ -32,6 +32,12 @@ module.exports = {
         .setTitle("Bot Info")
         .addFields(
           {
+            name: "Developer 🐒➡️🍌",
+            value: `
+          \`\`\`Mezo#0001\n\`\`\``,
+            inline: false,
+          },
+          {
             name: "Uptime 🚀",
             value: `
           \`\`\`${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds\n\`\`\``,
