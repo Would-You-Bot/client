@@ -34,31 +34,31 @@ module.exports = {
           {
             name: "Uptime 🚀",
             value: `
-          \`\`\`ansi\n[2;31m${days}[0m days, [2;31m${hours}[0m hours, [2;31m${minutes}[0m minutes, [2;31m${seconds}[0m seconds\n\`\`\``,
+          \`\`\`${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds\n\`\`\``,
             inline: true,
           },
           {
             name: "Memory 🎇",
-            value: `\`\`\`ansi\n[2;31m${round(
+            value: `\`\`\`${round(
               process.memoryUsage().heapUsed / 1000000000
-            )}GB[0m Used Memory\n\`\`\``,
+            )} Used Memory\n\`\`\``,
             inline: true,
           },
           {
             name: "Guilds 🏢",
-            value: `\`\`\`ansi\n[2;31m${client.guilds.cache.size}[0m Total Guilds\`\`\``,
+            value: `\`\`\`${client.guilds.cache.size} Total Guilds\`\`\``,
             inline: true,
           },
           {
             name: "Users 🐧",
-            value: `\`\`\`ansi\n[2;31m${client.guilds.cache
+            value: `\`\`\`${client.guilds.cache
               .reduce((a, b) => a + b.memberCount, 0)
-              .toLocaleString()}[0m Total Users\`\`\``,
+              .toLocaleString()} Total Users\`\`\``,
             inline: true,
           },
           {
             name: "Bot Version 🧾",
-            value: `\`\`\`ansi\n[2;31mv.[0m${version}\`\`\``,
+            value: `\`\`\`v.${version}\`\`\``,
             inline: true,
           }
         )
