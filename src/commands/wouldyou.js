@@ -64,11 +64,12 @@ module.exports = {
               });
           }
         }
-
+        try  {
         const message = await interaction.reply({
           embeds: [wouldyouembed],
           fetchReply: true,
         });
+
         try {
           await message.react("✅");
           await message.react("❌");
@@ -133,9 +134,8 @@ module.exports = {
 
             collector.stop();
           });
-        } catch (error) {
-          return;
-        }
+        } catch (error) {}
+      } catch (error) {}
       });
   },
 };
