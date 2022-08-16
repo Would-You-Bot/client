@@ -43,7 +43,7 @@
       "footer": "Would You",
       "Fields": {
           "name": "**My Commands**",
-          "value": "`/wouldyou` -Start a discussion about superpowers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/howtoplay` - Guide on how to play the game!"
+          "value": "`/wouldyou` -Start a discussion about superpowers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from"
         }
     },
     "button": {

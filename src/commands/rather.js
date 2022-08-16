@@ -7,6 +7,12 @@ module.exports = {
     .setDescription('Get a would you rather question.')
     .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Get a useful would you rather'))
     .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Get a useless would you rather')),
+        
+  /**
+   * @param {CommandInteraction} interaction
+   * @param {Client} client
+   */
+
 
   async execute(interaction) {
     guildLang

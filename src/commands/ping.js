@@ -5,6 +5,12 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Displays the clients ping'),
+        
+  /**
+   * @param {CommandInteraction} interaction
+   * @param {Client} client
+   */
+
 
   async execute(interaction, client) {
     guildLang

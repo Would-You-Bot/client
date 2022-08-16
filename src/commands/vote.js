@@ -5,6 +5,11 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('vote')
     .setDescription('Vote for me!'),
+    
+  /**
+   * @param {CommandInteraction} interaction
+   * @param {Client} client
+   */
 
   async execute(interaction, client) {
     guildLang

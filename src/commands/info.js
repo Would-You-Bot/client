@@ -3,7 +3,6 @@ const {
   Client,
   EmbedBuilder,
   SlashCommandBuilder,
-  version: djsversion,
 } = require("discord.js");
 
 const os = require("os");

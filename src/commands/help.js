@@ -5,6 +5,11 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('help')
     .setDescription('Help command!'),
+    
+  /**
+   * @param {CommandInteraction} interaction
+   * @param {Client} client
+   */
 
   async execute(interaction, client) {
     guildLang

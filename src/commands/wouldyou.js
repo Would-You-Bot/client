@@ -12,9 +12,11 @@ module.exports = {
       subcommand.setName("useful").setDescription("Useful superpower")
     ),
 
-    /**
-     * @param {CommandInteraction} interaction
-     */
+  /**
+   * @param {CommandInteraction} interaction
+   * @param {Client} client
+   */
+
   async execute(interaction, client) {
     let wouldyouembed;
     guildLang

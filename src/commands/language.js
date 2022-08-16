@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const guildLang = require('../util/Models/guildModel.js');
 
 module.exports = {
@@ -9,6 +9,11 @@ module.exports = {
       .setName('english')
       .setDescription('Set the language to english'))
     .addSubcommand((subcommand) => subcommand.setName('german').setDescription('Set the language to german')),
+        
+  /**
+   * @param {CommandInteraction} interaction
+   * @param {Client} client
+   */
 
   async execute(interaction, client) {
     let languageembed;
@@ -18,7 +23,7 @@ module.exports = {
         const { Language } = require(`../languages/${result.language}.json`);
 
         if (
-          interaction.member.permissions.has([PermissionsBitField.Flags.Administator])
+          interaction.member.permissions.has([PermissionFlagsBits.Administator])
         ) {
           switch (interaction.options.getSubcommand()) {
             case 'english': {
