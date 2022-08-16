@@ -21,9 +21,8 @@ module.exports = {
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { Language } = require(`../languages/${result.language}.json`);
-
         if (
-          interaction.member.permissions.has([PermissionFlagsBits.Administator])
+          interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
         ) {
           switch (interaction.options.getSubcommand()) {
             case 'english': {
@@ -62,7 +61,7 @@ module.exports = {
           });
         } else {
           const errorembed = new EmbedBuilder()
-            .setColor('RED')
+            .setColor('#F00505')
             .setTitle('Error!')
             .setDescription(Language.embed.error);
           await interaction.reply({

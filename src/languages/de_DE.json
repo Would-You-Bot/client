@@ -12,7 +12,7 @@
   },
   "Language": {
     "embed": {
-      "error": "Dir fehlt die `ADMINISTRATOR` permission!\nBitte kontaktiere denn server admin um die sprache zu ändern!",
+      "error": "Dir fehlt die `ManageGuild` permission!\nBitte kontaktiere denn server admin um die sprache zu ändern!",
       "footer": "Would You"
     }
   },

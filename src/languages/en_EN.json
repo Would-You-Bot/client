@@ -12,7 +12,7 @@
   },
   "Language": {
     "embed": {
-      "error": "You are missing the `ADMINISTRATOR` permission!\nPlease contact an administrator to change the language!",
+      "error": "You are missing the `ManageGuild` permission!\nPlease contact an administrator to change the language!",
       "footer": "Would You"
     }
   },
