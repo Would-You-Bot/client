@@ -16,6 +16,18 @@
       "footer": "Would You"
     }
   },
+  "Wwyd": {
+    "embed": {
+      "title": "Was **würdest du** tuen?",
+      "footer": "Would You"
+    }
+  },
+  "Custom": {
+    "embed": {
+      "title": "Würdest du diese Superkraft haben wollen?",
+      "footer": "Would You"
+    }
+  },
   "WouldYou": {
     "embed": {
       "Usefulname": "Würdest du diese Superkraft haben wollen?",
@@ -43,7 +55,7 @@
       "footer": "Would You",
       "Fields": {
           "name": "**Meine befehle**",
-          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei stärken aus denen du wählen kannst"
+          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei stärken aus denen du wählen kannst\n`/custom` - Sende eine custom would you nachricht in denn chat!\n`/wwyd` - Sendet eine was würdest du tuen frage in denn chat!"
         }
     },
     "button": {

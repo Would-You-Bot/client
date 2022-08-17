@@ -16,6 +16,18 @@
       "footer": "Would You"
     }
   },
+  "Wwyd": {
+    "embed": {
+      "title": "What **would you** do?",
+      "footer": "Would You"
+    }
+  },
+  "Custom": {
+    "embed": {
+      "title": "Would you want this superpower?",
+      "footer": "Would You"
+    }
+  },
   "WouldYou": {
     "embed": {
       "Usefulname": "Would you want this superpower?",
@@ -43,7 +55,7 @@
       "footer": "Would You",
       "Fields": {
           "name": "**My Commands**",
-          "value": "`/wouldyou` -Start a discussion about superpowers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from"
+          "value": "`/wouldyou` -Start a discussion about superpowers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat"
         }
     },
     "button": {
