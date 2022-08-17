@@ -31,9 +31,9 @@ module.exports = {
         .setTitle("Bot Info")
         .addFields(
           {
-            name: "Developer 🐒➡️🍌",
+            name: "Developers 🐒➡️🍌",
             value: `
-          \`\`\`Mezo#0001\n\`\`\``,
+          \`\`\`Mezo#0001, YoItRT#4935\n\`\`\``,
             inline: false,
           },
           {
