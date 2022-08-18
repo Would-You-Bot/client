@@ -77,7 +77,9 @@ module.exports = {
             break;
           }
         }
-        const message = await interaction.reply({ embeds: [ratherEmebed], fetchReply: true })
+        try {
+        var message = await interaction.reply({ embeds: [ratherEmebed], fetchReply: true })
+        } catch (error) {}
           try {
          await message.react("1️⃣");
          await message.react("2️⃣");

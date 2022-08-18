@@ -4,7 +4,7 @@ const guildLang = require('../util/Models/guildModel.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('wwyd')
-    .setDescription('commanddescription'),
+    .setDescription('What would you do...'),
         
   /**
    * @param {CommandInteraction} interaction
