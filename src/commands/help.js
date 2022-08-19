@@ -35,7 +35,7 @@ module.exports = {
             .setLabel(Help.button.title)
             .setStyle(5)
             .setEmoji('💫')
-            .setURL('https://discord.developersdungeon.xyz'),
+            .setURL('https://discord.gg/vMyXAxEznS'),
           new ButtonBuilder()
             .setLabel('Source code')
             .setStyle(5)
