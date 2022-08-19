@@ -54,10 +54,6 @@ module.exports = async (client) => {
             "Successfully registered commands globally"
           )}`
         );
-        try {
-          fetchDungeonSingle("wouldyou", process.env.DEVELOPERSDUNGEON, client);
-          fetchDungeon("wouldyou", process.env.DEVELOPERSDUNGEON, client);
-        } catch (err) {}
       } else {
         await rest.put(
           Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID),
