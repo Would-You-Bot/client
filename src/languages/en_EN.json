@@ -31,26 +31,26 @@
   },
   "Custom": {
     "embed": {
-      "title": "Would you want this superpower?",
+      "title": "Would you want this power?",
       "footer": "Would You"
     }
   },
   "WouldYou": {
     "embed": {
-      "Usefulname": "Would you want this superpower?",
-      "Uselessname": "Would you want this superpower?",
+      "Usefulname": "Would you want this power?",
+      "Uselessname": "Would you want this power?",
       "footer": "Would You"
     },
     "stats": {
       "of": "of",
-      "taking": " would take this superpower.",
+      "taking": " would take this power.",
       "user": "user",
       "users": "users"
     }
   },
   "Random": {
     "embed": {
-      "text1": "Would you want this superpower but",
+      "text1": "Would you want this power but",
       "text2": "can choose a Side effect?",
       "footer": "Would You"
     }
@@ -58,21 +58,17 @@
   "Help": {
     "embed": {
       "title": "Info",
-      "description": "**Would You** is a fun little bot for every server. Our mission is it to keep discord servers active by giving them a bunch of useless and useful superpowers to start a conversation.",
+      "description": "**Would You** is a fun little bot for every server. Our mission is it to keep discord servers active by giving them a bunch of useless and useful powers to start a conversation.",
       "footer": "Would You",
       "Fields": {
           "name": "**My Commands**",
-          "value": "`/wouldyou` -Start a discussion about superpowers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat"
+          "value": "`/wouldyou` -Start a discussion about random powers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat\n`/support` - If you ever need help use this command to get help from the support team!",
+          "privacyname": "**Privacy Policy**",
+          "privacy": "We value your privacy if you have any concers about your data check out privacy policy [here](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
         }
     },
     "button": {
       "title": "Our Discord"
-    }
-  },
-  "Info": {
-    "embed": {
-      "name1": "**Bot Joined:**",
-      "name2": "**Creation Date:** <t:1654106682:R>"
     }
   },
   "Vote": {
@@ -85,9 +81,9 @@
   "Rather": {
     "embed": {
       "uselessname": "Would you rather have this",
-      "uselessname2": "or this useless superpower?",
+      "uselessname2": "or this useless Power?",
       "usefulname": "Would you rather have this",
-      "usefulname2": "or this useful superpower?",
+      "usefulname2": "or this useful Power?",
       "footer": "Would You"
     }
   }

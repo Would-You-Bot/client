@@ -1,5 +1,9 @@
-const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const guildLang = require('../util/Models/guildModel.js');
+const {
+  EmbedBuilder,
+  SlashCommandBuilder,
+  PermissionFlagsBits,
+} = require('discord.js');
+const guildLang = require('../util/Models/guildModel');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -9,7 +13,7 @@ module.exports = {
       .setName('english')
       .setDescription('Set the language to english'))
     .addSubcommand((subcommand) => subcommand.setName('german').setDescription('Set the language to german')),
-        
+
   /**
    * @param {CommandInteraction} interaction
    * @param {Client} client
@@ -29,14 +33,22 @@ module.exports = {
               guildLang
                 .findOne({ guildID: interaction.guild.id })
                 .then(async () => {
-                  await guildLang.findOneAndUpdate({ guildID: interaction.guild.id }, {
-                    language: 'en_EN',
-                  }).catch();
+                  await guildLang
+                    .findOneAndUpdate(
+                      { guildID: interaction.guild.id },
+                      {
+                        language: 'en_EN',
+                      },
+                    )
+                    .catch();
                 });
               languageembed = new EmbedBuilder()
                 .setTitle('Language changed!')
                 .setDescription('English has been selected as the language!')
-                .setFooter({ text: 'Would You' });
+                .setFooter({
+                  text: 'Would You',
+                  iconURL: client.user.avatarURL(),
+                });
               break;
             }
 
@@ -44,21 +56,33 @@ module.exports = {
               guildLang
                 .findOne({ guildID: interaction.guild.id })
                 .then(async () => {
-                  await guildLang.findOneAndUpdate({ guildID: interaction.guild.id }, {
-                    language: 'de_DE',
-                  }).catch();
+                  await guildLang
+                    .findOneAndUpdate(
+                      { guildID: interaction.guild.id },
+                      {
+                        language: 'de_DE',
+                      },
+                    )
+                    .catch();
                 });
               languageembed = new EmbedBuilder()
                 .setTitle('Sprache bearbeitet!')
                 .setDescription('Deutsch wurde als Sprache ausgewählt!')
-                .setFooter({ text: 'Would You' });
+                .setFooter({
+                  text: 'Would You',
+                  iconURL: client.user.avatarURL(),
+                });
               break;
             }
           }
-          await interaction.reply({
-            embeds: [languageembed],
-            ephemeral: true,
-          });
+          try {
+            await interaction.reply({
+              embeds: [languageembed],
+              ephemeral: true,
+            });
+          } catch (error) {
+            console.error(error);
+          }
         } else {
           const errorembed = new EmbedBuilder()
             .setColor('#F00505')

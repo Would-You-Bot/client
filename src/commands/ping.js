@@ -1,16 +1,20 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } = require('discord.js');
-const guildLang = require('../util/Models/guildModel.js');
+const {
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  SlashCommandBuilder,
+} = require('discord.js');
+const guildLang = require('../util/Models/guildModel');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Displays the clients ping'),
-        
+
   /**
    * @param {CommandInteraction} interaction
    * @param {Client} client
    */
-
 
   async execute(interaction, client) {
     guildLang
@@ -21,7 +25,10 @@ module.exports = {
         const pingembed = new EmbedBuilder()
 
           .setColor('#0598F6')
-          .setFooter({ text: `${Ping.embed.footer}` })
+          .setFooter({
+            text: `${Ping.embed.footer}`,
+            iconURL: client.user.avatarURL(),
+          })
           .setTimestamp()
           .setTitle(Ping.embed.title)
           .addFields(
@@ -45,15 +52,21 @@ module.exports = {
             .setEmoji('💻')
             .setURL('https://discordstatus.com/'),
         );
-
-        await interaction.reply({
-          embeds: [pingembed],
-          components: [button],
-        });
-        setTimeout(() => {
-          button.components[0].setDisabled(true);
-          interaction.editReply({ embeds: [pingembed], components: [button] });
-        }, 120000);
+        try {
+          await interaction.reply({
+            embeds: [pingembed],
+            components: [button],
+          });
+          setTimeout(() => {
+            button.components[0].setDisabled(true);
+            interaction.editReply({
+              embeds: [pingembed],
+              components: [button],
+            });
+          }, 120000);
+        } catch (error) {
+          console.error(error);
+        }
       });
   },
 };
