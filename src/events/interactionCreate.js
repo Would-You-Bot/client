@@ -1,4 +1,4 @@
-const guildcreate = require('../util/Models/guildModel.js');
+const guildcreate = require('../util/Models/guildModel');
 
 module.exports = (interaction) => {
   if (!interaction.guild) {
@@ -7,29 +7,31 @@ module.exports = (interaction) => {
       ephemeral: true,
     });
   } else {
-    guildcreate.findOne({ guildID: interaction.guild.id }).then(async (result) => {
-      if (!result) {
-        await guildcreate.create({
-          guildID: interaction.guild.id,
-          language: 'en_EN',
-          botJoined: (Date.now() / 1000) | 0,
-        });
-      } else {
-      }
+    guildcreate
+      .findOne({ guildID: interaction.guild.id })
+      .then(async (result) => {
+        if (!result) {
+          await guildcreate.create({
+            guildID: interaction.guild.id,
+            language: 'en_EN',
+            botJoined: Date.now() / 1000 || 0,
+          });
+        } else {
+        }
 
-      const { client } = interaction;
-      if (!interaction.isChatInputCommand()) return;
-      const command = client.commands.get(interaction.commandName);
-      if (!command) return;
-      try {
-        command.execute(interaction, client);
-      } catch (err) {
-        if (err) console.error(err);
-        interaction.reply({
-          content: 'An error occurred while trying to execute that command.',
-          ephemeral: true,
-        });
-      }
-    });
+        const { client } = interaction;
+        if (!interaction.isChatInputCommand()) return;
+        const command = client.commands.get(interaction.commandName);
+        if (!command) return;
+        try {
+          command.execute(interaction, client);
+        } catch (err) {
+          if (err) console.error(err);
+          interaction.reply({
+            content: 'An error occurred while trying to execute that command.',
+            ephemeral: true,
+          });
+        }
+      });
   }
 };

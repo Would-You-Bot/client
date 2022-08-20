@@ -31,26 +31,26 @@
   },
   "Custom": {
     "embed": {
-      "title": "Würdest du diese Superkraft haben wollen?",
+      "title": "Würdest du diese Kraft haben wollen?",
       "footer": "Would You"
     }
   },
   "WouldYou": {
     "embed": {
-      "Usefulname": "Würdest du diese Superkraft haben wollen?",
-      "Uselessname": "Würdest du diese Superkraft haben wollen?",
+      "Usefulname": "Würdest du diese Kraft haben wollen?",
+      "Uselessname": "Würdest du diese Kraft haben wollen?",
       "footer": "Would You"
     },
     "stats": {
       "of": "von",
-      "taking": " würden diese superpower nutzen.",
+      "taking": " würden diese kraft benutzen.",
       "user": "nutzern",
       "users": "nutzern"
     }
   },
   "Random": {
     "embed": {
-      "text1": "Würdest du diese Superkraft haben wollen aber ",
+      "text1": "Würdest du diese Kraft haben wollen aber ",
       "text2": "kann eine nebenwirkung auswählen?",
       "footer": "Would You"
     }
@@ -58,21 +58,17 @@
   "Help": {
     "embed": {
       "title": "Info",
-      "description": "**Would You** ist ein lustiger kleiner bot. Unsere mission ist es discord server aktiver zu machen indem der bot euch unnütze und nützliche super stärken vorstellt um euch dabei zu helfen eine diskussion anzufangen.",
+      "description": "**Would You** ist ein lustiger kleiner bot. Unsere mission ist es discord server aktiver zu machen indem der bot euch unnütze und nützliche kräfte vorstellt um euch dabei zu helfen eine diskussion anzufangen.",
       "footer": "Would You",
       "Fields": {
           "name": "**Meine befehle**",
-          "value": "`/wouldyou` - Starte diskussionen über superkräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei stärken aus denen du wählen kannst\n`/custom` - Sende eine custom would you nachricht in denn chat!\n`/wwyd` - Sendet eine was würdest du tuen frage in denn chat!"
+          "value": "`/wouldyou` - Starte diskussionen über zufällige kräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei kräfte aus denen du wählen kannst\n`/custom` - Sende eine custom would you nachricht in denn chat!\n`/wwyd` - Sendet eine was würdest du tuen frage in denn chat!\n`/support` - Solltest du hilfe brauchen nutze diesen command und wir helfen dir gerne weiter!",
+          "privacyname": "**Privacy Policy**",
+          "privacy": "Wir schätzen deine privatsphäre sehr wenn du wissen möchtest was mit deinen daten passiert schau dir unsere privacy policy  [hier](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY) an."
         }
     },
     "button": {
-      "title": "Unser Discord Server"
-    }
-  },
-  "Info": {
-    "embed": {
-      "name1": "**Bot beigetreten:**",
-      "name2": "**Erstellungs datum:** <t:1654106682:R>"
+      "title": "Unser Support Server"
     }
   },
   "Vote": {
@@ -85,9 +81,9 @@
   "Rather": {
     "embed": {
       "uselessname": "Hätteste du lieber diese",
-      "uselessname2": "oder diese nutzlose Superkraft?",
+      "uselessname2": "oder diese nutzlose Kraft?",
       "usefulname": "Hätteste du lieber diese",
-      "usefulname2": "oder diese nützliche Superkraft?",
+      "usefulname2": "oder diese nützliche Kraft?",
       "footer": "Would You"
     }
   }

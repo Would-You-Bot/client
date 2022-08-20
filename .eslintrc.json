@@ -39,6 +39,7 @@
     "import/no-absolute-path": "off",
     "no-underscore-dangle": "off",
     "no-bitwise": "off",
-    "camelcase":"off"
+    "camelcase":"off",
+    "no-var": "off"
   }
 }

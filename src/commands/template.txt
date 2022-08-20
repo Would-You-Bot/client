@@ -1,23 +1,21 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const guildLang = require('../util/Models/guildModel.js');
+const guildLang = require('../util/Models/guildModel');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('commandname')
     .setDescription('commanddescription'),
-        
+
   /**
    * @param {CommandInteraction} interaction
    * @param {Client} client
    */
-
 
   async execute(interaction, client) {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { Name } = require(`../languages/${result.language}.json`);
-
       });
   },
 };
