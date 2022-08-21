@@ -34,9 +34,7 @@ module.exports = {
 
         try {
           await interaction.reply({ embeds: [wwydembed] });
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
       });
   },
 };

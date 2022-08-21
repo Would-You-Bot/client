@@ -135,13 +135,12 @@ module.exports = {
 
               try {
                 await message.reactions.removeAll();
-              } catch (error) {
-                console.log(error);
-              }
-
-              await interaction.editReply({
-                embeds: [wouldyouembed],
-              });
+              } catch (error) {}
+              try {
+                await interaction.editReply({
+                  embeds: [wouldyouembed],
+                });
+              } catch (error) {}
 
               collector.stop();
             });

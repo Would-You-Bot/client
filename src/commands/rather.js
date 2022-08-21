@@ -89,9 +89,7 @@ module.exports = {
             embeds: [ratherEmebed],
             fetchReply: true,
           });
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
         try {
           await message.react('1️⃣');
           await message.react('2️⃣');
