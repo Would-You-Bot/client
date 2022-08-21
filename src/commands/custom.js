@@ -22,7 +22,7 @@ module.exports = {
 
         const customembed = new EmbedBuilder()
           .setTitle(Custom.embed.title)
-          .setDescription(`> ${interaction.options.get('custom').value}`)
+          .setDescription(`> ${interaction.options.getString('message')}`)
           .setColor('#0598F6')
           .setFooter({
             text: `${Custom.embed.footer}`,
