@@ -119,7 +119,7 @@ module.exports = {
 
               wouldyouembed = new EmbedBuilder()
                 .setColor(color)
-                .setFooter({ text: `${WouldYou.embed.footer}` })
+                .setFooter({ text: `${WouldYou.embed.footer}`, iconURL: client.user.avatarURL() })
                 .setTimestamp()
                 .addFields(
                   {
