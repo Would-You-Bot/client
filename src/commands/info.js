@@ -70,8 +70,6 @@ module.exports = {
       .setTimestamp();
     try {
       interaction.reply({ embeds: [infoEmbed], ephemeral: false });
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   },
 };

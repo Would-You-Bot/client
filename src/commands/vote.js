@@ -40,9 +40,7 @@ module.exports = {
           await interaction.reply({
             embeds: [votemebed],
           });
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
       });
   },
 };

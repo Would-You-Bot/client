@@ -61,9 +61,7 @@ module.exports = {
             embeds: [helpembed],
             components: [button],
           });
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
       });
   },
 };

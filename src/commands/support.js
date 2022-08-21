@@ -44,9 +44,7 @@ module.exports = {
             embeds: [supportembed],
             components: [supportbutton],
           });
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
       });
   },
 };

@@ -64,9 +64,7 @@ module.exports = {
               components: [button],
             });
           }, 120000);
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) { }
       });
   },
 };

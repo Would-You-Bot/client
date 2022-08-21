@@ -38,12 +38,8 @@ module.exports = {
           try {
             await message.react('✅');
             await message.react('❌');
-          } catch (error) {
-            console.error(error);
-          }
-        } catch (error) {
-          console.error(error);
-        }
+          } catch (error) {}
+        } catch (error) {}
       });
   },
 };

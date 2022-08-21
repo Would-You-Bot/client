@@ -80,9 +80,7 @@ module.exports = {
               embeds: [languageembed],
               ephemeral: true,
             });
-          } catch (error) {
-            console.error(error);
-          }
+          } catch (error) {}
         } else {
           const errorembed = new EmbedBuilder()
             .setColor('#F00505')
