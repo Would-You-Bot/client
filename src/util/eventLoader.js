@@ -6,8 +6,8 @@ module.exports = async (client) => {
 
     files.forEach((file) => {
       const event = require(`../events/${file}`);
-      const eventName = file.split('.')[0];
-      client.on(eventName, event.bind(client));
+      let eventName = file.split('.')[0];
+      client.on(eventName, event.bind(null, client));
     });
   });
 };

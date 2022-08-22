@@ -39,12 +39,10 @@ module.exports = {
             .setEmoji('💻')
             .setURL('https://discord.gg/vMyXAxEznS'),
         );
-        try {
-          await interaction.reply({
-            embeds: [supportembed],
-            components: [supportbutton],
-          });
-        } catch (error) {}
+        await interaction.reply({
+          embeds: [supportembed],
+          components: [supportbutton],
+        }).catch((err) => { return; });
       });
   },
 };

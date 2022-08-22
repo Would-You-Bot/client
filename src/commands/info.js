@@ -68,8 +68,7 @@ module.exports = {
         iconURL: client.user.avatarURL(),
       })
       .setTimestamp();
-    try {
-      interaction.reply({ embeds: [infoEmbed], ephemeral: false });
-    } catch (error) {}
+
+    interaction.reply({ embeds: [infoEmbed], ephemeral: false }).catch((err) => { return; });
   },
 };

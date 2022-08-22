@@ -32,9 +32,7 @@ module.exports = {
           .setTitle(Wwyd.embed.title)
           .setDescription(`> ${wwydstring}`);
 
-        try {
-          await interaction.reply({ embeds: [wwydembed] });
-        } catch (error) {}
+        await interaction.reply({ embeds: [wwydembed] }).catch((err) => { return; });
       });
   },
 };

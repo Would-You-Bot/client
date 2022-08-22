@@ -29,16 +29,14 @@ module.exports = {
             iconURL: client.user.avatarURL(),
           })
           .setTimestamp();
-        try {
-          const message = await interaction.reply({
-            embeds: [customembed],
-            fetchReply: true,
-          });
+        const message = await interaction.reply({
+          embeds: [customembed],
+          fetchReply: true,
+        }).catch((err) => { return; });
 
-          try {
-            await message.react('✅');
-            await message.react('❌');
-          } catch (error) {}
+        try {
+          await message.react('✅');
+          await message.react('❌');
         } catch (error) {}
       });
   },
