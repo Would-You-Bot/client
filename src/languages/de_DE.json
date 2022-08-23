@@ -31,8 +31,14 @@
   },
   "Custom": {
     "embed": {
-      "title": "Würdest du diese Kraft haben wollen?",
+      "title": "Würdest du diese Kraft haben wollen? Erkläre warum!",
       "footer": "Would You"
+    }
+  },
+  "Welcome": {
+    "embed": {
+      "title": "Würdest du diese Kraft haben wollen? Erkläre warum!",
+      "footer": "ist dem server beigetreten!"
     }
   },
   "WouldYou": {

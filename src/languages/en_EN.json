@@ -29,6 +29,12 @@
       "footer": "Would You"
     }
   },
+  "Welcome": {
+    "embed": {
+      "title": "Would you want this power? Explain Why!",
+      "footer": "just joined the server!"
+    }
+  },
   "Custom": {
     "embed": {
       "title": "Would you want this power?",
