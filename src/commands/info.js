@@ -11,10 +11,7 @@ module.exports = {
    * @param {Client} client
    */
   async execute(interaction, client) {
-    const days = Math.floor(client.uptime / 86400000);
-    const hours = Math.floor(client.uptime / 3600000) % 24;
-    const minutes = Math.floor(client.uptime / 60000) % 60;
-    const seconds = Math.floor(client.uptime / 1000) % 60;
+    const unixstamp = Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime / 1000);
 
     function round(num) {
       const m = Number((Math.abs(num) * 100).toPrecision(15));
@@ -26,15 +23,15 @@ module.exports = {
       .setTitle('Bot Info')
       .addFields(
         {
-          name: 'Developers 🐒',
+          name: 'Developer 🐒',
           value: `
-          \`\`\`Mezo#0001, YoItRT#4935\n\`\`\``,
+          \`\`\`Mezo#0001\n\`\`\``,
           inline: false,
         },
         {
-          name: 'Uptime 🚀',
+          name: 'Last Restart 🚀',
           value: `
-          \`\`\`${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds\n\`\`\``,
+          <t:${unixstamp}:R>`,
           inline: true,
         },
         {
@@ -69,6 +66,10 @@ module.exports = {
       })
       .setTimestamp();
 
-    interaction.reply({ embeds: [infoEmbed], ephemeral: false }).catch((err) => { return; });
+    interaction
+      .reply({ embeds: [infoEmbed], ephemeral: false })
+      .catch((err) => {
+        return;
+      });
   },
 };
