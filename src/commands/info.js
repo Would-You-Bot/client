@@ -38,7 +38,7 @@ module.exports = {
           name: 'Memory 🎇',
           value: `\`\`\`${round(
             process.memoryUsage().heapUsed / 1000000000,
-          )} Used Memory\n\`\`\``,
+          )}GB Used Memory\n\`\`\``,
           inline: true,
         },
         {
