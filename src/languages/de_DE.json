@@ -96,12 +96,12 @@
   "Guide": {
     "embed": {
       "title": "Would You | Anleitung",
-      "name1": "Wie man Would You richtig benutzt",
-      "value1": "Create a dedicated channel for the bot or allow users to use the bot in the main chat. \n > Would You's purpose is to make chats more active so it would be very ironic to deny the usage of would you in the main chats. \n > If you want to use the bot to its fullest potential use the </welcome:1011374285350260914> command and setup a welcome channel. This channel will be used to send a would you message once a user joins.",
-      "name2": "Why do I need that",
-      "value2": "> The intention behind this is to help new users be part of the conversation by given the members a topic to talk about right after joining! This not only makes the server more active it also makes new users feel more included right after joining the server and it encourages them to stay for longer!",
-      "name3": "Any more tips?",
-      "value3": "> Yes! Make sure to talk about the topic you got instead of spamming the commands. This will help the members build a conversation and makes the server more active in minutes! There is an image attached with a prime example on how to use the bot!",
+      "name1": "Wie man Would You richtig benutzt!",
+      "value1": "Erstell einen eigenen Kanal für den Bot oder erlaub deinen Nutzern, den Bot im Hauptchat zu verwenden. \n > Das Ziel von Would You ist es, Chats aktiver zu machen, es wäre also sehr ironisch, die Verwendung von Would You auf bot channel zu beschränken \n > Wenn du das volle Potenzial des Bots ausschöpfen willst, verwende den Befehl </welcome:1011374285350260914> und richte einen Willkommenskanal ein. Dieser Kanal wird verwendet, um eine Willkommensnachricht zu senden, sobald ein Benutzer dem server beitritt.",
+      "name2": "Warum brauche ich das?",
+      "value2": "> Die Absicht dahinter ist, neuen Benutzern zu helfen, Teil der Konversation zu werden, indem man den Mitgliedern ein Thema gibt, über das sie direkt nach dem Beitritt sprechen können! Dies macht den Server nicht nur aktiver, sondern bezieht neue Benutzer direkt mit ein sodass diese sich nach Beitritt des Servers einbezogen fühlen und ermutigt werden, länger zu bleiben!",
+      "name3": "Weitere tipps?",
+      "value3": "> Na klar! Achte darauf, dass die user über das Thema sprechen,welches sie bekommen haben, anstatt die Commands zu spammen. Dies wird den Mitgliedern helfen, ein Gespräch aufzubauen und macht den Server in wenigen Minuten aktiver! Unten haben wir dir eine beispiel conversation angegängt!",
       "footer": "Would You"
     }
   }
