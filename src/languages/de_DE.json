@@ -12,7 +12,7 @@
   },
   "Language": {
     "embed": {
-      "error": "Dir fehlt die `ManageGuild` permission!\nBitte kontaktiere denn server admin um die sprache zu ändern!",
+      "error": "Dir fehlt die `ManageGuild` permission!\nBitte kontaktiere einen server admin um die sprache zu ändern!",
       "footer": "Would You"
     }
   },
@@ -90,6 +90,18 @@
       "uselessname2": "oder diese nutzlose Kraft?",
       "usefulname": "Hätteste du lieber diese",
       "usefulname2": "oder diese nützliche Kraft?",
+      "footer": "Would You"
+    }
+  },
+  "Guide": {
+    "embed": {
+      "title": "Would You | Anleitung",
+      "name1": "Wie man Would You richtig benutzt",
+      "value1": "Create a dedicated channel for the bot or allow users to use the bot in the main chat. \n > Would You's purpose is to make chats more active so it would be very ironic to deny the usage of would you in the main chats. \n > If you want to use the bot to its fullest potential use the </welcome:1011374285350260914> command and setup a welcome channel. This channel will be used to send a would you message once a user joins.",
+      "name2": "Why do I need that",
+      "value2": "> The intention behind this is to help new users be part of the conversation by given the members a topic to talk about right after joining! This not only makes the server more active it also makes new users feel more included right after joining the server and it encourages them to stay for longer!",
+      "name3": "Any more tips?",
+      "value3": "> Yes! Make sure to talk about the topic you got instead of spamming the commands. This will help the members build a conversation and makes the server more active in minutes! There is an image attached with a prime example on how to use the bot!",
       "footer": "Would You"
     }
   }
