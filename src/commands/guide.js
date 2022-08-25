@@ -38,12 +38,12 @@ module.exports = {
           },
           {
             name: `${Guide.embed.name3}`,
-            value: `${ Guide.embed.value3}`,
+            value: `${Guide.embed.value3}`,
             inline: false,
           }
         )
         .setImage("https://wouldyoubot.com/assets/guidembed.png")
-        .setDescription("Guide on how to use Would You with its full potential!");
+        .setDescription(Guide.embed.description);
 
         
 

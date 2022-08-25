@@ -96,6 +96,7 @@
   "Guide": {
     "embed": {
       "title": "Would You | Guide",
+      "description": "Guide on how to use Would You to its full potential!",
       "name1": "How to correctly use Would You!",
       "value1": "Create a dedicated channel for the bot or allow users to use the bot in the main chat. \n > Would You's purpose is to make chats more active so it would be very ironic to deny the usage of would you in the main chats. \n > If you want to use the bot to its fullest potential use the </welcome:1011374285350260914> command and setup a welcome channel. This channel will be used to send a would you message once a user joins.",
       "name2": "Why do I need that?",

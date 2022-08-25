@@ -96,6 +96,7 @@
   "Guide": {
     "embed": {
       "title": "Would You | Anleitung",
+      "description": "Anleitung zur Nutzung des vollen Potenzials von Would You",
       "name1": "Wie man Would You richtig benutzt!",
       "value1": "Erstell einen eigenen Kanal für den Bot oder erlaub deinen Nutzern, den Bot im Hauptchat zu verwenden. \n > Das Ziel von Would You ist es, Chats aktiver zu machen, es wäre also sehr ironisch, die Verwendung von Would You auf bot channel zu beschränken \n > Wenn du das volle Potenzial des Bots ausschöpfen willst, verwende den Befehl </welcome:1011374285350260914> und richte einen Willkommenskanal ein. Dieser Kanal wird verwendet, um eine Willkommensnachricht zu senden, sobald ein Benutzer dem server beitritt.",
       "name2": "Warum brauche ich das?",
