@@ -70,7 +70,7 @@
           "name": "**My Commands**",
           "value": "`/wouldyou` -Start a discussion about random powers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat\n`/support` - If you ever need help use this command to get help from the support team!",
           "privacyname": "**Privacy Policy**",
-          "privacy": "We value your privacy if you have any concers about your data check out privacy policy [here](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
+          "privacy": "We value your privacy if you have any concern about your data check out privacy policy [here](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
         }
     },
     "button": {

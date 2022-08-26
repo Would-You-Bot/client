@@ -8,3 +8,5 @@
 - add how to play (guide) command ✅
 - upgrade custom command
 - vote logs 
+- upgrade wwyd command 
+- add voting to wwyd and rather command
