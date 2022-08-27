@@ -154,20 +154,7 @@ module.exports = {
               embeds: [ratherEmebed],
               fetchReply: true,
             }).catch((err) => { return; });
-        const customembed = new EmbedBuilder()
-          .setTitle(Custom.embed.title)
-          .setDescription(`> ${interaction.options.getString('message')}`)
-          .setColor('#0598F6')
-          .setFooter({
-            text: `${Custom.embed.footer}`,
-            iconURL: client.user.avatarURL(),
-          })
-          .setTimestamp();
-        try {
-          const message = await interaction.reply({
-            embeds: [customembed],
-            fetchReply: true,
-          });
+
             if (interaction.options.getBoolean('voting') == true) {
             try {
               await message.react('1️⃣');
