@@ -12,7 +12,7 @@
   },
   "Language": {
     "embed": {
-      "error": "You are missing the `ManageGuild` permission!\nPlease contact a server administrator to change the language!",
+      "error": "You are missing the `ManageGuild` permission!\nPlease contact a server administrator to change the language.",
       "footer": "Would You"
     }
   },
@@ -25,14 +25,14 @@
   "Support": {
     "embed": {
       "title": "Would You - Support",
-      "description": "If you ever need help with anything just contact the **support team** on our **[Support Server](https://discord.gg/vMyXAxEznS)!**",
+      "description": "If you ever need help with anything, just contact the **support team** on our **[Support Server](https://discord.gg/vMyXAxEznS)!**",
       "footer": "Would You"
     }
   },
   "Welcome": {
     "embed": {
       "title": "Would you want this power? Explain Why!",
-      "footer": "just joined the server!"
+      "footer": "Just joined the server!"
     }
   },
   "Custom": {
@@ -57,20 +57,20 @@
   "Random": {
     "embed": {
       "text1": "Would you want this power but",
-      "text2": "can choose a Side effect?",
+      "text2": "can choose a side effect?",
       "footer": "Would You"
     }
   },
   "Help": {
     "embed": {
       "title": "Info",
-      "description": "**Would You** is a discord bot build to increase discord server activity.",
+      "description": "**Would You** is a discord bot built to increase discord server activity.",
       "footer": "Would You",
       "Fields": {
           "name": "**My Commands**",
-          "value": "`/wouldyou` -Start a discussion about random powers\n`/ping` - Pong!\n`/language` - Change the language of this server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat\n`/support` - If you ever need help use this command to get help from the support team!",
+          "value": "`/wouldyou` - Start a discussion about random powers\n`/ping` - Pong!\n`/language` - Change the language of the bot for the server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat\n`/support` - If you ever need help on the bot, use this command to get help from the support team!",
           "privacyname": "**Privacy Policy**",
-          "privacy": "We value your privacy if you have any concern about your data check out privacy policy [here](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
+          "privacy": "We value your privacy. If you have any concerns about your data, check out privacy policy [here](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
         }
     },
     "button": {
@@ -79,7 +79,7 @@
   },
   "Vote": {
     "embed": {
-      "title": "Voting helps **Would You** gain more users! So make sure to vote every day!",
+      "title": "Voting helps **Would You** gain more users! Make sure to vote every day!",
       "value": "Click to vote",
       "footer": "Would You"
     }
@@ -96,13 +96,12 @@
   "Guide": {
     "embed": {
       "title": "Would You | Guide",
-      "description": "Guide on how to use Would You to its full potential!",
       "name1": "How to correctly use Would You!",
-      "value1": "Create a dedicated channel for the bot or allow users to use the bot in the main chat. \n > Would You's purpose is to make chats more active so it would be very ironic to deny the usage of would you in the main chats. \n > If you want to use the bot to its fullest potential use the </welcome:1011374285350260914> command and setup a welcome channel. This channel will be used to send a would you message once a user joins.",
+      "value1": "Create a dedicated channel for the bot or allow users to use the bot in the main chat. \n > Would You's purpose is to make chats more active so it would be very ironic to deny the usage of would you in main chats. \n > If you want to use the bot to its fullest potential, use the </welcome:1011374285350260914> command and setup a welcome channel. The channel will be used to send a would you message once a user joins.",
       "name2": "Why do I need that?",
-      "value2": "> The intention behind this is to help new users be part of the conversation by given the members a topic to talk about right after joining! This not only makes the server more active it also makes new users feel more included right after joining the server and it encourages them to stay for longer!",
+      "value2": "> The intention behind this is to help new users be part of the conversation by giving the members a topic to talk about right after joining! This not only makes the server more active, but it also makes new users feel more included right after joining the server and encourages them to stay for longer!",
       "name3": "Any more tips?",
-      "value3": "> Yes! Make sure to talk about the topic you got instead of spamming the commands. This will help the members build a conversation and makes the server more active in minutes! There is an image attached with a prime example on how to use the bot!",
+      "value3": "> Yes! Make sure to talk about the topic you got instead of spamming the commands. This will help the members build a conversation and make the server more active in minutes! There is an image attached with a prime example on how to use the bot!",
       "footer": "Would You"
     }
   }
