@@ -10,3 +10,4 @@
 - vote logs ✅
 - upgrade wwyd command 
 - add voting to wwyd and rather command
+- fixed any grammar/general english errors ✅
