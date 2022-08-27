@@ -73,7 +73,7 @@ module.exports = {
 
           const collector = message.createReactionCollector({
             filter,
-            time: 200000,
+            time: 20000,
           });
           collector.on('collect', async () => {});
 
