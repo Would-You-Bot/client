@@ -84,12 +84,10 @@ module.exports = {
             break;
           }
         }
-        try {
-          message = await interaction.reply({
-            embeds: [ratherEmebed],
-            fetchReply: true,
-          });
-        } catch (error) {}
+        message = await interaction.reply({
+          embeds: [ratherEmebed],
+          fetchReply: true,
+        }).catch((err) => { return; });
         try {
           await message.react('1️⃣');
           await message.react('2️⃣');

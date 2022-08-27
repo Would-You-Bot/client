@@ -3,8 +3,7 @@ const { Routes } = require('discord-api-types/v10');
 const { readdirSync } = require('fs');
 require('dotenv').config();
 const { ChalkAdvanced } = require('chalk-advanced');
-const { AutoPoster } = require('topgg-autoposter');
-const { fetchDungeon, fetchDungeonSingle } = require('dungeon-api');
+// const { AutoPoster } = require('topgg-autoposter');
 
 module.exports = async (client) => {
   client.user.setPresence({
@@ -12,17 +11,17 @@ module.exports = async (client) => {
     status: 'idle',
   });
 
-  const ap = AutoPoster(`${process.env.TOPGGTOKEN}`, client);
+  // const ap = AutoPoster(`${process.env.TOPGGTOKEN}`, client);
 
-  ap.on('posted', () => {
-    console.log(
-      `${ChalkAdvanced.white('Top.gg')} ${ChalkAdvanced.gray(
-        '>',
-      )} ${ChalkAdvanced.green(
-        'Stats pushed to https://top.gg/bot/981649513427111957',
-      )}`,
-    );
-  });
+  // ap.on('posted', () => {
+  //   console.log(
+  //     `${ChalkAdvanced.white('Top.gg')} ${ChalkAdvanced.gray(
+  //       '>',
+  //     )} ${ChalkAdvanced.green(
+  //       'Stats pushed to https://top.gg/bot/981649513427111957',
+  //     )}`,
+  //   );
+  // });
 
   const commandFiles = readdirSync('./src/commands/').filter((file) => file.endsWith('.js'));
 
@@ -33,6 +32,7 @@ module.exports = async (client) => {
     commands.push(command.data.toJSON());
     client.commands.set(command.data.name, command);
   }
+
 
   const rest = new REST({
     version: '10',

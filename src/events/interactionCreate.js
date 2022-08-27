@@ -1,6 +1,6 @@
 const guildcreate = require('../util/Models/guildModel');
 
-module.exports = (interaction) => {
+module.exports = (client, interaction) => {
   if (!interaction.guild) {
     interaction.reply({
       content: 'You need to be in a server to use this command.',
@@ -14,12 +14,10 @@ module.exports = (interaction) => {
           await guildcreate.create({
             guildID: interaction.guild.id,
             language: 'en_EN',
-            botJoined: Date.now() / 1000 || 0,
+            botJoined: Date.now() / 1000 | 0,
           });
         } else {
         }
-
-        const { client } = interaction;
         if (!interaction.isChatInputCommand()) return;
         const command = client.commands.get(interaction.commandName);
         if (!command) return;
