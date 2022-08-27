@@ -4,7 +4,6 @@ const { readdirSync } = require('fs');
 require('dotenv').config();
 const { ChalkAdvanced } = require('chalk-advanced');
 // const { AutoPoster } = require('topgg-autoposter');
-const { fetchDungeon, fetchDungeonSingle } = require('dungeon-api');
 
 module.exports = async (client) => {
   client.user.setPresence({
@@ -33,6 +32,7 @@ module.exports = async (client) => {
     commands.push(command.data.toJSON());
     client.commands.set(command.data.name, command);
   }
+
 
   const rest = new REST({
     version: '10',
