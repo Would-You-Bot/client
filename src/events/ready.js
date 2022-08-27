@@ -4,7 +4,6 @@ const { readdirSync } = require('fs');
 require('dotenv').config();
 const { ChalkAdvanced } = require('chalk-advanced');
 const { AutoPoster } = require('topgg-autoposter');
-const { fetchDungeon, fetchDungeonSingle } = require('dungeon-api');
 
 module.exports = async (client) => {
   client.user.setPresence({
@@ -12,17 +11,6 @@ module.exports = async (client) => {
     status: 'idle',
   });
 
-  const ap = AutoPoster(`${process.env.TOPGGTOKEN}`, client);
-
-  ap.on('posted', () => {
-    console.log(
-      `${ChalkAdvanced.white('Top.gg')} ${ChalkAdvanced.gray(
-        '>',
-      )} ${ChalkAdvanced.green(
-        'Stats pushed to https://top.gg/bot/981649513427111957',
-      )}`,
-    );
-  });
 
   const commandFiles = readdirSync('./src/commands/').filter((file) => file.endsWith('.js'));
 
@@ -41,7 +29,19 @@ module.exports = async (client) => {
   (async () => {
     try {
       if (process.env.STATUS === 'PRODUCTION') {
-        // If the bot is in production mode it will load slash commands for all guilds
+        // If the bot is in production mode it will load slash commands for all guilds and upload stats to topgg
+        const ap = AutoPoster(`${config.topgg}`, client);
+
+        ap.on('posted', () => {
+          console.log(
+            `${ChalkAdvanced.white('Top.gg')} ${ChalkAdvanced.gray(
+              '>',
+            )} ${ChalkAdvanced.green(
+              'Stats pushed to https://top.gg/bot/981649513427111957',
+            )}`,
+          );
+        });
+
         await rest.put(Routes.applicationCommands(client.user.id), {
           body: commands,
         });
@@ -72,7 +72,7 @@ module.exports = async (client) => {
   })();
   setInterval(() => {
     client.user.setPresence({
-      activities: [{ name: `${process.env.STATUSBOT}` }],
+      activities: [{ name: `${process.env.BOTSTATUS}` }],
       status: 'dnd',
     });
   }, 13000);
