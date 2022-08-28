@@ -33,6 +33,22 @@
     "embed": {
       "title": "Would you want this power? Explain Why!",
       "footer": "Just joined the server!"
+    },
+    "error": {
+      "description": "You don't have the permission to use this command!"
+    },
+    "removeembed": {
+      "title": "Welcome channel removed!",
+      "description":  "You successfully removed the welcome channel!"
+    },
+    "nochannel": {
+      "title": "Couldnt find a welcome channel",
+      "description":  "Can't remove the welcome channel because there is no welcome channel set!"
+    },
+    "savedchannel": {
+      "title": "Welcome channel set!",
+      "description": "You successfully set the welcome channel to: ",
+      "description2": "."
     }
   },
   "Custom": {
