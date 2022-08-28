@@ -39,6 +39,22 @@
     "embed": {
       "title": "Würdest du diese Kraft haben wollen? Erkläre warum!",
       "footer": "ist dem server beigetreten!"
+    },
+    "error": {
+      "description": "Du hast nicht die Berechtigung, diesen Befehl zu verwenden!"
+    },
+    "removeembed": {
+      "title": "Willkommenskanal entfernt!",
+      "description":  "Du hast den Willkommenskanal erfolgreich entfernt!"
+    },
+    "nochannel": {
+      "title": "Konnte keinen Willkommenskanal finden",
+      "description":  "Der Willkommenskanal kann nicht entfernt werden, weil kein Willkommenskanal eingestellt ist!"
+    },
+    "savedchannel": {
+      "title": "Willkommenes Kanal wurde gesetzt!",
+      "description": "Du hast den Begrüßungskanal erfolgreich auf: ",
+      "description2": " gesetzt!"
     }
   },
   "WouldYou": {
