@@ -49,7 +49,7 @@ module.exports = {
 
         await interaction.reply({
             embeds: [guideembed]
-          }).catch((err) => { return; });
+          }).catch((err) => { console.log(err); });
       });
   },
 };

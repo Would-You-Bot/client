@@ -84,7 +84,7 @@
       "footer": "Would You",
       "Fields": {
           "name": "**Meine befehle**",
-          "value": "`/wouldyou` - Starte diskussionen über zufällige kräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei kräfte aus denen du wählen kannst\n`/custom` - Sende eine custom would you nachricht in denn chat!\n`/wwyd` - Sendet eine was würdest du tuen frage in denn chat!\n`/support` - Solltest du hilfe brauchen nutze diesen command und wir helfen dir gerne weiter!",
+          "value": "`/wouldyou` - Starte diskussionen über zufällige kräfte\n`/ping` - Pong!\n`/language` - Änder die sprache auf dem server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei kräfte aus denen du wählen kannst\n`/custom` - Sende eine custom would you nachricht in denn chat!\n`/wwyd` - Sendet eine was würdest du tuen frage in denn chat!\n`/welcome` - Hinzufügen oder Entfernen des Willkommenskanals\n`/support` - Solltest du hilfe brauchen nutze diesen command und wir helfen dir gerne weiter!",
           "privacyname": "**Privacy Policy**",
           "privacy": "Wir schätzen deine privatsphäre sehr wenn du wissen möchtest was mit deinen daten passiert schau dir unsere privacy policy  [hier](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY) an."
         }
