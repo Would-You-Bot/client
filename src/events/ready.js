@@ -50,7 +50,6 @@ module.exports = async (client) => {
             body: commands,
           },
         );
-
         console.log(
           `${ChalkAdvanced.white('Would You?')} ${ChalkAdvanced.gray(
             '>',
