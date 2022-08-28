@@ -13,6 +13,7 @@ const client = new Client({
 const wouldyouComponents = async () => {
   await require('./util/wouldyouClient')(client);
   await require('./util/dbHandler');
+  await require('./util/voteLogs');
 };
 
 wouldyouComponents();
