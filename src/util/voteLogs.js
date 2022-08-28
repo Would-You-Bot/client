@@ -6,6 +6,7 @@ require("dotenv").config()
 
 const app = express()
 
+
 const webhook = new Topgg.Webhook(process.env.WEBHOOKTOKEN)
 
 app.post("/dblwebhook", webhook.listener(async vote => {
@@ -38,4 +39,4 @@ app.post("/dblwebhook", webhook.listener(async vote => {
   }).catch((err) => console.log(err));
 }))
 
-app.listen(8060)
+app.listen(8090)
