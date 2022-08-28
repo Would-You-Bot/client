@@ -36,11 +36,9 @@ module.exports = {
             text: `${Vote.embed.footer}`,
             iconURL: client.user.avatarURL(),
           });
-        try {
-          await interaction.reply({
-            embeds: [votemebed],
-          });
-        } catch (error) {}
+        await interaction.reply({
+          embeds: [votemebed],
+        }).catch((err) => { return; });
       });
   },
 };

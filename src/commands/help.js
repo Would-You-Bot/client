@@ -56,12 +56,10 @@ module.exports = {
             .setEmoji('🤖')
             .setURL('https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands'),
         );
-        try {
-          await interaction.reply({
-            embeds: [helpembed],
-            components: [button],
-          });
-        } catch (error) {}
+        await interaction.reply({
+          embeds: [helpembed],
+          components: [button],
+        }).catch((err) => { return; });
       });
   },
 };

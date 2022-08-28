@@ -44,7 +44,7 @@ module.exports = {
                 });
               languageembed = new EmbedBuilder()
                 .setTitle('Language changed!')
-                .setDescription('English has been selected as the language!')
+                .setDescription('English has been selected as the new language!')
                 .setFooter({
                   text: 'Would You',
                   iconURL: client.user.avatarURL(),
@@ -67,7 +67,7 @@ module.exports = {
                 });
               languageembed = new EmbedBuilder()
                 .setTitle('Sprache bearbeitet!')
-                .setDescription('Deutsch wurde als Sprache ausgewählt!')
+                .setDescription('Deutsch wurde als neue Sprache ausgewählt!')
                 .setFooter({
                   text: 'Would You',
                   iconURL: client.user.avatarURL(),
@@ -75,12 +75,10 @@ module.exports = {
               break;
             }
           }
-          try {
-            await interaction.reply({
-              embeds: [languageembed],
-              ephemeral: true,
-            });
-          } catch (error) {}
+          await interaction.reply({
+            embeds: [languageembed],
+            ephemeral: true,
+          }).catch((err) => { return; });
         } else {
           const errorembed = new EmbedBuilder()
             .setColor('#F00505')
@@ -89,7 +87,7 @@ module.exports = {
           await interaction.reply({
             embeds: [errorembed],
             ephemeral: true,
-          });
+          }).catch((err) => { return; });
         }
       });
   },

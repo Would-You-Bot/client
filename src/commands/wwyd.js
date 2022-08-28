@@ -4,7 +4,7 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('wwyd')
-    .setDescription('What would you do...'),
+    .setDescription('What would you do in this situation'),
 
   /**
    * @param {CommandInteraction} interaction
@@ -32,9 +32,7 @@ module.exports = {
           .setTitle(Wwyd.embed.title)
           .setDescription(`> ${wwydstring}`);
 
-        try {
-          await interaction.reply({ embeds: [wwydembed] });
-        } catch (error) {}
+        await interaction.reply({ embeds: [wwydembed] }).catch((err) => { return; });
       });
   },
 };

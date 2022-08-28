@@ -52,19 +52,17 @@ module.exports = {
             .setEmoji('💻')
             .setURL('https://discordstatus.com/'),
         );
-        try {
-          await interaction.reply({
+        await interaction.reply({
+          embeds: [pingembed],
+          components: [button],
+        }).catch((err) => { return; });
+        setTimeout(() => {
+          button.components[0].setDisabled(true);
+          interaction.editReply({
             embeds: [pingembed],
             components: [button],
-          });
-          setTimeout(() => {
-            button.components[0].setDisabled(true);
-            interaction.editReply({
-              embeds: [pingembed],
-              components: [button],
-            });
-          }, 120000);
-        } catch (error) { }
+          }).catch((err) => { return; });
+        }, 120000);
       });
   },
 };

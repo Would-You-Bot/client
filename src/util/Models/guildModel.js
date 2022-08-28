@@ -12,6 +12,19 @@ const guildProfile = new Schema(
       default: 'en_EN',
       required: true,
     },
+    welcome: {
+      type: Boolean,
+      default: false,
+    },
+    welcomeChannel: {
+      type: String,
+    },
+    wouldyou: {
+      type: Boolean,
+      default: false,
+    },
+    wouldyouChannel: {
+    },
     botJoined: {
       type: Number,
     },
