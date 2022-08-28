@@ -8,6 +8,6 @@
 - add how to play (guide) command ✅
 - upgrade custom command ✅
 - vote logs ✅
-- upgrade wwyd command 
+- upgrade wwyd command ✅
 - fixed any grammar/general english errors ✅
-- add voting to rather command
+- add voting to rather command ✅

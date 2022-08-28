@@ -9,8 +9,19 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('wouldyou')
     .setDescription('Would you')
-    .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Useless Power'))
-    .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Useful Power')),
+    .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Useless Power')
+    .addBooleanOption((option) =>
+    option
+      .setName("voting")
+
+      .setDescription("Do you want the users to be able to vote?"))
+  )
+    .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Useful Power')
+    .addBooleanOption((option) =>
+    option
+      .setName("voting")
+      .setDescription("Do you want the users to be able to vote?"))
+  ),
 
   /**
    * @param {CommandInteraction} interaction
@@ -65,7 +76,8 @@ module.exports = {
           embeds: [wouldyouembed],
           fetchReply: true,
         }).catch((err) => { return; });
-
+        if (interaction.options.getBoolean("voting") == false) {
+        } else {
         try {
           await message.react('✅');
           await message.react('❌');
@@ -142,6 +154,7 @@ module.exports = {
             collector.stop();
           });
         } catch (error) {}
+      }
       });
   },
 };

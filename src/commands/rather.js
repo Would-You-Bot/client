@@ -1,16 +1,30 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const guildLang = require('../util/Models/guildModel');
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const guildLang = require("../util/Models/guildModel");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('rather')
-    .setDescription('Get a would you rather question.')
-    .addSubcommand((subcommand) => subcommand
-      .setName('useful')
-      .setDescription('Get a useful would you rather'))
-    .addSubcommand((subcommand) => subcommand
-      .setName('useless')
-      .setDescription('Get a useless would you rather')),
+    .setName("rather")
+    .setDescription("Get a would you rather question.")
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("useful")
+        .setDescription("Get a useful would you rather")
+        .addBooleanOption((option) =>
+        option
+          .setName("voting")
+          .setDescription("Do you want the users to be able to vote?")
+      )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("useless")
+        .setDescription("Get a useless would you rather")
+        .addBooleanOption((option) =>
+        option
+          .setName("voting")
+          .setDescription("Do you want the users to be able to vote?")
+      )
+    ),
 
   /**
    * @param {CommandInteraction} interaction
@@ -18,80 +32,267 @@ module.exports = {
    */
 
   async execute(interaction, client) {
-    var message;
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
-        const { Rather } = await require(`../languages/${result.language}.json`);
-        const { Useless_Powers, Useful_Powers } = await require(`../data/power-${result.language}.json`);
-        let ratherEmebed;
+        const { Rather } =
+          await require(`../languages/${result.language}.json`);
+        const { Useless_Powers, Useful_Powers } =
+          await require(`../data/power-${result.language}.json`);
 
         switch (interaction.options.getSubcommand()) {
-          case 'useful': {
-            ratherEmebed = new EmbedBuilder()
-              .setColor('#0598F6')
-              .addFields({
-                name: Rather.embed.usefulname,
-                value: `> 1️⃣${
-                  Useful_Powers[
-                    Math.floor(Math.random() * Useful_Powers.length)
-                  ]
-                }`,
-                inline: false,
-              })
-              .addFields({
-                name: Rather.embed.usefulname2,
-                value: `> 2️⃣${
-                  Useful_Powers[
-                    Math.floor(Math.random() * Useful_Powers.length)
-                  ]
-                }`,
-                inline: false,
-              })
-              .setFooter({
-                text: `${Rather.embed.footer}`,
-                iconURL: client.user.avatarURL(),
-              })
-              .setTimestamp();
-            break;
+          case "useful":
+            {
+              let usefulpower1 =
+                Useful_Powers[
+                  Math.floor(Math.random() * Useful_Powers.length)
+                ];
+              let usefulpower2 =
+              Useful_Powers[
+                  Math.floor(Math.random() * Useful_Powers.length)
+                ];
+
+              let ratherembed = new EmbedBuilder()
+                .setColor("#0598F6")
+                .addFields(
+                  {
+                    name: Rather.embed.usefulname,
+                    value: `> 1️⃣ ${usefulpower1}`,
+                    inline: false,
+                  },
+                  {
+                    name: Rather.embed.usefulname2,
+                    value: `> 2️⃣ ${usefulpower2}`,
+                    inline: false,
+                  }
+                )
+                .setFooter({
+                  text: `${Rather.embed.footer}`,
+                  iconURL: client.user.avatarURL(),
+                })
+                .setTimestamp();
+
+              let message = await interaction
+                .reply({
+                  embeds: [ratherembed],
+                  fetchReply: true,
+                })
+                .catch((err) => {
+                  return;
+                });
+                if (interaction.options.getBoolean("voting") == false) {
+                } else {
+              try {
+                await message.react("1️⃣");
+                await message.react("2️⃣");
+                const filter = (reaction) =>
+                  reaction.emoji.name == "1️⃣" || reaction.emoji.name == "2️⃣";
+
+                const collector = message.createReactionCollector({
+                  filter,
+                  time: 20000,
+                });
+                collector.on("collect", async () => {});
+
+                collector.on("end", async () => {
+                  if (
+                    message.reactions.cache.get("1️⃣").count - 1 >
+                    message.reactions.cache.get("2️⃣").count - 1
+                  ) {
+                    ratherembed = new EmbedBuilder()
+                      .setColor("#0598F6")
+                      .setFooter({
+                        text: `${Rather.embed.footer}`,
+                        iconURL: client.user.avatarURL(),
+                      })
+                      .setTimestamp()
+                      .addFields({
+                        name: Rather.embed.thispower,
+                        value: `> 1️⃣ ${usefulpower1}`,
+                        inline: false,
+                      });
+                  } else if (
+                    message.reactions.cache.get("1️⃣").count - 1 <
+                    message.reactions.cache.get("2️⃣").count - 1
+                  ) {
+                    ratherembed = new EmbedBuilder()
+                      .setColor("#0598F6")
+                      .setFooter({
+                        text: `${Rather.embed.footer}`,
+                        iconURL: client.user.avatarURL(),
+                      })
+                      .setTimestamp()
+                      .addFields({
+                        name: Rather.embed.thispower,
+                        value: `> 2️⃣ ${usefulpower2}`,
+                        inline: false,
+                      });
+                  } else {
+                    ratherembed = new EmbedBuilder()
+                      .setColor("#ffffff")
+                      .addFields(
+                        {
+                          name: Rather.embed.usefulname,
+                          value: `> 1️⃣ ${usefulpower1}`,
+                          inline: false,
+                        },
+                        {
+                          name: Rather.embed.usefulname2,
+                          value: `> 2️⃣ ${usefulpower2}`,
+                          inline: false,
+                        }
+                      )
+                      .setFooter({
+                        text: `${Rather.embed.footer}`,
+                        iconURL: client.user.avatarURL(),
+                      })
+                      .setTimestamp();
+                  }
+
+                  try {
+                    await message.reactions.removeAll();
+                  } catch (error) {}
+                  await interaction
+                    .editReply({
+                      embeds: [ratherembed],
+                    })
+                    .catch((err) => {
+                      return;
+                    });
+
+                  collector.stop();
+                });
+              } catch (error) {}
+            }
           }
-          case 'useless': {
-            ratherEmebed = new EmbedBuilder()
-              .setColor('#F00505')
-              .addFields({
-                name: Rather.embed.uselessname,
-                value: `> 1️⃣${
-                  Useless_Powers[
-                    Math.floor(Math.random() * Useless_Powers.length)
-                  ]
-                }`,
-                inline: false,
-              })
-              .addFields({
-                name: Rather.embed.uselessname2,
-                value: `> 2️⃣${
-                  Useless_Powers[
-                    Math.floor(Math.random() * Useless_Powers.length)
-                  ]
-                }`,
-                inline: false,
-              })
-              .setFooter({
-                text: `${Rather.embed.footer}`,
-                iconURL: client.user.avatarURL(),
-              })
-              .setTimestamp();
             break;
+
+          case "useless":
+            {
+              let uselesspower1 =
+                Useless_Powers[
+                  Math.floor(Math.random() * Useless_Powers.length)
+                ];
+              let uselesspower2 =
+                Useless_Powers[
+                  Math.floor(Math.random() * Useless_Powers.length)
+                ];
+
+              let ratherembed = new EmbedBuilder()
+                .setColor("#F00505")
+                .addFields(
+                  {
+                    name: Rather.embed.uselessname,
+                    value: `> 1️⃣ ${uselesspower1}`,
+                    inline: false,
+                  },
+                  {
+                    name: Rather.embed.uselessname2,
+                    value: `> 2️⃣ ${uselesspower2}`,
+                    inline: false,
+                  }
+                )
+                .setFooter({
+                  text: `${Rather.embed.footer}`,
+                  iconURL: client.user.avatarURL(),
+                })
+                .setTimestamp();
+
+              let message = await interaction
+                .reply({
+                  embeds: [ratherembed],
+                  fetchReply: true,
+                })
+                .catch((err) => {
+                  return;
+                });
+                if (interaction.options.getBoolean("voting") == false) {
+                } else {
+              try {
+                await message.react("1️⃣");
+                await message.react("2️⃣");
+                const filter = (reaction) =>
+                  reaction.emoji.name == "1️⃣" || reaction.emoji.name == "2️⃣";
+
+                const collector = message.createReactionCollector({
+                  filter,
+                  time: 20000,
+                });
+                collector.on("collect", async () => {});
+
+                collector.on("end", async () => {
+                  if (
+                    message.reactions.cache.get("1️⃣").count - 1 >
+                    message.reactions.cache.get("2️⃣").count - 1
+                  ) {
+                    ratherembed = new EmbedBuilder()
+                      .setColor("#F00505")
+                      .setFooter({
+                        text: `${Rather.embed.footer}`,
+                        iconURL: client.user.avatarURL(),
+                      })
+                      .setTimestamp()
+                      .addFields({
+                        name: Rather.embed.thispower,
+                        value: `> 1️⃣ ${uselesspower1}`,
+                        inline: false,
+                      });
+                  } else if (
+                    message.reactions.cache.get("1️⃣").count - 1 <
+                    message.reactions.cache.get("2️⃣").count - 1
+                  ) {
+                    ratherembed = new EmbedBuilder()
+                      .setColor("#F00505")
+                      .setFooter({
+                        text: `${Rather.embed.footer}`,
+                        iconURL: client.user.avatarURL(),
+                      })
+                      .setTimestamp()
+                      .addFields({
+                        name: Rather.embed.thispower,
+                        value: `> 2️⃣ ${uselesspower2}`,
+                        inline: false,
+                      });
+                  } else {
+                    ratherembed = new EmbedBuilder()
+                      .setColor("#ffffff")
+                      .addFields(
+                        {
+                          name: Rather.embed.uselessname,
+                          value: `> 1️⃣ ${uselesspower1}`,
+                          inline: false,
+                        },
+                        {
+                          name: Rather.embed.uselessname2,
+                          value: `> 2️⃣ ${uselesspower2}`,
+                          inline: false,
+                        }
+                      )
+                      .setFooter({
+                        text: `${Rather.embed.footer}`,
+                        iconURL: client.user.avatarURL(),
+                      })
+                      .setTimestamp();
+                  }
+
+                  try {
+                    await message.reactions.removeAll();
+                  } catch (error) {}
+                  await interaction
+                    .editReply({
+                      embeds: [ratherembed],
+                    })
+                    .catch((err) => {
+                      return;
+                    });
+
+                  collector.stop();
+                });
+              } catch (error) {}
+            }
           }
+            break;
         }
-        message = await interaction.reply({
-          embeds: [ratherEmebed],
-          fetchReply: true,
-        }).catch((err) => { return; });
-        try {
-          await message.react('1️⃣');
-          await message.react('2️⃣');
-        } catch (error) {}
       });
   },
 };

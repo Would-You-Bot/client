@@ -90,7 +90,8 @@
       "uselessname2": "or this useless Power?",
       "usefulname": "Would you rather have this",
       "usefulname2": "or this useful Power?",
-      "footer": "Would You"
+      "footer": "Would You Rather",
+      "thispower": "According to the vote the majority of users would want this power:"
     }
   },
   "Guide": {

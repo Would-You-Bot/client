@@ -18,7 +18,7 @@ module.exports = {
         .addBooleanOption((option) =>
           option
             .setName("voting")
-            .setDescription("Do you want users to be able to vote?")
+            .setDescription("Do you want the users to be able to vote?")
         )
     )
     .addSubcommand((subcommand) =>
@@ -51,7 +51,7 @@ module.exports = {
         .addBooleanOption((option) =>
           option
             .setName("voting")
-            .setDescription("Do you want users to be able to vote?")
+            .setDescription("Do you want the users to be able to vote?")
         )
     ),
 
@@ -229,7 +229,7 @@ module.exports = {
                       })
                       .setTimestamp()
                       .addFields({
-                        name: "You guys would rather have this power:",
+                        name: Rather.embed.thispower,
                         value: `> 1️⃣ ${interaction.options.getString(
                           "messagetop"
                         )}`,
@@ -247,7 +247,7 @@ module.exports = {
                       })
                       .setTimestamp()
                       .addFields({
-                        name: "You guys would rather have this power:",
+                        name: Rather.embed.thispower,
                         value: `> 2️⃣ ${interaction.options.getString(
                           "messagebottom"
                         )}`,
