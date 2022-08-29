@@ -65,5 +65,5 @@ module.exports = async (client) => {
       activities: [{ name: `${process.env.BOTSTATUS || "Would you?"}` }],
       status: 'dnd',
     });
-  }, 13000);
+  }, 15000);
 };
