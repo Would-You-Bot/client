@@ -2,6 +2,8 @@ const {
   CommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
 } = require('discord.js');
 const guildLang = require('../util/Models/guildModel');
 
@@ -36,7 +38,17 @@ module.exports = {
       .then(async (result) => {
         const { WouldYou } = await require(`../languages/${result.language}.json`);
         const { Useless_Powers, Useful_Powers } = await require(`../data/power-${result.language}.json`);
-
+        const button = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+            .setLabel('Invite')
+            .setStyle(5)
+            .setEmoji('🤖')
+            .setURL('https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands'),
+        );
+        let rbutton;
+        if (Math.round(Math.random() * 5) < 3) {
+          rbutton = [button];
+        }
         switch (interaction.options.getSubcommand()) {
           case 'useful': {
             power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
@@ -75,6 +87,7 @@ module.exports = {
         const message = await interaction.reply({
           embeds: [wouldyouembed],
           fetchReply: true,
+          components: rbutton || [] ,
         }).catch((err) => { return; });
         if (interaction.options.getBoolean("voting") == false) {
         } else {
@@ -149,6 +162,7 @@ module.exports = {
             } catch (error) {}
             await interaction.editReply({
               embeds: [wouldyouembed],
+              components: rbutton || [] ,
             }).catch((err) => { return; });
 
             collector.stop();
