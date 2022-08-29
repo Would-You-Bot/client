@@ -1,4 +1,4 @@
-const { EmbedBuilder, channelLink } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 require('dotenv').config();
 const guildProfile = require('../util/Models/guildModel');
 
@@ -27,12 +27,8 @@ module.exports = async (client, member) => {
         value: `> ${power}`,
         inline: false,
       });
-
-    const message = await channel.send({ embeds: [wouldyouembed] }).catch((err) => { return; });
-
-    try {
-      await message.react('✅');
-      await message.react('❌');
-    } catch (err) {}
+    if (member.user.bot == false) {
+    await channel.send({ embeds: [wouldyouembed] }).catch((err) => { return; });
+    } else { return; }
   });
 };
