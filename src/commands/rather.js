@@ -1,4 +1,9 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { 
+  EmbedBuilder,
+  SlashCommandBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+ } = require("discord.js");
 const guildLang = require("../util/Models/guildModel");
 
 module.exports = {
@@ -39,7 +44,17 @@ module.exports = {
           await require(`../languages/${result.language}.json`);
         const { Useless_Powers, Useful_Powers } =
           await require(`../data/power-${result.language}.json`);
-
+          const button = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+              .setLabel('Invite')
+              .setStyle(5)
+              .setEmoji('🤖')
+              .setURL('https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands'),
+          );
+          let rbutton;
+          if (Math.round(Math.random() * 9) < 3) {
+            rbutton = [button];
+          }
         switch (interaction.options.getSubcommand()) {
           case "useful":
             {
@@ -155,6 +170,7 @@ module.exports = {
                   await interaction
                     .editReply({
                       embeds: [ratherembed],
+                      components: rbutton || [] ,
                     })
                     .catch((err) => {
                       return;
@@ -202,6 +218,7 @@ module.exports = {
                 .reply({
                   embeds: [ratherembed],
                   fetchReply: true,
+                  components: rbutton || [] ,
                 })
                 .catch((err) => {
                   return;
@@ -281,6 +298,7 @@ module.exports = {
                   await interaction
                     .editReply({
                       embeds: [ratherembed],
+                      components: rbutton || [] ,
                     })
                     .catch((err) => {
                       return;

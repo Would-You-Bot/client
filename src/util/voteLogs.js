@@ -12,12 +12,11 @@ const webhook = new Topgg.Webhook(process.env.WEBHOOKTOKEN)
 app.post("/dblwebhook", webhook.listener(async vote => {
 
   let emojis = [
-'<a:jammiesyou:1009965703484424282>','<a:nyancatyou:1009965705808056350>','<a:partyparrotyou:1009965704621080678>','<a:shootyou:1009965706978267136>','<a:catjamyou:1009965950101110806>','<a:patyou:1009964589678612581>', '<a:patyoufast:1009964759216574586>'
+    '<a:jammiesyou:1009965703484424282>','<a:nyancatyou:1009965705808056350>','<a:partyparrotyou:1009965704621080678>','<a:shootyou:1009965706978267136>','<a:catjamyou:1009965950101110806>','<a:patyou:1009964589678612581>', '<a:patyoufast:1009964759216574586>'
+  ];
 
-];
   let emojisrandom = emojis[Math.floor(Math.random() * emojis.length)];
-  
-    let userdata = null;
+  let userdata = null;
     await axios({
       method: "get",
       url: `https://stealth.rest/discord/v1/${vote.user}`,
@@ -25,13 +24,11 @@ app.post("/dblwebhook", webhook.listener(async vote => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-  
     }).then(function (res) {
-        userdata = res.data;
-        }).catch(function (err) {})
-
+      userdata = res.data;
+    }).catch(function (err) {})
   const webhookClient = new WebhookClient({ url: process.env.WEBHOOKVOTE });
-
+  
   webhookClient.send({
     content: `${emojisrandom} Voted for me on \`https://top.gg/bot/981649513427111957/vote\``,
     username: `${userdata.user.tag}`,
