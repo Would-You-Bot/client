@@ -24,7 +24,7 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("wwyd")
-        .setDescription("Set the language to english")
+        .setDescription("Custom what would you do message")
         .addStringOption((option) =>
           option
             .setName("message")
@@ -35,7 +35,7 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("rather")
-        .setDescription("Set the language to english")
+        .setDescription("Custom would you rather message")
         .addStringOption((option) =>
           option
             .setRequired(true)
