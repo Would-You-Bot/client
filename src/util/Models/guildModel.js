@@ -28,6 +28,14 @@ const guildProfile = new Schema(
     botJoined: {
       type: Number,
     },
+    customMessages: [{
+      type: Object,
+      default: {},
+    },],
+    customTypes: {
+      type: String,
+      default: "mixed"
+    }
   },
   { timestamps: true },
 );
