@@ -48,7 +48,7 @@ module.exports = {
         );
         const newButton = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
-            .setLabel('New Round')
+            .setLabel('Replay')
             .setStyle(1)
             .setEmoji('🔄')
             .setCustomId(voting ? `rather_${interaction.options.getSubcommand()}_voting` : `rather_${interaction.options.getSubcommand()}`),

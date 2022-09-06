@@ -23,7 +23,7 @@ module.exports = {
         );
         const newbutton = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
-            .setLabel('New round')
+            .setLabel('Replay')
             .setStyle(1)
             .setEmoji('🔄')
             .setCustomId('wouldyou_useless'),
@@ -47,7 +47,7 @@ module.exports = {
             value: `> ${power}`,
             inline: false,
           });
-        const message = await interaction.reply({
+        await interaction.reply({
           embeds: [wouldyouembed],
           fetchReply: true,
           components: rbutton,

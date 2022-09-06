@@ -15,7 +15,7 @@ module.exports = {
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { Rather } = await require(`../languages/${result.language}.json`);
-        const { Useless_Powers, Useful_Powers } = await require(`../data/power-${result.language}.json`);
+        const { Useful_Powers } = await require(`../data/power-${result.language}.json`);
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setLabel('Invite')
@@ -27,7 +27,7 @@ module.exports = {
         );
         const newButton = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
-            .setLabel('New Round')
+            .setLabel('Replay')
             .setStyle(1)
             .setEmoji('🔄')
             .setCustomId('rather_useful_voting'),

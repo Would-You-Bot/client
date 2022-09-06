@@ -46,7 +46,7 @@ module.exports = {
         else voting = true;
         const newbutton = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
-            .setLabel('New round')
+            .setLabel('Replay')
             .setStyle(1)
             .setEmoji('🔄')
             .setCustomId(voting ? `wouldyou_${interaction.options.getSubcommand()}_voting` : `wouldyou_${interaction.options.getSubcommand()}`),
