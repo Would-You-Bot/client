@@ -63,6 +63,7 @@ module.exports = {
                     switch (interaction.options.getSubcommand()) {
                         case 'add': {
                             let db = await guildLang.findOne({ guildID: interaction.guild.id });
+                            if (db.customMessages.length >= 30) return await interaction.reply({ ephemeral: true, content: "You've reached the maximum amount of custom messages. You can gain more using our premium plan." })
                             let newID = makeID(6);
                             typeEmbed = new EmbedBuilder()
                                 .setTitle('Successfully created that WouldYou message!')
