@@ -18,17 +18,30 @@ module.exports = (client, interaction) => {
           });
         } else {
         }
-        if (!interaction.isChatInputCommand()) return;
-        const command = client.commands.get(interaction.commandName);
-        if (!command) return;
-        try {
-          command.execute(interaction, client);
-        } catch (err) {
-          if (err) console.error(err);
-          interaction.reply({
-            content: 'An error occurred while trying to execute that command.',
-            ephemeral: true,
-          });
+        if (interaction.isChatInputCommand()) {
+          const command = client.commands.get(interaction.commandName);
+          if (!command) return;
+          try {
+            command.execute(interaction, client);
+          } catch (err) {
+            if (err) console.error(err);
+            interaction.reply({
+              content: 'An error occurred while trying to execute that command.',
+              ephemeral: true,
+            });
+          }
+        } else if (interaction.isButton()) {
+          const button = client.buttons.get(interaction.customId);
+          if (!button) return interaction.reply({ content: 'Please use the command again.', ephemeral: true });
+          try {
+            button.execute(interaction, client);
+          } catch (err) {
+            if (err) console.error(err);
+            interaction.reply({
+              content: 'An error occurred while trying to execute that command.',
+              ephemeral: true,
+            });
+          }
         }
       });
   }

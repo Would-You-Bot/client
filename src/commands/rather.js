@@ -3,33 +3,25 @@ const {
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-} = require("discord.js");
-const guildLang = require("../util/Models/guildModel");
+} = require('discord.js');
+const guildLang = require('../util/Models/guildModel');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("rather")
-    .setDescription("Get a would you rather question.")
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("useful")
-        .setDescription("Get a useful would you rather")
-        .addBooleanOption((option) =>
-          option
-            .setName("voting")
-            .setDescription("Do you want the users to be able to vote?")
-        )
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("useless")
-        .setDescription("Get a useless would you rather")
-        .addBooleanOption((option) =>
-          option
-            .setName("voting")
-            .setDescription("Do you want the users to be able to vote?")
-        )
-    ),
+    .setName('rather')
+    .setDescription('Get a would you rather question.')
+    .addSubcommand((subcommand) => subcommand
+      .setName('useful')
+      .setDescription('Get a useful would you rather')
+      .addBooleanOption((option) => option
+        .setName('voting')
+        .setDescription('Do you want the users to be able to vote?')))
+    .addSubcommand((subcommand) => subcommand
+      .setName('useless')
+      .setDescription('Get a useless would you rather')
+      .addBooleanOption((option) => option
+        .setName('voting')
+        .setDescription('Do you want the users to be able to vote?'))),
 
   /**
    * @param {CommandInteraction} interaction
@@ -40,34 +32,39 @@ module.exports = {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
-        const { Rather } =
-          await require(`../languages/${result.language}.json`);
-        const { Useless_Powers, Useful_Powers } =
-          await require(`../data/power-${result.language}.json`);
-          
+        let voting = true;
+        if (interaction.options.getBoolean('voting') == false) voting = false;
+        const { Rather } = await require(`../languages/${result.language}.json`);
+        const { Useless_Powers, Useful_Powers } = await require(`../data/power-${result.language}.json`);
+
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
-            .setLabel("Invite")
+            .setLabel('Invite')
             .setStyle(5)
-            .setEmoji("🤖")
+            .setEmoji('🤖')
             .setURL(
-              "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands"
-            )
+              'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands',
+            ),
+        );
+        const newButton = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+            .setLabel('New Round')
+            .setStyle(1)
+            .setEmoji('🔄')
+            .setCustomId(voting ? `rather_${interaction.options.getSubcommand()}_voting` : `rather_${interaction.options.getSubcommand()}`),
         );
         let rbutton;
         if (Math.round(Math.random() * 9) < 3) {
-          rbutton = [button];
-        }
+          rbutton = [button, newButton];
+        } else rbutton = [newButton];
         switch (interaction.options.getSubcommand()) {
-          case "useful":
+          case 'useful':
             {
-              let usefulpower1 =
-                Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
-              let usefulpower2 =
-                Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+              let usefulpower1 = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+              let usefulpower2 = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
 
               let ratherembed = new EmbedBuilder()
-                .setColor("#0598F6")
+                .setColor('#0598F6')
                 .addFields(
                   {
                     name: Rather.embed.usefulname,
@@ -78,7 +75,7 @@ module.exports = {
                     name: Rather.embed.usefulname2,
                     value: `> 2️⃣ ${usefulpower2}`,
                     inline: false,
-                  }
+                  },
                 )
                 .setFooter({
                   text: `${Rather.embed.footer}`,
@@ -89,32 +86,32 @@ module.exports = {
               let message = await interaction
                 .reply({
                   embeds: [ratherembed],
+                  components: rbutton,
                   fetchReply: true,
                 })
                 .catch((err) => {
                   return;
                 });
-              if (interaction.options.getBoolean("voting") == false) {
+              if (interaction.options.getBoolean('voting') == false) {
               } else {
                 try {
-                  await message.react("1️⃣");
-                  await message.react("2️⃣");
-                  const filter = (reaction) =>
-                    reaction.emoji.name == "1️⃣" || reaction.emoji.name == "2️⃣";
+                  await message.react('1️⃣');
+                  await message.react('2️⃣');
+                  const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
 
                   const collector = message.createReactionCollector({
                     filter,
                     time: 20000,
                   });
-                  collector.on("collect", async () => {});
+                  collector.on('collect', async () => {});
 
-                  collector.on("end", async () => {
+                  collector.on('end', async () => {
                     if (
-                      message.reactions.cache.get("1️⃣").count - 1 >
-                      message.reactions.cache.get("2️⃣").count - 1
+                      message.reactions.cache.get('1️⃣').count - 1
+                      > message.reactions.cache.get('2️⃣').count - 1
                     ) {
                       ratherembed = new EmbedBuilder()
-                        .setColor("#0598F6")
+                        .setColor('#0598F6')
                         .setFooter({
                           text: `${Rather.embed.footer}`,
                           iconURL: client.user.avatarURL(),
@@ -126,11 +123,11 @@ module.exports = {
                           inline: false,
                         });
                     } else if (
-                      message.reactions.cache.get("1️⃣").count - 1 <
-                      message.reactions.cache.get("2️⃣").count - 1
+                      message.reactions.cache.get('1️⃣').count - 1
+                      < message.reactions.cache.get('2️⃣').count - 1
                     ) {
                       ratherembed = new EmbedBuilder()
-                        .setColor("#0598F6")
+                        .setColor('#0598F6')
                         .setFooter({
                           text: `${Rather.embed.footer}`,
                           iconURL: client.user.avatarURL(),
@@ -143,7 +140,7 @@ module.exports = {
                         });
                     } else {
                       ratherembed = new EmbedBuilder()
-                        .setColor("#ffffff")
+                        .setColor('#ffffff')
                         .addFields(
                           {
                             name: Rather.embed.usefulname,
@@ -154,7 +151,7 @@ module.exports = {
                             name: Rather.embed.usefulname2,
                             value: `> 2️⃣ ${usefulpower2}`,
                             inline: false,
-                          }
+                          },
                         )
                         .setFooter({
                           text: `${Rather.embed.footer}`,
@@ -182,19 +179,17 @@ module.exports = {
             }
             break;
 
-          case "useless":
+          case 'useless':
             {
-              let uselesspower1 =
-                Useless_Powers[
-                  Math.floor(Math.random() * Useless_Powers.length)
-                ];
-              let uselesspower2 =
-                Useless_Powers[
-                  Math.floor(Math.random() * Useless_Powers.length)
-                ];
+              let uselesspower1 = Useless_Powers[
+                Math.floor(Math.random() * Useless_Powers.length)
+              ];
+              let uselesspower2 = Useless_Powers[
+                Math.floor(Math.random() * Useless_Powers.length)
+              ];
 
               let ratherembed = new EmbedBuilder()
-                .setColor("#F00505")
+                .setColor('#F00505')
                 .addFields(
                   {
                     name: Rather.embed.uselessname,
@@ -205,7 +200,7 @@ module.exports = {
                     name: Rather.embed.uselessname2,
                     value: `> 2️⃣ ${uselesspower2}`,
                     inline: false,
-                  }
+                  },
                 )
                 .setFooter({
                   text: `${Rather.embed.footer}`,
@@ -222,27 +217,26 @@ module.exports = {
                 .catch((err) => {
                   return;
                 });
-              if (interaction.options.getBoolean("voting") == false) {
+              if (interaction.options.getBoolean('voting') == false) {
               } else {
                 try {
-                  await message.react("1️⃣");
-                  await message.react("2️⃣");
-                  const filter = (reaction) =>
-                    reaction.emoji.name == "1️⃣" || reaction.emoji.name == "2️⃣";
+                  await message.react('1️⃣');
+                  await message.react('2️⃣');
+                  const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
 
                   const collector = message.createReactionCollector({
                     filter,
                     time: 20000,
                   });
-                  collector.on("collect", async () => {});
+                  collector.on('collect', async () => {});
 
-                  collector.on("end", async () => {
+                  collector.on('end', async () => {
                     if (
-                      message.reactions.cache.get("1️⃣").count - 1 >
-                      message.reactions.cache.get("2️⃣").count - 1
+                      message.reactions.cache.get('1️⃣').count - 1
+                      > message.reactions.cache.get('2️⃣').count - 1
                     ) {
                       ratherembed = new EmbedBuilder()
-                        .setColor("#F00505")
+                        .setColor('#F00505')
                         .setFooter({
                           text: `${Rather.embed.footer}`,
                           iconURL: client.user.avatarURL(),
@@ -254,11 +248,11 @@ module.exports = {
                           inline: false,
                         });
                     } else if (
-                      message.reactions.cache.get("1️⃣").count - 1 <
-                      message.reactions.cache.get("2️⃣").count - 1
+                      message.reactions.cache.get('1️⃣').count - 1
+                      < message.reactions.cache.get('2️⃣').count - 1
                     ) {
                       ratherembed = new EmbedBuilder()
-                        .setColor("#F00505")
+                        .setColor('#F00505')
                         .setFooter({
                           text: `${Rather.embed.footer}`,
                           iconURL: client.user.avatarURL(),
@@ -271,7 +265,7 @@ module.exports = {
                         });
                     } else {
                       ratherembed = new EmbedBuilder()
-                        .setColor("#ffffff")
+                        .setColor('#ffffff')
                         .addFields(
                           {
                             name: Rather.embed.uselessname,
@@ -282,7 +276,7 @@ module.exports = {
                             name: Rather.embed.uselessname2,
                             value: `> 2️⃣ ${uselesspower2}`,
                             inline: false,
-                          }
+                          },
                         )
                         .setFooter({
                           text: `${Rather.embed.footer}`,

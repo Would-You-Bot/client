@@ -29,7 +29,6 @@ module.exports = async (client) => {
       if (process.env.STATUS === 'PRODUCTION') {
         if (process.env.TOPGGTOKEN) {
           const ap = AutoPoster(`${process.env.TOPGGTOKEN}`, client);
-
         }
         // If the bot is in production mode it will load slash commands for all guilds
         await rest.put(Routes.applicationCommands(client.user.id), {
@@ -43,7 +42,7 @@ module.exports = async (client) => {
           )}`,
         );
       } else {
-        if (!process.env.GUILD_ID) return console.log(ChalkAdvanced.red("Looks like your bot is not in production mode and you don't have a guild id set in .env"))
+        if (!process.env.GUILD_ID) return console.log(ChalkAdvanced.red("Looks like your bot is not in production mode and you don't have a guild id set in .env"));
         await rest.put(
           Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID),
           {
@@ -62,7 +61,7 @@ module.exports = async (client) => {
   })();
   setInterval(() => {
     client.user.setPresence({
-      activities: [{ name: `${process.env.BOTSTATUS || "Would you?"}` }],
+      activities: [{ name: `${process.env.BOTSTATUS || 'Would you?'}` }],
       status: 'dnd',
     });
   }, 15000);
