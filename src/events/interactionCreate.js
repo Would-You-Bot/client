@@ -32,7 +32,7 @@ module.exports = (client, interaction) => {
           }
         } else if (interaction.isButton()) {
           const button = client.buttons.get(interaction.customId);
-          if (!button) return interaction.reply({content: "Please use the command again.", ephemeral: true});
+          if (!button) return interaction.reply({ content: 'Please use the command again.', ephemeral: true });
           try {
             button.execute(interaction, client);
           } catch (err) {
@@ -43,6 +43,6 @@ module.exports = (client, interaction) => {
             });
           }
         }
-        });
+      });
   }
 };

@@ -1,10 +1,10 @@
-const guildLang = require('../util/Models/guildModel');
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
+const guildLang = require('../util/Models/guildModel');
 
 module.exports = {
   data: {
-    name: "wouldyou_useless_voting",
-    description: "Would you button",
+    name: 'wouldyou_useless_voting',
+    description: 'Would you button',
   },
   async execute(interaction, client) {
     let power;
@@ -26,7 +26,7 @@ module.exports = {
             .setLabel('New round')
             .setStyle(1)
             .setEmoji('🔄')
-            .setCustomId(`wouldyou_useless_voting`),
+            .setCustomId('wouldyou_useless_voting'),
         );
         let rbutton;
         if (Math.round(Math.random() * 5) < 3) {
@@ -51,7 +51,7 @@ module.exports = {
           embeds: [wouldyouembed],
           fetchReply: true,
           components: rbutton,
-        }).catch((err) => {return;});
+        }).catch((err) => { return; });
         try {
           await message.react('✅');
           await message.react('❌');
@@ -123,12 +123,12 @@ module.exports = {
             } catch (error) {}
             await interaction.editReply({
               embeds: [wouldyouembed],
-              components: rbutton || [] ,
+              components: rbutton || [],
             }).catch((err) => { return; });
 
             collector.stop();
           });
         } catch (error) {}
-        });
+      });
   },
 };
