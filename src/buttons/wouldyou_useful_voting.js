@@ -1,43 +1,19 @@
-const {
-  CommandInteraction,
-  EmbedBuilder,
-  SlashCommandBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-} = require('discord.js');
 const guildLang = require('../util/Models/guildModel');
+const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('wouldyou')
-    .setDescription('Would you')
-    .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Useless Power')
-    .addBooleanOption((option) =>
-    option
-      .setName("voting")
-
-      .setDescription("Do you want the users to be able to vote?"))
-  )
-    .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Useful Power')
-    .addBooleanOption((option) =>
-    option
-      .setName("voting")
-      .setDescription("Do you want the users to be able to vote?"))
-  ),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {Client} client
-   */
-
+  data: {
+    name: "wouldyou_useful_voting",
+    description: "Would you button",
+  },
   async execute(interaction, client) {
-    var power;
+    let power;
     let wouldyouembed;
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { WouldYou } = await require(`../languages/${result.language}.json`);
-        const { Useless_Powers, Useful_Powers } = await require(`../data/power-${result.language}.json`);
+        const { Useful_Powers } = await require(`../data/power-${result.language}.json`);
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setLabel('Invite')
@@ -45,14 +21,12 @@ module.exports = {
             .setEmoji('🤖')
             .setURL('https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands'),
         );
-        if (interaction.options.getBoolean('voting') == false) voting = false 
-        else voting = true;
         const newbutton = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setLabel('New round')
             .setStyle(1)
             .setEmoji('🔄')
-            .setCustomId(voting ? `wouldyou_${interaction.options.getSubcommand()}_voting` : `wouldyou_${interaction.options.getSubcommand()}`),
+            .setCustomId(`wouldyou_useful_voting`),
         );
         let rbutton;
         if (Math.round(Math.random() * 5) < 3) {
@@ -60,48 +34,24 @@ module.exports = {
         } else {
           rbutton = [newbutton];
         }
-        switch (interaction.options.getSubcommand()) {
-          case 'useful': {
-            power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
-
-            wouldyouembed = new EmbedBuilder()
-              .setColor('#0598F6')
-              .setFooter({
-                text: `${WouldYou.embed.footer}`,
-                iconURL: client.user.avatarURL(),
-              })
-              .setTimestamp()
-              .addFields({
-                name: WouldYou.embed.Usefulname,
-                value: `> ${power}`,
-                inline: false,
-              });
-            break;
-          }
-          case 'useless': {
-            power = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
-
-            wouldyouembed = new EmbedBuilder()
-              .setColor('#F00505')
-              .setFooter({
-                text: `${WouldYou.embed.footer}`,
-                iconURL: client.user.avatarURL(),
-              })
-              .setTimestamp()
-              .addFields({
-                name: WouldYou.embed.Uselessname,
-                value: `> ${power}`,
-                inline: false,
-              });
-          }
-        }
+        power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+        wouldyouembed = new EmbedBuilder()
+          .setColor('#0598F6')
+          .setFooter({
+            text: `${WouldYou.embed.footer}`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setTimestamp()
+          .addFields({
+            name: WouldYou.embed.Usefulname,
+            value: `> ${power}`,
+            inline: false,
+          });
         const message = await interaction.reply({
           embeds: [wouldyouembed],
           fetchReply: true,
-          components: rbutton || [] ,
-        }).catch((err) => { return; });
-        if (interaction.options.getBoolean("voting") == false) {
-        } else {
+          components: rbutton,
+        }).catch((err) => {return;});
         try {
           await message.react('✅');
           await message.react('❌');
@@ -179,7 +129,6 @@ module.exports = {
             collector.stop();
           });
         } catch (error) {}
-      }
-      });
+        });
   },
 };
