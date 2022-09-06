@@ -40,6 +40,8 @@ module.exports = {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
+        let voting = true;
+        if (interaction.options.getBoolean("voting") == false) voting = false;
         const { Rather } =
           await require(`../languages/${result.language}.json`);
         const { Useless_Powers, Useful_Powers } =
@@ -54,10 +56,17 @@ module.exports = {
               "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands"
             )
         );
+        const newButton = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+            .setLabel("New Round")
+            .setStyle(1)
+            .setEmoji("🔄")
+            .setCustomId(voting ? `rather_${interaction.options.getSubcommand()}_voting` : `rather_${interaction.options.getSubcommand()}`)
+        );
         let rbutton;
         if (Math.round(Math.random() * 9) < 3) {
-          rbutton = [button];
-        }
+          rbutton = [button, newButton];
+        } else rbutton = [newButton];
         switch (interaction.options.getSubcommand()) {
           case "useful":
             {
@@ -89,6 +98,7 @@ module.exports = {
               let message = await interaction
                 .reply({
                   embeds: [ratherembed],
+                  components: rbutton,
                   fetchReply: true,
                 })
                 .catch((err) => {
