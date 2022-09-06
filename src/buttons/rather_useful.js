@@ -33,7 +33,7 @@ module.exports = {
             .setCustomId('rather_useful'),
         );
         let rbutton;
-        if (Math.round(Math.random() * 9) < 3) {
+        if (Math.round(Math.random() * 15) < 3) {
           rbutton = [button, newButton];
         } else rbutton = [newButton];
         {

@@ -52,7 +52,7 @@ module.exports = {
             .setCustomId(voting ? `wouldyou_${interaction.options.getSubcommand()}_voting` : `wouldyou_${interaction.options.getSubcommand()}`),
         );
         let rbutton;
-        if (Math.round(Math.random() * 5) < 3) {
+        if (Math.round(Math.random() * 15) < 3) {
           rbutton = [button, newbutton];
         } else {
           rbutton = [newbutton];
