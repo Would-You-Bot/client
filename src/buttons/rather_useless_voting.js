@@ -37,8 +37,24 @@ module.exports = {
           rbutton = [button, newButton];
         } else rbutton = [newButton];
         {
-          let uselesspower1 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
-          let uselesspower2 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
+          
+          let uselesspower1;
+          let uselesspower2;
+          if (result.customTypes === "regular") {
+            uselesspower1 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
+            uselesspower2 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
+          } else if (result.customTypes === "mixed") {
+            if (result.customMessages.length > 0) {
+              uselesspower1 = result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg
+            } else {
+              return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+            }
+            uselesspower2 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
+          } else if (result.customTypes === "custom") {
+            if (result.customMessages.length === 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+            uselesspower1 = result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg;
+            uselesspower2 = result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg;
+          }
 
           let ratherembed = new EmbedBuilder()
             .setColor('#F00505')

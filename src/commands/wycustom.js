@@ -23,10 +23,21 @@ module.exports = {
                 .setDescription("Adds a custom message")
                 .addStringOption((option) =>
                     option
+                        .setName("options")
+                        .setDescription("Select which category you want this custom message to be in.")
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'Useful', value: 'useful' },
+                            { name: 'NSFW', value: 'nsfw' },
+                            { name: 'Useless', value: 'useless' },
+                        )
+                )
+                .addStringOption((option) =>
+                    option
                         .setName("message")
                         .setDescription("Input a message for to create a custom WouldYou message.")
                         .setRequired(true)
-                ),
+                )
         )
         .addSubcommand((subcommand) =>
             subcommand
@@ -59,21 +70,22 @@ module.exports = {
                 if (
                     interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
                 ) {
-
                     switch (interaction.options.getSubcommand()) {
                         case 'add': {
+                            let array = ["useless", "nsfw", "useful"]; // This is probably not needed but oh well
+                            if (!array.find(c => c === interaction.options.getString("options").toLowerCase())) return await interaction.reply({ ephemeral: true, content: "You need to provide which category you want it in. Options: \`useful\` | \`nsfw\` | \`useless\`" })
                             let db = await guildLang.findOne({ guildID: interaction.guild.id });
                             if (db.customMessages.length >= 30) return await interaction.reply({ ephemeral: true, content: "You've reached the maximum amount of custom messages. You can gain more using our premium plan." })
                             let newID = makeID(6);
                             typeEmbed = new EmbedBuilder()
                                 .setTitle('Successfully created that WouldYou message!')
-                                .setDescription(`**ID**: ${newID}\n**Content**: \`${interaction.options.getString("message")}\``)
+                                .setDescription(`**ID**: ${newID}\n**Category**: ${interaction.options.getString("options").toLowerCase()}\n\n**Content**: \`${interaction.options.getString("message")}\``)
                                 .setFooter({
                                     text: 'Would You',
                                     iconURL: client.user.avatarURL(),
                                 });
 
-                            db.customMessages.push({ id: newID, msg: interaction.options.getString("message") })
+                            db.customMessages.push({ id: newID, msg: interaction.options.getString("message"), type: interaction.options.getString("options").toLowerCase() })
                             await db.save()
                             break;
                         }
@@ -100,7 +112,7 @@ module.exports = {
 
                             typeEmbed = new EmbedBuilder()
                                 .setTitle('WouldYou Custom Messages')
-                                .setDescription(`${db.customMessages.map(c => `**ID**: ${c.id} - **Message**: ${c.msg}`).join("\n")}`)
+                                .setDescription(`${db.customMessages.map(c => `**ID**: ${c.id}\n**Category**: ${c.type}\n**Message**: ${c.msg}`).join("\n\n")}`)
                                 .setFooter({
                                     text: 'Would You',
                                     iconURL: client.user.avatarURL(),

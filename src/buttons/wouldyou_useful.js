@@ -34,7 +34,24 @@ module.exports = {
         } else {
           rbutton = [newbutton];
         }
-        power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+
+        if (result.customTypes === "regular") {
+          power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+        } else if (result.customTypes === "mixed") {
+          let array = [];
+          if (result.customMessages.length > 0) {
+            array.push(result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg)
+          } else {
+            return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+          }
+          array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
+          power = array[Math.floor(Math.random() * array.length)]
+          array = [];
+        } else if (result.customTypes === "custom") {
+          if (result.customMessages.length === 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+          power = result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg;
+        }
+
         wouldyouembed = new EmbedBuilder()
           .setColor('#0598F6')
           .setFooter({
