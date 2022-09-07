@@ -25,6 +25,10 @@ const guildProfile = new Schema(
     },
     wouldyouChannel: {
     },
+    nsfw: {
+      type: Boolean,
+      default: false,
+    },
     botJoined: {
       type: Number,
     },

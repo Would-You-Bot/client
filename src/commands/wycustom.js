@@ -4,6 +4,14 @@ const {
     PermissionFlagsBits,
 } = require('discord.js');
 const guildLang = require('../util/Models/guildModel');
+
+require("dotenv").config();
+
+const Topgg = require(`@top-gg/sdk`)
+
+const api = new Topgg.Api(process.env.TOPGGTOKEN)
+
+
 function makeID(length) {
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -75,7 +83,9 @@ module.exports = {
                             let array = ["useless", "nsfw", "useful"]; // This is probably not needed but oh well
                             if (!array.find(c => c === interaction.options.getString("options").toLowerCase())) return await interaction.reply({ ephemeral: true, content: "You need to provide which category you want it in. Options: \`useful\` | \`nsfw\` | \`useless\`" })
                             let db = await guildLang.findOne({ guildID: interaction.guild.id });
-                            if (db.customMessages.length >= 30) return await interaction.reply({ ephemeral: true, content: "You've reached the maximum amount of custom messages. You can gain more using our premium plan." })
+                            if(await api.hasVoted(interaction.user.id) == false) {
+                             if (db.customMessages.length >= 30) return await interaction.reply({ ephemeral: true, content: "You've reached the maximum amount of custom messages. You can add more using our premium nsfw subscription billed annually " })
+                            }
                             let newID = makeID(6);
                             typeEmbed = new EmbedBuilder()
                                 .setTitle('Successfully created that WouldYou message!')
