@@ -8,6 +8,9 @@ module.exports = (client) => {
 
   /* It's creating a new collection for the commands. */
   client.commands = new Collection();
+  
+  /* Map for cooldowns */
+  client.used = new Map();
 
   /* It's creating a new collection for the buttons and adding them to it. */
   require('./buttonLoader')(client);
