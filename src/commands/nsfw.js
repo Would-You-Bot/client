@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, ButtonBuilder, ActionRowBuilder } = require('discord.js');
 const guildLang = require('../util/Models/guildModel');
 
 require("dotenv").config();
@@ -33,7 +33,7 @@ module.exports = {
           interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
         ) {
             if(interaction.options.getBoolean('enable') == true) {
-              if(await api.hasVoted(interaction.user.id) == true ) {
+              if(await api.hasVoted(interaction.user.id) == !true ) {
                 guildLang
                 .findOne({ guildID: interaction.guild.id })
                 .then(async () => {
@@ -58,11 +58,20 @@ module.exports = {
                     });
                 });
               } else {
+                const novotebtn = new ActionRowBuilder().addComponents(
+                  new ButtonBuilder()
+                    .setLabel('Vote Here!')
+                    .setStyle(5)
+                    .setEmoji('❤️')
+                    .setURL(
+                      'https://top.gg/bot/981649513427111957/vote',
+                    ),
+                );
+
                 const novote = new EmbedBuilder()
                   .setColor("#F00505")
                   .setTitle("Error!")
-                  .setImage("https://c.tenor.com/7YMBPBszTpEAAAAd/tenor.gif")
-                  .setDescription("🦹You naughty, naughty🦹");
+                  .setDescription("In order to use this command you need to vote for the bot!");
                 await interaction
                   .reply({
                     embeds: [novote],
@@ -81,7 +90,7 @@ module.exports = {
                   if (result.nsfw == false) {
                     const nochannelEmbed = new EmbedBuilder()
                       .setColor("#2f3037")
-                      .setTitle("Nsfw.nochannel.title")
+                      .setTitle("Error!")
                       .setDescription("Nsfw questions are already disabled");
                     await interaction
                       .reply({
@@ -95,13 +104,13 @@ module.exports = {
                     result.nsfw = false;
                     await result.save();
 
-                    const removedchannelEmbed = new EmbedBuilder()
+                    const removednsfwembed = new EmbedBuilder()
                       .setColor("#2f3037")
-                      .setTitle("Nsfw.removeembed.title")
-                      .setDescription("Nsfw.removeembed.description");
+                      .setTitle("Sucess!")
+                      .setDescription("Nsfw questions have been disabled");
                     await interaction
                       .reply({
-                        embeds: [removedchannelEmbed],
+                        embeds: [removednsfwembed],
                         ephemeral: true,
                       })
                       .catch((err) => {
@@ -114,7 +123,7 @@ module.exports = {
           const errorembed = new EmbedBuilder()
             .setColor("#F00505")
             .setTitle("Error!")
-            .setDescription("Nsfw.error.description");
+            .setDescription("You are missing the `Manage Server` permission to use this command");
           await interaction
             .reply({
               embeds: [errorembed],
