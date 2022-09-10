@@ -5,6 +5,14 @@ const {
 } = require('discord.js');
 const axios = require('axios');
 const guildLang = require('../util/Models/guildModel');
+
+require("dotenv").config();
+
+const Topgg = require(`@top-gg/sdk`)
+
+const api = new Topgg.Api(process.env.TOPGGTOKEN)
+
+
 function makeID(length) {
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -55,7 +63,7 @@ module.exports = {
             subcommand
                 .setName("view")
                 .setDescription("Views all of your custom WouldYou messages")
-    )
+        )
         .addSubcommand((subcommand) =>
             subcommand
                 .setName("import")
@@ -67,7 +75,7 @@ module.exports = {
             subcommand
                 .setName("export")
                 .setDescription("Exports custom messages into a JSON file.")
-    ),
+        ),
 
     /**
      * @param {CommandInteraction} interaction
@@ -85,9 +93,9 @@ module.exports = {
                 ) {
                     switch (interaction.options.getSubcommand()) {
                         case 'add': {
-                            let array = ["useless", "nsfw", "useful"]; // This is probably not needed but oh well
-                            if (!array.find(c => c === interaction.options.getString("options").toLowerCase())) return await interaction.reply({ ephemeral: true, content: "You need to provide which category you want it in. Options: \`useful\` | \`nsfw\` | \`useless\`" })
-                            if (result.customMessages.length >= 30) return await interaction.reply({ ephemeral: true, content: "You've reached the maximum amount of custom messages. You can gain more using our premium plan." })
+                            if (await api.hasVoted(interaction.user.id) == false) {
+                                if (result.customMessages.length >= 30) return await interaction.reply({ ephemeral: true, content: "You've reached the maximum amount of custom messages. You can add more using our premium nsfw subscription billed annually." })
+                            }
                             let newID = makeID(6);
                             typeEmbed = new EmbedBuilder()
                                 .setTitle('Successfully created that WouldYou message!')
@@ -170,7 +178,7 @@ module.exports = {
                                     await result.save()
 
                                     return await interaction.reply({ ephemeral: true, content: "Successfully imported those custom messages!" })
-                                }).catch((e) => {return interaction.reply(`There was an error that occured while running this command, please report it to the support server!\n\nError: ${e}`)})
+                                }).catch((e) => { return interaction.reply(`There was an error that occured while running this command, please report it to the support server!\n\nError: ${e}`) })
                             break;
                         }
 
