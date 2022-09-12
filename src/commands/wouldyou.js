@@ -66,8 +66,8 @@ module.exports = {
               power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
             } else if (result.customTypes === "mixed") {
               let array = [];
-              if (result.customMessages.filter(c => c.type === "useful") == 0) {
-                array.push(result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg)
+              if (result.customMessages.filter(c => c.type === "useful") != 0) {
+                array.push(result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg || Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
               } else {
                 power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
               }
@@ -98,8 +98,8 @@ module.exports = {
               power = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
             } else if (result.customTypes === "mixed") {
               let array = [];
-              if (result.customMessages.filter(c => c.type === "useless") == 0) {
-                array.push(result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg)
+              if (result.customMessages.filter(c => c.type === "useless") != 0) {
+                array.push(result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg || Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
               } else {
                 power = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
               }
@@ -130,8 +130,8 @@ module.exports = {
             power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
           } else if (result.customTypes === "mixed") {
             let array = [];
-            if (result.customMessages.filter(c => c.type === "nsfw") == 0) {
-              array.push(result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg)
+            if (result.customMessages.filter(c => c.type === "nsfw") != 0) {
+              array.push(result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg || Nsfw[Math.floor(Math.random() * Nsfw.length)])
             } else {
               power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
             }
