@@ -1,6 +1,8 @@
 const {
     EmbedBuilder,
     SlashCommandBuilder,
+    ButtonBuilder,
+    ActionRowBuilder,
     PermissionFlagsBits,
 } = require('discord.js');
 const axios = require('axios');
@@ -11,7 +13,6 @@ require("dotenv").config();
 const Topgg = require(`@top-gg/sdk`)
 
 const api = new Topgg.Api(process.env.TOPGGTOKEN)
-
 
 function makeID(length) {
     let result = '';
@@ -83,6 +84,114 @@ module.exports = {
      */
 
     async execute(interaction, client) {
+        class Paginator {
+            constructor(pages = [], {
+                filter,
+                timeout
+            } = {
+                    timeout: 5 * 6e4
+                }) {
+                this.pages = Array.isArray(pages) ? pages : [];
+                this.timeout = Number(timeout) || 5 * 6e4;
+                this.page = 0;
+            }
+
+            add(page) {
+                this.pages.push(page);
+                return this;
+            }
+
+            setEndPage(page) {
+                if (page) this.endPage = page;
+                return this;
+            }
+
+            setTransform(fn) {
+                const _pages = [];
+                let i = 0;
+                const ln = this.pages.length;
+                for (const page of this.pages) {
+                    _pages.push(fn(page, i, ln));
+                    i++;
+                }
+                this.pages = _pages;
+                return this;
+            }
+
+            async start(channel, buttons) {
+                if (!this.pages.length) return;
+                const msg = await channel.reply({
+                    embeds: [this.pages[0]],
+                    components: [buttons],
+                    ephemeral: true
+                });
+                const collector = msg.createMessageComponentCollector();
+
+                collector.on('collect', async (inter) => {
+                    try {
+                        if (inter.isButton()) {
+                            if (!inter) return;
+
+                            switch (inter.customId) {
+                                case "first":
+                                    if (this.page === 0) {
+                                        return await inter.reply({
+                                            ephemeral: true,
+                                            content: "You can't proceed that way any further."
+                                        });
+                                    } else {
+                                        await inter.update({
+                                            embeds: [this.pages[0]],
+                                            ephemeral: true
+                                        });
+                                        return this.page = 0;
+                                    }
+                                case "prev":
+                                    if (this.pages[this.page - 1]) {
+                                        return await inter.update({
+                                            embeds: [this.pages[--this.page]],
+                                            ephemeral: true
+                                        });
+                                    } else {
+                                        return await inter.reply({
+                                            ephemeral: true,
+                                            content: "You can't proceed that way any further."
+                                        });
+                                    }
+                                case "next":
+                                    if (this.pages[this.page + 1]) {
+                                        return await inter.update({
+                                            embeds: [this.pages[++this.page]],
+                                            ephemeral: true
+                                        });
+                                    } else {
+                                        return await inter.reply({
+                                            ephemeral: true,
+                                            content: "You can't proceed that way any further."
+                                        });
+                                    }
+                                case "last":
+                                    if (this.page === this.pages.length - 1) {
+                                        return await inter.reply({
+                                            ephemeral: true,
+                                            content: "You can't proceed that way any further."
+                                        });
+                                    } else {
+                                        await inter.update({
+                                            embeds: [this.pages[this.pages.length - 1]],
+                                            ephemeral: true
+                                        });
+                                        return this.page = this.pages.length - 1;
+                                    }
+                            }
+                        }
+                    } catch (e) {
+                        return;
+                    }
+                });
+            }
+        }
+
         let typeEmbed;
         guildLang
             .findOne({ guildID: interaction.guild.id })
@@ -128,13 +237,82 @@ module.exports = {
                         case 'view': {
                             if (result.customMessages.length === 0) return await interaction.reply({ ephemeral: true, content: "There currently is no custom WouldYou messages to view!" })
 
-                            typeEmbed = new EmbedBuilder()
-                                .setTitle('WouldYou Custom Messages')
-                                .setDescription(`${result.customMessages.map(c => `**ID**: ${c.id}\n**Category**: ${c.type}\n**Message**: ${c.msg}`).join("\n\n")}`)
-                                .setFooter({
-                                    text: 'Would You',
-                                    iconURL: client.user.avatarURL(),
-                                });
+                            const page = new Paginator([], {})
+
+                            if (result.customMessages.filter(c => c.type === "nsfw" > 0)) {
+                                let data;
+                                data = result.customMessages.filter(c => c.type === "nsfw").map(
+                                    (s, i) =>
+                                        `${s.msg}`
+                                );
+                                data = Array.from({
+                                    length: Math.ceil(data.length / 5)
+                                },
+                                    (a, r) => data.slice(r * 5, r * 5 + 5)
+                                );
+
+                                Math.ceil(data.length / 5);
+                                data = data.map(e => page.add(new EmbedBuilder().setTitle("WouldYou Custom Messages").setDescription(`**Category**: useful\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
+                            }
+
+                            if (result.customMessages.filter(c => c.type === "useless" > 0)) {
+                                let data;
+                                data = result.customMessages.filter(c => c.type === "useless").map(
+                                    (s, i) =>
+                                        `${s.msg}`
+                                );
+                                data = Array.from({
+                                    length: Math.ceil(data.length / 5)
+                                },
+                                    (a, r) => data.slice(r * 5, r * 5 + 5)
+                                );
+
+                                Math.ceil(data.length / 5);
+                                data = data.map(e => page.add(new EmbedBuilder().setTitle("WouldYou Custom Messages").setDescription(`**Category**: nsfw\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
+                            }
+
+                            if (result.customMessages.filter(c => c.type === "useful" > 0)) {
+                                let data;
+                                data = result.customMessages.filter(c => c.type === "useful").map(
+                                    (s, i) =>
+                                        `${s.msg}`
+                                );
+                                data = Array.from({
+                                    length: Math.ceil(data.length / 5)
+                                },
+                                    (a, r) => data.slice(r * 5, r * 5 + 5)
+                                );
+
+                                Math.ceil(data.length / 5);
+                                data = data.map(e => page.add(new EmbedBuilder().setTitle("WouldYou Custom Messages").setDescription(`**Category**: useless\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
+                            }
+
+                            page.setTransform((embed, index, total) => embed.setFooter({
+                                text: `Would You | Page ${index + 1} / ${total}`,
+                                iconURL: client.user.avatarURL()
+                            }))
+
+                            const buttons = new ActionRowBuilder()
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setCustomId('first')
+                                        .setLabel('⏪')
+                                        .setStyle('Primary'),
+                                    new ButtonBuilder()
+                                        .setCustomId('prev')
+                                        .setLabel('◀️')
+                                        .setStyle('Success'),
+                                    new ButtonBuilder()
+                                        .setCustomId('next')
+                                        .setLabel('▶️')
+                                        .setStyle('Success'),
+                                    new ButtonBuilder()
+                                        .setCustomId('last')
+                                        .setLabel('⏩')
+                                        .setStyle('Primary'),
+                                );
+
+                            return page.start(interaction, buttons)
                             break;
                         }
 
