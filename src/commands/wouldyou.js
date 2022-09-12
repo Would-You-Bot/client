@@ -14,7 +14,10 @@ module.exports = {
     .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Useless Power')
       .addBooleanOption((option) => option
         .setName('voting')
-
+        .setDescription('Do you want the users to be able to vote?')))
+    .addSubcommand((subcommand) => subcommand.setName('nsfw').setDescription('Borderline NSFW Questions')
+      .addBooleanOption((option) => option
+        .setName('voting')
         .setDescription('Do you want the users to be able to vote?')))
     .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Useful Power')
       .addBooleanOption((option) => option
@@ -33,7 +36,7 @@ module.exports = {
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { WouldYou } = await require(`../languages/${result.language}.json`);
-        const { Useless_Powers, Useful_Powers } = await require(`../data/power-${result.language}.json`);
+        const { Useless_Powers, Useful_Powers, Nsfw } = await require(`../data/power-${result.language}.json`);
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setLabel('Invite')
@@ -59,21 +62,20 @@ module.exports = {
         }
         switch (interaction.options.getSubcommand()) {
           case 'useful': {
-            let power;
             if (result.customTypes === "regular") {
               power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
             } else if (result.customTypes === "mixed") {
               let array = [];
-              if (result.customMessages.length > 0) {
-                array.push(result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg)
+              if (result.customMessages.filter(c => c.type === "useful") != 0) {
+                array.push(result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg || Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
               } else {
-                return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+                power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
               }
               array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
               power = array[Math.floor(Math.random() * array.length)]
               array = [];
             } else if (result.customTypes === "custom") {
-              if (result.customMessages.length === 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+              if (result.customMessages.filter(c => c.type === "useful") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
               power = result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg;
             }
 
@@ -92,21 +94,20 @@ module.exports = {
             break;
           }
           case 'useless': {
-            let power;
             if (result.customTypes === "regular") {
               power = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
             } else if (result.customTypes === "mixed") {
               let array = [];
-              if (result.customMessages.length > 0) {
-                array.push(result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg)
+              if (result.customMessages.filter(c => c.type === "useless") != 0) {
+                array.push(result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg || Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
               } else {
-                return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+                power = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
               }
               array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
               power = array[Math.floor(Math.random() * array.length)]
               array = [];
             } else if (result.customTypes === "custom") {
-              if (result.customMessages.length === 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+              if (result.customMessages.filter(c => c.type === "useless") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
               power = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg;
             }
 
@@ -122,8 +123,41 @@ module.exports = {
                 value: `> ${power}`,
                 inline: false,
               });
+            break;
           }
+        case 'nsfw': {
+          if (result.customTypes === "regular") {
+            power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
+          } else if (result.customTypes === "mixed") {
+            let array = [];
+            if (result.customMessages.filter(c => c.type === "nsfw") != 0) {
+              array.push(result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg || Nsfw[Math.floor(Math.random() * Nsfw.length)])
+            } else {
+              power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
+            }
+            array.push(Nsfw[Math.floor(Math.random() * Nsfw.length)]);
+            power = array[Math.floor(Math.random() * array.length)]
+            array = [];
+          } else if (result.customTypes === "custom") {
+            if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+            power = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
+          }
+
+          wouldyouembed = new EmbedBuilder()
+            .setColor('#F00505')
+            .setFooter({
+              text: `${WouldYou.embed.footer}`,
+              iconURL: client.user.avatarURL(),
+            })
+            .setTimestamp()
+            .addFields({
+              name: WouldYou.embed.Nsfwname,
+              value: `> ${power}`,
+              inline: false,
+            });
         }
+        break; 
+      }
         const message = await interaction.reply({
           embeds: [wouldyouembed],
           fetchReply: true,

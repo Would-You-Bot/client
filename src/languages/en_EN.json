@@ -61,6 +61,7 @@
     "embed": {
       "Usefulname": "Would you want this power?",
       "Uselessname": "Would you want this power?",
+      "Nsfwname": "Would you want this power?",
       "footer": "Would You"
     },
     "stats": {
