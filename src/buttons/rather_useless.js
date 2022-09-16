@@ -44,14 +44,15 @@ module.exports = {
             uselesspower1 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
             uselesspower2 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
           } else if (result.customTypes === "mixed") {
-            if (result.customMessages.length > 0) {
-              uselesspower1 = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg
+            if (result.customMessages.filter(c => c.type === "useless") != 0) {
+              uselesspower1 = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg || Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
             } else {
-              return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+            uselesspower1 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
+            uselesspower2 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
             }
             uselesspower2 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
           } else if (result.customTypes === "custom") {
-            if (result.customMessages.length === 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+            if (result.customMessages.filter(c => c.type === "useless") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
             uselesspower1 = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg;
             uselesspower2 = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg;
           }

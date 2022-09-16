@@ -39,16 +39,16 @@ module.exports = {
           power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
         } else if (result.customTypes === "mixed") {
           let array = [];
-          if (result.customMessages.length > 0) {
-            array.push(result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg)
+          if (result.customMessages.filter(c => c.type === "useful") != 0) {
+            array.push(result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg || Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
           } else {
-            return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+            power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
           }
           array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
           power = array[Math.floor(Math.random() * array.length)]
           array = [];
         } else if (result.customTypes === "custom") {
-          if (result.customMessages.length === 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+          if (result.customMessages.filter(c => c.type === "useful") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
           power = result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg;
         }
 
