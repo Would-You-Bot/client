@@ -45,7 +45,7 @@ module.exports = {
                 .addStringOption((option) =>
                     option
                         .setName("message")
-                        .setDescription("Input a message for to create a custom WouldYou message.")
+                        .setDescription("Input a message to create a custom WouldYou message.")
                         .setRequired(true)
                 )
         )
