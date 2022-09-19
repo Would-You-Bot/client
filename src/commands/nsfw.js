@@ -24,7 +24,6 @@ module.exports = {
    */
 
   async execute(interaction, client) {
-    console.log(await api.hasVoted(interaction.user.id))
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
@@ -33,7 +32,7 @@ module.exports = {
           interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
         ) {
             if(interaction.options.getBoolean('enable') == true) {
-              if(await api.hasVoted(interaction.user.id) == !true ) {
+              if(await api.hasVoted(interaction.user.id) == true ) {
                 guildLang
                 .findOne({ guildID: interaction.guild.id })
                 .then(async () => {
