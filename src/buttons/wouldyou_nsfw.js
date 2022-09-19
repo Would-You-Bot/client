@@ -40,7 +40,7 @@ module.exports = {
         } else if (result.customTypes === "mixed") {
           let array = [];
           if (result.customMessages.filter(c => c.type === "nsfw") != 0) {
-            array.push(result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg || Nsfw[Math.floor(Math.random() * Nsfw.length)]);
+            array.push(result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg || Nsfw[Math.floor(Math.random() * Nsfw.length)])
           } else {
             power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
           }

@@ -342,7 +342,7 @@ module.exports = {
         case 'nsfw':
           if(!interaction.channel.nsfw) return await interaction.reply({ ephemeral: true, content: "This command can only be used in NSFW channels!" })
           // if statement only work when user votes 
-          if(result.nsfw != true) return await interaction.reply({ ephemeral: true, content: "NSFW commands aren't enabled in this server!" })
+          if(!result.nsfw) return await interaction.reply({ ephemeral: true, content: "NSFW commands aren't enabled in this server!" })
           {
             let nsfwpower1;
             let nsfwpower2;

@@ -36,20 +36,22 @@ module.exports = {
         }
 
         if (result.customTypes === "regular") {
-            nsfwpower1 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-            nsfwpower2 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-            if (result.customMessages.filter(c => c.type === "nsfw") != 0) {
-              nsfwpower1 = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg || Nsfw[Math.floor(Math.random() * Nsfw.length)]
-            } else {
-              nsfwpower1 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-              nsfwpower2 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-            }
-            nsfwpower2 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-          } else if (result.customTypes === "custom") {
-            if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
-            nsfwpower1 = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
-            nsfwpower2 = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
+          power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
+        } else if (result.customTypes === "mixed") {
+          let array = [];
+          if (result.customMessages.filter(c => c.type === "nsfw") != 0) {
+            array.push(result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg || Nsfw[Math.floor(Math.random() * Nsfw.length)])
+          } else {
+            power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
           }
+          array.push(Nsfw[Math.floor(Math.random() * Nsfw.length)]);
+          power = array[Math.floor(Math.random() * array.length)]
+          array = [];
+        } else if (result.customTypes === "custom") {
+          if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+          power = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
+        }
+
 
         wouldyouembed = new EmbedBuilder()
           .setColor('#0598F6')

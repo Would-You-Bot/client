@@ -125,7 +125,11 @@ module.exports = {
               });
             break;
           }
-        case 'nsfw': {
+          case 'nsfw': {
+            if (!interaction.channel.nsfw) return await interaction.reply({ ephemeral: true, content: "This command can only be used in NSFW channels!" })
+            // if statement only work when user votes 
+            if (!result.nsfw) return await interaction.reply({ ephemeral: true, content: "NSFW commands aren't enabled in this server!" })
+
           if (result.customTypes === "regular") {
             power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
           } else if (result.customTypes === "mixed") {
