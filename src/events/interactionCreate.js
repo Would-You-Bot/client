@@ -33,6 +33,7 @@ module.exports = (client, interaction) => {
         } else if (interaction.isButton()) {
           if (client.used.has(interaction.user.id)) return await interaction.reply({ ephemeral: true, content: "You need to wait one minute between every button press." })
           const button = client.buttons.get(interaction.customId);
+          console.log(button)
           if (!button) return interaction.reply({ content: 'Please use the command again.', ephemeral: true });
           try {
             client.used.set(interaction.user.id, Date.now() + 60000)

@@ -28,7 +28,7 @@ app.post('/dblwebhook', webhook.listener(async (vote) => {
   let userdata = null;
   await axios({
     method: 'get',
-    url: `https://stealth.rest/discord/v1/${vote.user}`,
+    url: `https://japi.rest/discord/v1/user/${vote.user}`,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
@@ -42,8 +42,8 @@ app.post('/dblwebhook', webhook.listener(async (vote) => {
   webhookClient.send({
     content: `${emojisrandom} Voted for me on \`https://top.gg/bot/981649513427111957/vote\``,
     components: [button],
-    username: `${userdata.user.tag}`,
-    avatarURL: userdata.user.avatarURL,
+    username: `${userdata.data.tag}`,
+    avatarURL: userdata.data.avatarURL,
   }).catch((err) => console.log(err));
 }));
 

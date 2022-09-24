@@ -84,6 +84,7 @@ module.exports = {
      */
 
     async execute(interaction, client) {
+
         class Paginator {
             constructor(pages = [], {
                 filter,
@@ -328,29 +329,29 @@ module.exports = {
                                     if (response.data.length === 0) return await interaction.reply({ ephemeral: true, content: "The JSON you provided didn't have any data in it! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)" })
                                     if (!response.data.useless && !response.data.useful && !response.data.nsfw) return await interaction.reply({ ephemeral: true, content: "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)" })
                                     if (!response.data.useless.length === 0 && !response.data.useful.length === 0 && !response.data.nsfw.length === 0) return await interaction.reply({ ephemeral: true, content: "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)" })
-                                    if (response.data.useless && response.data.useless.length > 30) return await interaction.reply({ ephemeral: true, content: "The JSON you provided had too much data for the useless category, we only accept 30 custom messages. You can gain more using our premium plan." })
-                                    if (response.data.useful && response.data.useful.length > 30) return await interaction.reply({ ephemeral: true, content: "The JSON you provided had too much data for the useful category, we only accept 30 custom messages. You can gain more using our premium plan." })
-                                    if (response.data.nsfw && response.data.nsfw.length > 30) return await interaction.reply({ ephemeral: true, content: "The JSON you provided had too much data in it for the NSFW category, we only accept 30 custom messages. You can gain more using our premium plan." })
+                                    if (response.data.useless && response.data.useless.length > 30) return await interaction.reply({ ephemeral: true, content: "The JSON you provided had too much data for the useless category, we only accept 30 custom messages. You can gain more by voting for the bot!" })
+                                    if (response.data.useful && response.data.useful.length > 30) return await interaction.reply({ ephemeral: true, content: "The JSON you provided had too much data for the useful category, we only accept 30 custom messages. You can gain more by voting for the bot!" })
+                                    if (response.data.nsfw && response.data.nsfw.length > 30) return await interaction.reply({ ephemeral: true, content: "The JSON you provided had too much data in it for the NSFW category, we only accept 30 custom messages. You can gain more by voting for the bot!" })
 
                                     let useful = result.customMessages.filter(c => c.type === "useful").length;
                                     let useless = result.customMessages.filter(c => c.type === "useless").length;
                                     let nsfw = result.customMessages.filter(c => c.type === "nsfw").length
-                                    if (useful > 30) return await interaction.reply({ ephemeral: true, content: "You can't have more than 30 custom messages in an import for the useful category. You can gain more using our premium plan." })
-                                    if (useless > 30) return await interaction.reply({ ephemeral: true, content: "You can't have more than 30 custom messages in an import for the useless category. You can gain more using our premium plan." })
-                                    if (nsfw > 30) return await interaction.reply({ ephemeral: true, content: "You can't have more than 30 custom messages in an import for the NSFW category. You can gain more using our premium plan." })
+                                    if (useful > 30) return await interaction.reply({ ephemeral: true, content: "You can't have more than 30 custom messages in an import for the useful category. You can gain more by voting for the bot!" })
+                                    if (useless > 30) return await interaction.reply({ ephemeral: true, content: "You can't have more than 30 custom messages in an import for the useless category. You can gain more by voting for the bot!" })
+                                    if (nsfw > 30) return await interaction.reply({ ephemeral: true, content: "You can't have more than 30 custom messages in an import for the NSFW category. You can gain more by voting for the bot!" })
 
                                     if (response.data.useful) {
-                                        if (response.data.useful.length + useful > 30) return await interaction.reply({ ephemeral: true, content: "Adding up your current **useful** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more using our premium plan." })
+                                        if (response.data.useful.length + useful > 30) return await interaction.reply({ ephemeral: true, content: "Adding up your current **useful** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!" })
                                         response.data.useful.map(d => { let newID = makeID(6); result.customMessages.push({ id: newID, msg: d, type: "useful" }) });
                                     }
 
                                     if (response.data.useless) {
-                                        if (response.data.useless.length + useless > 30) return await interaction.reply({ ephemeral: true, content: "Adding up your current **useless** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more using our premium plan." })
+                                        if (response.data.useless.length + useless > 30) return await interaction.reply({ ephemeral: true, content: "Adding up your current **useless** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!" })
                                         response.data.useless.map(d => { let newID = makeID(6); result.customMessages.push({ id: newID, msg: d, type: "useless" }) });
                                     }
 
                                     if (response.data.nsfw) {
-                                        if (response.data.nsfw.length + nsfw > 30) return await interaction.reply({ ephemeral: true, content: "Adding up your current **NSFW** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more using our premium plan." })
+                                        if (response.data.nsfw.length + nsfw > 30) return await interaction.reply({ ephemeral: true, content: "Adding up your current **NSFW** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!" })
                                         response.data.nsfw.map(d => { let newID = makeID(6); result.customMessages.push({ id: newID, msg: d, type: "nsfw" }) });
                                     }
                                     await result.save()
