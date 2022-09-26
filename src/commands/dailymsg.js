@@ -78,14 +78,14 @@ module.exports = {
         guildLang
             .findOne({ guildID: interaction.guild.id })
             .then(async (result) => {
-                const { Language } = require(`../languages/${result.language}.json`);
+                const { Daily } = require(`../languages/${result.language}.json`);
                 if (
                     interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
                 ) {
                     switch (interaction.options.getSubcommand()) {
                         case 'options': {
-                            if (result.dailyMsg && interaction.options.getString("options") === "true") return await interaction.reply({ ephemeral: true, content: "This option is already on, you can turn it off by using the command and selecting `false`" })
-                            if (!result.dailyMsg && interaction.options.getString("options") === "false") return await interaction.reply({ ephemeral: true, content: "This option is already off, you can turn it on by using the command and selecting `true`" })
+                            if (result.dailyMsg && interaction.options.getString("options") === "true") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadytrue}`})
+                            if (!result.dailyMsg && interaction.options.getString("options") === "false") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadyfalse}` })
                             guildLang
                                 .findOne({ guildID: interaction.guild.id })
                                 .then(async () => {
@@ -194,7 +194,7 @@ module.exports = {
                     const errorembed = new EmbedBuilder()
                         .setColor('#F00505')
                         .setTitle('Error!')
-                        .setDescription(Language.embed.error);
+                        .setDescription(Daily.embed.error);
                     await interaction.reply({
                         embeds: [errorembed],
                         ephemeral: true,

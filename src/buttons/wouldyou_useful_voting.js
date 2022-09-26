@@ -48,7 +48,7 @@ module.exports = {
           power = array[Math.floor(Math.random() * array.length)]
           array = [];
         } else if (result.customTypes === "custom") {
-          if (result.customMessages.filter(c => c.type === "useful") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+          if (result.customMessages.filter(c => c.type === "useful") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
           power = result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg;
         }
 

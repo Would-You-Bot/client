@@ -35,7 +35,7 @@ module.exports = {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
-        const { WouldYou } = await require(`../languages/${result.language}.json`);
+        const { WouldYou, NSFW, Rather } = await require(`../languages/${result.language}.json`);
         const { Useless_Powers, Useful_Powers, Nsfw } = await require(`../data/power-${result.language}.json`);
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
@@ -75,7 +75,7 @@ module.exports = {
               power = array[Math.floor(Math.random() * array.length)]
               array = [];
             } else if (result.customTypes === "custom") {
-              if (result.customMessages.filter(c => c.type === "useful") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+              if (result.customMessages.filter(c => c.type === "useful") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
               power = result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg;
             }
 
@@ -107,7 +107,7 @@ module.exports = {
               power = array[Math.floor(Math.random() * array.length)]
               array = [];
             } else if (result.customTypes === "custom") {
-              if (result.customMessages.filter(c => c.type === "useless") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+              if (result.customMessages.filter(c => c.type === "useless") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
               power = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg;
             }
 
@@ -126,9 +126,9 @@ module.exports = {
             break;
           }
           case 'nsfw': {
-            if (!interaction.channel.nsfw) return await interaction.reply({ ephemeral: true, content: "This command can only be used in NSFW channels!" })
+            if (!interaction.channel.nsfw) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nonsfw}` })
             // if statement only work when user votes 
-            if (!result.nsfw) return await interaction.reply({ ephemeral: true, content: "NSFW commands aren't enabled in this server!" })
+            if (!result.nsfw) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nochannel}` })
 
           if (result.customTypes === "regular") {
             power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
@@ -143,7 +143,7 @@ module.exports = {
             power = array[Math.floor(Math.random() * array.length)]
             array = [];
           } else if (result.customTypes === "custom") {
-            if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using \`/wytype <type>\`" })
+            if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
             power = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
           }
 

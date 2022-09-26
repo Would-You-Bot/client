@@ -109,6 +109,22 @@
       "usefulname2": "or this useful Power?",
       "footer": "Would You Rather",
       "thispower": "According to the vote the majority of users would want this power:"
+    },
+    "button": {
+      "nocustom": "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using /wouldyou type"
+    }
+  },
+  "NSFW": {
+    "embed": {
+      "nonsfw": "NSFW commands aren't enabled in this server!",
+      "nochannel": "This command can only be used in NSFW channels!"
+    }
+  },
+  "Daily": {
+    "embed": {
+      "alreadytrue": "This option is already on, you can turn it off by using the command and selecting `false`",
+      "alreadyfalse": "This option is already off, you can turn it on by using the command and selecting `true`",
+      "error": "You are missing the `ManageGuild` permission!\nPlease contact a server administrator to change the language."
     }
   },
   "Guide": {
