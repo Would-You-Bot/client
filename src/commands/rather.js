@@ -40,7 +40,7 @@ module.exports = {
       .then(async (result) => {
         let voting = true;
         if (interaction.options.getBoolean('voting') == false) voting = false;
-        const { Rather } = await require(`../languages/${result.language}.json`);
+        const { Rather, NSFW } = await require(`../languages/${result.language}.json`);
         const { Useless_Powers, Useful_Powers, Nsfw } = await require(`../data/power-${result.language}.json`);
 
         const button = new ActionRowBuilder().addComponents(
@@ -340,9 +340,9 @@ module.exports = {
             break;
 
         case 'nsfw':
-          if(!interaction.channel.nsfw) return await interaction.reply({ ephemeral: true, content: "This command can only be used in NSFW channels!" })
+          if(!interaction.channel.nsfw) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nochannel })
           // if statement only work when user votes 
-          if(!result.nsfw) return await interaction.reply({ ephemeral: true, content: "NSFW commands aren't enabled in this server!" })
+          if(!result.nsfw) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nonsfw })
           {
             let nsfwpower1;
             let nsfwpower2;

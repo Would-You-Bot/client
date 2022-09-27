@@ -25,7 +25,7 @@ module.exports = {
 
     async execute(interaction, client) {
         const users = ["268843733317976066", "347077478726238228", "834549048764661810"];
-        if (!users.find(e => e === interaction.user.id)) return await interaction.reply({ ephemeral: true, content: "Only Would You develpers have access to this command!" })
+        if (!users.find(e => e === interaction.user.id)) return await interaction.reply({ ephemeral: true, content: "Only Would You develpers have access to this command! | Nur würden Sie-Entwickler Zugriff auf diesen Befehl haben!" })
         const cmd = interaction.options.getString("options");
         if (!cat.find(e => e.replace(".js", "") === cmd.toLowerCase())) return await interaction.reply({ ephemeral: true, content: "You must provide a valid command to reload it!" })
 

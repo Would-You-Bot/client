@@ -99,8 +99,8 @@ module.exports = {
                                         .catch();
                                 });
                             daily = new EmbedBuilder()
-                                .setTitle('Daily Would You')
-                                .setDescription(`Successfully ${interaction.options.getString("options") === "true" ? "enabled" : "disabled"} daily Would You messages!${!result.dailyChannel ? `\nSince you ${interaction.options.getString("options") === "true" ? "enabled" : "disabled"} daily messages, you can set a channel for them using \`/dailymsg channel\`` : ""}`)
+                                .setTitle(`${Daily.successEmbed.title} Would You`)
+                                .setDescription(`${Daily.successEmbed.desc} ${interaction.options.getString("options") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc2}${!result.dailyChannel ? `\n${Daily.successEmbed.desc3} ${interaction.options.getString("options") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc4}` : ""}`)
                                 .setFooter({
                                     text: 'Would You',
                                     iconURL: client.user.avatarURL(),
@@ -109,9 +109,9 @@ module.exports = {
                         }
 
                         case 'channel': {
-                            if (!interaction.guild.members.cache.get(client.user.id).permissionsIn(interaction.options.getChannel("channel").id).has("ViewChannel")) return await interaction.reply({ ephemeral: true, content: "The channel provided doesn't allow me to view it. Select a channel which I have access to." })
-                            if (!interaction.guild.members.cache.get(client.user.id).permissionsIn(interaction.options.getChannel("channel").id).has("SendMessages")) return await interaction.reply({ ephemeral: true, content: "The channel provided doesn't allow me to send messages to it. Select a channel which I have access to." })
-                            if (result.dailyChannel && result.dailyChannel === interaction.options.getChannel("channel").id) return await interaction.reply({ ephemeral: true, content: "The provided channel is the same channel that is already set. Make sure to choose a different channel." })
+                            if (!interaction.guild.members.cache.get(client.user.id).permissionsIn(interaction.options.getChannel("channel").id).has("ViewChannel")) return await interaction.reply({ ephemeral: true, content: Daily.errorChannel.viewChannel })
+                            if (!interaction.guild.members.cache.get(client.user.id).permissionsIn(interaction.options.getChannel("channel").id).has("SendMessages")) return await interaction.reply({ ephemeral: true, content: Daily.errorChannel.sendMessages })
+                            if (result.dailyChannel && result.dailyChannel === interaction.options.getChannel("channel").id) return await interaction.reply({ ephemeral: true, content: Daily.errorChannel.alreadySet })
 
                             guildLang
                                 .findOne({ guildID: interaction.guild.id })
@@ -126,8 +126,8 @@ module.exports = {
                                         .catch();
                                 });
                             daily = new EmbedBuilder()
-                                .setTitle('Daily Would You')
-                                .setDescription(`Successfully set <#${interaction.options.getChannel("channel").id}> for daily Would You messages.\nIf you haven't already, you can set the server's timezone for when it will send the message by using \`/dailymsg timezone\`. It's by default \`America/Chicago\``)
+                                .setTitle(Daily.success.title)
+                                .setDescription(`${Daily.success.desc} <#${interaction.options.getChannel("channel").id}> ${Daily.success.desc2}`)
                                 .setFooter({
                                     text: 'Would You',
                                     iconURL: client.user.avatarURL(),
@@ -136,7 +136,7 @@ module.exports = {
                         }
 
                         case 'role': {
-                            if (result.dailyRole && result.dailyRole === interaction.options.getRole("role").id) return await interaction.reply({ ephemeral: true, content: "The provided role is the same role that is already set. Make sure to choose a different role." })
+                            if (result.dailyRole && result.dailyRole === interaction.options.getRole("role").id) return await interaction.reply({ ephemeral: true, content: Daily.errorRole })
 
                             guildLang
                                 .findOne({ guildID: interaction.guild.id })
@@ -151,8 +151,8 @@ module.exports = {
                                         .catch();
                                 });
                             daily = new EmbedBuilder()
-                                .setTitle('Daily Would You')
-                                .setDescription(`Successfully set \`${interaction.options.getRole("role").name}\` role for daily Would You mentions.`)
+                                .setTitle(Daily.success.title)
+                                .setDescription(`${Daily.success.desc} \`${interaction.options.getRole("role").name}\` ${Daily.success.desc3}`)
                                 .setFooter({
                                     text: 'Would You',
                                     iconURL: client.user.avatarURL(),
@@ -161,9 +161,9 @@ module.exports = {
                         }
 
                         case 'timezone': {
-                            if (result.dailyTimezone.toLowerCase() === interaction.options.getString("timezone").toLowerCase().id) return await interaction.reply({ ephemeral: true, content: "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone." })
-
-                            if (!isValid(interaction.options.getString("timezone").toLowerCase())) return await interaction.reply({ ephemeral: true, content: `Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)` })
+                            if (result.dailyTimezone.toLowerCase() === interaction.options.getString("timezone").toLowerCase()) return await interaction.reply({ ephemeral: true, content: Daily.timezone.errorSame })
+                            if (!isValid(interaction.options.getString("timezone").toLowerCase())) return await interaction.reply({ ephemeral: true, content: Daily.timezone.errorInvalid })
+                            
                             guildLang
                                 .findOne({ guildID: interaction.guild.id })
                                 .then(async () => {
@@ -177,8 +177,8 @@ module.exports = {
                                         .catch();
                                 });
                             daily = new EmbedBuilder()
-                                .setTitle('Daily Would You')
-                                .setDescription(`Successfully set \`${interaction.options.getString("timezone")}\` timezone for daily Would You.`)
+                                .setTitle(Daily.success.title)
+                                .setDescription(`${Daily.timezone.desc} \`${interaction.options.getString("timezone")}\` ${Daily.timezone.desc2}`)
                                 .setFooter({
                                     text: 'Would You',
                                     iconURL: client.user.avatarURL(),

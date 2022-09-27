@@ -23,7 +23,7 @@ module.exports = {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
-        const { Language } = require(`../languages/${result.language}.json`);
+        const { Language, wyType } = require(`../languages/${result.language}.json`);
         if (
           interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
         ) {
@@ -42,8 +42,8 @@ module.exports = {
                   d.save()
                 });
               typeEmbed = new EmbedBuilder()
-                .setTitle('WouldYou Type Changed!')
-                .setDescription('Default messages will now only be used for Would You\'s!')
+                .setTitle(wyType.embed.title)
+                .setDescription(wyType.embed.descDef)
                 .setFooter({
                   text: 'Would You',
                   iconURL: client.user.avatarURL(),
@@ -65,8 +65,8 @@ module.exports = {
                   d.save()
                 });
               typeEmbed = new EmbedBuilder()
-                .setTitle('WouldYou Type Changed!')
-                .setDescription('Both custom and default messages will now be used for Would You\'s!')
+                .setTitle(wyType.embed.title)
+                .setDescription(wyType.embed.descBoth)
                 .setFooter({
                   text: 'Would You',
                   iconURL: client.user.avatarURL(),
@@ -88,8 +88,8 @@ module.exports = {
                   d.save()
                 });
               typeEmbed = new EmbedBuilder()
-                .setTitle('WouldYou Type Changed!')
-                .setDescription('Custom messages will now only be used for Would You\'s!')
+                .setTitle(wyType.embed.title)
+                .setDescription(wyType.embed.descCust)
                 .setFooter({
                   text: 'Would You',
                   iconURL: client.user.avatarURL(),
