@@ -84,120 +84,118 @@ module.exports = {
      */
 
     async execute(interaction, client) {
-
-        class Paginator {
-            constructor(pages = [], {
-                filter,
-                timeout
-            } = {
-                    timeout: 5 * 6e4
-                }) {
-                this.pages = Array.isArray(pages) ? pages : [];
-                this.timeout = Number(timeout) || 5 * 6e4;
-                this.page = 0;
-            }
-
-            add(page) {
-                this.pages.push(page);
-                return this;
-            }
-
-            setEndPage(page) {
-                if (page) this.endPage = page;
-                return this;
-            }
-
-            setTransform(fn) {
-                const _pages = [];
-                let i = 0;
-                const ln = this.pages.length;
-                for (const page of this.pages) {
-                    _pages.push(fn(page, i, ln));
-                    i++;
-                }
-                this.pages = _pages;
-                return this;
-            }
-
-            async start(channel, buttons) {
-                if (!this.pages.length) return;
-                const msg = await channel.reply({
-                    embeds: [this.pages[0]],
-                    components: [buttons],
-                    ephemeral: true
-                });
-                const collector = msg.createMessageComponentCollector();
-
-                collector.on('collect', async (inter) => {
-                    try {
-                        if (inter.isButton()) {
-                            if (!inter) return;
-
-                            switch (inter.customId) {
-                                case "first":
-                                    if (this.page === 0) {
-                                        return await inter.reply({
-                                            ephemeral: true,
-                                            content: wyCustom.error.paginate
-                                        });
-                                    } else {
-                                        await inter.update({
-                                            embeds: [this.pages[0]],
-                                            ephemeral: true
-                                        });
-                                        return this.page = 0;
-                                    }
-                                case "prev":
-                                    if (this.pages[this.page - 1]) {
-                                        return await inter.update({
-                                            embeds: [this.pages[--this.page]],
-                                            ephemeral: true
-                                        });
-                                    } else {
-                                        return await inter.reply({
-                                            ephemeral: true,
-                                            content: wyCustom.error.paginate
-                                        });
-                                    }
-                                case "next":
-                                    if (this.pages[this.page + 1]) {
-                                        return await inter.update({
-                                            embeds: [this.pages[++this.page]],
-                                            ephemeral: true
-                                        });
-                                    } else {
-                                        return await inter.reply({
-                                            ephemeral: true,
-                                            content: wyCustom.error.paginate
-                                        });
-                                    }
-                                case "last":
-                                    if (this.page === this.pages.length - 1) {
-                                        return await inter.reply({
-                                            ephemeral: true,
-                                            content: wyCustom.error.paginate
-                                        });
-                                    } else {
-                                        await inter.update({
-                                            embeds: [this.pages[this.pages.length - 1]],
-                                            ephemeral: true
-                                        });
-                                        return this.page = this.pages.length - 1;
-                                    }
-                            }
-                        }
-                    } catch (e) {
-                        return;
-                    }
-                });
-            }
-        }
-
         let typeEmbed;
         guildLang
             .findOne({ guildID: interaction.guild.id })
             .then(async (result) => {
                 const { Language, wyCustom } = require(`../languages/${result.language}.json`);
+                class Paginator {
+                    constructor(pages = [], {
+                        filter,
+                        timeout
+                    } = {
+                            timeout: 5 * 6e4
+                        }) {
+                        this.pages = Array.isArray(pages) ? pages : [];
+                        this.timeout = Number(timeout) || 5 * 6e4;
+                        this.page = 0;
+                    }
+
+                    add(page) {
+                        this.pages.push(page);
+                        return this;
+                    }
+
+                    setEndPage(page) {
+                        if (page) this.endPage = page;
+                        return this;
+                    }
+
+                    setTransform(fn) {
+                        const _pages = [];
+                        let i = 0;
+                        const ln = this.pages.length;
+                        for (const page of this.pages) {
+                            _pages.push(fn(page, i, ln));
+                            i++;
+                        }
+                        this.pages = _pages;
+                        return this;
+                    }
+
+                    async start(channel, buttons) {
+                        if (!this.pages.length) return;
+                        const msg = await channel.reply({
+                            embeds: [this.pages[0]],
+                            components: [buttons],
+                            ephemeral: true
+                        });
+                        const collector = msg.createMessageComponentCollector();
+
+                        collector.on('collect', async (inter) => {
+                            try {
+                                if (inter.isButton()) {
+                                    if (!inter) return;
+
+                                    switch (inter.customId) {
+                                        case "first":
+                                            if (this.page === 0) {
+                                                return await inter.reply({
+                                                    ephemeral: true,
+                                                    content: wyCustom.error.paginate
+                                                });
+                                            } else {
+                                                await inter.update({
+                                                    embeds: [this.pages[0]],
+                                                    ephemeral: true
+                                                });
+                                                return this.page = 0;
+                                            }
+                                        case "prev":
+                                            if (this.pages[this.page - 1]) {
+                                                return await inter.update({
+                                                    embeds: [this.pages[--this.page]],
+                                                    ephemeral: true
+                                                });
+                                            } else {
+                                                return await inter.reply({
+                                                    ephemeral: true,
+                                                    content: wyCustom.error.paginate
+                                                });
+                                            }
+                                        case "next":
+                                            if (this.pages[this.page + 1]) {
+                                                return await inter.update({
+                                                    embeds: [this.pages[++this.page]],
+                                                    ephemeral: true
+                                                });
+                                            } else {
+                                                return await inter.reply({
+                                                    ephemeral: true,
+                                                    content: wyCustom.error.paginate
+                                                });
+                                            }
+                                        case "last":
+                                            if (this.page === this.pages.length - 1) {
+                                                return await inter.reply({
+                                                    ephemeral: true,
+                                                    content: wyCustom.error.paginate
+                                                });
+                                            } else {
+                                                await inter.update({
+                                                    embeds: [this.pages[this.pages.length - 1]],
+                                                    ephemeral: true
+                                                });
+                                                return this.page = this.pages.length - 1;
+                                            }
+                                    }
+                                }
+                            } catch (e) {
+                                return;
+                            }
+                        });
+                    }
+                }
                 if (
                     interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
                 ) {
