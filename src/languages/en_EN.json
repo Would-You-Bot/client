@@ -228,7 +228,9 @@
       "footer": "Would You"
     }
   },
-  "info": {
-    
+  "inter": {
+    "error": "An error occurred while trying to execute that command.",
+    "wait": "You need to wait 30 seconds between every button press.",
+    "again": "Please use the command again."
   }
 }
