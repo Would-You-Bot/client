@@ -206,7 +206,7 @@ module.exports = {
                             }
                             let newID = makeID(6);
                             typeEmbed = new EmbedBuilder()
-                                .setTitle(wyCustom.success.embed.title)
+                                .setTitle(wyCustom.success.embedAdd.title)
                                 .setDescription(`**${wyCustom.success.embedAdd.descID}**: ${newID}\n**${wyCustom.success.embedAdd.descCat}**: ${interaction.options.getString("options").toLowerCase()}\n\n**${wyCustom.success.embedAdd.descCont}**: \`${interaction.options.getString("message")}\``)
                                 .setFooter({
                                     text: 'Would You',
@@ -242,7 +242,7 @@ module.exports = {
                                 let data;
                                 data = result.customMessages.filter(c => c.type === "nsfw").map(
                                     (s, i) =>
-                                        `${wyCustom.success.embed.descID}: ${s.id}\n${wyCustom.success.embed.descMsg}: ${s.msg}`
+                                        `${wyCustom.success.embedAdd.descID}: ${s.id}\n${wyCustom.success.embedAdd.descMsg}: ${s.msg}`
                                 );
                                 data = Array.from({
                                     length: Math.ceil(data.length / 5)
@@ -258,7 +258,7 @@ module.exports = {
                                 let data;
                                 data = result.customMessages.filter(c => c.type === "useless").map(
                                     (s, i) =>
-                                        `${wyCustom.success.embed.descID}: ${s.id}\n${wyCustom.success.embed.descMsg}: ${s.msg}`
+                                        `${wyCustom.success.embedAdd.descID}: ${s.id}\n${wyCustom.success.embedAdd.descMsg}: ${s.msg}`
                                 );
                                 data = Array.from({
                                     length: Math.ceil(data.length / 5)
@@ -274,7 +274,7 @@ module.exports = {
                                 let data;
                                 data = result.customMessages.filter(c => c.type === "useful").map(
                                     (s, i) =>
-                                        `${wyCustom.success.embed.descID}: ${s.id}\n${wyCustom.success.embed.descMsg}: ${s.msg}`
+                                        `${wyCustom.success.embedAdd.descID}: ${s.id}\n${wyCustom.success.embedAdd.descMsg}: ${s.msg}`
                                 );
                                 data = Array.from({
                                     length: Math.ceil(data.length / 5)
