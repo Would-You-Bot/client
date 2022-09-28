@@ -326,9 +326,9 @@ module.exports = {
                                     if (response.data.length === 0) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att3 })
                                     if (!response.data.useless && !response.data.useful && !response.data.nsfw) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att4 })
                                     if (!response.data.useless.length === 0 && !response.data.useful.length === 0 && !response.data.nsfw.length === 0) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att5 })
-                                    if (response.data.useless && response.data.useless.length > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att6 })
-                                    if (response.data.useful && response.data.useful.length > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att7 })
-                                    if (response.data.nsfw && response.data.nsfw.length > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att8 })
+                                    if (response.data.useless && response.data.useless.length > 30 && await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att6 })
+                                    if (response.data.useful && response.data.useful.length > 30 && await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att7 })
+                                    if (response.data.nsfw && response.data.nsfw.length > 30 && await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att8 })
 
                                     let useful = result.customMessages.filter(c => c.type === "useful").length;
                                     let useless = result.customMessages.filter(c => c.type === "useless").length;
@@ -338,17 +338,17 @@ module.exports = {
                                     if (nsfw > 30) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att11 })
 
                                     if (response.data.useful) {
-                                        if (response.data.useful.length + useful > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att12 })
+                                        if (response.data.useful.length + useful > 30 && await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att12 })
                                         response.data.useful.map(d => { let newID = makeID(6); result.customMessages.push({ id: newID, msg: d, type: "useful" }) });
                                     }
 
                                     if (response.data.useless) {
-                                        if (response.data.useless.length + useless > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att13 })
+                                        if (response.data.useless.length + useless > 30 && await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att13 })
                                         response.data.useless.map(d => { let newID = makeID(6); result.customMessages.push({ id: newID, msg: d, type: "useless" }) });
                                     }
 
                                     if (response.data.nsfw) {
-                                        if (response.data.nsfw.length + nsfw > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att14 })
+                                        if (response.data.nsfw.length + nsfw > 30 && await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att14 })
                                         response.data.nsfw.map(d => { let newID = makeID(6); result.customMessages.push({ id: newID, msg: d, type: "nsfw" }) });
                                     }
                                     await result.save()
