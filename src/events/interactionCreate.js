@@ -17,7 +17,7 @@ module.exports = (client, interaction) => {
             botJoined: Date.now() / 1000 | 0,
           });
         } 
-        const { inter } = require(`../languages/${result.language}.json`);
+        const { inter } = require(`../languages/${result.language || "en_EN"}.json`);
         if (interaction.isChatInputCommand()) {
           const command = client.commands.get(interaction.commandName);
           if (!command) return;
