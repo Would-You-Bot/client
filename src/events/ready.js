@@ -65,4 +65,6 @@ module.exports = async (client) => {
       status: 'dnd',
     });
   }, 15000);
+
+  await require('../util/dailyMsgs')(client);
 };

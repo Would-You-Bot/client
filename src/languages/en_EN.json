@@ -12,7 +12,7 @@
   },
   "Language": {
     "embed": {
-      "error": "You are missing the `ManageGuild` permission!\nPlease contact a server administrator to change the language.",
+      "error": "You are missing the `Manage Guild` permission to use this command!",
       "footer": "Would You"
     }
   },
@@ -51,6 +51,61 @@
       "description2": "."
     }
   },
+  "wyCustom": {
+    "error": {
+      "paginate": "You can't proceed that way any further.",
+      "maximum": "You've reached the maximum amount of custom messages. You can gain more by voting for the bot!",
+      "empty": "There currently is no custom Would You messages to view!",
+      "import": {
+        "att1": "You need to provide a valid JSON file!",
+        "att2": "You need to provide a valid JSON file!",
+        "att3": "The JSON you provided didn't have any data in it! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att4": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att5": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att6": "The JSON you provided had too much data for the useless category, we only accept 30 custom messages. You can gain more by voting for the bot!",
+        "att7": "The JSON you provided had too much data for the useful category, we only accept 30 custom messages. You can gain more by voting for the bot!",
+        "att8": "The JSON you provided had too much data for the nsfw category, we only accept 30 custom messages. You can gain more by voting for the bot!",
+        "att9": "You can't have more than 30 custom messages in an import for the useful category. You can gain more by voting for the bot!",
+        "att10": "You can't have more than 30 custom messages in an import for the useless category. You can gain more by voting for the bot!",
+        "att11": "You can't have more than 30 custom messages in an import for the NSFW category. You can gain more by voting for the bot!",
+        "att12": "Adding up your current **useful** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
+        "att13": "Adding up your current **useless** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
+        "att14": "Adding up your current **nsfw** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
+        "att15": "There was an error that occured while running this command, please report it to the support server!"
+      },
+      "export": {
+        "none": "You don't have any custom messages to export!"
+      }
+    },
+    "success": {
+      "import": "Successfully imported those custom messages!",
+      "export": "Successully exported your custom messages!",
+      "embedAdd": {
+        "title": "Successfully created that Would You message!",
+        "descID": "ID",
+        "descMsg": "Message",
+        "descCat": "Category",
+        "descCont": "Content"
+      },
+      "embedRemove": {
+        "title": "Successfully removed that custom WouldYou message!"
+      },
+      "paginator": {
+        "title": "Would You Custom Messages",
+        "descCatUseful": "**Category**: useful",
+        "descCatNSFW": "**Category**: nsfw",
+        "descCatUseless": "**Category**: useless"
+      }
+    }
+  },
+  "wyType": {
+    "embed": {
+      "title": "Would You Type Changed!",
+      "descDef": "Default messages will now be used for Would You commands.",
+      "descBoth": "Both default messages and custom messages will be used for Would You commands.",
+      "descCust": "Custom messages will now be used for Would You commands."
+    }
+  },
   "Custom": {
     "embed": {
       "title": "Would you want this power?",
@@ -61,6 +116,7 @@
     "embed": {
       "Usefulname": "Would you want this power?",
       "Uselessname": "Would you want this power?",
+      "Nsfwname": "Would you want this power?",
       "footer": "Would You"
     },
     "stats": {
@@ -108,6 +164,55 @@
       "usefulname2": "or this useful Power?",
       "footer": "Would You Rather",
       "thispower": "According to the vote the majority of users would want this power:"
+    },
+    "button": {
+      "nocustom": "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using /wouldyou type"
+    }
+  },
+  "NSFW": {
+    "embed": {
+      "nonsfw": "NSFW commands aren't enabled in this server!",
+      "nochannel": "This command can only be used in NSFW channels!",
+      "title": "Would You NSFW",
+      "description": "You've successfully set NSFW to",
+      "errorDesc": "In order to use this command you need to vote for the bot!",
+      "errorAlready": "Nsfw questions are already disabled",
+      "success": "Nsfw questions have been disabled",
+      "missingPerms": "You are missing the `Manage Server` permission to use this command."
+    }
+  },
+  "Daily": {
+    "errorRole": "The provided role is the same role that is already set. Make sure to choose a different role.",
+    "embed": {
+      "alreadytrue": "This option is already on, you can turn it off by using the command and selecting `false`",
+      "alreadyfalse": "This option is already off, you can turn it on by using the command and selecting `true`",
+      "error": "You are missing the `Manage Guild` permission to use this command!"
+    },
+    "successEmbed": {
+      "title": "Daily",
+      "desc": "Successfully",
+      "desc2": "daily Would You messages!",
+      "desc3": "Since you",
+      "desc4": "daily messages, you can set a channel for them using `/dailymsg channel`",
+      "options": "enabled",
+      "options2": "disabled"
+    },
+    "errorChannel": {
+      "viewChannel": "The channel provided doesn't allow me to view it. Select a channel which I have access to.",
+      "sendMessages": "The channel provided doesn't allow me to send messages to it. Select a channel which I have access to.",
+      "alreadySet": "The provided channel is the same channel that is already set. Make sure to choose a different channel."
+    },
+    "success": {
+      "title": "Daily Would You",
+      "desc": "Successfully set",
+      "desc2": "for daily Would You messages.\nIf you haven't already, you can set the server's timezone for when it will send the message by using `/dailymsg timezone`. It's by default `America/Chicago`",
+      "desc3": "role for daily Would You mentions."
+    },
+    "timezone": {
+      "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
+      "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
+      "desc": "Successfully set",
+      "desc2": "timezone for daily Would You."
     }
   },
   "Guide": {
@@ -122,5 +227,10 @@
       "value3": "> Yes! Make sure to talk about the topic you got instead of spamming the commands. This will help the members build a conversation and make the server more active in minutes! There is an image attached with a prime example on how to use the bot!",
       "footer": "Would You"
     }
+  },
+  "inter": {
+    "error": "An error occurred while trying to execute that command.",
+    "wait": "You need to wait 30 seconds between every button press.",
+    "again": "Please use the command again."
   }
 }

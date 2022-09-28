@@ -19,14 +19,37 @@ const guildProfile = new Schema(
     welcomeChannel: {
       type: String,
     },
-    wouldyou: {
+    dailyMsg: {
       type: Boolean,
       default: false,
     },
-    wouldyouChannel: {
+    dailyChannel: {
+      type: String,
+    },
+    dailyRole: {
+      type: String,
+    },
+    dailyTimezone: {
+      type: String,
+      default: "America/Chicago"
+    },
+    dailyDay: {
+      type: Number,
+    },
+    nsfw: {
+      type: Boolean,
+      default: false,
     },
     botJoined: {
       type: Number,
+    },
+    customMessages: [{
+      type: Object,
+      default: {},
+    },],
+    customTypes: {
+      type: String,
+      default: "mixed"
     },
   },
   { timestamps: true },

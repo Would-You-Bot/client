@@ -23,10 +23,29 @@ module.exports = {
       .setTitle('Bot Info')
       .addFields(
         {
-          name: 'Developer 🐒',
+          name: 'Developers 🐒',
           value: `
-          \`\`\`Mezo#0001\n\`\`\``,
+          \`\`\`Mezo#0001\nForGetFulSkyBro#9999\n\`\`\``,
           inline: false,
+        },
+        {
+          name: 'Guilds 🏢',
+          value: `\`\`\`${client.guilds.cache.size}\`\`\``,
+          inline: true,
+        },
+        {
+          name: 'Users 🐧',
+          value: `\`\`\`${client.guilds.cache
+            .reduce((a, b) => a + b.memberCount, 0)
+            .toLocaleString()}\`\`\``,
+          inline: true,
+        },
+        {
+          name: 'Memory 🎇',
+          value: `\`\`\`${round(
+            process.memoryUsage().heapUsed / 1000000000,
+          )}GB\n\`\`\``,
+          inline: true,
         },
         {
           name: 'Last Restart 🚀',
@@ -35,27 +54,8 @@ module.exports = {
           inline: true,
         },
         {
-          name: 'Memory 🎇',
-          value: `\`\`\`${round(
-            process.memoryUsage().heapUsed / 1000000000,
-          )}GB Used Memory\n\`\`\``,
-          inline: true,
-        },
-        {
-          name: 'Guilds 🏢',
-          value: `\`\`\`${client.guilds.cache.size} Total Guilds\`\`\``,
-          inline: true,
-        },
-        {
-          name: 'User 🐧',
-          value: `\`\`\`${client.guilds.cache
-            .reduce((a, b) => a + b.memberCount, 0)
-            .toLocaleString()} Total Users\`\`\``,
-          inline: true,
-        },
-        {
           name: 'Bot Version 🧾',
-          value: `\`\`\`v.${version}\`\`\``,
+          value: `\`\`\`v${version}\`\`\``,
           inline: true,
         },
       )

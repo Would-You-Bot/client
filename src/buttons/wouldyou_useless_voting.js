@@ -34,7 +34,25 @@ module.exports = {
         } else {
           rbutton = [newbutton];
         }
-        power = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
+
+        let power;
+        if (result.customTypes === "regular") {
+          power = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
+        } else if (result.customTypes === "mixed") {
+          let array = [];
+          if (result.customMessages.filter(c => c.type === "useless") != 0) {
+            array.push(result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg || Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
+          } else {
+            power = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
+          }
+          array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
+          power = array[Math.floor(Math.random() * array.length)]
+          array = [];
+        } else if (result.customTypes === "custom") {
+          if (result.customMessages.filter(c => c.type === "useless") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
+          power = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg;
+        }
+
         wouldyouembed = new EmbedBuilder()
           .setColor('#F00505')
           .setFooter({

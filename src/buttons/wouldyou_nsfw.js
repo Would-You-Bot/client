@@ -3,8 +3,8 @@ const guildLang = require('../util/Models/guildModel');
 
 module.exports = {
   data: {
-    name: 'wouldyou_useful',
-    description: 'Would you useful',
+    name: 'wouldyou_nsfw',
+    description: 'Would you nsfw',
   },
   async execute(interaction, client) {
     let power;
@@ -13,7 +13,7 @@ module.exports = {
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { WouldYou } = await require(`../languages/${result.language}.json`);
-        const { Useful_Powers } = await require(`../data/power-${result.language}.json`);
+        const { Nsfw } = await require(`../data/power-${result.language}.json`);
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setLabel('Invite')
@@ -26,7 +26,7 @@ module.exports = {
             .setLabel('Replay')
             .setStyle(1)
             .setEmoji('🔄')
-            .setCustomId('wouldyou_useful'),
+            .setCustomId('wouldyou_nsfw'),
         );
         let rbutton;
         if (Math.round(Math.random() * 15) < 3) {
@@ -36,20 +36,20 @@ module.exports = {
         }
 
         if (result.customTypes === "regular") {
-          power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+          power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
         } else if (result.customTypes === "mixed") {
           let array = [];
-          if (result.customMessages.filter(c => c.type === "useful") != 0) {
-            array.push(result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg || Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
+          if (result.customMessages.filter(c => c.type === "nsfw") != 0) {
+            array.push(result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg || Nsfw[Math.floor(Math.random() * Nsfw.length)])
           } else {
-            power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+            power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
           }
-          array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
+          array.push(Nsfw[Math.floor(Math.random() * Nsfw.length)]);
           power = array[Math.floor(Math.random() * array.length)]
           array = [];
         } else if (result.customTypes === "custom") {
-          if (result.customMessages.filter(c => c.type === "useful") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
-          power = result.customMessages.filter(c => c.type === "useful")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useful").length)].msg;
+          if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
+          power = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
         }
 
         wouldyouembed = new EmbedBuilder()
