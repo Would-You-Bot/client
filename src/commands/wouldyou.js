@@ -126,9 +126,9 @@ module.exports = {
             break;
           }
           case 'nsfw': {
-            if (!interaction.channel.nsfw) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nonsfw}` })
+            if (interaction.channel.nsfw == false) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nochannel}` })
             // if statement only work when user votes 
-            if (!result.nsfw) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nochannel}` })
+            if (!result.nsfw == true) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nonsfw}` })
 
           if (result.customTypes === "regular") {
             power = Nsfw[Math.floor(Math.random() * Nsfw.length)];

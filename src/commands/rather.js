@@ -340,9 +340,9 @@ module.exports = {
             break;
 
         case 'nsfw':
-          if(!interaction.channel.nsfw) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nochannel })
+          if(interaction.channel.nsfw == false) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nonsfw })
           // if statement only work when user votes 
-          if(!result.nsfw) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nonsfw })
+          if(!result.nsfw == true) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nochannel })
           {
             let nsfwpower1;
             let nsfwpower2;
