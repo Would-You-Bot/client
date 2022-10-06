@@ -19,6 +19,14 @@ function isValid(tz) {
     }
 }
 
+function dateType(tz) {
+    if (!tz.includes("/")) return false;
+    let text = tz.split("/");
+
+    if (text.length === 2) return true
+    else return false;
+}
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('dailymsg')
@@ -163,6 +171,7 @@ module.exports = {
                         case 'timezone': {
                             if (result.dailyTimezone.toLowerCase() === interaction.options.getString("timezone").toLowerCase()) return await interaction.reply({ ephemeral: true, content: Daily.timezone.errorSame })
                             if (!isValid(interaction.options.getString("timezone").toLowerCase())) return await interaction.reply({ ephemeral: true, content: Daily.timezone.errorInvalid })
+                            if (!dateType(interaction.options.getString("timezone").toLowerCase())) return await interaction.reply({ ephemeral: true, content: Daily.timezone.errorInvalid })
                             
                             guildLang
                                 .findOne({ guildID: interaction.guild.id })
