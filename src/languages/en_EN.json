@@ -54,7 +54,7 @@
   "wyCustom": {
     "error": {
       "paginate": "You can't proceed that way any further.",
-      "maximum": "You've reached the maximum amount of custom messages. You can add more using our premium nsfw subscription billed annually.",
+      "maximum": "You've reached the maximum amount of custom messages. You can gain more by voting for the bot!",
       "empty": "There currently is no custom Would You messages to view!",
       "import": {
         "att1": "You need to provide a valid JSON file!",
@@ -62,12 +62,12 @@
         "att3": "The JSON you provided didn't have any data in it! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att4": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att5": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
-        "att6": "The JSON you provided had too much data for the useless category, we only accept 30 custom messages. You can gain more by subscribing to our premium plan annually!",
-        "att7": "The JSON you provided had too much data for the useful category, we only accept 30 custom messages. You can gain more by subscribing to our premium plan annually!",
-        "att8": "The JSON you provided had too much data for the nsfw category, we only accept 30 custom messages. You can gain more by subscribing to our premium plan annually!",
-        "att9": "You can't have more than 30 custom messages in an import for the useful category. You can gain more by subscribing to our premium plan annually!",
-        "att10": "You can't have more than 30 custom messages in an import for the useless category. You can gain more by subscribing to our premium plan annually!",
-        "att11": "You can't have more than 30 custom messages in an import for the NSFW category. You can gain more by subscribing to our premium plan annually!",
+        "att6": "The JSON you provided had too much data for the useless category, we only accept 30 custom messages. You can gain more by voting for the bot!",
+        "att7": "The JSON you provided had too much data for the useful category, we only accept 30 custom messages. You can gain more by voting for the bot!",
+        "att8": "The JSON you provided had too much data for the nsfw category, we only accept 30 custom messages. You can gain more by voting for the bot!",
+        "att9": "You can't have more than 30 custom messages in an import for the useful category. You can gain more by voting for the bot!",
+        "att10": "You can't have more than 30 custom messages in an import for the useless category. You can gain more by voting for the bot!",
+        "att11": "You can't have more than 30 custom messages in an import for the NSFW category. You can gain more by voting for the bot!",
         "att12": "Adding up your current **useful** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
         "att13": "Adding up your current **useless** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
         "att14": "Adding up your current **nsfw** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
