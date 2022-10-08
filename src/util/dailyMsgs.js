@@ -9,6 +9,14 @@ module.exports = async (client) => {
             if (!client.channels.cache.get(db.dailyChannel)) return
             if (db.dailyDay && db.dailyDay !== new Date().getDay()) return;
             if (mom.tz(db.dailyTimezone).format("HH") === "12") {
+                if (db.dailyDay === 6) {
+                    db.dailyDay = 0;
+                    db.save()
+                } else {
+                    db.dailyDay = new Date().getDay() + 1;
+                    db.save()
+                }
+
                 const { Useless_Powers, Useful_Powers, } = await require(`../data/power-${db.language}.json`);
                 const { WouldYou } = await require(`../languages/${db.language}.json`);
                 let power;
@@ -58,14 +66,6 @@ module.exports = async (client) => {
                         .get(db.dailyChannel)
                         .send({ embeds: [embed] }).catch(() => { })
                 }
-
-                if (db.dailyDay === 6) {
-                    db.dailyDay = 0;
-                    return db.save()
-                }
-
-                db.dailyDay = new Date().getDay() + 1;
-                db.save()
             }
         })
     }, 4000)
