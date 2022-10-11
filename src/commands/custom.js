@@ -4,37 +4,79 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('custom')
+    .setNameLocalizations({
+      de: 'benutzerdefiniert',
+    })
     .setDescription('Send a custom would you message')
+    .setDescriptionLocalizations({
+      de: 'Sende eine benutzerdefinierte Would You Nachricht',
+    })
     .addSubcommand((subcommand) => subcommand
       .setName('wouldyou')
+      .setNameLocalizations({
+        de: 'wouldyou',
+      })
       .setDescription('Custom /wouldyou message')
+      .setDescriptionLocalizations({
+        de: 'Benutzerdefinierte /wouldyou Nachricht',
+      })
       .addStringOption((option) => option
         .setName('message')
+        .setNameLocalizations({
+          de: 'nachricht',
+        })
         .setDescription('Input for the custom message')
+        .setDescriptionLocalizations({
+          de: 'Sende eine benutzerdefinierte Would You Nachricht',
+        })
         .setRequired(true))
       .addBooleanOption((option) => option
         .setName('voting')
-        .setDescription('Do you want the users to be able to vote?')))
+        .setNameLocalizations({
+          de: 'wahlen',
+        })
+        .setDescription('Do you want the users to be able to vote?'))
+        .setDescriptionLocalizations({
+          de: 'Sende eine benutzerdefinierte Would You Nachricht',
+        }))
     .addSubcommand((subcommand) => subcommand
       .setName('wwyd')
+      .setNameLocalizations({
+        de: 'wwyd',
+      })
       .setDescription('Custom what would you do message')
       .addStringOption((option) => option
         .setName('message')
+        .setNameLocalizations({
+          de: 'nachricht',
+        })
         .setDescription('Input for the custom message')
         .setRequired(true)))
     .addSubcommand((subcommand) => subcommand
       .setName('rather')
+      .setNameLocalizations({
+        de: 'eher',
+      })
       .setDescription('Custom would you rather message')
       .addStringOption((option) => option
         .setRequired(true)
         .setName('messagetop')
+        .setNameLocalizations({
+          de: 'nachrichtoben',
+        })
         .setDescription('Input for the custom'))
       .addStringOption((option) => option
         .setRequired(true)
         .setName('messagebottom')
+        .setNameLocalizations({
+          de: 'nachrichtunten',
+        })
         .setDescription('Input for the custom'))
       .addBooleanOption((option) => option
         .setName('voting')
+        .setNameLocalizations({
+          de: 'wahlen',
+        })
         .setDescription('Do you want the users to be able to vote?'))),
 
   /**

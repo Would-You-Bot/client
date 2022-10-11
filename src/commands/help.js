@@ -9,7 +9,13 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('help')
-    .setDescription('Help command!'),
+    .setNameLocalizations({
+      de: "hilfe"
+    })
+    .setDescription('Help command!')
+    .setDescriptionLocalizations({
+      de: "Hilfe Befehl!"
+    }),
 
   /**
    * @param {CommandInteraction} interaction

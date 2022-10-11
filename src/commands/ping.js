@@ -9,7 +9,13 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('ping')
-    .setDescription('Displays the clients ping'),
+    .setNameLocalizations({
+      de: "ping"
+    })
+    .setDescription('Displays the clients ping')
+    .setDescriptionLocalizations({
+      de: "Zeigt den Ping des Bots an"
+    }),
 
   /**
    * @param {CommandInteraction} interaction
