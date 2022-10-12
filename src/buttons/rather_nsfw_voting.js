@@ -4,7 +4,7 @@ const {
     ButtonBuilder,
   } = require('discord.js');
   const guildLang = require('../util/Models/guildModel');
-  
+  const generateRather = require('../util/generateRather');
   module.exports = {
     data: {
       name: 'rather_nsfw_voting',
@@ -37,37 +37,18 @@ const {
             rbutton = [button, newButton];
           } else rbutton = [newButton];
           {
-            let nsfwpower1;
-            let nsfwpower2;
-            if (result.customTypes === "regular") {
-                nsfwpower1 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-                nsfwpower2 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-            } else if (result.customTypes === "mixed") {
-              if (result.customMessages.filter(c => c.type === "nsfw") != 0) {
-                nsfwpower1 = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg || Useful_Powers[Math.floor(Math.random() * Nsfw.length)];
-              } else {
-                nsfwpower1 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-                nsfwpower2 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-              }
-              nsfwpower2 = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-            } else if (result.customTypes === "custom") {
-              if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
-              nsfwpower1 = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
-              nsfwpower2 = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
-            }
-  
-  
+            let powers = await generateRather(result, Nsfw, "nsfw");
             let ratherembed = new EmbedBuilder()
               .setColor('#0598F6')
               .addFields(
                 {
                   name: Rather.embed.usefulname,
-                  value: `> 1️⃣ ${nsfwpower1}`,
+                  value: `> 1️⃣ ${powers.power1}`,
                   inline: false,
                 },
                 {
                   name: Rather.embed.usefulname2,
-                  value: `> 2️⃣ ${nsfwpower2}`,
+                  value: `> 2️⃣ ${powers.power2}`,
                   inline: false,
                 },
               )
@@ -111,7 +92,7 @@ const {
                     .setTimestamp()
                     .addFields({
                       name: Rather.embed.thispower,
-                      value: `> 1️⃣ ${nsfwpower1}`,
+                      value: `> 1️⃣ ${powers.power1}`,
                       inline: false,
                     });
                 } else if (
@@ -127,7 +108,7 @@ const {
                     .setTimestamp()
                     .addFields({
                       name: Rather.embed.thispower,
-                      value: `> 2️⃣ ${nsfwpower2}`,
+                      value: `> 2️⃣ ${powers.power2}`,
                       inline: false,
                     });
                 } else {
@@ -136,12 +117,12 @@ const {
                     .addFields(
                       {
                         name: Rather.embed.usefulname,
-                        value: `> 1️⃣ ${nsfwpower1}`,
+                        value: `> 1️⃣ ${powers.power1}`,
                         inline: false,
                       },
                       {
                         name: Rather.embed.usefulname2,
-                        value: `> 2️⃣ ${nsfwpower2}`,
+                        value: `> 2️⃣ ${powers.power2}`,
                         inline: false,
                       },
                     )
