@@ -7,7 +7,7 @@ module.exports = async (client) => {
         guilds.map(async db => {
             if (!db.dailyMsg) return;
             if (!isNaN(db.dailyDay)) { if (db.dailyDay === new Date().getDay()) return; }
-            if (mom.tz(db.dailyTimezone).format("HH:mm") === "16:25") {
+            if (mom.tz(db.dailyTimezone).format("HH:mm") === "12:00") {
                 db.dailyDay = new Date().getDay();
                 db.save();
 
