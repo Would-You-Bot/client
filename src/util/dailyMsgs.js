@@ -6,11 +6,8 @@ module.exports = async (client) => {
         const guilds = await guildLang.find();
         guilds.map(async db => {
             if (!db.dailyMsg) return;
-            if (!client.channels.cache.get(db.dailyChannel)) return
-            if (!isNaN(db.dailyDay)) {
-                if (db.dailyDay === new Date().getDay()) return;
-            }
-            if (mom.tz(db.dailyTimezone).format("HH:mm") === "12:00") {
+            if (!isNaN(db.dailyDay)) { if (db.dailyDay === new Date().getDay()) return; }
+            if (mom.tz(db.dailyTimezone).format("HH:mm") === "16:25") {
                 db.dailyDay = new Date().getDay();
                 db.save();
 
@@ -57,11 +54,13 @@ module.exports = async (client) => {
                 if (db.dailyRole) {
                     client.channels.cache
                         .get(db.dailyChannel)
-                        .send({ embeds: [embed], content: `<@&${db.dailyRole}>` }).catch(() => { })
+                        .send({ embeds: [embed], content: `<@&${db.dailyRole}>` })
+                        .catch(() => { })
                 } else {
                     client.channels.cache
                         .get(db.dailyChannel)
-                        .send({ embeds: [embed] }).catch(() => { })
+                        .send({ embeds: [embed] })
+                        .catch(() => { })
                 }
             }
         })
