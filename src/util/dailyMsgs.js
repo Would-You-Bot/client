@@ -6,9 +6,11 @@ module.exports = async (client) => {
         const guilds = await guildLang.find();
         guilds.map(async db => {
             if (!db.dailyMsg) return;
-            if (!client.channels.cache.get(db.dailyChannel)) return
-            if (db.dailyDay && db.dailyDay !== new Date().getDay()) return;
-            if (mom.tz(db.dailyTimezone).format("HH") === "12") {
+            if (!isNaN(db.dailyDay)) { if (db.dailyDay === new Date().getDay()) return; }
+            if (mom.tz(db.dailyTimezone).format("HH:mm") === "16:25") {
+                db.dailyDay = new Date().getDay();
+                db.save();
+
                 const { Useless_Powers, Useful_Powers, } = await require(`../data/power-${db.language}.json`);
                 const { WouldYou } = await require(`../languages/${db.language}.json`);
                 let power;
@@ -52,20 +54,14 @@ module.exports = async (client) => {
                 if (db.dailyRole) {
                     client.channels.cache
                         .get(db.dailyChannel)
-                        .send({ embeds: [embed], content: `<@&${db.dailyRole}>` }).catch(() => { })
+                        .send({ embeds: [embed], content: `<@&${db.dailyRole}>` })
+                        .catch(() => { })
                 } else {
                     client.channels.cache
                         .get(db.dailyChannel)
-                        .send({ embeds: [embed] }).catch(() => { })
+                        .send({ embeds: [embed] })
+                        .catch(() => { })
                 }
-
-                if (db.dailyDay === 6) {
-                    db.dailyDay = 0;
-                    return db.save()
-                }
-
-                db.dailyDay = new Date().getDay() + 1;
-                db.save()
             }
         })
     }, 4000)

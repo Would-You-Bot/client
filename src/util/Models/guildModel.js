@@ -35,6 +35,7 @@ const guildProfile = new Schema(
     },
     dailyDay: {
       type: Number,
+      default: 0,
     },
     nsfw: {
       type: Boolean,
