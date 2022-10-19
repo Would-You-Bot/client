@@ -51,16 +51,23 @@ module.exports = async (client) => {
                         inline: false,
                     });
 
+                client.channels.fetch(db.dailyChannel)
                 if (db.dailyRole) {
+                    try {
                     client.channels.cache
                         .get(db.dailyChannel)
-                        .send({ embeds: [embed], content: `<@&${db.dailyRole}>` })
-                        .catch(() => { })
+                            ?.send({ embeds: [embed], content: `<@&${db.dailyRole}>` })
+                    } catch {
+                        return;
+                    }
                 } else {
-                    client.channels.cache
-                        .get(db.dailyChannel)
-                        .send({ embeds: [embed] })
-                        .catch(() => { })
+                    try {
+                        client.channels.cache
+                            .get(db.dailyChannel)
+                            ?.send({ embeds: [embed] })
+                    } catch {
+                        return;
+                    }
                 }
             }
         })
