@@ -55,16 +55,14 @@ module.exports = async (client) => {
                 if (db.dailyRole) {
                     try {
                     client.channels.cache
-                        .get(db.dailyChannel)
-                            ?.send({ embeds: [embed], content: `<@&${db.dailyRole}>` })
+                        .get(db.dailyChannel)?.send({ embeds: [embed], content: `<@&${db.dailyRole}>` })
                     } catch {
                         return;
                     }
                 } else {
                     try {
                         client.channels.cache
-                            .get(db.dailyChannel)
-                            ?.send({ embeds: [embed] })
+                            .get(db.dailyChannel)?.send({ embeds: [embed] })
                     } catch {
                         return;
                     }
