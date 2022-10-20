@@ -4,7 +4,7 @@ const {
   ButtonBuilder,
 } = require('discord.js');
 const guildLang = require('../util/Models/guildModel');
-
+const generateRather = require('../util/generateRather');
 module.exports = {
   data: {
     name: 'rather_useless_voting',
@@ -38,36 +38,18 @@ module.exports = {
         } else rbutton = [newButton];
         {
           
-          let uselesspower1;
-          let uselesspower2;
-          if (result.customTypes === "regular") {
-            uselesspower1 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
-            uselesspower2 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
-          } else if (result.customTypes === "mixed") {
-            if (result.customMessages.filter(c => c.type === "useless") != 0) {
-              uselesspower1 = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg || Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
-            } else {
-            uselesspower1 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
-            uselesspower2 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
-            }
-            uselesspower2 = Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)];
-          } else if (result.customTypes === "custom") {
-            if (result.customMessages.filter(c => c.type === "useless") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
-            uselesspower1 = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg;
-            uselesspower2 = result.customMessages.filter(c => c.type === "useless")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "useless").length)].msg;
-          }
-
+          let powers = await generateRather(result, Useless_Powers, "useless");
           let ratherembed = new EmbedBuilder()
             .setColor('#F00505')
             .addFields(
               {
                 name: Rather.embed.uselessname,
-                value: `> 1️⃣ ${uselesspower1}`,
+                value: `> 1️⃣ ${powers.power1}`,
                 inline: false,
               },
               {
                 name: Rather.embed.uselessname2,
-                value: `> 2️⃣ ${uselesspower2}`,
+                value: `> 2️⃣ ${powers.power2}}`,
                 inline: false,
               },
             )
@@ -111,7 +93,7 @@ module.exports = {
                   .setTimestamp()
                   .addFields({
                     name: Rather.embed.thispower,
-                    value: `> 1️⃣ ${uselesspower1}`,
+                    value: `> 1️⃣ ${powers.power1}`,
                     inline: false,
                   });
               } else if (
@@ -127,7 +109,7 @@ module.exports = {
                   .setTimestamp()
                   .addFields({
                     name: Rather.embed.thispower,
-                    value: `> 2️⃣ ${uselesspower2}`,
+                    value: `> 2️⃣ ${powers.power2}}`,
                     inline: false,
                   });
               } else {
@@ -136,12 +118,12 @@ module.exports = {
                   .addFields(
                     {
                       name: Rather.embed.uselessname,
-                      value: `> 1️⃣ ${uselesspower1}`,
+                      value: `> 1️⃣ ${powers.power1}`,
                       inline: false,
                     },
                     {
                       name: Rather.embed.uselessname2,
-                      value: `> 2️⃣ ${uselesspower2}`,
+                      value: `> 2️⃣ ${powers.power2}}`,
                       inline: false,
                     },
                   )
