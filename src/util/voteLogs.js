@@ -42,7 +42,7 @@ app.post('/dblwebhook', webhook.listener(async (vote) => {
   webhookClient.send({
     content: `${emojisrandom} Voted for me on \`https://top.gg/bot/981649513427111957/vote\``,
     components: [button],
-    username: `${userdata.data.tag}`,
+    username: `${userdata.data.tag.replace("Discord", "").replace("discord", "")}`,
     avatarURL: userdata.data.avatarURL,
   }).catch((err) => console.log(err));
 }));
