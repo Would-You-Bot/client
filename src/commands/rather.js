@@ -304,9 +304,9 @@ module.exports = {
             break;
 
         case 'nsfw':
-          if(interaction.channel.nsfw == false) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nonsfw })
+          if(interaction.channel.nsfw == false) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nonsfw }).catch((err) => { });
           // if statement only work when user votes 
-          if(!result.nsfw == true) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nochannel })
+          if(!result.nsfw == true) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nochannel }).catch((err) => { });
           {
             let powers = await generateRather(result, Nsfw, "nsfw");
             let ratherembed = new EmbedBuilder()

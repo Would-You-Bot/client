@@ -126,9 +126,9 @@ module.exports = {
             break;
           }
           case 'nsfw': {
-            if (interaction.channel.nsfw == false) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nochannel}` })
+            if (interaction.channel.nsfw == false) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nochannel}` }).catch((err) => { });
             // if statement only work when user votes 
-            if (!result.nsfw == true) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nonsfw}` })
+            if (!result.nsfw == true) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nonsfw}` }).catch((err) => { });
 
           if (result.customTypes === "regular") {
             power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
@@ -143,7 +143,7 @@ module.exports = {
             power = array[Math.floor(Math.random() * array.length)]
             array = [];
           } else if (result.customTypes === "custom") {
-            if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
+            if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` }).catch((err) => { });
             power = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
           }
 
