@@ -4,9 +4,6 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('guide')
-    .setNameLocalizations({
-      de: 'guide'
-    })
     .setDescription('guide to use the bot and increase activity')
     .setDescriptionLocalizations({
       de: 'guide zum benutzen des bots und zur steigerung der aktivität'

@@ -8,9 +8,6 @@ const guildLang = require("../util/Models/guildModel");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("language")
-    .setNameLocalizations({
-      de: "sprache",
-    })
     .setDescription("Change the language for the current guild")
     .setDescriptionLocalizations({
       de: "Ändere die Sprache für den aktuellen Server",
@@ -18,9 +15,6 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("english")
-        .setNameLocalizations({
-          de: "englisch",
-        })
         .setDescription("Set the language to english")
     .setDescriptionLocalizations({
       de: "Ändere die Sprache für den aktuellen Server auf englisch",
@@ -28,9 +22,6 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("german")
-        .setNameLocalizations({
-          de: "deutsch",
-        })
         .setDescription("Set the language to german")
         .setDescriptionLocalizations({
           de: "Ändere die Sprache für den aktuellen Server auf deutsch",

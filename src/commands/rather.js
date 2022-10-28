@@ -9,60 +9,39 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('rather')
-    .setNameLocalizations({
-      de: 'würdest-du-eher',
-    })
     .setDescription('Get a would you rather question.')
     .setDescriptionLocalizations({
       de: 'Erhalte eine würdest du eher Frage.',
     })
     .addSubcommand((subcommand) => subcommand
       .setName('useful')
-      .setNameLocalizations({
-        de: 'nützlich',
-      })
       .setDescription('Get a useful would you rather question')
       .setDescriptionLocalizations({
         de: 'Erhalte eine nützliche würdest du eher Frage.',
       })
       .addBooleanOption((option) => option
         .setName('voting')
-        .setNameLocalizations({
-          de: 'würdest-du-eher',
-        })
         .setDescription('Do you want the users to be able to vote?'))
         .setDescriptionLocalizations({
           de: 'Möchtest du, dass die Nutzer abstimmen können?',
         }))
     .addSubcommand((subcommand) => subcommand
       .setName('useless')
-      .setNameLocalizations({
-        de: 'nutzlos',
-      })
       .setDescription('Get a useless would you rather question')
       .addBooleanOption((option) => option
         .setName('voting')
-        .setNameLocalizations({
-          de: 'wählen',
-        })
         .setDescription('Do you want the users to be able to vote?'))
         .setDescriptionLocalizations({
           de: 'Erhalte eine würdest du eher Frage.',
         }))
     .addSubcommand((subcommand) => subcommand
     .setName('nsfw')
-    .setNameLocalizations({
-      de: 'nsfw',
-    })
     .setDescription('Get a borderline nsfw would you rather question')
     .setDescriptionLocalizations({
       de: 'Erhalte eine nsfw würdest du eher Frage.',
     })
     .addBooleanOption((option) => option
       .setName('voting')
-      .setNameLocalizations({
-        de: 'würdest-du-eher',
-      })
       .setDescription('Do you want the users to be able to vote?'))
       .setDescriptionLocalizations({
         de: 'Möchtest du, dass die Nutzer abstimmen können?',

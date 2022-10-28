@@ -8,9 +8,6 @@ const guildLang = require("../util/Models/guildModel");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("wytype")
-    .setNameLocalizations({
-      de: "wytype",
-    })
     .setDescription("Changes the type of messages that will be used for WWYD.")
     .setDescriptionLocalizations({
       de: "Ändert den Typ der Nachrichten, die für would you verwendet werden.",
@@ -18,9 +15,6 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("regular")
-        .setNameLocalizations({
-          de: "regulär",
-        })
         .setDescription("This changes it to use only default messages.")
         .setDescriptionLocalizations({
           de: "Dies ändert es, um nur Standard Nachrichten zu verwenden.",
@@ -29,9 +23,6 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("mixed")
-        .setNameLocalizations({
-          de: "gemischt",
-        })
         .setDescription(
           "This changes it to use both custom & default messages."
         )
@@ -42,9 +33,6 @@ module.exports = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("custom")
-        .setNameLocalizations({
-          de: "benuzterdefiniert",
-        })
         .setDescription("This changes it to use only custom messages.")
         .setDescriptionLocalizations({
           de: "Dies ändert es, um nur Benutzerdefinierte Nachrichten zu verwenden.",

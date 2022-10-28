@@ -4,9 +4,6 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('commandname')
-        .setNameLocalizations({
-      de: 'commandname but in german',
-    })
     .setDescription('commanddescription')
     .setDescriptionLocalizations({
       de: 'Tets german description',

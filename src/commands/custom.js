@@ -4,80 +4,68 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('custom')
-    .setNameLocalizations({
-      de: 'benutzerdefiniert',
-    })
     .setDescription('Send a custom would you message')
     .setDescriptionLocalizations({
       de: 'Sende eine benutzerdefinierte Would You Nachricht',
     })
     .addSubcommand((subcommand) => subcommand
       .setName('wouldyou')
-      .setNameLocalizations({
-        de: 'wouldyou',
-      })
       .setDescription('Custom /wouldyou message')
       .setDescriptionLocalizations({
         de: 'Benutzerdefinierte /wouldyou Nachricht',
       })
       .addStringOption((option) => option
         .setName('message')
-        .setNameLocalizations({
-          de: 'nachricht',
-        })
-        .setDescription('Input for the custom message')
+         .setDescription('Input for the custom message')
         .setDescriptionLocalizations({
-          de: 'Sende eine benutzerdefinierte Would You Nachricht',
+          de: 'Input für die benutzerdefinierte Nachricht',
         })
         .setRequired(true))
       .addBooleanOption((option) => option
         .setName('voting')
-        .setNameLocalizations({
-          de: 'wahlen',
-        })
         .setDescription('Do you want the users to be able to vote?'))
         .setDescriptionLocalizations({
-          de: 'Sende eine benutzerdefinierte Would You Nachricht',
+          de: 'möchtest du, dass die Nutzer abstimmen können?',
         }))
     .addSubcommand((subcommand) => subcommand
       .setName('wwyd')
-      .setNameLocalizations({
-        de: 'wwyd',
-      })
       .setDescription('Custom what would you do message')
+      .setDescriptionLocalizations({
+        de: 'Benutzerdefinierte was würdest du tuen Nachricht',
+      })
       .addStringOption((option) => option
         .setName('message')
-        .setNameLocalizations({
-          de: 'nachricht',
-        })
         .setDescription('Input for the custom message')
+        .setDescriptionLocalizations({
+          de: 'Input für die benutzerdefinierte Nachricht',
+        })
         .setRequired(true)))
     .addSubcommand((subcommand) => subcommand
       .setName('rather')
-      .setNameLocalizations({
-        de: 'eher',
-      })
       .setDescription('Custom would you rather message')
+      .setDescriptionLocalizations({
+        de: 'Benutzerdefinierte würdest du eher Nachricht',
+      })
       .addStringOption((option) => option
         .setRequired(true)
-        .setName('messagetop')
-        .setNameLocalizations({
-          de: 'nachrichtoben',
-        })
-        .setDescription('Input for the custom'))
+        .setName('message-top')
+        .setDescription('Input for the custom')
+        .setDescriptionLocalizations({
+          de: 'Input für die benutzerdefinierte Nachricht',
+        }))
       .addStringOption((option) => option
         .setRequired(true)
-        .setName('messagebottom')
-        .setNameLocalizations({
-          de: 'nachrichtunten',
-        })
-        .setDescription('Input for the custom'))
+        .setName('message-bottom')
+        .setDescription('Input for the custom')
+        .setDescriptionLocalizations({
+          de: 'Input für die benutzerdefinierte Nachricht',
+          }))
       .addBooleanOption((option) => option
         .setName('voting')
-        .setNameLocalizations({
-          de: 'wahlen',
-        })
-        .setDescription('Do you want the users to be able to vote?'))),
+        .setDescription('Do you want the users to be able to vote?')
+        .setDescriptionLocalizations({
+          de: 'möchtest du, dass die Nutzer abstimmen können?',
+        }))),
 
   /**
    * @param {CommandInteraction} interaction
@@ -202,12 +190,12 @@ module.exports = {
               .setColor('#0598F6')
               .addFields({
                 name: Rather.embed.usefulname,
-                value: `> 1️⃣ ${interaction.options.getString('messagetop')}`,
+                value: `> 1️⃣ ${interaction.options.getString('message-top')}`,
                 inline: false,
               })
               .addFields({
                 name: Rather.embed.usefulname2,
-                value: `> 2️⃣ ${interaction.options.getString('messagebottom')}`,
+                value: `> 2️⃣ ${interaction.options.getString('message-bottom')}`,
                 inline: false,
               })
               .setFooter({
@@ -252,7 +240,7 @@ module.exports = {
                       .addFields({
                         name: Rather.embed.thispower,
                         value: `> 1️⃣ ${interaction.options.getString(
-                          'messagetop',
+                          'message-top',
                         )}`,
                         inline: false,
                       });
@@ -270,7 +258,7 @@ module.exports = {
                       .addFields({
                         name: Rather.embed.thispower,
                         value: `> 2️⃣ ${interaction.options.getString(
-                          'messagebottom',
+                          'message-bottom',
                         )}`,
                         inline: false,
                       });

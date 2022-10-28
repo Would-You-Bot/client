@@ -10,9 +10,6 @@ const api = new Topgg.Api(process.env.TOPGGTOKEN)
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('nsfw')
-    .setNameLocalizations({
-      de: "nsfw"
-    })
     .setDescription('Disabled or enable nsfw questions')
     .setDescriptionLocalizations({
       de: "Deaktiviere oder aktiviere nsfw fragen"
@@ -20,9 +17,6 @@ module.exports = {
     .addBooleanOption((option) =>
       option
         .setName('enable')
-        .setNameLocalizations({
-          de: "aktivieren"
-        })
         .setDescription('Disbaled or enable nsfw questions')
         .setDescriptionLocalizations({
           de:  "Deaktiviere oder aktiviere nsfw fragen"
