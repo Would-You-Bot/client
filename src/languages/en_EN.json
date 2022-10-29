@@ -88,7 +88,13 @@
         "descCont": "Content"
       },
       "embedRemove": {
-        "title": "Successfully removed that custom WouldYou message!"
+        "title": "Successfully removed that custom Would You message!"
+      },
+      "embedRemoveAll": {
+        "title": "Are you sure you want to delete every Would You custom message?",
+        "accept": "Successfully deleted all of the Would You custom messages!",
+        "decline": "You declined deleting all of Would You custom messages.",
+        "none": "You currently don't have any Would You custom messages to delete!"
       },
       "paginator": {
         "title": "Would You Custom Messages",
@@ -140,7 +146,7 @@
       "footer": "Would You",
       "Fields": {
           "name": "**My Commands**",
-          "value": "`/wouldyou` - Start a discussion about random powers\n`/ping` - Pong!\n`/language` - Change the language of the bot for the server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat\n`/welcome` - Add or remove the welcome channel!\n`/support` - If you ever need help on the bot, use this command to get help from the support team!",
+          "value": "`/Would You` - Start a discussion about random powers\n`/ping` - Pong!\n`/language` - Change the language of the bot for the server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat\n`/welcome` - Add or remove the welcome channel!\n`/support` - If you ever need help on the bot, use this command to get help from the support team!",
           "privacyname": "**Privacy Policy**",
           "privacy": "We value your privacy. If you have any concerns about your data, check out privacy policy [here](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
         }
@@ -166,7 +172,7 @@
       "thispower": "According to the vote the majority of users would want this power:"
     },
     "button": {
-      "nocustom": "There's currently no custom WouldYou messages to be displayed! Either make some or change the type using /wouldyou type"
+      "nocustom": "There's currently no custom Would You messages to be displayed! Either make some or change the type using /Would You type"
     }
   },
   "NSFW": {

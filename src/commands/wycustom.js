@@ -52,13 +52,18 @@ module.exports = {
         .addSubcommand((subcommand) =>
             subcommand
                 .setName("remove")
-                .setDescription("Removes a custom message")
+                .setDescription("Removes a custom message.")
                 .addStringOption((option) =>
                     option
                         .setName("message")
                         .setDescription("Input a custom WouldYou ID number to remove it.")
                         .setRequired(true)
-                ),
+            )
+        )
+        .addSubcommand((subcommand) =>
+            subcommand
+                .setName("removeall")
+                .setDescription("Removes all custom messages.")
         )
         .addSubcommand((subcommand) =>
             subcommand
@@ -207,6 +212,7 @@ module.exports = {
                             let newID = makeID(6);
                             typeEmbed = new EmbedBuilder()
                                 .setTitle(wyCustom.success.embed.title)
+                                .setColor("#0598F4")
                                 .setDescription(`**${wyCustom.success.embedAdd.descID}**: ${newID}\n**${wyCustom.success.embedAdd.descCat}**: ${interaction.options.getString("options").toLowerCase()}\n\n**${wyCustom.success.embedAdd.descCont}**: \`${interaction.options.getString("message")}\``)
                                 .setFooter({
                                     text: 'Would You',
@@ -221,6 +227,7 @@ module.exports = {
                         case 'remove': {
                             typeEmbed = new EmbedBuilder()
                                 .setTitle(wyCustom.success.embedRemove.title)
+                                .setColor("#0598F4")
                                 .setFooter({
                                     text: 'Would You',
                                     iconURL: client.user.avatarURL(),
@@ -231,6 +238,31 @@ module.exports = {
                             result.customMessages = filtered
                             await result.save()
                             break;
+                        }
+
+                        case 'removeall': {
+                            if (result.customMessages.length === 0) return interaction.reply({ content: wyCustom.success.embedRemoveAll.none, ephemeral: true })
+
+                            typeEmbed = new EmbedBuilder()
+                                .setTitle(wyCustom.success.embedRemoveAll.title)
+                                .setColor("#0598F4")
+                                .setFooter({
+                                    text: 'Would You',
+                                    iconURL: client.user.avatarURL(),
+                                });
+
+                            const button = new ActionRowBuilder().addComponents(
+                                new ButtonBuilder()
+                                    .setLabel('Accept')
+                                    .setStyle(4)
+                                    .setCustomId('wycustom_accept'),
+                                new ButtonBuilder()
+                                    .setLabel('Decline')
+                                    .setStyle(2)
+                                    .setCustomId('wycustom_decline'),
+                            );
+
+                            return interaction.reply({ embeds: [typeEmbed], components: [button], ephemeral: true })
                         }
 
                         case 'view': {
