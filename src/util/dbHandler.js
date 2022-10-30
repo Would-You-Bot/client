@@ -3,8 +3,9 @@ require('dotenv').config();
 
 const { ChalkAdvanced } = require('chalk-advanced');
 
-connect(process.env.MONGO_URI || 'mongodb://localhost:27017/wouldyou', {
+connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
+  serverSelectionTimeoutMS: 1000
 }).then(() => console.log(
   `${ChalkAdvanced.white('Database')} ${ChalkAdvanced.gray(
     '>',
