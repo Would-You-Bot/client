@@ -198,6 +198,7 @@
       "title": "Daily",
       "desc": "Successfully",
       "desc2": "daily Would You messages!",
+      "desc22": "rather daily Would You messages!",
       "desc3": "Since you",
       "desc4": "daily messages, you can set a channel for them using `/dailymsg channel`",
       "options": "enabled",

@@ -33,6 +33,10 @@ const guildProfile = new Schema(
       type: String,
       default: "America/Chicago"
     },
+    dailyRather: {
+      type: Boolean,
+      default: false,
+    },
     dailyDay: {
       type: Number,
     },
