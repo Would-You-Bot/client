@@ -4,7 +4,7 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
     data: {
         name: 'wycustom_accept',
-        description: 'Would you useful',
+        description: 'WyCustom Accept',
     },
     async execute(interaction, client) {
         guildLang
