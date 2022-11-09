@@ -125,6 +125,9 @@
       "Nsfwname": "¿Querrías este poder?",
       "footer": "Would You"
     },
+    "replays": {
+      "disabled": "¡Volver a jugar está actualmente deshabilitado en este servidor!"
+    },
     "stats": {
       "of": "of",
       "taking": " querría este poder.",
@@ -171,6 +174,9 @@
       "footer": "Would You Rather",
       "thispower": "Según la votación, la mayoría de los usuarios querrían este poder:"
     },
+    "replays": {
+      "disabled": "¡Volver a jugar está actualmente deshabilitado en este servidor!"
+    },
     "button": {
       "nocustom": "¡Actualmente no hay mensajes personalizados! Haga algunos o cambie el tipo usando /Would You type"
     }
@@ -184,6 +190,19 @@
       "errorDesc": "¡Para usar este comando necesitas votar por el bot!",
       "errorAlready": "Las preguntas NSFW ya están deshabilitadas.",
       "success": "Preguntas NSFW han sido deshabilitadas.",
+      "missingPerms": "¡Te falta el permiso `Manage guild` para usar este comando!"
+    }
+  },
+  "REPLAY": {
+    "embed": {
+      "title": "Repeticiones de Would You",
+      "description": "Configuraste repeticiones con éxito",
+      "errorDesc": "¡Para usar este comando necesitas votar por el bot!",
+      "errorAlready": "Las repeticiones ya están deshabilitadas.",
+      "errorAlready2": "Las repeticiones ya están habilitadas.",
+      "cooldownSuccess": "El cooldown fue habilitado con éxito para ",
+      "cooldownSuccess2": " segundos!",
+      "success": "Las repeticiones fueran deshabilitadas.",
       "missingPerms": "¡Te falta el permiso `Manage guild` para usar este comando!"
     }
   },
