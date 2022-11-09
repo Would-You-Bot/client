@@ -33,10 +33,6 @@ const guildProfile = new Schema(
       type: String,
       default: "America/Chicago"
     },
-    dailyRather: {
-      type: Boolean,
-      default: false,
-    },
     dailyDay: {
       type: Number,
       default: 0,
@@ -44,6 +40,14 @@ const guildProfile = new Schema(
     nsfw: {
       type: Boolean,
       default: false,
+    },
+    replay: {
+      type: Boolean,
+      default: true,
+    },
+    replayCooldown: {
+      type: Number,
+      default: 30000,
     },
     botJoined: {
       type: Number,

@@ -91,7 +91,7 @@ module.exports = {
               let message = await interaction
                 .reply({
                   embeds: [ratherembed],
-                  components: rbutton,
+                  components: result.replay ? rbutton  : [] || [],
                   fetchReply: true,
                 })
                 .catch((err) => {
@@ -171,7 +171,7 @@ module.exports = {
                     await interaction
                       .editReply({
                         embeds: [ratherembed],
-                        components: rbutton || [],
+                        components: result.replay ? rbutton  : [] || [],
                       })
                       .catch((err) => {
                         return;
@@ -211,7 +211,7 @@ module.exports = {
                 .reply({
                   embeds: [ratherembed],
                   fetchReply: true,
-                  components: rbutton || [],
+                  components: result.replay ? rbutton  : [] || [],
                 })
                 .catch((err) => {
                   return;
@@ -290,7 +290,7 @@ module.exports = {
                     await interaction
                       .editReply({
                         embeds: [ratherembed],
-                        components: rbutton || [],
+                        components: result.replay ? rbutton  : [] || [],
                       })
                       .catch((err) => {
                         return;
@@ -333,7 +333,7 @@ module.exports = {
               .reply({
                 embeds: [ratherembed],
                 fetchReply: true,
-                components: rbutton || [],
+                components: result.replay ? rbutton  : [] || [],
               })
               .catch((err) => {
                 return;
@@ -412,7 +412,7 @@ module.exports = {
                   await interaction
                     .editReply({
                       embeds: [ratherembed],
-                      components: rbutton || [],
+                      components: result.replay ? rbutton  : [] || [],
                     })
                     .catch((err) => {
                       return;
