@@ -38,7 +38,6 @@ module.exports = {
                         .setRequired(true)
                         .addChoices(
                             { name: 'Useful', value: 'useful' },
-                            { name: 'NSFW', value: 'nsfw' },
                             { name: 'Useless', value: 'useless' },
                         )
                 )
@@ -74,7 +73,7 @@ module.exports = {
             subcommand
                 .setName("import")
                 .setDescription("Imports custom messages from a JSON file.")
-                .addAttachmentOption(option => option.setName('attachment').setDescription('Import a JSON file containing useless, useful, or nsfw Would You custom messages.').setRequired(true)
+                .addAttachmentOption(option => option.setName('attachment').setDescription('Import a JSON file containing useless or useful Would You custom messages.').setRequired(true)
                 )
         )
         .addSubcommand((subcommand) =>
@@ -270,22 +269,6 @@ module.exports = {
 
                             const page = new Paginator([], {})
 
-                            if (result.customMessages.filter(c => c.type === "nsfw" > 0)) {
-                                let data;
-                                data = result.customMessages.filter(c => c.type === "nsfw").map(
-                                    (s, i) =>
-                                        `${wyCustom.success.embed.descID}: ${s.id}\n${wyCustom.success.embed.descMsg}: ${s.msg}`
-                                );
-                                data = Array.from({
-                                    length: Math.ceil(data.length / 5)
-                                },
-                                    (a, r) => data.slice(r * 5, r * 5 + 5)
-                                );
-
-                                Math.ceil(data.length / 5);
-                                data = data.map(e => page.add(new EmbedBuilder().setTitle(wyCustom.success.paginator.title).setDescription(`${wyCustom.success.paginator.descCatNSFW}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
-                            }
-
                             if (result.customMessages.filter(c => c.type === "useless" > 0)) {
                                 let data;
                                 data = result.customMessages.filter(c => c.type === "useless").map(
@@ -356,18 +339,15 @@ module.exports = {
                             })
                                 .then(async response => {
                                     if (response.data.length === 0) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att3 })
-                                    if (!response.data.useless && !response.data.useful && !response.data.nsfw) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att4 })
-                                    if (!response.data.useless.length === 0 && !response.data.useful.length === 0 && !response.data.nsfw.length === 0) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att5 })
+                                    if (!response.data.useless && !response.data.useful) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att4 })
+                                    if (!response.data.useless.length === 0 && !response.data.useful.length === 0) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att5 })
                                     if (response.data.useless && response.data.useless.length > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att6 })
                                     if (response.data.useful && response.data.useful.length > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att7 })
-                                    if (response.data.nsfw && response.data.nsfw.length > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att8 })
 
                                     let useful = result.customMessages.filter(c => c.type === "useful").length;
                                     let useless = result.customMessages.filter(c => c.type === "useless").length;
-                                    let nsfw = result.customMessages.filter(c => c.type === "nsfw").length
                                     if (useful > 30) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att9 })
                                     if (useless > 30) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att10 })
-                                    if (nsfw > 30) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att11 })
 
                                     if (response.data.useful) {
                                         if (response.data.useful.length + useful > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att12 })
@@ -379,10 +359,6 @@ module.exports = {
                                         response.data.useless.map(d => { let newID = makeID(6); result.customMessages.push({ id: newID, msg: d, type: "useless" }) });
                                     }
 
-                                    if (response.data.nsfw) {
-                                        if (response.data.nsfw.length + nsfw > 30 & await api.hasVoted(interaction.user.id) == false) return await interaction.reply({ ephemeral: true, content: wyCustom.error.import.att14 })
-                                        response.data.nsfw.map(d => { let newID = makeID(6); result.customMessages.push({ id: newID, msg: d, type: "nsfw" }) });
-                                    }
                                     await result.save()
 
                                     return await interaction.reply({ ephemeral: true, content: wyCustom.success.import })
@@ -394,7 +370,6 @@ module.exports = {
                             if (result.customMessages.length === 0) return await interaction.reply({ ephemeral: true, content: wyCustom.error.export.none })
                             let useful = result.customMessages.filter(c => c.type === "useful");
                             let useless = result.customMessages.filter(c => c.type === "useless");
-                            let nsfw = result.customMessages.filter(c => c.type === "nsfw");
 
                             let text = `{\n`;
                             if (useful.length > 0) {
@@ -411,15 +386,6 @@ module.exports = {
                                 useless.map((a, i) => {
                                     i = i++ + 1
                                     text += `\n"${a.msg}"${useless.length !== i ? "," : ""}`
-                                })
-                                text += `\n]${nsfw.length > 0 ? "," : ""}`
-                            }
-
-                            if (nsfw.length > 0) {
-                                text += `\n"nsfw": [`
-                                nsfw.map((a, i) => {
-                                    i = i++ + 1
-                                    text += `\n"${a.msg}"${nsfw.length !== i ? "," : ""}`
                                 })
                                 text += `\n]`
                             }
