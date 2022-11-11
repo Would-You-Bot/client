@@ -1,5 +1,4 @@
 const guildcreate = require('../util/Models/guildModel');
-
 module.exports = (client, interaction) => {
   if (!interaction.guild) {
     interaction.reply({
@@ -16,7 +15,7 @@ module.exports = (client, interaction) => {
             language: 'en_EN',
             botJoined: Date.now() / 1000 | 0,
           });
-        } 
+        }
         // const { inter } = require(`../languages/${result.language || "en_EN"}.json`);
         if (interaction.isChatInputCommand()) {
           const command = client.commands.get(interaction.commandName);
@@ -31,12 +30,15 @@ module.exports = (client, interaction) => {
             });
           }
         } else if (interaction.isButton()) {
-          if (client.used.has(interaction.user.id)) return await interaction.reply({ ephemeral: true, content: "You need to wait 30 seconds between every button press." }).catch(() => { });
+          if (client.used.has(interaction.user.id)) {
+            return await interaction.reply({ ephemeral: true, content: `<t:${Math.floor(result.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!` }).catch(() => { });
+          }
+          
           const button = client.buttons.get(interaction.customId);
-          if (!button) return interaction.reply({ content: "Please use the command again.", ephemeral: true }).catch(() => {  });
+          if (!button) return interaction.reply({ content: "Please use the command again.", ephemeral: true }).catch(() => { });
           try {
-            client.used.set(interaction.user.id, Date.now() + 30000)
-            setTimeout(() => client.used.delete(interaction.user.id), 30000)
+            client.used.set(interaction.user.id, Date.now() + result.replayCooldown)
+            setTimeout(() => client.used.delete(interaction.user.id), result.replayCooldown)
 
             button.execute(interaction, client);
           } catch (err) {
@@ -49,4 +51,4 @@ module.exports = (client, interaction) => {
         }
       });
   }
-};
+}

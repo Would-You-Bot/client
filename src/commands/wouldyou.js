@@ -165,7 +165,7 @@ module.exports = {
         const message = await interaction.reply({
           embeds: [wouldyouembed],
           fetchReply: true,
-          components: rbutton || [],
+          components: result.replay ? rbutton : [] || [],
         }).catch((err) => { return; });
         if (interaction.options.getBoolean('voting') == false) {
         } else {
@@ -240,7 +240,7 @@ module.exports = {
               } catch (error) {}
               await interaction.editReply({
                 embeds: [wouldyouembed],
-                components: rbutton || [],
+                components: result.replay ? rbutton : [] || [],
               }).catch((err) => { return; });
 
               collector.stop();

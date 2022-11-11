@@ -125,6 +125,9 @@
       "Nsfwname": "Would you want this power?",
       "footer": "Would You"
     },
+    "replays": {
+      "disabled": "Replaying in this server is currently disabled!"
+    },
     "stats": {
       "of": "of",
       "taking": " would take this power.",
@@ -171,6 +174,9 @@
       "footer": "Would You Rather",
       "thispower": "According to the vote the majority of users would want this power:"
     },
+    "replays": {
+      "disabled": "Replaying in this server is currently disabled!"
+    },
     "button": {
       "nocustom": "There's currently no custom Would You messages to be displayed! Either make some or change the type using /Would You type"
     }
@@ -187,6 +193,19 @@
       "missingPerms": "You are missing the `Manage Server` permission to use this command."
     }
   },
+  "REPLAY": {
+    "embed": {
+      "title": "Would You Replays",
+      "description": "You've successfully set Replay to",
+      "errorDesc": "In order to use this command you need to vote for the bot!",
+      "errorAlready": "Replaying is already disabled",
+      "errorAlready2": "Replaying is already enabled",
+      "cooldownSuccess": "Successfully put cooldown for ",
+      "cooldownSuccess2": " seconds!",
+      "success": "Replay has been disabled successfully",
+      "missingPerms": "You are missing the `Manage Server` permission to use this command."
+    }
+  },
   "Daily": {
     "errorRole": "The provided role is the same role that is already set. Make sure to choose a different role.",
     "embed": {
@@ -198,6 +217,7 @@
       "title": "Daily",
       "desc": "Successfully",
       "desc2": "daily Would You messages!",
+      "desc22": "rather daily Would You messages!",
       "desc3": "Since you",
       "desc4": "daily messages, you can set a channel for them using `/dailymsg channel`",
       "options": "enabled",

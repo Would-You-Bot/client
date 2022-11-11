@@ -37,15 +37,11 @@ const guildProfile = new Schema(
       type: Number,
       default: 0,
     },
-    nsfw: {
-      type: Boolean,
-      default: false,
-    },
     replay: {
       type: Boolean,
       default: true,
     },
-    replaycooldown: {
+    replayCooldown: {
       type: Number,
       default: 30000,
     },
