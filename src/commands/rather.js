@@ -22,13 +22,7 @@ module.exports = {
       .setDescription('Get a useless would you rather question')
       .addBooleanOption((option) => option
         .setName('voting')
-        .setDescription('Do you want the users to be able to vote?')))
-    .addSubcommand((subcommand) => subcommand
-    .setName('nsfw')
-    .setDescription('Get a borderline nsfw would you rather question')
-    .addBooleanOption((option) => option
-      .setName('voting')
-      .setDescription('Do you want the users to be able to vote?'))),
+        .setDescription('Do you want the users to be able to vote?'))),
 
   /**
    * @param {CommandInteraction} interaction
@@ -41,8 +35,8 @@ module.exports = {
       .then(async (result) => {
         let voting = true;
         if (interaction.options.getBoolean('voting') == false) voting = false;
-        const { Rather, NSFW } = await require(`../languages/${result.language}.json`);
-        const { Useless_Powers, Useful_Powers, Nsfw } = await require(`../data/power-${result.language}.json`);
+        const { Rather } = await require(`../languages/${result.language}.json`);
+        const { Useless_Powers, Useful_Powers } = await require(`../data/power-${result.language}.json`);
 
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
@@ -302,129 +296,7 @@ module.exports = {
               }
             }
             break;
-
-        case 'nsfw':
-          if(interaction.channel.nsfw == false) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nonsfw }).catch((err) => { });
-          // if statement only work when user votes 
-          if(!result.nsfw == true) return await interaction.reply({ ephemeral: true, content: NSFW.embed.nochannel }).catch((err) => { });
-          {
-            let powers = await generateRather(result, Nsfw, "nsfw");
-            let ratherembed = new EmbedBuilder()
-              .setColor('#F00505')
-              .addFields(
-                {
-                  name: Rather.embed.uselessname,
-                  value: `> 1️⃣ ${powers.power1}`,
-                  inline: false,
-                },
-                {
-                  name: Rather.embed.uselessname2,
-                  value: `> 2️⃣ ${powers.power2}`,
-                  inline: false,
-                },
-              )
-              .setFooter({
-                text: `${Rather.embed.footer}`,
-                iconURL: client.user.avatarURL(),
-              })
-              .setTimestamp();
-
-            let message = await interaction
-              .reply({
-                embeds: [ratherembed],
-                fetchReply: true,
-                components: rbutton || [],
-              })
-              .catch((err) => {
-                return;
-              });
-            if (interaction.options.getBoolean('voting') == false) {
-            } else {
-              try {
-                await message.react('1️⃣');
-                await message.react('2️⃣');
-                const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
-
-                const collector = message.createReactionCollector({
-                  filter,
-                  time: 20000,
-                });
-                collector.on('collect', async () => {});
-
-                collector.on('end', async () => {
-                  if (
-                    message.reactions.cache.get('1️⃣').count - 1
-                    > message.reactions.cache.get('2️⃣').count - 1
-                  ) {
-                    ratherembed = new EmbedBuilder()
-                      .setColor('#F00505')
-                      .setFooter({
-                        text: `${Rather.embed.footer}`,
-                        iconURL: client.user.avatarURL(),
-                      })
-                      .setTimestamp()
-                      .addFields({
-                        name: Rather.embed.thispower,
-                        value: `> 1️⃣ ${powers.power1}`,
-                        inline: false,
-                      });
-                  } else if (
-                    message.reactions.cache.get('1️⃣').count - 1
-                    < message.reactions.cache.get('2️⃣').count - 1
-                  ) {
-                    ratherembed = new EmbedBuilder()
-                      .setColor('#F00505')
-                      .setFooter({
-                        text: `${Rather.embed.footer}`,
-                        iconURL: client.user.avatarURL(),
-                      })
-                      .setTimestamp()
-                      .addFields({
-                        name: Rather.embed.thispower,
-                        value: `> 2️⃣ ${powers.power2}`,
-                        inline: false,
-                      });
-                  } else {
-                    ratherembed = new EmbedBuilder()
-                      .setColor('#ffffff')
-                      .addFields(
-                        {
-                          name: Rather.embed.uselessname,
-                          value: `> 1️⃣ ${powers.power1}`,
-                          inline: false,
-                        },
-                        {
-                          name: Rather.embed.uselessname2,
-                          value: `> 2️⃣ ${powers.power2}`,
-                          inline: false,
-                        },
-                      )
-                      .setFooter({
-                        text: `${Rather.embed.footer}`,
-                        iconURL: client.user.avatarURL(),
-                      })
-                      .setTimestamp();
-                  }
-
-                  try {
-                    await message.reactions.removeAll();
-                  } catch (error) {}
-                  await interaction
-                    .editReply({
-                      embeds: [ratherembed],
-                      components: rbutton || [],
-                    })
-                    .catch((err) => {
-                      return;
-                    });
-
-                  collector.stop();
-                });
-              } catch (error) {}
-            }
           }
-          break;
-      }
       });
   },
 };

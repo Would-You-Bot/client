@@ -69,7 +69,7 @@ module.exports = {
             subcommand
                 .setName("import")
                 .setDescription("Imports custom messages from a JSON file.")
-                .addAttachmentOption(option => option.setName('attachment').setDescription('Import a JSON file containing useless, useful, or nsfw Would You custom messages.').setRequired(true)
+                .addAttachmentOption(option => option.setName('attachment').setDescription('Import a JSON file containing useless or useful Would You custom messages.').setRequired(true)
                 )
         )
         .addSubcommand((subcommand) =>

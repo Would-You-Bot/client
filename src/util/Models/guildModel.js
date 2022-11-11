@@ -37,10 +37,6 @@ const guildProfile = new Schema(
       type: Number,
       default: 0,
     },
-    nsfw: {
-      type: Boolean,
-      default: false,
-    },
     botJoined: {
       type: Number,
     },

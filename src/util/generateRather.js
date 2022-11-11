@@ -36,7 +36,7 @@ module.exports = async (result, _PowersList, _type) => {
     let power2;
     if (result.customTypes === "regular") {
         /* 
-            1. Generate 2 random powers from _PowerList given as param > rather.js and replay system trough buttons. (useful,useles,nsfw)
+            1. Generate 2 random powers from _PowerList given as param > rather.js and replay system trough buttons. (useful,useles)
             2. Check if both powers are the same. If so regenerate. Otherwise return them -> generateRegular()
             3. Set powers to generated power messages.
         */
