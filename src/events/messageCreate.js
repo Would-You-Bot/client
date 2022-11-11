@@ -25,6 +25,6 @@ module.exports = async (client, message) => {
     if (message.content && (new RegExp(`^(<@!?${client.user.id}>)`)).test(message.content)) return message.channel.send({
         embeds: [embed],
         components: [supportbutton]
-    });
+    }).catch(() => { })
 
 };
