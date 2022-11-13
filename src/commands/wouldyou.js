@@ -15,10 +15,6 @@ module.exports = {
       .addBooleanOption((option) => option
         .setName('voting')
         .setDescription('Do you want the users to be able to vote?')))
-    .addSubcommand((subcommand) => subcommand.setName('nsfw').setDescription('Borderline NSFW Questions')
-      .addBooleanOption((option) => option
-        .setName('voting')
-        .setDescription('Do you want the users to be able to vote?')))
     .addSubcommand((subcommand) => subcommand.setName('useful').setDescription('Useful Power')
       .addBooleanOption((option) => option
         .setName('voting')
@@ -35,8 +31,8 @@ module.exports = {
     guildLang
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
-        const { WouldYou, NSFW, Rather } = await require(`../languages/${result.language}.json`);
-        const { Useless_Powers, Useful_Powers, Nsfw } = await require(`../data/power-${result.language}.json`);
+        const { WouldYou, Rather } = await require(`../languages/${result.language}.json`);
+        const { Useless_Powers, Useful_Powers } = await require(`../data/power-${result.language}.json`);
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setLabel('Invite')
@@ -125,42 +121,6 @@ module.exports = {
               });
             break;
           }
-          case 'nsfw': {
-            if (interaction.channel.nsfw == false) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nochannel}` })
-            // if statement only work when user votes 
-            if (!result.nsfw == true) return await interaction.reply({ ephemeral: true, content: `${NSFW.embed.nonsfw}` })
-
-          if (result.customTypes === "regular") {
-            power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-          } else if (result.customTypes === "mixed") {
-            let array = [];
-            if (result.customMessages.filter(c => c.type === "nsfw") != 0) {
-              array.push(result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg || Nsfw[Math.floor(Math.random() * Nsfw.length)])
-            } else {
-              power = Nsfw[Math.floor(Math.random() * Nsfw.length)];
-            }
-            array.push(Nsfw[Math.floor(Math.random() * Nsfw.length)]);
-            power = array[Math.floor(Math.random() * array.length)]
-            array = [];
-          } else if (result.customTypes === "custom") {
-            if (result.customMessages.filter(c => c.type === "nsfw") == 0) return await interaction.reply({ ephemeral: true, content: `${Rather.button.nocustom}` })
-            power = result.customMessages.filter(c => c.type === "nsfw")[Math.floor(Math.random() * result.customMessages.filter(c => c.type === "nsfw").length)].msg;
-          }
-
-          wouldyouembed = new EmbedBuilder()
-            .setColor('#F00505')
-            .setFooter({
-              text: `${WouldYou.embed.footer}`,
-              iconURL: client.user.avatarURL(),
-            })
-            .setTimestamp()
-            .addFields({
-              name: WouldYou.embed.Nsfwname,
-              value: `> ${power}`,
-              inline: false,
-            });
-        }
-        break; 
       }
         const message = await interaction.reply({
           embeds: [wouldyouembed],

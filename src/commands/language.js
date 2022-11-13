@@ -12,7 +12,8 @@ module.exports = {
     .addSubcommand((subcommand) => subcommand
       .setName('english')
       .setDescription('Set the language to english'))
-    .addSubcommand((subcommand) => subcommand.setName('german').setDescription('Set the language to german')),
+    .addSubcommand((subcommand) => subcommand.setName('german').setDescription('Set the language to german'))
+    .addSubcommand((subcommand) => subcommand.setName('spanish').setDescription('Set the language to spanish')),
 
   /**
    * @param {CommandInteraction} interaction
@@ -68,6 +69,28 @@ module.exports = {
               languageembed = new EmbedBuilder()
                 .setTitle('Sprache bearbeitet!')
                 .setDescription('Deutsch wurde als neue Sprache ausgewählt!')
+                .setFooter({
+                  text: 'Would You',
+                  iconURL: client.user.avatarURL(),
+                });
+              break;
+            }
+            case 'spanish': {
+              guildLang
+                .findOne({ guildID: interaction.guild.id })
+                .then(async () => {
+                  await guildLang
+                    .findOneAndUpdate(
+                      { guildID: interaction.guild.id },
+                      {
+                        language: 'es_ES',
+                      },
+                    )
+                    .catch();
+                });
+              languageembed = new EmbedBuilder()
+                .setTitle('¡Idioma cambiado!')
+                .setDescription('¡Has seleccionado el español como nuevo idioma!')
                 .setFooter({
                   text: 'Would You',
                   iconURL: client.user.avatarURL(),

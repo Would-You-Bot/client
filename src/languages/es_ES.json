@@ -1,0 +1,262 @@
+{
+  "Ping": {
+    "embed": {
+      "title": "🏓 Pong!",
+      "api": "Latencia de la API",
+      "client": "Latencia del cliente",
+      "footer": "Would You"
+    },
+    "button": {
+      "title": "Latencia de la API de Discord"
+    }
+  },
+  "Language": {
+    "embed": {
+      "error": "¡Te falta el permiso `Manage guild` para usar este comando!",
+      "footer": "Would You"
+    }
+  },
+  "Wwyd": {
+    "embed": {
+      "title": "¿Qué harías **tú**?",
+      "footer": "Explica qué y por qué."
+    }
+  },
+  "Support": {
+    "embed": {
+      "title": "Would You - Soporte",
+      "description": "Si alguna vez necesitas ayuda con algo, simplemente comunícate con el **equipo de soporte** en nuestro **[Servidor de soporte](https://discord.gg/vMyXAxEznS)!**",
+      "footer": "Would You"
+    }
+  },
+  "Welcome": {
+    "embed": {
+      "title": "¿Querrías este poder? ¡Explica por qué!",
+      "footer": "acaba de unirse al servidor!"
+    },
+    "error": {
+      "description": "¡No tienes permiso para usar ese comando!"
+    },
+    "removeembed": {
+      "title": "¡Canal de bienvenida eliminado!",
+      "description":  "¡Has eliminado con éxito el canal de bienvenida!"
+    },
+    "nochannel": {
+      "title": "No se pudo encontrar un canal de bienvenida.",
+      "description":  "¡No se puede eliminar el canal de bienvenida porque no hay un canal de bienvenida establecido!"
+    },
+    "savedchannel": {
+      "title": "¡Canal de bienvenida establecido!",
+      "description": "Se ha configurado correctamente el canal de bienvenida en: ",
+      "description2": "."
+    }
+  },
+  "wyCustom": {
+    "error": {
+      "paginate": "No puedes continuar para ese lado.",
+      "maximum": "Has alcanzado la cantidad máxima de mensajes personalizados. ¡Puedes ganar más votando por el bot!",
+      "empty": "¡Actualmente no hay mensajes personalizados para ver!",
+      "import": {
+        "att1": "¡Debes proporcionar un archivo JSON válido!",
+        "att2": "¡Debes proporcionar un archivo JSON válido!",
+        "att3": "¡El JSON que proporcionaste no tenía ningún dato! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att4": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att5": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att6": "El JSON que proporcionaste tiene demasiados datos para la categoría inútil, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
+        "att7": "El JSON que proporcionaste tiene demasiados datos para la categoría útil, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
+        "att8": "El JSON que proporcionaste tiene demasiados datos para la categoría NSFW, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
+        "att9": "No puedes tener más que 30 mensajes personalizados en una importación para la categoría útil. ¡Puedes ganar más votando por el bot!",
+        "att10": "No puedes tener más que 30 mensajes personalizados en una importación para la categoría inútil. ¡Puedes ganar más votando por el bot!",
+        "att11": "No puedes tener más que 30 mensajes personalizados en una importación para la categoría NSFW. ¡Puedes ganar más votando por el bot!",
+        "att12": "Sumando tus mensajes personalizados **útiles** actuales y los que están en tu archivo, esto supera los 30, que es el límite. ¡Puedes ganar más votando por el bot!",
+        "att13": "Sumando tus mensajes personalizados **inútiles** actuales y los que están en tu archivo, esto supera los 30, que es el límite. ¡Puedes ganar más votando por el bot!",
+        "att14": "Sumando tus mensajes personalizados **NSFW** actuales y los que están en tu archivo, esto supera los 30, que es el límite. ¡Puedes ganar más votando por el bot!",
+        "att15": "Se produjo un error al ejecutar este comando, por favor infórmelo al servidor de soporte."
+      },
+      "export": {
+        "none": "¡No tienes ningun mensaje personalizado para exportar!"
+      }
+    },
+    "success": {
+      "import": "¡Importó con éxito los mensajes personalizados!",
+      "export": "¡Exportó con éxito sus mensajes personalizados!",
+      "embedAdd": {
+        "title": "¡Se creó con éxito el mensaje Would You!",
+        "descID": "ID",
+        "descMsg": "Mensaje",
+        "descCat": "Categoría",
+        "descCont": "Contenido"
+      },
+      "embedRemove": {
+        "title": "¡Se eliminó con éxito ese mensaje Would You!"
+      },
+      "embedRemoveAll": {
+        "title": "¿Estás seguro de que deseas eliminar todos los mensajes personalizados de Would You?",
+        "accept": "¡Eliminó con éxito todos los mensajes personalizados de Would You!",
+        "decline": "Has rechazado eliminar todos los mensajes personalizados de Would You.",
+        "none": "¡Actualmente no tienes ningún mensaje personalizado para eliminar!"
+      },
+      "paginator": {
+        "title": "Mensajes personalizados de Would You",
+        "descCatUseful": "**Categoría**: útil",
+        "descCatNSFW": "**Categoría**: NSFW",
+        "descCatUseless": "**Categoría**: inútil"
+      }
+    }
+  },
+  "wyType": {
+    "embed": {
+      "title": "Tipo de Would You cambiado!",
+      "descDef": "Los mensajes por defecto ahora se utilizarán para los comandos.",
+      "descBoth": "Tanto los mensajes por defecto como los mensajes personalizados se utilizarán para los comandos.",
+      "descCust": "Los mensajes personalizados ahora se utilizarán para los comandos."
+    }
+  },
+  "Custom": {
+    "embed": {
+      "title": "¿Querrías este poder?",
+      "footer": "Would You"
+    }
+  },
+  "WouldYou": {
+    "embed": {
+      "Usefulname": "¿Querrías este poder?",
+      "Uselessname": "¿Querrías este poder?",
+      "Nsfwname": "¿Querrías este poder?",
+      "footer": "Would You"
+    },
+    "replays": {
+      "disabled": "¡Volver a jugar está actualmente deshabilitado en este servidor!"
+    },
+    "stats": {
+      "of": "of",
+      "taking": " querría este poder.",
+      "user": "user",
+      "users": "users"
+    }
+  },
+  "Random": {
+    "embed": {
+      "text1": "Querrías este poder pero",
+      "text2": "puedes elegir un efecto secundario?",
+      "footer": "Would You"
+    }
+  },
+  "Help": {
+    "embed": {
+      "title": "Info",
+      "description": "**Would You** es un bot creado para aumentar la actividad del servidor de Discord.",
+      "footer": "Would You",
+      "Fields": {
+          "name": "**Mis Comandos**",
+          "value": "`/Would You` - Inicia una discusión sobre poderes aleatorios.\n`/ping` - Pong!\n`/language` - Cambia el idioma del bot para el servidor.\n`/help` - Muestra esta información.\n`/rather` - Te da dos poderes para elegir.\n`/custom` - envía un mensaje personalizado en el chat!\n`/welcome` - ¡Agrega o elimina el canal de bienvenida!\n`/support`: si alguna vez necesitas ayuda con el bot, ¡usa este comando para obtener ayuda del equipo de soporte!",
+          "privacyname": "**Política de privacidad**",
+          "privacy": "Valoramos tu privacidad. Si tienes alguna duda sobre tus datos, consulta nuestra política de privacidad [aquí](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
+        }
+    },
+    "button": {
+      "title": "Nuestro Discord"
+    }
+  },
+  "Vote": {
+    "embed": {
+      "title": "¡Votar ayuda **Would You** a ganar más usuarios, asegúrate de votar todos los días!",
+      "value": "Clica para votar",
+      "footer": "Would You"
+    }
+  },
+  "Rather": {
+    "embed": {
+      "uselessname": "¿Preferirías tener esto?",
+      "uselessname2": "¿o este poder inútil?",
+      "usefulname": "¿Preferirías tener esto?",
+      "usefulname2": "¿o este poder útil?",
+      "footer": "Would You Rather",
+      "thispower": "Según la votación, la mayoría de los usuarios querrían este poder:"
+    },
+    "replays": {
+      "disabled": "¡Volver a jugar está actualmente deshabilitado en este servidor!"
+    },
+    "button": {
+      "nocustom": "¡Actualmente no hay mensajes personalizados! Haga algunos o cambie el tipo usando /Would You type"
+    }
+  },
+  "NSFW": {
+    "embed": {
+      "nonsfw": "¡Los comandos NSFW no están habilitados en este servidor!",
+      "nochannel": "¡Este comando solo se puede usar en canales NSFW!",
+      "title": "Would You NSFW",
+      "description": "Ha configurado correctamente NSFW",
+      "errorDesc": "¡Para usar este comando necesitas votar por el bot!",
+      "errorAlready": "Las preguntas NSFW ya están deshabilitadas.",
+      "success": "Preguntas NSFW han sido deshabilitadas.",
+      "missingPerms": "¡Te falta el permiso `Manage guild` para usar este comando!"
+    }
+  },
+  "REPLAY": {
+    "embed": {
+      "title": "Repeticiones de Would You",
+      "description": "Configuraste repeticiones con éxito",
+      "errorDesc": "¡Para usar este comando necesitas votar por el bot!",
+      "errorAlready": "Las repeticiones ya están deshabilitadas.",
+      "errorAlready2": "Las repeticiones ya están habilitadas.",
+      "cooldownSuccess": "El cooldown fue habilitado con éxito para ",
+      "cooldownSuccess2": " segundos!",
+      "success": "Las repeticiones fueran deshabilitadas.",
+      "missingPerms": "¡Te falta el permiso `Manage guild` para usar este comando!"
+    }
+  },
+  "Daily": {
+    "errorRole": "El rol proporcionado es el mismo rol que ya está establecido. Asegúrate de elegir un rol diferente.",
+    "embed": {
+      "alreadytrue": "Esta opción ya está activada, puedes desactivarla usando el comando y seleccionando `false`",
+      "alreadyfalse": "Esta opción ya está desactivada, puedes activarla usando el comando y seleccionando `true`",
+      "error": "¡Te falta el permiso `Manage guild` para usar este comando!"
+    },
+    "successEmbed": {
+      "title": "Diario",
+      "desc": "Con éxito",
+      "desc2": "Mensajes Would You diarias!",
+      "desc22": "Mensajes Would You Rather (que prefieres) diarias!",
+      "desc3": "Desde que tu",
+      "desc4": "mensajes diarios, puedes establecer un canal para ellos usando `/dailymsg channel`",
+      "options": "activada",
+      "options2": "desactivada"
+    },
+    "errorChannel": {
+      "viewChannel": "No tengo permiso para ver ese canal. Selecciona un canal al que tenga acceso.",
+      "sendMessages": "No tengo permiso para enviar mensajes a ese canal. Selecciona un canal al que tenga acceso.",
+      "alreadySet": "El canal proporcionado es el mismo canal que ya está configurado. Asegúrate de elegir un canal diferente."
+    },
+    "success": {
+      "title": "Would You Diario",
+      "desc": "Configurado con éxito",
+      "desc2": "para mensajes Would You diarias.\nSi aún no lo has hecho, puedes configurar la zona horaria del servidor para cuándo enviará el mensaje usando `/dailymsg timezone`. Es por defecto `América/Chicago`",
+      "desc3": "rol para menciones Would You diarias."
+    },
+    "timezone": {
+      "errorSame": "La zona horaria proporcionada es la misma zona horaria que ya está configurada. Asegúrate de elegir una zona horaria diferente.",
+      "errorInvalid": "La zona horaria no es válida, puedes elegir una zona horaria válida en [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
+      "desc": "Configurado con éxito",
+      "desc2": "Zona horaria para Would You diario."
+    }
+  },
+  "Guide": {
+    "embed": {
+      "title": "Would You | Guía",
+      "description": "Guía para utilizar todo el potencial de Would You",
+      "name1": "Cómo usar correctamente Would You!",
+      "value1": "Cria un canal dedicado para el bot o permita que los usuarios usen el bot en el chat principal.\n > El propósito de Would You es hacer que los chats sean más activos, por lo que sería muy irónico negar el uso de Would You en los chats principales.\n > Si desea utilizar el bot en todo su potencial, utilice el comando </welcome:1011374285350260914> y configure un canal de bienvenida. El canal se utilizará para enviar un mensaje cada vez que un usuario se una.",
+      "name2": "¿Por qué necesito eso?",
+      "value2": "> La intención detrás de esto es ayudar a los nuevos usuarios a ser parte de la conversación, ¡dándoles un tema del que hablar inmediatamente después de unirse! Esto no solo hace que el servidor sea más activo, sino que también hace que los nuevos usuarios se sientan más incluidos justo después de unirse al servidor y los alienta a quedarse por más tiempo.",
+      "name3": "¿Algún consejo más?",
+      "value3": "> ¡Sí! Asegúrate de hablar sobre el tema en lugar de hacer spam de comandos. ¡Esto ayudará a los miembros a construir una conversación y hacer que el servidor sea más activo en minutos! ¡Hay una imagen adjunta con un excelente ejemplo de cómo usar el bot!",
+      "footer": "Would You"
+    }
+  },
+  "inter": {
+    "error": "Ocurrió un error al intentar ejecutar ese comando.",
+    "wait": "Debes esperar 30 segundos entre cada pulsación de botón.",
+    "again": "Por favor utiliza el comando de nuevo."
+  }
+}
