@@ -10,7 +10,11 @@ const guildProfile = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('welcome')
-    .setDescription('Change settings for the welcome')
+    .setDescription('Change settings for the welcome systen')
+    .setDescriptionLocalizations({
+      de: 'Ändere die Einstellungen für das Willkommenssystem',
+      "es-ES": '' ''
+    })
     .addSubcommand((subcommand) => subcommand.setName('remove').setDescription('Remove the welcome channel'))
     .addSubcommand((subcommand) => subcommand
       .setName('add')

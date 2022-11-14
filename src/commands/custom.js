@@ -5,6 +5,10 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('custom')
     .setDescription('Send a custom would you message')
+    .setDescriptionLocalizations({
+      de: 'Sende eine benutzerdefinierte Would you Nachricht',
+      "es-ES": ''
+    })
     .addSubcommand((subcommand) => subcommand
       .setName('wouldyou')
       .setDescription('Custom /wouldyou message')

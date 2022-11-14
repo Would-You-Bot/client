@@ -8,6 +8,10 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('replay')
         .setDescription('Edit the replay system.')
+        .setDescriptionLocalizations({
+            de: 'Bearbeite das Replay System.',
+            "es-ES": '' ''
+        })
         .addSubcommand((subcommand) => subcommand
             .setName('toggle')
             .setDescription('Enable/disable the replay button')

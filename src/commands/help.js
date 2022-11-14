@@ -11,7 +11,8 @@ module.exports = {
     .setName('help')
     .setDescription('Help command!')
     .setDescriptionLocalizations({
-      de: "Hilfe Befehl!"
+      de: "Hilfe Befehl!",
+      "es-ES": '' ''
     }),
   /**
    * @param {CommandInteraction} interaction

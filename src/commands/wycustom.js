@@ -27,6 +27,10 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('wycustom')
         .setDescription('Adds custom WouldYou messages.')
+        .setDescriptionLocalizations({
+            de: 'Fügt eigene WouldYou Fragen hinzu.',
+            "es-ES": '' ''
+        })
         .addSubcommand((subcommand) =>
             subcommand
                 .setName("add")

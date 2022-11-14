@@ -10,7 +10,11 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('wouldyou')
-    .setDescription('Would you')
+    .setDescription('Gives you a would you question')
+    .setDescriptionLocalizations({
+      de: 'Gibt dir eine would you Frage',
+      "es-ES": '' ''
+    })
     .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Useless Power')
       .addBooleanOption((option) => option
         .setName('voting')

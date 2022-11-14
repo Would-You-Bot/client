@@ -9,6 +9,10 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('language')
     .setDescription('Change the language for the current guild')
+    .setDescriptionLocalizations({
+      de: 'Ändere die Sprache für den aktuellen Server',
+      "es-ES": '' ''
+    })
     .addSubcommand((subcommand) => subcommand
       .setName('english')
       .setDescription('Set the language to english'))

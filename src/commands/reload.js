@@ -11,6 +11,10 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('reload')
         .setDescription('Reloads slash commands.')
+        .setDescriptionLocalizations({
+            de: 'Lädt slash commands neu.',
+            "es-ES": '' ''
+        })
         .addStringOption((option) =>
             option
                 .setName("options")

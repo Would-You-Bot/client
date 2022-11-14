@@ -4,7 +4,11 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('vote')
-    .setDescription('Vote for me!'),
+    .setDescription('Vote for me!')
+    .setDescriptionLocalizations({
+      de: 'Stimme für mich ab!',
+      "es-ES": '' ''
+    }),
 
   /**
    * @param {CommandInteraction} interaction

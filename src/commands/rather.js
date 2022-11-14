@@ -11,6 +11,10 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('rather')
     .setDescription('Get a would you rather question.')
+    .setDescriptionLocalizations({
+      de: 'Erhalte eine Würdest du eher Frage.',
+      "es-ES": '' ''
+    })
     .addSubcommand((subcommand) => subcommand
       .setName('useful')
       .setDescription('Get a useful would you rather question')
