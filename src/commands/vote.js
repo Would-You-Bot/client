@@ -7,7 +7,7 @@ module.exports = {
     .setDescription('Vote for me!')
     .setDescriptionLocalizations({
       de: 'Stimme für mich ab!',
-      "es-ES": '' ''
+      "es-ES": '¡Vota por mí!'
     }),
 
   /**

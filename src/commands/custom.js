@@ -7,7 +7,7 @@ module.exports = {
     .setDescription('Send a custom would you message')
     .setDescriptionLocalizations({
       de: 'Sende eine benutzerdefinierte Would you Nachricht',
-      "es-ES": ''
+      "es-ES": 'Envía un mensaje Would you personalizado'
     })
     .addSubcommand((subcommand) => subcommand
       .setName('wouldyou')

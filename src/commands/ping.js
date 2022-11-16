@@ -12,7 +12,7 @@ module.exports = {
     .setDescription('Displays the clients ping')
     .setDescriptionLocalizations({
       de: 'Zeigt den Ping des Clients an',
-      "es-ES": '' ''
+      "es-ES": 'Muestra el ping del cliente'
     }),
 
   /**

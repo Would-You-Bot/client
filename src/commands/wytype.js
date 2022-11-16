@@ -11,7 +11,7 @@ module.exports = {
     .setDescription('Changes the type of messages that will be used for WWYD.')
     .setDescriptionLocalizations({
       de: 'Ändert den Typ der Nachrichten, die für WWYD verwendet werden.',
-      "es-ES": '' ''
+      "es-ES": 'Cambia el tipo de mensajes que se utilizarán para WWYD.'
     })
     .addSubcommand((subcommand) => subcommand.setName('regular').setDescription('This changes it to use only default messages.'))
     .addSubcommand((subcommand) => subcommand.setName('mixed').setDescription('This changes it to use both custom & default messages.'))

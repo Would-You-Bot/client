@@ -13,7 +13,7 @@ module.exports = {
     .setDescription('Get a would you rather question.')
     .setDescriptionLocalizations({
       de: 'Erhalte eine Würdest du eher Frage.',
-      "es-ES": '' ''
+      "es-ES": 'Obtiene une pregunta ¿Qué prefieres?'
     })
     .addSubcommand((subcommand) => subcommand
       .setName('useful')
