@@ -13,7 +13,7 @@ module.exports = {
         .setDescription('Reloads slash commands.')
         .setDescriptionLocalizations({
             de: 'Lädt slash commands neu.',
-            "es-ES": '' ''
+            "es-ES": 'Recargar los slash commands.'
         })
         .addStringOption((option) =>
             option

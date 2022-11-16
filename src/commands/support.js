@@ -12,7 +12,7 @@ module.exports = {
     .setDescription('Link to our support server')
     .setDescriptionLocalizations({
       de: 'Link zu unserem Support Server',
-      "es-ES": '' ''
+      "es-ES": 'Link para nuestro servidor de soporte'
     }),
 
   /**

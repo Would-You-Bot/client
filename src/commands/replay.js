@@ -10,7 +10,7 @@ module.exports = {
         .setDescription('Edit the replay system.')
         .setDescriptionLocalizations({
             de: 'Bearbeite das Replay System.',
-            "es-ES": '' ''
+            "es-ES": 'Editar el sistema de repetición.'
         })
         .addSubcommand((subcommand) => subcommand
             .setName('toggle')

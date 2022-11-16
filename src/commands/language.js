@@ -11,7 +11,7 @@ module.exports = {
     .setDescription('Change the language for the current guild')
     .setDescriptionLocalizations({
       de: 'Ändere die Sprache für den aktuellen Server',
-      "es-ES": '' ''
+      "es-ES": 'Cambiar el idioma del bot en el servidor'
     })
     .addSubcommand((subcommand) => subcommand
       .setName('english')

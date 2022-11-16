@@ -33,7 +33,7 @@ module.exports = {
         .setDescription('Daily Would You messages')
         .setDescriptionLocalizations({
             de: 'Tägliche Würdest du Nachrichten',
-            "es-ES": '' ''
+            "es-ES": 'Mensajes Would You diarios'
           })
         .addSubcommand((subcommand) =>
             subcommand

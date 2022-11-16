@@ -13,7 +13,7 @@ module.exports = {
     .setDescription('Gives you a would you question')
     .setDescriptionLocalizations({
       de: 'Gibt dir eine would you Frage',
-      "es-ES": '' ''
+      "es-ES": 'Te hace una pregunta Would You'
     })
     .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Useless Power')
       .addBooleanOption((option) => option

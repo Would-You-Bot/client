@@ -12,7 +12,7 @@ module.exports = {
     .setDescription('Help command!')
     .setDescriptionLocalizations({
       de: "Hilfe Befehl!",
-      "es-ES": '' ''
+      "es-ES": 'Comando de ayuda!'
     }),
   /**
    * @param {CommandInteraction} interaction
