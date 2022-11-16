@@ -48,7 +48,7 @@ module.exports = {
               inline: false,
             },
           )
-          .setDescription(`${Help.embed.description}\n\n${commands.filter(e => e.name !== "reload").sort((a, b) => a.name.localeCompare(b.name)).map(n => `</${n.name}:${n.id}> - ${type === "de" ? n.descriptionLocalizations.de : type === "es" ? n.descriptionLocalizations.es : n.description}`).join("\n")}`);
+          .setDescription(`${Help.embed.description}\n\n${commands.filter(e => e.name !== "reload").sort((a, b) => a.name.localeCompare(b.name)).map(n => `</${n.name}:${n.id}> - ${type === "de" ? n.descriptionLocalizations.de : type === "es" ? n.descriptionLocalizations["es-ES"] : n.description}`).join("\n")}`);
 
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
