@@ -6,6 +6,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('info')
     .setDescription('Shows information about the bot.')
+    .setDMPermission(false)
     .setDescriptionLocalizations({
       de: 'Zeigt einige Informationen über den Bot.',
       "es-ES": 'Muestra información sobre el bot.'

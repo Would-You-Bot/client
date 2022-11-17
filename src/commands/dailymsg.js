@@ -31,6 +31,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('dailymsg')
         .setDescription('Daily Would You messages')
+        .setDMPermission(false)
         .setDescriptionLocalizations({
             de: 'Tägliche Würdest du Nachrichten',
             "es-ES": 'Mensajes Would You diarios'

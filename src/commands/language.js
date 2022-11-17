@@ -9,6 +9,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('language')
     .setDescription('Change the language for the current guild')
+    .setDMPermission(false)
     .setDescriptionLocalizations({
       de: 'Ändere die Sprache für den aktuellen Server',
       "es-ES": 'Cambiar el idioma del bot en el servidor'

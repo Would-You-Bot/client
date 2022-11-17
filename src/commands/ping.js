@@ -10,6 +10,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Displays the clients ping')
+    .setDMPermission(false)
     .setDescriptionLocalizations({
       de: 'Zeigt den Ping des Clients an',
       "es-ES": 'Muestra el ping del cliente'

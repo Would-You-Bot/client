@@ -11,6 +11,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('welcome')
     .setDescription('Change settings for the welcome system')
+    .setDMPermission(false)
     .setDescriptionLocalizations({
       de: 'Ändere die Einstellungen für das Willkommenssystem',
       "es-ES": 'Cambiar la configuración del sistema de bienvenida'

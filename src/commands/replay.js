@@ -8,6 +8,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('replay')
         .setDescription('Edit the replay system.')
+        .setDMPermission(false)
         .setDescriptionLocalizations({
             de: 'Bearbeite das Replay System.',
             "es-ES": 'Editar el sistema de repetición.'

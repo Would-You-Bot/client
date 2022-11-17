@@ -5,6 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('custom')
     .setDescription('Send a custom would you message')
+    .setDMPermission(false)
     .setDescriptionLocalizations({
       de: 'Sende eine benutzerdefinierte Would you Nachricht',
       "es-ES": 'Envía un mensaje Would you personalizado'

@@ -5,6 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('vote')
     .setDescription('Vote for me!')
+    .setDMPermission(false)
     .setDescriptionLocalizations({
       de: 'Stimme für mich ab!',
       "es-ES": '¡Vota por mí!'

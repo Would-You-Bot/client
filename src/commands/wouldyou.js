@@ -11,6 +11,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('wouldyou')
     .setDescription('Gives you a would you question')
+    .setDMPermission(false)
     .setDescriptionLocalizations({
       de: 'Gibt dir eine would you Frage',
       "es-ES": 'Te hace una pregunta Would You'

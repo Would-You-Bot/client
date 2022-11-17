@@ -10,6 +10,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('help')
     .setDescription('Help command!')
+    .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Hilfe Befehl!",
       "es-ES": 'Comando de ayuda!'

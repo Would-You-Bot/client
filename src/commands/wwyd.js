@@ -5,6 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('wwyd')
     .setDescription('What would you do in this situation')
+    .setDMPermission(false)
     .setDescriptionLocalizations({
       de: 'Was würdest du in dieser Situation tun',
       "es-ES": '¿Qué harías en esta situación?'
