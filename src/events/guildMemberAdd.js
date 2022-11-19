@@ -27,8 +27,8 @@ module.exports = async (client, member) => {
         value: `> ${power}`,
         inline: false,
       });
-    if (member.user.bot == false) {
-      await channel.send({ embeds: [wouldyouembed] }).catch((err) => { return; });
+    if (!member.user.bot) {
+      await channel.send({ embeds: [wouldyouembed] }).catch((err) => {  });
     } else { return; }
   });
 };

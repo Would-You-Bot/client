@@ -125,14 +125,14 @@ module.exports = async (client) => {
                 if (db.dailyRole) {
                     try {
                         client.channels.fetch(db.dailyChannel).catch((err) => { return; });
-                        client.channels.cache?.get(db.dailyChannel)?.send({ embeds: [embed], content: `<@&${db.dailyRole}>` })
+                        client.channels.cache?.get(db.dailyChannel)?.send({ embeds: [embed], content: `<@&${db.dailyRole}>` }).catch((err) => { });
                     } catch {
                         return;
                     }
                 } else {
                     try {
                         client.channels.fetch(db.dailyChannel).catch((err) => { return; });
-                        client.channels.cache?.get(db.dailyChannel)?.send({ embeds: [embed] })
+                        client.channels.cache?.get(db.dailyChannel)?.send({ embeds: [embed] }).catch((err) => { });
                     } catch {
                         return;
                     }
