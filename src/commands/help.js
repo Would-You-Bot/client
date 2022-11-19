@@ -9,8 +9,12 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('help')
-    .setDescription('Help command!'),
-
+    .setDescription('Help command!')
+    .setDMPermission(false)
+    .setDescriptionLocalizations({
+      de: "Hilfe Befehl!",
+      "es-ES": 'Comando de ayuda!'
+    }),
   /**
    * @param {CommandInteraction} interaction
    * @param {Client} client
@@ -21,7 +25,15 @@ module.exports = {
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { Help } = require(`../languages/${result.language}.json`);
-
+        const commands = await interaction.guild.commands.fetch({ withLocalizations: true, applicationId: "596546848882163723" })
+        let type;
+        if (result.language === "de_DE") {
+          type = "de"
+        } else if (result.language === "en_US") {
+          type = "en"
+        } else if (result.language === "es_ES") {
+          type = "es"
+        }
         const helpembed = new EmbedBuilder()
           .setColor('#0598F6')
           .setFooter({
@@ -32,17 +44,12 @@ module.exports = {
           .setTitle(Help.embed.title)
           .addFields(
             {
-              name: Help.embed.Fields.name,
-              value: Help.embed.Fields.value,
-              inline: false,
-            },
-            {
               name: Help.embed.Fields.privacyname,
               value: Help.embed.Fields.privacy,
               inline: false,
             },
           )
-          .setDescription(Help.embed.description);
+          .setDescription(`${Help.embed.description}\n\n${commands.filter(e => e.name !== "reload").sort((a, b) => a.name.localeCompare(b.name)).map(n => `</${n.name}:${n.id}> - ${type === "de" ? n.descriptionLocalizations.de : type === "es" ? n.descriptionLocalizations["es-ES"] : n.description}`).join("\n")}`);
 
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()

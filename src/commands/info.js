@@ -5,7 +5,12 @@ const { version } = require('../../package.json');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('info')
-    .setDescription('Shows some information about the bot.'),
+    .setDescription('Shows information about the bot.')
+    .setDMPermission(false)
+    .setDescriptionLocalizations({
+      de: 'Zeigt einige Informationen über den Bot.',
+      "es-ES": 'Muestra información sobre el bot.'
+    }),
   /**
    * @param {CommandInteraction} interaction
    * @param {Client} client

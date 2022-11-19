@@ -10,7 +10,12 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('wouldyou')
-    .setDescription('Would you')
+    .setDescription('Gives you a would you question')
+    .setDMPermission(false)
+    .setDescriptionLocalizations({
+      de: 'Gibt dir eine would you Frage',
+      "es-ES": 'Te hace una pregunta Would You'
+    })
     .addSubcommand((subcommand) => subcommand.setName('useless').setDescription('Useless Power')
       .addBooleanOption((option) => option
         .setName('voting')
@@ -125,7 +130,7 @@ module.exports = {
         const message = await interaction.reply({
           embeds: [wouldyouembed],
           fetchReply: true,
-          components: rbutton || [],
+          components: result.replay ? rbutton : [] || [],
         }).catch((err) => { return; });
         if (interaction.options.getBoolean('voting') == false) {
         } else {
@@ -200,7 +205,7 @@ module.exports = {
               } catch (error) {}
               await interaction.editReply({
                 embeds: [wouldyouembed],
-                components: rbutton || [],
+                components: result.replay ? rbutton : [] || [],
               }).catch((err) => { return; });
 
               collector.stop();

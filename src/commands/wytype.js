@@ -9,6 +9,11 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('wytype')
     .setDescription('Changes the type of messages that will be used for WWYD.')
+    .setDMPermission(false)
+    .setDescriptionLocalizations({
+      de: 'Ändert den Typ der Nachrichten, die für WWYD verwendet werden.',
+      "es-ES": 'Cambia el tipo de mensajes que se utilizarán para WWYD.'
+    })
     .addSubcommand((subcommand) => subcommand.setName('regular').setDescription('This changes it to use only default messages.'))
     .addSubcommand((subcommand) => subcommand.setName('mixed').setDescription('This changes it to use both custom & default messages.'))
     .addSubcommand((subcommand) => subcommand.setName('custom').setDescription('This changes it to use only custom messages.')),

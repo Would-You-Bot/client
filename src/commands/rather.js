@@ -11,6 +11,11 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('rather')
     .setDescription('Get a would you rather question.')
+    .setDMPermission(false)
+    .setDescriptionLocalizations({
+      de: 'Erhalte eine Würdest du eher Frage.',
+      "es-ES": 'Obtiene une pregunta ¿Qué prefieres?'
+    })
     .addSubcommand((subcommand) => subcommand
       .setName('useful')
       .setDescription('Get a useful would you rather question')
@@ -85,7 +90,7 @@ module.exports = {
               let message = await interaction
                 .reply({
                   embeds: [ratherembed],
-                  components: rbutton,
+                  components: result.replay ? rbutton  : [] || [],
                   fetchReply: true,
                 })
                 .catch((err) => {
@@ -165,7 +170,7 @@ module.exports = {
                     await interaction
                       .editReply({
                         embeds: [ratherembed],
-                        components: rbutton || [],
+                        components: result.replay ? rbutton  : [] || [],
                       })
                       .catch((err) => {
                         return;
@@ -205,7 +210,7 @@ module.exports = {
                 .reply({
                   embeds: [ratherembed],
                   fetchReply: true,
-                  components: rbutton || [],
+                  components: result.replay ? rbutton  : [] || [],
                 })
                 .catch((err) => {
                   return;
@@ -284,7 +289,7 @@ module.exports = {
                     await interaction
                       .editReply({
                         embeds: [ratherembed],
-                        components: rbutton || [],
+                        components: result.replay ? rbutton  : [] || [],
                       })
                       .catch((err) => {
                         return;

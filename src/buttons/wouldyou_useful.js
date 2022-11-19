@@ -14,6 +14,7 @@ module.exports = {
       .then(async (result) => {
         const { WouldYou } = await require(`../languages/${result.language}.json`);
         const { Useful_Powers } = await require(`../data/power-${result.language}.json`);
+        if (!result.replay) return await interaction.reply({ ephemeral: true, content: WouldYou.replays.disabled })
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setLabel('Invite')

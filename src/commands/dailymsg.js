@@ -31,6 +31,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('dailymsg')
         .setDescription('Daily Would You messages')
+        .setDMPermission(false)
+        .setDescriptionLocalizations({
+            de: 'Tägliche Würdest du Nachrichten',
+            "es-ES": 'Mensajes Would You diarios'
+          })
         .addSubcommand((subcommand) =>
             subcommand
                 .setName("channel")
@@ -63,12 +68,27 @@ module.exports = {
         )
         .addSubcommand((subcommand) =>
             subcommand
-                .setName("options")
+                .setName("message")
                 .setDescription("Enable/disable daily Would You messages.")
                 .addStringOption((option) =>
                     option
-                        .setName("options")
+                        .setName("message")
                         .setDescription("Enable/disable daily Would You messages.")
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'true', value: 'true' },
+                            { name: 'false', value: 'false' },
+                        )
+                )
+    )
+        .addSubcommand((subcommand) =>
+            subcommand
+                .setName("types")
+                .setDescription("Enable/disable to change the message to a rather message.")
+                .addStringOption((option) =>
+                    option
+                        .setName("types")
+                        .setDescription("Change Daily Messages to rather messages.")
                         .setRequired(true)
                         .addChoices(
                             { name: 'true', value: 'true' },
@@ -91,9 +111,9 @@ module.exports = {
                     interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
                 ) {
                     switch (interaction.options.getSubcommand()) {
-                        case 'options': {
-                            if (result.dailyMsg && interaction.options.getString("options") === "true") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadytrue}`})
-                            if (!result.dailyMsg && interaction.options.getString("options") === "false") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadyfalse}` })
+                        case 'message': {
+                            if (result.dailyMsg && interaction.options.getString("message") === "true") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadytrue}` })
+                            if (!result.dailyMsg && interaction.options.getString("message") === "false") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadyfalse}` })
                             guildLang
                                 .findOne({ guildID: interaction.guild.id })
                                 .then(async () => {
@@ -101,14 +121,41 @@ module.exports = {
                                         .findOneAndUpdate(
                                             { guildID: interaction.guild.id },
                                             {
-                                                dailyMsg: `${interaction.options.getString("options") === "true" ? true : false}`,
+                                                dailyMsg: interaction.options.getString("message") === "true" ? true : false,
                                             },
                                         )
                                         .catch();
                                 });
                             daily = new EmbedBuilder()
                                 .setTitle(`${Daily.successEmbed.title} Would You`)
-                                .setDescription(`${Daily.successEmbed.desc} ${interaction.options.getString("options") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc2}${!result.dailyChannel ? `\n${Daily.successEmbed.desc3} ${interaction.options.getString("options") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc4}` : ""}`)
+                                .setColor('#0598F6')
+                                .setDescription(`${Daily.successEmbed.desc} ${interaction.options.getString("message") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc2}${!result.dailyChannel ? `\n${Daily.successEmbed.desc3} ${interaction.options.getString("message") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc4}` : ""}`)
+                                .setFooter({
+                                    text: 'Would You',
+                                    iconURL: client.user.avatarURL(),
+                                });
+                            break;
+                        }
+
+                        case 'types': {
+                            if (result.dailyRather && interaction.options.getString("types") === "true") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadytrue}` })
+                            if (!result.dailyRather && interaction.options.getString("types") === "false") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadyfalse}` })
+                            guildLang
+                                .findOne({ guildID: interaction.guild.id })
+                                .then(async () => {
+                                    await guildLang
+                                        .findOneAndUpdate(
+                                            { guildID: interaction.guild.id },
+                                            {
+                                                dailyRather: interaction.options.getString("types") === "true" ? true : false,
+                                            },
+                                        )
+                                        .catch();
+                                });
+                            daily = new EmbedBuilder()
+                                .setTitle(`${Daily.successEmbed.title} Would You`)
+                                .setColor('#0598F6')
+                                .setDescription(`${Daily.successEmbed.desc} ${interaction.options.getString("types") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc22}`)
                                 .setFooter({
                                     text: 'Would You',
                                     iconURL: client.user.avatarURL(),
@@ -135,6 +182,7 @@ module.exports = {
                                 });
                             daily = new EmbedBuilder()
                                 .setTitle(Daily.success.title)
+                                .setColor('#0598F6')
                                 .setDescription(`${Daily.success.desc} <#${interaction.options.getChannel("channel").id}> ${Daily.success.desc2}`)
                                 .setFooter({
                                     text: 'Would You',
@@ -160,6 +208,7 @@ module.exports = {
                                 });
                             daily = new EmbedBuilder()
                                 .setTitle(Daily.success.title)
+                                .setColor('#0598F6')
                                 .setDescription(`${Daily.success.desc} \`${interaction.options.getRole("role").name}\` ${Daily.success.desc3}`)
                                 .setFooter({
                                     text: 'Would You',
@@ -187,6 +236,7 @@ module.exports = {
                                 });
                             daily = new EmbedBuilder()
                                 .setTitle(Daily.success.title)
+                                .setColor('#0598F6')
                                 .setDescription(`${Daily.timezone.desc} \`${interaction.options.getString("timezone")}\` ${Daily.timezone.desc2}`)
                                 .setFooter({
                                     text: 'Would You',

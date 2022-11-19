@@ -37,6 +37,14 @@ const guildProfile = new Schema(
       type: Number,
       default: 0,
     },
+    replay: {
+      type: Boolean,
+      default: true,
+    },
+    replayCooldown: {
+      type: Number,
+      default: 30000,
+    },
     botJoined: {
       type: Number,
     },

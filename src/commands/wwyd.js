@@ -4,7 +4,12 @@ const guildLang = require('../util/Models/guildModel');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('wwyd')
-    .setDescription('What would you do in this situation'),
+    .setDescription('What would you do in this situation')
+    .setDMPermission(false)
+    .setDescriptionLocalizations({
+      de: 'Was würdest du in dieser Situation tun',
+      "es-ES": '¿Qué harías en esta situación?'
+    }),
 
   /**
    * @param {CommandInteraction} interaction
