@@ -25,7 +25,7 @@ module.exports = {
       .findOne({ guildID: interaction.guild.id })
       .then(async (result) => {
         const { Help } = require(`../languages/${result.language}.json`);
-        const commands = await interaction.guild.commands.fetch({ withLocalizations: true, applicationId: "596546848882163723" })
+        const commands = await interaction.guild.commands.fetch({ withLocalizations: true, applicationId: "981649513427111957" })
         let type;
         if (result.language === "de_DE") {
           type = "de"
