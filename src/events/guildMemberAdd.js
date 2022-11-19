@@ -28,7 +28,7 @@ module.exports = async (client, member) => {
         inline: false,
       });
     if (!member.user.bot) {
-      await channel.send({ embeds: [wouldyouembed] }).catch((err) => {  });
+      await channel.send({ embeds: [wouldyouembed] }).catch((err) => { return; });
     } else { return; }
   });
 };
