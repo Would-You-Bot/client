@@ -37,7 +37,7 @@ module.exports = async (client) => {
                         power2 = array[Math.floor(Math.random() * array.length)];
                         array = [];
                     } else if (db.customTypes === "custom") {
-                        client.channels.fetch(db.dailyChannel);
+                        client.channels.fetch(db.dailyChannel).catch((err) => { return; });;
                         if (db.customMessages.filter(c => c.type !== "nsfw") == 0) return client.channels.cache
                             .get(db.dailyChannel)
                             .send({ ephemeral: true, content: "There's currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages." }).catch(() => { })
@@ -67,14 +67,14 @@ module.exports = async (client) => {
 
                     if (db.dailyRole) {
                         try {
-                            client.channels.fetch(db.dailyChannel)
+                            client.channels.fetch(db.dailyChannel).catch((err) => { return; });
                             client.channels.cache?.get(db.dailyChannel)?.send({ embeds: [embed], content: `<@&${db.dailyRole}>` })
                         } catch {
                             return;
                         }
                     } else {
                         try {
-                            client.channels.fetch(db.dailyChannel)
+                            client.channels.fetch(db.dailyChannel).catch((err) => { return; });
                             client.channels.cache?.get(db.dailyChannel)?.send({ embeds: [embed] })
                         } catch {
                             return;
@@ -102,7 +102,7 @@ module.exports = async (client) => {
                     power = array[Math.floor(Math.random() * array.length)]
                     array = [];
                 } else if (db.customTypes === "custom") {
-                    client.channels.fetch(db.dailyChannel)
+                    client.channels.fetch(db.dailyChannel).catch((err) => { return; });
                     if (db.customMessages.filter(c => c.type !== "nsfw") == 0) return client.channels.cache
                         .get(db.dailyChannel)
                         .send({ ephemeral: true, content: "There's currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages." }).catch(() => { })
@@ -124,14 +124,14 @@ module.exports = async (client) => {
 
                 if (db.dailyRole) {
                     try {
-                        client.channels.fetch(db.dailyChannel)
+                        client.channels.fetch(db.dailyChannel).catch((err) => { return; });
                         client.channels.cache?.get(db.dailyChannel)?.send({ embeds: [embed], content: `<@&${db.dailyRole}>` })
                     } catch {
                         return;
                     }
                 } else {
                     try {
-                        client.channels.fetch(db.dailyChannel)
+                        client.channels.fetch(db.dailyChannel).catch((err) => { return; });
                         client.channels.cache?.get(db.dailyChannel)?.send({ embeds: [embed] })
                     } catch {
                         return;
