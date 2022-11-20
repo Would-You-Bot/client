@@ -105,7 +105,7 @@ module.exports = async (client) => {
                     client.channels.fetch(db.dailyChannel).catch((err) => { return; });
                     if (db.customMessages.filter(c => c.type !== "nsfw") == 0) return client.channels.cache
                         .get(db.dailyChannel)
-                        .send({ ephemeral: true, content: "There's currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages." }).catch(() => { })
+                        .send({ ephemeral: true, content: "There's currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages." }).catch(() => { return; })
                     power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
                 }
 
