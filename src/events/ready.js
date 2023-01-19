@@ -24,7 +24,7 @@ module.exports = async (client) => {
 
     const rest = new REST({
       version: '10',
-    }).setToken(process.env.TOKEN);
+    }).setToken(process.env.DISCORD_TOKEN);
 
     (async () => {
       try {
