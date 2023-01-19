@@ -58,7 +58,7 @@ async function fetchGuild(guildId, createIfNotFound = false) {
 
         return setTimeout(async () => {
             return guildModel.findOne({guildID: guildId});
-        })
+        }, 750)
     }
     else return null;
 }
