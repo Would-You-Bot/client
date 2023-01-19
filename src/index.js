@@ -1,5 +1,5 @@
 const { Client, GatewayIntentBits, Options } = require('discord.js');
-const Cluster = require("discord-hybrid-sharding");
+const { ClusterClient, getInfo } = require("discord-hybrid-sharding");
 
 
 // User filter to filter all users out of the cache expect the bot
@@ -44,13 +44,13 @@ const client = new Client({
   makeCache: Options.cacheWithLimits({
     ...cacheOptions,
   }),
-  shards: Cluster.data.SHARD_LIST,
-  shardCount: Cluster.data.TOTAL_SHARDS,
+  shards: getInfo().SHARD_LIST,
+  shardCount: getInfo().TOTAL_SHARDS,
 });
 
 const wouldyouComponents = async () => {
   // Cluster Init
-  client.cluster = new Cluster.Client(client);
+  client.cluster = new ClusterClient(client);
 
   client.database = require('./util/dbHandler');
   await client.database.connectToDatabase();
