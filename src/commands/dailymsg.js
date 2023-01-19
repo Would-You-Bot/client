@@ -132,7 +132,6 @@ module.exports = {
                         });
                     break;
                 }
-
                 case 'types': {
                     const types = interaction.options.getString("types") === "true" ? true : false;
 
@@ -159,7 +158,6 @@ module.exports = {
                         });
                     break;
                 }
-
                 case 'channel': {
                     const channel = interaction.options.getChannel("channel");
 
@@ -190,7 +188,6 @@ module.exports = {
                         });
                     break;
                 }
-
                 case 'role': {
                     const role = interaction.options.getRole("role");
 
