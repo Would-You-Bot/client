@@ -16,7 +16,7 @@ module.exports = (client) => {
   require('./buttonLoader')(client);
 
   /* Logging the bot in. */
-  client.login(process.env.TOKEN);
+  client.login(process.env.DISCORD_OKEN);
 
   client.database.startSweeper();
 };

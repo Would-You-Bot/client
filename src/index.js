@@ -1,4 +1,6 @@
 const { Client, GatewayIntentBits, Options } = require('discord.js');
+const Cluster = require("discord-hybrid-sharding");
+
 
 // User filter to filter all users out of the cache expect the bot
 const userFilter = (u) => u?.id !== client?.user?.id;
@@ -42,15 +44,20 @@ const client = new Client({
   makeCache: Options.cacheWithLimits({
     ...cacheOptions,
   }),
+  shards: Cluster.data.SHARD_LIST,
+  shardCount: Cluster.data.TOTAL_SHARDS,
 });
 
 const wouldyouComponents = async () => {
+  // Cluster Init
+  client.cluster = new Cluster.Client(client);
+
   client.database = require('./util/dbHandler');
   await client.database.connectToDatabase();
 
   require('./util/keepAlive')(client);
   await require('./util/wouldyouClient')(client);
-  await require('./util/voteLogs');
+  if(client?.cluster?.id === 0) await require('./util/voteLogs');
 };
 
 wouldyouComponents();

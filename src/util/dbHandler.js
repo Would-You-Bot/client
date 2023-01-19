@@ -124,11 +124,20 @@ async function updateGuild(guildId, data = {}, createIfNotFound = false) {
     } else return null;
 }
 
+/**
+ * Fetch all available settings
+ * @returns {Promise<guildModel>}
+ */
+async function getAll() {
+    return guildModel.find().lean();
+}
+
 module.exports = {
     connectToDatabase,
     fetchGuild,
     getGuild,
     deleteGuild,
     updateGuild,
-    startSweeper
+    startSweeper,
+    getAll
 };
