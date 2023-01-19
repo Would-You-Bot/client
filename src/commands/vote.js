@@ -36,7 +36,7 @@ module.exports = {
                 },
                 {
                     name: 'Discord-Botlist.eu',
-                    value: '> [ ${Vote.embed.value}  ](https://discord-botlist.eu/bots/wouldyou)',
+                    value: `> [ ${Vote.embed.value}  ](https://discord-botlist.eu/bots/wouldyou)`,
                     inline: true,
                 }
             )
