@@ -78,7 +78,7 @@ async function getGuild(guildId, createIfNotFound = true, force = false) {
 
     const fetched = await fetchGuild(guildId, createIfNotFound);
     if (fetched) {
-        cache.set(guildId, fetched);
+        cache.set(guildId, fetched?.toObject() ?? fetched);
 
         console.log('getGuild => 2. ', cache.get(guildId));
 
