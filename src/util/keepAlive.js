@@ -3,7 +3,7 @@ require('dotenv')
 
 const {
   WebhookClient,
-  MessageEmbed,
+  EmbedBuilder,
 } = require('discord.js');
 
 const { inspect } = require('util');
@@ -20,7 +20,7 @@ module.exports = (client) => {
     if (!e.includes('ratelimit')) return;
 
     console.log('[BOT] Watch-out Possible Rate-limit...\n', e);
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle('Watch-out Possible Rate-limit...')
       .addFields([{
         name: 'Info',
@@ -38,7 +38,7 @@ module.exports = (client) => {
 
   client.on('error', (e) => {
     console.log('[BOT] Bot got a error...\n\n', e);
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle('Bot got a error...')
       .addFields([{
         name: 'Error',
@@ -56,7 +56,7 @@ module.exports = (client) => {
 
   client.on('warn', async (info) => {
     console.log('[BOT] Bot got a warn...\n\n', info);
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle('Bot got a warn...')
       .addFields([{
         name: 'Info',
@@ -76,7 +76,7 @@ module.exports = (client) => {
     console.log('[BOT | FATAL ERROR] Unhandled Rejection/Catch');
     console.log(reason, p);
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle('New Unhandled Rejection/Catch')
       .setDescription(`\`\`\`${reason}\`\`\``)
       .setColor('#4E5D94')
@@ -104,7 +104,7 @@ module.exports = (client) => {
     console.log('[BOT | FATAL ERROR] Uncaught Exception/Catch');
     console.log(err, origin);
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle('New uncaughtException')
       .setDescription(`\`\`\`${err}\`\`\``)
       .setColor('#4E5D94')
@@ -131,7 +131,7 @@ module.exports = (client) => {
     console.log('[BOT | FATAL ERROR] Uncaught Exception/Catch (MONITOR)');
     console.log(err, origin);
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle('New uncaughtExceptionMonitor' + `${global?.CustomBot ? ' (Custom Bot)' : ''}`)
       .setDescription(`\`\`\`${err}\`\`\``)
       .setColor('#4E5D94')
