@@ -71,23 +71,13 @@ async function fetchGuild(guildId, createIfNotFound = false) {
 async function getGuild(guildId, createIfNotFound = true, force = false) {
     if(force) return fetchGuild(guildId, createIfNotFound);
 
-    console.log('GetGuild => 1')
-
     if(cache.has(guildId)) {
-        const g = cache.get(guildId);
-        console.log('GetGuild => 2', g);
-
-
-        return g;
+        return cache.get(guildId);
     }
 
     const fetched = await fetchGuild(guildId, createIfNotFound);
     if(fetched) {
-        console.log('GetGuild => 3', fetched);
-
-        cache.set(guildId, {
-            fetched
-        });
+        cache.set(guildId, fetched);
 
         return cache.get(guildId);
     } else return null;
