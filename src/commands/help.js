@@ -22,14 +22,14 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        const {Help} = require(`../languages/${guiildDb.language}.json`);
+        const {Help} = require(`../languages/${guildDb.language}.json`);
         const commands = await client.application.commands.fetch({withLocalizations: true})
         let type;
-        if (guiildDb.language === "de_DE") {
+        if (guildDb.language === "de_DE") {
             type = "de"
-        } else if (guiildDb.language === "en_US") {
+        } else if (guildDb.language === "en_US") {
             type = "en"
-        } else if (guiildDb.language === "es_ES") {
+        } else if (guildDb.language === "es_ES") {
             type = "es"
         }
         const helpembed = new EmbedBuilder()

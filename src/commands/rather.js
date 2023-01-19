@@ -33,14 +33,14 @@ module.exports = {
     /**
      * @param {CommandInteraction} interaction
      * @param {Client} client
-     * @param {guildModel} guiildDb
+     * @param {guildModel} guildDb
      */
 
-    async execute(interaction, client, guiildDb) {
+    async execute(interaction, client, guildDb) {
         let voting = true;
         if (interaction.options.getBoolean('voting') == false) voting = false;
-        const {Rather} = await require(`../languages/${guiildDb.language}.json`);
-        const {Useless_Powers, Useful_Powers} = await require(`../data/power-${guiildDb.language}.json`);
+        const {Rather} = await require(`../languages/${guildDb.language}.json`);
+        const {Useless_Powers, Useful_Powers} = await require(`../data/power-${guildDb.language}.json`);
 
         const button = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
@@ -64,7 +64,7 @@ module.exports = {
         } else rbutton = [newButton];
         switch (interaction.options.getSubcommand()) {
             case 'useful': {
-                let powers = await generateRather(guiildDb, Useful_Powers, "useful");
+                let powers = await generateRather(guildDb, Useful_Powers, "useful");
                 let ratherembed = new EmbedBuilder()
                     .setColor('#0598F6')
                     .addFields(
@@ -88,7 +88,7 @@ module.exports = {
                 let message = await interaction
                     .reply({
                         embeds: [ratherembed],
-                        components: guiildDb.replay ? rbutton : [] || [],
+                        components: guildDb.replay ? rbutton : [] || [],
                         fetchReply: true,
                     })
                     .catch((err) => {
@@ -170,7 +170,7 @@ module.exports = {
                             await interaction
                                 .editReply({
                                     embeds: [ratherembed],
-                                    components: guiildDb.replay ? rbutton : [] || [],
+                                    components: guildDb.replay ? rbutton : [] || [],
                                 })
                                 .catch((err) => {
                                     return;
@@ -185,7 +185,7 @@ module.exports = {
                 break;
 
             case 'useless': {
-                let powers = await generateRather(guiildDb, Useless_Powers, "useless");
+                let powers = await generateRather(guildDb, Useless_Powers, "useless");
                 let ratherembed = new EmbedBuilder()
                     .setColor('#F00505')
                     .addFields(
@@ -210,7 +210,7 @@ module.exports = {
                     .reply({
                         embeds: [ratherembed],
                         fetchReply: true,
-                        components: guiildDb.replay ? rbutton : [] || [],
+                        components: guildDb.replay ? rbutton : [] || [],
                     })
                     .catch((err) => {
                         return;
@@ -291,7 +291,7 @@ module.exports = {
                             await interaction
                                 .editReply({
                                     embeds: [ratherembed],
-                                    components: guiildDb.replay ? rbutton : [] || [],
+                                    components: guildDb.replay ? rbutton : [] || [],
                                 })
                                 .catch((err) => {
                                     return;

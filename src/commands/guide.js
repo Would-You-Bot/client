@@ -19,7 +19,7 @@ module.exports = {
      */
 
     async execute(interaction, client, guildDb) {
-        const {Guide} = require(`../languages/${guiildDb.language}.json`);
+        const {Guide} = require(`../languages/${guildDb.language}.json`);
 
         const guideembed = new EmbedBuilder()
             .setColor('#0598F6')

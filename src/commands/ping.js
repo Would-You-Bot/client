@@ -23,7 +23,7 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        const {Ping} = require(`../languages/${guiildDb.language}.json`);
+        const {Ping} = require(`../languages/${guildDb.language}.json`);
 
         const pingembed = new EmbedBuilder()
 
