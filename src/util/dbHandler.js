@@ -56,9 +56,7 @@ async function fetchGuild(guildId, createIfNotFound = false) {
             botJoined: Date.now() / 1000 | 0,
         });
 
-        return setTimeout(async () => {
-            return guildModel.findOne({guildID: guildId});
-        }, 750)
+        return guildModel.findOne({guildID: guildId});
     }
     else return null;
 }
@@ -73,10 +71,20 @@ async function fetchGuild(guildId, createIfNotFound = false) {
 async function getGuild(guildId, createIfNotFound = true, force = false) {
     if(force) return fetchGuild(guildId, createIfNotFound);
 
-    if(cache.has(guildId)) return cache.get(guildId);
+    console.log('GetGuild => 1')
+
+    if(cache.has(guildId)) {
+        const g = cache.get(guildId);
+        console.log('GetGuild => 2', g);
+
+
+        return g;
+    }
 
     const fetched = await fetchGuild(guildId, createIfNotFound);
     if(fetched) {
+        console.log('GetGuild => 3', fetched);
+
         cache.set(guildId, {
             fetched
         });
