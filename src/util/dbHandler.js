@@ -71,16 +71,12 @@ async function getGuild(guildId, createIfNotFound = true, force = false) {
     if (force) return fetchGuild(guildId, createIfNotFound);
 
     if (cache.has(guildId)) {
-        console.log('getGuild => 1. ', cache.get(guildId));
-
         return cache.get(guildId);
     }
 
     const fetched = await fetchGuild(guildId, createIfNotFound);
     if (fetched) {
         cache.set(guildId, fetched?.toObject() ?? fetched);
-
-        console.log('getGuild => 2. ', cache.get(guildId));
 
         return cache.get(guildId);
     } else return null;
@@ -114,8 +110,6 @@ async function updateGuild(guildId, data = {}, createIfNotFound = false) {
         data = { ...oldData, ...data}
 
         cache.set(guildId, data);
-
-        console.log('updateGuild => 1. ', data);
 
         return guildModel.updateOne({
             guildID: guildId
