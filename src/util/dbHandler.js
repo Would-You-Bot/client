@@ -111,9 +111,9 @@ async function updateGuild(guildId, data = {}, createIfNotFound = false) {
     if (oldData) {
         if(oldData?._doc) oldData = oldData?._doc;
 
-        cache.set(guildId, data);
-
         data = { ...oldData, ...data}
+
+        cache.set(guildId, data);
 
         console.log('updateGuild => 1. ', data);
 
