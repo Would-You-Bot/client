@@ -11,11 +11,11 @@ const cache = new Map();
  * @param client the client object
  * @private
  */
-function startSweeper(client)  {
+function startSweeper(client) {
     setInterval(() => {
         const guilds = cache.values();
-        for(const g of guilds) {
-            if(!client?.guilds?.cache?.has(g?.guildID)) {
+        for (const g of guilds) {
+            if (!client?.guilds?.cache?.has(g?.guildID)) {
                 cache.delete(g?.guildID);
             }
         }
@@ -48,8 +48,8 @@ async function connectToDatabase() {
 async function fetchGuild(guildId, createIfNotFound = false) {
     const fetched = await guildModel.findOne({guildID: guildId});
 
-    if(fetched) return fetched;
-    else if(!fetched && createIfNotFound) {
+    if (fetched) return fetched;
+    else if (!fetched && createIfNotFound) {
         await guildModel.create({
             guildID: guildId,
             language: 'en_EN',
@@ -57,8 +57,7 @@ async function fetchGuild(guildId, createIfNotFound = false) {
         });
 
         return guildModel.findOne({guildID: guildId});
-    }
-    else return null;
+    } else return null;
 }
 
 /**
@@ -69,14 +68,14 @@ async function fetchGuild(guildId, createIfNotFound = false) {
  * @returns {guildModel}
  */
 async function getGuild(guildId, createIfNotFound = true, force = false) {
-    if(force) return fetchGuild(guildId, createIfNotFound);
+    if (force) return fetchGuild(guildId, createIfNotFound);
 
-    if(cache.has(guildId)) {
+    if (cache.has(guildId)) {
         return cache.get(guildId);
     }
 
     const fetched = await fetchGuild(guildId, createIfNotFound);
-    if(fetched) {
+    if (fetched) {
         cache.set(guildId, fetched);
 
         return cache.get(guildId);
@@ -90,9 +89,9 @@ async function getGuild(guildId, createIfNotFound = true, force = false) {
  * @returns {Promise<deleteMany|boolean>}
  */
 async function deleteGuild(guildId, onlyCache = false) {
-    if(cache.has(guildId)) cache.delete(guildId);
+    if (cache.has(guildId)) cache.delete(guildId);
 
-    return !onlyCache ? guildModel.deleteMany({ guildID: guildId }) : true;
+    return !onlyCache ? guildModel.deleteMany({guildID: guildId}) : true;
 }
 
 /**
@@ -105,14 +104,11 @@ async function deleteGuild(guildId, onlyCache = false) {
 async function updateGuild(guildId, data = {}, createIfNotFound = false) {
     const oldData = await getGuild(guildId, createIfNotFound);
 
-    if(oldData) {
-        data = {
-            // Set the old data
-            ...oldData,
-
-            // set the new data
-            ...data
-        };
+    if (oldData) {
+        data = oldData.map(e => {
+            Object.keys(data).forEach(key => e[key] = data[key]);
+            return e;
+        })
 
         cache.set(guildId, data);
 
