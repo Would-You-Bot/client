@@ -1,11 +1,34 @@
 const guildcreate = require('../util/Models/guildModel');
-module.exports = (client, interaction) => {
+module.exports = async (client, interaction) => {
   if (!interaction.guild) {
     if (interaction.isChatInputCommand()) {
       const command = client.commands.get(interaction.commandName);
       if (!command) return;
+
+      if(command?.requireGuild) return interaction.reply({
+        content: "This command is only usable on a Discord Server!\nYou want to test WouldYou? Join the support server!\nhttps://discord.gg/vMyXAxEznS",
+        ephemeral: true,
+      });
+
       try {
-        command.execute(interaction, client);
+        command.execute(interaction, client, null);
+      } catch (err) {
+        if (err) console.error(err);
+        return interaction.reply({
+          content: "An error occurred while trying to execute that command.",
+          ephemeral: true,
+        });
+      }
+    };
+  } else {
+    const guildDb = await client.database.getGuild(interaction.guild.id, true);
+
+    // const { inter } = require(`../languages/${result.language || "en_EN"}.json`);
+    if (interaction.isChatInputCommand()) {
+      const command = client.commands.get(interaction.commandName);
+      if (!command) return;
+      try {
+        command.execute(interaction, client, guildDb);
       } catch (err) {
         if (err) console.error(err);
         interaction.reply({
@@ -13,51 +36,25 @@ module.exports = (client, interaction) => {
           ephemeral: true,
         });
       }
-    };
-  } else {
-    guildcreate
-      .findOne({ guildID: interaction.guild.id })
-      .then(async (result) => {
-        if (!result) {
-          await guildcreate.create({
-            guildID: interaction.guild.id,
-            language: 'en_EN',
-            botJoined: Date.now() / 1000 | 0,
-          });
-        }
-        // const { inter } = require(`../languages/${result.language || "en_EN"}.json`);
-        if (interaction.isChatInputCommand()) {
-          const command = client.commands.get(interaction.commandName);
-          if (!command) return;
-          try {
-            command.execute(interaction, client);
-          } catch (err) {
-            if (err) console.error(err);
-            interaction.reply({
-              content: "An error occurred while trying to execute that command.",
-              ephemeral: true,
-            });
-          }
-        } else if (interaction.isButton()) {
-          if (client.used.has(interaction.user.id)) {
-            return await interaction.reply({ ephemeral: true, content: `<t:${Math.floor(result.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!` }).catch(() => { });
-          }
-          
-          const button = client.buttons.get(interaction.customId);
-          if (!button) return interaction.reply({ content: "Please use the command again.", ephemeral: true }).catch(() => { });
-          try {
-            client.used.set(interaction.user.id, Date.now() + result.replayCooldown)
-            setTimeout(() => client.used.delete(interaction.user.id), result.replayCooldown)
+    } else if (interaction.isButton()) {
+      if (client.used.has(interaction.user.id)) {
+        return await interaction.reply({ ephemeral: true, content: `<t:${Math.floor(result.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!` }).catch(() => { });
+      }
 
-            button.execute(interaction, client);
-          } catch (err) {
-            if (err) console.error(err);
-            interaction.reply({
-              content: "An error occurred while trying to execute that command.",
-              ephemeral: true,
-            });
-          }
-        }
-      });
+      const button = client.buttons.get(interaction.customId);
+      if (!button) return interaction.reply({ content: "Please use the command again.", ephemeral: true }).catch(() => { });
+      try {
+        client.used.set(interaction.user.id, Date.now() + result.replayCooldown)
+        setTimeout(() => client.used.delete(interaction.user.id), result.replayCooldown)
+
+        button.execute(interaction, client, guildDb);
+      } catch (err) {
+        if (err) console.error(err);
+        interaction.reply({
+          content: "An error occurred while trying to execute that command.",
+          ephemeral: true,
+        });
+      }
+    }
   }
 }

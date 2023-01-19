@@ -2,6 +2,9 @@ const { WebhookClient } = require('discord.js');
 require('dotenv').config();
 
 module.exports = async (client, guild) => {
+  // Only delete the guild settings from the cache we don't want a data lose but also don't need not used data in the cache :)
+  await client.database.deleteGuild(guild?.id, true);
+
   const webhookClient = new WebhookClient({ url: process.env.WEBHOOK });
 
   webhookClient.send({

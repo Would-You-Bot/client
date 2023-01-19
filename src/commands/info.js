@@ -14,8 +14,9 @@ module.exports = {
   /**
    * @param {CommandInteraction} interaction
    * @param {Client} client
+   * @param {guildModel} guildDb
    */
-  async execute(interaction, client) {
+  async execute(interaction, client, guildDb) {
     const unixstamp = Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime / 1000);
 
     function round(num) {
@@ -66,7 +67,7 @@ module.exports = {
       )
       .setThumbnail(client.user.displayAvatarURL())
       .setFooter({
-        text: interaction.user.tag,
+        text: interaction.user.tag + ' Shard #' + interaction?.guild?.shardId ?? 0,
         iconURL: client.user.avatarURL(),
       })
       .setTimestamp();

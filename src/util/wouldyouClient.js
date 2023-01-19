@@ -17,4 +17,6 @@ module.exports = (client) => {
 
   /* Logging the bot in. */
   client.login(process.env.TOKEN);
+
+  client.database.startSweeper();
 };
