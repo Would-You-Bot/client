@@ -34,7 +34,7 @@ module.exports = {
         let languageembed;
         const {Language} = require(`../languages/${guildDb.language}.json`);
         if (
-            interaction.member.permissions.has(PermissionFlagsBitss.ManageGuild)
+            interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'english': {

@@ -207,7 +207,7 @@ module.exports = {
             }
         }
         if (
-            interaction.member.permissions.has(PermissionFlagsBitss.ManageGuild)
+            interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'add':
