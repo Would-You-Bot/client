@@ -23,7 +23,7 @@ module.exports = async (client, interaction) => {
   } else {
     const guildDb = await client.database.getGuild(interaction.guild.id, true);
 
-    // const { inter } = require(`../languages/${result.language || "en_EN"}.json`);
+    // const { inter } = require(`../languages/${guildDb.language || "en_EN"}.json`);
     if (interaction.isChatInputCommand()) {
       const command = client.commands.get(interaction.commandName);
       if (!command) return;
@@ -38,14 +38,14 @@ module.exports = async (client, interaction) => {
       }
     } else if (interaction.isButton()) {
       if (client.used.has(interaction.user.id)) {
-        return await interaction.reply({ ephemeral: true, content: `<t:${Math.floor(result.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!` }).catch(() => { });
+        return await interaction.reply({ ephemeral: true, content: `<t:${Math.floor(guildDb.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!` }).catch(() => { });
       }
 
       const button = client.buttons.get(interaction.customId);
       if (!button) return interaction.reply({ content: "Please use the command again.", ephemeral: true }).catch(() => { });
       try {
-        client.used.set(interaction.user.id, Date.now() + result.replayCooldown)
-        setTimeout(() => client.used.delete(interaction.user.id), result.replayCooldown)
+        client.used.set(interaction.user.id, Date.now() + guildDb.replayCooldown)
+        setTimeout(() => client.used.delete(interaction.user.id), guildDb.replayCooldown)
 
         button.execute(interaction, client, guildDb);
       } catch (err) {
