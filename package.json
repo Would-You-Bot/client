@@ -4,8 +4,8 @@
   "description": "Would you rather die or use this bot. You got the choice",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "nodemon src/index.js",
+    "start": "node src/cluster.js",
+    "test": "nodemon src/cluster.js",
     "lint": "eslint . --fix"
   },
   "repository": {
@@ -32,6 +32,7 @@
     "chalk-advanced": "^1.0.3",
     "cron": "^2.1.0",
     "discord-api-types": "^0.37.11",
+    "discord-hybrid-sharding": "^2.1.0",
     "discord.js": "14.5.0",
     "dotenv": "^16.0.3",
     "dungeon-api": "^1.0.5",
