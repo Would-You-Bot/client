@@ -1,8 +1,8 @@
 require('dotenv').config();
-const Cluster = require("discord-hybrid-sharding");
+const { ClusterManager, ReClusterManager, HeartbeatManager } = require("discord-hybrid-sharding");
 const { ChalkAdvanced } = require('chalk-advanced');
 
-const manager = new Cluster.Manager(`${__dirname}/index.js`, {
+const manager = new ClusterManager(`${__dirname}/index.js`, {
     totalClusters: 1,
     totalShards: 2,
     shardsPerClusters: 2,
@@ -11,8 +11,8 @@ const manager = new Cluster.Manager(`${__dirname}/index.js`, {
 }, true)
 
 manager.extend(
-    new Cluster.ReClusterManager(),
-    new Cluster.HeartbeatManager({
+    new ReClusterManager(),
+    new HeartbeatManager({
         interval: 10000,
         maxMissedHeartbeats: 10,
     })
