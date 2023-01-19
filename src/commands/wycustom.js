@@ -3,7 +3,7 @@ const {
     SlashCommandBuilder,
     ButtonBuilder,
     ActionRowBuilder,
-    PermissionFlagsBits,
+    PermissionFlagsBitss,
 } = require('discord.js');
 const axios = require('axios');
 const guildModel = require('../util/Models/guildModel');
@@ -207,7 +207,7 @@ module.exports = {
             }
         }
         if (
-            interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
+            interaction.member.permissions.has(PermissionFlagsBitss.ManageGuild)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'add':

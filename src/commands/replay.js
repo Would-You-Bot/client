@@ -1,4 +1,4 @@
-const {EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, ButtonBuilder, ActionRowBuilder} = require('discord.js');
+const {EmbedBuilder, SlashCommandBuilder, PermissionFlagsBitss, ButtonBuilder, ActionRowBuilder} = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 require("dotenv").config();
 const Topgg = require(`@top-gg/sdk`)
@@ -41,7 +41,7 @@ module.exports = {
     async execute(interaction, client, guildDb) {
         const {REPLAY} = require(`../languages/${guildDb.language}.json`);
         if (
-            interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
+            interaction.member.permissions.has(PermissionFlagsBitss.ManageGuild)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case "toggle":

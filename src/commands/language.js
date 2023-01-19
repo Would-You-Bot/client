@@ -1,7 +1,7 @@
 const {
     EmbedBuilder,
     SlashCommandBuilder,
-    PermissionFlagsBits,
+    PermissionFlagsBitss,
 } = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 
@@ -34,7 +34,7 @@ module.exports = {
         let languageembed;
         const {Language} = require(`../languages/${guildDb.language}.json`);
         if (
-            interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
+            interaction.member.permissions.has(PermissionFlagsBitss.ManageGuild)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'english': {

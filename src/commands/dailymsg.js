@@ -2,7 +2,7 @@ const {
     EmbedBuilder,
     ChannelType,
     SlashCommandBuilder,
-    PermissionFlagsBits,
+    PermissionFlagsBitss,
 } = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 
@@ -106,7 +106,7 @@ module.exports = {
         let daily;
         const {Daily} = require(`../languages/${guildDb.language}.json`);
         if (
-            interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
+            interaction.member.permissions.has(PermissionFlagsBitss.ManageGuild)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'message': {
@@ -163,11 +163,11 @@ module.exports = {
                 case 'channel': {
                     const channel = interaction.options.getChannel("channel");
 
-                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBit.ViewChannel])) return await interaction.reply({
+                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ViewChannel])) return await interaction.reply({
                         ephemeral: true,
                         content: Daily.errorChannel.viewChannel
                     })
-                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBit.SendMessages])) return await interaction.reply({
+                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.SendMessages])) return await interaction.reply({
                         ephemeral: true,
                         content: Daily.errorChannel.sendMessages
                     })

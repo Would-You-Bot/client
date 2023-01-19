@@ -2,16 +2,16 @@ const {
     EmbedBuilder,
     ActionRowBuilder,
     ButtonBuilder,
-    PermissionFlagsBit
+    PermissionFlagsBits
 } = require('discord.js');
 const Cooldown = new Set();
 
 module.exports = async (client, message) => {
     // Always check the permissions before doing any actions to avoid a ratelimit IP ban =)
     if (message?.channel?.permissionsFor(client?.user?.id)?.has([
-        PermissionFlagsBit.ViewChannel,
-        PermissionFlagsBit.SendMessages,
-        PermissionFlagsBit.EmbedLinks
+        PermissionFlagsBits.ViewChannel,
+        PermissionFlagsBits.SendMessages,
+        PermissionFlagsBits.EmbedLinks
     ])) {
         if (Cooldown.has(message?.channel?.id)) return;
 

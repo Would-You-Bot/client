@@ -1,7 +1,7 @@
 const {
     EmbedBuilder,
     SlashCommandBuilder,
-    PermissionFlagsBits,
+    PermissionFlagsBitss,
     ChannelType,
 } = require('discord.js');
 
@@ -37,7 +37,7 @@ module.exports = {
     async execute(interaction, client, guildDb) {
         const {Welcome} = require(`../languages/${guildDb.language}.json`);
         if (
-            interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
+            interaction.member.permissions.has(PermissionFlagsBitss.ManageGuild)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'add':

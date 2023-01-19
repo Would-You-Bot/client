@@ -208,7 +208,7 @@ module.exports = {
                     collector.stop();
 
                     try {
-                        if (message?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBit.ManageMessages])) await message.reactions.removeAll();
+                        if (message?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await message.reactions.removeAll();
                     } catch (error) {
                     }
 

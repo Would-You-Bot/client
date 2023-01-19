@@ -1,4 +1,4 @@
-const {EmbedBuilder, PermissionFlagsBit} = require('discord.js');
+const {EmbedBuilder, PermissionFlagsBits} = require('discord.js');
 require('dotenv').config();
 
 module.exports = async (client, member) => {
@@ -13,9 +13,9 @@ module.exports = async (client, member) => {
         if (!channel?.id) return;
 
         if (!channel?.permissionsFor(client?.user?.id)?.has([
-            PermissionFlagsBit.ViewChannel,
-            PermissionFlagsBit.SendMessages,
-            PermissionFlagsBit.EmbedLinks
+            PermissionFlagsBits.ViewChannel,
+            PermissionFlagsBits.SendMessages,
+            PermissionFlagsBits.EmbedLinks
         ])) return;
 
         const {Welcome} = await require(`../languages/${guildDb.language}.json`);
