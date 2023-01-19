@@ -105,11 +105,6 @@ async function updateGuild(guildId, data = {}, createIfNotFound = false) {
     const oldData = await getGuild(guildId, createIfNotFound);
 
     if (oldData) {
-        data = oldData.map(e => {
-            Object.keys(data).forEach(key => e[key] = data[key]);
-            return e;
-        })
-
         cache.set(guildId, data);
 
         return guildModel.updateOne({
