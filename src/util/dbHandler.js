@@ -106,9 +106,11 @@ async function deleteGuild(guildId, onlyCache = false) {
  * @returns {Promise<guildModel|null>}
  */
 async function updateGuild(guildId, data = {}, createIfNotFound = false) {
-    const oldData = await getGuild(guildId, createIfNotFound);
+    let oldData = await getGuild(guildId, createIfNotFound);
 
     if (oldData) {
+        if(oldData?._doc) oldData = oldData?._doc;
+
         cache.set(guildId, data);
 
         data = { ...oldData, ...data}
