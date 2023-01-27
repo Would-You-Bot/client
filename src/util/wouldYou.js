@@ -1,5 +1,12 @@
+// Main Bot Library's
 const {Client, GatewayIntentBits, Options, Collection} = require("discord.js");
 const {getInfo, ClusterClient} = require("discord-hybrid-sharding");
+
+// Utils anc Config
+const {ChalkAdvanced} = require("chalk-advanced");
+require('dotenv').config();
+
+// Classes for the bot
 const TranslationHandler = require("./translationHandler");
 const DatabaseHandler = require("./databaseHandler");
 const KeepAlive = require('./keepAlive');
@@ -7,8 +14,6 @@ const ButtonHandler = require("./buttonHandler");
 const EventHandler = require("./eventHandler");
 const WebhookHandler = require("./webhookHandler");
 const VoteLogger = require("./voteLogger");
-const {ChalkAdvanced} = require("chalk-advanced");
-require('dotenv').config();
 
 // User filter to filter all users out of the cache expect the bot
 const userFilter = (u) => u?.id !== client?.user?.id;
@@ -62,12 +67,6 @@ module.exports = class WouldYou extends Client {
         // Init the cluster client
         this.cluster = new ClusterClient(this);
 
-        // The translations handler
-        this.translation = new TranslationHandler();
-
-        // Webhook Manager
-        this.webhookHandler = new WebhookHandler(this);
-
         // The database handler
         this.database = new DatabaseHandler(process.env.MONGO_URI);
         this.database.connectToDatabase().then(() => {
@@ -78,6 +77,12 @@ module.exports = class WouldYou extends Client {
             );
         });
         this.database.startSweeper();
+
+        // The translations handler
+        this.translation = new TranslationHandler();
+
+        // Webhook Manager
+        this.webhookHandler = new WebhookHandler(this);
 
         // Keep Alive system after the necessary things that are allowed to crash are loaded
         this.keepAlive = new KeepAlive(this);
