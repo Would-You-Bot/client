@@ -105,7 +105,7 @@ module.exports = {
                             ephemeral: true,
                         })
                         .catch((err) => {
-                            return;
+
                         });
                     break;
             }

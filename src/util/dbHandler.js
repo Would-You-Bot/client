@@ -1,8 +1,8 @@
-const {connect} = require('mongoose');
+const { connect } = require('mongoose');
 require('dotenv').config();
 
-const {ChalkAdvanced} = require('chalk-advanced');
-const guildModel = require("./Models/guildModel");
+const { ChalkAdvanced } = require('chalk-advanced');
+const guildModel = require('./Models/guildModel');
 
 const cache = new Map();
 
@@ -12,14 +12,14 @@ const cache = new Map();
  * @private
  */
 function startSweeper(client) {
-    setInterval(() => {
-        const guilds = cache.values();
-        for (const g of guilds) {
-            if (!client?.guilds?.cache?.has(g?.guildID)) {
-                cache.delete(g?.guildID);
-            }
-        }
-    }, 60 * 60 * 1000)
+  setInterval(() => {
+    const guilds = cache.values();
+    for (const g of guilds) {
+      if (!client?.guilds?.cache?.has(g?.guildID)) {
+        cache.delete(g?.guildID);
+      }
+    }
+  }, 60 * 60 * 1000);
 }
 
 /**
@@ -27,15 +27,15 @@ function startSweeper(client) {
  * @returns {Promise<void>}
  */
 async function connectToDatabase() {
-    connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-    }).catch((err) => {
-        console.log(err)
-    }).then(() => console.log(
-        `${ChalkAdvanced.white('Database')} ${ChalkAdvanced.gray(
-            '>',
-        )} ${ChalkAdvanced.green('Successfully loaded database')}`,
-    ));
+  connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+  }).catch((err) => {
+    console.log(err);
+  }).then(() => console.log(
+    `${ChalkAdvanced.white('Database')} ${ChalkAdvanced.gray(
+      '>',
+    )} ${ChalkAdvanced.green('Successfully loaded database')}`,
+  ));
 }
 
 /**
@@ -46,18 +46,18 @@ async function connectToDatabase() {
  * @private
  */
 async function fetchGuild(guildId, createIfNotFound = false) {
-    const fetched = await guildModel.findOne({guildID: guildId});
+  const fetched = await guildModel.findOne({ guildID: guildId });
 
-    if (fetched) return fetched;
-    else if (!fetched && createIfNotFound) {
-        await guildModel.create({
-            guildID: guildId,
-            language: 'en_EN',
-            botJoined: Date.now() / 1000 | 0,
-        });
+  if (fetched) return fetched;
+  if (!fetched && createIfNotFound) {
+    await guildModel.create({
+      guildID: guildId,
+      language: 'en_EN',
+      botJoined: Date.now() / 1000 | 0,
+    });
 
-        return guildModel.findOne({guildID: guildId});
-    } else return null;
+    return guildModel.findOne({ guildID: guildId });
+  } return null;
 }
 
 /**
@@ -68,18 +68,18 @@ async function fetchGuild(guildId, createIfNotFound = false) {
  * @returns {guildModel}
  */
 async function getGuild(guildId, createIfNotFound = true, force = false) {
-    if (force) return fetchGuild(guildId, createIfNotFound);
+  if (force) return fetchGuild(guildId, createIfNotFound);
 
-    if (cache.has(guildId)) {
-        return cache.get(guildId);
-    }
+  if (cache.has(guildId)) {
+    return cache.get(guildId);
+  }
 
-    const fetched = await fetchGuild(guildId, createIfNotFound);
-    if (fetched) {
-        cache.set(guildId, fetched?.toObject() ?? fetched);
+  const fetched = await fetchGuild(guildId, createIfNotFound);
+  if (fetched) {
+    cache.set(guildId, fetched?.toObject() ?? fetched);
 
-        return cache.get(guildId);
-    } else return null;
+    return cache.get(guildId);
+  } return null;
 }
 
 /**
@@ -89,9 +89,9 @@ async function getGuild(guildId, createIfNotFound = true, force = false) {
  * @returns {Promise<deleteMany|boolean>}
  */
 async function deleteGuild(guildId, onlyCache = false) {
-    if (cache.has(guildId)) cache.delete(guildId);
+  if (cache.has(guildId)) cache.delete(guildId);
 
-    return !onlyCache ? guildModel.deleteMany({guildID: guildId}) : true;
+  return !onlyCache ? guildModel.deleteMany({ guildID: guildId }) : true;
 }
 
 /**
@@ -102,19 +102,19 @@ async function deleteGuild(guildId, onlyCache = false) {
  * @returns {Promise<guildModel|null>}
  */
 async function updateGuild(guildId, data = {}, createIfNotFound = false) {
-    let oldData = await getGuild(guildId, createIfNotFound);
+  let oldData = await getGuild(guildId, createIfNotFound);
 
-    if (oldData) {
-        if(oldData?._doc) oldData = oldData?._doc;
+  if (oldData) {
+    if (oldData?._doc) oldData = oldData?._doc;
 
-        data = { ...oldData, ...data}
+    data = { ...oldData, ...data };
 
-        cache.set(guildId, data);
+    cache.set(guildId, data);
 
-        return guildModel.updateOne({
-            guildID: guildId
-        }, data);
-    } else return null;
+    return guildModel.updateOne({
+      guildID: guildId,
+    }, data);
+  } return null;
 }
 
 /**
@@ -122,15 +122,15 @@ async function updateGuild(guildId, data = {}, createIfNotFound = false) {
  * @returns {Promise<guildModel>}
  */
 async function getAll() {
-    return guildModel.find().lean();
+  return guildModel.find().lean();
 }
 
 module.exports = {
-    connectToDatabase,
-    fetchGuild,
-    getGuild,
-    deleteGuild,
-    updateGuild,
-    startSweeper,
-    getAll
+  connectToDatabase,
+  fetchGuild,
+  getGuild,
+  deleteGuild,
+  updateGuild,
+  startSweeper,
+  getAll,
 };

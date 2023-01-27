@@ -88,7 +88,6 @@ module.exports = {
                 .setName("export")
                 .setDescription("Exports custom messages into a JSON file.")
         ),
-
     /**
      * @param {CommandInteraction} interaction
      * @param {Client} client
@@ -97,7 +96,6 @@ module.exports = {
     async execute(interaction, client, guildDb) {
         let typeEmbed, message;
         const {Language, wyCustom} = require(`../languages/${guildDb.language}.json`);
-
 
         class Paginator {
             constructor(pages = [], {

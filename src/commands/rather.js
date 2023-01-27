@@ -2,7 +2,7 @@ const {
     EmbedBuilder,
     SlashCommandBuilder,
     ActionRowBuilder,
-    ButtonBuilder,
+    ButtonBuilder, PermissionFlagsBits,
 } = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 const generateRather = require('../util/generateRather');
@@ -218,86 +218,93 @@ module.exports = {
                 if (interaction.options.getBoolean('voting') == false) {
                 } else {
                     try {
-                        await message.react('1️⃣');
-                        await message.react('2️⃣');
+                        if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
+                            PermissionFlagsBits.AddReactions,
+                        ])) {
+                            await message.react('1️⃣');
+                            await message.react('2️⃣');
+                        }
+
                         const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
 
                         const collector = message.createReactionCollector({
                             filter,
                             time: 20000,
                         });
-                        collector.on('collect', async () => {
-                        });
 
                         collector.on('end', async () => {
-                            if (
-                                message.reactions.cache.get('1️⃣').count - 1
-                                > message.reactions.cache.get('2️⃣').count - 1
-                            ) {
-                                ratherembed = new EmbedBuilder()
-                                    .setColor('#F00505')
-                                    .setFooter({
-                                        text: `${Rather.embed.footer}`,
-                                        iconURL: client.user.avatarURL(),
-                                    })
-                                    .setTimestamp()
-                                    .addFields({
-                                        name: Rather.embed.thispower,
-                                        value: `> 1️⃣ ${powers.power1}`,
-                                        inline: false,
-                                    });
-                            } else if (
-                                message.reactions.cache.get('1️⃣').count - 1
-                                < message.reactions.cache.get('2️⃣').count - 1
-                            ) {
-                                ratherembed = new EmbedBuilder()
-                                    .setColor('#F00505')
-                                    .setFooter({
-                                        text: `${Rather.embed.footer}`,
-                                        iconURL: client.user.avatarURL(),
-                                    })
-                                    .setTimestamp()
-                                    .addFields({
-                                        name: Rather.embed.thispower,
-                                        value: `> 2️⃣ ${powers.power2}`,
-                                        inline: false,
-                                    });
-                            } else {
-                                ratherembed = new EmbedBuilder()
-                                    .setColor('#ffffff')
-                                    .addFields(
-                                        {
-                                            name: Rather.embed.uselessname,
+                            const msg = await message.fetch().catch((err) => {
+                            });
+                            if (msg) {
+                                if (
+                                    msg.reactions.cache.get('1️⃣').count - 1
+                                    > msg.reactions.cache.get('2️⃣').count - 1
+                                ) {
+                                    ratherembed = new EmbedBuilder()
+                                        .setColor('#F00505')
+                                        .setFooter({
+                                            text: `${Rather.embed.footer}`,
+                                            iconURL: client.user.avatarURL(),
+                                        })
+                                        .setTimestamp()
+                                        .addFields({
+                                            name: Rather.embed.thispower,
                                             value: `> 1️⃣ ${powers.power1}`,
                                             inline: false,
-                                        },
-                                        {
-                                            name: Rather.embed.uselessname2,
+                                        });
+                                } else if (
+                                    msg.reactions.cache.get('1️⃣').count - 1
+                                    < msg.reactions.cache.get('2️⃣').count - 1
+                                ) {
+                                    ratherembed = new EmbedBuilder()
+                                        .setColor('#F00505')
+                                        .setFooter({
+                                            text: `${Rather.embed.footer}`,
+                                            iconURL: client.user.avatarURL(),
+                                        })
+                                        .setTimestamp()
+                                        .addFields({
+                                            name: Rather.embed.thispower,
                                             value: `> 2️⃣ ${powers.power2}`,
                                             inline: false,
-                                        },
-                                    )
-                                    .setFooter({
-                                        text: `${Rather.embed.footer}`,
-                                        iconURL: client.user.avatarURL(),
+                                        });
+                                } else {
+                                    ratherembed = new EmbedBuilder()
+                                        .setColor('#ffffff')
+                                        .addFields(
+                                            {
+                                                name: Rather.embed.uselessname,
+                                                value: `> 1️⃣ ${powers.power1}`,
+                                                inline: false,
+                                            },
+                                            {
+                                                name: Rather.embed.uselessname2,
+                                                value: `> 2️⃣ ${powers.power2}`,
+                                                inline: false,
+                                            },
+                                        )
+                                        .setFooter({
+                                            text: `${Rather.embed.footer}`,
+                                            iconURL: client.user.avatarURL(),
+                                        })
+                                        .setTimestamp();
+                                }
+
+                                try {
+                                    await msg.reactions.removeAll();
+                                } catch (error) {
+                                }
+                                await interaction
+                                    .editReply({
+                                        embeds: [ratherembed],
+                                        components: guildDb.replay ? rbutton : [] || [],
                                     })
-                                    .setTimestamp();
-                            }
+                                    .catch((err) => {
+                                        return;
+                                    });
 
-                            try {
-                                await message.reactions.removeAll();
-                            } catch (error) {
+                                collector.stop();
                             }
-                            await interaction
-                                .editReply({
-                                    embeds: [ratherembed],
-                                    components: guildDb.replay ? rbutton : [] || [],
-                                })
-                                .catch((err) => {
-                                    return;
-                                });
-
-                            collector.stop();
                         });
                     } catch (error) {
                     }

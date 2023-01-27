@@ -1,7 +1,7 @@
 const {
     EmbedBuilder,
     ActionRowBuilder,
-    ButtonBuilder,
+    ButtonBuilder, PermissionFlagsBits,
 } = require('discord.js');
 const generateRather = require('../util/generateRather');
 
@@ -67,21 +67,26 @@ module.exports = {
                     return;
                 });
             try {
-                await message.react('1️⃣');
-                await message.react('2️⃣');
+                if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
+                    PermissionFlagsBits.AddReactions,
+                ])) {
+                    await message.react('1️⃣');
+                    await message.react('2️⃣');
+                }
+
                 const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
 
                 const collector = message.createReactionCollector({
                     filter,
                     time: 20000,
                 });
-                collector.on('collect', async () => {
-                });
 
                 collector.on('end', async () => {
+                    const msg = await message.fetch().catch((err) => {});
+
                     if (
-                        message.reactions.cache.get('1️⃣').count - 1
-                        > message.reactions.cache.get('2️⃣').count - 1
+                        msg.reactions.cache.get('1️⃣').count - 1
+                        > msg.reactions.cache.get('2️⃣').count - 1
                     ) {
                         ratherembed = new EmbedBuilder()
                             .setColor('#0598F6')
@@ -96,8 +101,8 @@ module.exports = {
                                 inline: false,
                             });
                     } else if (
-                        message.reactions.cache.get('1️⃣').count - 1
-                        < message.reactions.cache.get('2️⃣').count - 1
+                        msg.reactions.cache.get('1️⃣').count - 1
+                        < msg.reactions.cache.get('2️⃣').count - 1
                     ) {
                         ratherembed = new EmbedBuilder()
                             .setColor('#0598F6')

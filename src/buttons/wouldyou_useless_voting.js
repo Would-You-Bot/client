@@ -1,4 +1,4 @@
-const {ButtonBuilder, ActionRowBuilder, EmbedBuilder} = require('discord.js');
+const {ButtonBuilder, ActionRowBuilder, EmbedBuilder, PermissionFlagsBits} = require('discord.js');
 
 module.exports = {
     data: {
@@ -72,84 +72,91 @@ module.exports = {
             return;
         });
         try {
-            await message.react('✅');
-            await message.react('❌');
+            if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
+                PermissionFlagsBits.AddReactions,
+            ])) {
+                await message.react('✅');
+                await message.react('❌');
+            }
+
             const filter = (reaction) => reaction.emoji.name == '✅' || reaction.emoji.name == '❌';
 
             const collector = message.createReactionCollector({
                 filter,
                 time: 20000,
             });
-            collector.on('collect', async () => {
-            });
 
             collector.on('end', async () => {
-                const totalreactions = message.reactions.cache.get('✅').count
-                    - 1
-                    + message.reactions.cache.get('❌').count
-                    - 1;
-                let percentage = Math.round(
-                    ((message.reactions.cache.get('✅').count - 1)
-                        / totalreactions)
-                    * 100,
-                );
-                let emoji = null;
-                let color = null;
-                const userstotal = totalreactions < 2
-                    ? `${WouldYou.stats.user}`
-                    : `${WouldYou.stats.users}`;
+                const msg = await message.fetch().catch((err) => {});
 
-                if (
-                    message.reactions.cache.get('✅').count
-                    - 1
-                    + message.reactions.cache.get('❌').count
-                    - 1
-                    == 0
-                ) {
-                    percentage = 0;
-                    emoji = '🤷';
-                    color = '#F0F0F0';
-                }
-
-                if (percentage > 50) {
-                    color = '#0598F6';
-                    emoji = '✅';
-                } else if (percentage < 50) {
-                    color = '#F00505';
-                    emoji = '❌';
-                } else {
-                    color = '#F0F0F0';
-                    emoji = '🤷';
-                }
-
-                wouldyouembed = new EmbedBuilder()
-                    .setColor(color)
-                    .setFooter({text: `${WouldYou.embed.footer}`, iconURL: client.user.avatarURL()})
-                    .setTimestamp()
-                    .addFields(
-                        {
-                            name: WouldYou.embed.Uselessname,
-                            value: `> ${power}`,
-                            inline: false,
-                        },
-                        {
-                            name: 'Stats',
-                            value: `> **${percentage}%** ${WouldYou.stats.of} **${totalreactions} ${userstotal}** ${WouldYou.stats.taking} ${emoji}`,
-                        },
+                if(msg) {
+                    const totalreactions = msg.reactions.cache.get('✅').count
+                        - 1
+                        + msg.reactions.cache.get('❌').count
+                        - 1;
+                    let percentage = Math.round(
+                        ((msg.reactions.cache.get('✅').count - 1)
+                            / totalreactions)
+                        * 100,
                     );
+                    let emoji = null;
+                    let color = null;
+                    const userstotal = totalreactions < 2
+                        ? `${WouldYou.stats.user}`
+                        : `${WouldYou.stats.users}`;
 
-                try {
-                    await message.reactions.removeAll();
-                } catch (error) {
+                    if (
+                        msg.reactions.cache.get('✅').count
+                        - 1
+                        + msg.reactions.cache.get('❌').count
+                        - 1
+                        == 0
+                    ) {
+                        percentage = 0;
+                        emoji = '🤷';
+                        color = '#F0F0F0';
+                    }
+
+                    if (percentage > 50) {
+                        color = '#0598F6';
+                        emoji = '✅';
+                    } else if (percentage < 50) {
+                        color = '#F00505';
+                        emoji = '❌';
+                    } else {
+                        color = '#F0F0F0';
+                        emoji = '🤷';
+                    }
+
+                    wouldyouembed = new EmbedBuilder()
+                        .setColor(color)
+                        .setFooter({text: `${WouldYou.embed.footer}`, iconURL: client.user.avatarURL()})
+                        .setTimestamp()
+                        .addFields(
+                            {
+                                name: WouldYou.embed.Uselessname,
+                                value: `> ${power}`,
+                                inline: false,
+                            },
+                            {
+                                name: 'Stats',
+                                value: `> **${percentage}%** ${WouldYou.stats.of} **${totalreactions} ${userstotal}** ${WouldYou.stats.taking} ${emoji}`,
+                            },
+                        );
+
+                    try {
+                        await message.reactions.removeAll();
+                    } catch (error) {
+                    }
+                    await interaction.editReply({
+                        embeds: [wouldyouembed],
+                        components: rbutton || [],
+                    }).catch((err) => {
+                        return;
+                    });
+
+                    collector.stop();
                 }
-                await interaction.editReply({
-                    embeds: [wouldyouembed],
-                    components: rbutton || [],
-                }).catch((err) => {
-                    return;
-                });
-
-                collector.stop();
             });
         } catch (error) {
         }

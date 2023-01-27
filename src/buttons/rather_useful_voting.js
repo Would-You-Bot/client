@@ -1,7 +1,7 @@
 const {
     EmbedBuilder,
     ActionRowBuilder,
-    ButtonBuilder,
+    ButtonBuilder, PermissionFlagsBits,
 } = require('discord.js');
 const generateRather = require('../util/generateRather');
 
@@ -66,86 +66,94 @@ module.exports = {
                     return;
                 });
             try {
-                await message.react('1️⃣');
-                await message.react('2️⃣');
+                if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
+                    PermissionFlagsBits.AddReactions,
+                ])) {
+                    await message.react('1️⃣');
+                    await message.react('2️⃣');
+                }
+
                 const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
 
                 const collector = message.createReactionCollector({
                     filter,
                     time: 20000,
                 });
-                collector.on('collect', async () => {
-                });
 
                 collector.on('end', async () => {
-                    if (
-                        message.reactions.cache.get('1️⃣').count - 1
-                        > message.reactions.cache.get('2️⃣').count - 1
-                    ) {
-                        ratherembed = new EmbedBuilder()
-                            .setColor('#0598F6')
-                            .setFooter({
-                                text: `${Rather.embed.footer}`,
-                                iconURL: client.user.avatarURL(),
-                            })
-                            .setTimestamp()
-                            .addFields({
-                                name: Rather.embed.thispower,
-                                value: `> 1️⃣ ${powers.power1}}`,
-                                inline: false,
-                            });
-                    } else if (
-                        message.reactions.cache.get('1️⃣').count - 1
-                        < message.reactions.cache.get('2️⃣').count - 1
-                    ) {
-                        ratherembed = new EmbedBuilder()
-                            .setColor('#0598F6')
-                            .setFooter({
-                                text: `${Rather.embed.footer}`,
-                                iconURL: client.user.avatarURL(),
-                            })
-                            .setTimestamp()
-                            .addFields({
-                                name: Rather.embed.thispower,
-                                value: `> 2️⃣ ${powers.power2}`,
-                                inline: false,
-                            });
-                    } else {
-                        ratherembed = new EmbedBuilder()
-                            .setColor('#ffffff')
-                            .addFields(
-                                {
-                                    name: Rather.embed.usefulname,
+                    const msg = await message.fetch().catch((err) => {
+                    });
+
+                    if(msg) {
+                        if (
+                            msg.reactions.cache.get('1️⃣').count - 1
+                            > msg.reactions.cache.get('2️⃣').count - 1
+                        ) {
+                            ratherembed = new EmbedBuilder()
+                                .setColor('#0598F6')
+                                .setFooter({
+                                    text: `${Rather.embed.footer}`,
+                                    iconURL: client.user.avatarURL(),
+                                })
+                                .setTimestamp()
+                                .addFields({
+                                    name: Rather.embed.thispower,
                                     value: `> 1️⃣ ${powers.power1}}`,
                                     inline: false,
-                                },
-                                {
-                                    name: Rather.embed.usefulname2,
+                                });
+                        } else if (
+                            msg.reactions.cache.get('1️⃣').count - 1
+                            < msg.reactions.cache.get('2️⃣').count - 1
+                        ) {
+                            ratherembed = new EmbedBuilder()
+                                .setColor('#0598F6')
+                                .setFooter({
+                                    text: `${Rather.embed.footer}`,
+                                    iconURL: client.user.avatarURL(),
+                                })
+                                .setTimestamp()
+                                .addFields({
+                                    name: Rather.embed.thispower,
                                     value: `> 2️⃣ ${powers.power2}`,
                                     inline: false,
-                                },
-                            )
-                            .setFooter({
-                                text: `${Rather.embed.footer}`,
-                                iconURL: client.user.avatarURL(),
+                                });
+                        } else {
+                            ratherembed = new EmbedBuilder()
+                                .setColor('#ffffff')
+                                .addFields(
+                                    {
+                                        name: Rather.embed.usefulname,
+                                        value: `> 1️⃣ ${powers.power1}}`,
+                                        inline: false,
+                                    },
+                                    {
+                                        name: Rather.embed.usefulname2,
+                                        value: `> 2️⃣ ${powers.power2}`,
+                                        inline: false,
+                                    },
+                                )
+                                .setFooter({
+                                    text: `${Rather.embed.footer}`,
+                                    iconURL: client.user.avatarURL(),
+                                })
+                                .setTimestamp();
+                        }
+
+                        try {
+                            await message.reactions.removeAll();
+                        } catch (error) {
+                        }
+                        await interaction
+                            .editReply({
+                                embeds: [ratherembed],
+                                components: rbutton || [],
                             })
-                            .setTimestamp();
-                    }
+                            .catch((err) => {
+                                return;
+                            });
 
-                    try {
-                        await message.reactions.removeAll();
-                    } catch (error) {
+                        collector.stop();
                     }
-                    await interaction
-                        .editReply({
-                            embeds: [ratherembed],
-                            components: rbutton || [],
-                        })
-                        .catch((err) => {
-                            return;
-                        });
-
-                    collector.stop();
                 });
             } catch (error) {
             }
