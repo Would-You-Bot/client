@@ -7,12 +7,7 @@ const {
 } = require('discord.js');
 const axios = require('axios');
 const guildModel = require('../util/Models/guildModel');
-
 require("dotenv").config();
-
-const Topgg = require(`@top-gg/sdk`)
-
-const api = new Topgg.Api(process.env.TOPGGTOKEN)
 
 function makeID(length) {
     let result = '';
@@ -90,7 +85,7 @@ module.exports = {
         ),
     /**
      * @param {CommandInteraction} interaction
-     * @param {Client} client
+     * @param {WouldYou} client
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
@@ -209,7 +204,7 @@ module.exports = {
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'add':
-                    if (await api.hasVoted(interaction.user.id) == false) {
+                    if (!client.voteLogger.votes.has(interaction.user.id)) {
                         if (guildDb.customMessages.length >= 30) return interaction.reply({
                             ephemeral: true,
                             content: wyCustom.error.maximum
@@ -387,11 +382,11 @@ module.exports = {
                                 ephemeral: true,
                                 content: wyCustom.error.import.att5
                             })
-                            if (response.data.useless && response.data.useless.length > 30 & await api.hasVoted(interaction.user.id) == false) return interaction.editReply({
+                            if (response.data.useless && response.data.useless.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att6
                             })
-                            if (response.data.useful && response.data.useful.length > 30 & await api.hasVoted(interaction.user.id) == false) return interaction.editReply({
+                            if (response.data.useful && response.data.useful.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att7
                             })
@@ -408,7 +403,7 @@ module.exports = {
                             })
 
                             if (response.data.useful) {
-                                if (response.data.useful.length + useful > 30 & await api.hasVoted(interaction.user.id) == false) return interaction.editReply({
+                                if (response.data.useful.length + useful > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                     ephemeral: true,
                                     content: wyCustom.error.import.att12
                                 })
@@ -419,7 +414,7 @@ module.exports = {
                             }
 
                             if (response.data.useless) {
-                                if (response.data.useless.length + useless > 30 & await api.hasVoted(interaction.user.id) == false) return interaction.editReply({
+                                if (response.data.useless.length + useless > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                     ephemeral: true,
                                     content: wyCustom.error.import.att13
                                 })

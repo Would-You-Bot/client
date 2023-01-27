@@ -1,12 +1,20 @@
 const {EmbedBuilder} = require('discord.js');
 const guildLang = require('./Models/guildModel');
 const mom = require("moment-timezone");
-module.exports = async (client) => {
-    setInterval(async function () {
-        const today = new Date();
+const CronJob = require('cron').CronJob;
 
-        let guilds = await client.database.getAll();
-        guilds = guilds.filter(g => client.guilds.cache.has(g.guildID) && g.dailyMsg && Number(g.dailyDay) !== today.getDay());
+module.exports = class DailyMessage {
+    constructor(c) {
+        this.c = c;
+        new CronJob('0 */60 * * * *', async () => {
+            await this.runSchedule();
+        });
+    }
+
+    async runSchedule() {
+        const today = new Date();
+        let guilds = await this.c.database.getAll();
+        guilds = guilds.filter(g => this.c.guilds.cache.has(g.guildID) && g.dailyMsg && Number(g.dailyDay) !== today.getDay());
 
         let i = 0;
         for (const db of guilds) {
@@ -16,17 +24,18 @@ module.exports = async (client) => {
                 if (!isNaN(db.dailyDay)) {
                     if (db.dailyDay === new Date().getDay()) return;
                 }
+
                 if (mom.tz(db.dailyTimezone).format("HH:mm") === "09:52") {
-                    await client.database.updateGuild(db.guildID, {
+                    await this.c.database.updateGuild(db.guildID, {
                         dailyDay: today.getDay()
                     }, false)
 
-                    const channel = await client.channels.fetch(db.dailyChannel).catch(err => {
+                    const channel = await this.c.channels.fetch(db.dailyChannel).catch(err => {
                     });
 
                     if (!channel?.id) return; // Always directly return before do to many actions
 
-                    const {Useless_Powers, Useful_Powers,} = await require(`../data/power-${db.language}.json`);
+                    const {Useless_Powers, Useful_Powers} = await require(`../data/power-${db.language}.json`);
                     const {WouldYou, Rather} = await require(`../languages/${db.language}.json`);
 
                     if (db.dailyRather) {
@@ -52,17 +61,16 @@ module.exports = async (client) => {
                             power2 = array[Math.floor(Math.random() * array.length)];
                             array = [];
                         } else if (db.customTypes === "custom") {
-                            client.channels.fetch(db.dailyChannel).catch((err) => {
-                                return;
-                            });
-                            ;
-                            if (db.customMessages.filter(c => c.type !== "nsfw") == 0) return client.channels.cache
-                                .get(db.dailyChannel)
-                                .send({
-                                    ephemeral: true,
-                                    content: "There's currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages."
-                                }).catch(() => {
-                                })
+                            if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
+                                return this.c.webhookHandler.sendWebhook(
+                                    channel,
+                                    db.dailyChannel,
+                                    {
+                                        content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.'
+                                    }
+                                )
+                            }
+
                             power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
                             power2 = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
                         }
@@ -71,7 +79,7 @@ module.exports = async (client) => {
                             .setColor('#0598F6')
                             .setFooter({
                                 text: `${Rather.embed.footer}`,
-                                iconURL: client.user.avatarURL(),
+                                iconURL: this.c.user.avatarURL(),
                             })
                             .setTimestamp()
                             .addFields(
@@ -87,11 +95,14 @@ module.exports = async (client) => {
                                 },
                             )
 
-                        return channel.send({
-                            embeds: [embed],
-                            content: db.dailyRole ? `<@&${db.dailyRole}>` : null
-                        }).catch((err) => {
-                        });
+                        return this.c.webhookHandler.sendWebhook(
+                            channel,
+                            db.dailyChannel,
+                            {
+                                embeds: [embed],
+                                content: db.dailyRole ? `<@&${db.dailyRole}>` : null
+                            }
+                        );
                     }
 
                     let power;
@@ -103,7 +114,7 @@ module.exports = async (client) => {
                         array = [];
                     } else if (db.customTypes === "mixed") {
                         let array = [];
-                        if (db.customMessages.filter(c => c.type !== "nsfw") != 0) {
+                        if (db.customMessages.filter(c => c.type !== "nsfw") !== 0) {
                             array.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg);
                         } else {
                             power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
@@ -113,17 +124,16 @@ module.exports = async (client) => {
                         power = array[Math.floor(Math.random() * array.length)]
                         array = [];
                     } else if (db.customTypes === "custom") {
-                        client.channels.fetch(db.dailyChannel).catch((err) => {
-                            return;
-                        });
-                        if (db.customMessages.filter(c => c.type !== "nsfw") == 0) return client.channels.cache
-                            .get(db.dailyChannel)
-                            .send({
-                                ephemeral: true,
-                                content: "There's currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages."
-                            }).catch(() => {
-                                return;
-                            })
+                        if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
+                            this.c.webhookHandler.sendWebhook(
+                                channel,
+                                db.dailyChannel,
+                                {
+                                    content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.'
+                                }
+                            )
+                        }
+
                         power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
                     }
 
@@ -131,7 +141,7 @@ module.exports = async (client) => {
                         .setColor('#0598F6')
                         .setFooter({
                             text: `${WouldYou.embed.footer}`,
-                            iconURL: client.user.avatarURL(),
+                            iconURL: this.c.user.avatarURL(),
                         })
                         .setTimestamp()
                         .addFields({
@@ -140,13 +150,16 @@ module.exports = async (client) => {
                             inline: false,
                         });
 
-                    return channel.send({
-                        embeds: [embed],
-                        content: db.dailyRole ? `<@&${db.dailyRole}>` : null
-                    }).catch((err) => {
-                    });
+                    return this.c.webhookHandler.sendWebhook(
+                        channel,
+                        db.dailyChannel,
+                        {
+                            embeds: [embed],
+                            content: db.dailyRole ? `<@&${db.dailyRole}>` : null
+                        }
+                    );
                 }
             }, i * 2500) // We do a little timeout here to work against discord ratelimit with 50reqs/second
         }
-    }, 60 * 1000) // Because of your configuration it is okay to just do that every minute
+    }
 };
