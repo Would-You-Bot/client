@@ -105,6 +105,7 @@ module.exports = class WouldYou extends Client {
         this.eventHandler = new EventHandler(this);
         this.eventHandler.load();
 
+        // Daily Message
         this.dailyMessage = new DailyMessage(this);
         this.dailyMessage.start();
     }
