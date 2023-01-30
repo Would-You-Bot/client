@@ -71,6 +71,6 @@ module.exports = async (client) => {
     };
 
 
-    setTimeout(() => setStatus(), 35000);
+    setTimeout(() => setStatus(), 35 * 1000);
     setInterval(() => setStatus(), 60 * 60 * 1000); // Do this not so often because everytime you set the presence the bot won't receive any events for some seconds
 };
