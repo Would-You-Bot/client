@@ -13,6 +13,7 @@ const KeepAlive = require('./keepAlive');
 const ButtonHandler = require("./buttonHandler");
 const EventHandler = require("./eventHandler");
 const WebhookHandler = require("./webhookHandler");
+const CooldownHandler = require("./cooldownHandler");
 const VoteLogger = require("./voteLogger");
 
 // User filter to filter all users out of the cache expect the bot
@@ -61,8 +62,9 @@ module.exports = class WouldYou extends Client {
         // It's creating a new collection for the commands.
         this.commands = new Collection();
 
-        // Map for cool-downs
-        this.used = new Map();
+        // The cooldown handler
+        this.cooldownHandler = new CooldownHandler(this);
+        this.cooldownHandler.startSweeper();
 
         // Init the cluster client
         this.cluster = new ClusterClient(this);
@@ -102,7 +104,6 @@ module.exports = class WouldYou extends Client {
         this.eventHandler = new EventHandler(this);
         this.eventHandler.load();
     }
-
 
     /**
      * Login the bot client
