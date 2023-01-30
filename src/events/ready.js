@@ -70,5 +70,5 @@ module.exports = async (client) => {
     });
   }, 60 * 60 * 1000); // Do this not so often because everytime you set the presence the bot won't receive any events for some seconds
 
-  await require('../util/dailyMsgs')(client);
+  await require('../util/dailyMessage')(client);
 };
