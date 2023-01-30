@@ -39,11 +39,11 @@
     },
     "removeembed": {
       "title": "¡Canal de bienvenida eliminado!",
-      "description":  "¡Has eliminado con éxito el canal de bienvenida!"
+      "description": "¡Has eliminado con éxito el canal de bienvenida!"
     },
     "nochannel": {
       "title": "No se pudo encontrar un canal de bienvenida.",
-      "description":  "¡No se puede eliminar el canal de bienvenida porque no hay un canal de bienvenida establecido!"
+      "description": "¡No se puede eliminar el canal de bienvenida porque no hay un canal de bienvenida establecido!"
     },
     "savedchannel": {
       "title": "¡Canal de bienvenida establecido!",
@@ -148,11 +148,11 @@
       "description": "**Would You** es un bot creado para aumentar la actividad del servidor de Discord.",
       "footer": "Would You",
       "Fields": {
-          "name": "**Mis Comandos**",
-          "value": "`/Would You` - Inicia una discusión sobre poderes aleatorios.\n`/ping` - Pong!\n`/language` - Cambia el idioma del bot para el servidor.\n`/help` - Muestra esta información.\n`/rather` - Te da dos poderes para elegir.\n`/custom` - envía un mensaje personalizado en el chat!\n`/welcome` - ¡Agrega o elimina el canal de bienvenida!\n`/support`: si alguna vez necesitas ayuda con el bot, ¡usa este comando para obtener ayuda del equipo de soporte!",
-          "privacyname": "**Política de privacidad**",
-          "privacy": "Valoramos tu privacidad. Si tienes alguna duda sobre tus datos, consulta nuestra política de privacidad [aquí](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
-        }
+        "name": "**Mis Comandos**",
+        "value": "`/Would You` - Inicia una discusión sobre poderes aleatorios.\n`/ping` - Pong!\n`/language` - Cambia el idioma del bot para el servidor.\n`/help` - Muestra esta información.\n`/rather` - Te da dos poderes para elegir.\n`/custom` - envía un mensaje personalizado en el chat!\n`/welcome` - ¡Agrega o elimina el canal de bienvenida!\n`/support`: si alguna vez necesitas ayuda con el bot, ¡usa este comando para obtener ayuda del equipo de soporte!",
+        "privacyname": "**Política de privacidad**",
+        "privacy": "Valoramos tu privacidad. Si tienes alguna duda sobre tus datos, consulta nuestra política de privacidad [aquí](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
+      }
     },
     "button": {
       "title": "Nuestro Discord"
@@ -258,5 +258,8 @@
     "error": "Ocurrió un error al intentar ejecutar ese comando.",
     "wait": "Debes esperar 30 segundos entre cada pulsación de botón.",
     "again": "Por favor utiliza el comando de nuevo."
+  },
+  "webhookManager": {
+    "noWebhook": "Due to a necessary change for performance, I need **Manage Webhooks** permissions to send this message! (If I have these permissions but this message still appears, make sure it\\'s possible for me to create a Webhook!"
   }
 }

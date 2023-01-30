@@ -97,7 +97,8 @@ module.exports = class WebhookHandler {
     }
 
     webhookFallBack = async (channel = null, channelId, message, err = false) => {
-        if (!channel) channel = await this.c.channels.fetch(channelId).catch((err) => {  });
+        if (!channel) channel = await this.c.channels.fetch(channelId).catch((err) => {
+        });
 
         if (!channel) return;
 
@@ -111,7 +112,8 @@ module.exports = class WebhookHandler {
                     setInterval(() => {
                         if (web?.owner?.id === this.c?.user?.id) {
                             web.delete('Deleting old webhook, to create a new one')
-                                .catch((err) => { });
+                                .catch((err) => {
+                                });
                         }
                     }, 1000 * i);
                 });
@@ -136,12 +138,13 @@ module.exports = class WebhookHandler {
                 message.embeds.unshift(
                     new EmbedBuilder()
                         .setColor('#FE0001')
-                        .setDescription('🛑 Due to a necessary change for performance, I need **Manage Webhooks** permissions to send this message! (If I have these permissions but this message still appears, make sure it\'s possible for me to create a Webhook!')
+                        .setDescription('🛑 ' + this.c.translation(channel.data?.language, 'webhookManager.noWebhook'))
                 );
 
                 return channel
                     .send(message)
-                    .catch(err => { });
+                    .catch(err => {
+                    });
             }
         }
     }
