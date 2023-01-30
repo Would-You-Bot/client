@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const Schema = Schema({
+const WebhookCache = Schema({
     channelId: {
         type: String,
         default: null,
@@ -15,4 +15,4 @@ const Schema = Schema({
     }
 });
 
-module.exports = model('webhookCache', Schema);
+module.exports = model('webhookCache', WebhookCache);

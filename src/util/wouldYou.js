@@ -14,6 +14,7 @@ const ButtonHandler = require("./buttonHandler");
 const EventHandler = require("./eventHandler");
 const WebhookHandler = require("./webhookHandler");
 const CooldownHandler = require("./cooldownHandler");
+const DailyMessage = require("./dailyMessage");
 const VoteLogger = require("./voteLogger");
 
 // User filter to filter all users out of the cache expect the bot
@@ -103,6 +104,9 @@ module.exports = class WouldYou extends Client {
         // Events Loader
         this.eventHandler = new EventHandler(this);
         this.eventHandler.load();
+
+        this.dailyMessage = new DailyMessage(this);
+        this.dailyMessage.start();
     }
 
     /**

@@ -1,16 +1,25 @@
 const {EmbedBuilder} = require('discord.js');
-const guildLang = require('./Models/guildModel');
 const mom = require("moment-timezone");
 const CronJob = require('cron').CronJob;
 
 module.exports = class DailyMessage {
     constructor(c) {
         this.c = c;
+    }
+
+    /**
+     * Start the daily message Schedule
+     */
+    start() {
         new CronJob('0 */60 * * * *', async () => {
             await this.runSchedule();
         });
     }
 
+    /**
+     * Run the daily message schedule
+     * @return {Promise<void>}
+     */
     async runSchedule() {
         const today = new Date();
         let guilds = await this.c.database.getAll();
