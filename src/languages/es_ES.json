@@ -260,6 +260,6 @@
     "again": "Por favor utiliza el comando de nuevo."
   },
   "webhookManager": {
-    "noWebhook": "Due to a necessary change for performance, I need **Manage Webhooks** permissions to send this message! (If I have these permissions but this message still appears, make sure it\\'s possible for me to create a Webhook!"
+    "noWebhook": "Debido a un cambio necesario para el rendimiento, ¡necesito permisos de **Gestión de Webhooks** para enviar este mensaje! (Si tengo estos permisos pero sigue apareciendo este mensaje, ¡asegúrate de que puedo crear un Webhook!"
   }
 }
