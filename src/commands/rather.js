@@ -48,7 +48,7 @@ module.exports = {
                 .setStyle(5)
                 .setEmoji('🤖')
                 .setURL(
-                    'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=274878294080&scope=bot%20applications.commands',
+                    'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands',
                 ),
         );
         const newButton = new ActionRowBuilder().addComponents(
