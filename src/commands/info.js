@@ -29,9 +29,9 @@ module.exports = {
       .setTitle('Bot Info')
       .addFields(
         {
-          name: 'Developers 🐒',
+          name: 'Developers 🐧',
           value: `
-          \`\`\`Mezo#0001\nForGetFulSkyBro#9999\n\`\`\``,
+          \`\`\`Dominik#5555\nForGetFulSkyBro#9999\nfb_sean#1337\nImGajeed76#5617\n\`\`\``,
           inline: false,
         },
         {
