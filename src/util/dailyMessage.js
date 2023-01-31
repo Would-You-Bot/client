@@ -34,7 +34,7 @@ module.exports = class DailyMessage {
                     if (db.dailyDay === new Date().getDay()) return;
                 }
 
-                if (mom.tz(db.dailyTimezone).format("HH:mm") === "09:52") {
+                if (mom.tz(db.dailyTimezone).format("HH:mm") === "12:00") {
                     await this.c.database.updateGuild(db.guildID, {
                         dailyDay: today.getDay()
                     }, false)
