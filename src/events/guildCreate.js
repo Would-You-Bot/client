@@ -2,6 +2,11 @@ const { WebhookClient } = require('discord.js');
 require('dotenv').config();
 
 module.exports = async (client, guild) => {
+  if(!guild?.name) return;
+
+  // Create and save the settings in the cache so that we don't need to do that at a command run
+  await client.database.getGuild(guild?.id, true);
+
   const webhookClient = new WebhookClient({ url: process.env.WEBHOOK });
 
   webhookClient.send({

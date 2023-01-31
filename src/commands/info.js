@@ -14,8 +14,9 @@ module.exports = {
   /**
    * @param {CommandInteraction} interaction
    * @param {Client} client
+   * @param {guildModel} guildDb
    */
-  async execute(interaction, client) {
+  async execute(interaction, client, guildDb) {
     const unixstamp = Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime / 1000);
 
     function round(num) {
@@ -28,9 +29,9 @@ module.exports = {
       .setTitle('Bot Info')
       .addFields(
         {
-          name: 'Developers 🐒',
+          name: 'Developers 🐧',
           value: `
-          \`\`\`Mezo#0001\nForGetFulSkyBro#9999\n\`\`\``,
+          \`\`\`Dominik#5555\nForGetFulSkyBro#9999\nfb_sean#1337\nImGajeed76#5617\n\`\`\``,
           inline: false,
         },
         {
@@ -66,7 +67,7 @@ module.exports = {
       )
       .setThumbnail(client.user.displayAvatarURL())
       .setFooter({
-        text: interaction.user.tag,
+        text: interaction.user.tag + ' Shard #' + interaction?.guild?.shardId ?? 0,
         iconURL: client.user.avatarURL(),
       })
       .setTimestamp();

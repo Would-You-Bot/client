@@ -2,6 +2,7 @@ const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const guildLang = require('../util/Models/guildModel');
 
 module.exports = {
+  requireGuild: true,
   data: new SlashCommandBuilder()
     .setName('commandname')
     .setDescription('commanddescription')

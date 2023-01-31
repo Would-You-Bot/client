@@ -1,20 +1,11 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const WouldYou = require('./util/wouldYou');
+const {ChalkAdvanced} = require("chalk-advanced");
 
-/* Initialize client */
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildMessageReactions,
-  ],
-});
-
-const wouldyouComponents = async () => {
-  require('./util/keepAlive')(client);
-  await require('./util/wouldyouClient')(client);
-  await require('./util/dbHandler');
-  await require('./util/voteLogs');
-};
-
-wouldyouComponents();
+const client = new WouldYou();
+client.loginBot().then(() => {
+  console.log(
+      `${ChalkAdvanced.white('Would You?')} ${ChalkAdvanced.gray(
+          '>',
+      )} ${ChalkAdvanced.green('Bot should be started now...')}`,
+  );
+})

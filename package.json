@@ -2,11 +2,10 @@
   "name": "would-you",
   "version": "3.0.0",
   "description": "Would you rather die or use this bot. You got the choice",
-  "main": "src/index.js",
+  "main": "src/cluster.js",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "nodemon src/index.js",
-    "lint": "eslint . --fix"
+    "start": "node src/cluster.js",
+    "test": "nodemon src/cluster.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +18,7 @@
     "discord",
     "javascript"
   ],
-  "author": "Mezo, ForGetFulSkyBro",
+  "author": "Mezo, ForGetFulSkyBro, fb_sean",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Developer-Dungeon-Studio/Would-You/issues"
@@ -28,10 +27,11 @@
   "dependencies": {
     "@discordjs/rest": "^1.2.0",
     "@top-gg/sdk": "^3.1.3",
-    "axios": "^0.27.2",
+    "axios": "^1.2.2",
     "chalk-advanced": "^1.0.3",
     "cron": "^2.1.0",
     "discord-api-types": "^0.37.11",
+    "discord-hybrid-sharding": "^2.1.0",
     "discord.js": "14.5.0",
     "dotenv": "^16.0.3",
     "dungeon-api": "^1.0.5",
@@ -41,9 +41,6 @@
     "topgg-autoposter": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^8.24.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
     "nodemon": "2.0.20"
   }
 }

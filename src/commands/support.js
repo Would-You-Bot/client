@@ -1,87 +1,58 @@
 const {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  SlashCommandBuilder,
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    SlashCommandBuilder,
 } = require("discord.js");
-const guildLang = require("../util/Models/guildModel");
+const guildModel = require("../util/Models/guildModel");
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("support")
-    .setDescription("Link to our support server")
-    .setDMPermission(true)
-    .setDescriptionLocalizations({
-      de: "Link zu unserem Support Server",
-      "es-ES": "Link para nuestro servidor de soporte",
-    }),
+    data: new SlashCommandBuilder()
+        .setName("support")
+        .setDescription("Link to our support server")
+        .setDMPermission(true)
+        .setDescriptionLocalizations({
+            de: "Link zu unserem Support Server",
+            "es-ES": "Link para nuestro servidor de soporte",
+        }),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {Client} client
-   */
+    /**
+     * @param {CommandInteraction} interaction
+     * @param {Client} client
+     * @param {guildModel} guildDb
+     */
+    async execute(interaction, client, guildDb) {
+        let language = require(`../languages/en_EN.json`);
+        if (interaction.guildId) {
+            language = require(`../languages/${guildDb.language}.json`);
+        }
+        const {Support} = language;
 
-  async execute(interaction, client) {
-    if (interaction.guild) {
-      guildLang
-        .findOne({ guildID: interaction.guild.id })
-        .then(async (result) => {
-          const { Support } = require(`../languages/${result.language}.json`);
-
-          const supportembed = new EmbedBuilder()
+        const supportembed = new EmbedBuilder()
             .setColor("#F00505")
             .setTitle(Support.embed.title)
             .setDescription(`${Support.embed.description}`)
             .setFooter({
-              text: `${Support.embed.footer}`,
-              iconURL: client.user.avatarURL(),
+                text: `${Support.embed.footer}`,
+                iconURL: client.user.avatarURL(),
             })
             .setTimestamp();
 
-          const supportbutton = new ActionRowBuilder().addComponents(
+        const supportbutton = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-              .setLabel("Support Server")
-              .setStyle(5)
-              .setEmoji("💻")
-              .setURL("https://discord.gg/vMyXAxEznS")
-          );
-          await interaction
+                .setLabel("Support Server")
+                .setStyle(5)
+                .setEmoji("💻")
+                .setURL("https://discord.gg/vMyXAxEznS")
+        );
+
+        return interaction
             .reply({
-              embeds: [supportembed],
-              components: [supportbutton],
+                embeds: [supportembed],
+                components: [supportbutton],
             })
             .catch((err) => {
-              return;
+                return;
             });
-        });
-    } else {
-      const { Support } = require(`../languages/en_EN.json`);
-
-      const supportembed = new EmbedBuilder()
-        .setColor("#F00505")
-        .setTitle(Support.embed.title)
-        .setDescription(`${Support.embed.description}`)
-        .setFooter({
-          text: `${Support.embed.footer}`,
-          iconURL: client.user.avatarURL(),
-        })
-        .setTimestamp();
-
-      const supportbutton = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setLabel("Support Server")
-          .setStyle(5)
-          .setEmoji("💻")
-          .setURL("https://discord.gg/vMyXAxEznS")
-      );
-      await interaction
-        .reply({
-          embeds: [supportembed],
-          components: [supportbutton],
-        })
-        .catch((err) => {
-          return;
-        });
-    }
-  },
+    },
 };

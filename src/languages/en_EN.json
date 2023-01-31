@@ -39,11 +39,11 @@
     },
     "removeembed": {
       "title": "Welcome channel removed!",
-      "description":  "You successfully removed the welcome channel!"
+      "description": "You successfully removed the welcome channel!"
     },
     "nochannel": {
       "title": "Couldnt find a welcome channel",
-      "description":  "Can't remove the welcome channel because there is no welcome channel set!"
+      "description": "Can't remove the welcome channel because there is no welcome channel set!"
     },
     "savedchannel": {
       "title": "Welcome channel set!",
@@ -148,11 +148,11 @@
       "description": "**Would You** is a discord bot built to increase discord server activity.",
       "footer": "Would You",
       "Fields": {
-          "name": "**My Commands**",
-          "value": "`/Would You` - Start a discussion about random powers\n`/ping` - Pong!\n`/language` - Change the language of the bot for the server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat\n`/welcome` - Add or remove the welcome channel!\n`/support` - If you ever need help on the bot, use this command to get help from the support team!",
-          "privacyname": "**Privacy Policy**",
-          "privacy": "We value your privacy. If you have any concerns about your data, check out privacy policy [here](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
-        }
+        "name": "**My Commands**",
+        "value": "`/Would You` - Start a discussion about random powers\n`/ping` - Pong!\n`/language` - Change the language of the bot for the server\n`/help` - Shows this info\n`/rather` - Gives you two powers to choose from\n`/custom` - Sends a custom would you message in the chat!\n`/wwyd` - Sends a what would you do question in the chat\n`/welcome` - Add or remove the welcome channel!\n`/support` - If you ever need help on the bot, use this command to get help from the support team!",
+        "privacyname": "**Privacy Policy**",
+        "privacy": "We value your privacy. If you have any concerns about your data, check out privacy policy [here](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
+      }
     },
     "button": {
       "title": "Our Discord"
@@ -258,5 +258,8 @@
     "error": "An error occurred while trying to execute that command.",
     "wait": "You need to wait 30 seconds between every button press.",
     "again": "Please use the command again."
+  },
+  "webhookManager": {
+    "noWebhook": "Due to a necessary change for performance, I need **Manage Webhooks** permissions to send this message! (If I have these permissions but this message still appears, make sure it\\'s possible for me to create a Webhook!"
   }
 }

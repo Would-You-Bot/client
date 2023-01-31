@@ -4,17 +4,17 @@ const {
     SlashCommandBuilder,
     PermissionFlagsBits,
 } = require('discord.js');
-const guildLang = require('../util/Models/guildModel');
+const guildModel = require('../util/Models/guildModel');
+
 function isValid(tz) {
     if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
         return false;
     }
 
     try {
-        Intl.DateTimeFormat(undefined, { timeZone: tz });
+        Intl.DateTimeFormat(undefined, {timeZone: tz});
         return true;
-    }
-    catch (ex) {
+    } catch (ex) {
         return false;
     }
 }
@@ -28,6 +28,7 @@ function dateType(tz) {
 }
 
 module.exports = {
+    requireGuild: true,
     data: new SlashCommandBuilder()
         .setName('dailymsg')
         .setDescription('Daily Would You messages')
@@ -35,7 +36,7 @@ module.exports = {
         .setDescriptionLocalizations({
             de: 'Tägliche Würdest du Nachrichten',
             "es-ES": 'Mensajes Would You diarios'
-          })
+        })
         .addSubcommand((subcommand) =>
             subcommand
                 .setName("channel")
@@ -76,11 +77,11 @@ module.exports = {
                         .setDescription("Enable/disable daily Would You messages.")
                         .setRequired(true)
                         .addChoices(
-                            { name: 'true', value: 'true' },
-                            { name: 'false', value: 'false' },
+                            {name: 'true', value: 'true'},
+                            {name: 'false', value: 'false'},
                         )
                 )
-    )
+        )
         .addSubcommand((subcommand) =>
             subcommand
                 .setName("types")
@@ -91,174 +92,174 @@ module.exports = {
                         .setDescription("Change Daily Messages to rather messages.")
                         .setRequired(true)
                         .addChoices(
-                            { name: 'true', value: 'true' },
-                            { name: 'false', value: 'false' },
+                            {name: 'true', value: 'true'},
+                            {name: 'false', value: 'false'},
                         )
                 )
         ),
     /**
      * @param {CommandInteraction} interaction
      * @param {Client} client
+     * @param {guildModel} guildDb
      */
-
-    async execute(interaction, client) {
+    async execute(interaction, client, guildDb) {
         let daily;
-        guildLang
-            .findOne({ guildID: interaction.guild.id })
-            .then(async (result) => {
-                const { Daily } = require(`../languages/${result.language}.json`);
-                if (
-                    interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
-                ) {
-                    switch (interaction.options.getSubcommand()) {
-                        case 'message': {
-                            if (result.dailyMsg && interaction.options.getString("message") === "true") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadytrue}` })
-                            if (!result.dailyMsg && interaction.options.getString("message") === "false") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadyfalse}` })
-                            guildLang
-                                .findOne({ guildID: interaction.guild.id })
-                                .then(async () => {
-                                    await guildLang
-                                        .findOneAndUpdate(
-                                            { guildID: interaction.guild.id },
-                                            {
-                                                dailyMsg: interaction.options.getString("message") === "true" ? true : false,
-                                            },
-                                        )
-                                        .catch();
-                                });
-                            daily = new EmbedBuilder()
-                                .setTitle(`${Daily.successEmbed.title} Would You`)
-                                .setColor('#0598F6')
-                                .setDescription(`${Daily.successEmbed.desc} ${interaction.options.getString("message") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc2}${!result.dailyChannel ? `\n${Daily.successEmbed.desc3} ${interaction.options.getString("message") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc4}` : ""}`)
-                                .setFooter({
-                                    text: 'Would You',
-                                    iconURL: client.user.avatarURL(),
-                                });
-                            break;
-                        }
-
-                        case 'types': {
-                            if (result.dailyRather && interaction.options.getString("types") === "true") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadytrue}` })
-                            if (!result.dailyRather && interaction.options.getString("types") === "false") return await interaction.reply({ ephemeral: true, content: `${Daily.embed.alreadyfalse}` })
-                            guildLang
-                                .findOne({ guildID: interaction.guild.id })
-                                .then(async () => {
-                                    await guildLang
-                                        .findOneAndUpdate(
-                                            { guildID: interaction.guild.id },
-                                            {
-                                                dailyRather: interaction.options.getString("types") === "true" ? true : false,
-                                            },
-                                        )
-                                        .catch();
-                                });
-                            daily = new EmbedBuilder()
-                                .setTitle(`${Daily.successEmbed.title} Would You`)
-                                .setColor('#0598F6')
-                                .setDescription(`${Daily.successEmbed.desc} ${interaction.options.getString("types") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc22}`)
-                                .setFooter({
-                                    text: 'Would You',
-                                    iconURL: client.user.avatarURL(),
-                                });
-                            break;
-                        }
-
-                        case 'channel': {
-                            if (!interaction.guild.members.cache.get(client.user.id).permissionsIn(interaction.options.getChannel("channel").id).has("ViewChannel")) return await interaction.reply({ ephemeral: true, content: Daily.errorChannel.viewChannel })
-                            if (!interaction.guild.members.cache.get(client.user.id).permissionsIn(interaction.options.getChannel("channel").id).has("SendMessages")) return await interaction.reply({ ephemeral: true, content: Daily.errorChannel.sendMessages })
-                            if (result.dailyChannel && result.dailyChannel === interaction.options.getChannel("channel").id) return await interaction.reply({ ephemeral: true, content: Daily.errorChannel.alreadySet })
-
-                            guildLang
-                                .findOne({ guildID: interaction.guild.id })
-                                .then(async () => {
-                                    await guildLang
-                                        .findOneAndUpdate(
-                                            { guildID: interaction.guild.id },
-                                            {
-                                                dailyChannel: interaction.options.getChannel("channel").id,
-                                            },
-                                        )
-                                        .catch();
-                                });
-                            daily = new EmbedBuilder()
-                                .setTitle(Daily.success.title)
-                                .setColor('#0598F6')
-                                .setDescription(`${Daily.success.desc} <#${interaction.options.getChannel("channel").id}> ${Daily.success.desc2}`)
-                                .setFooter({
-                                    text: 'Would You',
-                                    iconURL: client.user.avatarURL(),
-                                });
-                            break;
-                        }
-
-                        case 'role': {
-                            if (result.dailyRole && result.dailyRole === interaction.options.getRole("role").id) return await interaction.reply({ ephemeral: true, content: Daily.errorRole })
-
-                            guildLang
-                                .findOne({ guildID: interaction.guild.id })
-                                .then(async () => {
-                                    await guildLang
-                                        .findOneAndUpdate(
-                                            { guildID: interaction.guild.id },
-                                            {
-                                                dailyRole: interaction.options.getRole("role").id,
-                                            },
-                                        )
-                                        .catch();
-                                });
-                            daily = new EmbedBuilder()
-                                .setTitle(Daily.success.title)
-                                .setColor('#0598F6')
-                                .setDescription(`${Daily.success.desc} \`${interaction.options.getRole("role").name}\` ${Daily.success.desc3}`)
-                                .setFooter({
-                                    text: 'Would You',
-                                    iconURL: client.user.avatarURL(),
-                                });
-                            break;
-                        }
-
-                        case 'timezone': {
-                            if (result.dailyTimezone.toLowerCase() === interaction.options.getString("timezone").toLowerCase()) return await interaction.reply({ ephemeral: true, content: Daily.timezone.errorSame })
-                            if (!isValid(interaction.options.getString("timezone").toLowerCase())) return await interaction.reply({ ephemeral: true, content: Daily.timezone.errorInvalid })
-                            if (!dateType(interaction.options.getString("timezone").toLowerCase())) return await interaction.reply({ ephemeral: true, content: Daily.timezone.errorInvalid })
-                            
-                            guildLang
-                                .findOne({ guildID: interaction.guild.id })
-                                .then(async () => {
-                                    await guildLang
-                                        .findOneAndUpdate(
-                                            { guildID: interaction.guild.id },
-                                            {
-                                                dailyTimezone: interaction.options.getString("timezone"),
-                                            },
-                                        )
-                                        .catch();
-                                });
-                            daily = new EmbedBuilder()
-                                .setTitle(Daily.success.title)
-                                .setColor('#0598F6')
-                                .setDescription(`${Daily.timezone.desc} \`${interaction.options.getString("timezone")}\` ${Daily.timezone.desc2}`)
-                                .setFooter({
-                                    text: 'Would You',
-                                    iconURL: client.user.avatarURL(),
-                                });
-                            break;
-                        }
-                    }
-                    await interaction.reply({
-                        embeds: [daily],
+        const {Daily} = require(`../languages/${guildDb.language}.json`);
+        if (
+            interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
+        ) {
+            switch (interaction.options.getSubcommand()) {
+                case 'message': {
+                    if (guildDb.dailyMsg && interaction.options.getString("message") === "true") return await interaction.reply({
                         ephemeral: true,
-                    }).catch((err) => { return; });
-                } else {
-                    const errorembed = new EmbedBuilder()
-                        .setColor('#F00505')
-                        .setTitle('Error!')
-                        .setDescription(Daily.embed.error);
-                    await interaction.reply({
-                        embeds: [errorembed],
+                        content: `${Daily.embed.alreadytrue}`
+                    })
+                    if (!guildDb.dailyMsg && interaction.options.getString("message") === "false") return await interaction.reply({
                         ephemeral: true,
-                    }).catch((err) => { return; });
+                        content: `${Daily.embed.alreadyfalse}`
+                    })
+                    await client.database.updateGuild(interaction.guildId, {
+                        dailyMsg: interaction.options.getString("message") === "true" ? true : false,
+                    }, true)
+
+                    daily = new EmbedBuilder()
+                        .setTitle(`${Daily.successEmbed.title} Would You`)
+                        .setColor('#0598F6')
+                        .setDescription(`${Daily.successEmbed.desc} ${interaction.options.getString("message") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc2}${!guildDb.dailyChannel ? `\n${Daily.successEmbed.desc3} ${interaction.options.getString("message") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc4}` : ""}`)
+                        .setFooter({
+                            text: 'Would You',
+                            iconURL: client.user.avatarURL(),
+                        });
+                    break;
                 }
+                case 'types': {
+                    const types = interaction.options.getString("types") === "true" ? true : false;
+
+                    if (guildDb.dailyRather && types) return await interaction.reply({
+                        ephemeral: true,
+                        content: `${Daily.embed.alreadytrue}`
+                    })
+                    if (!guildDb.dailyRather && !types) return await interaction.reply({
+                        ephemeral: true,
+                        content: `${Daily.embed.alreadyfalse}`
+                    })
+
+                    await client.database.updateGuild(interaction.guildId, {
+                        dailyRather: types,
+                    }, true)
+
+                    daily = new EmbedBuilder()
+                        .setTitle(`${Daily.successEmbed.title} Would You`)
+                        .setColor('#0598F6')
+                        .setDescription(`${Daily.successEmbed.desc} ${interaction.options.getString("types") === "true" ? Daily.successEmbed.options : Daily.successEmbed.options2} ${Daily.successEmbed.desc22}`)
+                        .setFooter({
+                            text: 'Would You',
+                            iconURL: client.user.avatarURL(),
+                        });
+                    break;
+                }
+                case 'channel': {
+                    const channel = interaction.options.getChannel("channel");
+
+                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ViewChannel])) return await interaction.reply({
+                        ephemeral: true,
+                        content: Daily.errorChannel.viewChannel
+                    })
+                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.SendMessages])) return await interaction.reply({
+                        ephemeral: true,
+                        content: Daily.errorChannel.sendMessages
+                    })
+                    if (guildDb.dailyChannel && guildDb.dailyChannel === channel.id) return await interaction.reply({
+                        ephemeral: true,
+                        content: Daily.errorChannel.alreadySet
+                    })
+
+                    await client.database.updateGuild(interaction.guildId, {
+                        dailyChannel: channel.id,
+                    }, true)
+
+                    daily = new EmbedBuilder()
+                        .setTitle(Daily.success.title)
+                        .setColor('#0598F6')
+                        .setDescription(`${Daily.success.desc} <#${channel.id}> ${Daily.success.desc2}`)
+                        .setFooter({
+                            text: 'Would You',
+                            iconURL: client.user.avatarURL(),
+                        });
+                    break;
+                }
+                case 'role': {
+                    const role = interaction.options.getRole("role");
+
+                    if (guildDb.dailyRole && guildDb.dailyRole === role.id) return await interaction.reply({
+                        ephemeral: true,
+                        content: Daily.errorRole
+                    })
+
+                    await client.database.updateGuild(interaction.guildId, {
+                        dailyRole: role.id,
+                    }, true)
+
+                    daily = new EmbedBuilder()
+                        .setTitle(Daily.success.title)
+                        .setColor('#0598F6')
+                        .setDescription(`${Daily.success.desc} \`${role.name}\` ${Daily.success.desc3}`)
+                        .setFooter({
+                            text: 'Would You',
+                            iconURL: client.user.avatarURL(),
+                        });
+                    break;
+                }
+
+                case 'timezone': {
+                    const userInput = interaction.options.getString("timezone");
+                    const lowerCaseUserInput = userInput.toLowerCase();
+
+                    if (guildDb.dailyTimezone.toLowerCase() === lowerCaseUserInput) return await interaction.reply({
+                        ephemeral: true,
+                        content: Daily.timezone.errorSame
+                    })
+                    if (!isValid(lowerCaseUserInput)) return await interaction.reply({
+                        ephemeral: true,
+                        content: Daily.timezone.errorInvalid
+                    })
+                    if (!dateType(lowerCaseUserInput)) return await interaction.reply({
+                        ephemeral: true,
+                        content: Daily.timezone.errorInvalid
+                    })
+
+                    await client.database.updateGuild(interaction.guildId, {
+                        dailyTimezone: userInput,
+                    }, true)
+
+                    daily = new EmbedBuilder()
+                        .setTitle(Daily.success.title)
+                        .setColor('#0598F6')
+                        .setDescription(`${Daily.timezone.desc} \`${userInput}\` ${Daily.timezone.desc2}`)
+                        .setFooter({
+                            text: 'Would You',
+                            iconURL: client.user.avatarURL(),
+                        });
+                    break;
+                }
+            }
+            await interaction.reply({
+                embeds: [daily],
+                ephemeral: true,
+            }).catch((err) => {
+                return;
             });
+        } else {
+            const errorembed = new EmbedBuilder()
+                .setColor('#F00505')
+                .setTitle('Error!')
+                .setDescription(Daily.embed.error);
+            await interaction.reply({
+                embeds: [errorembed],
+                ephemeral: true,
+            }).catch((err) => {
+                return;
+            });
+        }
     },
 };
