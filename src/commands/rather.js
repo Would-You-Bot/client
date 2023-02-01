@@ -94,89 +94,100 @@ module.exports = {
                     .catch((err) => {
                         return;
                     });
-                if (interaction.options.getBoolean('voting') == false) {
+                if (interaction.options.getBoolean('voting') === false) {
                 } else {
                     try {
-                        await message.react('1️⃣');
-                        await message.react('2️⃣');
-                        const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
+                        if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
+                            PermissionFlagsBits.AddReactions,
+                        ])) {
+                            await message.react('1️⃣');
+                            await message.react('2️⃣');
+                        }
+
+                        const filter = (reaction) => reaction.emoji.name === '1️⃣' || reaction.emoji.name === '2️⃣';
 
                         const collector = message.createReactionCollector({
                             filter,
                             time: 20000,
                         });
-                        collector.on('collect', async () => {
-                        });
 
                         collector.on('end', async () => {
-                            if (
-                                message.reactions.cache.get('1️⃣').count - 1
-                                > message.reactions.cache.get('2️⃣').count - 1
-                            ) {
-                                ratherembed = new EmbedBuilder()
-                                    .setColor('#0598F6')
-                                    .setFooter({
-                                        text: `${Rather.embed.footer}`,
-                                        iconURL: client.user.avatarURL(),
-                                    })
-                                    .setTimestamp()
-                                    .addFields({
-                                        name: Rather.embed.thispower,
-                                        value: `> 1️⃣ ${powers.power1}`,
-                                        inline: false,
-                                    });
-                            } else if (
-                                message.reactions.cache.get('1️⃣').count - 1
-                                < message.reactions.cache.get('2️⃣').count - 1
-                            ) {
-                                ratherembed = new EmbedBuilder()
-                                    .setColor('#0598F6')
-                                    .setFooter({
-                                        text: `${Rather.embed.footer}`,
-                                        iconURL: client.user.avatarURL(),
-                                    })
-                                    .setTimestamp()
-                                    .addFields({
-                                        name: Rather.embed.thispower,
-                                        value: `> 2️⃣ ${powers.power2}`,
-                                        inline: false,
-                                    });
-                            } else {
-                                ratherembed = new EmbedBuilder()
-                                    .setColor('#ffffff')
-                                    .addFields(
-                                        {
-                                            name: Rather.embed.usefulname,
+                            const msg = await message.fetch().catch((err) => {
+                            });
+
+                            if(msg) {
+                                const oneCount = msg.reactions.cache.get('1️⃣')?.count ?? 0;
+                                const twoCount = msg.reactions.cache.get('2️⃣')?.count ?? 0;
+
+                                if (
+                                    oneCount - 1
+                                    > twoCount - 1
+                                ) {
+                                    ratherembed = new EmbedBuilder()
+                                        .setColor('#0598F6')
+                                        .setFooter({
+                                            text: `${Rather.embed.footer}`,
+                                            iconURL: client.user.avatarURL(),
+                                        })
+                                        .setTimestamp()
+                                        .addFields({
+                                            name: Rather.embed.thispower,
                                             value: `> 1️⃣ ${powers.power1}`,
                                             inline: false,
-                                        },
-                                        {
-                                            name: Rather.embed.usefulname2,
+                                        });
+                                } else if (
+                                    oneCount - 1
+                                    < twoCount - 1
+                                ) {
+                                    ratherembed = new EmbedBuilder()
+                                        .setColor('#0598F6')
+                                        .setFooter({
+                                            text: `${Rather.embed.footer}`,
+                                            iconURL: client.user.avatarURL(),
+                                        })
+                                        .setTimestamp()
+                                        .addFields({
+                                            name: Rather.embed.thispower,
                                             value: `> 2️⃣ ${powers.power2}`,
                                             inline: false,
-                                        },
-                                    )
-                                    .setFooter({
-                                        text: `${Rather.embed.footer}`,
-                                        iconURL: client.user.avatarURL(),
+                                        });
+                                } else {
+                                    ratherembed = new EmbedBuilder()
+                                        .setColor('#ffffff')
+                                        .addFields(
+                                            {
+                                                name: Rather.embed.usefulname,
+                                                value: `> 1️⃣ ${powers.power1}`,
+                                                inline: false,
+                                            },
+                                            {
+                                                name: Rather.embed.usefulname2,
+                                                value: `> 2️⃣ ${powers.power2}`,
+                                                inline: false,
+                                            },
+                                        )
+                                        .setFooter({
+                                            text: `${Rather.embed.footer}`,
+                                            iconURL: client.user.avatarURL(),
+                                        })
+                                        .setTimestamp();
+                                }
+
+                                try {
+                                    if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await msg.reactions.removeAll();
+                                } catch (error) {
+                                }
+                                await interaction
+                                    .editReply({
+                                        embeds: [ratherembed],
+                                        components: guildDb.replay ? rbutton : [] || [],
                                     })
-                                    .setTimestamp();
-                            }
+                                    .catch((err) => {
+                                        return collector.stop();
+                                    });
 
-                            try {
-                                await message.reactions.removeAll();
-                            } catch (error) {
+                                collector.stop();
                             }
-                            await interaction
-                                .editReply({
-                                    embeds: [ratherembed],
-                                    components: guildDb.replay ? rbutton : [] || [],
-                                })
-                                .catch((err) => {
-                                    return;
-                                });
-
-                            collector.stop();
                         });
                     } catch (error) {
                     }
@@ -215,7 +226,7 @@ module.exports = {
                     .catch((err) => {
                         return;
                     });
-                if (interaction.options.getBoolean('voting') == false) {
+                if (interaction.options.getBoolean('voting') === false) {
                 } else {
                     try {
                         if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
@@ -225,7 +236,7 @@ module.exports = {
                             await message.react('2️⃣');
                         }
 
-                        const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
+                        const filter = (reaction) => reaction.emoji.name === '1️⃣' || reaction.emoji.name === '2️⃣';
 
                         const collector = message.createReactionCollector({
                             filter,
@@ -236,9 +247,12 @@ module.exports = {
                             const msg = await message.fetch().catch((err) => {
                             });
                             if (msg) {
+                                const oneCount = msg.reactions.cache.get('1️⃣')?.count ?? 0;
+                                const twoCount = msg.reactions.cache.get('2️⃣')?.count ?? 0;
+
                                 if (
-                                    msg.reactions.cache.get('1️⃣').count - 1
-                                    > msg.reactions.cache.get('2️⃣').count - 1
+                                    oneCount - 1
+                                    > twoCount - 1
                                 ) {
                                     ratherembed = new EmbedBuilder()
                                         .setColor('#F00505')
@@ -253,8 +267,8 @@ module.exports = {
                                             inline: false,
                                         });
                                 } else if (
-                                    msg.reactions.cache.get('1️⃣').count - 1
-                                    < msg.reactions.cache.get('2️⃣').count - 1
+                                    oneCount - 1
+                                    < twoCount - 1
                                 ) {
                                     ratherembed = new EmbedBuilder()
                                         .setColor('#F00505')
@@ -291,7 +305,7 @@ module.exports = {
                                 }
 
                                 try {
-                                    await msg.reactions.removeAll();
+                                    if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await msg.reactions.removeAll();
                                 } catch (error) {
                                 }
                                 await interaction
@@ -300,7 +314,7 @@ module.exports = {
                                         components: guildDb.replay ? rbutton : [] || [],
                                     })
                                     .catch((err) => {
-                                        return;
+                                        return collector.stop();
                                     });
 
                                 collector.stop();

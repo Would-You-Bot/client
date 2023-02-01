@@ -79,7 +79,7 @@ module.exports = {
                     .catch((err) => {
                         return;
                     });
-                if (interaction.options.getBoolean('voting') == true) {
+                if (interaction.options.getBoolean('voting') === true) {
                     try {
                         if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
                             PermissionFlagsBits.AddReactions,
@@ -88,7 +88,7 @@ module.exports = {
                             await message.react('❌');
                         }
 
-                        const filter = (reaction) => reaction.emoji.name == '✅' || reaction.emoji.name == '❌';
+                        const filter = (reaction) => reaction.emoji.name === '✅' || reaction.emoji.name === '❌';
 
                         const collector = message.createReactionCollector({
                             filter,
@@ -100,12 +100,15 @@ module.exports = {
                             });
 
                             if (msg) {
-                                const totalreactions = msg.reactions.cache.get('✅').count
+                                const checksCount = msg.reactions.cache.get('✅')?.count ?? 0;
+                                const crossCount = msg.reactions.cache.get('❌')?.count ?? 0;
+
+                                const totalreactions = checksCount
                                     - 1
-                                    + msg.reactions.cache.get('❌').count
+                                    + crossCount
                                     - 1;
                                 let percentage = Math.round(
-                                    ((msg.reactions.cache.get('✅').count - 1)
+                                    ((checksCount - 1)
                                         / totalreactions)
                                     * 100,
                                 );
@@ -116,9 +119,9 @@ module.exports = {
                                     : `${WouldYou.stats.users}`;
 
                                 if (
-                                    msg.reactions.cache.get('✅').count
+                                    checksCount
                                     - 1
-                                    + msg.reactions.cache.get('❌').count -
+                                    + crossCount -
                                     1 == 0
                                 ) {
                                     percentage = 0;
@@ -157,7 +160,7 @@ module.exports = {
                                     );
 
                                 try {
-                                    if (message?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await message.reactions.removeAll();
+                                    if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await msg.reactions.removeAll();
                                 } catch (error) {
                                 }
 
@@ -204,7 +207,7 @@ module.exports = {
                         return;
                     });
 
-                if (interaction.options.getBoolean('voting') == true) {
+                if (interaction.options.getBoolean('voting') === true) {
                     try {
                         if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
                             PermissionFlagsBits.AddReactions,
@@ -213,7 +216,7 @@ module.exports = {
                             await message.react('2️⃣');
                         }
 
-                        const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
+                        const filter = (reaction) => reaction.emoji.name === '1️⃣' || reaction.emoji.name === '2️⃣';
 
                         const collector = message.createReactionCollector({
                             filter,
@@ -225,9 +228,12 @@ module.exports = {
                             });
 
                             if (msg) {
+                                const oneCount = msg.reactions.cache.get('1️⃣')?.count ?? 0;
+                                const twoCount = msg.reactions.cache.get('2️⃣')?.count ?? 0;
+
                                 if (
-                                    msg.reactions.cache.get('1️⃣').count - 1
-                                    > msg.reactions.cache.get('2️⃣').count - 1
+                                    oneCount - 1
+                                    > twoCount - 1
                                 ) {
                                     ratherembed = new EmbedBuilder()
                                         .setColor('#0598F6')
@@ -244,8 +250,8 @@ module.exports = {
                                             inline: false,
                                         });
                                 } else if (
-                                    msg.reactions.cache.get('1️⃣').count - 1
-                                    < msg.reactions.cache.get('2️⃣').count - 1
+                                    oneCount - 1
+                                    < twoCount - 1
                                 ) {
                                     ratherembed = new EmbedBuilder()
                                         .setColor('#0598F6')
@@ -273,7 +279,7 @@ module.exports = {
                                 }
 
                                 try {
-                                    if (message?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await message.reactions.removeAll();
+                                    if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await msg.reactions.removeAll();
                                 } catch (error) {
                                 }
                                 await interaction
