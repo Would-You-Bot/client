@@ -11,9 +11,10 @@ module.exports = class DailyMessage {
      * Start the daily message Schedule
      */
     start() {
-        new CronJob('0 */60 * * * *', async () => {
+        const job = new CronJob('0 */60 * * * *', async () => {
             await this.runSchedule();
         });
+        job.start()
     }
 
     /**
