@@ -158,12 +158,15 @@ module.exports = {
                     });
 
                     if (msg) {
-                        const totalreactions = msg.reactions.cache.get('✅').count
+                        const checksCount = msg.reactions.cache.get('✅')?.count ?? 0;
+                        const crossCount = msg.reactions.cache.get('❌')?.count ?? 0;
+
+                        const totalreactions = checksCount
                             - 1
-                            + msg.reactions.cache.get('❌').count
+                            + crossCount
                             - 1;
                         let percentage = Math.round(
-                            ((msg.reactions.cache.get('✅').count - 1)
+                            ((checksCount - 1)
                                 / totalreactions)
                             * 100,
                         );
@@ -174,9 +177,9 @@ module.exports = {
                             : `${WouldYou.stats.users}`;
 
                         if (
-                            msg.reactions.cache.get('✅').count
+                            checksCount
                             - 1
-                            + msg.reactions.cache.get('❌').count
+                            + crossCount
                             - 1
                             == 0
                         ) {
@@ -215,7 +218,7 @@ module.exports = {
                         collector.stop();
 
                         try {
-                            if (message?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await message.reactions.removeAll();
+                            if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await msg.reactions.removeAll();
                         } catch (error) {
                         }
 

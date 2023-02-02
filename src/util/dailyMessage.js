@@ -11,10 +11,9 @@ module.exports = class DailyMessage {
      * Start the daily message Schedule
      */
     start() {
-        const job = new CronJob('0 */60 * * * *', async () => {
+        new CronJob('0 */60 * * * *', async () => {
             await this.runSchedule();
-        });
-        job.start()
+        }, null, true);
     }
 
     /**
@@ -126,7 +125,7 @@ module.exports = class DailyMessage {
                         array = [];
                     } else if (db.customTypes === "mixed") {
                         let array = [];
-                        if (db.customMessages.filter(c => c.type !== "nsfw") !== 0) {
+                        if (db.customMessages.filter(c => c.type !== "nsfw") != 0) {
                             array.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg);
                         } else {
                             power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];

@@ -216,7 +216,7 @@ module.exports = {
 
                     let newID = makeID(6);
                     typeEmbed = new EmbedBuilder()
-                        .setTitle(wyCustom.success.embed.title)
+                        .setTitle(wyCustom.success.embedAdd.title)
                         .setColor("#0598F4")
                         .setDescription(`**${wyCustom.success.embedAdd.descID}**: ${newID}\n**${wyCustom.success.embedAdd.descCat}**: ${option}\n\n**${wyCustom.success.embedAdd.descCont}**: \`${message}\``)
                         .setFooter({
@@ -294,7 +294,7 @@ module.exports = {
                         let data;
                         data = guildDb.customMessages.filter(c => c.type === "useless").map(
                             (s, i) =>
-                                `${wyCustom.success.embed.descID}: ${s.id}\n${wyCustom.success.embed.descMsg}: ${s.msg}`
+                                `${wyCustom.success.embedAdd.descID}: ${s.id}\n${wyCustom.success.embedAdd.descMsg}: ${s.msg}`
                         );
                         data = Array.from({
                                 length: Math.ceil(data.length / 5)
@@ -310,7 +310,7 @@ module.exports = {
                         let data;
                         data = guildDb.customMessages.filter(c => c.type === "useful").map(
                             (s, i) =>
-                                `${wyCustom.success.embed.descID}: ${s.id}\n${wyCustom.success.embed.descMsg}: ${s.msg}`
+                                `${wyCustom.success.embedAdd.descID}: ${s.id}\n${wyCustom.success.embedAdd.descMsg}: ${s.msg}`
                         );
                         data = Array.from({
                                 length: Math.ceil(data.length / 5)

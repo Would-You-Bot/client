@@ -73,7 +73,7 @@ module.exports = {
                     await message.react('2️⃣');
                 }
 
-                const filter = (reaction) => reaction.emoji.name == '1️⃣' || reaction.emoji.name == '2️⃣';
+                const filter = (reaction) => reaction.emoji.name === '1️⃣' || reaction.emoji.name === '2️⃣';
 
                 const collector = message.createReactionCollector({
                     filter,
@@ -85,9 +85,12 @@ module.exports = {
                     });
 
                     if(msg) {
+                        const oneCount = msg.reactions.cache.get('1️⃣')?.count ?? 0;
+                        const twoCount = msg.reactions.cache.get('2️⃣')?.count ?? 0;
+
                         if (
-                            msg.reactions.cache.get('1️⃣').count - 1
-                            > msg.reactions.cache.get('2️⃣').count - 1
+                            oneCount - 1
+                            > twoCount - 1
                         ) {
                             ratherembed = new EmbedBuilder()
                                 .setColor('#0598F6')
@@ -102,8 +105,8 @@ module.exports = {
                                     inline: false,
                                 });
                         } else if (
-                            msg.reactions.cache.get('1️⃣').count - 1
-                            < msg.reactions.cache.get('2️⃣').count - 1
+                            oneCount - 1
+                            < twoCount - 1
                         ) {
                             ratherembed = new EmbedBuilder()
                                 .setColor('#0598F6')
@@ -140,7 +143,7 @@ module.exports = {
                         }
 
                         try {
-                            await message.reactions.removeAll();
+                            if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageMessages])) await msg.reactions.removeAll();
                         } catch (error) {
                         }
                         await interaction
@@ -149,7 +152,7 @@ module.exports = {
                                 components: rbutton || [],
                             })
                             .catch((err) => {
-                                return;
+                                return collector.stop();
                             });
 
                         collector.stop();
