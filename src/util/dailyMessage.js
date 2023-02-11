@@ -1,5 +1,6 @@
 const {EmbedBuilder} = require('discord.js');
 const mom = require("moment-timezone");
+const {ChalkAdvanced} = require("chalk-advanced");
 const CronJob = require('cron').CronJob;
 
 module.exports = class DailyMessage {
@@ -21,24 +22,21 @@ module.exports = class DailyMessage {
      * @return {Promise<void>}
      */
     async runSchedule() {
-        const today = new Date();
         let guilds = await this.c.database.getAll();
-        guilds = guilds.filter(g => this.c.guilds.cache.has(g.guildID) && g.dailyMsg && Number(g.dailyDay) !== today.getDay());
+        guilds = guilds.filter(g => this.c.guilds.cache.has(g.guildID) && g.dailyMsg);
+
+        console.log(
+            `${ChalkAdvanced.white('Daily Message')} ${ChalkAdvanced.gray(
+                '>',
+            )} ${ChalkAdvanced.green('Running daily message check for ' + guilds.length + ' guilds')}`,
+        );
 
         let i = 0;
         for (const db of guilds) {
             i++;
             setTimeout(async () => {
                 if (!db.dailyMsg) return;
-                if (!isNaN(db.dailyDay)) {
-                    if (db.dailyDay === new Date().getDay()) return;
-                }
-
                 if (mom.tz(db.dailyTimezone).format("HH:mm") === "12:00") {
-                    await this.c.database.updateGuild(db.guildID, {
-                        dailyDay: today.getDay()
-                    }, false)
-
                     const channel = await this.c.channels.fetch(db.dailyChannel).catch(err => {
                     });
 

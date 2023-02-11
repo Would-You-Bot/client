@@ -132,18 +132,22 @@ module.exports = class WebhookHandler {
                     return this.webhookFallBack(channel, channelId, message, false);
                 });
         } else {
-            if (channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.ManageWebhooks])) {
+            if (channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.EmbedLinks])) {
+                const guildSettings = await this.c.database.getGuild(channel.guild.id);
+
                 message.embeds = message?.embeds ?? [];
 
                 message.embeds.unshift(
                     new EmbedBuilder()
                         .setColor('#FE0001')
-                        .setDescription('🛑 ' + this.c.translation(channel.data?.language, 'webhookManager.noWebhook'))
+                        .setDescription('🛑 ' + this.c.translation.get(guildSettings?.language ?? 'en_EN', 'webhookManager.noWebhook'))
                 );
 
                 return channel
                     .send(message)
                     .catch(err => {
+                        console.log(err);
+                        console.log(message);
                     });
             }
         }
