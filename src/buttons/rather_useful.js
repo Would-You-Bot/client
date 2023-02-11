@@ -25,7 +25,7 @@ module.exports = {
         );
         const newButton = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setLabel('Replay')
+                .setLabel('New Question')
                 .setStyle(1)
                 .setEmoji('🔄')
                 .setCustomId('rather_useful'),
