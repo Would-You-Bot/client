@@ -98,9 +98,28 @@ module.exports = class TranslationHandler {
      * @example
      * const translation = getTranslation('en_EN', 'commands.ping.pong', {ping: 100});
      */
-    get(language, path, data) {
+    get(language, path, data = {}) {
         const l = this.getLanguage(language);
-        const c = l[path];
+        const p = path.split('.');
+        let c = null;
+
+        if(p.length > 0) {
+            for (const i of p) {
+                try {
+                    if(!c) {
+                        if (!l[i]) break;
+                        c = l[i];
+                    } else {
+                        if (!c[i]) break;
+                        c = c[i];
+                    }
+                } catch(err) {
+                    break;
+                }
+            }
+        } else {
+            return path;
+        }
 
         if (!c) return path;
 

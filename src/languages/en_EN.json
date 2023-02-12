@@ -226,6 +226,7 @@
     "errorChannel": {
       "viewChannel": "The channel provided doesn't allow me to view it. Select a channel which I have access to.",
       "sendMessages": "The channel provided doesn't allow me to send messages to it. Select a channel which I have access to.",
+      "manageWebhooks": "The channel provided doesn't allow me to create webhooks inside of it. Select a channel which I can create webhooks.",
       "alreadySet": "The provided channel is the same channel that is already set. Make sure to choose a different channel."
     },
     "success": {

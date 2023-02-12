@@ -36,10 +36,6 @@ const guildProfile = new Schema(
             type: String,
             default: "America/Chicago"
         },
-        dailyDay: {
-            type: Number,
-            default: 0,
-        },
         replay: {
             type: Boolean,
             default: true,

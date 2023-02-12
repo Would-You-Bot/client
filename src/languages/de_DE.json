@@ -196,6 +196,7 @@
     "errorChannel": {
       "viewChannel": "Der angegebene Kanal erlaubt es mir nicht, ihn zu sehen. Bitte wähle einen Kanal, auf den ich Zugriff habe.",
       "sendMessages": "Der angegebene Kanal erlaubt es mir nicht nachrichten zu senden. Bitte wähle einen Kanal, auf den ich Zugriff habe.",
+      "manageWebhooks": "Der angegebene Kanal erlaubt es mir nicht Webhooks zu erstellen. Bitte wähle einen Kanal, in dem ich Webhooks erstellen kann.",
       "alreadySet": "Der angegebene Kanal ist derselbe, der bereits gesetzt ist. Stelle sicher, dass du einen anderen Kanal wählen."
     },
     "success": {

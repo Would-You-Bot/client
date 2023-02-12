@@ -226,6 +226,7 @@
     "errorChannel": {
       "viewChannel": "No tengo permiso para ver ese canal. Selecciona un canal al que tenga acceso.",
       "sendMessages": "No tengo permiso para enviar mensajes a ese canal. Selecciona un canal al que tenga acceso.",
+      "manageWebhooks": "El canal proporcionado no me permite crear webhooks dentro de él. Seleccione un canal en el que pueda crear webhooks.",
       "alreadySet": "El canal proporcionado es el mismo canal que ya está configurado. Asegúrate de elegir un canal diferente."
     },
     "success": {

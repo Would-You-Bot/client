@@ -99,7 +99,7 @@ module.exports = {
         ),
     /**
      * @param {CommandInteraction} interaction
-     * @param {Client} client
+     * @param {WouldYou} client
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
@@ -110,11 +110,11 @@ module.exports = {
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'message': {
-                    if (guildDb.dailyMsg && interaction.options.getString("message") === "true") return await interaction.reply({
+                    if (guildDb.dailyMsg && interaction.options.getString("message") === "true") return interaction.reply({
                         ephemeral: true,
                         content: `${Daily.embed.alreadytrue}`
                     })
-                    if (!guildDb.dailyMsg && interaction.options.getString("message") === "false") return await interaction.reply({
+                    if (!guildDb.dailyMsg && interaction.options.getString("message") === "false") return interaction.reply({
                         ephemeral: true,
                         content: `${Daily.embed.alreadyfalse}`
                     })
@@ -135,11 +135,11 @@ module.exports = {
                 case 'types': {
                     const types = interaction.options.getString("types") === "true" ? true : false;
 
-                    if (guildDb.dailyRather && types) return await interaction.reply({
+                    if (guildDb.dailyRather && types) return interaction.reply({
                         ephemeral: true,
                         content: `${Daily.embed.alreadytrue}`
                     })
-                    if (!guildDb.dailyRather && !types) return await interaction.reply({
+                    if (!guildDb.dailyRather && !types) return interaction.reply({
                         ephemeral: true,
                         content: `${Daily.embed.alreadyfalse}`
                     })
@@ -161,17 +161,25 @@ module.exports = {
                 case 'channel': {
                     const channel = interaction.options.getChannel("channel");
 
-                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ViewChannel])) return await interaction.reply({
+                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ViewChannel])) return interaction.reply({
                         ephemeral: true,
                         content: Daily.errorChannel.viewChannel
                     })
-                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.SendMessages])) return await interaction.reply({
+                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.SendMessages])) return interaction.reply({
                         ephemeral: true,
                         content: Daily.errorChannel.sendMessages
                     })
-                    if (guildDb.dailyChannel && guildDb.dailyChannel === channel.id) return await interaction.reply({
+                    if (!channel?.permissionsFor(client?.user?.id)?.has([PermissionFlagsBits.ManageWebhooks])) return interaction.reply({
+                        ephemeral: true,
+                        content: Daily.errorChannel.manageWebhooks
+                    })
+                    if (guildDb.dailyChannel && guildDb.dailyChannel === channel.id) return interaction.reply({
                         ephemeral: true,
                         content: Daily.errorChannel.alreadySet
+                    })
+
+                    await client.webhookHandler.sendWebhook(channel, channel.id, {
+                        content: '<:roundyou:1009964111045607525> This channel will be used to send daily Would You messages.'
                     })
 
                     await client.database.updateGuild(interaction.guildId, {
@@ -191,7 +199,7 @@ module.exports = {
                 case 'role': {
                     const role = interaction.options.getRole("role");
 
-                    if (guildDb.dailyRole && guildDb.dailyRole === role.id) return await interaction.reply({
+                    if (guildDb.dailyRole && guildDb.dailyRole === role.id) return interaction.reply({
                         ephemeral: true,
                         content: Daily.errorRole
                     })
@@ -215,15 +223,15 @@ module.exports = {
                     const userInput = interaction.options.getString("timezone");
                     const lowerCaseUserInput = userInput.toLowerCase();
 
-                    if (guildDb.dailyTimezone.toLowerCase() === lowerCaseUserInput) return await interaction.reply({
+                    if (guildDb.dailyTimezone.toLowerCase() === lowerCaseUserInput) return interaction.reply({
                         ephemeral: true,
                         content: Daily.timezone.errorSame
                     })
-                    if (!isValid(lowerCaseUserInput)) return await interaction.reply({
+                    if (!isValid(lowerCaseUserInput)) return interaction.reply({
                         ephemeral: true,
                         content: Daily.timezone.errorInvalid
                     })
-                    if (!dateType(lowerCaseUserInput)) return await interaction.reply({
+                    if (!dateType(lowerCaseUserInput)) return interaction.reply({
                         ephemeral: true,
                         content: Daily.timezone.errorInvalid
                     })
