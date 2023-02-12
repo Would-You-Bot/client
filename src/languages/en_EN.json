@@ -193,18 +193,6 @@
       "missingPerms": "You are missing the `Manage Server` permission to use this command."
     }
   },
-  "COOLDOWN": {
-    "error": {
-      "syntax": "Cooldowns can't have negative numbers! Make sure to put only positive numbers.",
-      "notEnough": "Cooldown can't be below 5 seconds! Make sure to put all cooldowns above 5 seconds.",
-      "tooMuch": "Voting cooldown can't be above a week! Make sure to put all cooldowns below one week.",
-      "tooMuchReplay": "Replay cooldown can't be above a day! Make sure to put all cooldowns below one day."
-    },
-    "embed": {
-      "votingSuccess": "Successfully set voting cooldown to ",
-      "replaySuccess": "Successfully set replay cooldown to "
-    }
-  },
   "REPLAY": {
     "embed": {
       "title": "Would You Replays",
@@ -212,6 +200,8 @@
       "errorDesc": "In order to use this command you need to vote for the bot!",
       "errorAlready": "Replaying is already disabled",
       "errorAlready2": "Replaying is already enabled",
+      "cooldownSuccess": "Successfully put cooldown for ",
+      "cooldownSuccess2": " seconds!",
       "success": "Replay has been disabled successfully",
       "missingPerms": "You are missing the `Manage Server` permission to use this command."
     }

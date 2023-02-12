@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, ButtonBuilder, ActionRowBuilder } = require('discord.js');
+const {EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, ButtonBuilder, ActionRowBuilder} = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 require("dotenv").config();
 const Topgg = require(`@top-gg/sdk`)
@@ -22,6 +22,15 @@ module.exports = {
                     .setName('enable')
                     .setDescription('Disable or enable the replay button.')
                     .setRequired(true)
+            ))
+        .addSubcommand((subcommand) => subcommand
+            .setName('cooldown')
+            .setDescription('Change the cooldown for the replay button.')
+            .addNumberOption((option) =>
+                option
+                    .setName('cooldown')
+                    .setDescription('Change the cooldown for the replay button. Use seconds to determine how long.')
+                    .setRequired(true)
             )),
 
     /**
@@ -30,7 +39,7 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        const { REPLAY } = require(`../languages/${guildDb.language}.json`);
+        const {REPLAY} = require(`../languages/${guildDb.language}.json`);
         if (
             interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
         ) {
@@ -77,6 +86,26 @@ module.exports = {
                         })
                         .catch((err) => {
                             return;
+                        });
+                    break;
+                case "cooldown":
+                    const cooldown = interaction.options.getNumber('cooldown');
+
+                    await client.database.updateGuild(interaction.guildId, {
+                        replayCooldown: cooldown * 1000,
+                    }, true)
+
+                    const nochannelEmbed = new EmbedBuilder()
+                        .setColor("#2f3037")
+                        .setTitle("Error!")
+                        .setDescription(`${REPLAY.embed.cooldownSuccess}\`${cooldown.toLocaleString()}\`${REPLAY.embed.cooldownSuccess2}`);
+                    await interaction
+                        .reply({
+                            embeds: [nochannelEmbed],
+                            ephemeral: true,
+                        })
+                        .catch((err) => {
+
                         });
                     break;
             }
