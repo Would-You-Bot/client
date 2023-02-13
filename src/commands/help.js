@@ -27,7 +27,7 @@ module.exports = {
         let type;
         if (guildDb.language === "de_DE") {
             type = "de"
-        } else if (guildDb.language === "en_US") {
+        } else if (guildDb.language === "en_EN") {
             type = "en"
         } else if (guildDb.language === "es_ES") {
             type = "es"
