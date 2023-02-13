@@ -40,8 +40,6 @@ module.exports = class DailyMessage {
                     const channel = await this.c.channels.fetch(db.dailyChannel).catch(err => {
                     });
 
-                    channel.data = db;
-
                     if (!channel?.id) return; // Always directly return before do to many actions
 
                     const {Useless_Powers, Useful_Powers} = await require(`../data/power-${db.language}.json`);
