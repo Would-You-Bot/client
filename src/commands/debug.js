@@ -99,7 +99,7 @@ module.exports = {
                     .setTitle(client.translation.get(guildDb?.language, 'Debug.embed.title'))
                     .setDescription(
                         `**${client.translation.get(guildDb?.language, 'Debug.embed.settings')}:**\n` +
-                        `${client.translation.get(guildDb?.language, 'Debug.embed.settings', {
+                        `${client.translation.get(guildDb?.language, 'Debug.embed.isChannel', {
                             is: interaction?.channel?.id == guildDb?.dailyChannel ? client.translation.get(guildDb?.language, 'Debug.embed.is') : client.translation.get(guildDb?.language, 'Debug.embed.isnot')
                         })}\n` +
                         `**${client.translation.get(guildDb?.language, 'Debug.embed.channel')}:**\n` +
