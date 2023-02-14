@@ -32,7 +32,7 @@ module.exports = {
 
     /**
      * @param {CommandInteraction} interaction
-     * @param {Client} client
+     * @param {WouldYou} client
      * @param {guildModel} guildDb
      */
 

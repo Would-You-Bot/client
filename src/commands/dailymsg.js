@@ -107,6 +107,7 @@ module.exports = {
         const {Daily} = require(`../languages/${guildDb.language}.json`);
         if (
             interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
+            && !global.checkDebug(guildDb, interaction?.user?.id)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'message': {
@@ -146,7 +147,7 @@ module.exports = {
 
                     await client.database.updateGuild(interaction.guildId, {
                         dailyRather: types,
-                    }, true)
+                    }, true);
 
                     daily = new EmbedBuilder()
                         .setTitle(`${Daily.successEmbed.title} Would You`)
@@ -262,7 +263,7 @@ module.exports = {
                 .setColor('#F00505')
                 .setTitle('Error!')
                 .setDescription(Daily.embed.error);
-            await interaction.reply({
+            return  interaction.reply({
                 embeds: [errorembed],
                 ephemeral: true,
             }).catch((err) => {

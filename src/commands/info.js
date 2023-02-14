@@ -13,7 +13,7 @@ module.exports = {
     }),
   /**
    * @param {CommandInteraction} interaction
-   * @param {Client} client
+   * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
   async execute(interaction, client, guildDb) {
