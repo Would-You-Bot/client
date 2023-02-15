@@ -32,21 +32,35 @@ module.exports = {
         const image = await Canvas.loadImage("./src/data/images/template.png");
         await ctx.drawImage(image, 0, 0, 600, 300);
 
-        if (guildDb.language === "de_DE") {
-            const detranslation = await Canvas.loadImage("./src/data/images/rather-de.png")
-            ctx.drawImage(detranslation, 0, 0, 600, 300);
-        } else if (guildDb.language === "en_EN") {
-            const entranslation = await Canvas.loadImage("./src/data/images/rather-en.png")
-            ctx.drawImage(entranslation, 0, 0, 600, 300);
-        } else if (guildDb.language === "es_ES") {
-            const estranslation = await Canvas.loadImage("./src/data/images/rather-es.png")
-            ctx.drawImage(estranslation, 0, 0, 600, 300);
-        }
+    let imageFile = "./src/data/images/rather-en.png";
+    switch (guildDb.language) {
+        case "de_DE":
+            imageFile = "./src/data/images/rather-de.png";
+            break;
+        case "en_EN":
+            imageFile = "./src/data/images/rather-en.png";
+            break;
+        case "es_ES":
+            imageFile = "./src/data/images/rather-es.png";
+            break;
+    }
+    const translation = await Canvas.loadImage(imageFile);
+    ctx.drawImage(translation, 0, 0, 600, 300);
+
+
+        ctx.font = `bold ${text1 || "25"}px sans-serif`;
+        ctx.fillStyle = "#000000";
+        ctx.fillText("only eat banana uwu sus hehe", 140, 159);
+
+        ctx.font = `bold ${tex2 || "25"}px sans-serif`;
+        ctx.fillStyle = "#000000";
+        ctx.fillText("or only eat apples", 140, 243);
+
 
         attachment = new AttachmentBuilder(
             await canvas.encode("png"),
             {
-                name: "spotify-card.png",
+                name: "wouldyou-card.png",
             })
         interaction
             .reply({
