@@ -13,6 +13,17 @@ module.exports = {
         .setName('canvas')
         .setDescription('Generate a canvas image')
         .setDMPermission(false)
+        .addSubcommand((subcommand) => subcommand
+        .setName('message')
+        .setDescription('Custom would you rather message image')
+        .addStringOption((option) => option
+            .setRequired(true)
+            .setName('first')
+            .setDescription('Text for the first option'))
+        .addStringOption((option) => option
+            .setRequired(true)
+            .setName('second')
+            .setDescription('Text for the second option')))
         .setDescriptionLocalizations({
             de: 'Zeigt den Ping des Clients an',
             "es-ES": 'Muestra el ping del cliente'
@@ -24,6 +35,9 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
+
+        const text1 = interaction.options.getString('first');
+        const text2 = interaction.options.getString('second');
 
         const Canvas = require("@napi-rs/canvas");
         const canvas = Canvas.createCanvas(600, 300);
@@ -47,14 +61,26 @@ module.exports = {
     const translation = await Canvas.loadImage(imageFile);
     ctx.drawImage(translation, 0, 0, 600, 300);
 
+    function calcFontSize(textLength, fontSize, maxLength){
+        let size = fontSize
+        while(textLength > maxLength) {
+            console.log(textLength)
+            size--
+            return size
+        }
+        }
 
-        ctx.font = `bold ${text1 || "25"}px sans-serif`;
-        ctx.fillStyle = "#000000";
-        ctx.fillText("only eat banana uwu sus hehe", 140, 159);
+        const fontsize1 = calcFontSize(ctx.measureText(text1).width, 15, 180)
+        const fontsize2 = calcFontSize(ctx.measureText(text2).width, 15, 180)
 
-        ctx.font = `bold ${tex2 || "25"}px sans-serif`;
+
+        ctx.font = `bold ${fontsize1 || "25"}px sans-serif`;
         ctx.fillStyle = "#000000";
-        ctx.fillText("or only eat apples", 140, 243);
+        ctx.fillText(text1, 140, 158);
+
+        ctx.font = `bold ${fontsize2 || "25"}px sans-serif`;
+        ctx.fillStyle = "#000000";
+        ctx.fillText(text2, 140, 242);
 
 
         attachment = new AttachmentBuilder(
