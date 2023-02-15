@@ -11,7 +11,7 @@ module.exports = {
     requireGuild: true,
     data: new SlashCommandBuilder()
         .setName('canvas')
-        .setDescription('Generate a canvas image')
+        .setDescription('Generate a custom canvas image')
         .setDMPermission(false)
         .addSubcommand((subcommand) => subcommand
         .setName('message')
@@ -25,8 +25,8 @@ module.exports = {
             .setName('second')
             .setDescription('Text for the second option')))
         .setDescriptionLocalizations({
-            de: 'Zeigt den Ping des Clients an',
-            "es-ES": 'Muestra el ping del cliente'
+            de: 'Erstellt eine Würdest du Eher Karte',
+            "es-ES": 'Crea una tarjeta de ¿Qué prefieres?'
         }),
 
     /**
@@ -36,8 +36,11 @@ module.exports = {
      */
     async execute(interaction, client, guildDb) {
 
-        const text1 = interaction.options.getString('first');
-        const text2 = interaction.options.getString('second');
+        const text1 =
+        interaction.options.getString('first').length > 48 ?  interaction.options.getString('first').substring(0, 48).trim() + '...' :  interaction.options.getString('first');
+
+        const text2 =
+        interaction.options.getString('second').length > 48 ?  interaction.options.getString('second').substring(0, 48).trim() + '...' :  interaction.options.getString('second');
 
         const Canvas = require("@napi-rs/canvas");
         const canvas = Canvas.createCanvas(600, 300);
@@ -64,7 +67,6 @@ module.exports = {
     function calcFontSize(textLength, fontSize, maxLength){
         let size = fontSize
         while(textLength > maxLength) {
-            console.log(textLength)
             size--
             return size
         }
@@ -76,11 +78,11 @@ module.exports = {
 
         ctx.font = `bold ${fontsize1 || "25"}px sans-serif`;
         ctx.fillStyle = "#000000";
-        ctx.fillText(text1, 140, 158);
+        ctx.fillText(text1, 140, 156);
 
         ctx.font = `bold ${fontsize2 || "25"}px sans-serif`;
         ctx.fillStyle = "#000000";
-        ctx.fillText(text2, 140, 242);
+        ctx.fillText(text2, 140, 240);
 
 
         attachment = new AttachmentBuilder(
