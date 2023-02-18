@@ -79,7 +79,7 @@ module.exports = {
 
                     return interaction.reply({
                         ephemeral: true,
-                        content: client.translation.get(guildDb?.language, 'Debug.enabled')
+                        content: client.translation.get(guildDb?.language, 'Debug.disabled')
                     });
                 } else {
                     await client.database.updateGuild(interaction.guildId, {
@@ -88,7 +88,7 @@ module.exports = {
 
                     return interaction.reply({
                         ephemeral: true,
-                        content: client.translation.get(guildDb?.language, 'Debug.disabled')
+                        content: client.translation.get(guildDb?.language, 'Debug.enabled')
                     });
                 }
             }
