@@ -21,7 +21,7 @@ module.exports = class WebhookHandler {
      * @private
      */
     getWebhook = async (channelId) => {
-        if (this.webhooks.has(`${channelId}`)) this.webhooks.get(channelId);
+        if (this.webhooks.has(`${channelId}`)) return this.webhooks.get(channelId);
 
         const data = await this.webhookModel.findOne({
             channelId: channelId
@@ -121,15 +121,15 @@ module.exports = class WebhookHandler {
 
             const webhook = await this.createWebhook(channel, channelId, 'Would You', this.c.user.displayAvatarURL(), 'Webhook token unavailable, creating new webhook');
 
-            if (!webhook?.id || !webhook.token) this.webhookFallBack(channel, channelId, message, false);
+            if (!webhook?.id || !webhook.token) return this.webhookFallBack(channel, channelId, message, false);
 
             const webhookClient = new WebhookClient({id: webhook.id, token: webhook.token});
-            if (!webhookClient) this.webhookFallBack(channel, channelId, message, false);
+            if (!webhookClient) return this.webhookFallBack(channel, channelId, message, false);
 
             webhookClient
                 .send(message)
                 .catch(async err => {
-                    this.webhookFallBack(channel, channelId, message, false);
+                    return this.webhookFallBack(channel, channelId, message, false);
                 });
         } else {
             if (channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.EmbedLinks])) {
@@ -143,7 +143,7 @@ module.exports = class WebhookHandler {
                         .setDescription('🛑 ' + this.c.translation.get(guildSettings?.language ?? 'en_EN', 'webhookManager.noWebhook'))
                 );
 
-                channel
+                return channel
                     .send(message)
                     .catch(err => {
                         console.log(err);
@@ -176,24 +176,24 @@ module.exports = class WebhookHandler {
             if (webhook?.webhookId) webhook.id = webhook.webhookId;
             if (webhook?.webhookToken) webhook.token = webhook.webhookToken;
 
-            if (!webhook?.id || !webhook?.token) this.webhookFallBack(channel, channelId, message, false);
+            if (!webhook?.id || !webhook?.token) return this.webhookFallBack(channel, channelId, message, false);
 
             const webhookClient = new WebhookClient({id: webhook.id, token: webhook.token});
-            if (!webhookClient)  this.webhookFallBack(channel, channelId, message, false);
+            if (!webhookClient) return this.webhookFallBack(channel, channelId, message, false);
 
             webhookClient
                 .send(message)
                 .catch(err => {
-                     this.webhookFallBack(channel, channelId, message, false);
+                    return this.webhookFallBack(channel, channelId, message, false);
                 });
         } else {
             const webhook = new WebhookClient({id: webhookData?.id, token: webhookData?.token});
-            if (!webhook)  this.webhookFallBack(channel, channelId, message);
+            if (!webhook) return this.webhookFallBack(channel, channelId, message);
 
             webhook
                 .send(message)
                 .catch(err => {
-                     this.webhookFallBack(channel, channelId, message, err);
+                    return this.webhookFallBack(channel, channelId, message, err);
                 });
         }
     }
