@@ -73,6 +73,7 @@ module.exports = class DailyMessage {
                         } else if (db.customTypes === "custom") {
                             if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
                                 test++
+                                console.log("before 1")
                                 this.c.webhookHandler.sendWebhook(
                                     channel,
                                     db.dailyChannel,
@@ -81,6 +82,7 @@ module.exports = class DailyMessage {
                                     }
                                 ).catch(err => { console.log(err)
                                 });
+                                console.log("after 1")
                             }
 
                             power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
@@ -97,16 +99,17 @@ module.exports = class DailyMessage {
                             .addFields(
                                 {
                                     name: Rather.embed.usefulname,
-                                    value: `> 1ï¸âƒ£ ${power}`,
+                                    value: `> ${power}`,
                                     inline: false,
                                 },
                                 {
                                     name: Rather.embed.usefulname2,
-                                    value: `> 2ï¸âƒ£ ${power2}`,
+                                    value: `> ${power2}`,
                                     inline: false,
                                 },
                             )
                             test++
+                            console.log("before 2")
                         this.c.webhookHandler.sendWebhook(
                             channel,
                             db.dailyChannel,
@@ -116,6 +119,7 @@ module.exports = class DailyMessage {
                             }
                         ).catch(err => { console.log(err)
                         });
+                        console.log("after 1")
                     }
 
                     let power;
@@ -139,13 +143,15 @@ module.exports = class DailyMessage {
                     } else if (db.customTypes === "custom") {
                         if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
                             test++
+                            console.log("before 3")
                             this.c.webhookHandler.sendWebhook(
                                 channel,
                                 db.dailyChannel,
                                 {
                                     content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.'
                                 }
-                            )
+                            ).catch(err => { console.log(err)});
+                            console.log("after 3")
                         }
 
                         power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
@@ -164,6 +170,7 @@ module.exports = class DailyMessage {
                             inline: false,
                         });
                         test++
+                        console.log("before 4")
                     this.c.webhookHandler.sendWebhook(
                         channel,
                         db.dailyChannel,
@@ -173,6 +180,7 @@ module.exports = class DailyMessage {
                         }
                     ).catch(err => { console.log(err)
                     });
+                    console.log("after 4")
                 }
             }, i * 2500) // We do a little timeout here to work against discord ratelimit with 50reqs/second
         }
