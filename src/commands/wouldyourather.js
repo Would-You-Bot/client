@@ -9,7 +9,7 @@ const guildModel = require('../util/Models/guildModel');
 module.exports = {
     requireGuild: true,
     data: new SlashCommandBuilder()
-        .setName('newrather')
+        .setName('wouldyourather')
         .setDescription('Get a would you rather question.')
         .setDMPermission(false)
         .setDescriptionLocalizations({
@@ -37,7 +37,7 @@ module.exports = {
             new ButtonBuilder()
                 .setLabel('Invite')
                 .setStyle(5)
-                .setEmoji('🤖')
+                .setEmoji('1009964111045607525')
                 .setURL(
                     'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands',
                 ),
@@ -47,7 +47,7 @@ module.exports = {
                 .setLabel('New Question')
                 .setStyle(1)
                 .setEmoji('1073954835533156402')
-                .setCustomId(voting ? `rather_useful_voting` : `rather_useful`),
+                .setCustomId(`wouldyourather`),
         );
         let rbutton;
         if (Math.round(Math.random() * 15) < 3) {

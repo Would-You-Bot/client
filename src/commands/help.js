@@ -58,7 +58,7 @@ module.exports = {
             new ButtonBuilder()
                 .setLabel('Invite')
                 .setStyle(5)
-                .setEmoji('🤖')
+                .setEmoji('1009964111045607525')
                 .setURL('https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands'),
         );
         await interaction.reply({
