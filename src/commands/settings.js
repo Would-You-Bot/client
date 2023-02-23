@@ -22,6 +22,7 @@ module.exports = {
                 .setDescription("Enable/disable daily Would You messages.")
                 .setRequired(true)
                 .addChoices(
+                    { name: 'General Settings', value: 'general' },
                     { name: 'Daily Messages', value: 'dailyMsgs' },
                     { name: 'Welcomes', value: 'welcomes' },
                 )
@@ -70,6 +71,39 @@ module.exports = {
 
                     interaction.reply({ embeds: [dailyMsgs], components: [dailyButtons, dailyButtons2], ephemeral: true }).catch(() => { })
                     break;
+
+                    case "general":
+                        const generalMsg = new EmbedBuilder()
+                            .setTitle(Settings.embed.dailyTitle)
+                            .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`)
+                            .setColor("#0598F6")
+                            .setFooter({ text: Settings.embed.footer, iconURL: client.user.avatarURL(), })
+    
+                        const generalButtons = new ActionRowBuilder()
+                            .addComponents(
+                                new ButtonBuilder()
+                                    .setCustomId("dailyMsg")
+                                    .setLabel(Settings.button.dailyMsg)
+                                    .setStyle(guildDb.dailyMsg ? "Success" : "Secondary"),
+                                new ButtonBuilder()
+                                    .setCustomId("dailyChannel")
+                                    .setLabel(Settings.button.dailyChannel)
+                                    .setStyle(guildDb.dailyChannel ? "Success" : "Secondary"),
+                            ), generalButtons2 = new ActionRowBuilder()
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setCustomId("dailyTimezone")
+                                        .setLabel(Settings.button.dailyTimezone)
+                                        .setStyle("Primary")
+                                        .setEmoji("🌍"),
+                                    new ButtonBuilder()
+                                        .setCustomId("dailyRole")
+                                        .setLabel(Settings.button.dailyRole)
+                                        .setStyle(guildDb.dailyRole ? "Success" : "Secondary"),
+                                )
+    
+                        interaction.reply({ embeds: [generalMsg], components: [generalButtons, generalButtons2], ephemeral: true }).catch(() => { })
+                        break;
 
                 case "welcomes":
                     const welcomes = new EmbedBuilder()
