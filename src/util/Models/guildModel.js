@@ -20,6 +20,10 @@ const guildProfile = new Schema(
             type: String,
             default: null,
         },
+        welcomePing: {
+            type: Boolean,
+            default: false,
+        },
         dailyMsg: {
             type: Boolean,
             default: false,

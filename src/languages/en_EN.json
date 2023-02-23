@@ -29,6 +29,33 @@
       "footer": "Would You"
     }
   },
+  "Settings": {
+    "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
+    "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "dailyChannel": "Select a channel where you want Daily Messages to be!",
+    "dailyRole": "Select a role that you want to be pinged in Daily Messages!",
+    "embed": {
+      "dailyTitle": "Would You - Daily Messages",
+      "dailyMsg": "**Enabled**",
+      "dailyRole": "**Role**",
+      "dailyChannel": "**Channel**",
+      "dailyTimezone": "**Timezone**",
+      "welcomeTitle": "Would You - Welcomes",
+      "welcome": "**Enabled**",
+      "welcomeChannel": "**Channel**",
+      "welcomePing": "**User Pings**",
+      "footer": "Would You"
+    },
+    "button": {
+      "dailyChannel": "Set Channel",
+      "dailyRole": "Set Role",
+      "dailyTimezone": "Set Timezone",
+      "dailyMsg": "Toggle Daily Messages",
+      "welcomeChannel": "Set Channel",
+      "welcome": "Toggle Welcomes",
+      "welcomePing": "Toggle User Ping"
+    }
+  },
   "Welcome": {
     "embed": {
       "title": "Would you want this power? Explain Why!",

@@ -1,5 +1,5 @@
-const guildcreate = require('../util/Models/guildModel');
 module.exports = async (client, interaction) => {
+    const restrict = ["dailyChannel", "welcomeChannel", "welcomePing", "welcome", "welcomeChannel", "dailyRole", "dailyTimezone", "dailyMsg"]
     if (!interaction.guild) {
         if (interaction.isChatInputCommand()) {
             const command = client.commands.get(interaction.commandName);
@@ -23,7 +23,6 @@ module.exports = async (client, interaction) => {
         ;
     } else {
         const guildDb = await client.database.getGuild(interaction.guild.id, true);
-
         // const { inter } = require(`../languages/${guildDb.language || "en_EN"}.json`);
         if (interaction.isChatInputCommand()) {
             const command = client.commands.get(interaction.commandName);
@@ -54,8 +53,10 @@ module.exports = async (client, interaction) => {
             });
 
             try {
-                client.used.set(interaction.user.id, Date.now() + guildDb.replayCooldown)
-                setTimeout(() => client.used.delete(interaction.user.id), guildDb.replayCooldown)
+                if (!restrict.includes(interaction.customId)) {
+                    client.used.set(interaction.user.id, Date.now() + guildDb.replayCooldown)
+                    setTimeout(() => client.used.delete(interaction.user.id), guildDb.replayCooldown)
+                }
 
                 return button.execute(interaction, client, guildDb);
             } catch (err) {
@@ -65,6 +66,9 @@ module.exports = async (client, interaction) => {
                     ephemeral: true,
                 });
             }
+        } else {
+            const button = client.buttons.get(interaction.customId);
+            if (button) return button.execute(interaction, client, guildDb);
         }
     }
 }
