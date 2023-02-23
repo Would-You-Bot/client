@@ -64,7 +64,7 @@ module.exports = {
 
             const dailyMsgs = new EmbedBuilder()
                 .setTitle(Settings.embed.dailyTitle)
-                .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.dailyTimezone}: ${value}\n`)
+                .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyTimezone}: ${value}\n`)
                 .setColor("#0598F6")
                 .setFooter({ text: Settings.embed.footer, iconUrl: client.user.avatarURL() })
 

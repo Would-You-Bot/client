@@ -10,7 +10,7 @@ module.exports = {
 
         const welcomes = new EmbedBuilder()
             .setTitle(Settings.embed.welcomeTitle)
-            .setDescription(`${Settings.embed.welcome}: ${guildDb.welcome ? `<:check:1077962440815411241>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.welcomePing}: ${guildDb.welcomePing ? `<:check:1077962440815411241>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.welcomeChannel}: <#${newChannel}>`)
+            .setDescription(`${Settings.embed.welcome}: ${guildDb.welcome ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.welcomePing}: ${guildDb.welcomePing ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.welcomeChannel}: <#${newChannel}>`)
             .setColor("#0598F6")
             .setFooter({ text: Settings.embed.footer, iconURL: client.user.avatarURL(), })
 
