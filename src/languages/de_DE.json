@@ -35,28 +35,6 @@
       "footer": "Would You"
     }
   },
-  "Welcome": {
-    "embed": {
-      "title": "Würdest du diese Kraft haben wollen? Erkläre warum!",
-      "footer": "ist dem server beigetreten!"
-    },
-    "error": {
-      "description": "Du hast nicht die Berechtigung, diesen Befehl zu verwenden!"
-    },
-    "removeembed": {
-      "title": "Willkommenskanal entfernt!",
-      "description": "Du hast den Willkommenskanal erfolgreich entfernt!"
-    },
-    "nochannel": {
-      "title": "Konnte keinen Willkommenskanal finden",
-      "description": "Der Willkommenskanal kann nicht entfernt werden, weil kein Willkommenskanal eingestellt ist!"
-    },
-    "savedchannel": {
-      "title": "Willkommenes Kanal wurde gesetzt!",
-      "description": "Du hast den Begrüßungskanal erfolgreich auf: ",
-      "description2": " gesetzt!"
-    }
-  },
   "wyCustom": {
     "error": {
       "paginate": "Du kannst nichmehr weiter gehen :(",
@@ -175,40 +153,6 @@
       "errorAlready": "NSFW nachrichten sind hier bereits ausgeschaltet!",
       "success": "NSFW nachrichten ausgeschaltet!",
       "missingPerms": "Dir fehlen die `MANAGE_GUILD` rechte um diesen befehl auszuführen."
-    }
-  },
-  "Daily": {
-    "errorRole": "Die angegebene Rolle ist dieselbe Rolle, die bereits eingestellt ist. Stelle sicher, dass du eine andere Rolle auswählst.",
-    "embed": {
-      "alreadytrue": "Diese Option ist bereits angeschaltet, du kannst sie jedoch mit dem Befehl und der Auswahl von `false` deaktivieren.",
-      "alreadyfalse": "Diese Option ist bereits ausgeschaltet, du kannst sie jedoch mit dem Befehl und der Auswahl von `true` aktivieren.",
-      "error": "Dir fehlt die `ManageGuild` permission!"
-    },
-    "successEmbed": {
-      "title": "Täglich",
-      "desc": "Erfolgreich",
-      "desc2": "tägliche Would You nachrichten!",
-      "desc3": "Weil du",
-      "desc4": "tägliche nachrichten, du kannst einen kanal für sie setzen mit `/dailymsg channel`",
-      "options": "aktiviert",
-      "options2": "deaktiviert"
-    },
-    "errorChannel": {
-      "viewChannel": "Der angegebene Kanal erlaubt es mir nicht, ihn zu sehen. Bitte wähle einen Kanal, auf den ich Zugriff habe.",
-      "sendMessages": "Der angegebene Kanal erlaubt es mir nicht nachrichten zu senden. Bitte wähle einen Kanal, auf den ich Zugriff habe.",
-      "alreadySet": "Der angegebene Kanal ist derselbe, der bereits gesetzt ist. Stelle sicher, dass du einen anderen Kanal wählen."
-    },
-    "success": {
-      "title": "Tägliche Would You",
-      "desc": "Erfolgreich gesetzt",
-      "desc2": "für tägliche Would You-Nachrichten. Falls du das noch nicht getan hast, kannst du die Zeitzone des Servers für die Nachricht mit `/dailymsg timezone` einstellen. Standardmäßig ist `America/Chicago` gesetzt.",
-      "desc3": "rolle für tögliche would you erwähnungen."
-    },
-    "timezone": {
-      "errorSame": "Die angegebene Zeitzone ist dieselbe, die bereits eingestellt ist. Stelle sicher, dass du eine andere Zeitzone wählst.",
-      "errorInvalid": "Wenn die Zeitzone ungültig war, wähle eine gultige Zeitzone aus dieser [Liste](https://kevinnovak.github.io/Time-Zone-Picker/) aus.",
-      "desc": "Erfolgreich gesetzt",
-      "desc2": "Zeitzone für täglich Would You."
     }
   },
   "Guide": {

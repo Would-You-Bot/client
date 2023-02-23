@@ -56,28 +56,6 @@
       "welcomePing": "Toggle User Ping"
     }
   },
-  "Welcome": {
-    "embed": {
-      "title": "Would you want this power? Explain Why!",
-      "footer": "Just joined the server!"
-    },
-    "error": {
-      "description": "You don't have the permission to use this command!"
-    },
-    "removeembed": {
-      "title": "Welcome channel removed!",
-      "description": "You successfully removed the welcome channel!"
-    },
-    "nochannel": {
-      "title": "Couldnt find a welcome channel",
-      "description": "Can't remove the welcome channel because there is no welcome channel set!"
-    },
-    "savedchannel": {
-      "title": "Welcome channel set!",
-      "description": "You successfully set the welcome channel to: ",
-      "description2": "."
-    }
-  },
   "wyCustom": {
     "error": {
       "paginate": "You can't proceed that way any further.",
@@ -233,41 +211,7 @@
       "missingPerms": "You are missing the `Manage Server` permission to use this command."
     }
   },
-  "Daily": {
-    "errorRole": "The provided role is the same role that is already set. Make sure to choose a different role.",
-    "embed": {
-      "alreadytrue": "This option is already on, you can turn it off by using the command and selecting `false`",
-      "alreadyfalse": "This option is already off, you can turn it on by using the command and selecting `true`",
-      "error": "You are missing the `Manage Guild` permission to use this command!"
-    },
-    "successEmbed": {
-      "title": "Daily",
-      "desc": "Successfully",
-      "desc2": "daily Would You messages!",
-      "desc22": "rather daily Would You messages!",
-      "desc3": "Since you",
-      "desc4": "daily messages, you can set a channel for them using `/dailymsg channel`",
-      "options": "enabled",
-      "options2": "disabled"
-    },
-    "errorChannel": {
-      "viewChannel": "The channel provided doesn't allow me to view it. Select a channel which I have access to.",
-      "sendMessages": "The channel provided doesn't allow me to send messages to it. Select a channel which I have access to.",
-      "alreadySet": "The provided channel is the same channel that is already set. Make sure to choose a different channel."
-    },
-    "success": {
-      "title": "Daily Would You",
-      "desc": "Successfully set",
-      "desc2": "for daily Would You messages.\nIf you haven't already, you can set the server's timezone for when it will send the message by using `/dailymsg timezone`. It's by default `America/Chicago`",
-      "desc3": "role for daily Would You mentions."
-    },
-    "timezone": {
-      "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
-      "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
-      "desc": "Successfully set",
-      "desc2": "timezone for daily Would You."
-    }
-  },
+
   "Guide": {
     "embed": {
       "title": "Would You | Guide",

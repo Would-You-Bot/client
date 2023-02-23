@@ -3,32 +3,9 @@ const {
     ActionRowBuilder,
     ButtonBuilder,
     SlashCommandBuilder,
-    ComponentType,
-    StringSelectMenuBuilder,
     PermissionFlagsBits
 } = require("discord.js");
 const guildModel = require("../util/Models/guildModel");
-
-function isValid(tz) {
-    if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
-        return false;
-    }
-
-    try {
-        Intl.DateTimeFormat(undefined, { timeZone: tz });
-        return true;
-    } catch (ex) {
-        return false;
-    }
-}
-
-function dateType(tz) {
-    if (!tz.includes("/")) return false;
-    let text = tz.split("/");
-
-    if (text.length === 2) return true
-    else return false;
-}
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -36,8 +13,8 @@ module.exports = {
         .setDescription("Change settings for Daily Messages and Welcomes")
         .setDMPermission(true)
         .setDescriptionLocalizations({
-            de: "TBA",
-            "es-ES": "TBA",
+            de: "Ändere die Einstellungen für Tägliche und Willkommens Nachrichten",
+            "es-ES": "Cambie la configuración para los mensajes diarios y las bienvenidas",
         })
         .addStringOption((option) =>
             option
@@ -66,7 +43,7 @@ module.exports = {
                 case "dailyMsgs":
                     const dailyMsgs = new EmbedBuilder()
                         .setTitle(Settings.embed.dailyTitle)
-                        .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`)
+                        .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:BadCheck:1025490660968628436>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:BadCheck:1025490660968628436>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:BadCheck:1025490660968628436>`}\n${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`)
                         .setColor("#0598F6")
                         .setFooter({ text: Settings.embed.footer, iconURL: client.user.avatarURL(), })
 
@@ -99,7 +76,7 @@ module.exports = {
                 case "welcomes":
                     const welcomes = new EmbedBuilder()
                         .setTitle(Settings.embed.welcomeTitle)
-                        .setDescription(`${Settings.embed.welcome}: ${guildDb.welcome ? `<:check:1077962440815411241>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.welcomePing}: ${guildDb.welcomePing ? `<:check:1077962440815411241>` : `<:BadCheck:1025495596968198175>`}\n${Settings.embed.welcomeChannel}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : `<:BadCheck:1025495596968198175>`}`)
+                        .setDescription(`${Settings.embed.welcome}: ${guildDb.welcome ? `<:check:1077962440815411241>` : `<:BadCheck:1025490660968628436>`}\n${Settings.embed.welcomePing}: ${guildDb.welcomePing ? `<:check:1077962440815411241>` : `<:BadCheck:1025490660968628436>`}\n${Settings.embed.welcomeChannel}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : `<:BadCheck:1025490660968628436>`}`)
                         .setColor("#0598F6")
                         .setFooter({ text: Settings.embed.footer, iconURL: client.user.avatarURL(), })
 
