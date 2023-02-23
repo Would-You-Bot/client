@@ -3,32 +3,9 @@ const {
     ActionRowBuilder,
     ButtonBuilder,
     SlashCommandBuilder,
-    ComponentType,
-    StringSelectMenuBuilder,
     PermissionFlagsBits
 } = require("discord.js");
 const guildModel = require("../util/Models/guildModel");
-
-function isValid(tz) {
-    if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
-        return false;
-    }
-
-    try {
-        Intl.DateTimeFormat(undefined, { timeZone: tz });
-        return true;
-    } catch (ex) {
-        return false;
-    }
-}
-
-function dateType(tz) {
-    if (!tz.includes("/")) return false;
-    let text = tz.split("/");
-
-    if (text.length === 2) return true
-    else return false;
-}
 
 module.exports = {
     data: new SlashCommandBuilder()

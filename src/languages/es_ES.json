@@ -29,28 +29,6 @@
       "footer": "Would You"
     }
   },
-  "Welcome": {
-    "embed": {
-      "title": "¿Querrías este poder? ¡Explica por qué!",
-      "footer": "acaba de unirse al servidor!"
-    },
-    "error": {
-      "description": "¡No tienes permiso para usar ese comando!"
-    },
-    "removeembed": {
-      "title": "¡Canal de bienvenida eliminado!",
-      "description": "¡Has eliminado con éxito el canal de bienvenida!"
-    },
-    "nochannel": {
-      "title": "No se pudo encontrar un canal de bienvenida.",
-      "description": "¡No se puede eliminar el canal de bienvenida porque no hay un canal de bienvenida establecido!"
-    },
-    "savedchannel": {
-      "title": "¡Canal de bienvenida establecido!",
-      "description": "Se ha configurado correctamente el canal de bienvenida en: ",
-      "description2": "."
-    }
-  },
   "wyCustom": {
     "error": {
       "paginate": "No puedes continuar para ese lado.",
@@ -204,41 +182,6 @@
       "cooldownSuccess2": " segundos!",
       "success": "Las repeticiones fueran deshabilitadas.",
       "missingPerms": "¡Te falta el permiso `Manage guild` para usar este comando!"
-    }
-  },
-  "Daily": {
-    "errorRole": "El rol proporcionado es el mismo rol que ya está establecido. Asegúrate de elegir un rol diferente.",
-    "embed": {
-      "alreadytrue": "Esta opción ya está activada, puedes desactivarla usando el comando y seleccionando `false`",
-      "alreadyfalse": "Esta opción ya está desactivada, puedes activarla usando el comando y seleccionando `true`",
-      "error": "¡Te falta el permiso `Manage guild` para usar este comando!"
-    },
-    "successEmbed": {
-      "title": "Diario",
-      "desc": "Con éxito",
-      "desc2": "Mensajes Would You diarias!",
-      "desc22": "Mensajes Would You Rather (que prefieres) diarias!",
-      "desc3": "Desde que tu",
-      "desc4": "mensajes diarios, puedes establecer un canal para ellos usando `/dailymsg channel`",
-      "options": "activada",
-      "options2": "desactivada"
-    },
-    "errorChannel": {
-      "viewChannel": "No tengo permiso para ver ese canal. Selecciona un canal al que tenga acceso.",
-      "sendMessages": "No tengo permiso para enviar mensajes a ese canal. Selecciona un canal al que tenga acceso.",
-      "alreadySet": "El canal proporcionado es el mismo canal que ya está configurado. Asegúrate de elegir un canal diferente."
-    },
-    "success": {
-      "title": "Would You Diario",
-      "desc": "Configurado con éxito",
-      "desc2": "para mensajes Would You diarias.\nSi aún no lo has hecho, puedes configurar la zona horaria del servidor para cuándo enviará el mensaje usando `/dailymsg timezone`. Es por defecto `América/Chicago`",
-      "desc3": "rol para menciones Would You diarias."
-    },
-    "timezone": {
-      "errorSame": "La zona horaria proporcionada es la misma zona horaria que ya está configurada. Asegúrate de elegir una zona horaria diferente.",
-      "errorInvalid": "La zona horaria no es válida, puedes elegir una zona horaria válida en [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
-      "desc": "Configurado con éxito",
-      "desc2": "Zona horaria para Would You diario."
     }
   },
   "Guide": {
