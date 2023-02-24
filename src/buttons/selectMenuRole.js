@@ -9,7 +9,7 @@ module.exports = {
         const newRole = interaction.values[0];
         const dailyMsgs = new EmbedBuilder()
             .setTitle(Settings.embed.dailyTitle)
-            .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<@&${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: <@&${newRole}>\n${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`)
+            .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: <@&${newRole}>\n${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`)
             .setColor("#0598F6")
             .setFooter({ text: Settings.embed.footer, iconUrl: client.user.avatarURL() })
 
