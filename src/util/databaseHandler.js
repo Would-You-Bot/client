@@ -1,132 +1,182 @@
-const {connect} = require("mongoose");
-const {ChalkAdvanced} = require("chalk-advanced");
+const { EmbedBuilder } = require('discord.js');
+const mom = require("moment-timezone");
+const { ChalkAdvanced } = require("chalk-advanced");
+const CronJob = require('cron').CronJob;
 
-module.exports = class DatabaseHandler {
-    /**
-     * Create a database handler
-     * @param {string} connectionString the connection string
-     */
-    constructor(connectionString) {
-        this.cache = new Map();
-        this.guildModel = require('./Models/guildModel');
-        this.connectionString = connectionString;
+module.exports = class DailyMessage {
+    constructor(c) {
+        this.c = c;
     }
 
     /**
-     * This is the cache sweeper to keep the cache clean!
-     * @param client the client object
+     * Start the daily message Schedule
      */
-    startSweeper(client) {
-        setInterval(() => {
-            const guilds = this.cache.values();
-            for (const g of guilds) {
-                if (!client?.guilds?.cache?.has(g?.guildID)) {
-                    this.cache.delete(g?.guildID);
-                }
-            }
-        }, 60 * 60 * 1000);
+    start() {
+        var job = new CronJob('0 */60 * * * *', async () => {
+            await this.runSchedule();
+        });
+        job.start()
     }
 
     /**
-     * Connect to the mongoose database
-     * @returns {Promise<void>}
+     * Run the daily message schedule
+     * @return {Promise<void>}
      */
-    async connectToDatabase() {
-        connect(this.connectionString, {
-            useNewUrlParser: true,
-        }).catch((err) => {
-            console.log(err);
-        }).then(() => console.log(
-            `${ChalkAdvanced.white('Database')} ${ChalkAdvanced.gray(
+    async runSchedule() {
+        let guilds = await this.c.database.getAll();
+        guilds = guilds.filter(g => this.c.guilds.cache.has(g.guildID) && g.dailyMsg);
+        guilds = guilds.filter(g => mom.tz(g.dailyTimezone).format("HH:mm") === "12:00");
+
+        console.log(
+            `${ChalkAdvanced.white('Daily Message')} ${ChalkAdvanced.gray(
                 '>',
-            )} ${ChalkAdvanced.green('Successfully loaded database')}`,
-        ));
-    }
+            )} ${ChalkAdvanced.green('Running daily message check for ' + guilds.length + ' guilds')}`,
+        );
 
-    /**
-     * Fetch a guild from the database (Not suggested use .get()!)
-     * @param {number|string} guildId the server id
-     * @param {boolean} createIfNotFound create a database entry if not found
-     * @returns {this.guildModel}
-     * @private
-     */
-    async fetchGuild(guildId, createIfNotFound = false) {
-        const fetched = await this.guildModel.findOne({ guildID: guildId });
+        let i = 0;
+        for (const db of guilds) {
+            if (!db?.dailyChannel) continue;
+            if (!db.dailyMsg) continue;
+            i++;
+            setTimeout(async () => {
+                const channel = await this.c.channels.fetch(db.dailyChannel).catch(err => {
+                    console.log(err)
+                });
 
-        if (fetched) return fetched;
-        if (!fetched && createIfNotFound) {
-            await this.guildModel.create({
-                guildID: guildId,
-                language: 'en_EN',
-                botJoined: Date.now() / 1000 | 0,
-            });
+                if (!channel?.id) return; // Always directly return before do to many actions
 
-            return this.guildModel.findOne({ guildID: guildId });
-        } return null;
-    }
+                const { Useless_Powers, Useful_Powers } = await require(`../data/power-${db.language}.json`);
+                const { WouldYou, Rather } = await require(`../languages/${db.language}.json`);
 
-    /**
-     * Get a guild database from the cache
-     * @param {number|string} guildId the server id
-     * @param {boolean} createIfNotFound create a database entry if not found
-     * @param {boolean} force if it should force fetch the guild
-     * @returns {this.guildModel}
-     */
-    async getGuild(guildId, createIfNotFound = true, force = false) {
-        if (force) return this.fetchGuild(guildId, createIfNotFound);
+                if (db.dailyRather) {
+                    let power;
+                    let power2;
+                    if (db.customTypes === "regular") {
+                        let array = [];
+                        array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
+                        array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
+                        power = array[Math.floor(Math.random() * array.length)];
+                        power2 = array[Math.floor(Math.random() * array.length)];
+                        array = [];
+                    } else if (db.customTypes === "mixed") {
+                        let array = [];
+                        if (db.customMessages.filter(c => c.type !== "nsfw") != 0) {
+                            array.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg);
+                        } else {
+                            power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+                        }
+                        array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
+                        array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
+                        power = array[Math.floor(Math.random() * array.length)];
+                        power2 = array[Math.floor(Math.random() * array.length)];
+                        array = [];
+                    } else if (db.customTypes === "custom") {
+                        if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
+                            this.c.webhookHandler.sendWebhook(
+                                channel,
+                                db.dailyChannel,
+                                {
+                                    content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.'
+                                }
+                            ).catch(err => {
+                                console.log(err)
+                            });
+                        }
 
-        if (this.cache.has(guildId)) {
-            return this.cache.get(guildId);
+                        power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
+                        power2 = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
+                    }
+
+                    const embed = new EmbedBuilder()
+                        .setColor('#0598F6')
+                        .setFooter({
+                            text: `${Rather.embed.footer}`,
+                            iconURL: this.c.user.avatarURL(),
+                        })
+                        .setTimestamp()
+                        .addFields(
+                            {
+                                name: Rather.embed.usefulname,
+                                value: `> ${power}`,
+                                inline: false,
+                            },
+                            {
+                                name: Rather.embed.usefulname2,
+                                value: `> ${power2}`,
+                                inline: false,
+                            },
+                        )
+
+                    this.c.webhookHandler.sendWebhook(
+                        channel,
+                        db.dailyChannel,
+                        {
+                            embeds: [embed],
+                            content: db.dailyRole ? `<@&${db.dailyRole}>` : null
+                        }
+                    ).catch(err => {
+                        console.log(err)
+                    });
+                }
+
+                let power;
+                if (db.customTypes === "regular") {
+                    let array = [];
+                    array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
+                    array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
+                    power = array[Math.floor(Math.random() * array.length)]
+                    array = [];
+                } else if (db.customTypes === "mixed") {
+                    let array = [];
+                    if (db.customMessages.filter(c => c.type !== "nsfw") != 0) {
+                        array.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg);
+                    } else {
+                        power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+                    }
+                    array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
+                    array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
+                    power = array[Math.floor(Math.random() * array.length)]
+                    array = [];
+                } else if (db.customTypes === "custom") {
+                    if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
+                        this.c.webhookHandler.sendWebhook(
+                            channel,
+                            db.dailyChannel,
+                            {
+                                content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.'
+                            }
+                        ).catch(err => {
+                            console.log(err)
+                        });
+                    }
+
+                    power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
+                }
+
+                const embed = new EmbedBuilder()
+                    .setColor('#0598F6')
+                    .setFooter({
+                        text: `${WouldYou.embed.footer}`,
+                        iconURL: this.c.user.avatarURL(),
+                    })
+                    .setTimestamp()
+                    .addFields({
+                        name: WouldYou.embed.Usefulname,
+                        value: `> ${power}`,
+                        inline: false,
+                    });
+
+                this.c.webhookHandler.sendWebhook(
+                    channel,
+                    db.dailyChannel,
+                    {
+                        embeds: [embed],
+                        content: db.dailyRole ? `<@&${db.dailyRole}>` : null
+                    }
+                ).catch(err => {
+                    console.log(err)
+                });
+            }, i * 2500) // We do a little timeout here to work against discord ratelimit with 50reqs/second
         }
-
-        const fetched = await this.fetchGuild(guildId, createIfNotFound);
-        if (fetched) {
-            this.cache.set(guildId, fetched?.toObject() ?? fetched);
-
-            return this.cache.get(guildId);
-        } return null;
-    }
-
-    /**
-     * Delete a guild from the db and the cache
-     * @param {number|string} guildId the server id
-     * @param {boolean} onlyCache if you want to only delete the cache
-     * @returns {Promise<deleteMany|boolean>}
-     */
-    async deleteGuild(guildId, onlyCache = false) {
-        if (this.cache.has(guildId)) this.cache.delete(guildId);
-
-        return !onlyCache ? this.guildModel.deleteMany({ guildID: guildId }) : true;
-    }
-
-    /**
-     * Update the settings from a guild
-     * @param {number|string} guildId the server id
-     * @param {object | this.guildModel} data the updated or new data
-     * @param {boolean} createIfNotFound create a database entry if not found
-     * @returns {Promise<this.guildModel|null>}
-     */
-    async updateGuild(guildId, data = {}, createIfNotFound = false) {
-        let oldData = await this.getGuild(guildId, createIfNotFound);
-
-        if (oldData) {
-            if (oldData?._doc) oldData = oldData?._doc;
-
-            data = { ...oldData, ...data };
-
-            this.cache.set(guildId, data);
-
-            return this.guildModel.updateOne({
-                guildID: guildId,
-            }, data);
-        } return null;
-    }
-
-    /**
-     * Fetch all available settings
-     * @returns {Promise<this.guildModal[]>}
-     */
-    async getAll() {
-        return this.guildModel.find();
     }
 };
