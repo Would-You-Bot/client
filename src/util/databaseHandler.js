@@ -124,7 +124,7 @@ module.exports = class DatabaseHandler {
 
     /**
      * Fetch all available settings
-     * @returns {Promise<this.guildModel>}
+     * @returns {Promise<this.guildModal[]>}
      */
     async getAll() {
         return this.guildModel.find();
