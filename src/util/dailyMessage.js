@@ -35,11 +35,11 @@ module.exports = class DailyMessage {
 
         let i = 0;
         for (const db of guilds) {
-            if(!db?.dailyChannel) return;
-            i++;
-            setTimeout(async () => {
-                if (!db.dailyMsg) return;
-                if (mom.tz(db.dailyTimezone).format("HH:mm") === "12:00") {
+            if(!db?.dailyChannel) continue;
+            if (!db.dailyMsg) continue;
+            if (mom.tz(db.dailyTimezone).format("HH:mm") === "12:00") {
+                i++;
+                setTimeout(async () => {
                     const channel = await this.c.channels.fetch(db.dailyChannel).catch(err => { console.log(err)
                     });
 
@@ -108,8 +108,8 @@ module.exports = class DailyMessage {
                                     inline: false,
                                 },
                             )
-                            test++
-                            console.log("before 2")
+                        test++
+                        console.log("before 2")
                         this.c.webhookHandler.sendWebhook(
                             channel,
                             db.dailyChannel,
@@ -169,8 +169,8 @@ module.exports = class DailyMessage {
                             value: `> ${power}`,
                             inline: false,
                         });
-                        test++
-                        console.log("before 4")
+                    test++
+                    console.log("before 4")
                     this.c.webhookHandler.sendWebhook(
                         channel,
                         db.dailyChannel,
@@ -181,8 +181,8 @@ module.exports = class DailyMessage {
                     ).catch(err => { console.log(err)
                     });
                     console.log("after 4")
-                }
-            }, i * 2500) // We do a little timeout here to work against discord ratelimit with 50reqs/second
+                }, i * 2500) // We do a little timeout here to work against discord ratelimit with 50reqs/second
+            }
         }
         console.log(test)
     }
