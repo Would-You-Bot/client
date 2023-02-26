@@ -41,7 +41,7 @@ module.exports = class KeepAlive {
      * Start the keep alive system (listener to the process)
      */
     start() {
-        this.c.ws.on('rateLimit', (log) => {
+        this.c.on('rateLimit', (log) => {
             const { path, limit, timeout } = log;
 
             this.consoleError('RateLimit', 'We got rate-limited at', `Path: ${path} Limit: ${limit} Timeout: ${timeout}`);
