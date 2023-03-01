@@ -10,18 +10,18 @@ const guildModel = require('../util/Models/guildModel');
 module.exports = {
     requireGuild: true,
     data: new SlashCommandBuilder()
-        .setName('canvas')
+        .setName('either')
         .setDescription('Generate a custom canvas image')
         .setDMPermission(false)
         .addSubcommand((subcommand) => subcommand
         .setName('message')
         .setDescription('Custom would you rather message image')
         .addStringOption((option) => option
-            .setRequired(true)
+            .setRequired(false)
             .setName('first')
             .setDescription('Text for the first option'))
         .addStringOption((option) => option
-            .setRequired(true)
+            .setRequired(false)
             .setName('second')
             .setDescription('Text for the second option')))
         .setDescriptionLocalizations({
@@ -83,6 +83,27 @@ module.exports = {
         ctx.font = `bold ${fontsize2 || "25"}px sans-serif`;
         ctx.fillStyle = "#000000";
         ctx.fillText(text2, 140, 240);
+
+        for (let i = 0; i < users.length; i++) {
+			ctx.beginPath();
+			let user = users[i]; // user == interaction.user.displayAvatarURL({ format: 'jpg' })
+
+			const a = Canvas.createCanvas(rad * 2, rad * 2);
+			const context = a.getContext("2d");
+
+			context.beginPath();
+			context.arc(rad, rad, rad, 0, Math.PI * 2, true);
+			context.closePath();
+			context.clip();
+
+			const avatar = await Canvas.loadImage(user);
+			context.drawImage(avatar, 0, 0, rad * 2, rad * 2);
+
+			ctx.drawImage(a, pos, yPos);
+
+			ctx.closePath();
+			pos -= rad;
+		}
 
 
         attachment = new AttachmentBuilder(
