@@ -13,7 +13,7 @@ module.exports = {
     }),
   /**
    * @param {CommandInteraction} interaction
-   * @param {Client} client
+   * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
   async execute(interaction, client, guildDb) {
@@ -29,9 +29,15 @@ module.exports = {
       .setTitle('Bot Info')
       .addFields(
         {
-          name: 'Developers 🐧',
+          name: 'Bot Developers 🐧',
           value: `
-          \`\`\`Dominik#5555\nForGetFulSkyBro#9999\nfb_sean#1337\nImGajeed76#5617\n\`\`\``,
+          \`\`\`Dominik#5555\nForGetFulSkyBro#9999\nfb_sean#1337\`\`\``,
+          inline: false,
+        },
+        {
+          name: 'Web Developer ⛄',
+          value: `
+          \`\`\`MarcDev#6826\`\`\``,
           inline: false,
         },
         {

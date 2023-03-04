@@ -27,7 +27,7 @@ module.exports = {
 
     /**
      * @param {CommandInteraction} interaction
-     * @param {Client} client
+     * @param {WouldYou} client
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
@@ -35,6 +35,7 @@ module.exports = {
         const {Language} = require(`../languages/${guildDb.language}.json`);
         if (
             interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
+            || global.checkDebug(guildDb, interaction?.user?.id)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'english': {

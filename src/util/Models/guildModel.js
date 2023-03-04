@@ -40,10 +40,6 @@ const guildProfile = new Schema(
             type: String,
             default: "America/Chicago"
         },
-        dailyDay: {
-            type: Number,
-            default: 0,
-        },
         replay: {
             type: Boolean,
             default: true,
@@ -62,6 +58,10 @@ const guildProfile = new Schema(
         customTypes: {
             type: String,
             default: "mixed"
+        },
+        debugMode: {
+            type: Boolean,
+            default: false,
         },
     },
     {timestamps: true},

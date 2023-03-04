@@ -32,7 +32,7 @@ module.exports = class DatabaseHandler {
      * @returns {Promise<void>}
      */
     async connectToDatabase() {
-        connect(this.connectionString, {
+       await connect(this.connectionString, {
             useNewUrlParser: true,
         }).catch((err) => {
             console.log(err);

@@ -29,33 +29,6 @@
       "footer": "Would You"
     }
   },
-  "Settings": {
-    "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
-    "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
-    "dailyChannel": "Select a channel where you want Daily Messages to be!",
-    "dailyRole": "Select a role that you want to be pinged in Daily Messages!",
-    "embed": {
-      "dailyTitle": "Would You - Daily Messages",
-      "dailyMsg": "**Enabled**",
-      "dailyRole": "**Role**",
-      "dailyChannel": "**Channel**",
-      "dailyTimezone": "**Timezone**",
-      "welcomeTitle": "Would You - Welcomes",
-      "welcome": "**Enabled**",
-      "welcomeChannel": "**Channel**",
-      "welcomePing": "**User Pings**",
-      "footer": "Would You"
-    },
-    "button": {
-      "dailyChannel": "Set Channel",
-      "dailyRole": "Set Role",
-      "dailyTimezone": "Set Timezone",
-      "dailyMsg": "Toggle Daily Messages",
-      "welcomeChannel": "Set Channel",
-      "welcome": "Toggle Welcomes",
-      "welcomePing": "Toggle User Ping"
-    }
-  },
   "wyCustom": {
     "error": {
       "paginate": "You can't proceed that way any further.",
@@ -231,5 +204,61 @@
   },
   "webhookManager": {
     "noWebhook": "Due to a necessary change for performance, I need **Manage Webhooks** permissions to send this message! (If I have these permissions but this message still appears, make sure it\\'s possible for me to create a Webhook!"
+  },
+  "Settings": {
+    "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
+    "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "dailyChannel": "Select a channel where you want Daily Messages to be!",
+    "dailyRole": "Select a role that you want to be pinged in Daily Messages!",
+    "embed": {
+      "dailyTitle": "Would You - Daily Messages",
+      "dailyMsg": "**Enabled**",
+      "dailyRole": "**Role**",
+      "dailyChannel": "**Channel**",
+      "dailyTimezone": "**Timezone**",
+      "welcomeTitle": "Would You - Welcomes",
+      "welcome": "**Enabled**",
+      "welcomeChannel": "**Channel**",
+      "welcomePing": "**User Pings**",
+      "footer": "Would You"
+    },
+    "button": {
+      "dailyChannel": "Set Channel",
+      "dailyRole": "Set Role",
+      "dailyTimezone": "Set Timezone",
+      "dailyMsg": "Toggle Daily Messages",
+      "welcomeChannel": "Set Channel",
+      "welcome": "Toggle Welcomes",
+      "welcomePing": "Toggle User Ping"
+    }
+  },
+  "Debug": {
+    "permissions": "You don't have the required permissions to use this command.",
+    "channelNotSet": "The channel for the daily message isn't set or I cant access to it.",
+    "tryToSent": "I will try to sent a test message now! If nothing happen check the support server of the bot!",
+    "testMessage": "This is a test message to check if the webhook for daily messages works.",
+    "enabled": "Debug mode is now **enabled**. Keep in mind that the Devs of WouldYou can now access commands **without** having the needed permissions!",
+    "disabled": "Debug mode is now **disabled**. Keep in mind that the Devs of WouldYou can no longer access commands **without** having the needed permissions!",
+    "embed": {
+      "title": "Debug",
+      "settings": "Settings",
+      "isChannel": "This channel **{is}** the daily message channel.",
+      "is": "is",
+      "isnot": "is not",
+      "channel": "This channel",
+      "can": "can",
+      "cannot": "can't",
+      "manageWebhook": "I **{can}** manage webhooks in this channel.",
+      "embedLinks": "I **{can}** send embeds in this channel.",
+      "sendMessages": "I **{can}** send messages in this channel.",
+      "viewChannel": "I **{can}** view this channel.",
+      "readMessageHistory": "I **{can}** read the message history in this channel.",
+      "global": "Global",
+      "g_manageWebhooks": "I **{can}** manage webhooks on this server.",
+      "g_embedLinks": "I **{can}** send embeds on this server.",
+      "g_sendMessages": "I **{can}** send messages on this server.",
+      "g_viewChannel": "I **{can}** view channels on this server.",
+      "g_readMessageHistory": "I **{can}** read the message history on this server."
+    }
   }
 }
