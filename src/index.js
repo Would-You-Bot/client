@@ -24,7 +24,6 @@ global.wouldYouDevs = [
     '347077478726238228', // Mezo
     '268843733317976066', // Sky
     '980199990746034236', // Mezo 2acc
-    '637956661616574465' // ImGajeed76
 ];
 
 global.checkDebug = (d, i) => {
