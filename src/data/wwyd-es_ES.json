@@ -1,10 +1,39 @@
 {
-    "WhatYouDo":
-    [
-        " Todos los países han decidido unirse, ¿qué harías si fueras el presidente?",
-        " ¿Qué harías si otros pudieran ver tus mensajes privados en discord?",
-        " ¿Qué harías si fueras presidente?",
-        " ¿Qué harías si pudieras controlar mentes?",
-        " ¿Qué harías si solo te quedan 24 horas en internet?"
+    "WhatYouDo": [
+      "Todos los países han decidido unirse, ¿qué harías si fueras tú el presidente?",
+      "¿Qué harías si otros pudieran ver tus mensajes directos de Discord?",
+      "¿Qué harías si fueras el presidente?",
+      "¿Qué harías si pudieras controlar mentes?",
+      "¿Qué harías si solo tuvieras 24 horas más en Internet?",
+      "¿Qué harías si vieras a un colega robando material de oficina?",
+      "¿Qué harías si recibieras un ascenso en el trabajo, pero tu colega que también estaba compitiendo por el puesto está molesto?",
+      "¿Qué harías si te enteraras de que te han dejado fuera de una reunión importante a la que tu jefe quería que asistieras?",
+      "¿Qué harías si te pidieran que trabajes en un proyecto que va en contra de tus valores personales?",
+      "¿Qué harías si te pidieran que mientas a un cliente para cerrar un trato?",
+      "¿Qué harías si tu jefe te pidiera que hagas algo poco ético?",
+      "¿Qué harías si tuvieras un plazo ajustado y un compañero de trabajo te pidiera ayuda en su proyecto?",
+      "¿Qué harías si accidentalmente enviaras un correo electrónico que contiene  información confidencial a la persona equivocada?",
+      "¿Qué harías si te pidieran que cubras un error cometido por un compañero de trabajo?",
+      "¿Qué harías si te pidieran que hagas una presentación ante un grupo grande y te sientes muy ansioso?",
+      "¿Qué harías si estuvieras en una fiesta y alguien te ofreciera drogas?",
+      "¿Qué harías si estuvieras en una fiesta y alguien empezara una pelea?",
+      "¿Qué harías si estuvieras en una fiesta y ves a alguien tratando de aprovecharse de una persona borracha?",
+      "¿Qué harías si estuvieras conduciendo y ves a un peatón a punto de cruzar la calle, pero sabes que no puedes detenerte a tiempo?",
+      "¿Qué harías si estuvieras en una tienda llena de gente y ves a alguien tratando de robar algo?",
+      "¿Qué harías si estuvieras en una tienda llena de gente y ves a alguien siendo grosero con un empleado?",
+      "¿Qué harías si estuvieras en un restaurante y ves que el camarero trata mal a un cliente?",
+      "¿Qué harías si estuvieras en una sala de cine y alguien está hablando en voz alta durante la película?",
+      "¿Qué harías si estuvieras en un autobús o tren lleno de gente y alguien está ocupando más de un asiento?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que lo ayudes a hacer trampa en un examen?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que le guardes un secreto de sus padres?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que hagas algo peligroso?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que hagas algo que va en contra de tus valores?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que pruebes una sustancia con la que no te sientes cómodo?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que rompas una regla?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que mientas por él?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que cargues con la culpa de algo que hizo?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que hagas algo ilegal?",
+      "¿Qué harías si estuvieras en casa de un amigo y te pide que hagas algo que pueda lastimar a alguien?",
+      "¿Qué harías si estuvieras en un lugar público y ves a alguien siendo intimidado?"
     ]
-}
+  }

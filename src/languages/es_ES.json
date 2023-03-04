@@ -262,5 +262,34 @@
   },
   "webhookManager": {
     "noWebhook": "Debido a un cambio necesario para el rendimiento, ¡necesito permisos de **Gestión de Webhooks** para enviar este mensaje! (Si tengo estos permisos pero sigue apareciendo este mensaje, ¡asegúrate de que puedo crear un Webhook!"
+  },
+  "Debug": {
+    "permissions": "No tienes los permisos necesarios para usar este comando.",
+    "channelNotSet": "El canal para el mensaje diario no está configurado o no puedo acceder a él.",
+    "tryToSent": "¡Intentaré enviar un mensaje de prueba ahora! Si no pasa nada, ¡verifique el servidor de soporte del bot!",
+    "testMessage": "Este es un mensaje de prueba para verificar si el webhook para mensajes diarios funciona.",
+    "enabled": "El modo debug fue **habilitado**. Tenga en cuenta que los desarrolladores de WouldYou ahora pueden acceder a los comandos **sin** tener los permisos necesarios.",
+    "disabled": "El modo debug fue **deshabilitado**. Tenga en cuenta que los desarrolladores de WouldYou ya no pueden acceder a los comandos **sin** tener los permisos necesarios.",
+    "embed": {
+      "title": "Debug",
+      "settings": "Configuraciones",
+      "isChannel": "Este canal **{is}** el canal de mensajes diarios.",
+      "is": "es",
+      "isnot": "no es",
+      "channel": "Este canal",
+      "can": "puede",
+      "cannot": "no puede",
+      "manageWebhook": "Yo **{can}** administrar webhooks en este canal.",
+      "embedLinks": "Yo **{can}** enviar embeds en este canal.",
+      "sendMessages": "Yo **{can}** enviar mensajes en este canal.",
+      "viewChannel": "Yo **{can}** ver este canal.",
+      "readMessageHistory": "Yo **{can}** leer el historial de mensajes de este canal.",
+      "global": "Global",
+      "g_manageWebhooks": "Yo **{can}** administrar webhooks en este servidor.",
+      "g_embedLinks": "Yo **{can}** enviar embeds en este servidor.",
+      "g_sendMessages": "Yo **{can}** enviar mensajes en este servidor.",
+      "g_viewChannel": "Yo **{can}** ver canales en este servidor.",
+      "g_readMessageHistory": "Yo **{can}** leer el historial de mensajes en este servidor."
+    }
   }
 }

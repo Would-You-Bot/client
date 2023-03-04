@@ -232,5 +232,34 @@
   },
   "webhookManager": {
     "noWebhook": "Aufgrund einer notwendigen Änderung für die Leistung benötige ich die Berechtigung **Webhooks verwalten**, um diese Nachricht zu senden! (Wenn ich diese Berechtigungen habe und diese Nachricht trotzdem erscheint, stelle sicher, dass ich einen Webhook erstellen kann!"
+  },
+  "Debug": {
+    "permissions": "Du hast nicht die erforderlichen Berechtigungen, um diesen Befehl zu verwenden.",
+    "channelNotSet": "Der Kanal für die tägliche Nachricht ist nicht eingestellt oder ich kann nicht darauf zugreifen.",
+    "tryToSent": "Ich werde jetzt versuchen, eine Testnachricht zu senden! Wenn nichts passiert, überprüfe den Support-Server des Bots!",
+    "testMessage": "Ich werde jetzt versuchen, eine Testnachricht zu senden! Wenn nichts passiert, überprüfe den Support-Server des Bots!",
+    "enabled": "Der Debug-Modus ist jetzt **aktiviert**. Denke daran, dass die Entwickler von WouldYou jetzt auf Befehle zugreifen können, **ohne** die nötigen Rechte zu haben!",
+    "disabled": "Der Debug-Modus ist jetzt **deaktiviert**. Denke daran, dass die Entwickler von WouldYou nicht mehr auf Befehle zugreifen können, **ohne** die nötigen Rechte zu haben!",
+    "embed": {
+      "title": "Debug",
+      "settings": "Einstellungen",
+      "isChannel": "Dieser Kanal **{is}** der tägliche Nachrichtenkanal.",
+      "is": "ist",
+      "isnot": "ist nicht",
+      "channel": "Dieser Kanal",
+      "can": "kann",
+      "cannot": "kann nicht",
+      "manageWebhook": "Ich **{can}** Webhooks in diesem Kanal verwalten.",
+      "embedLinks": "Ich **{can}** in diesem Kanal embeds senden.",
+      "sendMessages": "Ich **{can}** Nachrichten in diesem Kanal senden.",
+      "viewChannel": "Ich **{can}** diesen Kanal sehen.",
+      "readMessageHistory": "Ich **{can}** den Nachrichtenverlauf in diesem Kanal lesen.",
+      "global": "Global",
+      "g_manageWebhooks": "Ich **{can}** Webhooks auf diesem Server verwalten.",
+      "g_embedLinks": "Ich **{can}** auf diesem Server Einbettungen senden.",
+      "g_sendMessages": "Ich **{can}** Nachrichten auf diesem Server senden.",
+      "g_viewChannel": "Ich **{can}** Kanäle auf diesem Server anzeigen.",
+      "g_readMessageHistory": "Ich **{can}** den Nachrichtenverlauf auf diesem Server lesen."
+    }
   }
 }

@@ -201,6 +201,7 @@ module.exports = {
         }
         if (
             interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
+            || global.checkDebug(guildDb, interaction?.user?.id)
         ) {
             switch (interaction.options.getSubcommand()) {
                 case 'add':

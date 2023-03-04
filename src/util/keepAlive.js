@@ -41,10 +41,11 @@ module.exports = class KeepAlive {
      * Start the keep alive system (listener to the process)
      */
     start() {
-        this.c.ws.on('rateLimit', (log) => {
-            const { path, limit, timeout } = log;
 
-            this.consoleError('RateLimit', 'We got rate-limited at', `Path: ${path} Limit: ${limit} Timeout: ${timeout}`);
+        this.c.rest.on('rateLimited', (log) => {
+            const { route: path, limit, timeToReset: timeout } = log;
+
+            this.consoleError('RateLimited', 'We got rate-limited at', `Path: ${path} Limit: ${limit} Timeout: ${timeout}`);
             const embed = new EmbedBuilder()
                 .setTitle('Rate limited')
                 .setColor(global?.devBot ? "#e407f5" : "#6e0000")

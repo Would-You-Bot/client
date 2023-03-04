@@ -55,6 +55,10 @@ const guildProfile = new Schema(
             type: String,
             default: "mixed"
         },
+        debugMode: {
+            type: Boolean,
+            default: false,
+        },
     },
     {timestamps: true},
 );

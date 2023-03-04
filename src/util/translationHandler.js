@@ -99,6 +99,8 @@ module.exports = class TranslationHandler {
      * const translation = getTranslation('en_EN', 'commands.ping.pong', {ping: 100});
      */
     get(language, path, data = {}) {
+        if(!language) language = 'en_EN';
+
         const l = this.getLanguage(language);
         const p = path.split('.');
         let c = null;
@@ -107,10 +109,10 @@ module.exports = class TranslationHandler {
             for (const i of p) {
                 try {
                     if(!c) {
-                        if (!l[i]) break;
+                        if (!l.hasOwnProperty(i)) break;
                         c = l[i];
                     } else {
-                        if (!c[i]) break;
+                        if (!c.hasOwnProperty(i)) break;
                         c = c[i];
                     }
                 } catch(err) {
