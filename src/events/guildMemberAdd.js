@@ -25,9 +25,10 @@ module.exports = async (client, member) => {
         if (guildDb.welcomePing) {mention = `<@${member.user.id}>`}
 
         let welcomeEmbed = new EmbedBuilder()
+        .setTitle(`Welcome ${member.user.username}!`)
         .setColor("#0598F6")
-        .setFooter({text: `${member.user.tag} Joined`, iconURL: member.user.avatarURL()})
-        .setDescription(`**${General[randomrather]}**`);
+        .setThumbnail(member.user.avatarURL())
+        .setDescription(`${General[randomrather]}`);
 
 
         return channel.send({content: mention, embeds: [welcomeEmbed]}).catch((err) => {
