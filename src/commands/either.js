@@ -15,11 +15,11 @@ module.exports = {
             .setName('message')
             .setDescription('Custom would you rather message image')
             .addStringOption((option) => option
-                .setRequired(false)
+                .setRequired(true)
                 .setName('first')
                 .setDescription('Text for the first option'))
             .addStringOption((option) => option
-                .setRequired(false)
+                .setRequired(true)
                 .setName('second')
                 .setDescription('Text for the second option')))
         .setDescriptionLocalizations({
@@ -39,14 +39,14 @@ module.exports = {
             
 
         if (!interaction.options.getString('first')) {
-            eitherImage.addText("Sus","1")
+            eitherImage.addFirstText("Sus")
         } else {
-            eitherImage.addText(interaction.options.getString('first').length > 48 ? interaction.options.getString('first').substring(0, 48).trim() + '...' : interaction.options.getString('first'));
+            eitherImage.addFirstText(interaction.options.getString('first').length > 48 ? interaction.options.getString('first').substring(0, 48).trim() + '...' : interaction.options.getString('first'));
         }
         if (!interaction.options.getString('second')) {
-            eitherImage.addText("Sus 2", "s")
+            eitherImage.addSecondText("Sus 2", "s")
         } else {
-            eitherImage.addText(interaction.options.getString('second').length > 48 ? interaction.options.getString('second').substring(0, 48).trim() + '...' : interaction.options.getString('second'));
+            eitherImage.addSecondText(interaction.options.getString('second').length > 48 ? interaction.options.getString('second').substring(0, 48).trim() + '...' : interaction.options.getString('second'));
         }
 
         attachment = new AttachmentBuilder(await eitherImage.build(), { name: 'wouldyoubot-either.png' })

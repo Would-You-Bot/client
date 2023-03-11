@@ -42,13 +42,10 @@
         "att5": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att6": "The JSON you provided had too much data for the useless category, we only accept 30 custom messages. You can gain more by voting for the bot!",
         "att7": "The JSON you provided had too much data for the useful category, we only accept 30 custom messages. You can gain more by voting for the bot!",
-        "att8": "The JSON you provided had too much data for the nsfw category, we only accept 30 custom messages. You can gain more by voting for the bot!",
         "att9": "You can't have more than 30 custom messages in an import for the useful category. You can gain more by voting for the bot!",
         "att10": "You can't have more than 30 custom messages in an import for the useless category. You can gain more by voting for the bot!",
-        "att11": "You can't have more than 30 custom messages in an import for the NSFW category. You can gain more by voting for the bot!",
         "att12": "Adding up your current **useful** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
         "att13": "Adding up your current **useless** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
-        "att14": "Adding up your current **nsfw** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
         "att15": "There was an error that occured while running this command, please report it to the support server!"
       },
       "export": {
@@ -77,7 +74,6 @@
       "paginator": {
         "title": "Would You Custom Messages",
         "descCatUseful": "**Category**: useful",
-        "descCatNSFW": "**Category**: nsfw",
         "descCatUseless": "**Category**: useless"
       }
     }
@@ -100,7 +96,6 @@
     "embed": {
       "Usefulname": "Would you want this power?",
       "Uselessname": "Would you want this power?",
-      "Nsfwname": "Would you want this power?",
       "footer": "Would You"
     },
     "replays": {
@@ -159,18 +154,6 @@
       "nocustom": "There's currently no custom Would You messages to be displayed! Either make some or change the type using /Would You type"
     }
   },
-  "NSFW": {
-    "embed": {
-      "nonsfw": "NSFW commands aren't enabled in this server!",
-      "nochannel": "This command can only be used in NSFW channels!",
-      "title": "Would You NSFW",
-      "description": "You've successfully set NSFW to",
-      "errorDesc": "In order to use this command you need to vote for the bot!",
-      "errorAlready": "Nsfw questions are already disabled",
-      "success": "Nsfw questions have been disabled",
-      "missingPerms": "You are missing the `Manage Server` permission to use this command."
-    }
-  },
   "REPLAY": {
     "embed": {
       "title": "Would You Replays",
@@ -214,7 +197,7 @@
     "voteSame": "The provided vote cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
     "cooldownInvalid": "Provided cooldown was invalid. Make sure the cooldown only includes numbers!",
     "embed": {
-      "generalTitle": "Would You - Daily Messages",
+      "generalTitle": "Would You - General Settings",
       "voteCooldown": "Vote Cooldown",
       "replayCooldown": "Replay Cooldown",
       "dailyTitle": "Would You - Daily Messages",

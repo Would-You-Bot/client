@@ -35,15 +35,25 @@ const Canvas = require("@napi-rs/canvas");
   /**
    *
    * @param {String} text1
+   * @returns {Either}
+   */
+
+  addFirstText(text1) {
+    this.text1 = text1;
+    return this;
+  }
+
+    /**
+   *
    * @param {String} text2
    * @returns {Either}
    */
 
-  addText(text1, text2) {
-    this.text1 = text1;
-    this.text2 = text2;
-    return this;
-  }
+     addSecondText(text2) {
+      this.text2 = text2;
+      return this;
+    }
+  
 
   /**
    * This function builds the canvas
