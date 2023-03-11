@@ -2,7 +2,7 @@ const {
     SlashCommandBuilder,
     AttachmentBuilder
 } = require('discord.js');
-const {Either} = require("../util/generateEither")
+const Either = require("../util/generateEither")
 const guildModel = require('../util/Models/guildModel');
 
 module.exports = {
@@ -34,26 +34,22 @@ module.exports = {
      */
     async execute(interaction, client, guildDb) {
         const eitherImage = new Either()
-        .setVotes(["https://cdn.discordapp.com/avatars/981649513427111957/af5f8264403034530bba73ba6c2492d9.webp?size=512", "https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.webp?size=512", "https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.webp?size=512", "https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.webp?size=512"], ["https://cdn.discordapp.com/avatars/981649513427111957/af5f8264403034530bba73ba6c2492d9.webp?size=512", "https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.webp?size=512", "https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.webp?size=512", "https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.webp?size=512"])
-        .setLanguage(guildDb.language)
+            .setLanguage(guildDb.language)
+            .setVotes(["https://cdn.discordapp.com/avatars/981649513427111957/af5f8264403034530bba73ba6c2492d9.webp?size=512"], ["https://cdn.discordapp.com/avatars/981649513427111957/af5f8264403034530bba73ba6c2492d9.webp?size=512"])
+            
 
         if (!interaction.options.getString('first')) {
-            eitherImage.addText("Sus")
+            eitherImage.addText("Sus","1")
         } else {
-                  eitherImage.addText(interaction.options.getString('first').length > 48 ? interaction.options.getString('first').substring(0, 48).trim() + '...' : interaction.options.getString('first'));
+            eitherImage.addText(interaction.options.getString('first').length > 48 ? interaction.options.getString('first').substring(0, 48).trim() + '...' : interaction.options.getString('first'));
         }
         if (!interaction.options.getString('second')) {
-            eitherImage.addText("Sus 2")
+            eitherImage.addText("Sus 2", "s")
         } else {
             eitherImage.addText(interaction.options.getString('second').length > 48 ? interaction.options.getString('second').substring(0, 48).trim() + '...' : interaction.options.getString('second'));
         }
 
-        eitherImage.build().then((img) => {
-            attachment = new AttachmentBuilder(img, 
-                {
-                    name: "wouldyou-card.png",
-                })
-          })
+        attachment = new AttachmentBuilder(await eitherImage.build(), { name: 'wouldyoubot-either.png' })
 
         interaction
             .reply({

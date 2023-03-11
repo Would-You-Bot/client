@@ -1,8 +1,6 @@
 const Canvas = require("@napi-rs/canvas");
-module.exports = class Either {
-  constructor(client) {
-    this.c = client;
-  }
+ class Either {
+  constructor() {}
 
   /**
    *
@@ -16,7 +14,8 @@ module.exports = class Either {
       throw new Error("Expected rows array instead got " + typeof song);
     }
     this.rowOne = rowOne;
-    this.rowTwo = rowTwo
+    this.rowTwo = rowTwo;
+    return this;
   }
 
   /**
@@ -30,6 +29,7 @@ module.exports = class Either {
       throw new Error("Expected language instead got " + typeof language);
     }
     this.language = language;
+    return this;
   }
 
   /**
@@ -40,16 +40,9 @@ module.exports = class Either {
    */
 
   addText(text1, text2) {
-    if (!text1 || typeof text1 !== "string") {
-      throw new TypeError("Expected text1 string instead got " + typeof text1);
-    }
-    if (!text2 || typeof text2 !== "string") {
-      throw new TypeError(
-        "Expected text string instead got " + typeof background
-      );
-    }
     this.text1 = text1;
     this.text2 = text2;
+    return this;
   }
 
   /**
@@ -92,11 +85,11 @@ module.exports = class Either {
 
     ctx.font = `bold ${fontsize1 || "25"}px sans-serif`;
     ctx.fillStyle = "#000000";
-    ctx.fillText(text1, 140, 156);
+    ctx.fillText(this.text1, 140, 156);
 
     ctx.font = `bold ${fontsize2 || "25"}px sans-serif`;
     ctx.fillStyle = "#000000";
-    ctx.fillText(text2, 140, 240);
+    ctx.fillText(this.text2, 140, 240);
 
     var rad = 15;
 
@@ -154,6 +147,7 @@ module.exports = class Either {
       pos1 -= rad;
     }
 
-    return canvasObject.encode("png");
+    return canvas.encode("png");
   }
-}
+};
+module.exports = Either;

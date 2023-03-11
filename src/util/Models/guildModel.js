@@ -48,6 +48,10 @@ const guildProfile = new Schema(
             type: Number,
             default: 30000,
         },
+        voteCooldown: {
+            type: Number,
+            default: 25000,
+        },
         botJoined: {
             type: Number,
         },
