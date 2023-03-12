@@ -177,41 +177,6 @@
       "missingPerms": "Dir fehlen die `MANAGE_GUILD` rechte um diesen befehl auszuführen."
     }
   },
-  "Daily": {
-    "errorRole": "Die angegebene Rolle ist dieselbe Rolle, die bereits eingestellt ist. Stelle sicher, dass du eine andere Rolle auswählst.",
-    "embed": {
-      "alreadytrue": "Diese Option ist bereits angeschaltet, du kannst sie jedoch mit dem Befehl und der Auswahl von `false` deaktivieren.",
-      "alreadyfalse": "Diese Option ist bereits ausgeschaltet, du kannst sie jedoch mit dem Befehl und der Auswahl von `true` aktivieren.",
-      "error": "Dir fehlt die `ManageGuild` permission!"
-    },
-    "successEmbed": {
-      "title": "Täglich",
-      "desc": "Erfolgreich",
-      "desc2": "tägliche Would You nachrichten!",
-      "desc3": "Weil du",
-      "desc4": "tägliche nachrichten, du kannst einen kanal für sie setzen mit `/dailymsg channel`",
-      "options": "aktiviert",
-      "options2": "deaktiviert"
-    },
-    "errorChannel": {
-      "viewChannel": "Der angegebene Kanal erlaubt es mir nicht, ihn zu sehen. Bitte wähle einen Kanal, auf den ich Zugriff habe.",
-      "sendMessages": "Der angegebene Kanal erlaubt es mir nicht nachrichten zu senden. Bitte wähle einen Kanal, auf den ich Zugriff habe.",
-      "manageWebhooks": "Der angegebene Kanal erlaubt es mir nicht Webhooks zu erstellen. Bitte wähle einen Kanal, in dem ich Webhooks erstellen kann.",
-      "alreadySet": "Der angegebene Kanal ist derselbe, der bereits gesetzt ist. Stelle sicher, dass du einen anderen Kanal wählen."
-    },
-    "success": {
-      "title": "Tägliche Would You",
-      "desc": "Erfolgreich gesetzt",
-      "desc2": "für tägliche Would You-Nachrichten. Falls du das noch nicht getan hast, kannst du die Zeitzone des Servers für die Nachricht mit `/dailymsg timezone` einstellen. Standardmäßig ist `America/Chicago` gesetzt.",
-      "desc3": "rolle für tögliche would you erwähnungen."
-    },
-    "timezone": {
-      "errorSame": "Die angegebene Zeitzone ist dieselbe, die bereits eingestellt ist. Stelle sicher, dass du eine andere Zeitzone wählst.",
-      "errorInvalid": "Wenn die Zeitzone ungültig war, wähle eine gultige Zeitzone aus dieser [Liste](https://kevinnovak.github.io/Time-Zone-Picker/) aus.",
-      "desc": "Erfolgreich gesetzt",
-      "desc2": "Zeitzone für täglich Would You."
-    }
-  },
   "Guide": {
     "embed": {
       "title": "Would You | Anleitung",
@@ -232,6 +197,33 @@
   },
   "webhookManager": {
     "noWebhook": "Aufgrund einer notwendigen Änderung für die Leistung benötige ich die Berechtigung **Webhooks verwalten**, um diese Nachricht zu senden! (Wenn ich diese Berechtigungen habe und diese Nachricht trotzdem erscheint, stelle sicher, dass ich einen Webhook erstellen kann!"
+  },
+  "Settings": {
+    "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
+    "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "dailyChannel": "Select a channel where you want Daily Messages to be!",
+    "dailyRole": "Select a role that you want to be pinged in Daily Messages!",
+    "embed": {
+      "dailyTitle": "Would You - Daily Messages",
+      "dailyMsg": "**Enabled**",
+      "dailyRole": "**Role**",
+      "dailyChannel": "**Channel**",
+      "dailyTimezone": "**Timezone**",
+      "welcomeTitle": "Would You - Welcomes",
+      "welcome": "**Enabled**",
+      "welcomeChannel": "**Channel**",
+      "welcomePing": "**User Pings**",
+      "footer": "Would You"
+    },
+    "button": {
+      "dailyChannel": "Set Channel",
+      "dailyRole": "Set Role",
+      "dailyTimezone": "Set Timezone",
+      "dailyMsg": "Toggle Daily Messages",
+      "welcomeChannel": "Set Channel",
+      "welcome": "Toggle Welcomes",
+      "welcomePing": "Toggle User Ping"
+    }
   },
   "Debug": {
     "permissions": "Du hast nicht die erforderlichen Berechtigungen, um diesen Befehl zu verwenden.",

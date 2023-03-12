@@ -20,6 +20,10 @@ const guildProfile = new Schema(
             type: String,
             default: null,
         },
+        welcomePing: {
+            type: Boolean,
+            default: false,
+        },
         dailyMsg: {
             type: Boolean,
             default: false,
@@ -43,6 +47,10 @@ const guildProfile = new Schema(
         replayCooldown: {
             type: Number,
             default: 30000,
+        },
+        voteCooldown: {
+            type: Number,
+            default: 25000,
         },
         botJoined: {
             type: Number,

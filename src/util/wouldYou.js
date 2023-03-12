@@ -91,7 +91,7 @@ module.exports = class WouldYou extends Client {
         this.keepAlive = new KeepAlive(this);
         this.keepAlive.start();
 
-        // Vote Logger
+        //Vote Logger
         this.voteLogger = new VoteLogger(this);
         if(this?.cluster?.id === 0) {
             this.voteLogger.startAPI();

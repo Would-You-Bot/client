@@ -4,7 +4,7 @@ const { ChalkAdvanced } = require('chalk-advanced');
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
     totalClusters: 1,
-    totalShards: 2,
+    totalShards: 1,
     shardsPerClusters: 2,
     mode: "process",
     token: process.env.TOKEN,

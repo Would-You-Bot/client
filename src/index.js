@@ -18,7 +18,6 @@ if(botId !== '981649513427111957' || process.env.STATUS === 'DEVELOPMENT') {
 } else if(process.env.STATUS === 'DEVELOPMENT' && botId === '981649513427111957') {
     throw new Error('Are you stupid? Why should you run the main bot with status "DEVELOPMENT"?!');
 }
-
 global.wouldYouDevs = [
     '340243638892101646', // Sean
     '347077478726238228', // Mezo
@@ -29,7 +28,6 @@ global.wouldYouDevs = [
 global.checkDebug = (d, i) => {
     return d?.debugMode ?? global?.wouldYouDevs?.includes(i);
 }
-
 const client = new WouldYou();
 client.loginBot().then(() => {
   console.log(
