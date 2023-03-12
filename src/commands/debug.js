@@ -20,7 +20,7 @@ module.exports = {
         .addSubcommand((subcommand) =>
             subcommand
                 .setName('mode')
-                .setDescription('Set the bot to debug mode. This allows our developer to use commands without permissions.')
+                .setDescription('Set the bot to debug mode. This allows our developers to use commands without permissions.')
         )
         .addSubcommand((subcommand) =>
             subcommand
@@ -39,10 +39,7 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        if (
-            !interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
-            || global.checkDebug(guildDb, interaction?.user?.id)
-        ) {
+        if (!interaction.member.permissions.has(PermissionFlagsBits.ManageGuild) || global.checkDebug(guildDb, interaction?.user?.id)) {
             const errorembed = new EmbedBuilder()
                 .setColor('#F00505')
                 .setTitle('Error!')

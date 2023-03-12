@@ -18,25 +18,20 @@ module.exports = async (client, member) => {
             PermissionFlagsBits.EmbedLinks
         ])) return;
 
-        const {Welcome} = await require(`../languages/${guildDb.language}.json`);
-        const {Useful_Powers} = await require(`../data/power-${guildDb.language}.json`);
+        const {General} = await require(`../data/rather-${guildDb.language}.json`);
+        const randomrather = Math.floor(Math.random() * General.length)
+        let mention = null
 
-        let power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+        if (guildDb.welcomePing) {mention = `<@${member.user.id}>`}
 
-        const wouldyouembed = new EmbedBuilder()
-            .setColor('#0598F6')
-            .setFooter({
-                text: `${member.user.username} ${Welcome.embed.footer}`,
-                iconURL: client.user.avatarURL(),
-            })
-            .setTimestamp()
-            .addFields({
-                name: Welcome.embed.title,
-                value: `> ${power}`,
-                inline: false,
-            });
+        let welcomeEmbed = new EmbedBuilder()
+        .setTitle(`Welcome ${member.user.username}!`)
+        .setColor("#0598F6")
+        .setThumbnail(member.user.avatarURL())
+        .setDescription(`${General[randomrather]}`);
 
-        return channel.send({embeds: [wouldyouembed]}).catch((err) => {
+
+        return channel.send({content: mention, embeds: [welcomeEmbed]}).catch((err) => {
         });
     }
 };

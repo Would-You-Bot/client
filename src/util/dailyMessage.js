@@ -1,6 +1,6 @@
-const {EmbedBuilder} = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const mom = require("moment-timezone");
-const {ChalkAdvanced} = require("chalk-advanced");
+const { ChalkAdvanced } = require("chalk-advanced");
 const CronJob = require('cron').CronJob;
 
 module.exports = class DailyMessage {
@@ -23,7 +23,6 @@ module.exports = class DailyMessage {
      * @return {Promise<void>}
      */
     async runSchedule() {
-        let test = 0;
         let guilds = await this.c.database.getAll();
         guilds = guilds.filter(g => this.c.guilds.cache.has(g.guildID) && g.dailyMsg);
         guilds = guilds.filter(g => mom.tz(g.dailyTimezone).format("HH:mm") === "12:00");
@@ -46,8 +45,8 @@ module.exports = class DailyMessage {
 
                 if (!channel?.id) return; // Always directly return before do to many actions
 
-                const {Useless_Powers, Useful_Powers} = await require(`../data/power-${db.language}.json`);
-                const {WouldYou, Rather} = await require(`../languages/${db.language}.json`);
+                const { Useless_Powers, Useful_Powers } = await require(`../data/power-${db.language}.json`);
+                const { WouldYou, Rather } = await require(`../languages/${db.language}.json`);
 
                 if (db.dailyRather) {
                     let power;
@@ -73,8 +72,6 @@ module.exports = class DailyMessage {
                         array = [];
                     } else if (db.customTypes === "custom") {
                         if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
-                            test++
-                            console.log("before 1")
                             this.c.webhookHandler.sendWebhook(
                                 channel,
                                 db.dailyChannel,
@@ -84,7 +81,6 @@ module.exports = class DailyMessage {
                             ).catch(err => {
                                 console.log(err)
                             });
-                            console.log("after 1")
                         }
 
                         power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
@@ -110,8 +106,7 @@ module.exports = class DailyMessage {
                                 inline: false,
                             },
                         )
-                    test++
-                    console.log("before 2")
+
                     this.c.webhookHandler.sendWebhook(
                         channel,
                         db.dailyChannel,
@@ -122,7 +117,6 @@ module.exports = class DailyMessage {
                     ).catch(err => {
                         console.log(err)
                     });
-                    console.log("after 1")
                 }
 
                 let power;
@@ -145,8 +139,6 @@ module.exports = class DailyMessage {
                     array = [];
                 } else if (db.customTypes === "custom") {
                     if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
-                        test++
-                        console.log("before 3")
                         this.c.webhookHandler.sendWebhook(
                             channel,
                             db.dailyChannel,
@@ -156,7 +148,6 @@ module.exports = class DailyMessage {
                         ).catch(err => {
                             console.log(err)
                         });
-                        console.log("after 3")
                     }
 
                     power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
@@ -174,8 +165,7 @@ module.exports = class DailyMessage {
                         value: `> ${power}`,
                         inline: false,
                     });
-                test++
-                console.log("before 4")
+
                 this.c.webhookHandler.sendWebhook(
                     channel,
                     db.dailyChannel,
@@ -186,9 +176,7 @@ module.exports = class DailyMessage {
                 ).catch(err => {
                     console.log(err)
                 });
-                console.log("after 4")
             }, i * 2500) // We do a little timeout here to work against discord ratelimit with 50reqs/second
         }
-        console.log(test)
     }
 };

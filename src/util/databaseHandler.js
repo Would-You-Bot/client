@@ -1,4 +1,4 @@
-const {connect} = require("mongoose");
+const { connect } = require("mongoose").set('strictQuery', true);
 const {ChalkAdvanced} = require("chalk-advanced");
 
 module.exports = class DatabaseHandler {
@@ -32,7 +32,7 @@ module.exports = class DatabaseHandler {
      * @returns {Promise<void>}
      */
     async connectToDatabase() {
-        connect(this.connectionString, {
+       await connect(this.connectionString, {
             useNewUrlParser: true,
         }).catch((err) => {
             console.log(err);
