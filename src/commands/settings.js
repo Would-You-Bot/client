@@ -23,14 +23,14 @@ module.exports = {
                 .setRequired(true)
                 .addChoices(
                     { name: 'General Settings', value: 'general' },
-                    { name: 'Daily Messages', value: 'dailyMsgs' },
+                    { name: 'Daily Messages', value: 'daily_msg' },
                     { name: 'Welcomes', value: 'welcomes' },
                 )
         ),
 
     /**
      * @param {CommandInteraction} interaction
-     * @param {Client} client
+     * @param {WouldYou} client
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
@@ -39,10 +39,15 @@ module.exports = {
             interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
         ) {
             switch (interaction.options.getString("choose")) {
-                case "dailyMsgs":
+                case "daily_msg":
                     const dailyMsgs = new EmbedBuilder()
                         .setTitle(Settings.embed.dailyTitle)
-                        .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`)
+                        .setDescription(
+                            `${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n` +
+                            `${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n` +
+                            `${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:x_:1077962443013238814>`}\n` +
+                            `${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`
+                        )
                         .setColor("#0598F6")
                         .setFooter({ text: Settings.embed.footer, iconURL: client.user.avatarURL(), })
 
@@ -75,7 +80,9 @@ module.exports = {
                 case "general":
                     const generalMsg = new EmbedBuilder()
                         .setTitle(Settings.embed.generalTitle)
-                        .setDescription(`${Settings.embed.voteCooldown}: ${guildDb.voteCooldown ? `${guildDb.voteCooldown}` : `<:x_:1077962443013238814>`}\n${Settings.embed.replayCooldown}: ${guildDb.replayCooldown ? `${guildDb.replayCooldown}` : `<:x_:1077962443013238814>`}\n`)
+                        .setDescription(`${Settings.embed.voteCooldown}: ${guildDb.voteCooldown ? `${guildDb.voteCooldown}` : `<:x_:1077962443013238814>`}\n` +
+                            `${Settings.embed.replayCooldown}: ${guildDb.replayCooldown ? `${guildDb.replayCooldown}` : `<:x_:1077962443013238814>`}\n`
+                        )
                         .setColor("#0598F6")
                         .setFooter({ text: Settings.embed.footer, iconURL: client.user.avatarURL(), })
 
@@ -97,7 +104,11 @@ module.exports = {
                 case "welcomes":
                     const welcomes = new EmbedBuilder()
                         .setTitle(Settings.embed.welcomeTitle)
-                        .setDescription(`${Settings.embed.welcome}: ${guildDb.welcome ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.welcomePing}: ${guildDb.welcomePing ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.welcomeChannel}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : `<:x_:1077962443013238814>`}`)
+                        .setDescription(
+                            `${Settings.embed.welcome}: ${guildDb.welcome ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n` +
+                            `${Settings.embed.welcomePing}: ${guildDb.welcomePing ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n` +
+                            `${Settings.embed.welcomeChannel}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : `<:x_:1077962443013238814>`}`
+                        )
                         .setColor("#0598F6")
                         .setFooter({ text: Settings.embed.footer, iconURL: client.user.avatarURL(), })
 

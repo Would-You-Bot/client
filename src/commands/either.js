@@ -36,7 +36,6 @@ module.exports = {
         const eitherImage = new Either()
             .setLanguage(guildDb.language)
             .setVotes(["https://cdn.discordapp.com/avatars/981649513427111957/af5f8264403034530bba73ba6c2492d9.webp?size=512"], ["https://cdn.discordapp.com/avatars/981649513427111957/af5f8264403034530bba73ba6c2492d9.webp?size=512"])
-            
 
         if (!interaction.options.getString('first')) {
             eitherImage.addFirstText("Sus")
@@ -49,7 +48,7 @@ module.exports = {
             eitherImage.addSecondText(interaction.options.getString('second').length > 48 ? interaction.options.getString('second').substring(0, 48).trim() + '...' : interaction.options.getString('second'));
         }
 
-        attachment = new AttachmentBuilder(await eitherImage.build(), { name: 'wouldyoubot-either.png' })
+        const attachment = new AttachmentBuilder(await eitherImage.build(), { name: 'wouldyoubot-either.png' })
 
         interaction
             .reply({

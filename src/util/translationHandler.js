@@ -94,7 +94,7 @@ module.exports = class TranslationHandler {
      * @param {string} language the language key
      * @param {string} path the path to the translation
      * @param {object} data the data to replace in the translation
-     * @return {object | de_DE | en_EN | es_ES}
+     * @return {string|null} the translation
      * @example
      * const translation = getTranslation('en_EN', 'commands.ping.pong', {ping: 100});
      */

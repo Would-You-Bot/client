@@ -12,10 +12,9 @@ module.exports = class DailyMessage {
      * Start the daily message Schedule
      */
     start() {
-        var job = new CronJob('0 */60 * * * *', async () => {
+        new CronJob('0 */60 * * * *', async () => {
             await this.runSchedule();
-        });
-        job.start()
+        }, null, true, "Europe/Berlin");
     }
 
     /**

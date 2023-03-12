@@ -1,28 +1,14 @@
 const {
     EmbedBuilder,
-    SlashCommandBuilder,
     ActionRowBuilder,
-    ButtonBuilder, PermissionFlagsBits,
+    ButtonBuilder,
 } = require('discord.js');
-const guildModel = require('../util/Models/guildModel');
 
 module.exports = {
-    requireGuild: true,
-    data: new SlashCommandBuilder()
-        .setName('neverhaveiever')
-        .setDescription('Get a never have I ever message.')
-        .setDMPermission(false)
-        .setDescriptionLocalizations({
-            de: 'Bekomme eine nie habe ich jemals Nachricht.',
-            "es-ES": 'Consigue un mensaje Nunca he tenido'
-        }),
-
-    /**
-     * @param {CommandInteraction} interaction
-     * @param {WouldYou} client
-     * @param {guildModel} guildDb
-     */
-
+    data: {
+        name: 'neverhaveiever',
+        description: 'never have i ever',
+    },
     async execute(interaction, client, guildDb) {
         const {Funny, Basic, Young, Food, RuleBreak} = await require(`../data/nhie-${guildDb.language}.json`);
         const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak]
@@ -30,10 +16,7 @@ module.exports = {
 
         let ratherembed = new EmbedBuilder()
             .setColor("#0598F6")
-            .setFooter({
-                text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`,
-                iconURL: interaction.user.avatarURL()
-            })
+            .setFooter({text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`, iconURL: interaction.user.avatarURL()})
             .setDescription(neverArray[randomNever]);
 
         const row = new ActionRowBuilder();
@@ -56,11 +39,11 @@ module.exports = {
                 .setCustomId(`neverhaveiever`)
         ]);
 
-        return interaction.reply({
+        return interaction.update({
             embeds: [ratherembed],
             components: [row],
         }).catch((err) => {
-
+            return;
         });
     },
 };

@@ -204,7 +204,7 @@
   },
   "webhookManager": {
     "noWebhook": "Debido a un cambio necesario para el rendimiento, ¡necesito permisos de **Gestión de Webhooks** para enviar este mensaje! (Si tengo estos permisos pero sigue apareciendo este mensaje, ¡asegúrate de que puedo crear un Webhook!"
-  },  
+  },
   "Settings": {
     "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
     "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
@@ -260,5 +260,9 @@
       "g_viewChannel": "Yo **{can}** ver canales en este servidor.",
       "g_readMessageHistory": "Yo **{can}** leer el historial de mensajes en este servidor."
     }
+  },
+  "Voting": {
+    "Yes": "Si",
+    "No": "No"
   }
 }

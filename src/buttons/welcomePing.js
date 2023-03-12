@@ -33,7 +33,7 @@ module.exports = {
                 )
 
         await client.database.updateGuild(interaction.guild.id, {
-            welcomePing: check ? false : true
+            welcomePing: !check
         });
 
         return interaction.update({ content: null, embeds: [welcomes], components: [welcomeButtons, welcomeButtons2], ephemeral: true });

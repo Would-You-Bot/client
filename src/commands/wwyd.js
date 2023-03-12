@@ -25,7 +25,6 @@ module.exports = {
         const wwydstring = WhatYouDo[Math.floor(Math.random() * WhatYouDo.length)];
 
         const wwydembed = new EmbedBuilder()
-
             .setColor('#0598F6')
             .setFooter({
                 text: `${Wwyd.embed.footer}`,
@@ -34,6 +33,18 @@ module.exports = {
             .setTimestamp()
             .setTitle(Wwyd.embed.title)
             .setDescription(`> ${wwydstring}`);
+
+        const time = guildDb?.voteCooldown ?? 25000;
+
+        const vote = await client.voting.generateVoting(interaction.guildId, 0, 1, Wwyd.embed.option1, Wwyd.embed.option2);
+
+        if(time > 3 * 60 * 1000) {
+
+        } else {
+
+        }
+
+
 
         return interaction.reply({embeds: [wwydembed]}).catch((err) => {
 

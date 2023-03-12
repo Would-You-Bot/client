@@ -253,5 +253,9 @@
       "g_viewChannel": "Ich **{can}** Kanäle auf diesem Server anzeigen.",
       "g_readMessageHistory": "Ich **{can}** den Nachrichtenverlauf auf diesem Server lesen."
     }
+  },
+  "Voting": {
+    "Yes": "Ja",
+    "No": "Nein"
   }
 }

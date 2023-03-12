@@ -67,7 +67,7 @@ module.exports = class DatabaseHandler {
 
     /**
      * Get a guild database from the cache
-     * @param {number|string} guildId the server id
+     * @param {string} guildId the server id
      * @param {boolean} createIfNotFound create a database entry if not found
      * @param {boolean} force if it should force fetch the guild
      * @returns {this.guildModel}
