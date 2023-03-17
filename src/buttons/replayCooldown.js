@@ -1,6 +1,6 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
 const modalObject = {
-  title: "Would You Replay Cooldown",
+  title: "Replay Cooldown",
   custom_id: "replaymodal",
   components: [
     {

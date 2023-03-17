@@ -1,6 +1,6 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
 const modalObject = {
-  title: "Would You Vote Cooldown",
+  title: "Vote Cooldown",
   custom_id: "votemodal",
   components: [
     {

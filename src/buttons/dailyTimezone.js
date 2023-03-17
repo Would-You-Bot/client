@@ -1,6 +1,6 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
 const modalObject = {
-    title: 'Would You Timezone',
+    title: 'Daily Message Timezone',
     custom_id: 'modal',
     components: [{
         type: 1,

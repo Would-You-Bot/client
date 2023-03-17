@@ -40,6 +40,10 @@ const guildProfile = new Schema(
             type: String,
             default: "America/Chicago"
         },
+        dailyInterval: {
+            type: String,
+            default: "12:00"
+        },
         replay: {
             type: Boolean,
             default: true,
