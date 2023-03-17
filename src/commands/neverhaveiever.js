@@ -60,7 +60,10 @@ module.exports = {
             embeds: [ratherembed],
             components: [row],
         }).catch((err) => {
-
+            console.log(err)
         });
+
+        // @TODO: Voting here
+
     },
 };

@@ -56,7 +56,10 @@ module.exports = {
             embeds: [ratherembed],
             components: guildDb.replay ? rbutton : [] || [],
         }).catch((err) => {
-
+             console.log(err)
         });
+
+        // @TODO: Voting here
+
     },
 };

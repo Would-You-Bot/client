@@ -79,6 +79,9 @@ module.exports = {
                     .catch((err) => {
                         return;
                     });
+
+                    // @TODO: Voting here
+
                 if (interaction.options.getBoolean('voting') === true) {
                     try {
                         if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
@@ -207,6 +210,8 @@ module.exports = {
                         return;
                     });
 
+                    // @TODO: Voting here
+
                 if (interaction.options.getBoolean('voting') === true) {
                     try {
                         if (interaction?.channel?.permissionsFor(client?.user?.id)?.has([
@@ -310,9 +315,11 @@ module.exports = {
                     .setDescription(`> ${interaction.options.getString('message')}`);
 
                 interaction.reply({embeds: [wwydembed]}).catch((err) => {
-
+                    console.log(err)
                 });
 
+                // @TODO: Voting here
+                
                 break;
         }
     },

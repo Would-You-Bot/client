@@ -55,5 +55,7 @@ module.exports = {
                 files: [attachment],
             })
             .catch((err) => console.log(err));
+
+            // @TODO: Voting here
     }
 };
