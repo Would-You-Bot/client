@@ -40,12 +40,12 @@ module.exports = {
         if (guildDb.dailyInterval === value)
         return await modalInteraction.reply({
           ephemeral: true,
-          content: Settings.replaySame,
+          content: Settings.intervalSame,
         });
         if (isFormat(value) === false)
         return await modalInteraction.reply({
           ephemeral: true,
-          content: Settings.cooldownInvalid,
+          content: Settings.intervalInvalid,
         });
 
         const dailyMsgs = new EmbedBuilder()
@@ -68,13 +68,9 @@ module.exports = {
             }\n` +
             `${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`
             +
-            `${Settings.embed.dailyTimezone}: ${value}\n`
+            `${Settings.embed.dailyInterval}: ${value}\n`
         )
         .setColor("#0598F6")
-        .setFooter({
-          text: Settings.embed.footer,
-          iconURL: client.user.avatarURL(),
-        });
 
         const dailyButtons = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
@@ -98,7 +94,7 @@ module.exports = {
             .setStyle(guildDb.dailyRole ? "Success" : "Secondary"),
         new ButtonBuilder()
             .setCustomId("dailyInterval")
-            .setLabel(Settings.button.dailyRole)
+            .setLabel(Settings.button.dailyInterval)
             .setStyle(guildDb.dailyInterval ? "Success" : "Secondary")
             .setEmoji("⏰"),
         )

@@ -39,34 +39,29 @@ module.exports = {
       switch (interaction.options.getString("choose")) {
         case "daily_msg":
           const dailyMsgs = new EmbedBuilder()
-            .setTitle(Settings.embed.dailyTitle)
-            .setDescription(
-              `${Settings.embed.dailyMsg}: ${
-                guildDb.dailyMsg
-                  ? `<:check:1077962440815411241>`
+          .setTitle(Settings.embed.dailyTitle)
+          .setDescription(
+            `${Settings.embed.dailyMsg}: ${
+              guildDb.dailyMsg
+                ? `<:check:1077962440815411241>`
+                : `<:x_:1077962443013238814>`
+            }\n` +
+              `${Settings.embed.dailyChannel}: ${
+                guildDb.dailyChannel
+                  ? `<#${guildDb.dailyChannel}>`
                   : `<:x_:1077962443013238814>`
               }\n` +
-                `${Settings.embed.dailyChannel}: ${
-                  guildDb.dailyChannel
-                    ? `<#${guildDb.dailyChannel}>`
-                    : `<:x_:1077962443013238814>`
-                }\n` +
-                `${Settings.embed.dailyRole}: ${
-                  guildDb.dailyRole
-                    ? `<@&${guildDb.dailyRole}>`
-                    : `<:x_:1077962443013238814>`
-                }\n` +
-                `${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`
-                +
-                `${Settings.embed.dailyTimezone}: ${guildDb.dailyInterval}\n`
-            )
-            .setColor("#0598F6")
-            .setFooter({
-              text: Settings.embed.footer,
-              iconURL: client.user.avatarURL(),
-            });
-
-          const dailyButtons = new ActionRowBuilder().addComponents(
+              `${Settings.embed.dailyRole}: ${
+                guildDb.dailyRole
+                  ? `<@&${guildDb.dailyRole}>`
+                  : `<:x_:1077962443013238814>`
+              }\n` +
+              `${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`
+              +
+              `${Settings.embed.dailyInterval}: ${guildDb.dailyInterval}\n`
+          )
+          .setColor("#0598F6")
+            const dailyButtons = new ActionRowBuilder().addComponents(
               new ButtonBuilder()
                 .setCustomId("dailyMsg")
                 .setLabel(Settings.button.dailyMsg)
@@ -88,7 +83,7 @@ module.exports = {
                 .setStyle(guildDb.dailyRole ? "Success" : "Secondary"),
             new ButtonBuilder()
                 .setCustomId("dailyInterval")
-                .setLabel(Settings.button.dailyRole)
+                .setLabel(Settings.button.dailyInterval)
                 .setStyle(guildDb.dailyInterval ? "Success" : "Secondary")
                 .setEmoji("⏰"),
             )

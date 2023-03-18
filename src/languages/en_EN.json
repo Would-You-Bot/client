@@ -191,6 +191,8 @@
   "Settings": {
     "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
     "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "intervalSame": "The provided interval is the same interval that is already set. Make sure to choose a different interval.",
+    "intervalInvalid": "Provided interval was invalid. Make sure your interval is in the 24h format and mintues are either 00 or 30!",
     "dailyChannel": "Select a channel where you want Daily Messages to be!",
     "dailyRole": "Select a role that you want to be pinged in Daily Messages!",
     "replaySame": "The provided replay cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
@@ -198,8 +200,9 @@
     "cooldownInvalid": "Provided cooldown was invalid. Make sure the cooldown only includes numbers!",
     "embed": {
       "generalTitle": "Would You - General Settings",
-      "voteCooldown": "Vote Cooldown",
-      "replayCooldown": "Replay Cooldown",
+      "voteCooldown": "**Vote Cooldown**",
+      "replayCooldown": "**Replay Cooldown**",
+      "dailyInterval": "**Interval**",
       "dailyTitle": "Would You - Daily Messages",
       "dailyMsg": "**Enabled**",
       "dailyRole": "**Role**",
@@ -212,6 +215,7 @@
       "footer": "Would You"
     },
     "button": {
+      "dailyInterval": "Set Interval",
       "dailyChannel": "Set Channel",
       "dailyRole": "Set Role",
       "dailyTimezone": "Set Timezone",

@@ -11,7 +11,7 @@ module.exports = {
             .setTitle(Settings.embed.dailyTitle)
             .setDescription(`${Settings.embed.dailyMsg}: ${check ? `<:x_:1077962443013238814>` : `<:check:1077962440815411241>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`)
             .setColor("#0598F6")
-            .setFooter({ text: Settings.embed.footer, iconUrl: client.user.avatarURL() })
+
 
         const dailyButtons = new ActionRowBuilder()
             .addComponents(
