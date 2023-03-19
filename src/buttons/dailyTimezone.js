@@ -49,15 +49,15 @@ module.exports = {
         }).then(async (modalInteraction) => {
             const value = modalInteraction.components[0].components[0].value;
 
-            if (guildDb.dailyTimezone.toLowerCase() === value.toLowerCase()) return await modalInteraction.reply({
+            if (guildDb.dailyTimezone.toLowerCase() === value.toLowerCase()) return modalInteraction.reply({
                 ephemeral: true,
                 content: Settings.errorSame
             });
-            if (!isValid(value)) return await modalInteraction.reply({
+            if (!isValid(value)) return modalInteraction.reply({
                 ephemeral: true,
                 content: Settings.errorInvalid
             });
-            if (!dateType(value)) return await modalInteraction.reply({
+            if (!dateType(value)) return modalInteraction.reply({
                 ephemeral: true,
                 content: Settings.errorInvalid
             });

@@ -38,12 +38,12 @@ module.exports = {
         const value = modalInteraction.components[0].components[0].value;
 
         if (guildDb.replayCooldown === value)
-        return await modalInteraction.reply({
+        return modalInteraction.reply({
           ephemeral: true,
           content: Settings.replaySame,
         });
         if (isNumericRegex(value) === false)
-        return await modalInteraction.reply({
+        return modalInteraction.reply({
           ephemeral: true,
           content: Settings.cooldownInvalid,
         });

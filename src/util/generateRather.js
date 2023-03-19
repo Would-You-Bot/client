@@ -72,7 +72,7 @@ module.exports = async (result, _PowersList, _type) => {
             2. Check if both powers are the same. If so regenerate. Otherwise return them -> generateCustom()
             3. Set powers to generated power messages.
         */
-        if (result.customMessages.filter(c => c.type === _type) == 0) return await interaction.reply({
+        if (result.customMessages.filter(c => c.type === _type) == 0) return interaction.reply({
             ephemeral: true,
             content: `${Rather.button.nocustom}`
         })

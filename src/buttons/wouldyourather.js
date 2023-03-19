@@ -13,7 +13,7 @@ module.exports = {
     async execute(interaction, client, guildDb) {
         const {Rather} = await require(`../languages/${guildDb.language}.json`);
         const {General} = await require(`../data/rather-${guildDb.language}.json`);
-        if (!guildDb.replay) return await interaction.reply({ephemeral: true, content: Rather.replays.disabled});
+        if (!guildDb.replay) return interaction.reply({ephemeral: true, content: Rather.replays.disabled});
 
         const row = new ActionRowBuilder();
         if (Math.round(Math.random() * 15) < 3) {

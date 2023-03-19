@@ -5,7 +5,7 @@ module.exports = {
         description: 'Daily Channel',
     },
     async execute(interaction, client, guildDb) {
-        const { Settings } = await require(`../languages/${guildDb.language}.json`);
+        const { Settings } = require(`../languages/${guildDb.language}.json`);
 
         const inter = new ActionRowBuilder()
             .addComponents(

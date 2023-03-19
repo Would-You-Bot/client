@@ -143,7 +143,7 @@ module.exports = {
                             switch (inter.customId) {
                                 case "first":
                                     if (this.page === 0) {
-                                        return await inter.reply({
+                                        return inter.reply({
                                             ephemeral: true,
                                             content: wyCustom.error.paginate
                                         });
@@ -156,31 +156,31 @@ module.exports = {
                                     }
                                 case "prev":
                                     if (this.pages[this.page - 1]) {
-                                        return await inter.update({
+                                        return inter.update({
                                             embeds: [this.pages[--this.page]],
                                             ephemeral: true
                                         });
                                     } else {
-                                        return await inter.reply({
+                                        return inter.reply({
                                             ephemeral: true,
                                             content: wyCustom.error.paginate
                                         });
                                     }
                                 case "next":
                                     if (this.pages[this.page + 1]) {
-                                        return await inter.update({
+                                        return inter.update({
                                             embeds: [this.pages[++this.page]],
                                             ephemeral: true
                                         });
                                     } else {
-                                        return await inter.reply({
+                                        return inter.reply({
                                             ephemeral: true,
                                             content: wyCustom.error.paginate
                                         });
                                     }
                                 case "last":
                                     if (this.page === this.pages.length - 1) {
-                                        return await inter.reply({
+                                        return inter.reply({
                                             ephemeral: true,
                                             content: wyCustom.error.paginate
                                         });
@@ -352,11 +352,11 @@ module.exports = {
                 case 'import':
                     const attachemnt = interaction.options.get("attachment");
 
-                    if (!attachemnt) return await interaction.reply({
+                    if (!attachemnt) return interaction.reply({
                         ephemeral: true,
                         content: wyCustom.error.import.att1
                     })
-                    if (!attachemnt.attachment.name.includes(".json")) return await interaction.reply({
+                    if (!attachemnt.attachment.name.includes(".json")) return interaction.reply({
                         ephemeral: true,
                         content: wyCustom.error.import.att2
                     })
@@ -394,11 +394,11 @@ module.exports = {
 
                             let useful = guildDb.customMessages.filter(c => c.type === "useful").length;
                             let useless = guildDb.customMessages.filter(c => c.type === "useless").length;
-                            if (useful > 30) return await interaction.editReply({
+                            if (useful > 30) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att9
                             })
-                            if (useless > 30) return await interaction.editReply({
+                            if (useless > 30) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att10
                             })

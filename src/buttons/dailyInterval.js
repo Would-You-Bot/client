@@ -38,12 +38,12 @@ module.exports = {
         const value = modalInteraction.components[0].components[0].value;
 
         if (guildDb.dailyInterval === value)
-        return await modalInteraction.reply({
+        return modalInteraction.reply({
           ephemeral: true,
           content: Settings.intervalSame,
         });
         if (isFormat(value) === false)
-        return await modalInteraction.reply({
+        return modalInteraction.reply({
           ephemeral: true,
           content: Settings.intervalInvalid,
         });

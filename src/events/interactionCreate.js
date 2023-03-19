@@ -38,7 +38,7 @@ module.exports = async (client, interaction) => {
             }
         } else if (interaction.isButton()) {
             if (client.used.has(interaction.user.id)) {
-                return await interaction.reply({
+                return interaction.reply({
                     ephemeral: true,
                     content: `<t:${Math.floor(guildDb.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!`
                 }).catch(() => {

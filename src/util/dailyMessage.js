@@ -12,7 +12,7 @@ module.exports = class DailyMessage {
      * Start the daily message Schedule
      */
     start() {
-        new CronJob('0 */60 * * * *', async () => {
+        new CronJob('0 */30 * * * *', async () => {
             await this.runSchedule();
         }, null, true, "Europe/Berlin");
     }
@@ -24,7 +24,7 @@ module.exports = class DailyMessage {
     async runSchedule() {
         let guilds = await this.c.database.getAll();
         guilds = guilds.filter(g => this.c.guilds.cache.has(g.guildID) && g.dailyMsg);
-        guilds = guilds.filter(g => mom.tz(g.dailyTimezone).format("HH:mm") === "12:00");
+        guilds = guilds.filter(g => mom.tz(g.dailyTimezone).format("HH:mm") === g.dailyInterval);
 
         console.log(
             `${ChalkAdvanced.white('Daily Message')} ${ChalkAdvanced.gray(
@@ -46,77 +46,6 @@ module.exports = class DailyMessage {
 
                 const { Useless_Powers, Useful_Powers } = await require(`../data/power-${db.language}.json`);
                 const { WouldYou, Rather } = await require(`../languages/${db.language}.json`);
-
-                if (db.dailyRather) {
-                    let power;
-                    let power2;
-                    if (db.customTypes === "regular") {
-                        let array = [];
-                        array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
-                        array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
-                        power = array[Math.floor(Math.random() * array.length)];
-                        power2 = array[Math.floor(Math.random() * array.length)];
-                        array = [];
-                    } else if (db.customTypes === "mixed") {
-                        let array = [];
-                        if (db.customMessages.filter(c => c.type !== "nsfw") != 0) {
-                            array.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg);
-                        } else {
-                            power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
-                        }
-                        array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
-                        array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
-                        power = array[Math.floor(Math.random() * array.length)];
-                        power2 = array[Math.floor(Math.random() * array.length)];
-                        array = [];
-                    } else if (db.customTypes === "custom") {
-                        if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
-                            this.c.webhookHandler.sendWebhook(
-                                channel,
-                                db.dailyChannel,
-                                {
-                                    content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.'
-                                }
-                            ).catch(err => {
-                                console.log(err)
-                            });
-                        }
-
-                        power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
-                        power2 = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
-                    }
-
-                    const embed = new EmbedBuilder()
-                        .setColor('#0598F6')
-                        .setFooter({
-                            text: `${Rather.embed.footer}`,
-                            iconURL: this.c.user.avatarURL(),
-                        })
-                        .setTimestamp()
-                        .addFields(
-                            {
-                                name: Rather.embed.usefulname,
-                                value: `> ${power}`,
-                                inline: false,
-                            },
-                            {
-                                name: Rather.embed.usefulname2,
-                                value: `> ${power2}`,
-                                inline: false,
-                            },
-                        )
-
-                    this.c.webhookHandler.sendWebhook(
-                        channel,
-                        db.dailyChannel,
-                        {
-                            embeds: [embed],
-                            content: db.dailyRole ? `<@&${db.dailyRole}>` : null
-                        }
-                    ).catch(err => {
-                        console.log(err)
-                    });
-                }
 
                 let power;
                 if (db.customTypes === "regular") {
@@ -153,18 +82,12 @@ module.exports = class DailyMessage {
                 }
 
                 const embed = new EmbedBuilder()
-                    .setColor('#0598F6')
+                    .setColor("#0598F6")
                     .setFooter({
-                        text: `${WouldYou.embed.footer}`,
-                        iconURL: this.c.user.avatarURL(),
+                        text: `Daily Message | Type: Random | ID: ${randomDaily}`,
+                        iconURL: interaction.user.avatarURL()
                     })
-                    .setTimestamp()
-                    .addFields({
-                        name: WouldYou.embed.Usefulname,
-                        value: `> ${power}`,
-                        inline: false,
-                    });
-
+                    .setDescription(neverArray[randomNever]);
                 this.c.webhookHandler.sendWebhook(
                     channel,
                     db.dailyChannel,
