@@ -1,5 +1,5 @@
 const { connect } = require("mongoose").set('strictQuery', true);
-const {ChalkAdvanced} = require("chalk-advanced");
+const { ChalkAdvanced } = require("chalk-advanced");
 
 module.exports = class DatabaseHandler {
     /**

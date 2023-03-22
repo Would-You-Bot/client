@@ -1,4 +1,4 @@
-const {EmbedBuilder, PermissionFlagsBits} = require('discord.js');
+const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 require('dotenv').config();
 
 module.exports = async (client, member) => {
@@ -32,6 +32,7 @@ module.exports = async (client, member) => {
 
 
         return channel.send({content: mention, embeds: [welcomeEmbed]}).catch((err) => {
+            console.log(err)
         });
     }
 };

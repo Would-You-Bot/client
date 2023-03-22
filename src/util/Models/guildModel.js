@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const guildProfile = new Schema(
     {
@@ -72,7 +72,7 @@ const guildProfile = new Schema(
             default: false,
         },
     },
-    {timestamps: true},
+    { timestamps: true },
 );
 
 module.exports = model('guildProfile', guildProfile);

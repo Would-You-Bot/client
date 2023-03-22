@@ -1,5 +1,5 @@
-const {EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyles, PermissionFlagsBits} = require('discord.js');
-const {ChalkAdvanced} = require("chalk-advanced");
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyles, PermissionFlagsBits } = require('discord.js');
+const { ChalkAdvanced } = require("chalk-advanced");
 const CronJob = require('cron').CronJob;
 const voteSchema = require('../util/Models/voteModel');
 const QuickChart = require('quickchart-js');
@@ -19,13 +19,12 @@ module.exports = class Voting {
     }
 
     async saveVoting({
-                         guildId,
-                         type = 0,
-                         until,
-                         op_one,
-                         op_tow
-                     }) {
-
+        guildId,
+        type = 0,
+        until,
+        op_one,
+        op_tow
+    }) {
         const randomId = (new Date().getTime()).toString(36) + `${Math.random().toString(36).substring(2, 9)}`;
 
         const vote = new voteSchema({
@@ -106,7 +105,7 @@ module.exports = class Voting {
         if (!vote) return false;
 
         const options = [1, 2];
-        for(const o of options) {
+        for (const o of options) {
             vote.options[o] = vote.options[o].filter(u => u !== userId);
         }
 
@@ -159,7 +158,7 @@ module.exports = class Voting {
         });
 
         let e;
-        if(vote.type === 0) {
+        if (vote.type === 0) {
             e = new Either()
                 .setLanguage(g?.language ?? 'en_EN')
                 .addFirstText(vote.texts[1])
@@ -188,19 +187,19 @@ module.exports = class Voting {
         const embed = new EmbedBuilder()
             .setImage(results.chart);
 
-        if(vote.type === 0) {
+        if (vote.type === 0) {
             embed.setImage(results.image);
         } else {
 
         }
 
-        const channel = await this.c.channels.fetch(vote.channelId).catch(err => {});
+        const channel = await this.c.channels.fetch(vote.channelId).catch(err => { });
 
-        if(!channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.EmbedLinks])) return;
+        if (!channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.EmbedLinks])) return;
 
-        const message = await channel.messages.fetch(messageId).catch(err => {});
+        const message = await channel.messages.fetch(messageId).catch(err => { });
 
-        if(!message || !message.id) return;
+        if (!message || !message.id) return;
 
         await message.edit({
             embeds: [embed],
@@ -228,6 +227,6 @@ module.exports = class Voting {
      * @return {Promise<void>}
      */
     async runSchedule() {
-
+        // TODO: Code
     }
 };

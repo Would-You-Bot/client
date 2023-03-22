@@ -6,8 +6,8 @@ const {
     EmbedBuilder,
 } = require('discord.js');
 
-const {inspect} = require('util');
-const {ChalkAdvanced} = require("chalk-advanced");
+const { inspect } = require('util');
+const { ChalkAdvanced } = require("chalk-advanced");
 
 const warnWebhook = new WebhookClient({
     url: process.env.WARNWEBHOOKURL,

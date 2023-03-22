@@ -1,8 +1,4 @@
-const {
-    EmbedBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-} = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
     data: {
@@ -10,15 +6,18 @@ module.exports = {
         description: 'never have i ever',
     },
     async execute(interaction, client, guildDb) {
-        const {Funny, Basic, Young, Food, RuleBreak} = await require(`../data/nhie-${guildDb.language}.json`);
+        const { Funny, Basic, Young, Food, RuleBreak } = await require(`../data/nhie-${guildDb.language}.json`);
         const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak]
         const randomNever = Math.floor(Math.random() * neverArray.length)
 
         let ratherembed = new EmbedBuilder()
             .setColor("#0598F6")
-            .setFooter({text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`, iconURL: interaction.user.avatarURL()})
-            .setFooter({text: client.translation.get(guildDb?.language, 'Debug.embed.isChannel', {
-                is: interaction?.channel?.id == guildDb?.dailyChannel ? client.translation.get(guildDb?.language, 'Debug.embed.is') : client.translation.get(guildDb?.language, 'Debug.embed.isnot')})})
+            .setFooter({ text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`, iconURL: interaction.user.avatarURL() })
+            .setFooter({
+                text: client.translation.get(guildDb?.language, 'Debug.embed.isChannel', {
+                    is: interaction?.channel?.id == guildDb?.dailyChannel ? client.translation.get(guildDb?.language, 'Debug.embed.is') : client.translation.get(guildDb?.language, 'Debug.embed.isnot')
+                })
+            })
             .setDescription(neverArray[randomNever]);
 
         const row = new ActionRowBuilder();

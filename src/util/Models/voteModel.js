@@ -1,6 +1,6 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const guildProfile = new Schema(
+const voteModel = new Schema(
     {
         id: {
             type: String,
@@ -46,4 +46,4 @@ const guildProfile = new Schema(
     }
 );
 
-module.exports = model('voteModel', guildProfile);
+module.exports = model('voteModel', voteModel);

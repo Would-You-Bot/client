@@ -1,4 +1,4 @@
-const {EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits} = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 
 module.exports = {
@@ -80,7 +80,7 @@ module.exports = {
                         return;
                     });
 
-                    // @TODO: Voting here
+                // @TODO: Voting here
 
                 if (interaction.options.getBoolean('voting') === true) {
                     try {
@@ -210,7 +210,7 @@ module.exports = {
                         return;
                     });
 
-                    // @TODO: Voting here
+                // @TODO: Voting here
 
                 if (interaction.options.getBoolean('voting') === true) {
                     try {
@@ -314,12 +314,12 @@ module.exports = {
                     .setTitle(Wwyd.embed.title)
                     .setDescription(`> ${interaction.options.getString('message')}`);
 
-                interaction.reply({embeds: [wwydembed]}).catch((err) => {
+                interaction.reply({ embeds: [wwydembed] }).catch((err) => {
                     console.log(err)
                 });
 
                 // @TODO: Voting here
-                
+
                 break;
         }
     },

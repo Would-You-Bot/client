@@ -1,4 +1,4 @@
-const {WebhookClient, EmbedBuilder} = require('discord.js');
+const { WebhookClient, EmbedBuilder } = require('discord.js');
 require('dotenv').config();
 
 module.exports = async (client, guild) => {

@@ -1,5 +1,5 @@
-const {WebhookClient, EmbedBuilder} = require('discord.js');
 require('dotenv').config();
+const { WebhookClient, EmbedBuilder } = require('discord.js');
 
 module.exports = async (client, guild) => {
     if (!guild?.name) return;
@@ -33,7 +33,7 @@ module.exports = async (client, guild) => {
     })
 
     if (!global?.devBot) {
-        const webhookClient = new WebhookClient({url: process.env.WEBHOOK});
+        const webhookClient = new WebhookClient({ url: process.env.WEBHOOK });
 
         await webhookClient.send({
             content: `<:GoodCheck:1025490645525209148> Joined ${guild.name.replace("Discord", "").replace("discord", "").replace("Everyone", "").replace("everyone", "")}. I'm now in ${client.guilds.cache.size} guilds.`,

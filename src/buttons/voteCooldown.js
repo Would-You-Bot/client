@@ -1,4 +1,5 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
+
 const modalObject = {
   title: "Vote Cooldown",
   custom_id: "votemodal",
@@ -19,7 +20,7 @@ const modalObject = {
 
 function isNumericRegex(str) {
     return /^[0-9]+$/.test(str);
-  }
+}
 
 module.exports = {
   data: {
