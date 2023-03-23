@@ -375,11 +375,11 @@ module.exports = {
                                 ephemeral: true,
                                 content: wyCustom.error.import.att3
                             })
-                            if (!response.data.useless && !response.data.useful) return interaction.editReply({
+                            if (!response.data.useless && !response.data.useful && !response.data.wouldyourather && !response.data.neverhaveiever && !response.data.wwyd) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att4
                             })
-                            if (!response.data.useless.length === 0 && !response.data.useful.length === 0) return interaction.editReply({
+                            if (!response.data.useless.length === 0 && !response.data.useful.length === 0 && !response.data.wouldyourather.length === 0 && !response.data.neverhaveiever === 0 && !response.data.wwyd) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att5
                             })
@@ -391,16 +391,44 @@ module.exports = {
                                 ephemeral: true,
                                 content: wyCustom.error.import.att7
                             })
+                            if (response.data.wouldyourather && response.data.wouldyourather.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                ephemeral: true,
+                                content: wyCustom.error.import.att16
+                            })
+                            if (response.data.neverhaveiever && response.data.neverhaveiever.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                ephemeral: true,
+                                content: wyCustom.error.import.att17
+                            })
+                            if (response.data.wwyd && response.data.wwyd.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                ephemeral: true,
+                                content: wyCustom.error.import.att18
+                            })
 
                             let useful = guildDb.customMessages.filter(c => c.type === "useful").length;
                             let useless = guildDb.customMessages.filter(c => c.type === "useless").length;
-                            if (useful > 30) return interaction.editReply({
+                            let wouldyourather = guildDb.customMessages.filter(c => c.type === "wouldyourather").length;
+                            let neverhaveiever = guildDb.customMessages.filter(c => c.type === "neverhaveiever").length;
+                            let wwyd = guildDb.customMessages.filter(c => c.type === "wwyd").length;
+
+                            if (useful > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att9
                             })
-                            if (useless > 30) return interaction.editReply({
+                            if (useless > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att10
+                            })
+                            if (wouldyourather > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                ephemeral: true,
+                                content: wyCustom.error.import.att19
+                            })
+                            if (neverhaveiever > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                ephemeral: true,
+                                content: wyCustom.error.import.att20
+                            })
+                            if (wwyd > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                ephemeral: true,
+                                content: wyCustom.error.import.att21
                             })
 
                             if (response.data.useful) {
@@ -425,6 +453,39 @@ module.exports = {
                                 });
                             }
 
+                            if (response.data.wouldyourather) {
+                                if (response.data.wouldyourather.length + wouldyourather > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                    ephemeral: true,
+                                    content: wyCustom.error.import.att22
+                                })
+                                response.data.wouldyourather.map(d => {
+                                    let newID = makeID(6);
+                                    guildDb.customMessages.push({ id: newID, msg: d, type: "wouldyourather" })
+                                });
+                            }
+
+                            if (response.data.neverhaveiever) {
+                                if (response.data.neverhaveiever.length + neverhaveiever > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                    ephemeral: true,
+                                    content: wyCustom.error.import.att23
+                                })
+                                response.data.neverhaveiever.map(d => {
+                                    let newID = makeID(6);
+                                    guildDb.customMessages.push({ id: newID, msg: d, type: "neverhaveiever" })
+                                });
+                            }
+
+                            if (response.data.wwyd) {
+                                if (response.data.wwyd.length + wwyd > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                    ephemeral: true,
+                                    content: wyCustom.error.import.att24
+                                })
+                                response.data.wwyd.map(d => {
+                                    let newID = makeID(6);
+                                    guildDb.customMessages.push({ id: newID, msg: d, type: "wwyd" })
+                                });
+                            }
+
                             await client.database.updateGuild(interaction.guildId, {
                                 customMessages: guildDb.customMessages,
                             }, true);
@@ -444,6 +505,9 @@ module.exports = {
 
                     let useful = guildDb.customMessages.filter(c => c.type === "useful");
                     let useless = guildDb.customMessages.filter(c => c.type === "useless");
+                    let wouldyourather = guildDb.customMessages.filter(c => c.type === "wouldyourather");
+                    let neverhaveiever = guildDb.customMessages.filter(c => c.type === "neverhaveiever");
+                    let wwyd = guildDb.customMessages.filter(c => c.type === "wwyd");
 
                     let text = `{\n`;
                     if (useful.length > 0) {
@@ -463,6 +527,34 @@ module.exports = {
                         })
                         text += `\n]`
                     }
+
+                    if (wouldyourather.length > 0) {
+                        text += `\n"wouldyourather": [`
+                        wouldyourather.map((a, i) => {
+                            i = i++ + 1
+                            text += `\n"${a.msg}"${wouldyourather.length !== i ? "," : ""}`
+                        })
+                        text += `\n]`
+                    }
+
+                    if (neverhaveiever.length > 0) {
+                        text += `\n"neverhaveiever": [`
+                        neverhaveiever.map((a, i) => {
+                            i = i++ + 1
+                            text += `\n"${a.msg}"${neverhaveiever.length !== i ? "," : ""}`
+                        })
+                        text += `\n]`
+                    }
+
+                    if (wwyd.length > 0) {
+                        text += `\n"wwyd": [`
+                        wwyd.map((a, i) => {
+                            i = i++ + 1
+                            text += `\n"${a.msg}"${wwyd.length !== i ? "," : ""}`
+                        })
+                        text += `\n]`
+                    }
+
                     text += `\n}`
 
                     return interaction.editReply({
