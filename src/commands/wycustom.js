@@ -39,8 +39,9 @@ module.exports = {
                         .setDescription("Select which category you want this custom message to be in.")
                         .setRequired(true)
                         .addChoices(
-                            {name: 'Useful', value: 'useful'},
-                            {name: 'Useless', value: 'useless'},
+                            { name: 'Would You Rather', value: 'wouldyourather' },
+                            { name: 'Never Have I Ever', value: 'neverhaveiever' },
+                            { name: 'What Would You Do', value: 'wwyd' },
                         )
                 )
                 .addStringOption((option) =>
@@ -228,7 +229,7 @@ module.exports = {
                     guildDb.customMessages.push({
                         id: newID,
                         msg: message,
-                        type:option
+                        type: option
                     })
 
                     await client.database.updateGuild(interaction.guildId, {
@@ -375,21 +376,13 @@ module.exports = {
                                 ephemeral: true,
                                 content: wyCustom.error.import.att3
                             })
-                            if (!response.data.useless && !response.data.useful && !response.data.wouldyourather && !response.data.neverhaveiever && !response.data.wwyd) return interaction.editReply({
+                            if (!response.data.wouldyourather && !response.data.neverhaveiever && !response.data.wwyd) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att4
                             })
-                            if (!response.data.useless.length === 0 && !response.data.useful.length === 0 && !response.data.wouldyourather.length === 0 && !response.data.neverhaveiever === 0 && !response.data.wwyd) return interaction.editReply({
+                            if (!response.data.wouldyourather.length === 0 && !response.data.neverhaveiever === 0 && !response.data.wwyd) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att5
-                            })
-                            if (response.data.useless && response.data.useless.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
-                                ephemeral: true,
-                                content: wyCustom.error.import.att6
-                            })
-                            if (response.data.useful && response.data.useful.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
-                                ephemeral: true,
-                                content: wyCustom.error.import.att7
                             })
                             if (response.data.wouldyourather && response.data.wouldyourather.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
@@ -404,20 +397,10 @@ module.exports = {
                                 content: wyCustom.error.import.att18
                             })
 
-                            let useful = guildDb.customMessages.filter(c => c.type === "useful").length;
-                            let useless = guildDb.customMessages.filter(c => c.type === "useless").length;
                             let wouldyourather = guildDb.customMessages.filter(c => c.type === "wouldyourather").length;
                             let neverhaveiever = guildDb.customMessages.filter(c => c.type === "neverhaveiever").length;
                             let wwyd = guildDb.customMessages.filter(c => c.type === "wwyd").length;
 
-                            if (useful > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
-                                ephemeral: true,
-                                content: wyCustom.error.import.att9
-                            })
-                            if (useless > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
-                                ephemeral: true,
-                                content: wyCustom.error.import.att10
-                            })
                             if (wouldyourather > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
                                 content: wyCustom.error.import.att19
@@ -430,28 +413,6 @@ module.exports = {
                                 ephemeral: true,
                                 content: wyCustom.error.import.att21
                             })
-
-                            if (response.data.useful) {
-                                if (response.data.useful.length + useful > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
-                                    ephemeral: true,
-                                    content: wyCustom.error.import.att12
-                                })
-                                response.data.useful.map(d => {
-                                    let newID = makeID(6);
-                                    guildDb.customMessages.push({id: newID, msg: d, type: "useful"})
-                                });
-                            }
-
-                            if (response.data.useless) {
-                                if (response.data.useless.length + useless > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
-                                    ephemeral: true,
-                                    content: wyCustom.error.import.att13
-                                })
-                                response.data.useless.map(d => {
-                                    let newID = makeID(6);
-                                    guildDb.customMessages.push({id: newID, msg: d, type: "useless"})
-                                });
-                            }
 
                             if (response.data.wouldyourather) {
                                 if (response.data.wouldyourather.length + wouldyourather > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
@@ -503,31 +464,11 @@ module.exports = {
 
                     await interaction.deferReply();
 
-                    let useful = guildDb.customMessages.filter(c => c.type === "useful");
-                    let useless = guildDb.customMessages.filter(c => c.type === "useless");
                     let wouldyourather = guildDb.customMessages.filter(c => c.type === "wouldyourather");
                     let neverhaveiever = guildDb.customMessages.filter(c => c.type === "neverhaveiever");
                     let wwyd = guildDb.customMessages.filter(c => c.type === "wwyd");
 
                     let text = `{\n`;
-                    if (useful.length > 0) {
-                        text += `"useful": [`
-                        useful.map((a, i) => {
-                            i = i++ + 1
-                            text += `\n"${a.msg}"${useful.length !== i ? "," : ""}`
-                        })
-                        text += `\n]${useless.length > 0 ? "," : ""}`
-                    }
-
-                    if (useless.length > 0) {
-                        text += `\n"useless": [`
-                        useless.map((a, i) => {
-                            i = i++ + 1
-                            text += `\n"${a.msg}"${useless.length !== i ? "," : ""}`
-                        })
-                        text += `\n]`
-                    }
-
                     if (wouldyourather.length > 0) {
                         text += `\n"wouldyourather": [`
                         wouldyourather.map((a, i) => {
@@ -554,7 +495,6 @@ module.exports = {
                         })
                         text += `\n]`
                     }
-
                     text += `\n}`
 
                     return interaction.editReply({
