@@ -44,27 +44,23 @@ module.exports = class DailyMessage {
 
                 if (!channel?.id) return; // Always directly return before do to many actions
 
-                const { Useless_Powers, Useful_Powers } = await require(`../data/power-${db.language}.json`);
-                const { WouldYou, Rather } = await require(`../languages/${db.language}.json`);
+                const { Funny, Basic, Young, Food, RuleBreak } = await require(`../data/nhie-${guildDb.language}.json`);
+                const { General } = await require(`../data/rather-${guildDb.language}.json`);
+                const { WhatYouDo } = await require(`../data/would-you-${guildDb.language}.json`);
 
-                let power;
+                let randomDaily;
                 if (db.customTypes === "regular") {
-                    let array = [];
-                    array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
-                    array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
-                    power = array[Math.floor(Math.random() * array.length)]
-                    array = [];
+                    let regularArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo]
+                    randomDaily = regularArray[Math.floor(Math.random() * array.length)]
                 } else if (db.customTypes === "mixed") {
-                    let array = [];
+                    let array;
                     if (db.customMessages.filter(c => c.type !== "nsfw") != 0) {
                         array.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg);
                     } else {
-                        power = Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)];
+                        randomDaily = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo]
                     }
-                    array.push(Useful_Powers[Math.floor(Math.random() * Useful_Powers.length)]);
-                    array.push(Useless_Powers[Math.floor(Math.random() * Useless_Powers.length)]);
-                    power = array[Math.floor(Math.random() * array.length)]
-                    array = [];
+                    array.push([...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo])
+                    randomDaily = array[Math.floor(Math.random() * array.length)]
                 } else if (db.customTypes === "custom") {
                     if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
                         this.c.webhookHandler.sendWebhook(
@@ -78,7 +74,7 @@ module.exports = class DailyMessage {
                         });
                     }
 
-                    power = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
+                    randomDaily = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
                 }
 
                 const embed = new EmbedBuilder()
