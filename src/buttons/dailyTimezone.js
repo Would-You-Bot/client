@@ -64,7 +64,7 @@ module.exports = {
 
             const dailyMsgs = new EmbedBuilder()
                 .setTitle(Settings.embed.dailyTitle)
-                .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyTimezone}: ${value}\n`)
+                .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyTimezone}: ${value}\n${Settings.embed.dailyInterval}: ${guildDb.dailyInterval}\n${Settings.embed.dailyType}: ${guildDb.customTypes}`)
                 .setColor("#0598F6")
     
 
@@ -78,6 +78,11 @@ module.exports = {
                         .setCustomId("dailyChannel")
                         .setLabel(Settings.button.dailyChannel)
                         .setStyle(guildDb.dailyChannel ? "Success" : "Secondary"),
+                    new ButtonBuilder()
+                        .setCustomId("dailyType")
+                        .setLabel(Settings.button.dailyType)
+                        .setStyle("Primary")
+                        .setEmoji("📝"),
                 ), dailyButtons2 = new ActionRowBuilder()
                     .addComponents(
                         new ButtonBuilder()
@@ -89,6 +94,11 @@ module.exports = {
                             .setCustomId("dailyRole")
                             .setLabel(Settings.button.dailyRole)
                             .setStyle(guildDb.dailyRole ? "Success" : "Secondary"),
+                        new ButtonBuilder()
+                            .setCustomId("dailyInterval")
+                            .setLabel(Settings.button.dailyInterval)
+                            .setStyle('Primary')
+                            .setEmoji("⏰"),
                     )
 
             await client.database.updateGuild(interaction.guild.id, {

@@ -23,7 +23,7 @@ module.exports = {
         .setRequired(true)
         .addChoices(
           { name: "General Settings", value: "general" },
-          { name: "Daily Messages", value: "daily_msg" },
+          { name: "Daily Messages", value: "dailyMsgs" },
           { name: "Welcomes", value: "welcomes" }
         )
     ),
@@ -37,7 +37,7 @@ module.exports = {
     const { Settings } = require(`../languages/${guildDb.language}.json`);
     if (interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)) {
       switch (interaction.options.getString("choose")) {
-        case "daily_msg":
+        case "dailyMsgs":
           const dailyMsgs = new EmbedBuilder()
           .setTitle(Settings.embed.dailyTitle)
           .setDescription(
@@ -58,7 +58,9 @@ module.exports = {
               }\n` +
               `${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`
               +
-              `${Settings.embed.dailyInterval}: ${guildDb.dailyInterval}\n`
+            `${Settings.embed.dailyInterval}: ${guildDb.dailyInterval}\n`
+            +
+            `${Settings.embed.dailyType}: ${guildDb.customTypes}`
           )
           .setColor("#0598F6")
             const dailyButtons = new ActionRowBuilder().addComponents(
@@ -69,7 +71,12 @@ module.exports = {
               new ButtonBuilder()
                 .setCustomId("dailyChannel")
                 .setLabel(Settings.button.dailyChannel)
-                .setStyle(guildDb.dailyChannel ? "Success" : "Secondary")
+                .setStyle(guildDb.dailyChannel ? "Success" : "Secondary"),
+              new ButtonBuilder()
+                .setCustomId("dailyType")
+                .setLabel(Settings.button.dailyType)
+                .setStyle("Primary")
+                .setEmoji("📝"),
             ),
             dailyButtons2 = new ActionRowBuilder().addComponents(
               new ButtonBuilder()
@@ -84,7 +91,7 @@ module.exports = {
             new ButtonBuilder()
                 .setCustomId("dailyInterval")
                 .setLabel(Settings.button.dailyInterval)
-                .setStyle(guildDb.dailyInterval ? "Success" : "Secondary")
+              .setStyle('Primary')
                 .setEmoji("⏰"),
             )
 

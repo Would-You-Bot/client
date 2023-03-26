@@ -28,9 +28,8 @@ module.exports = {
   },
   async execute(interaction, client, guildDb) {
     const { Settings } = await require(`../languages/${guildDb.language}.json`);
-    interaction.showModal(modalObject);
-    interaction
-      .awaitModalSubmit({
+    interaction.showModal(modalObject).catch(() => { })
+    interaction.awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
         time: 60000,
       })
@@ -69,6 +68,8 @@ module.exports = {
             `${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`
             +
             `${Settings.embed.dailyInterval}: ${value}\n`
+          +
+          `${Settings.embed.dailyType}: ${guildDb.customTypes}`
         )
         .setColor("#0598F6")
 
@@ -80,7 +81,12 @@ module.exports = {
           new ButtonBuilder()
             .setCustomId("dailyChannel")
             .setLabel(Settings.button.dailyChannel)
-            .setStyle(guildDb.dailyChannel ? "Success" : "Secondary")
+            .setStyle(guildDb.dailyChannel ? "Success" : "Secondary"),
+          new ButtonBuilder()
+            .setCustomId("dailyType")
+            .setLabel(Settings.button.dailyType)
+            .setStyle("Primary")
+            .setEmoji("📝"),
         ),
         dailyButtons2 = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
@@ -95,7 +101,7 @@ module.exports = {
         new ButtonBuilder()
             .setCustomId("dailyInterval")
             .setLabel(Settings.button.dailyInterval)
-            .setStyle(guildDb.dailyInterval ? "Success" : "Secondary")
+          .setStyle('Primary')
             .setEmoji("⏰"),
         )
 

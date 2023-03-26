@@ -1,15 +1,15 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
     data: {
-        name: 'dailyMsg',
-        description: 'Daily Message Toggle',
+        name: 'selectMenuType',
+        description: 'Select Menu Type',
     },
     async execute(interaction, client, guildDb) {
         const { Settings } = await require(`../languages/${guildDb.language}.json`);
-        const check = guildDb.dailyMsg;
+        const newType = interaction.values[0];
         const dailyMsgs = new EmbedBuilder()
             .setTitle(Settings.embed.dailyTitle)
-            .setDescription(`${Settings.embed.dailyMsg}: ${check ? `<:x_:1077962443013238814>` : `<:check:1077962440815411241>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n${Settings.embed.dailyInterval}: ${guildDb.dailyInterval}\n${Settings.embed.dailyType}: ${guildDb.customTypes}`)
+            .setDescription(`${Settings.embed.dailyMsg}: ${guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyChannel}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyRole}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : `<:x_:1077962443013238814>`}\n${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n${Settings.embed.dailyInterval}: ${guildDb.dailyInterval}\n${Settings.embed.dailyType}: ${newType}`)
             .setColor("#0598F6")
 
 
@@ -18,11 +18,11 @@ module.exports = {
                 new ButtonBuilder()
                     .setCustomId("dailyMsg")
                     .setLabel(Settings.button.dailyMsg)
-                    .setStyle(check ? "Secondary" : "Success"),
+                    .setStyle(guildDb.dailyMsg ? "Success" : "Secondary"),
                 new ButtonBuilder()
                     .setCustomId("dailyChannel")
                     .setLabel(Settings.button.dailyChannel)
-                    .setStyle(guildDb.dailyChannel ? "Success" : "Secondary"),
+                    .setStyle("Success"),
                 new ButtonBuilder()
                     .setCustomId("dailyType")
                     .setLabel(Settings.button.dailyType)
@@ -47,7 +47,7 @@ module.exports = {
                 )
 
         await client.database.updateGuild(interaction.guild.id, {
-            dailyMsg: check ? false : true
+            customTypes: newType
         });
 
         return interaction.update({ content: null, embeds: [dailyMsgs], components: [dailyButtons, dailyButtons2], ephemeral: true });
