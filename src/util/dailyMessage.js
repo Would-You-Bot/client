@@ -24,7 +24,7 @@ module.exports = class DailyMessage {
     async runSchedule() {
         let guilds = await this.c.database.getAll();
         guilds = guilds.filter(g => this.c.guilds.cache.has(g.guildID) && g.dailyMsg);
-        guilds = guilds.filter(g => mom.tz(g.dailyTimezone).format("HH:mm") === g.dailyInterval);
+        //guilds = guilds.filter(g => mom.tz(g.dailyTimezone).format("HH:mm") === g.dailyInterval);
 
         console.log(
             `${ChalkAdvanced.white('Daily Message')} ${ChalkAdvanced.gray(
@@ -44,16 +44,16 @@ module.exports = class DailyMessage {
 
                 if (!channel?.id) return; // Always directly return before do to many actions
 
-                const { Funny, Basic, Young, Food, RuleBreak } = await require(`../data/nhie-${guildDb.language}.json`);
-                const { General } = await require(`../data/rather-${guildDb.language}.json`);
-                const { WhatYouDo } = await require(`../data/would-you-${guildDb.language}.json`);
+                const { Funny, Basic, Young, Food, RuleBreak } = await require(`../data/nhie-${db.language}.json`);
+                const { General } = await require(`../data/rather-${db.language}.json`);
+                const { WhatYouDo } = await require(`../data/wwyd-${db.language}.json`);
 
-                let randomDaily;
+                let randomDaily = [];
+                let dailyId;
                 if (db.customTypes === "regular") {
-                    let regularArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo]
-                    randomDaily = regularArray[Math.floor(Math.random() * array.length)]
+                    randomDaily = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo]
                 } else if (db.customTypes === "mixed") {
-                    let array;
+                    let array = [];
                     if (db.customMessages.filter(c => c.type !== "nsfw") != 0) {
                         array.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg);
                     } else {
@@ -74,16 +74,16 @@ module.exports = class DailyMessage {
                         });
                     }
 
-                    randomDaily = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
+                    randomDaily.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)]);
+                    console.log(randomDaily)
                 }
 
                 const embed = new EmbedBuilder()
                     .setColor("#0598F6")
                     .setFooter({
-                        text: `Daily Message | Type: Random | ID: ${randomDaily}`,
-                        iconURL: interaction.user.avatarURL()
+                        text: `Daily Message | Type: Random | ID: ${dailyId}`
                     })
-                    .setDescription(neverArray[randomNever]);
+                    .setDescription(randomDaily[Math.floor(Math.random() * randomDaily.length)]);
                 this.c.webhookHandler.sendWebhook(
                     channel,
                     db.dailyChannel,
