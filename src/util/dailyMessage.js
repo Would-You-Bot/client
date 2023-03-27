@@ -82,7 +82,7 @@ module.exports = class DailyMessage {
                 const embed = new EmbedBuilder()
                     .setColor("#0598F6")
                     .setFooter({
-                        text: `Daily Message | Type: ${db.customTypes} | ID: ${dailyId}`
+                        text: `Daily Message | Type: ${db.customTypes.replace(/^\w/, c => c.toUpperCase())} | ID: ${dailyId}`
                     })
                     .setDescription(randomDaily[dailyId]);
                 this.c.webhookHandler.sendWebhook(
