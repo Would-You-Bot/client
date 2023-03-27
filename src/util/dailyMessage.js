@@ -54,7 +54,7 @@ module.exports = class DailyMessage {
                     randomDaily = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo]
                 } else if (db.customTypes === "mixed") {
                     let array = [];
-                    if (db.customMessages.filter(c => c.type !== "nsfw") != 0) {
+                    if (db.customMessages.filter(c => c.type !== "nsfw").length != 0) {
                         array.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg);
                     } else {
                         randomDaily = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo]
@@ -62,8 +62,8 @@ module.exports = class DailyMessage {
                     array.push([...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo])
                     randomDaily = array[Math.floor(Math.random() * array.length)]
                 } else if (db.customTypes === "custom") {
-                    if (db.customMessages.filter(c => c.type !== "nsfw") === 0) {
-                        this.c.webhookHandler.sendWebhook(
+                    if (db.customMessages.filter(c => c.type !== "nsfw").length === 0) {
+                        return this.c.webhookHandler.sendWebhook(
                             channel,
                             db.dailyChannel,
                             {
@@ -75,15 +75,16 @@ module.exports = class DailyMessage {
                     }
 
                     randomDaily.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)]);
-                    console.log(randomDaily)
                 }
+
+                dailyId = Math.floor(Math.random() * randomDaily.length)
 
                 const embed = new EmbedBuilder()
                     .setColor("#0598F6")
                     .setFooter({
-                        text: `Daily Message | Type: Random | ID: ${dailyId}`
+                        text: `Daily Message | Type: ${db.customTypes} | ID: ${dailyId}`
                     })
-                    .setDescription(randomDaily[Math.floor(Math.random() * randomDaily.length)]);
+                    .setDescription(randomDaily[dailyId]);
                 this.c.webhookHandler.sendWebhook(
                     channel,
                     db.dailyChannel,
