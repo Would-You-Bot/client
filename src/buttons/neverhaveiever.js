@@ -44,7 +44,7 @@ module.exports = {
             embeds: [ratherembed],
             components: [row],
         }).catch((err) => {
-            return;
+            return console.log(err)
         });
     },
 };

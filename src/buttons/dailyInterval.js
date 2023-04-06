@@ -27,7 +27,6 @@ module.exports = {
     description: "Daily Interval customization",
   },
   async execute(interaction, client, guildDb) {
-    const { Settings } = await require(`../languages/${guildDb.language}.json`);
     interaction.showModal(modalObject).catch(() => { })
     interaction.awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
@@ -39,68 +38,68 @@ module.exports = {
         if (guildDb.dailyInterval === value)
         return modalInteraction.reply({
           ephemeral: true,
-          content: Settings.intervalSame,
+          content: client.translation.get(guildDb?.language, 'Settings.intervalSame'),
         });
         if (isFormat(value) === false)
         return modalInteraction.reply({
           ephemeral: true,
-          content: Settings.intervalInvalid,
+          content: client.translation.get(guildDb?.language, 'Settings.intervalInvalid'),
         });
 
         const dailyMsgs = new EmbedBuilder()
-        .setTitle(Settings.embed.dailyTitle)
+        .setTitle(client.translation.get(guildDb?.language, 'Settings.embed.dailyTitle'))
         .setDescription(
-          `${Settings.embed.dailyMsg}: ${
+          `${client.translation.get(guildDb?.language, 'Settings.embed.dailyMsg')}: ${
             guildDb.dailyMsg
               ? `<:check:1077962440815411241>`
               : `<:x_:1077962443013238814>`
           }\n` +
-            `${Settings.embed.dailyChannel}: ${
+            `${client.translation.get(guildDb?.language, 'Settings.embed.dailyChannel')}: ${
               guildDb.dailyChannel
                 ? `<#${guildDb.dailyChannel}>`
                 : `<:x_:1077962443013238814>`
             }\n` +
-            `${Settings.embed.dailyRole}: ${
+            `${client.translation.get(guildDb?.language, 'Settings.embed.dailyRole')}: ${
               guildDb.dailyRole
                 ? `<@&${guildDb.dailyRole}>`
                 : `<:x_:1077962443013238814>`
             }\n` +
-            `${Settings.embed.dailyTimezone}: ${guildDb.dailyTimezone}\n`
+            `${client.translation.get(guildDb?.language, 'Settings.embed.dailyTimezone')}: ${guildDb.dailyTimezone}\n`
             +
-            `${Settings.embed.dailyInterval}: ${value}\n`
+            `${client.translation.get(guildDb?.language, 'Settings.embed.dailyInterval')}: ${value}\n`
           +
-          `${Settings.embed.dailyType}: ${guildDb.customTypes}`
+          `${client.translation.get(guildDb?.language, 'Settings.embed.dailyType')}: ${guildDb.customTypes}`
         )
         .setColor("#0598F6")
 
         const dailyButtons = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setCustomId("dailyMsg")
-            .setLabel(Settings.button.dailyMsg)
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyMsg'))
             .setStyle(guildDb.dailyMsg ? "Success" : "Secondary"),
           new ButtonBuilder()
             .setCustomId("dailyChannel")
-            .setLabel(Settings.button.dailyChannel)
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyChannel'))
             .setStyle(guildDb.dailyChannel ? "Success" : "Secondary"),
           new ButtonBuilder()
             .setCustomId("dailyType")
-            .setLabel(Settings.button.dailyType)
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyType'))
             .setStyle("Primary")
             .setEmoji("📝"),
         ),
         dailyButtons2 = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setCustomId("dailyTimezone")
-            .setLabel(Settings.button.dailyTimezone)
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyTimezone'))
             .setStyle("Primary")
             .setEmoji("🌍"),
           new ButtonBuilder()
             .setCustomId("dailyRole")
-            .setLabel(Settings.button.dailyRole)
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyRole'))
             .setStyle(guildDb.dailyRole ? "Success" : "Secondary"),
         new ButtonBuilder()
             .setCustomId("dailyInterval")
-            .setLabel(Settings.button.dailyInterval)
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyInterval'))
           .setStyle('Primary')
             .setEmoji("⏰"),
         )

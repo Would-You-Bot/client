@@ -5,8 +5,6 @@ module.exports = {
         description: 'Daily Type',
     },
     async execute(interaction, client, guildDb) {
-        const { Settings } = require(`../languages/${guildDb.language}.json`);
-
         const inter = new ActionRowBuilder()
             .addComponents(
                 new StringSelectMenuBuilder()
@@ -31,6 +29,6 @@ module.exports = {
                     ])
             )
 
-        interaction.update({ content: null, embeds: [], content: Settings.dailyType, components: [inter], ephemeral: true })
+        interaction.update({ content: null, embeds: [], content: client.translation.get(guildDb?.language, 'Settings.dailyType'), components: [inter], ephemeral: true })
     },
 };

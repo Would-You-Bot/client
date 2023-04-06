@@ -23,34 +23,32 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        const {Ping} = require(`../languages/${guildDb.language}.json`);
-
         const pingembed = new EmbedBuilder()
 
             .setColor('#0598F6')
             .setFooter({
-                text: `${Ping.embed.footer}`,
+                text: client.translation.get(guildDb?.language, 'Ping.embed.footer'),
                 iconURL: client.user.avatarURL(),
             })
             .setTimestamp()
-            .setTitle(Ping.embed.title)
+            .setTitle(client.translation.get(guildDb?.language, 'Ping.embed.title'))
             .addFields(
                 {
-                    name: Ping.embed.client,
+                    name: client.translation.get(guildDb?.language, 'Ping.embed.client'),
                     value: `> **${Math.abs(
-                        Date.now() - interaction.createdTimestamp,
+                        Date.now() - interaction.createdTimestamp ,
                     )}**ms`,
                     inline: false,
                 },
                 {
-                    name: Ping.embed.api,
+                    name: client.translation.get(guildDb?.language, 'Ping.embed.api'),
                     value: `> **${Math.round(client.ws.ping)}**ms`,
                     inline: false,
                 },
             );
         const button = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setLabel(Ping.button.title)
+                .setLabel(client.translation.get(guildDb?.language, 'Ping.button.title'))
                 .setStyle(5)
                 .setEmoji('💻')
                 .setURL('https://discordstatus.com/'),
@@ -59,7 +57,7 @@ module.exports = {
             embeds: [pingembed],
             components: [button],
         }).catch((err) => {
-            return;
+            return console.log(err);
         });
         setTimeout(() => {
             button.components[0].setDisabled(true);

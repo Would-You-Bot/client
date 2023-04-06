@@ -18,7 +18,6 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        const {Wwyd} = require(`../languages/${guildDb.language}.json`);
 
         const {WhatYouDo} = require(`../data/wwyd-${guildDb.language}.json`);
 
@@ -27,16 +26,16 @@ module.exports = {
         const wwydembed = new EmbedBuilder()
             .setColor('#0598F6')
             .setFooter({
-                text: `${Wwyd.embed.footer}`,
+                text: client.translation.get(guildDb?.language, 'Wwyd.embed.footer'),
                 iconURL: client.user.avatarURL(),
             })
             .setTimestamp()
-            .setTitle(Wwyd.embed.title)
+            .setTitle(client.translation.get(guildDb?.language, 'Wwyd.embed.title'))
             .setDescription(`> ${wwydstring}`);
 
         const time = guildDb?.voteCooldown ?? 25000;
 
-        const vote = await client.voting.generateVoting(interaction.guildId, 0, 1, Wwyd.embed.option1, Wwyd.embed.option2);
+        const vote = await client.voting.generateVoting(interaction.guildId, 0, 1, client.translation.get(guildDb?.language, 'Wwyd.embed.option1'), client.translation.get(guildDb?.language, 'Wwyd.embed.option2'));
 
         if(time > 3 * 60 * 1000) {
 

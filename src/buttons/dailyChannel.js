@@ -5,7 +5,6 @@ module.exports = {
         description: 'Daily Channel',
     },
     async execute(interaction, client, guildDb) {
-        const { Settings } = require(`../languages/${guildDb.language}.json`);
 
         const inter = new ActionRowBuilder()
             .addComponents(
@@ -15,6 +14,6 @@ module.exports = {
                     .addChannelTypes(ChannelType.GuildText)
             )
 
-        interaction.update({ content: null, embeds: [], content: Settings.dailyChannel, components: [inter], ephemeral: true })
+        interaction.update({ content: null, embeds: [], content: client.translation.get(guildDb?.language, 'Settings.dailyChannel'), components: [inter], ephemeral: true })
     },
 };

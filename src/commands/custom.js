@@ -50,23 +50,17 @@ module.exports = {
      */
 
     async execute(interaction, client, guildDb) {
-        const {
-            Custom,
-            WouldYou,
-            Rather,
-            Wwyd,
-        } = await require(`../languages/${guildDb.language}.json`);
 
         let message;
 
         switch (interaction.options.getSubcommand()) {
             case 'wouldyou':
                 let wouldyouembed = new EmbedBuilder()
-                    .setTitle(Custom.embed.title)
+                    .setTitle(client.translation.get(guildDb?.language, 'Custom.embed.title'))
                     .setDescription(`> ${interaction.options.getString('message')}`)
                     .setColor('#0598F6')
                     .setFooter({
-                        text: `${Custom.embed.footer}`,
+                        text: client.translation.get(guildDb?.language, 'Custom.embed.footer'),
                         iconURL: client.user.avatarURL(),
                     })
                     .setTimestamp();
@@ -118,8 +112,8 @@ module.exports = {
                                 let emoji = null;
                                 let color = null;
                                 const userstotal = totalreactions < 2
-                                    ? `${WouldYou.stats.user}`
-                                    : `${WouldYou.stats.users}`;
+                                    ? client.translation.get(guildDb?.language, 'WouldYou.stats.user')
+                                    : client.translation.get(guildDb?.language, 'WouldYou.stats.users');
 
                                 if (
                                     checksCount
@@ -146,19 +140,19 @@ module.exports = {
                                 wouldyouembed = new EmbedBuilder()
                                     .setColor(color)
                                     .setFooter({
-                                        text: `${WouldYou.embed.footer}`,
+                                        text: client.translation.get(guildDb?.language, 'WouldYou.embed.footer'),
                                         iconURL: client.user.avatarURL(),
                                     })
                                     .setTimestamp()
                                     .addFields(
                                         {
-                                            name: WouldYou.embed.Uselessname,
+                                            name: client.translation.get(guildDb?.language, 'WouldYou.embed.Uselessname'),
                                             value: `> ${interaction.options.getString('message')}`,
                                             inline: false,
                                         },
                                         {
                                             name: 'Stats',
-                                            value: `> **${percentage}%** ${WouldYou.stats.of} **${totalreactions} ${userstotal}** ${WouldYou.stats.taking} ${emoji}`,
+                                            value: `> **${percentage}%** ${client.translation.get(guildDb?.language, 'WouldYou.stats.of')} **${totalreactions} ${userstotal}** ${client.translation.get(guildDb?.language, 'WouldYou.stats.taking')} ${emoji}`,
                                         },
                                     );
 
@@ -186,17 +180,17 @@ module.exports = {
                 let ratherembed = new EmbedBuilder()
                     .setColor('#0598F6')
                     .addFields({
-                        name: Rather.embed.usefulname,
+                        name: client.translation.get(guildDb?.language, 'Rather.embed.usefulname'),
                         value: `> 1️⃣ ${interaction.options.getString('messagetop')}`,
                         inline: false,
                     })
                     .addFields({
-                        name: Rather.embed.usefulname2,
+                        name: client.translation.get(guildDb?.language, 'Rather.embed.usefulname2'),
                         value: `> 2️⃣ ${interaction.options.getString('messagebottom')}`,
                         inline: false,
                     })
                     .setFooter({
-                        text: `${Rather.embed.footer}`,
+                        text: client.translation.get(guildDb?.language, 'Rather.embed.footer'),
                         iconURL: client.user.avatarURL(),
                     })
                     .setTimestamp();
@@ -207,7 +201,7 @@ module.exports = {
                         fetchReply: true,
                     })
                     .catch((err) => {
-                        return;
+                        return console.log(err)
                     });
 
                 // @TODO: Voting here
@@ -243,12 +237,12 @@ module.exports = {
                                     ratherembed = new EmbedBuilder()
                                         .setColor('#0598F6')
                                         .setFooter({
-                                            text: `${WouldYou.embed.footer}`,
+                                            text: client.translation.get(guildDb?.language, 'WouldYou.embed.footer'),
                                             iconURL: client.user.avatarURL(),
                                         })
                                         .setTimestamp()
                                         .addFields({
-                                            name: Rather.embed.thispower,
+                                            name: client.translation.get(guildDb?.language, 'Rather.embed.thispower'),
                                             value: `> 1️⃣ ${interaction.options.getString(
                                                 'messagetop',
                                             )}`,
@@ -261,12 +255,12 @@ module.exports = {
                                     ratherembed = new EmbedBuilder()
                                         .setColor('#0598F6')
                                         .setFooter({
-                                            text: `${WouldYou.embed.footer}`,
+                                            text: client.translation.get(guildDb?.language, 'WouldYou.embed.footer'),
                                             iconURL: client.user.avatarURL(),
                                         })
                                         .setTimestamp()
                                         .addFields({
-                                            name: Rather.embed.thispower,
+                                            name: client.translation.get(guildDb?.language, 'Rather.embed.thispower'),
                                             value: `> 2️⃣ ${interaction.options.getString(
                                                 'messagebottom',
                                             )}`,
@@ -277,7 +271,7 @@ module.exports = {
                                         .setColor('#0598F6')
                                         .setDescription('Nobody gave a vote')
                                         .setFooter({
-                                            text: `${Rather.embed.footer}`,
+                                            text: client.translation.get(guildDb?.language, 'Rather.embed.footer'),
                                             iconURL: client.user.avatarURL(),
                                         })
                                         .setTimestamp();
@@ -307,11 +301,11 @@ module.exports = {
 
                     .setColor('#0598F6')
                     .setFooter({
-                        text: `${Wwyd.embed.footer}`,
+                        text: client.translation.get(guildDb?.language, 'Wwyd.embed.footer'),
                         iconURL: client.user.avatarURL(),
                     })
                     .setTimestamp()
-                    .setTitle(Wwyd.embed.title)
+                    .setTitle(client.translation.get(guildDb?.language, 'Wwyd.embed.title'))
                     .setDescription(`> ${interaction.options.getString('message')}`);
 
                 interaction.reply({ embeds: [wwydembed] }).catch((err) => {

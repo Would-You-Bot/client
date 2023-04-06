@@ -143,12 +143,12 @@
   },
   "Rather": {
     "embed": {
-      "uselessname": "Would you rather have this",
-      "uselessname2": "or this useless Power?",
-      "usefulname": "Would you rather have this",
-      "usefulname2": "or this useful Power?",
+      "uselessname": "Would you rather",
+      "uselessname2": "or",
+      "usefulname": "Would you rather",
+      "usefulname2": "or",
       "footer": "Would You Rather",
-      "thispower": "According to the vote the majority of users would want this power:"
+      "thispower": "According to the vote the majority of users would prefer:"
     },
     "replays": {
       "disabled": "Replaying in this server is currently disabled!"

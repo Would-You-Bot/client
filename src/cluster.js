@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { ClusterManager, ReClusterManager, HeartbeatManager  } = require("discord-hybrid-sharding");
+const { ClusterManager, ReClusterManager, HeartbeatManager } = require("discord-hybrid-sharding");
 const { ChalkAdvanced } = require('chalk-advanced');
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
