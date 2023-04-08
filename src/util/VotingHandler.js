@@ -159,8 +159,9 @@ module.exports = class Voting {
             "data": {
                 "labels": chartLabels,
                 "datasets": [{
-                    "backgroundColor": ['#f00404', '#0091ff'],
-                    "data": chartData
+                    "backgroundColor": ['#0091ff', '#f00404'],
+                    // if chart data is 0,0, then set it to 180,180 to make it look like a circle
+                    "data": chartData == [ 0, 0 ] ? chartData : [180, 180]
                 }]
             },
             "options": {
