@@ -10,6 +10,10 @@ const voteModel = new Schema(
             type: String,
             required: false,
         },
+        channelId: {
+            type: String,
+            required: true,
+        },
         type: {
             type: Number,
             default: 0, // 0 = rather, 1 = would you

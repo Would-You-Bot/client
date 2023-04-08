@@ -263,6 +263,8 @@
   },
   "Voting": {
     "Yes": "Si",
-    "No": "No"
+    "No": "No",
+    "Vote": "Vote: ",
+    "VotingResults": "Resultados de la votación"
   }
 }

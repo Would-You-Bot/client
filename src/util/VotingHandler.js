@@ -1,5 +1,12 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyles, PermissionFlagsBits } = require('discord.js');
-const { ChalkAdvanced } = require("chalk-advanced");
+const {
+    EmbedBuilder,
+    ButtonBuilder,
+    ActionRowBuilder,
+    ButtonStyle,
+    PermissionFlagsBits,
+    AttachmentBuilder
+} = require('discord.js');
+const {ChalkAdvanced} = require("chalk-advanced");
 const CronJob = require('cron').CronJob;
 const voteSchema = require('../util/Models/voteModel');
 const QuickChart = require('quickchart-js');
@@ -19,17 +26,19 @@ module.exports = class Voting {
     }
 
     async saveVoting({
-        guildId,
-        type = 0,
-        until,
-        op_one,
-        op_tow
-    }) {
+                         guildId,
+                         type = 0,
+                         until,
+                         channelId,
+                         op_one,
+                         op_tow
+                     }) {
         const randomId = (new Date().getTime()).toString(36) + `${Math.random().toString(36).substring(2, 9)}`;
 
         const vote = new voteSchema({
             id: randomId,
             guildId: guildId,
+            channelId: channelId,
             type: type,
             until: until,
             texts: {
@@ -45,12 +54,13 @@ module.exports = class Voting {
     }
 
 
-    generateVoting(guildId = null, until = 0, type = 0, op_one, op_tow) {
+    async generateVoting(guildId = null, channelId = null, until = 0, type = 0, op_one, op_tow) {
         let g;
         if (guildId !== null && typeof guildId === 'string') g = this.c.database.getGuild(String(guildId));
 
-        const voteId = this.saveVoting({
+        const voteId = await this.saveVoting({
             guildId,
+            channelId,
             until,
             type,
             op_one,
@@ -62,30 +72,43 @@ module.exports = class Voting {
             case 0:
                 row.addComponents([
                     new ButtonBuilder()
+                        .setCustomId(`votingplaceholder`)
+                        .setLabel('Vote: ')
+                        .setDisabled(true)
+                        .setStyle(ButtonStyle.Secondary),
+                    new ButtonBuilder()
                         .setCustomId(`voting_${voteId}_1`)
                         .setEmoji('1️⃣')
-                        .setStyle(ButtonStyles.PRIMARY),
+                        .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId(`voting_${voteId}_2`)
                         .setEmoji('2️⃣')
-                        .setStyle(ButtonStyles.PRIMARY),
+                        .setStyle(ButtonStyle.Primary),
                 ]);
                 break;
             case 1:
                 row.addComponents([
                     new ButtonBuilder()
+                        .setCustomId(`votingplaceholder`)
+                        .setLabel(this.c.translation.get(g?.language ?? 'en_EN', 'Voting.Vote'))
+                        .setDisabled(true)
+                        .setStyle(ButtonStyle.Secondary),
+                    new ButtonBuilder()
                         .setCustomId(`voting_${voteId}_1`)
-                        .setLabel(this.c.translation.get(g?.language ?? 'en_EN', 'Voting.Yes'))
-                        .setStyle(ButtonStyles.PRIMARY),
+                        .setLabel(op_one ?? this.c.translation.get(g?.language ?? 'en_EN', 'Voting.Yes'))
+                        .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId(`voting_${voteId}_2`)
-                        .setLabel(this.c.translation.get(g?.language ?? 'en_EN', 'Voting.No'))
-                        .setStyle(ButtonStyles.PRIMARY),
+                        .setLabel(op_tow ?? this.c.translation.get(g?.language ?? 'en_EN', 'Voting.No'))
+                        .setStyle(ButtonStyle.Primary),
                 ]);
                 break;
         }
 
-        return row;
+        return {
+            row,
+            id: voteId
+        };
     }
 
     getVoting(id) {
@@ -128,8 +151,8 @@ module.exports = class Voting {
         const option_1 = Number(vote.options[1]?.length);
         const option_2 = Number(vote.options[2]?.length);
 
-        const chartData = vote.options?.keys().map(e => Number(vote.options[`${e}`].length));
-        const chartLabels = vote.options?.keys().map(e => '#' + e);
+        const chartData = Object.keys(vote.options).map(e => Number(vote.options[`${e}`].length));
+        const chartLabels = Object.keys(vote.options).map(e => '#' + e);
 
         chart.setConfig({
             "type": "outlabeledPie",
@@ -157,21 +180,21 @@ module.exports = class Voting {
             }
         });
 
-        let e;
-        if (vote.type === 0) {
-            e = new Either()
-                .setLanguage(g?.language ?? 'en_EN')
-                .addFirstText(vote.texts[1])
-                .addSecondText(vote.texts[2])
-                .setVotes(vote.options[1], vote.options[2]);
-        }
+        // let e;
+        // if (vote.type === 0) {
+        //     e = new Either()
+        //         .setLanguage(g?.language ?? 'en_EN')
+        //         .addFirstText(vote.texts[1])
+        //         .addSecondText(vote.texts[2])
+        //         .setVotes(vote.options[1], vote.options[2]);
+        // }
 
         return {
             all_votes,
             option_1,
             option_2,
             chart: chart.getUrl(),
-            image: vote.type === 0 ? await e.build() : null,
+            //image: vote.type === 0 ? await e.build() : null,
         };
     }
 
@@ -185,27 +208,40 @@ module.exports = class Voting {
         if (vote.guildId !== null && typeof vote.guildId === 'string') g = this.c.database.getGuild(String(vote.guildId));
 
         const embed = new EmbedBuilder()
+            .setTitle(this.c.translation.get(g?.language ?? 'en_EN', 'Voting.VotingResults'))
+            .setColor("#0598F6")
             .setImage(results.chart);
 
-        if (vote.type === 0) {
-            embed.setImage(results.image);
-        } else {
+        // let attachment = null;
+        // if (vote.type === 0) {
+        //     attachment = new AttachmentBuilder(results.image, {
+        //         name: 'voting.png'
+        //     });
+        //     embed.setImage('attachment://voting.png');
+        // }
 
-        }
+        const channel = await this.c.channels.fetch(vote.channelId).catch(err => {
+        });
 
-        const channel = await this.c.channels.fetch(vote.channelId).catch(err => { });
+        if (!channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.EmbedLinks])) return {
+            error: 'no_permissions'
+        };
 
-        if (!channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.EmbedLinks])) return;
+        const message = await channel.messages.fetch(messageId).catch(err => {
+            console.log(err)
+        });
 
-        const message = await channel.messages.fetch(messageId).catch(err => { });
+        if (!message || !message.id) return {
+            error: 'message_not_found'
+        };
 
-        if (!message || !message.id) return;
+        const row = ActionRowBuilder.from(message.components[1]);
 
         await message.edit({
-            embeds: [embed],
-            components: []
+            embeds: [embed.setDescription(message.embeds[0].description)],
+            components: [row],
         }).catch(err => {
-
+            console.log(err);
         });
 
         await this.deleteVoting(id);
@@ -227,6 +263,17 @@ module.exports = class Voting {
      * @return {Promise<void>}
      */
     async runSchedule() {
-        // TODO: Code
+        let votes = await voteSchema.find().lean();
+        votes = [...votes].filter(v => v.until <= ~~(Date.now() / 1000) && v.until !== 0);
+
+        for (const vote of votes) {
+            await this.endVoting(vote.id, vote.messageId);
+        }
+
+        console.log(
+            `${ChalkAdvanced.white('Would You?')} ${ChalkAdvanced.gray(
+                '>',
+            )} ${ChalkAdvanced.green('Voting Schedule done.')}`,
+        );
     }
 };

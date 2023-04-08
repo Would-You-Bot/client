@@ -19,7 +19,9 @@
   "Wwyd": {
     "embed": {
       "title": "What **would you** do?",
-      "footer": "Explain what and why"
+      "footer": "Explain what and why",
+      "option1": "Option 1",
+      "option2": "Option 2"
     }
   },
   "Support": {
@@ -203,6 +205,7 @@
     "voteSame": "The provided vote cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
     "cooldownInvalid": "Provided cooldown was invalid. Make sure the cooldown only includes numbers!",
     "embed": {
+      "error": "You don't have the required permissions to use this command.",
       "generalTitle": "Would You - General Settings",
       "voteCooldown": "**Vote Cooldown**",
       "replayCooldown": "**Replay Cooldown**",
@@ -264,6 +267,8 @@
   },
   "Voting": {
     "Yes": "Yes",
-    "No": "No"
+    "No": "No",
+    "Vote": "Vote: ",
+    "VotingResults": "Voting Results"
   }
 }

@@ -21,9 +21,28 @@ module.exports = class TranslationHandler {
          */
         this.translations = {};
 
+        // Init default languages
         for (const l of this.availableLanguages) {
             const data = require(`../languages/${l}.json`);
             this.initLanguage(l, data);
+        }
+
+        // Init what would you do
+        for (const l of this.availableLanguages) {
+            const data = require(`../data/wwyd-${l}.json`);
+            this.initLanguage(l + '_wwyd', data);
+        }
+
+        // Inti rather
+        for (const l of this.availableLanguages) {
+            const data = require(`../data/rather-${l}.json`);
+            this.initLanguage(l + '_rather', data);
+        }
+
+        // Init never have I ever
+        for (const l of this.availableLanguages) {
+            const data = require(`../data/nhie-${l}.json`);
+            this.initLanguage(l + '_nhie', data);
         }
     }
 
@@ -45,7 +64,7 @@ module.exports = class TranslationHandler {
      * @private
      */
     checkRegex(value) {
-        return !!new RegExp('^(?![a-zA-Z]+_[a-zA-Z]+)').test(value);
+        return /^[a-z]{2}_[A-Z]{2}(?:_rather|_wwyd|_nhie)?$/.test(value);
     }
 
     /**

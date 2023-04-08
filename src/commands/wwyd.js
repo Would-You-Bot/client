@@ -33,20 +33,23 @@ module.exports = {
             .setTitle(client.translation.get(guildDb?.language, 'Wwyd.embed.title'))
             .setDescription(`> ${wwydstring}`);
 
-        const time = guildDb?.voteCooldown ?? 25000;
+        return interaction.reply({embeds: [wwydembed]}).catch((err) => { });
 
-        const vote = await client.voting.generateVoting(interaction.guildId, 0, 1, client.translation.get(guildDb?.language, 'Wwyd.embed.option1'), client.translation.get(guildDb?.language, 'Wwyd.embed.option2'));
-
-        if(time > 3 * 60 * 1000) {
-
-        } else {
-
-        }
-
-
-
-        return interaction.reply({embeds: [wwydembed]}).catch((err) => {
-
-        });
+        // Questions don't really have something where the user can select what he would choose.
+        // const time = guildDb?.voteCooldown ?? 25000;
+        // const three_minutes = 3 * 60 * 1000;
+        //
+        // const {
+        //     row,
+        //     id
+        // } = await client.voting.generateVoting(interaction.guildId, interaction.channelId, time < three_minutes ? 0 : ~~((Date.now() + time) / 1000), 1, client.translation.get(guildDb?.language, 'Wwyd.embed.option1'), client.translation.get(guildDb?.language, 'Wwyd.embed.option2'));
+        //
+        // const msg = await interaction.reply({embeds: [wwydembed], components: [row]}).catch((err) => { });
+        //
+        // if(time < three_minutes) {
+        //     setTimeout(async () => {
+        //         await client.voting.endVoting(id, msg.id);
+        //     }, time);
+        // }
     },
 };

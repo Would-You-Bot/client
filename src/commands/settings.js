@@ -195,17 +195,16 @@ module.exports = {
           break;
       }
     } else {
-      const errorembed = new EmbedBuilder()
+      const errorEmbed = new EmbedBuilder()
         .setColor("#F00505")
         .setTitle("Error!")
         .setDescription(client.translation.get(guildDb?.language, 'Settings.embed.error'));
       await interaction
         .reply({
-          embeds: [errorembed],
+          embeds: [errorEmbed],
           ephemeral: true,
         })
         .catch((err) => {
-          return;
         });
     }
   },

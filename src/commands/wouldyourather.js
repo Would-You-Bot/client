@@ -32,9 +32,9 @@ module.exports = {
         .setFooter({text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomrather}`, iconURL: interaction.user.avatarURL()})
         .setDescription(General[randomrather]);
 
-        const row = new ActionRowBuilder();
+        const mainRow = new ActionRowBuilder();
         if (Math.round(Math.random() * 15) < 3) {
-            row.addComponents([
+            mainRow.addComponents([
                 new ButtonBuilder()
                     .setLabel('Invite')
                     .setStyle(5)
@@ -44,22 +44,35 @@ module.exports = {
                     )
             ]);
         }
-        row.addComponents([
+        mainRow.addComponents([
             new ButtonBuilder()
                 .setLabel('New Question')
                 .setStyle(1)
                 .setEmoji('1073954835533156402')
                 .setCustomId(`wouldyourather`)
+                .setDisabled(!guildDb.replay)
         ]);
 
-        return interaction.reply({
+        const time = guildDb?.voteCooldown ?? 25000;
+        const three_minutes = 3 * 60 * 1000;
+
+        const {
+            row,
+            id
+        } = await client.voting.generateVoting(interaction.guildId, interaction.channelId, time < three_minutes ? 0 : ~~((Date.now() + time) / 1000), 0);
+
+        const msg = await interaction.reply({
             embeds: [ratherembed],
-            components: guildDb.replay ? rbutton : [] || [],
+            components: [row, mainRow],
+            fetchReply: true,
         }).catch((err) => {
-             console.log(err)
+            console.log(err)
         });
 
-        // @TODO: Voting here
-
+        if(time < three_minutes) {
+            setTimeout(async () => {
+               await client.voting.endVoting(id, msg.id);
+            }, time);
+        }
     },
 };

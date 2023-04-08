@@ -48,7 +48,7 @@ module.exports = {
     return interaction
       .reply({
         embeds: [ratherembed],
-        components: rbutton,
+        components: [row],
       })
       .catch((err) => {});
   },

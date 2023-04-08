@@ -256,6 +256,8 @@
   },
   "Voting": {
     "Yes": "Ja",
-    "No": "Nein"
+    "No": "Nein",
+    "Vote": "Wählen Sie: ",
+    "VotingResults": "Abstimmungsergebnisse"
   }
 }
