@@ -12,7 +12,7 @@ module.exports = class DailyMessage {
      * Start the daily message Schedule
      */
     start() {
-        new CronJob('0 */30 * * * *', async () => {
+        new CronJob('0 */1 * * * *', async () => {
             await this.runSchedule();
         }, null, true, "Europe/Berlin");
     }
@@ -67,7 +67,8 @@ module.exports = class DailyMessage {
                             channel,
                             db.dailyChannel,
                             {
-                                content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.'
+                                content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.',
+                                fetchReply: true
                             }
                         ).catch(err => {
                             console.log(err)
@@ -85,16 +86,18 @@ module.exports = class DailyMessage {
                         text: `Daily Message | Type: ${db.customTypes.replace(/^\w/, c => c.toUpperCase())} | ID: ${dailyId}`
                     })
                     .setDescription(randomDaily[dailyId]);
-                this.c.webhookHandler.sendWebhook(
+                await this.c.webhookHandler.sendWebhook(
                     channel,
                     db.dailyChannel,
                     {
                         embeds: [embed],
-                        content: db.dailyRole ? `<@&${db.dailyRole}>` : null
+                        content: db.dailyRole ? `<@&${db.dailyRole}>` : null,
+                        fetchReply: true
                     }
                 ).catch(err => {
                     console.log(err)
                 });
+                
             }, i * 2500) // We do a little timeout here to work against discord ratelimit with 50reqs/second
         }
     }

@@ -181,20 +181,22 @@ module.exports = class WebhookHandler {
             const webhookClient = new WebhookClient({id: webhook.id, token: webhook.token});
             if (!webhookClient) return this.webhookFallBack(channel, channelId, message, false);
 
-            webhookClient
+           const fallbackThread = await webhookClient
                 .send(message)
                 .catch(err => {
                     return this.webhookFallBack(channel, channelId, message, false);
                 });
+                await fallbackThread.startThread({ name: `Suggestion`, reason: `Suggestion thread for uwu` })
         } else {
             const webhook = new WebhookClient({id: webhookData?.id, token: webhookData?.token});
             if (!webhook) return this.webhookFallBack(channel, channelId, message);
 
-            webhook
+           const webhookThread = await webhook
                 .send(message)
                 .catch(err => {
                     return this.webhookFallBack(channel, channelId, message, err);
-                });
+                })
+                await webhookThread.startThread({ name: `Suggestion`, reason: `Suggestion thread for uwu` })
         }
     }
 };
