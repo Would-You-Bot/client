@@ -186,17 +186,23 @@ module.exports = class WebhookHandler {
                 .catch(err => {
                     return this.webhookFallBack(channel, channelId, message, false);
                 });
-                await fallbackThread.startThread({ name: `Suggestion`, reason: `Suggestion thread for uwu` })
+                this.c.rest.post('/channels/' + channelId + '/messages/' + fallbackThread.id + '/threads', { name: 'Mixed - Daily Message' });
         } else {
             const webhook = new WebhookClient({id: webhookData?.id, token: webhookData?.token});
             if (!webhook) return this.webhookFallBack(channel, channelId, message);
 
-           const webhookThread = await webhook
-                .send(message)
-                .catch(err => {
-                    return this.webhookFallBack(channel, channelId, message, err);
-                })
-                await webhookThread.startThread({ name: `Suggestion`, reason: `Suggestion thread for uwu` })
+            const webhookThread = await webhook
+            .send(message)
+            .catch(err => {
+                return this.webhookFallBack(channel, channelId, message, err);
+            })
+            
+            this.c.rest.post('/channels/' + channelId + '/messages/' + webhookThread.id + '/threads', {
+                name: 'Mixed - Daily Message'
+              }, {
+                  'Content-Type': 'application/json'
+              });
+                  
         }
     }
 };

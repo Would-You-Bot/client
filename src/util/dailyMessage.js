@@ -68,7 +68,6 @@ module.exports = class DailyMessage {
                             db.dailyChannel,
                             {
                                 content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.',
-                                fetchReply: true
                             }
                         ).catch(err => {
                             console.log(err)
@@ -92,7 +91,6 @@ module.exports = class DailyMessage {
                     {
                         embeds: [embed],
                         content: db.dailyRole ? `<@&${db.dailyRole}>` : null,
-                        fetchReply: true
                     }
                 ).catch(err => {
                     console.log(err)
