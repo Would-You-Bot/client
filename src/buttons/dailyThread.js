@@ -1,12 +1,12 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
   data: {
-    name: "dailyMsg",
-    description: "Daily Message Toggle",
+    name: "dailyThread",
+    description: "Daily Message Thread Toggle",
   },
   async execute(interaction, client, guildDb) {
-    const check = guildDb.dailyMsg;
-    const dailyMsgs = new EmbedBuilder()
+    const check = guildDb.dailyThread;
+    const dailyThread = new EmbedBuilder()
       .setTitle(client.translation.get(guildDb?.language, 'Settings.embed.dailyTitle'))
       .setDescription(
         `${client.translation.get(guildDb?.language, 'Settings.embed.dailyMsg')}: ${
@@ -23,7 +23,7 @@ module.exports = {
             client.translation.get(guildDb?.language, 'Settings.embed.dailyInterval')
         }: ${guildDb.dailyInterval}\n${client.translation.get(guildDb?.language, 'Settings.embed.dailyType')}: ${
           guildDb.customTypes
-        }\n` + 
+        }\n`+ 
         `${client.translation.get(guildDb?.language, 'Settings.embed.dailyThread')}: ${
           guildDb.dailyThread
             ? `<:check:1077962440815411241>`
@@ -72,12 +72,12 @@ module.exports = {
 
 
     await client.database.updateGuild(interaction.guild.id, {
-      dailyMsg: check ? false : true,
+      dailyThread: check ? false : true,
     });
 
     return interaction.update({
       content: null,
-      embeds: [dailyMsgs],
+      embeds: [dailyThread],
       components: [dailyButtons, dailyButtons2, dailyButtons3],
       ephemeral: true,
     });

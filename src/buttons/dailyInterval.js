@@ -68,7 +68,12 @@ module.exports = {
             +
             `${client.translation.get(guildDb?.language, 'Settings.embed.dailyInterval')}: ${value}\n`
           +
-          `${client.translation.get(guildDb?.language, 'Settings.embed.dailyType')}: ${guildDb.customTypes}`
+          `${client.translation.get(guildDb?.language, 'Settings.embed.dailyType')}: ${guildDb.customTypes}\n`+ 
+          `${client.translation.get(guildDb?.language, 'Settings.embed.dailyThread')}: ${
+            guildDb.dailyThread
+              ? `<:check:1077962440815411241>`
+              : `<:x_:1077962443013238814>`
+          }`
         )
         .setColor("#0598F6")
 
@@ -102,7 +107,14 @@ module.exports = {
             .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyInterval'))
           .setStyle('Primary')
             .setEmoji("⏰"),
+        ),
+        dailyButtons3 = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+            .setCustomId("dailyThread")
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyThread'))
+            .setStyle(guildDb.dailyThread ? "Success" : "Secondary"),
         )
+
 
         await client.database.updateGuild(interaction.guild.id, {
           dailyInterval: value,
@@ -111,7 +123,7 @@ module.exports = {
         return modalInteraction.update({
           content: null,
           embeds: [dailyMsgs],
-          components: [dailyButtons, dailyButtons2],
+          components: [dailyButtons, dailyButtons2, dailyButtons3],
           ephemeral: true,
         });
       });

@@ -4,8 +4,8 @@ const { ChalkAdvanced } = require("chalk-advanced");
 const CronJob = require('cron').CronJob;
 
 module.exports = class DailyMessage {
-    constructor(c) {
-        this.c = c;
+    constructor(client) {
+        this.client = client;
     }
 
     /**
@@ -22,8 +22,8 @@ module.exports = class DailyMessage {
      * @return {Promise<void>}
      */
     async runSchedule() {
-        let guilds = await this.c.database.getAll();
-        guilds = guilds.filter(g => this.c.guilds.cache.has(g.guildID) && g.dailyMsg);
+        let guilds = await this.client.database.getAll();
+        guilds = guilds.filter(g => this.client.guilds.cache.has(g.guildID) && g.dailyMsg);
         //guilds = guilds.filter(g => mom.tz(g.dailyTimezone).format("HH:mm") === g.dailyInterval);
 
         console.log(
@@ -38,7 +38,7 @@ module.exports = class DailyMessage {
             if (!db.dailyMsg) continue;
             i++;
             setTimeout(async () => {
-                const channel = await this.c.channels.fetch(db.dailyChannel).catch(err => {
+                const channel = await this.client.channels.fetch(db.dailyChannel).catch(err => {
                     console.log(err)
                 });
 
@@ -63,12 +63,13 @@ module.exports = class DailyMessage {
                     randomDaily = array[Math.floor(Math.random() * array.length)]
                 } else if (db.customTypes === "custom") {
                     if (db.customMessages.filter(c => c.type !== "nsfw").length === 0) {
-                        return this.c.webhookHandler.sendWebhook(
+                        return this.client.webhookHandler.sendWebhook(
                             channel,
                             db.dailyChannel,
                             {
                                 content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.',
-                            }
+                            },
+                            db.dailyThread
                         ).catch(err => {
                             console.log(err)
                         });
@@ -85,13 +86,14 @@ module.exports = class DailyMessage {
                         text: `Daily Message | Type: ${db.customTypes.replace(/^\w/, c => c.toUpperCase())} | ID: ${dailyId}`
                     })
                     .setDescription(randomDaily[dailyId]);
-                await this.c.webhookHandler.sendWebhook(
+                await this.client.webhookHandler.sendWebhook(
                     channel,
                     db.dailyChannel,
                     {
                         embeds: [embed],
                         content: db.dailyRole ? `<@&${db.dailyRole}>` : null,
-                    }
+                    },
+                    db.dailyThread
                 ).catch(err => {
                     console.log(err)
                 });

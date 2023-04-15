@@ -88,6 +88,11 @@ module.exports = {
                 client.translation.get(guildDb?.language, 'Settings.embed.dailyInterval')
             }: ${guildDb.dailyInterval}\n${client.translation.get(guildDb?.language, 'Settings.embed.dailyType')}: ${
               guildDb.customTypes
+            }` + 
+            `${client.translation.get(guildDb?.language, 'Settings.embed.dailyThread')}: ${
+              guildDb.dailyThread
+                ? `<:check:1077962440815411241>`
+                : `<:x_:1077962443013238814>`
             }`
           )
           .setColor("#0598F6");
@@ -131,7 +136,7 @@ module.exports = {
         return modalInteraction.update({
           content: null,
           embeds: [dailyMsgs],
-          components: [dailyButtons, dailyButtons2],
+          components: [dailyButtons, dailyButtons2, dailyButtons3],
           ephemeral: true,
         });
       });

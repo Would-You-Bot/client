@@ -44,6 +44,10 @@ const guildProfile = new Schema(
             type: String,
             default: "12:00"
         },
+        dailyThread: {
+            type: Boolean,
+            default: false,
+        },
         replay: {
             type: Boolean,
             default: true,
