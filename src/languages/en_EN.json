@@ -229,7 +229,7 @@
       "dailyRole": "Set Role",
       "dailyTimezone": "Set Timezone",
       "dailyType": "Set Type",
-      "dailyThread": "Set threads",
+      "dailyThread": "Toggle threads",
       "dailyMsg": "Toggle Daily Messages",
       "voteCooldown": "Set Vote Cooldown",
       "replayCooldown": "Set Replay Cooldown",

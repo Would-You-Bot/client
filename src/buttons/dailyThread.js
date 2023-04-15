@@ -6,12 +6,12 @@ module.exports = {
   },
   async execute(interaction, client, guildDb) {
     const check = guildDb.dailyThread;
-    const dailyThread = new EmbedBuilder()
+    const dailyThreads = new EmbedBuilder()
       .setTitle(client.translation.get(guildDb?.language, 'Settings.embed.dailyTitle'))
       .setDescription(
         `${client.translation.get(guildDb?.language, 'Settings.embed.dailyMsg')}: ${
-          check ? `<:x_:1077962443013238814>` : `<:check:1077962440815411241>`
-        }\n${client.translation.get(guildDb?.language, 'Settings.embed.dailyChannel')}: ${
+          guildDb.dailyMsg ? `<:check:1077962440815411241>` : `<:x_:1077962443013238814>`
+        }\n${client.translation.get(guildDb?.language, 'Settings.embed.dailyChannel')}: ${ 
           guildDb.dailyChannel
             ? `<#${guildDb.dailyChannel}>`
             : `<:x_:1077962443013238814>`
@@ -25,9 +25,9 @@ module.exports = {
           guildDb.customTypes
         }\n`+ 
         `${client.translation.get(guildDb?.language, 'Settings.embed.dailyThread')}: ${
-          guildDb.dailyThread
-            ? `<:check:1077962440815411241>`
-            : `<:x_:1077962443013238814>`
+          check
+            ? `<:x_:1077962443013238814>`
+            : `<:check:1077962440815411241>`
         }`
       )
       .setColor("#0598F6");
@@ -36,7 +36,7 @@ module.exports = {
         new ButtonBuilder()
           .setCustomId("dailyMsg")
           .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyMsg'))
-          .setStyle(check ? "Secondary" : "Success"),
+          .setStyle(guildDb.dailyMsg ? "Success" : "Secondary"),
         new ButtonBuilder()
           .setCustomId("dailyChannel")
           .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyChannel'))
@@ -67,7 +67,7 @@ module.exports = {
         new ButtonBuilder()
           .setCustomId("dailyThread")
           .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyThread'))
-          .setStyle(guildDb.dailyThread ? "Success" : "Secondary"),
+          .setStyle(check ? "Secondary" : "Success"),
       )
 
 
@@ -77,7 +77,7 @@ module.exports = {
 
     return interaction.update({
       content: null,
-      embeds: [dailyThread],
+      embeds: [dailyThreads],
       components: [dailyButtons, dailyButtons2, dailyButtons3],
       ephemeral: true,
     });
