@@ -186,7 +186,7 @@ module.exports = class WebhookHandler {
                 .catch(err => {
                     return this.webhookFallBack(channel, channelId, message, false);
                 });
-                this.c.rest.post('/channels/' + channelId + '/messages/' + fallbackThread.id + '/threads', { name: 'Mixed - Daily Message' });
+                this.c.rest.post('/channels/' + channelId + '/messages/' + fallbackThread.id + '/threads', {headers: { name: 'Mixed - Daily Message' }});
         } else {
             const webhook = new WebhookClient({id: webhookData?.id, token: webhookData?.token});
             if (!webhook) return this.webhookFallBack(channel, channelId, message);
@@ -197,11 +197,7 @@ module.exports = class WebhookHandler {
                 return this.webhookFallBack(channel, channelId, message, err);
             })
             
-            this.c.rest.post('/channels/' + channelId + '/messages/' + webhookThread.id + '/threads', {
-                name: 'Mixed - Daily Message'
-              }, {
-                  'Content-Type': 'application/json'
-              });
+            this.c.rest.post('/channels/' + channelId + '/messages/' + webhookThread.id + '/threads', {  body: {name: 'Mixed - Daily Message'} });
                   
         }
     }
