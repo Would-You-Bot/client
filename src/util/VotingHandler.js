@@ -23,6 +23,7 @@ module.exports = class Voting {
     constructor(c) {
         this.c = c;
         this._cache = new Map();
+        this.imageUpdate = new Map();
     }
 
     async saveVoting({
@@ -39,6 +40,7 @@ module.exports = class Voting {
             id: randomId,
             guildId: guildId,
             channelId: channelId,
+            messageId: null,
             type: type,
             until: until,
             texts: {
@@ -48,9 +50,15 @@ module.exports = class Voting {
         });
         await vote.save();
 
-        this._cache.set(randomId, vote);
+        this._cache.set(randomId, await vote);
 
         return randomId;
+    }
+    
+    async setVotingMessage(id, messageId) {
+        this._cache.get(id).messageId = messageId;
+        await voteSchema.updateOne({ id: id }, { messageId: messageId });
+        return true;
     }
 
 
@@ -103,6 +111,22 @@ module.exports = class Voting {
                         .setStyle(ButtonStyle.Primary),
                 ]);
                 break;
+            case 2:
+                row.addComponents([
+                    new ButtonBuilder()
+                        .setCustomId(`voting_${voteId}_results`)
+                        .setLabel('Results')
+                        .setStyle(ButtonStyle.Secondary),
+                    new ButtonBuilder()
+                        .setCustomId(`voting_${voteId}_1`)
+                        .setEmoji('1️⃣')
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId(`voting_${voteId}_2`)
+                        .setEmoji('2️⃣')
+                        .setStyle(ButtonStyle.Primary),
+                ]);
+                break;
         }
 
         return {
@@ -111,8 +135,14 @@ module.exports = class Voting {
         };
     }
 
-    getVoting(id) {
-        return this._cache.get(id);
+    async getVoting(id) {
+        if (this._cache.has(id)) return this._cache.get(id);
+        let vote = await voteSchema.findOne({ id });
+        if (vote) {
+            this._cache.set(id, vote);
+            return vote;
+        }
+        return null;
     }
 
     async deleteVoting(id) {
@@ -123,25 +153,60 @@ module.exports = class Voting {
         this._cache.delete(id);
     }
 
-    async addVote(id, userId, option = 1) {
-        const vote = this.getVoting(id);
+    async updateImage(id) {
+        const vote = await this.getVoting(id);
+        if (!vote) return false;
+
+        const guildDb = await this.c.database.getGuild(vote.guildId, true);
+
+        const eitherImage = new Either()
+            .setLanguage(guildDb.language)
+            .setTexts(vote.texts['1'], vote.texts['2'])
+            .setVotes(vote.options['1'], vote.options['2'])
+            
+            
+        const image = await eitherImage.build();
+        const channel = await this.c.channels.fetch(vote.channelId).catch(err => {});
+        if (channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.EmbedLinks])) {
+            const message = await channel.messages.fetch(vote.messageId).catch(err => {});
+            if (message && message.id) {
+                await message.edit({ files: [{name: "wouldyoubot-either.png", attachment: image}] });
+                return true;
+            }
+        }
+        return false;
+    }
+
+    async addVote(id, userId, option = 1, userIcon) {
+        const vote = await this.getVoting(id);
         if (!vote) return false;
 
         const options = [1, 2];
         for (const o of options) {
-            vote.options[o] = vote.options[o].filter(u => u !== userId);
+            vote.options[o] = vote.options[o].filter(u => u.id !== userId);
         }
 
-        vote.options[option].push(userId);
+        vote.options[option].push({id: userId, icon: userIcon });
 
         this._cache.set(id, vote);
         await vote.save();
+        
+        if (vote.type == 2) {
+            if (this.imageUpdate.has(vote.id)) {
+                clearTimeout(this.imageUpdate.get(vote.id));
+                this.imageUpdate.delete(vote.id);
+            }
+            this.imageUpdate.set(vote.id, setTimeout(async () => {
+                this.imageUpdate.delete(vote.id);
+                await this.updateImage(vote.id);
+            }, 2000));
+        }
 
         return true;
     }
 
     async getVotingResults(id) {
-        const vote = this.getVoting(id);
+        const vote = await this.getVoting(id);
         if (!vote) return false;
 
         let g;
@@ -199,7 +264,7 @@ module.exports = class Voting {
     }
 
     async endVoting(id, messageId) {
-        const vote = this.getVoting(id);
+        const vote = await this.getVoting(id);
         if (!vote) return false;
 
         const results = await this.getVotingResults(id);
@@ -235,16 +300,29 @@ module.exports = class Voting {
             error: 'message_not_found'
         };
 
-        const row = ActionRowBuilder.from(message.components[1]);
+        if (vote.type != 2) {
+            const row = ActionRowBuilder.from(message.components[1]);
+    
+            await message.edit({
+                embeds: message.embeds.length > 0 ? [embed.setDescription(message.embeds[0].description)] : [],
+                components: [row],
+            }).catch(err => {
+                console.log(err);
+            });
+        } else {
+            message.components[0].components = message.components[0].components.slice(0,1);
+            await message.edit({ components: message.components, }).catch(err => console.log(err));
+            if (vote.type == 2) {
+                if (this.imageUpdate.has(vote.id)) {
+                    clearTimeout(this.imageUpdate.get(vote.id));
+                    this.imageUpdate.delete(vote.id);
+                }
+                await this.updateImage(vote.id);
+            }
+        }
 
-        await message.edit({
-            embeds: [embed.setDescription(message.embeds[0].description)],
-            components: [row],
-        }).catch(err => {
-            console.log(err);
-        });
 
-        await this.deleteVoting(id);
+        // await this.deleteVoting(id);
 
         return true;
     }
@@ -265,10 +343,8 @@ module.exports = class Voting {
     async runSchedule() {
         let votes = await voteSchema.find().lean();
         votes = [...votes].filter(v => v.until <= ~~(Date.now() / 1000) && v.until !== 0);
-
-        for (const vote of votes) {
-            await this.endVoting(vote.id, vote.messageId);
-        }
+        
+        for (const vote of votes) await this.endVoting(vote.id, vote.messageId);
 
         console.log(
             `${ChalkAdvanced.white('Would You?')} ${ChalkAdvanced.gray(

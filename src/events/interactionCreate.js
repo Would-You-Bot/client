@@ -44,16 +44,16 @@ module.exports = async (client, interaction) => {
                 }).catch(() => {
                 });
             }
-
-            const button = client.buttons.get(interaction.customId);
+            
+            let button = client.buttons.get(interaction.customId);
+            if (interaction.customId.startsWith("voting_")) button = client.buttons.get("voting");
             if (!button) return interaction.reply({
                 content: "Please use the command again.",
                 ephemeral: true
-            }).catch(() => {
-            });
+            }).catch(() => {});
 
             try {
-                if (!restrict.includes(interaction.customId)) {
+                if (!restrict.includes(interaction.customId) && !interaction.customId.startsWith("voting_")) {
                     client.used.set(interaction.user.id, Date.now() + guildDb.replayCooldown)
                     setTimeout(() => client.used.delete(interaction.user.id), guildDb.replayCooldown)
                 }

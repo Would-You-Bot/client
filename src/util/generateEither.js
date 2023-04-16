@@ -1,4 +1,6 @@
 const Canvas = require("@napi-rs/canvas");
+const {join} = require('path');
+Canvas.GlobalFonts.registerFromPath(join(__dirname, '..', 'data', 'Fonts', 'OpenSans-Bold.ttf'), 'OpenSans');
 
 class Either {
     constructor() {
@@ -52,6 +54,18 @@ class Either {
         return this;
     }
 
+    /**
+     *
+     * @param {String} text1
+     * @param {String} text2
+     * @returns {Either}
+     */
+    setTexts(text1, text2) {
+        this.text1 = text1;
+        this.text2 = text2;
+        return this;
+    }
+
 
     /**
      * This function builds the canvas
@@ -90,17 +104,18 @@ class Either {
         const fontsize1 = calcFontSize(ctx.measureText(this.text1).width, 15, 180);
         const fontsize2 = calcFontSize(ctx.measureText(this.text2).width, 15, 180);
 
-        ctx.font = `bold ${fontsize1 || "25"}px sans-serif`;
+        ctx.font = `${fontsize1 || "25"}px OpenSans`;
         ctx.fillStyle = "#000000";
-        ctx.fillText(this.text1, 140, 156);
+        ctx.fillText(this.text1, 140, 158);
 
-        ctx.font = `bold ${fontsize2 || "25"}px sans-serif`;
+        ctx.font = `${fontsize2 || "25"}px OpenSans`;
         ctx.fillStyle = "#000000";
-        ctx.fillText(this.text2, 140, 240);
+        ctx.fillText(this.text2, 140, 242);
 
         var rad = 15;
 
-        const sliced = this.rowOne.slice(0, 3);
+        const sliced = this.rowOne.slice(0, 3)
+
 
         var pos = rad * sliced.length + 430;
         var yPos = 162;
@@ -118,7 +133,7 @@ class Either {
             context.closePath();
             context.clip();
 
-            const avatar = await Canvas.loadImage(user);
+            const avatar = await Canvas.loadImage(user.icon);
             context.drawImage(avatar, 0, 0, rad * 2, rad * 2);
 
             ctx.drawImage(a, pos, yPos);
@@ -145,7 +160,7 @@ class Either {
             context.closePath();
             context.clip();
 
-            const avatar = await Canvas.loadImage(user);
+            const avatar = await Canvas.loadImage(user.icon);
             context.drawImage(avatar, 0, 0, rad * 2, rad * 2);
 
             ctx.drawImage(a, pos1, yPos1);

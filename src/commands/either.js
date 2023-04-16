@@ -35,27 +35,33 @@ module.exports = {
     async execute(interaction, client, guildDb) {
         const eitherImage = new Either()
             .setLanguage(guildDb.language)
-            .setVotes(["https://cdn.discordapp.com/avatars/981649513427111957/af5f8264403034530bba73ba6c2492d9.webp?size=512"], ["https://cdn.discordapp.com/avatars/981649513427111957/af5f8264403034530bba73ba6c2492d9.webp?size=512"])
-
-        if (!interaction.options.getString('first')) {
-            eitherImage.addFirstText("Sus")
-        } else {
-            eitherImage.addFirstText(interaction.options.getString('first').length > 48 ? interaction.options.getString('first').substring(0, 48).trim() + '...' : interaction.options.getString('first'));
-        }
-        if (!interaction.options.getString('second')) {
-            eitherImage.addSecondText("Sus 2", "s")
-        } else {
-            eitherImage.addSecondText(interaction.options.getString('second').length > 48 ? interaction.options.getString('second').substring(0, 48).trim() + '...' : interaction.options.getString('second'));
-        }
+            .setTexts(interaction.options.getString('first'), interaction.options.getString('second'))
+            .setVotes([], [])
 
         const attachment = new AttachmentBuilder(await eitherImage.build(), { name: 'wouldyoubot-either.png' })
 
-        interaction
-            .reply({
-                files: [attachment],
-            })
-            .catch((err) => console.log(err));
+        const time = guildDb?.voteCooldown ?? 60_000;
+        const three_minutes = 3 * 60 * 1e3;
 
-            // @TODO: Voting here
+        const {
+            row,
+            id
+        } = await client.voting.generateVoting(interaction.guildId, interaction.channelId, ~~((Date.now() + time) / 1000), 2, interaction.options.getString('first'), interaction.options.getString('second'));
+
+        const msg = await interaction.reply({
+            files: [attachment],
+            components: [row],
+            fetchReply: true,
+        }).catch((err) => {
+            console.log(err)
+        });
+
+        await client.voting.setVotingMessage(id, msg.id);
+
+        if(time < three_minutes) {
+            setTimeout(async () => {
+                await client.voting.endVoting(id, msg.id);
+            }, time);
+        }
     }
 };

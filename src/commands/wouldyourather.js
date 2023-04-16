@@ -53,8 +53,8 @@ module.exports = {
                 .setDisabled(!guildDb.replay)
         ]);
 
-        const time = guildDb?.voteCooldown ?? 25000;
-        const three_minutes = 3 * 60 * 1000;
+        const time = guildDb?.voteCooldown ?? 60_000;
+        const three_minutes = 3 * 60 * 1e3;
 
         const {
             row,
