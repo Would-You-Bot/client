@@ -29,13 +29,8 @@ module.exports = {
                     inline: true,
                 },
                 {
-                    name: 'Discord Bot List',
-                    value: `> [ ${client.translation.get(guildDb?.language, 'Vote.embed.value')}  ](https://discordbotlist.com/bots/would-you-8427/upvote)`,
-                    inline: true,
-                },
-                {
-                    name: 'Discord-Botlist.eu',
-                    value: `> [ ${client.translation.get(guildDb?.language, 'Vote.embed.value')}  ](https://discord-botlist.eu/bots/wouldyou)`,
+                    name: 'Voidbots',
+                    value: `> [ ${client.translation.get(guildDb?.language, 'Vote.embed.value')}  ](https://voidbots.net/bot/981649513427111957)`,
                     inline: true,
                 }
             )
