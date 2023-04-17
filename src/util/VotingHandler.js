@@ -166,7 +166,7 @@ module.exports = class Voting {
     this._cache.delete(id);
   }
 
-  async updateImage(id) {
+  async updateImage(id) { // HERE
     const vote = await this.getVoting(id);
     if (!vote) return false;
 
@@ -227,7 +227,7 @@ module.exports = class Voting {
         setTimeout(async () => {
           this.imageUpdate.delete(vote.id);
           await this.updateImage(vote.id);
-        }, 3000)
+        }, 5000)
       );
     }
 
@@ -297,7 +297,7 @@ module.exports = class Voting {
     };
   }
 
-  async endVoting(id, messageId) {
+  async endVoting(id, messageId) { // HERE
     const vote = await this.getVoting(id);
     if (!vote) return false;
 

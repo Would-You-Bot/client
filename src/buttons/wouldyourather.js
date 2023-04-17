@@ -1,5 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
-const generateRather = require("../util/generateRather");
+
 
 module.exports = {
   data: {
