@@ -16,7 +16,6 @@ const WebhookHandler = require("./webhookHandler");
 const CooldownHandler = require("./cooldownHandler");
 const DailyMessage = require("./dailyMessage");
 const VoteLogger = require("./voteLogger");
-const Voting = require("./VotingHandler");
 
 // User filter to filter all users out of the cache expect the bot
 const userFilter = (u) => u?.id !== client?.user?.id;
@@ -92,12 +91,6 @@ module.exports = class WouldYou extends Client {
         this.keepAlive = new KeepAlive(this);
         this.keepAlive.start();
 
-        //Vote Logger
-        this.voteLogger = new VoteLogger(this);
-        if(this?.cluster?.id === 0) {
-            this.voteLogger.startAPI();
-        }
-
         // Button Loader
         this.buttonHandler = new ButtonHandler(this);
         this.buttonHandler.load();
@@ -110,9 +103,6 @@ module.exports = class WouldYou extends Client {
         this.dailyMessage = new DailyMessage(this);
         this.dailyMessage.start();
 
-        // Voting System
-        this.voting = new Voting(this);
-        this.voting.start();
     }
 
     /**

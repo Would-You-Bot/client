@@ -1,53 +1,21 @@
 const { Schema, model } = require('mongoose');
 
-const voteModel = new Schema(
-    {
-        id: {
-            type: String,
-            required: true,
-        },
-        guildId: {
-            type: String,
-            required: false,
-        },
-        channelId: {
-            type: String,
-            required: true,
-        },
-        type: {
-            type: Number,
-            default: 0, // 0 = rather, 1 = would you
-        },
-        options: {
-            1: {
-                type: Array,
-                default: [],
-                required: false,
-            },
-            2: {
-                type: Array,
-                default: [],
-                required: false,
-            },
-        },
-        texts: {
-            1: {
-                type: String,
-                default: '',
-            },
-            2: {
-                type: String,
-                default: '',
-            }
-        },
+const voteModel = new Schema({
+  message: { type: String, required: true },
+  guild: { type: String, required: false },
+  channel: { type: String, required: true },
+  type: { type: Number, default: 0 }, // 0 = wouldyourather, 1 = neverhaveiever, 2 = wwyd
 
-        // Timestamp in seconds until you can vote
-        until: {
-            type: Number,
-            default: 0,
-            required: false,
-        }
-    }
-);
+  texts: { 
+    1: {  type: String,   default: ""  },
+    2: {  type: String,  default: ""}
+  },
+
+    votes: {
+        
+    },
+
+  until: {  type: Date,  required: false }
+});
 
 module.exports = model('voteModel', voteModel);
