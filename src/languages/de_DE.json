@@ -127,7 +127,7 @@
         "name": "**Meine Befehle**",
         "value": "`/wouldyou` - Starte Diskussionen über zufällige Kräfte\n`/ping` - Pong!\n`/language` - Ändere die Sprache auf dem Server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei Kräfte aus denen du wählen kannst\n`/custom` - Sende eine benutzerdefinierte Would You Nachricht in den Chat!\n`/wwyd` - Sendet eine was würdest du tun Frage in den Chat!\n`/welcome` - Hinzufügen oder Entfernen des Willkommenskanals\n`/support` - Solltest du Hilfe benötigen, nutze diesen Befehl und wir helfen dir gerne weiter!",
         "privacyname": "**Datenschutzbestimmung**",
-        "privacy": "Wir schätzen deine Privatsphäre sehr. Wenn du wissen möchtest, was mit deinen daten passiert, dann schaue dir unsere Datenschutzbestimmungen [hier](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY) an."
+        "privacy": "Wir schätzen deine Privatsphäre sehr. Wenn du wissen möchtest, was mit deinen daten passiert, dann schaue dir unsere Datenschutzbestimmungen [hier](https://wouldyoubot.gg/privacy) an."
       }
     },
     "button": {

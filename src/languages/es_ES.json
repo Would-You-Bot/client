@@ -127,7 +127,7 @@
         "name": "**Mis Comandos**",
         "value": "`/Would You` - Inicia una discusión sobre poderes aleatorios.\n`/ping` - Pong!\n`/language` - Cambia el idioma del bot para el servidor.\n`/help` - Muestra esta información.\n`/rather` - Te da dos poderes para elegir.\n`/custom` - envía un mensaje personalizado en el chat!\n`/welcome` - ¡Agrega o elimina el canal de bienvenida!\n`/support`: si alguna vez necesitas ayuda con el bot, ¡usa este comando para obtener ayuda del equipo de soporte!",
         "privacyname": "**Política de privacidad**",
-        "privacy": "Valoramos tu privacidad. Si tienes alguna duda sobre tus datos, consulta nuestra política de privacidad [aquí](https://raw.githubusercontent.com/Developer-Dungeon-Studio/Would-You/main/PRIVACY-POLICY)."
+        "privacy": "Valoramos tu privacidad. Si tienes alguna duda sobre tus datos, consulta nuestra política de privacidad [aquí](https://wouldyoubot.gg/privacy)."
       }
     },
     "button": {
