@@ -1,4 +1,4 @@
-const {WebhookClient, EmbedBuilder} = require('discord.js');
+const { WebhookClient, EmbedBuilder } = require('discord.js');
 require('dotenv').config();
 
 module.exports = async (client, guild) => {
@@ -25,20 +25,22 @@ module.exports = async (client, guild) => {
                     format: 'png',
                     dynamic: true
                 }))
-                .setDescription(`**Name**: ${guild.name.replace("Discord", "").replace("discord", "").replace("Everyone", "").replace("everyone", "")}\n**Users**: ${guild.memberCount.toLocaleString()}${features ? `\n**Features**: ${features}` : ``}`)
+                .setDescription(`**Name**: ${guild.name}\n**Users**: ${guild.memberCount.toLocaleString()}${features ? `\n**Features**: ${features}` : ``}`)
                 .setFooter({
                     text: global?.devBot ? 'Dev Bot' : 'Main Bot',
                 })
-        ]
+        ],
+        allowedMentions: { parse: [] }
     });
 
     if (!global?.devBot) {
         const webhookClient = new WebhookClient({url: process.env.WEBHOOK});
 
         await webhookClient.send({
-            content: `<:BadCheck:1025490660968628436> Left ${guild.name.replace("Discord", "").replace("discord", "").replace("Everyone", "").replace("everyone", "")}. I'm now in ${client.guilds.cache.size} guilds.`,
+            content: `<:BadCheck:1025490660968628436> Left ${guild.name}. I'm now in ${client.guilds.cache.size} guilds.`,
             username: `${guild.name.replace("Discord", "").replace("discord", "").replace("Everyone", "").replace("everyone", "")}`,
             avatarURL: guild.iconURL({format: 'webp', dynamic: true, size: 1024}),
+            allowedMentions: { parse: [] }
         }).catch((err) => console.log(err));
     }
 };

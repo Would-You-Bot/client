@@ -22,7 +22,6 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        const {Help} = require(`../languages/${guildDb.language}.json`);
         const commands = await client.application.commands.fetch({withLocalizations: true})
         let type;
         if (guildDb.language === "de_DE") {
@@ -35,23 +34,23 @@ module.exports = {
         const helpembed = new EmbedBuilder()
             .setColor('#0598F6')
             .setFooter({
-                text: `${Help.embed.footer}`,
+                text: client.translation.get(guildDb?.language, 'Help.embed.footer'),
                 iconURL: client.user.avatarURL(),
             })
             .setTimestamp()
-            .setTitle(Help.embed.title)
+            .setTitle(client.translation.get(guildDb?.language, 'Help.embed.title'))
             .addFields(
                 {
-                    name: Help.embed.Fields.privacyname,
-                    value: Help.embed.Fields.privacy,
+                    name: client.translation.get(guildDb?.language, 'Help.embed.Fields.privacyname'),
+                    value: client.translation.get(guildDb?.language, 'Help.embed.Fields.privacy'),
                     inline: false,
                 },
             )
-            .setDescription(`${Help.embed.description}\n\n${commands.filter(e => e.name !== "reload").sort((a, b) => a.name.localeCompare(b.name)).map(n => `</${n.name}:${n.id}> - ${type === "de" ? n.descriptionLocalizations.de : type === "es" ? n.descriptionLocalizations["es-ES"] : n.description}`).join("\n")}`);
+            .setDescription(client.translation.get(guildDb?.language, 'Help.embed.description'), `\n\n${commands.filter(e => e.name !== "reload").sort((a, b) => a.name.localeCompare(b.name)).map(n => `</${n.name}:${n.id}> - ${type === "de" ? n.descriptionLocalizations.de : type === "es" ? n.descriptionLocalizations["es-ES"] : n.description}`).join("\n")}`);
 
         const button = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setLabel(Help.button.title)
+                .setLabel(client.translation.get(guildDb?.language, 'Help.button.title'))
                 .setStyle(5)
                 .setEmoji('💫')
                 .setURL('https://discord.gg/vMyXAxEznS'),

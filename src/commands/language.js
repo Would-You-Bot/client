@@ -32,7 +32,6 @@ module.exports = {
      */
     async execute(interaction, client, guildDb) {
         let languageembed;
-        const {Language} = require(`../languages/${guildDb.language}.json`);
         if (
             interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
             || global.checkDebug(guildDb, interaction?.user?.id)
@@ -93,7 +92,7 @@ module.exports = {
             const errorembed = new EmbedBuilder()
                 .setColor('#F00505')
                 .setTitle('Error!')
-                .setDescription(Language.embed.error);
+                .setDescription(client.translation.get(guildDb?.language, 'Language.embed.error'));
 
             return interaction.reply({
                 embeds: [errorembed],

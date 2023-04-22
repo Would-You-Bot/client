@@ -48,7 +48,7 @@ module.exports = {
                 embeds: [errorembed],
                 ephemeral: true,
             }).catch((err) => {
-                return;
+                console.log(err)
             });
         }
 

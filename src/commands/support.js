@@ -22,18 +22,13 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        let language = require(`../languages/en_EN.json`);
-        if (interaction.guildId) {
-            language = require(`../languages/${guildDb.language}.json`);
-        }
-        const {Support} = language;
 
         const supportembed = new EmbedBuilder()
             .setColor("#F00505")
-            .setTitle(Support.embed.title)
-            .setDescription(`${Support.embed.description}`)
+            .setTitle(client.translation.get(guildDb?.language, 'Support.embed.title'))
+            .setDescription(client.translation.get(guildDb?.language, 'Support.embed.description'))
             .setFooter({
-                text: `${Support.embed.footer}`,
+                text: client.translation.get(guildDb?.language, 'Support.embed.footer'),
                 iconURL: client.user.avatarURL(),
             })
             .setTimestamp();
@@ -52,7 +47,7 @@ module.exports = {
                 components: [supportbutton],
             })
             .catch((err) => {
-                return;
+                return console.log(err)
             });
     },
 };

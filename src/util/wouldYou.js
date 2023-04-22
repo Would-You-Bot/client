@@ -1,9 +1,9 @@
-// Main Bot Library's
-const {Client, GatewayIntentBits, Options, Collection} = require("discord.js");
-const {getInfo, ClusterClient} = require("discord-hybrid-sharding");
+// Main Bot Librarys
+const { Client, GatewayIntentBits, Options, Collection } = require("discord.js");
+const { getInfo, ClusterClient } = require("discord-hybrid-sharding");
 
-// Utils anc Config
-const {ChalkAdvanced} = require("chalk-advanced");
+// Utils and Config
+const { ChalkAdvanced } = require("chalk-advanced");
 require('dotenv').config();
 
 // Classes for the bot
@@ -16,6 +16,7 @@ const WebhookHandler = require("./webhookHandler");
 const CooldownHandler = require("./cooldownHandler");
 const DailyMessage = require("./dailyMessage");
 const VoteLogger = require("./voteLogger");
+const Voting = require("./votingHandler");
 
 // User filter to filter all users out of the cache expect the bot
 const userFilter = (u) => u?.id !== client?.user?.id;
@@ -108,6 +109,9 @@ module.exports = class WouldYou extends Client {
         // Daily Message
         this.dailyMessage = new DailyMessage(this);
         this.dailyMessage.start();
+
+        this.voting = new Voting(this);
+        this.voting.start();
     }
 
     /**
