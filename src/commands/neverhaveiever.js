@@ -36,9 +36,9 @@ module.exports = {
             })
             .setDescription(neverArray[randomNever]);
 
-        const row = new ActionRowBuilder();
+        const mainRow = new ActionRowBuilder();
         if (Math.round(Math.random() * 15) < 3) {
-            row.addComponents([
+            mainRow.addComponents([
                 new ButtonBuilder()
                     .setLabel('Invite')
                     .setStyle(5)
@@ -48,22 +48,29 @@ module.exports = {
                     )
             ]);
         }
-        row.addComponents([
+        mainRow.addComponents([
             new ButtonBuilder()
                 .setLabel('New Question')
                 .setStyle(1)
                 .setEmoji('1073954835533156402')
                 .setCustomId(`neverhaveiever`)
         ]);
+        
+    const time = guildDb?.voteCooldown ?? 60_000;
+    const three_minutes = 3 * 60 * 1e3;
 
-        return interaction.reply({
-            embeds: [ratherembed],
-            components: [row],
-        }).catch((err) => {
-            console.log(err)
-        });
+    const { row, id } = await client.voting.generateVoting(
+      interaction.guildId,
+      interaction.channelId,
+      time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
+      1
+    );
 
-        // @TODO: Voting here
+    interaction
+      .reply({ embeds: [ratherembed], components: [row, mainRow] })
+      .catch((err) => {
+        return console.log(err);
+      });
 
     },
 };

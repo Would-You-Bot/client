@@ -14,15 +14,14 @@ module.exports = {
             .setColor("#0598F6")
             .setFooter({ text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`, iconURL: interaction.user.avatarURL() })
             .setFooter({
-                text: client.translation.get(guildDb?.language, 'Debug.embed.isChannel', {
-                    is: interaction?.channel?.id == guildDb?.dailyChannel ? client.translation.get(guildDb?.language, 'Debug.embed.is') : client.translation.get(guildDb?.language, 'Debug.embed.isnot')
-                })
-            })
+                text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomNever}`,
+                iconURL: interaction.user.avatarURL(),
+              })
             .setDescription(neverArray[randomNever]);
 
-        const row = new ActionRowBuilder();
+        const mainRow = new ActionRowBuilder();
         if (Math.round(Math.random() * 15) < 3) {
-            row.addComponents([
+            mainRow.addComponents([
                 new ButtonBuilder()
                     .setLabel('Invite')
                     .setStyle(5)
@@ -32,7 +31,7 @@ module.exports = {
                     )
             ]);
         }
-        row.addComponents([
+        mainRow.addComponents([
             new ButtonBuilder()
                 .setLabel('New Question')
                 .setStyle(1)
@@ -40,9 +39,18 @@ module.exports = {
                 .setCustomId(`neverhaveiever`)
         ]);
 
-        return interaction.update({
+        const time = guildDb?.voteCooldown ?? 60_000;
+        const three_minutes = 3 * 60 * 1e3;
+  
+      
+      const {
+        row,
+        id
+    } = await client.voting.generateVoting(interaction.guildId, interaction.channelId, time < three_minutes ? 0 : ~~((Date.now() + time) / 1000), 1);
+
+        return interaction.reply({
             embeds: [ratherembed],
-            components: [row],
+            components: [row, mainRow],
         }).catch((err) => {
             return console.log(err)
         });

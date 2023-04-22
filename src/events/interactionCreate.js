@@ -47,6 +47,7 @@ module.exports = async (client, interaction) => {
             
             let button = client.buttons.get(interaction.customId);
             if (interaction.customId.startsWith("voting_")) button = client.buttons.get("voting");
+            if (interaction.customId.startsWith("result_")) button = client.buttons.get("result");
             if (!button) return interaction.reply({
                 content: "Please use the command again.",
                 ephemeral: true

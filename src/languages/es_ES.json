@@ -40,16 +40,16 @@
         "att3": "¡El JSON que proporcionaste no tenía ningún dato! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att4": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att5": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
-        "att6": "El JSON que proporcionaste tiene demasiados datos para la categoría inútil, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
-        "att7": "El JSON que proporcionaste tiene demasiados datos para la categoría útil, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
-        "att8": "El JSON que proporcionaste tiene demasiados datos para la categoría NSFW, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
-        "att9": "No puedes tener más que 30 mensajes personalizados en una importación para la categoría útil. ¡Puedes ganar más votando por el bot!",
-        "att10": "No puedes tener más que 30 mensajes personalizados en una importación para la categoría inútil. ¡Puedes ganar más votando por el bot!",
-        "att11": "No puedes tener más que 30 mensajes personalizados en una importación para la categoría NSFW. ¡Puedes ganar más votando por el bot!",
-        "att12": "Sumando tus mensajes personalizados **útiles** actuales y los que están en tu archivo, esto supera los 30, que es el límite. ¡Puedes ganar más votando por el bot!",
-        "att13": "Sumando tus mensajes personalizados **inútiles** actuales y los que están en tu archivo, esto supera los 30, que es el límite. ¡Puedes ganar más votando por el bot!",
-        "att14": "Sumando tus mensajes personalizados **NSFW** actuales y los que están en tu archivo, esto supera los 30, que es el límite. ¡Puedes ganar más votando por el bot!",
-        "att15": "Se produjo un error al ejecutar este comando, por favor infórmelo al servidor de soporte."
+        "att15": "Se produjo un error al ejecutar este comando, por favor infórmelo al servidor de soporte.",
+        "att16": "El JSON que proporcionaste tenía demasiados datos para la categoría wouldyourather, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
+        "att17": "El JSON que proporcionaste tenía demasiados datos para la categoría neverhaveiever, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
+        "att18": "El JSON que proporcionaste tenía demasiados datos para la categoría wwyd, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
+        "att19": "No puedes tener más de 30 mensajes personalizados en una importación para la categoría wouldyourather. ¡Puedes ganar más votando por el bot!",
+        "att20": "No puedes tener más de 30 mensajes personalizados en una importación para la categoría neverhaveiever. ¡Puedes ganar más votando por el bot!",
+        "att21": "No puedes tener más de 30 mensajes personalizados en una importación para la categoría wwyd. ¡Puedes ganar más votando por el bot!",
+        "att22": "Al añadir los mensajes de tu archivo con tus mensajes personalizados actuales **wouldyourather** el número de mensajes superará los 30, que es el límite. ¡Puedes ganar más votando por el bot!",
+        "att23": "Al añadir los mensajes de tu archivo con tus mensajes personalizados actuales **neverhaveiever** el número de mensajes superará los 30, que es el límite. ¡Puedes ganar más votando por el bot!",
+        "att24": "Al añadir los mensajes de tu archivo con tus mensajes personalizados actuales **wwyd** el número de mensajes superará los 30, que es el límite. ¡Puedes ganar más votando por el bot!"
       },
       "export": {
         "none": "¡No tienes ningun mensaje personalizado para exportar!"
@@ -77,7 +77,6 @@
       "paginator": {
         "title": "Mensajes personalizados de Would You",
         "descCatUseful": "**Categoría**: útil",
-        "descCatNSFW": "**Categoría**: NSFW",
         "descCatUseless": "**Categoría**: inútil"
       }
     }
@@ -100,17 +99,16 @@
     "embed": {
       "Usefulname": "¿Querrías este poder?",
       "Uselessname": "¿Querrías este poder?",
-      "Nsfwname": "¿Querrías este poder?",
       "footer": "Would You"
     },
     "replays": {
       "disabled": "¡Volver a jugar está actualmente deshabilitado en este servidor!"
     },
     "stats": {
-      "of": "of",
+      "of": "de",
       "taking": " querría este poder.",
-      "user": "user",
-      "users": "users"
+      "user": "usuario",
+      "users": "usuarios"
     }
   },
   "Random": {
@@ -122,7 +120,7 @@
   },
   "Help": {
     "embed": {
-      "title": "Info",
+      "title": "Información",
       "description": "**Would You** es un bot creado para aumentar la actividad del servidor de Discord.",
       "footer": "Would You",
       "Fields": {
@@ -145,30 +143,18 @@
   },
   "Rather": {
     "embed": {
-      "uselessname": "¿Preferirías tener esto?",
-      "uselessname2": "¿o este poder inútil?",
-      "usefulname": "¿Preferirías tener esto?",
-      "usefulname2": "¿o este poder útil?",
+      "uselessname": "Would you rather",
+      "uselessname2": "o",
+      "usefulname": "Would you rather",
+      "usefulname2": "o",
       "footer": "Would You Rather",
-      "thispower": "Según la votación, la mayoría de los usuarios querrían este poder:"
+      "thispower": "Según la votación, la mayoría de los usuarios preferirían:"
     },
     "replays": {
       "disabled": "¡Volver a jugar está actualmente deshabilitado en este servidor!"
     },
     "button": {
       "nocustom": "¡Actualmente no hay mensajes personalizados! Haga algunos o cambie el tipo usando /Would You type"
-    }
-  },
-  "NSFW": {
-    "embed": {
-      "nonsfw": "¡Los comandos NSFW no están habilitados en este servidor!",
-      "nochannel": "¡Este comando solo se puede usar en canales NSFW!",
-      "title": "Would You NSFW",
-      "description": "Ha configurado correctamente NSFW",
-      "errorDesc": "¡Para usar este comando necesitas votar por el bot!",
-      "errorAlready": "Las preguntas NSFW ya están deshabilitadas.",
-      "success": "Preguntas NSFW han sido deshabilitadas.",
-      "missingPerms": "¡Te falta el permiso `Manage guild` para usar este comando!"
     }
   },
   "REPLAY": {
@@ -206,32 +192,49 @@
     "noWebhook": "Debido a un cambio necesario para el rendimiento, ¡necesito permisos de **Gestión de Webhooks** para enviar este mensaje! (Si tengo estos permisos pero sigue apareciendo este mensaje, ¡asegúrate de que puedo crear un Webhook!"
   },
   "Settings": {
-    "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
-    "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
-    "dailyChannel": "Select a channel where you want Daily Messages to be!",
-    "dailyRole": "Select a role that you want to be pinged in Daily Messages!",
+    "errorSame": "La zona horaria proporcionada es la misma zona horaria que ya está definida. Asegúrese de elegir una zona horaria diferente.",
+    "errorInvalid": "La zona horaria proporcionada no es válida, puedes elegir una zona horaria válida aquí: [Selector de Zona Horaria](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "intervalSame": "El intervalo proporcionado es el mismo que ya está establecido. Asegúrese de elegir un intervalo diferente.",
+    "intervalInvalid": "El intervalo proporcionado no es válido. ¡Asegúrese de que su intervalo está en formato 24 h y los minutos son 00 o 30!",
+    "dailyChannel": "¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!",
+    "dailyType": "¡Selecciona un tipo de mensaje diario que quieres enviar!",
+    "dailyRole": "¡Selecciona un rol que quieres hacer ping en los Mensajes Diarios!",
+    "replaySame": "El tiempo de reutilización proporcionado es el mismo que ya está establecido. Asegúrese de elegir un tiempo de reutilización diferente.",
+    "voteSame": "El tiempo de espera de votación proporcionado es el mismo tiempo de espera que ya está establecido. Asegúrese de elegir un tiempo de espera diferente.",
+    "cooldownInvalid": "El tiempo de reutilización proporcionado no es válido. ¡Asegúrese de que el tiempo de reutilización solo incluye números!",
     "embed": {
-      "dailyTitle": "Would You - Daily Messages",
-      "dailyMsg": "**Enabled**",
-      "dailyRole": "**Role**",
-      "dailyChannel": "**Channel**",
+      "generalTitle": "Would You - Configuración general",
+      "voteCooldown": "**Tiempo de Votación**",
+      "replayCooldown": "**Tiempo de Repetición**",
+      "dailyInterval": "**Intervalo**",
+      "dailyTitle": "Would You - Mensajes Diarios",
+      "dailyType": "**Tipo**",
+      "dailyMsg": "**Habilitado**",
+      "dailyRole": "**Papel**",
+      "dailyChannel": "**Canal**",
       "dailyTimezone": "**Timezone**",
-      "welcomeTitle": "Would You - Welcomes",
-      "welcome": "**Enabled**",
-      "welcomeChannel": "**Channel**",
-      "welcomePing": "**User Pings**",
-      "footer": "Would You"
+      "welcomeTitle": "Would You - Bienvenidas",
+      "welcome": "**Habilitado**",
+      "welcomeChannel": "**Canal**",
+      "welcomePing": "**Pings de usuario**",
+      "footer": "Would You",
+      "dailyThread": "**Hilos**"
     },
     "button": {
-      "dailyChannel": "Set Channel",
-      "dailyRole": "Set Role",
-      "dailyTimezone": "Set Timezone",
-      "dailyMsg": "Toggle Daily Messages",
-      "welcomeChannel": "Set Channel",
-      "welcome": "Toggle Welcomes",
-      "welcomePing": "Toggle User Ping"
-  }
-},
+      "dailyInterval": "Establecer intervalo",
+      "dailyChannel": "Establecer canal",
+      "dailyRole": "Establecer rol",
+      "dailyTimezone": "Establecer zona horaria",
+      "dailyType": "Definir tipo",
+      "dailyMsg": "Alternar Mensajes Diarios",
+      "voteCooldown": "Establecer tiempo de espera de voto",
+      "replayCooldown": "Establecer tiempo de reutilización",
+      "welcomeChannel": "Establecer canal",
+      "welcome": "Alternar Bienvenidas",
+      "welcomePing": "Alternar ping de usuario",
+      "dailyThread": "Hilo conductor"
+    }
+  },
   "Debug": {
     "permissions": "No tienes los permisos necesarios para usar este comando.",
     "channelNotSet": "El canal para el mensaje diario no está configurado o no puedo acceder a él.",
@@ -240,7 +243,7 @@
     "enabled": "El modo debug fue **habilitado**. Tenga en cuenta que los desarrolladores de WouldYou ahora pueden acceder a los comandos **sin** tener los permisos necesarios.",
     "disabled": "El modo debug fue **deshabilitado**. Tenga en cuenta que los desarrolladores de WouldYou ya no pueden acceder a los comandos **sin** tener los permisos necesarios.",
     "embed": {
-      "title": "Debug",
+      "title": "Depurar",
       "settings": "Configuraciones",
       "isChannel": "Este canal **{is}** el canal de mensajes diarios.",
       "is": "es",
@@ -262,9 +265,7 @@
     }
   },
   "Voting": {
-    "Yes": "Si",
-    "No": "No",
-    "Vote": "Vote: ",
-    "VotingResults": "Resultados de la votación"
+    "Yes": "Sí",
+    "No": "No"
   }
 }

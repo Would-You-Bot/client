@@ -61,18 +61,12 @@ module.exports = {
             id
         } = await client.voting.generateVoting(interaction.guildId, interaction.channelId, time < three_minutes ? 0 : ~~((Date.now() + time) / 1000), 0);
 
-        const msg = await interaction.reply({
+        await interaction.reply({
             embeds: [ratherembed],
             components: [row, mainRow],
             fetchReply: true,
         }).catch((err) => {
             console.log(err)
         });
-
-        if(time < three_minutes) {
-            setTimeout(async () => {
-               await client.voting.endVoting(id, msg.id);
-            }, time);
-        }
     },
 };
