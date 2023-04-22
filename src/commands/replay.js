@@ -39,7 +39,6 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        const {REPLAY} = require(`../languages/${guildDb.language}.json`);
         if (
             interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
             || global.checkDebug(guildDb, interaction?.user?.id)
@@ -54,8 +53,8 @@ module.exports = {
                             .setTitle("Error!")
                             .setDescription(
                                 guildDb.replay
-                                    ? REPLAY.embed.errorAlready2
-                                    : REPLAY.embed.errorAlready
+                                    ? client.translation.get(guildDb?.language, 'REPLAY.embed.errorAlready2')
+                                    : client.translation.get(guildDb?.language, 'REPLAY.embed.errorAlready')
                             );
 
                         return interaction
@@ -74,11 +73,11 @@ module.exports = {
 
                     const doneEmbed = new EmbedBuilder()
                         .setColor("#2f3037")
-                        .setTitle(REPLAY.embed.title)
+                        .setTitle(client.translation.get(guildDb?.language, 'REPLAY.embed.title'))
                         .setDescription(
                             !guildDb.replay
-                                ? `${REPLAY.embed.description} **${interaction.options.getBoolean('enable')}**`
-                                : REPLAY.embed.success
+                                ? `${client.translation.get(guildDb?.language, 'REPLAY.embed.description')} **${interaction.options.getBoolean('enable')}**`
+                                : client.translation.get(guildDb?.language, 'REPLAY.embed.success')
                         );
                     await interaction
                         .reply({
@@ -86,7 +85,7 @@ module.exports = {
                             ephemeral: true,
                         })
                         .catch((err) => {
-                            return;
+                            return console.log(err)
                         });
                     break;
                 case "cooldown":
@@ -99,7 +98,7 @@ module.exports = {
                     const nochannelEmbed = new EmbedBuilder()
                         .setColor("#2f3037")
                         .setTitle("Error!")
-                        .setDescription(`${REPLAY.embed.cooldownSuccess}\`${cooldown.toLocaleString()}\`${REPLAY.embed.cooldownSuccess2}`);
+                        .setDescription(`${client.translation.get(guildDb?.language, 'REPLAY.embed.cooldownSuccess')}\`${cooldown.toLocaleString()}\`${client.translation.get(guildDb?.language, 'REPLAY.embed.cooldownSuccess2')}`);
                     await interaction
                         .reply({
                             embeds: [nochannelEmbed],
@@ -114,7 +113,7 @@ module.exports = {
             const errorembed = new EmbedBuilder()
                 .setColor("#F00505")
                 .setTitle("Error!")
-                .setDescription(REPLAY.embed.missingPerms);
+                .setDescription(client.translation.get(guildDb?.language, 'REPLAY.embed.missingPerms'));
 
             return interaction
                 .reply({
@@ -122,7 +121,7 @@ module.exports = {
                     ephemeral: true,
                 })
                 .catch((err) => {
-                    return;
+                    return console.log(err)
                 });
         }
     },

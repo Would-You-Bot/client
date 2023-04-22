@@ -39,8 +39,9 @@ module.exports = {
                         .setDescription("Select which category you want this custom message to be in.")
                         .setRequired(true)
                         .addChoices(
-                            {name: 'Useful', value: 'useful'},
-                            {name: 'Useless', value: 'useless'},
+                            { name: 'Would You Rather', value: 'wouldyourather' },
+                            { name: 'Never Have I Ever', value: 'neverhaveiever' },
+                            { name: 'What Would You Do', value: 'wwyd' },
                         )
                 )
                 .addStringOption((option) =>
@@ -90,7 +91,6 @@ module.exports = {
      */
     async execute(interaction, client, guildDb) {
         let typeEmbed, message;
-        const {Language, wyCustom} = require(`../languages/${guildDb.language}.json`);
 
         class Paginator {
             constructor(pages = [], {
@@ -143,9 +143,9 @@ module.exports = {
                             switch (inter.customId) {
                                 case "first":
                                     if (this.page === 0) {
-                                        return await inter.reply({
+                                        return inter.reply({
                                             ephemeral: true,
-                                            content: wyCustom.error.paginate
+                                            content: client.translation.get(guildDb?.language, 'wyCustom.error.paginate')
                                         });
                                     } else {
                                         await inter.update({
@@ -156,33 +156,33 @@ module.exports = {
                                     }
                                 case "prev":
                                     if (this.pages[this.page - 1]) {
-                                        return await inter.update({
+                                        return inter.update({
                                             embeds: [this.pages[--this.page]],
                                             ephemeral: true
                                         });
                                     } else {
-                                        return await inter.reply({
+                                        return inter.reply({
                                             ephemeral: true,
-                                            content: wyCustom.error.paginate
+                                            content: client.translation.get(guildDb?.language, 'wyCustom.error.paginate')
                                         });
                                     }
                                 case "next":
                                     if (this.pages[this.page + 1]) {
-                                        return await inter.update({
+                                        return inter.update({
                                             embeds: [this.pages[++this.page]],
                                             ephemeral: true
                                         });
                                     } else {
-                                        return await inter.reply({
+                                        return inter.reply({
                                             ephemeral: true,
-                                            content: wyCustom.error.paginate
+                                            content: client.translation.get(guildDb?.language, 'wyCustom.error.paginate')
                                         });
                                     }
                                 case "last":
                                     if (this.page === this.pages.length - 1) {
-                                        return await inter.reply({
+                                        return inter.reply({
                                             ephemeral: true,
-                                            content: wyCustom.error.paginate
+                                            content: client.translation.get(guildDb?.language, 'wyCustom.error.paginate')
                                         });
                                     } else {
                                         await inter.update({
@@ -208,7 +208,7 @@ module.exports = {
                     if (!client.voteLogger.votes.has(interaction.user.id)) {
                         if (guildDb.customMessages.length >= 30) return interaction.reply({
                             ephemeral: true,
-                            content: wyCustom.error.maximum
+                            content: client.translation.get(guildDb?.language, 'wyCustom.error.maximum')
                         })
                     }
 
@@ -217,9 +217,9 @@ module.exports = {
 
                     let newID = makeID(6);
                     typeEmbed = new EmbedBuilder()
-                        .setTitle(wyCustom.success.embedAdd.title)
+                        .setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.title'))
                         .setColor("#0598F4")
-                        .setDescription(`**${wyCustom.success.embedAdd.descID}**: ${newID}\n**${wyCustom.success.embedAdd.descCat}**: ${option}\n\n**${wyCustom.success.embedAdd.descCont}**: \`${message}\``)
+                        .setDescription(`**${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descID')}**: ${newID}\n**${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descCat')}**: ${option}\n\n**${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descCont')}**: \`${message}\``)
                         .setFooter({
                             text: 'Would You',
                             iconURL: client.user.avatarURL(),
@@ -228,7 +228,7 @@ module.exports = {
                     guildDb.customMessages.push({
                         id: newID,
                         msg: message,
-                        type:option
+                        type: option
                     })
 
                     await client.database.updateGuild(interaction.guildId, {
@@ -239,7 +239,7 @@ module.exports = {
                     message = interaction.options.getString("message");
 
                     typeEmbed = new EmbedBuilder()
-                        .setTitle(wyCustom.success.embedRemove.title)
+                        .setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.embedRemove.title'))
                         .setColor("#0598F4")
                         .setFooter({
                             text: 'Would You',
@@ -258,12 +258,12 @@ module.exports = {
                     break;
                 case 'removeall':
                     if (guildDb.customMessages.length === 0) return interaction.reply({
-                        content: wyCustom.success.embedRemoveAll.none,
+                        content: client.translation.get(guildDb?.language, 'wyCustom.success.embedRemoveAll.none'),
                         ephemeral: true
                     })
 
                     typeEmbed = new EmbedBuilder()
-                        .setTitle(wyCustom.success.embedRemoveAll.title)
+                        .setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.embedRemoveAll.title'))
                         .setColor("#0598F4")
                         .setFooter({
                             text: 'Would You',
@@ -286,7 +286,7 @@ module.exports = {
                 case 'view':
                     if (guildDb.customMessages.length === 0) return interaction.reply({
                         ephemeral: true,
-                        content: wyCustom.error.empty
+                        content: client.translation.get(guildDb?.language, 'wyCustom.error.empty')
                     })
 
                     const page = new Paginator([], {})
@@ -295,7 +295,7 @@ module.exports = {
                         let data;
                         data = guildDb.customMessages.filter(c => c.type === "useless").map(
                             (s, i) =>
-                                `${wyCustom.success.embedAdd.descID}: ${s.id}\n${wyCustom.success.embedAdd.descMsg}: ${s.msg}`
+                                `${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descID')}: ${s.id}\n${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descMsg')}: ${s.msg}`
                         );
                         data = Array.from({
                                 length: Math.ceil(data.length / 5)
@@ -304,14 +304,14 @@ module.exports = {
                         );
 
                         Math.ceil(data.length / 5);
-                        data = data.map(e => page.add(new EmbedBuilder().setTitle(wyCustom.success.paginator.title).setDescription(`${wyCustom.success.paginator.descCatUseful}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
+                        data = data.map(e => page.add(new EmbedBuilder().setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.paginator.title')).setDescription(`${client.translation.get(guildDb?.language, 'wyCustom.success.paginator.descCatUseful')}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
                     }
 
                     if (guildDb.customMessages.filter(c => c.type === "useful" > 0)) {
                         let data;
                         data = guildDb.customMessages.filter(c => c.type === "useful").map(
                             (s, i) =>
-                                `${wyCustom.success.embedAdd.descID}: ${s.id}\n${wyCustom.success.embedAdd.descMsg}: ${s.msg}`
+                                `${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descID')}: ${s.id}\n${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descMsg')}: ${s.msg}`
                         );
                         data = Array.from({
                                 length: Math.ceil(data.length / 5)
@@ -320,7 +320,7 @@ module.exports = {
                         );
 
                         Math.ceil(data.length / 5);
-                        data = data.map(e => page.add(new EmbedBuilder().setTitle(wyCustom.success.paginator.title).setDescription(`${wyCustom.success.paginator.descCatUseless}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
+                        data = data.map(e => page.add(new EmbedBuilder().setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.paginator.title')).setDescription(`${client.translation.get(guildDb?.language, 'wyCustom.success.paginator.descCatUseless')}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
                     }
 
                     page.setTransform((embed, index, total) => embed.setFooter({
@@ -352,13 +352,13 @@ module.exports = {
                 case 'import':
                     const attachemnt = interaction.options.get("attachment");
 
-                    if (!attachemnt) return await interaction.reply({
+                    if (!attachemnt) return interaction.reply({
                         ephemeral: true,
-                        content: wyCustom.error.import.att1
+                        content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att1')
                     })
-                    if (!attachemnt.attachment.name.includes(".json")) return await interaction.reply({
+                    if (!attachemnt.attachment.name.includes(".json")) return interaction.reply({
                         ephemeral: true,
-                        content: wyCustom.error.import.att2
+                        content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att2')
                     })
 
                     // Let give the bot some more time to fetch it :)
@@ -373,55 +373,76 @@ module.exports = {
                         .then(async response => {
                             if (response.data.length === 0) return interaction.editReply({
                                 ephemeral: true,
-                                content: wyCustom.error.import.att3
+                                content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att3')
                             })
-                            if (!response.data.useless && !response.data.useful) return interaction.editReply({
+                            if (!response.data.wouldyourather && !response.data.neverhaveiever && !response.data.wwyd) return interaction.editReply({
                                 ephemeral: true,
-                                content: wyCustom.error.import.att4
+                                content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att4')
                             })
-                            if (!response.data.useless.length === 0 && !response.data.useful.length === 0) return interaction.editReply({
+                            if (!response.data.wouldyourather.length === 0 && !response.data.neverhaveiever === 0 && !response.data.wwyd) return interaction.editReply({
                                 ephemeral: true,
-                                content: wyCustom.error.import.att5
+                                content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att5')
                             })
-                            if (response.data.useless && response.data.useless.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                            if (response.data.wouldyourather && response.data.wouldyourather.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
-                                content: wyCustom.error.import.att6
+                                content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att16')
                             })
-                            if (response.data.useful && response.data.useful.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                            if (response.data.neverhaveiever && response.data.neverhaveiever.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
-                                content: wyCustom.error.import.att7
+                                content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att17')
+                            })
+                            if (response.data.wwyd && response.data.wwyd.length > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                ephemeral: true,
+                                content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att18')
                             })
 
-                            let useful = guildDb.customMessages.filter(c => c.type === "useful").length;
-                            let useless = guildDb.customMessages.filter(c => c.type === "useless").length;
-                            if (useful > 30) return await interaction.editReply({
+                            let wouldyourather = guildDb.customMessages.filter(c => c.type === "wouldyourather").length;
+                            let neverhaveiever = guildDb.customMessages.filter(c => c.type === "neverhaveiever").length;
+                            let wwyd = guildDb.customMessages.filter(c => c.type === "wwyd").length;
+
+                            if (wouldyourather > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
-                                content: wyCustom.error.import.att9
+                                content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att19')
                             })
-                            if (useless > 30) return await interaction.editReply({
+                            if (neverhaveiever > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                 ephemeral: true,
-                                content: wyCustom.error.import.att10
+                                content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att20')
+                            })
+                            if (wwyd > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                ephemeral: true,
+                                content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att21')
                             })
 
-                            if (response.data.useful) {
-                                if (response.data.useful.length + useful > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                            if (response.data.wouldyourather) {
+                                if (response.data.wouldyourather.length + wouldyourather > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                     ephemeral: true,
-                                    content: wyCustom.error.import.att12
+                                    content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att22')
                                 })
-                                response.data.useful.map(d => {
+                                response.data.wouldyourather.map(d => {
                                     let newID = makeID(6);
-                                    guildDb.customMessages.push({id: newID, msg: d, type: "useful"})
+                                    guildDb.customMessages.push({ id: newID, msg: d, type: "wouldyourather" })
                                 });
                             }
 
-                            if (response.data.useless) {
-                                if (response.data.useless.length + useless > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                            if (response.data.neverhaveiever) {
+                                if (response.data.neverhaveiever.length + neverhaveiever > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
                                     ephemeral: true,
-                                    content: wyCustom.error.import.att13
+                                    content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att23')
                                 })
-                                response.data.useless.map(d => {
+                                response.data.neverhaveiever.map(d => {
                                     let newID = makeID(6);
-                                    guildDb.customMessages.push({id: newID, msg: d, type: "useless"})
+                                    guildDb.customMessages.push({ id: newID, msg: d, type: "neverhaveiever" })
+                                });
+                            }
+
+                            if (response.data.wwyd) {
+                                if (response.data.wwyd.length + wwyd > 30 && !client.voteLogger.votes.has(interaction.user.id)) return interaction.editReply({
+                                    ephemeral: true,
+                                    content: client.translation.get(guildDb?.language, 'wyCustom.error.import.att24')
+                                })
+                                response.data.wwyd.map(d => {
+                                    let newID = makeID(6);
+                                    guildDb.customMessages.push({ id: newID, msg: d, type: "wwyd" })
                                 });
                             }
 
@@ -429,44 +450,54 @@ module.exports = {
                                 customMessages: guildDb.customMessages,
                             }, true);
 
-                            return interaction.editReply({ephemeral: true, content: wyCustom.success.import})
+                            return interaction.editReply({ephemeral: true, content: client.translation.get(guildDb?.language, 'wyCustom.success.import')})
                         }).catch((e) => {
-                        return interaction.editReply(`${wyCustom.error.import.att15}\n\nError: ${e}`)
+                        return interaction.editReply(`${client.translation.get(guildDb?.language, 'wyCustom.error.import.att15')}\n\nError: ${e}`)
                     })
                     break;
                 case "export":
                     if (guildDb.customMessages.length === 0) return interaction.reply({
                         ephemeral: true,
-                        content: wyCustom.error.export.none
+                        content: client.translation.get(guildDb?.language, 'wyCustom.error.export.none')
                     })
 
                     await interaction.deferReply();
 
-                    let useful = guildDb.customMessages.filter(c => c.type === "useful");
-                    let useless = guildDb.customMessages.filter(c => c.type === "useless");
+                    let wouldyourather = guildDb.customMessages.filter(c => c.type === "wouldyourather");
+                    let neverhaveiever = guildDb.customMessages.filter(c => c.type === "neverhaveiever");
+                    let wwyd = guildDb.customMessages.filter(c => c.type === "wwyd");
 
                     let text = `{\n`;
-                    if (useful.length > 0) {
-                        text += `"useful": [`
-                        useful.map((a, i) => {
+                    if (wouldyourather.length > 0) {
+                        text += `\n"wouldyourather": [`
+                        wouldyourather.map((a, i) => {
                             i = i++ + 1
-                            text += `\n"${a.msg}"${useful.length !== i ? "," : ""}`
+                            text += `\n"${a.msg}"${wouldyourather.length !== i ? "," : ""}`
                         })
-                        text += `\n]${useless.length > 0 ? "," : ""}`
+                        text += `\n]`
                     }
 
-                    if (useless.length > 0) {
-                        text += `\n"useless": [`
-                        useless.map((a, i) => {
+                    if (neverhaveiever.length > 0) {
+                        text += `\n"neverhaveiever": [`
+                        neverhaveiever.map((a, i) => {
                             i = i++ + 1
-                            text += `\n"${a.msg}"${useless.length !== i ? "," : ""}`
+                            text += `\n"${a.msg}"${neverhaveiever.length !== i ? "," : ""}`
+                        })
+                        text += `\n]`
+                    }
+
+                    if (wwyd.length > 0) {
+                        text += `\n"wwyd": [`
+                        wwyd.map((a, i) => {
+                            i = i++ + 1
+                            text += `\n"${a.msg}"${wwyd.length !== i ? "," : ""}`
                         })
                         text += `\n]`
                     }
                     text += `\n}`
 
                     return interaction.editReply({
-                        content: wyCustom.success.export,
+                        content: client.translation.get(guildDb?.language, 'wyCustom.success.export'),
                         files: [{
                             attachment: Buffer.from(text),
                             name: `Custom_Messages_${interaction.guild.id}.json`
@@ -484,7 +515,7 @@ module.exports = {
             const errorembed = new EmbedBuilder()
                 .setColor('#F00505')
                 .setTitle('Error!')
-                .setDescription(Language.embed.error);
+                .setDescription(client.translation.get(guildDb?.language, 'Language.embed.error'));
             return interaction.reply({
                 embeds: [errorembed],
                 ephemeral: true,

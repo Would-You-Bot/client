@@ -1,9 +1,9 @@
-const {REST} = require('@discordjs/rest');
-const {Routes} = require('discord-api-types/v10');
-const {readdirSync} = require('fs');
 require('dotenv').config();
-const {ChalkAdvanced} = require('chalk-advanced');
-const {AutoPoster} = require('topgg-autoposter');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v10');
+const { readdirSync } = require('fs');
+const { ChalkAdvanced } = require('chalk-advanced');
+const { AutoPoster } = require('topgg-autoposter');
 
 module.exports = async (client) => {
     client.user.setPresence({
@@ -26,7 +26,7 @@ module.exports = async (client) => {
             version: '10',
         }).setToken(process.env.DISCORD_TOKEN);
 
-        (async () => {
+        setTimeout(async () => {
             try {
                 if (process.env.STATUS === 'PRODUCTION') {
                     if (process.env.TOPGGTOKEN) {
@@ -60,7 +60,7 @@ module.exports = async (client) => {
             } catch (err) {
                 if (err) console.error(err);
             }
-        })();
+        }, 2500);
     }
 
     const setStatus = () => {
@@ -69,7 +69,6 @@ module.exports = async (client) => {
             status: 'dnd',
         });
     };
-
 
     setTimeout(() => setStatus(), 35 * 1000);
     setInterval(() => setStatus(), 60 * 60 * 1000); // Do this not so often because everytime you set the presence the bot won't receive any events for some seconds

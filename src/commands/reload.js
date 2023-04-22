@@ -33,9 +33,9 @@ module.exports = {
         await interaction.deferReply({ ephemeral: true });
 
         const users = ["268843733317976066", "347077478726238228", "834549048764661810"];
-        if (!users.find(e => e === interaction.user.id)) return await interaction.editReply({ content: "Only Would You develpers have access to this command! | Nur Would You Entwickler haben Zugriff auf diesen Befehl!" })
+        if (!users.find(e => e === interaction.user.id)) return interaction.editReply({ content: "Only Would You develpers have access to this command! | Nur Would You Entwickler haben Zugriff auf diesen Befehl!" })
         const cmd = interaction.options.getString("options");
-        if (!cat.find(e => e.replace(".js", "") === cmd.toLowerCase())) return await interaction.editReply({ content: "You must provide a valid command to reload it!" })
+        if (!cat.find(e => e.replace(".js", "") === cmd.toLowerCase())) return interaction.editReply({ content: "You must provide a valid command to reload it!" })
 
         try {
             delete require.cache[require.resolve(`./${cmd}.js`)];

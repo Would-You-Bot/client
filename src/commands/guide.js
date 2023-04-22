@@ -19,34 +19,33 @@ module.exports = {
      */
 
     async execute(interaction, client, guildDb) {
-        const {Guide} = require(`../languages/${guildDb.language}.json`);
 
         const guideembed = new EmbedBuilder()
             .setColor('#0598F6')
             .setFooter({
-                text: `${Guide.embed.footer}`,
+                text: client.translation.get(guildDb?.language, 'Guide.embed.footer}'),
                 iconURL: client.user.avatarURL(),
             })
             .setTimestamp()
-            .setTitle(`${Guide.embed.title}`)
+            .setTitle(client.translation.get(guildDb?.language, 'Guide.embed.title'))
             .addFields(
                 {
-                    name: `${Guide.embed.name1}`,
-                    value: `${Guide.embed.value1}`,
+                    name: client.translation.get(guildDb?.language, 'Guide.embed.name1'),
+                    value: client.translation.get(guildDb?.language, 'Guide.embed.value1'),
                     inline: false,
                 },
                 {
-                    name: `${Guide.embed.name2}`,
-                    value: `${Guide.embed.value2}`,
+                    name: client.translation.get(guildDb?.language, 'Guide.embed.name2'),
+                    value: client.translation.get(guildDb?.language, 'Guide.embed.value2'),
                     inline: false,
                 },
                 {
-                    name: `${Guide.embed.name3}`,
-                    value: `${Guide.embed.value3}`,
+                    name: client.translation.get(guildDb?.language, 'Guide.embed.name3'),
+                    value: client.translation.get(guildDb?.language, 'Guide.embed.value3'),
                     inline: false,
                 },
             )
-            .setDescription(Guide.embed.description);
+            .setDescription(client.translation.get(guildDb?.language, 'Guide.embed.description'));
 
         await interaction.reply({
             embeds: [guideembed],

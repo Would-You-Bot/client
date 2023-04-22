@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const guildProfile = new Schema(
     {
@@ -40,6 +40,14 @@ const guildProfile = new Schema(
             type: String,
             default: "America/Chicago"
         },
+        dailyInterval: {
+            type: String,
+            default: "12:00"
+        },
+        dailyThread: {
+            type: Boolean,
+            default: false,
+        },
         replay: {
             type: Boolean,
             default: true,
@@ -68,7 +76,7 @@ const guildProfile = new Schema(
             default: false,
         },
     },
-    {timestamps: true},
+    { timestamps: true },
 );
 
 module.exports = model('guildProfile', guildProfile);

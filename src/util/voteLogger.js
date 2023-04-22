@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Topgg = require("@top-gg/sdk");
 const {
     WebhookClient,
@@ -8,8 +9,7 @@ const {
 } = require("discord.js");
 const express = require("express");
 const axios = require("axios");
-const {ChalkAdvanced} = require("chalk-advanced");
-require("dotenv").config();
+const { ChalkAdvanced } = require("chalk-advanced");
 const app = express();
 const webhook = new Topgg.Webhook(process.env.WEBHOOKTOKEN);
 
@@ -126,5 +126,4 @@ module.exports = class VoteLogger {
 
         app.listen(8090);
     }
-
 };
