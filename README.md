@@ -4,14 +4,14 @@
 
 ---
 ### Description 
-Would-You bot is an open sourced discord bot that provides activities to keep your server active. We plan to see servers strive in activity with this discord bot.
+Would-You bot is a open sourced discord bot that provides activties to keep your server active. We plan to see servers strive in activty with this discord bot.
 
 ### Motive 
-We strive to help servers with their activity.
+We strive to help servers with their activty.
 
 
 ### Plans
-We plan to help servers grow whilst growing our discord bot.
+We plan to grow server whilst growing our discord bot.
 
 
 ### Website
@@ -27,4 +27,4 @@ We plan to help servers grow whilst growing our discord bot.
 
 ----
 
-#### Would you rather die or use this bot? Your choice!
+#### Would you rather die or use this bot. Your choice!
