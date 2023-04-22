@@ -102,7 +102,7 @@ module.exports = class WebhookHandler {
 
         if (!channel) return;
 
-        if (err && (err?.code === 10015 || `${err?.message}`?.inlcudes('Unknown Webhook')) && channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.ManageWebhooks])) {
+        if (err && (err?.code === 10015 || err?.message?.inlcudes('Unknown Webhook')) && channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.ManageWebhooks])) {
             const webhooks = await channel.fetchWebhooks();
 
             if (webhooks && webhooks.size > 0) {
