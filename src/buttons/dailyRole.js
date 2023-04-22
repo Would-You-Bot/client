@@ -5,7 +5,6 @@ module.exports = {
         description: 'Daily Role',
     },
     async execute(interaction, client, guildDb) {
-        const { Settings } = await require(`../languages/${guildDb.language}.json`);
 
         const inter = new ActionRowBuilder()
             .addComponents(
@@ -14,6 +13,6 @@ module.exports = {
                     .setPlaceholder('Select a role')
             )
 
-        interaction.update({ embeds: [], content: Settings.dailyRole, components: [inter], ephemeral: true })
+        interaction.update({ embeds: [], content: client.translation.get(guildDb?.language, 'Settings.dailyRole'), components: [inter], ephemeral: true })
     },
 };

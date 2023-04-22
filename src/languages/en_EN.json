@@ -19,7 +19,9 @@
   "Wwyd": {
     "embed": {
       "title": "What **would you** do?",
-      "footer": "Explain what and why"
+      "footer": "Explain what and why",
+      "option1": "Option 1",
+      "option2": "Option 2"
     }
   },
   "Support": {
@@ -40,13 +42,16 @@
         "att3": "The JSON you provided didn't have any data in it! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att4": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att5": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
-        "att6": "The JSON you provided had too much data for the useless category, we only accept 30 custom messages. You can gain more by voting for the bot!",
-        "att7": "The JSON you provided had too much data for the useful category, we only accept 30 custom messages. You can gain more by voting for the bot!",
-        "att9": "You can't have more than 30 custom messages in an import for the useful category. You can gain more by voting for the bot!",
-        "att10": "You can't have more than 30 custom messages in an import for the useless category. You can gain more by voting for the bot!",
-        "att12": "Adding up your current **useful** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
-        "att13": "Adding up your current **useless** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
-        "att15": "There was an error that occured while running this command, please report it to the support server!"
+        "att15": "There was an error that occured while running this command, please report it to the support server!",
+        "att16": "The JSON you provided had too much data for the wouldyourather category, we only accept 30 custom messages. You can gain more by voting for the bot!",
+        "att17": "The JSON you provided had too much data for the neverhaveiever category, we only accept 30 custom messages. You can gain more by voting for the bot!",
+        "att18": "The JSON you provided had too much data for the wwyd category, we only accept 30 custom messages. You can gain more by voting for the bot!",
+        "att19": "You can't have more than 30 custom messages in an import for the wouldyourather category. You can gain more by voting for the bot!",
+        "att20": "You can't have more than 30 custom messages in an import for the neverhaveiever category. You can gain more by voting for the bot!",
+        "att21": "You can't have more than 30 custom messages in an import for the wwyd category. You can gain more by voting for the bot!",
+        "att22": "Adding up your current **wouldyourather** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
+        "att23": "Adding up your current **neverhaveiever** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!",
+        "att24": "Adding up your current **wwyd** custom messages and the ones in your file, this will go over 30 which is the limit. You can gain more by voting for the bot!"
       },
       "export": {
         "none": "You don't have any custom messages to export!"
@@ -140,12 +145,12 @@
   },
   "Rather": {
     "embed": {
-      "uselessname": "Would you rather have this",
-      "uselessname2": "or this useless Power?",
-      "usefulname": "Would you rather have this",
-      "usefulname2": "or this useful Power?",
+      "uselessname": "Would you rather",
+      "uselessname2": "or",
+      "usefulname": "Would you rather",
+      "usefulname2": "or",
       "footer": "Would You Rather",
-      "thispower": "According to the vote the majority of users would want this power:"
+      "thispower": "According to the vote the majority of users would prefer:"
     },
     "replays": {
       "disabled": "Replaying in this server is currently disabled!"
@@ -191,20 +196,27 @@
   "Settings": {
     "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
     "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "intervalSame": "The provided interval is the same interval that is already set. Make sure to choose a different interval.",
+    "intervalInvalid": "Provided interval was invalid. Make sure your interval is in the 24h format and mintues are either 00 or 30!",
     "dailyChannel": "Select a channel where you want Daily Messages to be!",
+    "dailyType": "Select a type of Daily Message you want to be sent!",
     "dailyRole": "Select a role that you want to be pinged in Daily Messages!",
     "replaySame": "The provided replay cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
     "voteSame": "The provided vote cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
     "cooldownInvalid": "Provided cooldown was invalid. Make sure the cooldown only includes numbers!",
     "embed": {
+      "error": "You don't have the required permissions to use this command.",
       "generalTitle": "Would You - General Settings",
-      "voteCooldown": "Vote Cooldown",
-      "replayCooldown": "Replay Cooldown",
+      "voteCooldown": "**Vote Cooldown**",
+      "replayCooldown": "**Replay Cooldown**",
+      "dailyInterval": "**Interval**",
       "dailyTitle": "Would You - Daily Messages",
+      "dailyType": "**Type**",
       "dailyMsg": "**Enabled**",
       "dailyRole": "**Role**",
       "dailyChannel": "**Channel**",
       "dailyTimezone": "**Timezone**",
+      "dailyThread": "**Thread**",
       "welcomeTitle": "Would You - Welcomes",
       "welcome": "**Enabled**",
       "welcomeChannel": "**Channel**",
@@ -212,9 +224,12 @@
       "footer": "Would You"
     },
     "button": {
+      "dailyInterval": "Set Interval",
       "dailyChannel": "Set Channel",
       "dailyRole": "Set Role",
       "dailyTimezone": "Set Timezone",
+      "dailyType": "Set Type",
+      "dailyThread": "Toggle threads",
       "dailyMsg": "Toggle Daily Messages",
       "voteCooldown": "Set Vote Cooldown",
       "replayCooldown": "Set Replay Cooldown",
@@ -251,5 +266,11 @@
       "g_viewChannel": "I **{can}** view channels on this server.",
       "g_readMessageHistory": "I **{can}** read the message history on this server."
     }
+  },
+  "Voting": {
+    "Yes": "Yes",
+    "No": "No",
+    "Vote": "Vote: ",
+    "VotingResults": "Voting Results"
   }
 }

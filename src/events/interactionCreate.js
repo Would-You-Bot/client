@@ -1,5 +1,5 @@
 module.exports = async (client, interaction) => {
-    const restrict = ["dailyChannel", "welcomeChannel", "welcomePing", "welcome", "welcomeChannel", "dailyRole", "dailyTimezone", "dailyMsg"]
+    const restrict = ["dailyChannel", "welcomeChannel", "dailyInterval", "dailyType", "replayCooldown", "voteCooldown", "welcomePing", "welcome", "welcomeChannel", "dailyRole", "dailyTimezone", "dailyMsg", "dailyThread"]
     if (!interaction.guild) {
         if (interaction.isChatInputCommand()) {
             const command = client.commands.get(interaction.commandName);
@@ -38,22 +38,23 @@ module.exports = async (client, interaction) => {
             }
         } else if (interaction.isButton()) {
             if (client.used.has(interaction.user.id)) {
-                return await interaction.reply({
+                return interaction.reply({
                     ephemeral: true,
                     content: `<t:${Math.floor(guildDb.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!`
                 }).catch(() => {
                 });
             }
-
-            const button = client.buttons.get(interaction.customId);
+            
+            let button = client.buttons.get(interaction.customId);
+            if (interaction.customId.startsWith("voting_")) button = client.buttons.get("voting");
+            if (interaction.customId.startsWith("result_")) button = client.buttons.get("result");
             if (!button) return interaction.reply({
                 content: "Please use the command again.",
                 ephemeral: true
-            }).catch(() => {
-            });
+            }).catch(() => {});
 
             try {
-                if (!restrict.includes(interaction.customId)) {
+                if (!restrict.includes(interaction.customId) && !interaction.customId.startsWith("voting_")) {
                     client.used.set(interaction.user.id, Date.now() + guildDb.replayCooldown)
                     setTimeout(() => client.used.delete(interaction.user.id), guildDb.replayCooldown)
                 }

@@ -19,7 +19,7 @@ module.exports = {
 
     /**
      * @param {CommandInteraction} interaction
-     * @param {Client} client
+     * @param {WouldYou} client
      * @param {guildModel} guildDb
      */
 
@@ -29,37 +29,44 @@ module.exports = {
 
         let ratherembed = new EmbedBuilder()
         .setColor("#0598F6")
-        
         .setFooter({text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomrather}`, iconURL: interaction.user.avatarURL()})
         .setDescription(General[randomrather]);
 
-        const button = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-                .setLabel('Invite')
-                .setStyle(5)
-                .setEmoji('1009964111045607525')
-                .setURL(
-                    'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands',
-                ),
-        );
-        const newButton = new ActionRowBuilder().addComponents(
+        const mainRow = new ActionRowBuilder();
+        if (Math.round(Math.random() * 15) < 3) {
+            mainRow.addComponents([
+                new ButtonBuilder()
+                    .setLabel('Invite')
+                    .setStyle(5)
+                    .setEmoji('1009964111045607525')
+                    .setURL(
+                        'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands',
+                    )
+            ]);
+        }
+        mainRow.addComponents([
             new ButtonBuilder()
                 .setLabel('New Question')
                 .setStyle(1)
                 .setEmoji('1073954835533156402')
-                .setCustomId(`wouldyourather`),
-        );
-        let rbutton;
-        if (Math.round(Math.random() * 15) < 3) {
-            rbutton = [button, newButton];
-        } else rbutton = [newButton];
-       
+                .setCustomId(`wouldyourather`)
+                .setDisabled(!guildDb.replay)
+        ]);
+
+        const time = guildDb?.voteCooldown ?? 60_000;
+        const three_minutes = 3 * 60 * 1e3;
+
+        const {
+            row,
+            id
+        } = await client.voting.generateVoting(interaction.guildId, interaction.channelId, time < three_minutes ? 0 : ~~((Date.now() + time) / 1000), 0);
+
         await interaction.reply({
             embeds: [ratherembed],
-            components: guildDb.replay ? rbutton : [] || [],
+            components: [row, mainRow],
+            fetchReply: true,
         }).catch((err) => {
-            return;
+            console.log(err)
         });
-
     },
 };

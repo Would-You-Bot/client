@@ -1,6 +1,7 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
+
 const modalObject = {
-  title: "Would You Vote Cooldown",
+  title: "Vote Cooldown",
   custom_id: "votemodal",
   components: [
     {
@@ -18,8 +19,8 @@ const modalObject = {
 };
 
 function isNumericRegex(str) {
-    return /^[0-9]+$/.test(str);
-  }
+  return /^[0-9]+$/.test(str);
+}
 
 module.exports = {
   data: {
@@ -27,7 +28,6 @@ module.exports = {
     description: "Vote Cooldown",
   },
   async execute(interaction, client, guildDb) {
-    const { Settings } = await require(`../languages/${guildDb.language}.json`);
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
@@ -38,24 +38,22 @@ module.exports = {
         const value = modalInteraction.components[0].components[0].value;
 
         if (guildDb.voteCooldown === value)
-        return await modalInteraction.reply({
-          ephemeral: true,
-          content: Settings.voteSame,
-        });
+          return modalInteraction.reply({
+            ephemeral: true,
+            content: client.translation.get(guildDb?.language, 'Settings.voteSame'),
+          });
         if (isNumericRegex(value) === false)
-        return await modalInteraction.reply({
-          ephemeral: true,
-          content: Settings.cooldownInvalid,
-        });
+          return modalInteraction.reply({
+            ephemeral: true,
+            content: client.translation.get(guildDb?.language, 'Settings.cooldownInvalid'),
+          });
 
         const generalMsg = new EmbedBuilder()
-          .setTitle(Settings.embed.generalTitle)
+          .setTitle(client.translation.get(guildDb?.language, 'Settings.embed.generalTitle'))
           .setDescription(
-            `${Settings.embed.voteCooldown}: ${
-              guildDb.voteCooldown
-                ? `${value}`
-                : `<:x_:1077962443013238814>`
-            }\n${Settings.embed.replayCooldown}: ${
+            `${client.translation.get(guildDb?.language, 'Settings.embed.voteCooldown')}: ${
+              guildDb.voteCooldown ? `${value}` : `<:x_:1077962443013238814>`
+            }\n${client.translation.get(guildDb?.language, 'Settings.embed.replayCooldown')}: ${
               guildDb.replayCooldown
                 ? `${guildDb.replayCooldown}`
                 : `<:x_:1077962443013238814>`
@@ -63,23 +61,23 @@ module.exports = {
           )
           .setColor("#0598F6")
           .setFooter({
-            text: Settings.embed.footer,
+            text: client.translation.get(guildDb?.language, 'Settings.embed.footer'),
             iconURL: client.user.avatarURL(),
           });
 
         const generalButtons = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setCustomId("voteCooldown")
-            .setLabel(Settings.button.voteCooldown)
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.voteCooldown'))
             .setStyle(guildDb.voteCooldown ? "Success" : "Secondary"),
           new ButtonBuilder()
             .setCustomId("replayCooldown")
-            .setLabel(Settings.button.replayCooldown)
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.replayCooldown'))
             .setStyle(guildDb.replayCooldown ? "Success" : "Secondary")
         );
 
         await client.database.updateGuild(interaction.guild.id, {
-            voteCooldown: value,
+          voteCooldown: value,
         });
 
         return modalInteraction.update({
