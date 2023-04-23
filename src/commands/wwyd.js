@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const guildModel = require("../util/Models/guildModel");
 
 module.exports = {
@@ -30,8 +30,28 @@ module.exports = {
     })
       .setDescription(wwydstring);
 
+              const row = new ActionRowBuilder();
+        if (Math.round(Math.random() * 15) < 3) {
+            row.addComponents([
+                new ButtonBuilder()
+                    .setLabel('Invite')
+                    .setStyle(5)
+                    .setEmoji('1009964111045607525')
+                    .setURL(
+                        'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands',
+                    )
+            ]);
+        }
+        row.addComponents([
+            new ButtonBuilder()
+                .setLabel('New Question')
+                .setStyle(1)
+                .setEmoji('1073954835533156402')
+                .setCustomId(`wwyd`)
+        ]);
+
     interaction
-      .reply({ embeds: [wwydembed] })
+      .reply({ embeds: [wwydembed], components: [row] })
       .catch((err) => {
         return console.log(err);
       });
