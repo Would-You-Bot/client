@@ -127,6 +127,12 @@ module.exports = {
               .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyInterval'))
               .setStyle("Primary")
               .setEmoji("⏰")
+          ),
+          dailyButtons3 = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+              .setCustomId("dailyThread")
+              .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyThread'))
+              .setStyle(guildDb.dailyThread ? "Success" : "Secondary"),
           );
 
         await client.database.updateGuild(interaction.guild.id, {

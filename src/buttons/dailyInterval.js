@@ -27,7 +27,7 @@ module.exports = {
     description: "Daily Interval customization",
   },
   async execute(interaction, client, guildDb) {
-    interaction.showModal(modalObject).catch(() => { })
+    interaction.showModal(modalObject)
     interaction.awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
         time: 60000,

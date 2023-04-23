@@ -23,7 +23,7 @@ module.exports = {
         const guideembed = new EmbedBuilder()
             .setColor('#0598F6')
             .setFooter({
-                text: client.translation.get(guildDb?.language, 'Guide.embed.footer}'),
+                text: client.translation.get(guildDb?.language, 'Guide.embed.footer'),
                 iconURL: client.user.avatarURL(),
             })
             .setTimestamp()
