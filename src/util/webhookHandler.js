@@ -97,11 +97,11 @@ module.exports = class WebhookHandler {
     }
 
     webhookFallBack = async (channel = null, channelId, message, err = false) => {
-        if (!channel) channel = await this.c.channels.fetch(channelId).catch((err) => {
+        if (!channel) channel = await this.c.channels.fetch(channelId).catch((er) => {
+            console.error(er)
         });
 
         if (!channel) return;
-
         if (err && (err?.code === 10015 || (typeof err.message === 'string' && err.message.includes('Unknown Webhook'))) && channel?.permissionsFor(this.c?.user?.id).has([PermissionFlagsBits.ManageWebhooks])) {
             const webhooks = await channel.fetchWebhooks();
 
