@@ -1,12 +1,12 @@
 module.exports = async (client, interaction) => {
-    const restrict = ["dailyChannel", "welcomeChannel", "dailyInterval", "dailyType", "replayCooldown", "voteCooldown", "welcomePing", "welcome", "welcomeChannel", "dailyRole", "dailyTimezone", "dailyMsg", "dailyThread"]
+    const restrict = ["dailyChannel", "welcomeChannel", "dailyInterval", "dailyType", "replayCooldown", "voteCooldown", "welcomePing", "welcome", "welcomeChannel", "dailyRole", "dailyTimezone", "dailyMsg", "dailyThread", "voting", "result"]
     if (!interaction.guild) {
         if (interaction.isChatInputCommand()) {
             const command = client.commands.get(interaction.commandName);
             if (!command) return;
 
             if (command?.requireGuild) return interaction.reply({
-                content: "This command is only usable on a Discord Server!\nYou want to test WouldYou? Join the support server!\nhttps://discord.gg/vMyXAxEznS",
+                content: "This command is only usable on a Discord Server!\nYou want to test Would You? Join the support server!\nhttps://discord.gg/vMyXAxEznS",
                 ephemeral: true,
             });
 
