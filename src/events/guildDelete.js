@@ -20,7 +20,7 @@ module.exports = async (client, guild) => {
         embeds: [
             new EmbedBuilder()
                 .setTitle(`← Left Server`)
-                .setColor(`#0598F4`)
+                .setColor(`#f00704`)
                 .setThumbnail(guild.iconURL({
                     format: 'png',
                     dynamic: true
