@@ -41,8 +41,7 @@ module.exports = async (client, interaction) => {
                 return interaction.reply({
                     ephemeral: true,
                     content: `<t:${Math.floor(guildDb.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!`
-                }).catch(() => {
-                });
+                }).catch(() => { });
             } else if (guildDb.replayType === "Channels" && client.used.has(`${interaction.user.id}-${interaction.channel.id}`)) {
                 return interaction.reply({
                     ephemeral: true,
