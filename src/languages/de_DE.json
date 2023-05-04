@@ -204,7 +204,6 @@
     "cooldownInvalid": "Der Cooldown ist ungültig. Stelle sicher, dass der Cooldown nur Zahlen enthält!",
     "embed": {
       "generalTitle": "Would You - Generelle Einstellungen",
-      "voteCooldown": "**Vote Cooldown**",
       "replayCooldown": "**Replay Cooldown**",
       "dailyInterval": "**Intervall**",
       "dailyTitle": "Would You - Tägliche Nachrichten",
@@ -227,7 +226,6 @@
       "dailyTimezone": "Zeitzone setzen",
       "dailyType": "Typ setzen",
       "dailyMsg": "Tägliche Nachrichten umschalten",
-      "voteCooldown": "Vote Cooldown setzen",
       "replayCooldown": "Replay Cooldown setzen",
       "welcomeChannel": "Kanal setzen",
       "welcome": "Begrüßungsnachrichten einstellen",

@@ -39,7 +39,7 @@ module.exports = {
                 .setCustomId(`neverhaveiever`)
         ]);
 
-        const time = guildDb?.voteCooldown ?? 60_000;
+        const time = 60_000;
         const three_minutes = 3 * 60 * 1e3;
   
       

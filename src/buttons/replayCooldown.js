@@ -50,11 +50,7 @@ module.exports = {
         const generalMsg = new EmbedBuilder()
           .setTitle(client.translation.get(guildDb?.language, 'Settings.embed.generalTitle'))
           .setDescription(
-            `${client.translation.get(guildDb?.language, 'Settings.embed.voteCooldown')}: ${
-              guildDb.voteCooldown
-                ? `${guildDb.voteCooldown}`
-                : `<:x_:1077962443013238814>`
-            }\n${client.translation.get(guildDb?.language, 'Settings.embed.replayCooldown')}: ${
+            `${client.translation.get(guildDb?.language, 'Settings.embed.replayType')}: ${guildDb.replayType}\n${client.translation.get(guildDb?.language, 'Settings.embed.replayCooldown')}: ${
               guildDb.replayCooldown
                 ? `${value}`
                 : `<:x_:1077962443013238814>`
@@ -68,13 +64,14 @@ module.exports = {
 
         const generalButtons = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
-            .setCustomId("voteCooldown")
-            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.voteCooldown'))
-            .setStyle(guildDb.voteCooldown ? "Success" : "Secondary"),
-          new ButtonBuilder()
             .setCustomId("replayCooldown")
             .setLabel(client.translation.get(guildDb?.language, 'Settings.button.replayCooldown'))
-            .setStyle(guildDb.replayCooldown ? "Success" : "Secondary")
+            .setStyle(guildDb.replayCooldown ? "Success" : "Secondary"),
+          new ButtonBuilder()
+            .setCustomId("replayType")
+            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.replayType'))
+            .setStyle("Primary")
+            .setEmoji("📝"),
         );
 
         await client.database.updateGuild(interaction.guild.id, {

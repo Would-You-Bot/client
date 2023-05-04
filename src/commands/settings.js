@@ -117,18 +117,7 @@ module.exports = {
         case "general":
           const generalMsg = new EmbedBuilder()
             .setTitle(client.translation.get(guildDb?.language, 'Settings.embed.generalTitle'))
-            .setDescription(
-              `${client.translation.get(guildDb?.language, 'Settings.embed.voteCooldown')}: ${
-                guildDb.voteCooldown
-                  ? `${guildDb.voteCooldown}`
-                  : `<:x_:1077962443013238814>`
-              }\n` +
-                `${client.translation.get(guildDb?.language, 'Settings.embed.replayCooldown')}: ${
-                  guildDb.replayCooldown
-                    ? `${guildDb.replayCooldown}`
-                    : `<:x_:1077962443013238814>`
-                }\n`
-            )
+            .setDescription(`${client.translation.get(guildDb?.language, 'Settings.embed.replayType')}: ${guildDb.replayType}\n${guildDb.replayType === 'Channels' ? `${client.translation.get(guildDb?.language, 'Settings.embed.replayChannels')}: ${guildDb.replayChannels.length > 0 ? `\n${guildDb.replayChannels.map(c => `<#${c.id}>: ${c.cooldown}`).join("\n")}` : client.translation.get(guildDb?.language, `Settings.embed.replayChannelsNone`)}` : `${client.translation.get(guildDb?.language, 'Settings.embed.replayCooldown')}: ${guildDb.replayCooldown}`}`)
             .setColor("#0598F6")
             .setFooter({
               text: client.translation.get(guildDb?.language, 'Settings.embed.footer'),
@@ -137,19 +126,27 @@ module.exports = {
 
           const generalButtons = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-              .setCustomId("voteCooldown")
-              .setLabel(client.translation.get(guildDb?.language, 'Settings.button.voteCooldown'))
-              .setStyle(guildDb.voteCooldown ? "Success" : "Secondary"),
-            new ButtonBuilder()
-              .setCustomId("replayCooldown")
+              .setCustomId(guildDb.replayType === "Channels" ? "replayChannels" : "replayCooldown")
               .setLabel(client.translation.get(guildDb?.language, 'Settings.button.replayCooldown'))
-              .setStyle(guildDb.replayCooldown ? "Success" : "Secondary")
+              .setStyle(guildDb.replayCooldown ? "Success" : "Secondary"),
+            new ButtonBuilder()
+              .setCustomId("replayType")
+              .setLabel(client.translation.get(guildDb?.language, 'Settings.button.replayType'))
+              .setStyle("Primary")
+              .setEmoji("📝"),
+          );
+
+          const chanDelete = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+              .setCustomId("replayDeleteChannels")
+              .setLabel(client.translation.get(guildDb?.language, 'Settings.button.replayDeleteChannels'))
+              .setStyle("Danger"),
           );
 
           interaction
             .reply({
               embeds: [generalMsg],
-              components: [generalButtons],
+              components: guildDb.replayType === "Channels" ? [generalButtons, chanDelete] : [generalButtons],
               ephemeral: true,
             })
             .catch(() => {});

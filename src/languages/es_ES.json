@@ -204,7 +204,6 @@
     "cooldownInvalid": "El tiempo de reutilización proporcionado no es válido. ¡Asegúrese de que el tiempo de reutilización solo incluye números!",
     "embed": {
       "generalTitle": "Would You - Configuración general",
-      "voteCooldown": "**Tiempo de Votación**",
       "replayCooldown": "**Tiempo de Repetición**",
       "dailyInterval": "**Intervalo**",
       "dailyTitle": "Would You - Mensajes Diarios",
@@ -227,7 +226,6 @@
       "dailyTimezone": "Establecer zona horaria",
       "dailyType": "Definir tipo",
       "dailyMsg": "Alternar Mensajes Diarios",
-      "voteCooldown": "Establecer tiempo de espera de voto",
       "replayCooldown": "Establecer tiempo de reutilización",
       "welcomeChannel": "Establecer canal",
       "welcome": "Alternar Bienvenidas",
