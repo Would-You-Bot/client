@@ -41,6 +41,11 @@ module.exports = {
                         content: client.translation.get(guildDb?.language, 'Settings.cooldownInvalid'),
                     });
 
+                if (value < 2000) return modalInteraction.reply({
+                    ephemeral: true,
+                    content: client.translation.get(guildDb?.language, 'Settings.cooldownMin'),
+                });
+
                 if (value > 21600000)
                     return modalInteraction.reply({
                         ephemeral: true,

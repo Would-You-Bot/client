@@ -43,6 +43,11 @@ module.exports = async (client, interaction) => {
                     content: `<t:${Math.floor(guildDb.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!`
                 }).catch(() => {
                 });
+            } else if (guildDb.replayType === "Channels" && client.used.has(`${interaction.user.id}-${interaction.channel.id}`)) {
+                return interaction.reply({
+                    ephemeral: true,
+                    content: `<t:${Math.floor(guildDb.replayChannels.find(x => x.id === interaction.channel.id).cooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!`
+                }).catch(() => { });
             }
 
             let button = client.buttons.get(interaction.customId);
@@ -55,8 +60,13 @@ module.exports = async (client, interaction) => {
 
             try {
                 if (!restrict.includes(interaction.customId) && !interaction.customId.startsWith("voting_") && !interaction.customId.startsWith("result_")) {
-                    client.used.set(interaction.user.id, Date.now() + guildDb.replayCooldown)
-                    setTimeout(() => client.used.delete(interaction.user.id), guildDb.replayCooldown)
+                    if (guildDb.replayType === "Channels" && guildDb.replayChannels.find(x => x.id === interaction.channel.id)) {
+                        client.used.set(`${interaction.user.id}-${interaction.channel.id}`, Date.now() + guildDb.replayChannels.find(x => x.id === interaction.channel.id).cooldown)
+                        setTimeout(() => client.used.delete(`${interaction.user.id}-${interaction.channel.id}`), guildDb.replayChannels.find(x => x.id === interaction.channel.id).cooldown)
+                    } else {
+                        client.used.set(interaction.user.id, Date.now() + guildDb.replayCooldown)
+                        setTimeout(() => client.used.delete(interaction.user.id), guildDb.replayCooldown)
+                    }
                 }
 
                 return button.execute(interaction, client, guildDb);

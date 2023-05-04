@@ -41,6 +41,12 @@ module.exports = {
           ephemeral: true,
           content: client.translation.get(guildDb?.language, 'Settings.replaySame'),
         });
+
+        if (value < 2000) return modalInteraction.reply({
+          ephemeral: true,
+          content: client.translation.get(guildDb?.language, 'Settings.cooldownMin'),
+        });
+
         if (isNumericRegex(value) === false)
         return modalInteraction.reply({
           ephemeral: true,
