@@ -44,22 +44,21 @@ module.exports = class DailyMessage {
 
                 if (!channel?.id) return; // Always directly return before do to many actions
 
-                const { Funny, Basic, Young, Food, RuleBreak } = await require(`../data/nhie-${db.language}.json`);
                 const { General } = await require(`../data/rather-${db.language}.json`);
                 const { WhatYouDo } = await require(`../data/wwyd-${db.language}.json`);
 
                 let randomDaily = [];
                 let dailyId;
                 if (db.customTypes === "regular") {
-                    randomDaily = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo]
+                    randomDaily = [...General, ...WhatYouDo]
                 } else if (db.customTypes === "mixed") {
                     let array = [];
                     if (db.customMessages.filter(c => c.type !== "nsfw").length != 0) {
                         array.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg);
                     } else {
-                        randomDaily = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo]
+                        randomDaily = [...General, ...WhatYouDo]
                     }
-                    array.push([...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...General, ...WhatYouDo])
+                    array.push([...General, ...WhatYouDo])
                     randomDaily = array[Math.floor(Math.random() * array.length)]
                 } else if (db.customTypes === "custom") {
                     if (db.customMessages.filter(c => c.type !== "nsfw").length === 0) {
