@@ -1,0 +1,73 @@
+{
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "compilerOptions": {
+    "strict": false,
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "lib": [
+      "ESNext"
+    ],
+    "outDir": "dist",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmitOnError": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "removeComments": true,
+    "importHelpers": true,
+    "baseUrl": "./",
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "@config": [
+        "src/config.ts"
+      ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@crons/*": [
+        "src/crons/*"
+      ],
+      "@events/*": [
+        "src/events/*"
+      ],
+      "@interactions/*": [
+        "src/interactions/*"
+      ],
+      "@interface/*": [
+        "src/interface/*"
+      ],
+      "@models/*": [
+        "src/models/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@typings/*": [
+        "src/typings/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ]
+    }
+  },
+  "include": [
+    "config/**/*",
+    "src/**/*",
+    "environment.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}
