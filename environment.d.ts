@@ -3,22 +3,30 @@ declare global {
     interface ProcessEnv {
       // Environment
       NODE_ENV: 'development' | 'beta' | 'production';
-      DEBUG: string;
+      DEBUG: 'true' | 'false';
+
+      // Database
+      MONGODB_URI: string;
 
       // Discord bot
-      BOT_TOKEN: string;
+      BOT_TOKEN_DEV: string;
       BOT_TOKEN_BETA: string;
       BOT_TOKEN_PROD: string;
 
-      // Discord logging
+      // Discord logging - channels must be in the log guild
       LOG_GUILD: string;
-      WARN_CHANNEL: string;
-      ERROR_CHANNEL: string;
-      DEBUG_CHANNEL: string;
-      VOTE_CHANNEL: string;
+      ERROR_PING_ROLE: string;
+      WARN_WEBHOOK: string;
+      ERROR_WEBHOOK: string;
+      DEBUG_WEBHOOK: string;
+      // WARN_CHANNEL: string;
+      // ERROR_CHANNEL: string;
+      // DEBUG_CHANNEL: string;
 
       // External Keys/Tokens
       TOPGG_TOKEN: string;
+      VOTE_WEBHOOK: string;
+      // VOTE_CHANNEL: string;
     }
   }
 }

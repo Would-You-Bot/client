@@ -1,0 +1,7 @@
+# index 0 = default, 1 = premium limit (ms)
+cooldown:
+  slash: [500, 500]
+  context: [500, 500]
+  button: [500, 500]
+  selectMenu: [500, 500]
+  modal: [5000, 2500]
