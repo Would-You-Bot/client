@@ -1,11 +1,28 @@
-const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
-export default {
-  data: {
-    name: 'selectMenuChannel',
-    description: 'Select Menu Channel',
-  },
-  async execute(interaction, client, guildDb) {
-    const newChannel = interaction.values[0];
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
+  EmbedBuilder,
+} from 'discord.js';
+
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const button: CoreButton = {
+  name: 'selectMenuChannel',
+  description: 'Select Menu Channel',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    // ! This code was trying to get `values` from a button interaction
+    if (!interaction.guild) return;
+
+    /* const newChannel = interaction.values[0];
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, 'Settings.embed.dailyTitle')
@@ -15,9 +32,7 @@ export default {
           guildDb?.language,
           'Settings.embed.dailyMsg'
         )}: ${
-          guildDb.dailyMsg
-            ? `<:check:1077962440815411241>`
-            : `<:x_:1077962443013238814>`
+          guildDb.dailyMsg ? config.emojis.check.full : config.emojis.close.full
         }\n${client.translation.get(
           guildDb?.language,
           'Settings.embed.dailyChannel'
@@ -27,7 +42,7 @@ export default {
         )}: ${
           guildDb.dailyRole
             ? `<@&${guildDb.dailyRole}>`
-            : `<:x_:1077962443013238814>`
+            : config.emojis.close.full
         }\n${client.translation.get(
           guildDb?.language,
           'Settings.embed.dailyTimezone'
@@ -39,9 +54,9 @@ export default {
           'Settings.embed.dailyType'
         )}: ${guildDb.customTypes}`
       )
-      .setColor('#0598F6');
+      .setColor(config.colors.primary);
 
-    const dailyButtons = new ActionRowBuilder().addComponents(
+    const dailyButtons = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId('dailyMsg')
           .setLabel(
@@ -50,7 +65,9 @@ export default {
               'Settings.button.dailyMsg'
             )
           )
-          .setStyle(guildDb.dailyMsg ? 'Success' : 'Secondary'),
+          .setStyle(
+            guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary
+          ),
         new ButtonBuilder()
           .setCustomId('dailyChannel')
           .setLabel(
@@ -59,7 +76,7 @@ export default {
               'Settings.button.dailyChannel'
             )
           )
-          .setStyle('Success'),
+          .setStyle(ButtonStyle.Success),
         new ButtonBuilder()
           .setCustomId('dailyType')
           .setLabel(
@@ -68,10 +85,10 @@ export default {
               'Settings.button.dailyType'
             )
           )
-          .setStyle('Primary')
+          .setStyle(ButtonStyle.Primary)
           .setEmoji('📝')
       ),
-      dailyButtons2 = new ActionRowBuilder().addComponents(
+      dailyButtons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId('dailyTimezone')
           .setLabel(
@@ -80,7 +97,7 @@ export default {
               'Settings.button.dailyTimezone'
             )
           )
-          .setStyle('Primary')
+          .setStyle(ButtonStyle.Primary)
           .setEmoji('🌍'),
         new ButtonBuilder()
           .setCustomId('dailyRole')
@@ -90,7 +107,9 @@ export default {
               'Settings.button.dailyRole'
             )
           )
-          .setStyle(guildDb.dailyRole ? 'Success' : 'Secondary'),
+          .setStyle(
+            guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary
+          ),
         new ButtonBuilder()
           .setCustomId('dailyInterval')
           .setLabel(
@@ -99,7 +118,7 @@ export default {
               'Settings.button.dailyInterval'
             )
           )
-          .setStyle('Primary')
+          .setStyle(ButtonStyle.Primary)
           .setEmoji('⏰')
       );
 
@@ -108,10 +127,9 @@ export default {
     });
 
     return interaction.update({
-      content: null,
+      content: '',
       embeds: [dailyMsgs],
       components: [dailyButtons, dailyButtons2],
-      ephemeral: true,
-    });
+    }); */
   },
 };

@@ -1,6 +1,16 @@
 type Emoji = { full: string; id: string };
 export interface EmojisConfig {
-  example_emoji: Emoji;
+  verified: Emoji;
+  partner: Emoji;
+  goodCheck: Emoji;
+  badCheck: Emoji;
+  logo: Emoji;
+  arrowRight: Emoji;
+  check: Emoji;
+  mention: Emoji;
+  replay: Emoji;
+  close: Emoji;
+  help: Emoji;
   [key: string]: Emoji;
 }
 
@@ -30,8 +40,16 @@ export interface MainConfig {
     vote: string;
     tos: string;
     privacy: string;
+    logo: string;
   };
   developers: string[];
+  colors: {
+    primary: `#${string}`;
+    success: `#${string}`;
+    warning: `#${string}`;
+    danger: `#${string}`;
+    blurple: `#${string}`;
+  };
 }
 
 export interface ConfigType extends MainConfig {
@@ -41,6 +59,7 @@ export interface ConfigType extends MainConfig {
 
   // Environment
   env: NodeJS.ProcessEnv;
+  envName: string;
 
   // Functions
   isDevelopment: () => boolean;

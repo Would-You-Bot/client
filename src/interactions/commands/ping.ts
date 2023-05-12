@@ -1,13 +1,14 @@
-const {
-  EmbedBuilder,
+import {
   ActionRowBuilder,
   ButtonBuilder,
+  EmbedBuilder,
   SlashCommandBuilder,
-} = require('discord.js');
-const guildModel = require('../util/Models/guildModel');
+} from 'discord.js';
 
-export default {
-  requireGuild: true,
+import config from '@config';
+import { CoreCommand } from '@typings/core';
+
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Displays the clients ping')
@@ -16,19 +17,13 @@ export default {
       de: 'Zeigt den Ping des Clients an',
       'es-ES': 'Muestra el ping del cliente',
     }),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
   async execute(interaction, client, guildDb) {
     const pingembed = new EmbedBuilder()
 
-      .setColor('#0598F6')
+      .setColor(config.colors.primary)
       .setFooter({
         text: client.translation.get(guildDb?.language, 'Ping.embed.footer'),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp()
       .setTitle(client.translation.get(guildDb?.language, 'Ping.embed.title'))
@@ -46,7 +41,7 @@ export default {
           inline: false,
         }
       );
-    const button = new ActionRowBuilder().addComponents(
+    const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setLabel(
           client.translation.get(guildDb?.language, 'Ping.button.title')
@@ -61,8 +56,8 @@ export default {
         components: [button],
         ephemeral: true,
       })
-      .catch((err) => {
-        return console.log(err);
-      });
+      .catch((err) => console.log(err));
   },
 };
+
+export default command;

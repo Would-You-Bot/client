@@ -1,18 +1,32 @@
-const {
-  EmbedBuilder,
+import {
   ActionRowBuilder,
-  ChannelType,
+  ButtonInteraction,
   ChannelSelectMenuBuilder,
-} = require('discord.js');
-export default {
-  data: {
-    name: 'result',
-    description: 'The voting result',
-  },
-  async execute(interaction, client, guildDb) {
+  ChannelType,
+  EmbedBuilder,
+} from 'discord.js';
+
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const button: CoreButton = {
+  name: 'result',
+  description: 'The voting result',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     const customId = interaction.customId.split('_');
 
     const votingResults = await client.voting.getVotingResults(customId[1]);
+
+    if (!votingResults)
+      return interaction.reply({
+        content: 'No results found',
+        ephemeral: true,
+      });
 
     const resultEmbed = new EmbedBuilder().setImage(votingResults.chart);
 
@@ -22,3 +36,5 @@ export default {
     });
   },
 };
+
+export default button;

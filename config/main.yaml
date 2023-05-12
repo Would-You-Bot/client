@@ -1,15 +1,25 @@
+# If you want to add another value, also include it in the `MainConfig` type in `/src/typings/config.ts` and add it to `/src/config.ts`
+
 productionId: '981649513427111957'
 
 links:
-  invite: https://wouldyoubot.gg/invite
+  invite: https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands
+  # or https://wouldyoubot.gg/invite
   website: https://wouldyoubot.gg/
   support: https://wouldyoubot.gg/discord
   vote: https://wouldyoubot.gg/vote
   tos: https://wouldyoubot.gg/terms
   privacy: https://wouldyoubot.gg/privacy
+  logo: https://wouldyoubot.gg/Logo.png
 
 developers:
-  - '340243638892101646' # Sean
   - '347077478726238228' # Mezo
   - '268843733317976066' # Sky
   - '799319682862809169' # Marc
+
+colors:
+  primary: '#0598F4'
+  success: '#0598F4'
+  warning: '#0598F4'
+  danger: '#0598F4'
+  blurple: '#5865F4'

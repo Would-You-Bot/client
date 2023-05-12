@@ -15,6 +15,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
 import ButtonHandler from '@utils/classes/buttonHandler';
 import CooldownHandler from '@utils/classes/cooldownHandler';
 import DailyMessage from '@utils/classes/dailyMessage';
@@ -148,12 +149,7 @@ export class ExtendedClient extends Client {
    * @returns Promise<string>
    */
   public authenticate() {
-    const useToken = config.isProduction()
-      ? process.env.BOT_TOKEN_PROD
-      : config.isBeta()
-      ? process.env.BOT_TOKEN_BETA
-      : process.env.BOT_TOKEN_DEV;
-    return this.login(useToken);
+    return this.login(config.BOT_TOKEN);
   }
 
   /**
@@ -176,7 +172,10 @@ export class ExtendedClient extends Client {
    * @param userId The user id
    * @returns boolean
    */
-  public checkDebug = (guildDatabase: any, userId: string): boolean => {
+  public checkDebug = (
+    guildDatabase: GuildProfileDocument,
+    userId: string
+  ): boolean => {
     return guildDatabase?.debugMode ?? config.developers.includes(userId);
   };
 }

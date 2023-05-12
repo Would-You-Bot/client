@@ -59,12 +59,12 @@ export default class DailyMessage {
 
         if (!channel) return;
 
-        const { General }: { General: string[] } = await import(
-          `../data/rather-${db.language}.json`
-        );
-        const { WhatYouDo }: { WhatYouDo: string[] } = await import(
-          `../data/wwyd-${db.language}.json`
-        );
+        const { General }: { General: string[] } = (
+          await import(`../data/rather-${db.language}.json`)
+        ).default;
+        const { WhatYouDo }: { WhatYouDo: string[] } = (
+          await import(`../data/wwyd-${db.language}.json`)
+        ).default;
 
         // An array of random questions (regular is default)
         let randomMessages: string[] = [...General, ...WhatYouDo];

@@ -1,8 +1,16 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+import {
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+  SlashCommandBuilder,
+} from 'discord.js';
+import { version } from 'package.json';
 
-const { version } = require('../../package.json');
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreCommand } from '@typings/core';
+import { ExtendedClient } from 'src/client';
 
-export default {
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('info')
     .setDescription('Shows information about the bot.')
@@ -11,19 +19,26 @@ export default {
       de: 'Zeigt einige Informationen über den Bot.',
       'es-ES': 'Muestra información sobre el bot.',
     }),
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  async execute(interaction, client, guildDb) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    if (!client.uptime) return;
+
     const unixstamp =
       Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime / 1000);
 
-    function round(num) {
+    function round(num: number) {
       const m = Number((Math.abs(num) * 100).toPrecision(15));
       return (Math.round(m) / 100) * Math.sign(num);
     }
+
+    const developers = config.developers.map((id) => {
+      const devUser = client.users.cache.get(id);
+      if (!devUser) return;
+      return devUser.tag;
+    });
 
     const infoEmbed = new EmbedBuilder()
       .setColor('#5865f4')
@@ -32,7 +47,7 @@ export default {
         {
           name: 'Developers 🐧',
           value: `
-          \`\`\`Dominik#5555\nForGetFulSkyBro#9999\nfb_sean#1337\nMarcDev#6826\`\`\``,
+          \`\`\`${developers.map((dev) => `${dev}`).join('\n')}\`\`\``,
           inline: false,
         },
         {
@@ -66,18 +81,18 @@ export default {
           inline: true,
         }
       )
-      .setThumbnail(client.user.displayAvatarURL())
+      .setThumbnail(client.user?.displayAvatarURL() || null)
       .setFooter({
         text:
           interaction.user.tag + ' Shard #' + interaction?.guild?.shardId ?? 0,
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp();
 
     interaction
       .reply({ embeds: [infoEmbed], ephemeral: false })
-      .catch((err) => {
-        return;
-      });
+      .catch(() => {});
   },
 };
+
+export default command;

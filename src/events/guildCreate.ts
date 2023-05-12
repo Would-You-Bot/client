@@ -1,65 +1,73 @@
-require('dotenv').config();
-const { WebhookClient, EmbedBuilder } = require('discord.js');
+import { EmbedBuilder, Events, Guild, WebhookClient } from 'discord.js';
 
-export default async (client, guild) => {
-  if (!guild?.name) return;
+import config from '@config';
+import { CoreEvent } from '@typings/core';
+import { ExtendedClient } from 'src/client';
 
-  // Create and save the settings in the cache so that we don't need to do that at a command run
-  await client.database.getGuild(guild?.id, true);
+const event: CoreEvent = {
+  name: Events.GuildCreate,
+  async execute(client: ExtendedClient, guild: Guild) {
+    if (!guild?.name) return;
 
-  const webhookPrivate = new WebhookClient({ url: process.env.WEBHOOKPRIVATE });
+    // Create and save the settings in the cache so that we don't need to do that at a command run
+    await client.database.getGuild(guild?.id, true);
 
-  let features;
-  if (
-    (guild.features && guild.features.includes('VERIFIED')) ||
-    guild.features.includes('PARTNERED')
-  ) {
-    features = guild.features.includes('VERIFIED')
-      ? `<:verified_green:1072265950134550548>`
-      : `<:partner:1072265822577360982>`;
-  }
+    const webhookPrivate = new WebhookClient({
+      url: config.env.PRIVATE_WEBHOOK,
+    });
 
-  await webhookPrivate.send({
-    avatarURL: 'https://wouldyoubot.gg/static/img/round.webp', // Make sure to update this if you ever change the link thx <3
-    username: global?.devBot ? 'Dev Bot' : 'Main Bot',
-    embeds: [
-      new EmbedBuilder()
-        .setTitle(`→ Joined Server`)
-        .setColor(`#0598F4`)
-        .setThumbnail(
-          guild.iconURL({
-            format: 'png',
-            dynamic: true,
-          })
-        )
-        .setDescription(
-          `**Name**: ${
-            guild.name
-          }\n**Users**: ${guild.memberCount.toLocaleString()}${
-            features ? `\n**Features**: ${features}` : ``
-          }`
-        )
-        .setFooter({
-          text: global?.devBot ? 'Dev Bot' : 'Main Bot',
-        }),
-    ],
-    allowedMentions: { parse: [] },
-  });
+    let features: string | undefined;
+    if ((guild.features && guild.verified) || guild.partnered) {
+      features = guild.verified
+        ? config.emojis.verified.full
+        : config.emojis.partner.full;
+    }
 
-  if (!global?.devBot) {
-    const webhookClient = new WebhookClient({ url: process.env.WEBHOOK });
+    await webhookPrivate.send({
+      avatarURL: config.links.logo,
+      username: config.envName,
+      embeds: [
+        new EmbedBuilder()
+          .setTitle(`→ Joined Server`)
+          .setColor(config.colors.primary)
+          .setThumbnail(guild.iconURL())
+          .setDescription(
+            `**Name**: ${
+              guild.name
+            }\n**Users**: ${guild.memberCount.toLocaleString()}${
+              features ? `\n**Features**: ${features}` : ``
+            }`
+          )
+          .setFooter({
+            text: config.envName,
+          }),
+      ],
+      allowedMentions: { parse: [] },
+    });
 
-    await webhookClient
-      .send({
-        content: `<:GoodCheck:1025490645525209148> Joined ${guild.name}. I'm now in ${client.guilds.cache.size} guilds.`,
-        username: `${guild.name
-          .replace('Discord', '')
-          .replace('discord', '')
-          .replace('Everyone', '')
-          .replace('everyone', '')}`,
-        avatarURL: guild.iconURL({ format: 'webp', dynamic: true, size: 1024 }),
-        allowedMentions: { parse: [] },
-      })
-      .catch((err) => console.log(err));
-  }
+    if (config.isProduction()) {
+      const webhookClient = new WebhookClient({
+        url: config.env.PUBLIC_WEBHOOK,
+      });
+
+      await webhookClient
+        .send({
+          content: `${config.emojis.goodCheck.full} Joined ${guild.name}. I'm now in ${client.guilds.cache.size} guilds.`,
+          username: filterGuildName(guild.name),
+          avatarURL: guild.iconURL({ size: 1024 }) || undefined,
+          allowedMentions: { parse: [] },
+        })
+        .catch((err) => console.log(err));
+    }
+  },
 };
+
+const filterGuildName = (name: string) => {
+  return name
+    .replace('Discord', '')
+    .replace('discord', '')
+    .replace('Everyone', '')
+    .replace('everyone', '');
+};
+
+export default event;

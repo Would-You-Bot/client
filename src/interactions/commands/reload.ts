@@ -1,13 +1,15 @@
-const { readdirSync } = require('fs');
-const {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  SlashCommandBuilder,
-  CachedManager,
-} = require('discord.js');
-const cat = readdirSync(`./src/commands/`).filter((d) => d.endsWith('.js'));
-export default {
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
+import fs from 'fs';
+
+import config from '@config';
+import { CoreCommand } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const cat = fs
+  .readdirSync(`./src/interactions/commands/`)
+  .filter((d) => d.endsWith('.ts'));
+
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('reload')
     .setDescription('Reloads slash commands.')
@@ -22,44 +24,41 @@ export default {
         .setDescription('Choose which command you want to reload.')
         .setRequired(true)
     ),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   */
-
-  async execute(interaction, client) {
-    // Using deferReply here gives the bot more time to reload the command and reply to the interaction
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient
+  ) {
     await interaction.deferReply({ ephemeral: true });
 
-    const users = [
-      '268843733317976066',
-      '347077478726238228',
-      '834549048764661810',
-    ];
-    if (!users.find((e) => e === interaction.user.id))
+    if (!config.developers.find((e) => e === interaction.user.id))
       return interaction.editReply({
         content:
           'Only Would You develpers have access to this command! | Nur Would You Entwickler haben Zugriff auf diesen Befehl!',
       });
+
     const cmd = interaction.options.getString('options');
-    if (!cat.find((e) => e.replace('.js', '') === cmd.toLowerCase()))
+
+    if (!cmd) return;
+
+    if (!cat.find((e) => e.replace('.ts', '') === cmd.toLowerCase()))
       return interaction.editReply({
         content: 'You must provide a valid command to reload it!',
       });
 
     try {
-      delete require.cache[require.resolve(`./${cmd}.js`)];
-      const pull = require(`./${cmd}.js`);
+      delete require.cache[require.resolve(`./${cmd}.ts`)];
+      const pull = require(`./${cmd}.ts`);
       client.commands.delete(cmd);
       client.commands.set(cmd, pull);
       return interaction.editReply({
         content: `Successfully reloaded command \`${cmd}\`!`,
       });
-    } catch (e) {
+    } catch (e: any) {
       return interaction.editReply({
         content: `Errored reloading command: \`${cmd}\`!\nError: ${e.message}`,
       });
     }
   },
 };
+
+export default command;

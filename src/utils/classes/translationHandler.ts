@@ -12,7 +12,7 @@ export default class TranslationHandler {
    */
   constructor(/* languages: string[] | null */) {
     // this.availableLanguages = languages ?? ['de_DE', 'en_EN', 'es_ES'];
-    this.availableLanguages =  ['de_DE', 'en_EN', 'es_ES'];
+    this.availableLanguages = ['de_DE', 'en_EN', 'es_ES'];
     this.translations = {};
 
     // Initialize default languages
@@ -101,7 +101,11 @@ export default class TranslationHandler {
    * @returns the translation which could be string or null
    * @example const translation = getTranslation('en_EN', 'commands.ping.pong', {ping: 100});
    */
-  get(language: string, path: string, data: Record<string, string> = {}) {
+  get(
+    language: string,
+    path: string,
+    data: Record<string, string> = {}
+  ): string {
     if (!language) language = 'en_EN';
 
     const l = this.getLanguage(language);
@@ -135,6 +139,6 @@ export default class TranslationHandler {
       );
     }
 
-    return c;
+    return c.toString();
   }
 }

@@ -1,4 +1,16 @@
-const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
+  ComponentType,
+  EmbedBuilder,
+} from 'discord.js';
+import { ExtendedClient } from 'src/client';
+
 const modalObject = {
   title: 'Replay Cooldown',
   custom_id: 'replaymodal',
@@ -17,15 +29,21 @@ const modalObject = {
   ],
 };
 
-function isNumericRegex(str) {
-  return /^[0-9]+$/.test(str); // regex for extra 0,00000002% speeds :trol:
+function isNumericRegex(str: string) {
+  return /^[0-9]+$/.test(str);
 }
-export default {
-  data: {
-    name: 'selectMenuReplay',
-    description: 'Select Menu Replay',
-  },
-  async execute(interaction, client, guildDb) {
+
+const button: CoreButton = {
+  name: 'selectMenuReplay',
+  description: 'Select Menu Replay',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    // ! This code was trying to get `values` from a button interaction
+    /* if (!interaction.guild) return;
+
     if (guildDb.replayChannels.find((c) => c.id === interaction.values[0]))
       return interaction.reply({
         content: client.translation.get(
@@ -42,8 +60,16 @@ export default {
         time: 60000,
       })
       .then(async (modalInteraction) => {
-        const value = modalInteraction.components[0].components[0].value;
-        if (isNumericRegex(value) === false)
+        if (
+          modalInteraction.components[0].components[0].type !==
+          ComponentType.TextInput
+        )
+          return;
+        if (!modalInteraction.isFromMessage()) return;
+
+        const stringValue = modalInteraction.components[0].components[0].value;
+
+        if (isNumericRegex(stringValue) === false)
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
@@ -51,6 +77,8 @@ export default {
               'Settings.cooldownInvalid'
             ),
           });
+
+        const value = parseInt(stringValue);
 
         if (value < 2000)
           return modalInteraction.reply({
@@ -93,38 +121,43 @@ export default {
               'Settings.embed.replayChannels'
             )}:\n${arr.map((c) => `<#${c.id}>: ${c.cooldown}`).join('\n')}`
           )
-          .setColor('#0598F6')
+          .setColor(config.colors.primary)
           .setFooter({
             text: client.translation.get(
               guildDb?.language,
               'Settings.embed.footer'
             ),
-            iconURL: client.user.avatarURL(),
+            iconURL: client.user?.avatarURL() || undefined,
           });
 
-        const generalButtons = new ActionRowBuilder().addComponents(
-          new ButtonBuilder()
-            .setCustomId('replayChannels')
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                'Settings.button.replayCooldown'
+        const generalButtons =
+          new ActionRowBuilder<ButtonBuilder>().addComponents(
+            new ButtonBuilder()
+              .setCustomId('replayChannels')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.replayCooldown'
+                )
               )
-            )
-            .setStyle(guildDb.replayCooldown ? 'Success' : 'Secondary'),
-          new ButtonBuilder()
-            .setCustomId('replayType')
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                'Settings.button.replayType'
+              .setStyle(
+                guildDb.replayCooldown
+                  ? ButtonStyle.Success
+                  : ButtonStyle.Secondary
+              ),
+            new ButtonBuilder()
+              .setCustomId('replayType')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.replayType'
+                )
               )
-            )
-            .setStyle('Primary')
-            .setEmoji('📝')
-        );
+              .setStyle(ButtonStyle.Primary)
+              .setEmoji('📝')
+          );
 
-        const chanDelete = new ActionRowBuilder().addComponents(
+        const chanDelete = new ActionRowBuilder<ButtonBuilder>().addComponents(
           new ButtonBuilder()
             .setCustomId('replayDeleteChannels')
             .setLabel(
@@ -133,10 +166,12 @@ export default {
                 'Settings.button.replayDeleteChannels'
               )
             )
-            .setStyle('Danger')
+            .setStyle(ButtonStyle.Danger)
         );
 
         const channel = client.channels.cache.get(interaction.values[0]);
+        if (!channel) return;
+
         guildDb.replayChannels.push({
           id: interaction.values[0],
           cooldown: value,
@@ -145,15 +180,17 @@ export default {
         await client.database.updateGuild(interaction.guild.id, {
           replayChannels: guildDb.replayChannels,
         });
+
         return modalInteraction.update({
-          content: null,
+          content: '',
           embeds: [generalMsg],
           components: [generalButtons, chanDelete],
-          ephemeral: true,
         });
       })
       .catch((e) => {
         console.log(e);
-      });
+      }); */
   },
 };
+
+export default button;

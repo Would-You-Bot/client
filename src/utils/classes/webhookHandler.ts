@@ -224,7 +224,7 @@ export default class WebhookHandler {
     channel: TextChannel | null = null,
     channelId: string,
     message: MessagePayload | WebhookMessageCreateOptions,
-    thread: boolean
+    thread?: boolean
   ) {
     if (!channelId && channel?.id) channelId = channel.id;
 

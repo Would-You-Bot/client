@@ -1,10 +1,14 @@
-const {
-  EmbedBuilder,
+import {
   ActionRowBuilder,
   ButtonBuilder,
+  ChatInputCommandInteraction,
+  EmbedBuilder,
   SlashCommandBuilder,
-} = require('discord.js');
-const guildModel = require('../util/Models/guildModel');
+} from 'discord.js';
+
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { ExtendedClient } from 'src/client';
 
 export default {
   requireGuild: true,
@@ -16,16 +20,18 @@ export default {
       de: 'Hilfe Befehl!',
       'es-ES': 'Comando de ayuda!',
     }),
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  async execute(interaction, client, guildDb) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    if (!client.application) return;
+
     const commands = await client.application.commands.fetch({
       withLocalizations: true,
     });
-    let type;
+
+    let type: string;
     if (guildDb.language === 'de_DE') {
       type = 'de';
     } else if (guildDb.language === 'en_EN') {
@@ -34,10 +40,10 @@ export default {
       type = 'es';
     }
     const helpembed = new EmbedBuilder()
-      .setColor('#0598F6')
+      .setColor(config.colors.primary)
       .setFooter({
         text: client.translation.get(guildDb?.language, 'Help.embed.footer'),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp()
       .setTitle(client.translation.get(guildDb?.language, 'Help.embed.title'))
@@ -57,34 +63,32 @@ export default {
           `\n\n${commands
             .filter((e) => e.name !== 'reload')
             .sort((a, b) => a.name.localeCompare(b.name))
-            .map(
-              (n) =>
-                `</${n.name}:${n.id}> - ${
+            .map((n) => {
+              if (n.descriptionLocalizations)
+                return `</${n.name}:${n.id}> - ${
                   type === 'de'
                     ? n.descriptionLocalizations.de
                     : type === 'es'
                     ? n.descriptionLocalizations['es-ES']
                     : n.description
-                }`
-            )
+                }`;
+            })
             .join('\n')}`
       );
 
-    const button = new ActionRowBuilder().addComponents(
+    const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setLabel(
           client.translation.get(guildDb?.language, 'Help.button.title')
         )
         .setStyle(5)
         .setEmoji('💫')
-        .setURL('https://discord.gg/vMyXAxEznS'),
+        .setURL(config.links.support),
       new ButtonBuilder()
         .setLabel('Invite')
         .setStyle(5)
-        .setEmoji('1009964111045607525')
-        .setURL(
-          'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands'
-        )
+        .setEmoji(config.emojis.logo.id)
+        .setURL(config.links.invite)
     );
     await interaction
       .reply({

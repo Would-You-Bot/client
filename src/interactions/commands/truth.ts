@@ -1,8 +1,10 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 
-const { version } = require('../../package.json');
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreCommand } from '@typings/core';
+import { ExtendedClient } from 'src/client';
 
-export default {
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('truth')
     .setDescription('Shows information about the bot.')
@@ -11,10 +13,11 @@ export default {
       de: 'Zeigt einige Informationen über den Bot.',
       'es-ES': 'Muestra información sobre el bot.',
     }),
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  async execute(interaction, client, guildDb) {},
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {},
 };
+
+export default command;

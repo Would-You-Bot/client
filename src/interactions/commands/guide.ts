@@ -1,8 +1,12 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const guildModel = require('../util/Models/guildModel');
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreCommand } from '@typings/core';
+import { ChatInputCommandInteraction } from 'discord.js';
+import { ExtendedClient } from 'src/client';
 
-export default {
-  requireGuild: true,
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('guide')
     .setDescription('guide to use the bot and increase activity')
@@ -11,19 +15,16 @@ export default {
       de: 'Anleitung, um den Bot zu verwenden und die Aktivität zu erhöhen',
       'es-ES': 'Guía para usar el bot y aumentar la actividad',
     }),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-
-  async execute(interaction, client, guildDb) {
-    const guideembed = new EmbedBuilder()
-      .setColor('#0598F6')
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    const guideEmbed = new EmbedBuilder()
+      .setColor(config.colors.primary)
       .setFooter({
         text: client.translation.get(guildDb?.language, 'Guide.embed.footer'),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp()
       .setTitle(client.translation.get(guildDb?.language, 'Guide.embed.title'))
@@ -57,12 +58,12 @@ export default {
         client.translation.get(guildDb?.language, 'Guide.embed.description')
       );
 
-    await interaction
+    interaction
       .reply({
-        embeds: [guideembed],
+        embeds: [guideEmbed],
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   },
 };
+
+export default command;

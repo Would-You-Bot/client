@@ -19,12 +19,11 @@ export default class EventHandler {
       if (err) return console.error(err);
 
       files.forEach(async (file) => {
-        const event = await import(`../events/${file}`);
-        let eventName = file.split('.')[0];
+        const event = (await import(`../events/${file}`)).default;
 
-        if (this.once.includes(eventName))
-          this.client.once(eventName, event.bind(null, this.client));
-        else this.client.on(eventName, event.bind(null, this.client));
+        if (this.once.includes(event.execute))
+          this.client.once(event.execute, event.bind(null, this.client));
+        else this.client.on(event.execute, event.bind(null, this.client));
       });
     });
   }

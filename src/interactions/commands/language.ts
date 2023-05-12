@@ -1,16 +1,21 @@
-const {
+import {
+  ChatInputCommandInteraction,
   EmbedBuilder,
-  SlashCommandBuilder,
   PermissionFlagsBits,
-} = require('discord.js');
-const guildModel = require('../util/Models/guildModel');
+  SlashCommandBuilder,
+} from 'discord.js';
 
-export default {
-  requireGuild: true,
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreCommand } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('language')
     .setDescription('Change the language for the current guild')
     .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: 'Ändere die Sprache für den aktuellen Server',
       'es-ES': 'Cambiar el idioma del bot en el servidor',
@@ -28,18 +33,16 @@ export default {
         .setName('spanish')
         .setDescription('Set the language to spanish')
     ),
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    if (!interaction.guildId) return;
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  async execute(interaction, client, guildDb) {
-    let languageembed;
-    if (
-      interaction.member.permissions.has(PermissionFlagsBits.ManageGuild) ||
-      global.checkDebug(guildDb, interaction?.user?.id)
-    ) {
+    let languageEmbed = new EmbedBuilder();
+
+    if (client.checkDebug(guildDb, interaction?.user?.id)) {
       switch (interaction.options.getSubcommand()) {
         case 'english': {
           await client.database.updateGuild(
@@ -50,12 +53,12 @@ export default {
             true
           );
 
-          languageembed = new EmbedBuilder()
+          languageEmbed
             .setTitle('Language changed!')
             .setDescription('English has been selected as the new language!')
             .setFooter({
               text: 'Would You',
-              iconURL: client.user.avatarURL(),
+              iconURL: client.user?.avatarURL() || undefined,
             });
           break;
         }
@@ -68,12 +71,12 @@ export default {
             true
           );
 
-          languageembed = new EmbedBuilder()
+          languageEmbed
             .setTitle('Sprache bearbeitet!')
             .setDescription('Deutsch wurde als neue Sprache ausgewählt!')
             .setFooter({
               text: 'Would You',
-              iconURL: client.user.avatarURL(),
+              iconURL: client.user?.avatarURL() || undefined,
             });
           break;
         }
@@ -86,12 +89,12 @@ export default {
             true
           );
 
-          languageembed = new EmbedBuilder()
+          languageEmbed
             .setTitle('¡Idioma cambiado!')
             .setDescription('¡Has seleccionado el español como nuevo idioma!')
             .setFooter({
               text: 'Would You',
-              iconURL: client.user.avatarURL(),
+              iconURL: client.user?.avatarURL() || undefined,
             });
           break;
         }
@@ -99,15 +102,13 @@ export default {
 
       return interaction
         .reply({
-          embeds: [languageembed],
+          embeds: [languageEmbed],
           ephemeral: true,
         })
-        .catch((err) => {
-          return;
-        });
+        .catch((err) => {});
     } else {
       const errorembed = new EmbedBuilder()
-        .setColor('#F00505')
+        .setColor(config.colors.danger)
         .setTitle('Error!')
         .setDescription(
           client.translation.get(guildDb?.language, 'Language.embed.error')
@@ -124,3 +125,5 @@ export default {
     }
   },
 };
+
+export default command;

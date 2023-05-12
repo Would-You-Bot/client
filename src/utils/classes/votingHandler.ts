@@ -63,8 +63,8 @@ export default class Voting {
     channelId: string | null = null,
     until: number = 0,
     type: number = 0,
-    op_one: string[],
-    op_two: string[]
+    op_one?: string[],
+    op_two?: string[]
   ) {
     if (!guildId || !channelId) return;
 
@@ -80,7 +80,7 @@ export default class Voting {
       op_two: op_two ? op_two : [],
     });
 
-    const row = new ActionRowBuilder();
+    const row = new ActionRowBuilder<ButtonBuilder>();
     switch (type) {
       case 0:
         row.addComponents([
@@ -229,8 +229,9 @@ export default class Voting {
 
     setTimeout(async () => {
       const votes = await voteModel.find();
-      votes.forEach((vote: { id: string; createdAt: Date }) => {
-        if (olderthen(new Date(vote.createdAt), 30))
+      if (!votes) return;
+      votes.forEach((vote) => {
+        if (olderthen(new Date(`${vote.createdAt}`), 30))
           return voteModel.deleteOne({ id: vote.id }).catch(() => {});
         this._cache.set(vote.id, vote);
       });

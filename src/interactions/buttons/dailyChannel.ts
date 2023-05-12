@@ -1,30 +1,39 @@
-const {
+import {
   ActionRowBuilder,
-  ChannelType,
   ChannelSelectMenuBuilder,
-} = require('discord.js');
-export default {
-  data: {
-    name: 'dailyChannel',
-    description: 'Daily Channel',
-  },
-  async execute(interaction, client, guildDb) {
-    const inter = new ActionRowBuilder().addComponents(
-      new ChannelSelectMenuBuilder()
-        .setCustomId('selectMenuChannel')
-        .setPlaceholder('Select a channel')
-        .addChannelTypes(ChannelType.GuildText)
-    );
+  ChannelType,
+} from 'discord.js';
+
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ButtonInteraction } from 'discord.js';
+import { ExtendedClient } from 'src/client';
+
+const button: CoreButton = {
+  name: 'dailyChannel',
+  description: 'Daily Channel',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    const inter =
+      new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(
+        new ChannelSelectMenuBuilder()
+          .setCustomId('selectMenuChannel')
+          .setPlaceholder('Select a channel')
+          .addChannelTypes(ChannelType.GuildText)
+      );
 
     interaction.update({
-      content: null,
       embeds: [],
       content: client.translation.get(
         guildDb?.language,
         'Settings.dailyChannel'
       ),
       components: [inter],
-      ephemeral: true,
     });
   },
 };
+
+export default button;

@@ -1,4 +1,17 @@
-const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
+  ComponentType,
+  EmbedBuilder,
+} from 'discord.js';
+
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
 const modalObject = {
   title: 'Replay Cooldown',
   custom_id: 'replaymodal',
@@ -17,16 +30,18 @@ const modalObject = {
   ],
 };
 
-function isNumericRegex(str) {
+function isNumericRegex(str: string) {
   return /^[0-9]+$/.test(str); // regex for extra 0,00000002% speeds :trol:
 }
 
-export default {
-  data: {
-    name: 'replayCooldown',
-    description: 'Daily Message Toggle',
-  },
-  async execute(interaction, client, guildDb) {
+const button: CoreButton = {
+  name: 'replayCooldown',
+  description: 'Daily Message Toggle',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
@@ -34,9 +49,17 @@ export default {
         time: 60000,
       })
       .then(async (modalInteraction) => {
+        if (!modalInteraction.isFromMessage()) return;
+        if (!interaction.guild) return;
+        if (
+          modalInteraction.components[0].components[0].type !==
+          ComponentType.TextInput
+        )
+          return;
         const value = modalInteraction.components[0].components[0].value;
+        if (isNaN(parseInt(value))) return;
 
-        if (guildDb.replayCooldown === value)
+        if (guildDb.replayCooldown.toString() === value)
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
@@ -45,7 +68,7 @@ export default {
             ),
           });
 
-        if (value < 2000)
+        if (parseInt(value) < 2000)
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
@@ -78,39 +101,44 @@ export default {
               guildDb?.language,
               'Settings.embed.replayCooldown'
             )}: ${
-              guildDb.replayCooldown ? `${value}` : `<:x_:1077962443013238814>`
+              guildDb.replayCooldown ? `${value}` : config.emojis.close.full
             }\n`
           )
-          .setColor('#0598F6')
+          .setColor(config.colors.primary)
           .setFooter({
             text: client.translation.get(
               guildDb?.language,
               'Settings.embed.footer'
             ),
-            iconURL: client.user.avatarURL(),
+            iconURL: client.user?.avatarURL() || undefined,
           });
 
-        const generalButtons = new ActionRowBuilder().addComponents(
-          new ButtonBuilder()
-            .setCustomId('replayCooldown')
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                'Settings.button.replayCooldown'
+        const generalButtons =
+          new ActionRowBuilder<ButtonBuilder>().addComponents(
+            new ButtonBuilder()
+              .setCustomId('replayCooldown')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.replayCooldown'
+                )
               )
-            )
-            .setStyle(guildDb.replayCooldown ? 'Success' : 'Secondary'),
-          new ButtonBuilder()
-            .setCustomId('replayType')
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                'Settings.button.replayType'
+              .setStyle(
+                guildDb.replayCooldown
+                  ? ButtonStyle.Success
+                  : ButtonStyle.Secondary
+              ),
+            new ButtonBuilder()
+              .setCustomId('replayType')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.replayType'
+                )
               )
-            )
-            .setStyle('Primary')
-            .setEmoji('📝')
-        );
+              .setStyle(ButtonStyle.Primary)
+              .setEmoji('📝')
+          );
 
         await client.database.updateGuild(interaction.guild.id, {
           replayCooldown: value,
@@ -120,8 +148,9 @@ export default {
           content: null,
           embeds: [generalMsg],
           components: [generalButtons],
-          ephemeral: true,
         });
       });
   },
 };
+
+export default button;

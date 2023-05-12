@@ -22,6 +22,8 @@ const verifyEnvironment = (): NodeJS.ProcessEnv => {
     'WARN_WEBHOOK',
     'ERROR_WEBHOOK',
     'DEBUG_WEBHOOK',
+    'PRIVATE_WEBHOOK',
+    'PUBLIC_WEBHOOK',
     // 'WARN_CHANNEL',
     // 'ERROR_CHANNEL',
     // 'DEBUG_CHANNEL',

@@ -1,11 +1,22 @@
-const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
-export default {
-  data: {
-    name: 'dailyType',
-    description: 'Daily Type',
-  },
-  async execute(interaction, client, guildDb) {
-    const inter = new ActionRowBuilder().addComponents(
+import {
+  ActionRowBuilder,
+  ButtonInteraction,
+  StringSelectMenuBuilder,
+} from 'discord.js';
+
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const button: CoreButton = {
+  name: 'dailyType',
+  description: 'Daily Type',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    const inter = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId('selectMenuType')
         .setPlaceholder('Select a type')
@@ -30,11 +41,11 @@ export default {
     );
 
     interaction.update({
-      content: null,
       embeds: [],
       content: client.translation.get(guildDb?.language, 'Settings.dailyType'),
       components: [inter],
-      ephemeral: true,
     });
   },
 };
+
+export default button;

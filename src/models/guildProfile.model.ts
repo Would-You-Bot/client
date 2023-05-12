@@ -1,6 +1,9 @@
 import { Document, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
+type ReplayChannel = { id: string; name: string; cooldown: number };
+
 export type CustomMessage = {
+  id: string;
   type: string;
   msg: string;
 };
@@ -20,14 +23,14 @@ interface GuildProfileSchema extends SchemaTimestampsConfig {
   replay: boolean;
   replayCooldown: number;
   replayType: string;
-  replayChannels: Record<string, any>;
+  replayChannels: ReplayChannel[];
   botJoined: number;
   customMessages: CustomMessage[];
   customTypes: string;
   debugMode: boolean;
 }
 
-type GuildProfileDocument = GuildProfileSchema & Document;
+export type GuildProfileDocument = GuildProfileSchema & Document;
 
 export default model<GuildProfileDocument>(
   'guildProfile',

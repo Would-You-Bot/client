@@ -1,11 +1,29 @@
-const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
-export default {
-  data: {
-    name: 'seletcMenuWelcome',
-    description: 'Select Menu Welcome',
-  },
-  async execute(interaction, client, guildDb) {
-    const newChannel = interaction.values[0];
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
+  EmbedBuilder,
+} from 'discord.js';
+
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const button: CoreButton = {
+  name: 'seletcMenuWelcome',
+  description: 'Select Menu Welcome',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    if (!interaction.guild) return;
+
+    // ! This code was trying to get `values` from a button interaction
+
+    /* const newChannel = interaction.values[0];
 
     const welcomes = new EmbedBuilder()
       .setTitle(
@@ -16,37 +34,37 @@ export default {
           guildDb?.language,
           'Settings.embed.welcome'
         )}: ${
-          guildDb.welcome
-            ? `<:check:1077962440815411241>`
-            : `<:x_:1077962443013238814>`
+          guildDb.welcome ? config.emojis.check.full : config.emojis.close.full
         }\n${client.translation.get(
           guildDb?.language,
           'Settings.embed.welcomePing'
         )}: ${
           guildDb.welcomePing
-            ? `<:check:1077962440815411241>`
-            : `<:x_:1077962443013238814>`
+            ? config.emojis.check.full
+            : config.emojis.close.full
         }\n${client.translation.get(
           guildDb?.language,
           'Settings.embed.welcomeChannel'
         )}: <#${newChannel}>`
       )
-      .setColor('#0598F6')
+      .setColor(config.colors.primary)
       .setFooter({
         text: client.translation.get(
           guildDb?.language,
           'Settings.embed.footer'
         ),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       });
 
-    const welcomeButtons = new ActionRowBuilder().addComponents(
+    const welcomeButtons = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId('welcome')
           .setLabel(
             client.translation.get(guildDb?.language, 'Settings.button.welcome')
           )
-          .setStyle(guildDb.welcome ? 'Success' : 'Secondary'),
+          .setStyle(
+            guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary
+          ),
         new ButtonBuilder()
           .setCustomId('welcomeChannel')
           .setLabel(
@@ -55,9 +73,9 @@ export default {
               'Settings.button.welcomeChannel'
             )
           )
-          .setStyle('Success')
+          .setStyle(ButtonStyle.Success)
       ),
-      welcomeButtons2 = new ActionRowBuilder().addComponents(
+      welcomeButtons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId('welcomePing')
           .setLabel(
@@ -66,7 +84,9 @@ export default {
               'Settings.button.welcomePing'
             )
           )
-          .setStyle(guildDb.welcomePing ? 'Success' : 'Secondary')
+          .setStyle(
+            guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary
+          )
       );
 
     await client.database.updateGuild(interaction.guild.id, {
@@ -74,10 +94,11 @@ export default {
     });
 
     return interaction.update({
-      content: null,
+      content: '',
       embeds: [welcomes],
       components: [welcomeButtons, welcomeButtons2],
-      ephemeral: true,
-    });
+    }); */
   },
 };
+
+export default button;

@@ -48,7 +48,7 @@ export default class KeepAlive {
       // ! Disabled for now - will add a centralized error handler
       const embed = new EmbedBuilder()
         .setTitle('Rate limited')
-        .setColor(config.isProduction() ? '#6e0000' : '#e407f5')
+        .setColor(config.colors.danger)
         .addFields([
           {
             name: 'Rate-limit Info',
@@ -56,7 +56,7 @@ export default class KeepAlive {
           },
         ])
         .setFooter({
-          text: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          text: config.envName,
         })
         .setTimestamp();
 
@@ -76,7 +76,7 @@ export default class KeepAlive {
       // ! Disabled for now - will add a centralized error handler
       const embed = new EmbedBuilder()
         .setTitle('Watch-out Possible Rate-limit...')
-        .setColor(config.isProduction() ? '#F00505' : '#e407f5')
+        .setColor(config.colors.danger)
         .addFields([
           {
             name: 'Info',
@@ -84,7 +84,7 @@ export default class KeepAlive {
           },
         ])
         .setFooter({
-          text: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          text: config.envName,
         })
         .setTimestamp();
 
@@ -102,7 +102,7 @@ export default class KeepAlive {
       // ! Disabled for now - will add a centralized error handler
       const embed = new EmbedBuilder()
         .setTitle('Bot got a error...')
-        .setColor(config.isProduction() ? '#05b1f0' : '#e407f5')
+        .setColor(config.colors.danger)
         .addFields([
           {
             name: 'Error',
@@ -110,13 +110,13 @@ export default class KeepAlive {
           },
         ])
         .setFooter({
-          text: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          text: config.envName,
         })
         .setTimestamp();
 
       errorWebhook
         .send({
-          username: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          username: config.envName,
           embeds: [embed],
         })
         .catch((err) => {});
@@ -129,7 +129,7 @@ export default class KeepAlive {
       // ! Disabled for now - will add a centralized error handler
       const embed = new EmbedBuilder()
         .setTitle('Bot got a warn...')
-        .setColor(config.isProduction() ? '#05b1f0' : '#e407f5')
+        .setColor(config.colors.danger)
         .addFields([
           {
             name: 'Info',
@@ -137,13 +137,13 @@ export default class KeepAlive {
           },
         ])
         .setFooter({
-          text: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          text: config.envName,
         })
         .setTimestamp();
 
       warnWebhook
         .send({
-          username: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          username: config.envName,
           embeds: [embed],
         })
         .catch((err) => {});
@@ -159,7 +159,7 @@ export default class KeepAlive {
       const embed = new EmbedBuilder()
         .setTitle('New Unhandled Rejection/Catch')
         .setDescription(`\`\`\`${reason}\`\`\``)
-        .setColor(config.isProduction() ? '#F00505' : '#e407f5')
+        .setColor(config.colors.danger)
         .addFields([
           {
             name: 'Reason',
@@ -171,13 +171,13 @@ export default class KeepAlive {
           },
         ])
         .setFooter({
-          text: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          text: config.envName,
         })
         .setTimestamp();
 
       errorWebhook
         .send({
-          username: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          username: config.envName,
           embeds: [embed],
         })
         .catch((err) => {});
@@ -193,7 +193,7 @@ export default class KeepAlive {
       const embed = new EmbedBuilder()
         .setTitle('New uncaughtException')
         .setDescription(`\`\`\`${err}\`\`\``)
-        .setColor(config.isProduction() ? '#F00505' : '#e407f5')
+        .setColor(config.colors.danger)
         .addFields([
           {
             name: 'Error',
@@ -205,13 +205,13 @@ export default class KeepAlive {
           },
         ])
         .setFooter({
-          text: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          text: config.envName,
         })
         .setTimestamp();
 
       errorWebhook
         .send({
-          username: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          username: config.envName,
           embeds: [embed],
         })
         .catch((err) => {});
@@ -230,7 +230,7 @@ export default class KeepAlive {
           'New uncaughtExceptionMonitor' + `${customBot ? ' (Custom Bot)' : ''}`
         )
         .setDescription(`\`\`\`${err}\`\`\``)
-        .setColor(config.isProduction() ? '#F00505' : '#e407f5')
+        .setColor(config.colors.danger)
         .addFields([
           {
             name: 'Error',
@@ -242,13 +242,13 @@ export default class KeepAlive {
           },
         ])
         .setFooter({
-          text: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          text: config.envName,
         })
         .setTimestamp();
 
       errorWebhook
         .send({
-          username: config.isProduction() ? 'Main Bot' : 'Dev Bot',
+          username: config.envName,
           embeds: [embed],
         })
         .catch((err) => {});

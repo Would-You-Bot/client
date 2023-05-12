@@ -1,48 +1,65 @@
-const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-require('dotenv').config();
+import config from '@config';
+import { CoreEvent } from '@typings/core';
+import {
+  EmbedBuilder,
+  Events,
+  PermissionFlagsBits,
+  TextChannel,
+} from 'discord.js';
 
-export default async (client, member) => {
-  // Always do simple if checks before the main code. This is a little but not so little performance boost :)
-  if (member?.user?.bot) return;
+import { GuildMember } from 'discord.js';
+import { ExtendedClient } from 'src/client';
 
-  const guildDb = await client.database.getGuild(member.guild.id, false);
-  if (guildDb && guildDb?.welcome) {
-    const channel = await member.guild.channels
-      .fetch(guildDb.welcomeChannel)
-      .catch((err) => {});
+const event: CoreEvent = {
+  name: Events.GuildMemberAdd,
+  async execute(client: ExtendedClient, member: GuildMember) {
+    // Always do simple if checks before the main code. This is a little but not so little performance boost :)
+    if (member?.user?.bot) return;
 
-    if (!channel?.id) return;
+    const guildDb = await client.database.getGuild(member.guild.id, false);
+    if (guildDb && guildDb?.welcome) {
+      const channel = (await member.guild.channels
+        .fetch(guildDb.welcomeChannel)
+        .catch(() => {})) as TextChannel | null;
 
-    if (
-      !channel
-        ?.permissionsFor(client?.user?.id)
-        ?.has([
-          PermissionFlagsBits.ViewChannel,
-          PermissionFlagsBits.SendMessages,
-          PermissionFlagsBits.EmbedLinks,
-        ])
-    )
-      return;
+      if (!channel || !client.user?.id) return;
 
-    const { General } =
-      await require(`../data/rather-${guildDb.language}.json`);
-    const randomrather = Math.floor(Math.random() * General.length);
-    let mention = null;
+      const clientMember = await member.guild.members.fetch(client.user?.id);
 
-    if (guildDb.welcomePing) {
-      mention = `<@${member.user.id}>`;
+      if (
+        !channel
+          .permissionsFor(clientMember)
+          .has([
+            PermissionFlagsBits.ViewChannel,
+            PermissionFlagsBits.SendMessages,
+            PermissionFlagsBits.EmbedLinks,
+          ])
+      )
+        return;
+
+      const { General } = await import(
+        `../data/rather-${guildDb.language}.json`
+      );
+      const randomrather = Math.floor(Math.random() * General.length);
+      let mention = undefined;
+
+      if (guildDb.welcomePing) {
+        mention = `<@${member.user.id}>`;
+      }
+
+      let welcomeEmbed = new EmbedBuilder()
+        .setTitle(`Welcome ${member.user.username}!`)
+        .setColor(config.colors.primary)
+        .setThumbnail(member.user.avatarURL())
+        .setDescription(`${General[randomrather]}`);
+
+      return channel
+        .send({ content: mention, embeds: [welcomeEmbed] })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-
-    let welcomeEmbed = new EmbedBuilder()
-      .setTitle(`Welcome ${member.user.username}!`)
-      .setColor('#0598F6')
-      .setThumbnail(member.user.avatarURL())
-      .setDescription(`${General[randomrather]}`);
-
-    return channel
-      .send({ content: mention, embeds: [welcomeEmbed] })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  },
 };
+
+export default event;

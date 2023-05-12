@@ -1,8 +1,15 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const guildModel = require('../util/Models/guildModel');
+import {
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+  SlashCommandBuilder,
+} from 'discord.js';
 
-export default {
-  requireGuild: true,
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreCommand } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('vote')
     .setDescription('Vote for me!')
@@ -11,15 +18,13 @@ export default {
       de: 'Stimme für mich ab!',
       'es-ES': '¡Vota por mí!',
     }),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  async execute(interaction, client, guildDb) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     const votemebed = new EmbedBuilder()
-      .setColor('#5865f4')
+      .setColor(config.colors.blurple)
       .setTitle(client.translation.get(guildDb?.language, 'Vote.embed.title'))
       .addFields(
         {
@@ -27,7 +32,7 @@ export default {
           value: `> [ ${client.translation.get(
             guildDb?.language,
             'Vote.embed.value'
-          )}  ](https://top.gg/bot/981649513427111957/vote)`,
+          )}  ](https://top.gg/bot/${config.productionId}/vote)`,
           inline: true,
         },
         {
@@ -35,14 +40,14 @@ export default {
           value: `> [ ${client.translation.get(
             guildDb?.language,
             'Vote.embed.value'
-          )}  ](https://voidbots.net/bot/981649513427111957)`,
+          )}  ](https://voidbots.net/bot/${config.productionId})`,
           inline: true,
         }
       )
-      .setThumbnail(client.user.displayAvatarURL())
+      .setThumbnail(client.user?.displayAvatarURL() || null)
       .setFooter({
         text: client.translation.get(guildDb?.language, 'Vote.embed.footer'),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       });
 
     return interaction
@@ -54,3 +59,5 @@ export default {
       });
   },
 };
+
+export default command;

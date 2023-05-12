@@ -1,11 +1,22 @@
-const { ActionRowBuilder, RoleSelectMenuBuilder } = require('discord.js');
-export default {
-  data: {
-    name: 'dailyRole',
-    description: 'Daily Role',
-  },
-  async execute(interaction, client, guildDb) {
-    const inter = new ActionRowBuilder().addComponents(
+import {
+  ActionRowBuilder,
+  ButtonInteraction,
+  RoleSelectMenuBuilder,
+} from 'discord.js';
+
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const button: CoreButton = {
+  name: 'dailyRole',
+  description: 'Daily Role',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    const inter = new ActionRowBuilder<RoleSelectMenuBuilder>().addComponents(
       new RoleSelectMenuBuilder()
         .setCustomId('selectMenuRole')
         .setPlaceholder('Select a role')
@@ -15,7 +26,8 @@ export default {
       embeds: [],
       content: client.translation.get(guildDb?.language, 'Settings.dailyRole'),
       components: [inter],
-      ephemeral: true,
     });
   },
 };
+
+export default button;

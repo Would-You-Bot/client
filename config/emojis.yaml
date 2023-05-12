@@ -1,0 +1,14 @@
+# Config converts emojis to objects with the `id` and `full` string being the two values
+# If you're going to add an emoji here, also add the the emoji to the `EmojisConfig` interface in `/src/typings/config.ts`
+
+verified: <:verified_green:1072265950134550548>
+partner: <:partner:1072265822577360982>
+goodCheck: <:GoodCheck:1025490645525209148>
+badCheck: <:BadCheck:1025490660968628436>
+logo: <:roundyou:1009964111045607525>
+arrowRight: <:arrow:1086793114762629130>
+check: <:check:1077962440815411241>
+mention: <:fakeeveryone:1010011050336337934>
+replay: <:replay:1073954835533156402>
+close: <:x_:1077962443013238814>
+help: </help:982400982921138226>

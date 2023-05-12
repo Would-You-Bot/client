@@ -1,12 +1,18 @@
-const {
-  EmbedBuilder,
+import {
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
+  ChatInputCommandInteraction,
+  EmbedBuilder,
   SlashCommandBuilder,
-} = require('discord.js');
-const guildModel = require('../util/Models/guildModel');
+} from 'discord.js';
 
-export default {
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreCommand } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('support')
     .setDescription('Link to our support server')
@@ -15,15 +21,13 @@ export default {
       de: 'Link zu unserem Support Server',
       'es-ES': 'Link para nuestro servidor de soporte',
     }),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  async execute(interaction, client, guildDb) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     const supportembed = new EmbedBuilder()
-      .setColor('#F00505')
+      .setColor(config.colors.danger)
       .setTitle(
         client.translation.get(guildDb?.language, 'Support.embed.title')
       )
@@ -32,16 +36,16 @@ export default {
       )
       .setFooter({
         text: client.translation.get(guildDb?.language, 'Support.embed.footer'),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp();
 
-    const supportbutton = new ActionRowBuilder().addComponents(
+    const supportbutton = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setLabel('Support Server')
-        .setStyle(5)
+        .setStyle(ButtonStyle.Link)
         .setEmoji('💻')
-        .setURL('https://discord.gg/vMyXAxEznS')
+        .setURL(config.links.support)
     );
 
     return interaction
@@ -49,8 +53,8 @@ export default {
         embeds: [supportembed],
         components: [supportbutton],
       })
-      .catch((err) => {
-        return console.log(err);
-      });
+      .catch((err) => console.log(err));
   },
 };
+
+export default command;

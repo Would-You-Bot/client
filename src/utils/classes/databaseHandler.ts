@@ -10,7 +10,7 @@ import { logger } from '..';
 mongoose.set('strictQuery', true);
 
 export default class DatabaseHandler {
-  cache: Map<string, any>;
+  cache: Map<string, GuildProfileDocument>;
   guildProfileModel = guildProfileModel;
   connectionString: string;
 
@@ -63,7 +63,10 @@ export default class DatabaseHandler {
    * @param createIfNotFound create a database entry if not found
    * @returns The guild object from the database
    */
-  private async fetchGuild(guildId: string, createIfNotFound: boolean = false) {
+  private async fetchGuild(
+    guildId: string,
+    createIfNotFound: boolean = false
+  ): Promise<GuildProfileDocument | null> {
     const fetched = await this.guildProfileModel.findOne({ guildID: guildId });
 
     if (fetched) return fetched;
@@ -90,17 +93,17 @@ export default class DatabaseHandler {
     guildId: string,
     createIfNotFound: boolean = true,
     force: boolean = false
-  ) {
+  ): Promise<GuildProfileDocument | null> {
     if (force) return this.fetchGuild(guildId, createIfNotFound);
 
     if (this.cache.has(guildId)) {
-      return this.cache.get(guildId);
+      return this.cache.get(guildId) || null;
     }
 
     const fetched = await this.fetchGuild(guildId, createIfNotFound);
     if (fetched) {
       this.cache.set(guildId, fetched?.toObject() ?? fetched);
-      return this.cache.get(guildId);
+      return this.cache.get(guildId) || null;
     }
 
     return null;
@@ -129,26 +132,27 @@ export default class DatabaseHandler {
    */
   async updateGuild(
     guildId: string,
-    data: GuildProfileDocument | object = {},
+    dataValues: any,
     createIfNotFound: boolean = false
   ) {
     let oldData = await this.getGuild(guildId, createIfNotFound);
+    if (!oldData) return null;
 
-    if (oldData) {
-      if (oldData?._doc) oldData = oldData?._doc;
-
-      data = { ...oldData, ...data };
-
-      this.cache.set(guildId, data);
-
-      return this.guildProfileModel.updateOne(
-        {
-          guildID: guildId,
-        },
-        data
-      );
+    let newData: { [key: string]: any } = { ...oldData };
+    for (const key in dataValues) {
+      if (!newData[key]) {
+        newData[key] = newData[key];
+      }
     }
-    return null;
+
+    this.cache.set(guildId, newData as GuildProfileDocument);
+
+    return this.guildProfileModel.updateOne(
+      {
+        guildID: guildId,
+      },
+      newData
+    );
   }
 
   /**

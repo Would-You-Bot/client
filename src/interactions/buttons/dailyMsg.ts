@@ -1,10 +1,26 @@
-const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
-export default {
-  data: {
-    name: 'dailyMsg',
-    description: 'Daily Message Toggle',
-  },
-  async execute(interaction, client, guildDb) {
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
+  EmbedBuilder,
+} from 'discord.js';
+
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const button: CoreButton = {
+  name: 'dailyMsg',
+  description: 'Daily Message Toggle',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    if (!interaction.guild) return;
+
     const check = guildDb.dailyMsg;
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
@@ -49,9 +65,9 @@ export default {
               : `<:x_:1077962443013238814>`
           }`
       )
-      .setColor('#0598F6');
+      .setColor(config.colors.primary);
 
-    const dailyButtons = new ActionRowBuilder().addComponents(
+    const dailyButtons = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId('dailyMsg')
           .setLabel(
@@ -60,7 +76,7 @@ export default {
               'Settings.button.dailyMsg'
             )
           )
-          .setStyle(check ? 'Secondary' : 'Success'),
+          .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success),
         new ButtonBuilder()
           .setCustomId('dailyChannel')
           .setLabel(
@@ -69,7 +85,9 @@ export default {
               'Settings.button.dailyChannel'
             )
           )
-          .setStyle(guildDb.dailyChannel ? 'Success' : 'Secondary'),
+          .setStyle(
+            guildDb.dailyChannel ? ButtonStyle.Success : ButtonStyle.Secondary
+          ),
         new ButtonBuilder()
           .setCustomId('dailyType')
           .setLabel(
@@ -78,10 +96,10 @@ export default {
               'Settings.button.dailyType'
             )
           )
-          .setStyle('Primary')
+          .setStyle(ButtonStyle.Primary)
           .setEmoji('📝')
       ),
-      dailyButtons2 = new ActionRowBuilder().addComponents(
+      dailyButtons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId('dailyTimezone')
           .setLabel(
@@ -90,7 +108,7 @@ export default {
               'Settings.button.dailyTimezone'
             )
           )
-          .setStyle('Primary')
+          .setStyle(ButtonStyle.Primary)
           .setEmoji('🌍'),
         new ButtonBuilder()
           .setCustomId('dailyRole')
@@ -100,7 +118,9 @@ export default {
               'Settings.button.dailyRole'
             )
           )
-          .setStyle(guildDb.dailyRole ? 'Success' : 'Secondary'),
+          .setStyle(
+            guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary
+          ),
         new ButtonBuilder()
           .setCustomId('dailyInterval')
           .setLabel(
@@ -109,10 +129,10 @@ export default {
               'Settings.button.dailyInterval'
             )
           )
-          .setStyle('Primary')
+          .setStyle(ButtonStyle.Primary)
           .setEmoji('⏰')
       ),
-      dailyButtons3 = new ActionRowBuilder().addComponents(
+      dailyButtons3 = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId('dailyThread')
           .setLabel(
@@ -121,7 +141,9 @@ export default {
               'Settings.button.dailyThread'
             )
           )
-          .setStyle(guildDb.dailyThread ? 'Success' : 'Secondary')
+          .setStyle(
+            guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary
+          )
       );
 
     await client.database.updateGuild(interaction.guild.id, {
@@ -129,10 +151,11 @@ export default {
     });
 
     return interaction.update({
-      content: null,
+      content: '',
       embeds: [dailyMsgs],
       components: [dailyButtons, dailyButtons2, dailyButtons3],
-      ephemeral: true,
     });
   },
 };
+
+export default button;

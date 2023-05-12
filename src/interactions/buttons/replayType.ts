@@ -1,10 +1,26 @@
-const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
-export default {
-  data: {
-    name: 'replayType',
-    description: 'Replay type',
-  },
-  async execute(interaction, client, guildDb) {
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
+  EmbedBuilder,
+} from 'discord.js';
+
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const button: CoreButton = {
+  name: 'replayType',
+  description: 'Replay type',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    if (!interaction.guild) return;
+
     const newType = guildDb.replayType === 'Channels' ? 'Guild' : 'Channels';
     const generalMsg = new EmbedBuilder()
       .setTitle(
@@ -35,16 +51,16 @@ export default {
               }`
         }`
       )
-      .setColor('#0598F6')
+      .setColor(config.colors.primary)
       .setFooter({
         text: client.translation.get(
           guildDb?.language,
           'Settings.embed.footer'
         ),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       });
 
-    const generalButtons = new ActionRowBuilder().addComponents(
+    const generalButtons = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId(
           guildDb.replayType === 'Channels'
@@ -57,7 +73,9 @@ export default {
             'Settings.button.replayCooldown'
           )
         )
-        .setStyle(guildDb.replayCooldown ? 'Success' : 'Secondary'),
+        .setStyle(
+          guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary
+        ),
       new ButtonBuilder()
         .setCustomId('replayType')
         .setLabel(
@@ -66,11 +84,11 @@ export default {
             'Settings.button.replayType'
           )
         )
-        .setStyle('Primary')
+        .setStyle(ButtonStyle.Primary)
         .setEmoji('📝')
     );
 
-    const chanDelete = new ActionRowBuilder().addComponents(
+    const chanDelete = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId('replayDeleteChannels')
         .setLabel(
@@ -79,7 +97,7 @@ export default {
             'Settings.button.replayDeleteChannels'
           )
         )
-        .setStyle('Danger')
+        .setStyle(ButtonStyle.Danger)
     );
 
     await client.database.updateGuild(interaction.guild.id, {
@@ -93,7 +111,8 @@ export default {
         newType === 'Channels'
           ? [generalButtons, chanDelete]
           : [generalButtons],
-      ephemeral: true,
     });
   },
 };
+
+export default button;

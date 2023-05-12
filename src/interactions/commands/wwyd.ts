@@ -1,13 +1,18 @@
-const {
-  EmbedBuilder,
-  SlashCommandBuilder,
+import {
   ActionRowBuilder,
   ButtonBuilder,
-} = require('discord.js');
-const guildModel = require('../util/Models/guildModel');
+  ButtonStyle,
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+  SlashCommandBuilder,
+} from 'discord.js';
 
-export default {
-  requireGuild: true,
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreCommand } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('wwyd')
     .setDescription('What would you do in this situation')
@@ -16,49 +21,45 @@ export default {
       de: 'Was würdest du in dieser Situation tun',
       'es-ES': '¿Qué harías en esta situación?',
     }),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  async execute(interaction, client, guildDb) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     const { WhatYouDo } = require(`../data/wwyd-${guildDb.language}.json`);
     const randomNever = Math.floor(Math.random() * WhatYouDo.length);
     const wwydstring = WhatYouDo[randomNever];
 
     const wwydembed = new EmbedBuilder()
-      .setColor('#0598F6')
+      .setColor(config.colors.primary)
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`,
-        iconURL: interaction.user.avatarURL(),
+        iconURL: interaction.user?.avatarURL() || undefined,
       })
       .setDescription(wwydstring);
 
-    const row = new ActionRowBuilder();
+    const row = new ActionRowBuilder<ButtonBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
       row.addComponents([
         new ButtonBuilder()
           .setLabel('Invite')
-          .setStyle(5)
-          .setEmoji('1009964111045607525')
-          .setURL(
-            'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands'
-          ),
+          .setStyle(ButtonStyle.Link)
+          .setEmoji(config.emojis.logo.id)
+          .setURL(config.links.invite),
       ]);
     }
     row.addComponents([
       new ButtonBuilder()
         .setLabel('New Question')
-        .setStyle(1)
-        .setEmoji('1073954835533156402')
+        .setStyle(ButtonStyle.Primary)
+        .setEmoji(config.emojis.replay.id)
         .setCustomId(`wwyd`),
     ]);
 
     interaction
       .reply({ embeds: [wwydembed], components: [row] })
-      .catch((err) => {
-        return console.log(err);
-      });
+      .catch((err) => console.log(err));
   },
 };
+
+export default command;

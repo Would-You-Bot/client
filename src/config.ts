@@ -27,9 +27,22 @@ export class Config implements ConfigType {
   productionId = main.productionId;
   links = main.links;
   developers = main.developers;
+  colors = main.colors;
 
   // Environment
   env = env;
+  envName =
+    env.NODE_ENV === 'production'
+      ? 'Main Bot'
+      : env.NODE_ENV === 'beta'
+      ? 'Beta Bot'
+      : 'Dev Bot';
+  BOT_TOKEN =
+    env.NODE_ENV === 'production'
+      ? process.env.BOT_TOKEN_PROD
+      : env.NODE_ENV === 'beta'
+      ? process.env.BOT_TOKEN_BETA
+      : process.env.BOT_TOKEN_DEV;
 
   // Programatically generated config values
   logFolder = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}-${d.getHours()}-${d.getMinutes()}-${d.getSeconds()}`;

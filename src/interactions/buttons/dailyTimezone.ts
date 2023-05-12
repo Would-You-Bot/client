@@ -1,4 +1,18 @@
-const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
+  ComponentType,
+  EmbedBuilder,
+  ModalSubmitInteraction,
+} from 'discord.js';
+
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreButton } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
 const modalObject = {
   title: 'Daily Message Timezone',
   custom_id: 'modal',
@@ -17,40 +31,49 @@ const modalObject = {
   ],
 };
 
-function isValid(tz) {
+function isValid(timezone: string) {
   if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
     return false;
   }
 
   try {
-    Intl.DateTimeFormat(undefined, { timeZone: tz });
+    Intl.DateTimeFormat(undefined, { timeZone: timezone });
     return true;
   } catch (ex) {
     return false;
   }
 }
 
-function dateType(tz) {
-  if (!tz.includes('/')) return false;
-  let text = tz.split('/');
+function dateType(timezone: string) {
+  if (!timezone.includes('/')) return false;
+  let text = timezone.split('/');
 
   if (text.length === 2) return true;
   else return false;
 }
 
-export default {
-  data: {
-    name: 'dailyTimezone',
-    description: 'Daily Message Toggle',
-  },
-  async execute(interaction, client, guildDb) {
+const button: CoreButton = {
+  name: 'dailyTimezone',
+  description: 'Daily Message Toggle',
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
         time: 60000,
       })
-      .then(async (modalInteraction) => {
+      .then(async (modalInteraction: ModalSubmitInteraction) => {
+        if (!interaction.guild) return;
+        if (!modalInteraction.isFromMessage()) return;
+        if (
+          modalInteraction.components[0].components[0].type !==
+          ComponentType.TextInput
+        )
+          return;
         const value = modalInteraction.components[0].components[0].value;
 
         if (guildDb.dailyTimezone.toLowerCase() === value.toLowerCase())
@@ -91,22 +114,22 @@ export default {
               'Settings.embed.dailyMsg'
             )}: ${
               guildDb.dailyMsg
-                ? `<:check:1077962440815411241>`
-                : `<:x_:1077962443013238814>`
+                ? config.emojis.check.full
+                : config.emojis.close.full
             }\n${client.translation.get(
               guildDb?.language,
               'Settings.embed.dailyChannel'
             )}: ${
               guildDb.dailyChannel
                 ? `<#${guildDb.dailyChannel}>`
-                : `<:x_:1077962443013238814>`
+                : config.emojis.close.full
             }\n${client.translation.get(
               guildDb?.language,
               'Settings.embed.dailyRole'
             )}: ${
               guildDb.dailyRole
                 ? `<@&${guildDb.dailyRole}>`
-                : `<:x_:1077962443013238814>`
+                : config.emojis.close.full
             }\n${client.translation.get(
               guildDb?.language,
               'Settings.embed.dailyTimezone'
@@ -122,43 +145,50 @@ export default {
                 'Settings.embed.dailyThread'
               )}: ${
                 guildDb.dailyThread
-                  ? `<:check:1077962440815411241>`
-                  : `<:x_:1077962443013238814>`
+                  ? config.emojis.check.full
+                  : config.emojis.close.full
               }`
           )
           .setColor('#0598F6');
 
-        const dailyButtons = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-              .setCustomId('dailyMsg')
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  'Settings.button.dailyMsg'
+        const dailyButtons =
+            new ActionRowBuilder<ButtonBuilder>().addComponents(
+              new ButtonBuilder()
+                .setCustomId('dailyMsg')
+                .setLabel(
+                  client.translation.get(
+                    guildDb?.language,
+                    'Settings.button.dailyMsg'
+                  )
                 )
-              )
-              .setStyle(guildDb.dailyMsg ? 'Success' : 'Secondary'),
-            new ButtonBuilder()
-              .setCustomId('dailyChannel')
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  'Settings.button.dailyChannel'
+                .setStyle(
+                  guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary
+                ),
+              new ButtonBuilder()
+                .setCustomId('dailyChannel')
+                .setLabel(
+                  client.translation.get(
+                    guildDb?.language,
+                    'Settings.button.dailyChannel'
+                  )
                 )
-              )
-              .setStyle(guildDb.dailyChannel ? 'Success' : 'Secondary'),
-            new ButtonBuilder()
-              .setCustomId('dailyType')
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  'Settings.button.dailyType'
+                .setStyle(
+                  guildDb.dailyChannel
+                    ? ButtonStyle.Success
+                    : ButtonStyle.Secondary
+                ),
+              new ButtonBuilder()
+                .setCustomId('dailyType')
+                .setLabel(
+                  client.translation.get(
+                    guildDb?.language,
+                    'Settings.button.dailyType'
+                  )
                 )
-              )
-              .setStyle('Primary')
-              .setEmoji('📝')
-          ),
-          dailyButtons2 = new ActionRowBuilder().addComponents(
+                .setStyle(ButtonStyle.Primary)
+                .setEmoji('📝')
+            ),
+          dailyButtons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId('dailyTimezone')
               .setLabel(
@@ -167,7 +197,7 @@ export default {
                   'Settings.button.dailyTimezone'
                 )
               )
-              .setStyle('Primary')
+              .setStyle(ButtonStyle.Primary)
               .setEmoji('🌍'),
             new ButtonBuilder()
               .setCustomId('dailyRole')
@@ -177,7 +207,9 @@ export default {
                   'Settings.button.dailyRole'
                 )
               )
-              .setStyle(guildDb.dailyRole ? 'Success' : 'Secondary'),
+              .setStyle(
+                guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary
+              ),
             new ButtonBuilder()
               .setCustomId('dailyInterval')
               .setLabel(
@@ -186,10 +218,10 @@ export default {
                   'Settings.button.dailyInterval'
                 )
               )
-              .setStyle('Primary')
+              .setStyle(ButtonStyle.Primary)
               .setEmoji('⏰')
           ),
-          dailyButtons3 = new ActionRowBuilder().addComponents(
+          dailyButtons3 = new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId('dailyThread')
               .setLabel(
@@ -198,7 +230,11 @@ export default {
                   'Settings.button.dailyThread'
                 )
               )
-              .setStyle(guildDb.dailyThread ? 'Success' : 'Secondary')
+              .setStyle(
+                guildDb.dailyThread
+                  ? ButtonStyle.Success
+                  : ButtonStyle.Secondary
+              )
           );
 
         await client.database.updateGuild(interaction.guild.id, {
@@ -206,11 +242,12 @@ export default {
         });
 
         return modalInteraction.update({
-          content: null,
+          content: '',
           embeds: [dailyMsgs],
           components: [dailyButtons, dailyButtons2, dailyButtons3],
-          ephemeral: true,
         });
       });
   },
 };
+
+export default button;

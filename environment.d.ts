@@ -19,6 +19,8 @@ declare global {
       WARN_WEBHOOK: string;
       ERROR_WEBHOOK: string;
       DEBUG_WEBHOOK: string;
+      PRIVATE_WEBHOOK: string;
+      PUBLIC_WEBHOOK: string;
       // WARN_CHANNEL: string;
       // ERROR_CHANNEL: string;
       // DEBUG_CHANNEL: string;

@@ -1,19 +1,22 @@
-const {
-  CommandInteraction,
+import {
+  ChannelType,
+  ChatInputCommandInteraction,
   EmbedBuilder,
-  SlashCommandBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
   PermissionFlagsBits,
-} = require('discord.js');
-const guildModel = require('../util/Models/guildModel');
+  SlashCommandBuilder,
+} from 'discord.js';
 
-export default {
-  requireGuild: true,
+import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
+import { CoreCommand } from '@typings/core';
+import { ExtendedClient } from 'src/client';
+
+const command: CoreCommand = {
   data: new SlashCommandBuilder()
     .setName('debug')
     .setDescription('Debug the would you bot')
     .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: 'Debug den would you bot',
       'es-ES': 'Depurar el bot',
@@ -37,19 +40,18 @@ export default {
           "Debug the current channel to view some permissons information's."
         )
     ),
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    if (!interaction.guild || !interaction.guildId || !client.user?.id) return;
+    if (!interaction.channel) return;
+    if (interaction.channel?.type !== ChannelType.GuildText) return;
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  async execute(interaction, client, guildDb) {
-    if (
-      !interaction.member.permissions.has(PermissionFlagsBits.ManageGuild) ||
-      global.checkDebug(guildDb, interaction?.user?.id)
-    ) {
+    if (client.checkDebug(guildDb, interaction.user?.id)) {
       const errorembed = new EmbedBuilder()
-        .setColor('#F00505')
+        .setColor(config.colors.danger)
         .setTitle('Error!')
         .setDescription(
           client.translation.get(guildDb?.language, 'Debug.permissions')
@@ -158,9 +160,9 @@ export default {
                 guildDb?.language,
                 'Debug.embed.manageWebhook',
                 {
-                  can: interaction?.channel
-                    ?.permissionsFor(client?.user?.id)
-                    .has([PermissionFlagsBits.ManageWebhooks])
+                  can: interaction.channel
+                    .permissionsFor(client.user.id)
+                    ?.has([PermissionFlagsBits.ManageWebhooks])
                     ? client.translation.get(
                         guildDb?.language,
                         'Debug.embed.can'
@@ -175,9 +177,9 @@ export default {
                 guildDb?.language,
                 'Debug.embed.embedLinks',
                 {
-                  can: interaction?.channel
-                    ?.permissionsFor(client?.user?.id)
-                    .has([PermissionFlagsBits.EmbedLinks])
+                  can: interaction.channel
+                    .permissionsFor(client.user.id)
+                    ?.has([PermissionFlagsBits.EmbedLinks])
                     ? client.translation.get(
                         guildDb?.language,
                         'Debug.embed.can'
@@ -192,9 +194,9 @@ export default {
                 guildDb?.language,
                 'Debug.embed.sendMessages',
                 {
-                  can: interaction?.channel
-                    ?.permissionsFor(client?.user?.id)
-                    .has([PermissionFlagsBits.SendMessages])
+                  can: interaction.channel
+                    .permissionsFor(client.user.id)
+                    ?.has([PermissionFlagsBits.SendMessages])
                     ? client.translation.get(
                         guildDb?.language,
                         'Debug.embed.can'
@@ -209,9 +211,9 @@ export default {
                 guildDb?.language,
                 'Debug.embed.viewChannel',
                 {
-                  can: interaction?.channel
-                    ?.permissionsFor(client?.user?.id)
-                    .has([PermissionFlagsBits.ViewChannel])
+                  can: interaction.channel
+                    .permissionsFor(client?.user.id)
+                    ?.has([PermissionFlagsBits.ViewChannel])
                     ? client.translation.get(
                         guildDb?.language,
                         'Debug.embed.can'
@@ -226,9 +228,9 @@ export default {
                 guildDb?.language,
                 'Debug.embed.readMessageHistory',
                 {
-                  can: interaction?.channel
-                    ?.permissionsFor(client?.user?.id)
-                    .has([PermissionFlagsBits.ReadMessageHistory])
+                  can: interaction.channel
+                    .permissionsFor(client.user.id)
+                    ?.has([PermissionFlagsBits.ReadMessageHistory])
                     ? client.translation.get(
                         guildDb?.language,
                         'Debug.embed.can'
@@ -340,3 +342,5 @@ export default {
     }
   },
 };
+
+export default command;

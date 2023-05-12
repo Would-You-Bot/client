@@ -7,6 +7,8 @@ import {
 import dotenv from 'dotenv';
 dotenv.config();
 
+import { logger } from './utils';
+
 const manager = new ClusterManager(`${__dirname}/index.ts`, {
   totalClusters: 1,
   totalShards: 1,
@@ -24,7 +26,7 @@ manager.extend(
 );
 
 manager.on('clusterCreate', (cluster) => {
-  console.log(
+  logger.info(
     `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
       'Successfully created cluster #' + cluster.id
     )}`

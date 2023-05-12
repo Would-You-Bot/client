@@ -18,12 +18,12 @@ export default class ButtonHandler {
   async load() {
     for (const file of fs
       .readdirSync(path.join(__dirname, '..', 'buttons'))
-      .filter((file) => file.endsWith('.js'))) {
-      const button = await import(`../buttons/${file}`);
-      this.client.buttons.set(button.data.name, button);
+      .filter((file) => file.endsWith('.ts'))) {
+      const button = (await import(`@interactions/buttons/${file}`)).default;
+      this.client.buttons.set(button.name, button);
     }
     this.client.logger.info(
-      `${colors.white('Would You?')} ${ChalkAdvanced.gray('>')} ${colors.green(
+      `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
         'Successfully loaded buttons'
       )}`
     );
