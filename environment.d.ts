@@ -14,7 +14,7 @@ declare global {
       BOT_TOKEN_PROD: string;
 
       // Discord logging - channels must be in the log guild
-      LOG_GUILD: string;
+      LOG_GUILD: string; // This is also the dev guild
       ERROR_PING_ROLE: string;
       WARN_WEBHOOK: string;
       ERROR_WEBHOOK: string;

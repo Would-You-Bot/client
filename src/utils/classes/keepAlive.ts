@@ -9,7 +9,7 @@ const warnWebhook = new WebhookClient({
   url: config.env.WARN_WEBHOOK,
 });
 const errorWebhook = new WebhookClient({
-  url: process.env.ERROR_WEBHOOK,
+  url: config.env.ERROR_WEBHOOK,
 });
 
 export default class KeepAlive {
@@ -25,7 +25,7 @@ export default class KeepAlive {
    * @param msg The message
    * @param _optionalData Optional data
    */
-  private consoleError(type: string, msg: string, _optionalData: string = '') {
+  private consoleError(type: string, msg: string, _optionalData = '') {
     this.client.logger.error(
       `${colors.white(type)} ${colors.gray('>')} ${colors.red(msg)}`,
       _optionalData
@@ -64,7 +64,7 @@ export default class KeepAlive {
         .send({
           embeds: [embed],
         })
-        .catch((err) => {});
+        .catch(this.client.logger.error);
     });
 
     this.client.on('debug', (e) => {
@@ -92,7 +92,7 @@ export default class KeepAlive {
         .send({
           embeds: [embed],
         })
-        .catch((err) => {});
+        .catch(this.client.logger.error);
     });
 
     this.client.on('error', (e) => {
@@ -119,7 +119,7 @@ export default class KeepAlive {
           username: config.envName,
           embeds: [embed],
         })
-        .catch((err) => {});
+        .catch(this.client.logger.error);
     });
 
     this.client.on('warn', async (info) => {
@@ -146,12 +146,12 @@ export default class KeepAlive {
           username: config.envName,
           embeds: [embed],
         })
-        .catch((err) => {});
+        .catch(this.client.logger.error);
     });
 
     process.on('unhandledRejection', async (reason, p) => {
       this.consoleError('Fatal Error', 'Unhandled Rejection/Catch');
-      console.log(reason, p);
+      this.client.logger.error(`${reason} ${p}`);
 
       return;
 
@@ -180,12 +180,12 @@ export default class KeepAlive {
           username: config.envName,
           embeds: [embed],
         })
-        .catch((err) => {});
+        .catch(this.client.logger.error);
     });
 
     process.on('uncaughtException', async (err, origin) => {
       this.consoleError('Fatal Error', 'Uncaught Exception/Catch');
-      console.log(err, origin);
+      this.client.logger.error(`${err} ${origin}`);
 
       return;
 
@@ -214,11 +214,11 @@ export default class KeepAlive {
           username: config.envName,
           embeds: [embed],
         })
-        .catch((err) => {});
+        .catch(this.client.logger.error);
     });
     process.on('uncaughtExceptionMonitor', async (err, origin) => {
       this.consoleError('Fatal Error', 'Uncaught Exception/Catch (MONITOR)');
-      console.log(err, origin);
+      this.client.logger.error(`${err} ${origin}`);
 
       return;
 
@@ -227,7 +227,7 @@ export default class KeepAlive {
       const customBot = false;
       const embed = new EmbedBuilder()
         .setTitle(
-          'New uncaughtExceptionMonitor' + `${customBot ? ' (Custom Bot)' : ''}`
+          `New uncaughtExceptionMonitor ${customBot ? ' (Custom Bot)' : ''}`
         )
         .setDescription(`\`\`\`${err}\`\`\``)
         .setColor(config.colors.danger)
@@ -251,7 +251,7 @@ export default class KeepAlive {
           username: config.envName,
           embeds: [embed],
         })
-        .catch((err) => {});
+        .catch(this.client.logger.error);
     });
   }
 }

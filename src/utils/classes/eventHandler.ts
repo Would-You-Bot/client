@@ -4,11 +4,9 @@ import { ExtendedClient } from 'src/client';
 
 export default class EventHandler {
   client: ExtendedClient;
-  once: string[];
 
   constructor(client: ExtendedClient) {
     this.client = client;
-    this.once = ['ready'];
   }
 
   /**
@@ -16,14 +14,21 @@ export default class EventHandler {
    */
   async load() {
     fs.readdir('./src/events/', (err, files) => {
-      if (err) return console.error(err);
+      if (err) return this.client.logger.error(err);
 
-      files.forEach(async (file) => {
-        const event = (await import(`../events/${file}`)).default;
+      files.forEach(async (fileName) => {
+        this.client.logger.debug(`Importing event: ${fileName}`);
 
-        if (this.once.includes(event.execute))
-          this.client.once(event.execute, event.bind(null, this.client));
-        else this.client.on(event.execute, event.bind(null, this.client));
+        const event = (await import(`../../events/${fileName}`)).default;
+
+        const execute = (...args: any[]) => event.execute(...args, this.client);
+
+        try {
+          if (event.once) this.client.once(event.name, execute);
+          else this.client.on(event.name, execute);
+        } catch (error) {
+          this.client.logger.error(error);
+        }
       });
     });
   }

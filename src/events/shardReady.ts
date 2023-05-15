@@ -7,7 +7,7 @@ import { ExtendedClient } from 'src/client';
 const event: CoreEvent = {
   name: Events.ShardReady,
   async execute(client: ExtendedClient, id: string) {
-    console.log(
+    client.logger.info(
       `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
         'Shard is now ready #' + id
       )}`

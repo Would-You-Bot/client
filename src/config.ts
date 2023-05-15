@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { parse } from 'yaml';
 
 import { ConfigType, EmojisConfig, MainConfig } from '@typings/config';
-import { verifyEnvironment } from '@utils/index';
+import { verifyEnvironment } from '@utils/start';
 
 const emojisConfig = readFileSync('./config/emojis.yaml', 'utf8');
 const limitsConfig = readFileSync('./config/limits.yaml', 'utf8');
@@ -13,7 +13,7 @@ const emojiList = parse(emojisConfig);
 const emojisData: EmojisConfig = Object.keys(emojiList).reduce((acc, key) => {
   acc[key] = {
     full: emojiList[key],
-    id: emojiList[key].split(':')[2].replace('>', ''),
+    id: emojiList[key].split(':')[2]?.replace('>', ''),
   };
   return acc as EmojisConfig;
 }, {} as EmojisConfig);
@@ -28,35 +28,41 @@ export class Config implements ConfigType {
   links = main.links;
   developers = main.developers;
   colors = main.colors;
+  status = main.status;
 
   // Environment
   env = env;
-  envName =
-    env.NODE_ENV === 'production'
-      ? 'Main Bot'
-      : env.NODE_ENV === 'beta'
-      ? 'Beta Bot'
-      : 'Dev Bot';
-  BOT_TOKEN =
-    env.NODE_ENV === 'production'
-      ? process.env.BOT_TOKEN_PROD
-      : env.NODE_ENV === 'beta'
-      ? process.env.BOT_TOKEN_BETA
-      : process.env.BOT_TOKEN_DEV;
+  debug = env.DEBUG;
+  envName: string;
+  BOT_TOKEN: string;
 
   // Programatically generated config values
-  logFolder = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}-${d.getHours()}-${d.getMinutes()}-${d.getSeconds()}`;
+  logFolder: string;
 
   // Other config files
   limits = parse(limitsConfig);
   emojis = emojisData;
+  voteEmojis = main.voteEmojis;
 
-  constructor() {}
+  constructor() {
+    if (this.isProduction()) {
+      this.envName = 'Main Bot';
+      this.BOT_TOKEN = env.BOT_TOKEN_PROD;
+    } else if (this.isBeta()) {
+      this.envName = 'Beta Bot';
+      this.BOT_TOKEN = env.BOT_TOKEN_BETA;
+    } else {
+      this.envName = 'Dev Bot';
+      this.BOT_TOKEN = env.BOT_TOKEN_DEV;
+    }
+
+    this.logFolder = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}-${d.getHours()}-${d.getMinutes()}-${d.getSeconds()}`;
+  }
 
   // Additional config functions
-  isDevelopment = (): boolean => env.NODE_ENV === 'development';
-  isBeta = (): boolean => env.NODE_ENV === 'beta';
-  isProduction = (): boolean => env.NODE_ENV === 'production';
+  isDevelopment = (): boolean => this.env.NODE_ENV === 'development';
+  isBeta = (): boolean => this.env.NODE_ENV === 'beta';
+  isProduction = (): boolean => this.env.NODE_ENV === 'production';
 }
 
 const config = new Config();

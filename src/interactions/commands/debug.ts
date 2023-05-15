@@ -61,9 +61,7 @@ const command: CoreCommand = {
           embeds: [errorembed],
           ephemeral: true,
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(client.logger.error);
     }
 
     switch (interaction.options.getSubcommand()) {
@@ -126,7 +124,7 @@ const command: CoreCommand = {
       }
       case 'channel': {
         const debugEmbed = new EmbedBuilder()
-          .setColor('#0598F6')
+          .setColor(config.colors.primary)
           .setTimestamp()
           .setTitle(
             client.translation.get(guildDb?.language, 'Debug.embed.title')
@@ -337,7 +335,7 @@ const command: CoreCommand = {
           .reply({
             embeds: [debugEmbed],
           })
-          .catch((err) => {});
+          .catch(client.logger.error);
       }
     }
   },

@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 import guildProfileModel, {
   GuildProfileDocument,
 } from '@models/guildProfile.model';
+import { logger } from '@utils/client';
 import { ExtendedClient } from 'src/client';
-import { logger } from '..';
 
 mongoose.set('strictQuery', true);
 
@@ -20,7 +20,7 @@ export default class DatabaseHandler {
    */
   constructor(connectionString: string) {
     this.cache = new Map();
-    this.guildProfileModel = require('./Models/guildModel');
+    this.guildProfileModel = guildProfileModel;
     this.connectionString = connectionString;
   }
 
@@ -46,14 +46,14 @@ export default class DatabaseHandler {
   async connectToDatabase() {
     try {
       const connection = await mongoose.connect(this.connectionString);
-      console.log(
+      logger.info(
         `${colors.white('Database')} ${colors.gray('>')} ${colors.green(
           'Successfully loaded database'
         )}`
       );
       return connection;
     } catch (error) {
-      logger;
+      logger.error(error);
     }
   }
 
@@ -65,7 +65,7 @@ export default class DatabaseHandler {
    */
   private async fetchGuild(
     guildId: string,
-    createIfNotFound: boolean = false
+    createIfNotFound: boolean | undefined
   ): Promise<GuildProfileDocument | null> {
     const fetched = await this.guildProfileModel.findOne({ guildID: guildId });
 
@@ -74,7 +74,7 @@ export default class DatabaseHandler {
       await this.guildProfileModel.create({
         guildID: guildId,
         language: 'en_EN',
-        botJoined: (Date.now() / 1000) | 0,
+        botJoined: Date.now() / 1000 || 0,
       });
 
       return this.guildProfileModel.findOne({ guildID: guildId });
@@ -91,8 +91,8 @@ export default class DatabaseHandler {
    */
   async getGuild(
     guildId: string,
-    createIfNotFound: boolean = true,
-    force: boolean = false
+    createIfNotFound = true,
+    force = false
   ): Promise<GuildProfileDocument | null> {
     if (force) return this.fetchGuild(guildId, createIfNotFound);
 
@@ -115,7 +115,7 @@ export default class DatabaseHandler {
    * @param onlyCache if you want to only delete the cache
    * @returns if onlyCache is true it will return true
    */
-  async deleteGuild(guildId: string, onlyCache: boolean = false) {
+  async deleteGuild(guildId: string, onlyCache = false) {
     if (this.cache.has(guildId)) this.cache.delete(guildId);
 
     return !onlyCache
@@ -133,15 +133,17 @@ export default class DatabaseHandler {
   async updateGuild(
     guildId: string,
     dataValues: any,
-    createIfNotFound: boolean = false
+    createIfNotFound = false
   ) {
-    let oldData = await this.getGuild(guildId, createIfNotFound);
+    const oldData = await this.getGuild(guildId, createIfNotFound);
     if (!oldData) return null;
 
-    let newData: { [key: string]: any } = { ...oldData };
+    const newData: { [key: string]: any } = { ...oldData };
+
+    // Loop through all the data values and assign it to the new data object
     for (const key in dataValues) {
       if (!newData[key]) {
-        newData[key] = newData[key];
+        newData[key] = dataValues[key];
       }
     }
 

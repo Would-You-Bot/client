@@ -360,11 +360,11 @@ const command: CoreCommand = {
           const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
               .setLabel('Accept')
-              .setStyle(4)
+              .setStyle(ButtonStyle.Danger)
               .setCustomId('wycustom_accept'),
             new ButtonBuilder()
               .setLabel('Decline')
-              .setStyle(2)
+              .setStyle(ButtonStyle.Secondary)
               .setCustomId('wycustom_decline')
           );
 
@@ -792,12 +792,10 @@ const command: CoreCommand = {
           embeds: [typeEmbed],
           ephemeral: true,
         })
-        .catch((err) => {
-          return;
-        });
+        .catch(client.logger.error);
     } else {
       const errorembed = new EmbedBuilder()
-        .setColor('#F00505')
+        .setColor(config.colors.danger)
         .setTitle('Error!')
         .setDescription(
           client.translation.get(guildDb?.language, 'Language.embed.error')
@@ -807,7 +805,7 @@ const command: CoreCommand = {
           embeds: [errorembed],
           ephemeral: true,
         })
-        .catch(() => {});
+        .catch(client.logger.error);
     }
   },
 };

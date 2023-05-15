@@ -187,9 +187,7 @@ const button: CoreButton = {
           components: [generalButtons, chanDelete],
         });
       })
-      .catch((e) => {
-        console.log(e);
-      }); */
+      .catch(client.logger.error); */
   },
 };
 

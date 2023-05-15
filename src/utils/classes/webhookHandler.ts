@@ -17,7 +17,7 @@ export default class WebhookHandler {
   constructor(client: ExtendedClient) {
     this.client = client;
     this.webhooks = new Map();
-    this.webhookModel = require('../util/Models/webhookCache');
+    this.webhookModel = webhookModel;
   }
 
   /**
@@ -29,7 +29,7 @@ export default class WebhookHandler {
     if (this.webhooks.has(`${channelId}`)) return this.webhooks.get(channelId);
 
     const data = await this.webhookModel.findOne({
-      channelId: channelId,
+      channelId,
     });
     if (data) {
       this.webhooks.set(`${channelId}`, {
@@ -41,7 +41,7 @@ export default class WebhookHandler {
         id: data.webhookId,
         token: data.webhookToken,
       };
-    } else return null;
+    }
   }
 
   /**
@@ -54,7 +54,7 @@ export default class WebhookHandler {
    * @returns The webhook or null
    */
   private async createWebhook(
-    channel: TextChannel | null = null,
+    channel: TextChannel | undefined | null,
     channelId: string,
     name: string,
     avatar: string | undefined,
@@ -63,7 +63,7 @@ export default class WebhookHandler {
     if (!channel)
       channel = (await this.client.channels
         .fetch(channelId)
-        .catch((err) => {})) as TextChannel | null;
+        .catch(this.client.logger.error)) as TextChannel | null;
     if (!channel || !this.client.user?.id) return;
 
     const clientMember = await channel.guild.members.fetch(this.client.user.id);
@@ -75,57 +75,59 @@ export default class WebhookHandler {
     )
       return null;
 
-    const webhook = await channel
-      .createWebhook({
+    try {
+      const webhook = await channel.createWebhook({
         name: name ?? 'Would You',
         avatar: avatar ?? this.client.user.displayAvatarURL(),
         reason: reason ?? 'Would You Webhook',
-      })
-      .catch((err) => {
-        return err;
       });
 
-    if (webhook?.id) {
-      this.webhooks.set(`${channelId}`, {
-        id: webhook.id,
-        token: webhook.token,
-      });
+      if (!webhook) return null;
 
-      const oldData = await this.webhookModel.findOne({
-        channelId: channelId,
-      });
-
-      if (oldData) {
-        await oldData.updateOne({
-          channelId: channelId,
-          webhookId: webhook.id,
-          webhookToken: webhook.token,
+      if (webhook?.id) {
+        this.webhooks.set(`${channelId}`, {
+          id: webhook.id,
+          token: webhook.token,
         });
-      } else {
-        await this.webhookModel.create({
-          channelId: channelId,
-          webhookId: webhook.id,
-          webhookToken: webhook.token,
+
+        const oldData = await this.webhookModel.findOne({
+          channelId,
         });
+
+        if (oldData) {
+          await oldData.updateOne({
+            channelId,
+            webhookId: webhook.id,
+            webhookToken: webhook.token,
+          });
+        } else {
+          await this.webhookModel.create({
+            channelId,
+            webhookId: webhook.id,
+            webhookToken: webhook.token,
+          });
+        }
+
+        return {
+          id: webhook.id,
+          token: webhook.token,
+        };
       }
-
-      return {
-        id: webhook.id,
-        token: webhook.token,
-      };
-    } else return null;
+    } catch (error) {
+      this.client.logger.error(error);
+    }
   }
 
   async webhookFallBack(
-    channel: TextChannel | null = null,
+    channel: TextChannel | undefined | null,
     channelId: string,
     message: MessagePayload | WebhookMessageCreateOptions,
     error: any | boolean = false
   ): Promise<any> {
     if (!channel)
-      channel = (await this.client.channels.fetch(channelId).catch((err) => {
-        console.error(err);
-      })) as TextChannel | null;
+      channel = (await this.client.channels
+        .fetch(channelId)
+        .catch(this.client.logger.error)) as TextChannel | null;
 
     if (!channel || !this.client.user?.id) return;
 
@@ -145,12 +147,12 @@ export default class WebhookHandler {
       if (webhooks && webhooks.size > 0) {
         let i = 0;
         webhooks.forEach((web) => {
-          i++;
+          i += 1;
           setInterval(() => {
             if (web?.owner?.id === this.client.user?.id) {
               web
                 .delete('Deleting old webhook, to create a new one')
-                .catch((err) => {});
+                .catch(this.client.logger.error);
             }
           }, 1000 * i);
         });
@@ -177,25 +179,26 @@ export default class WebhookHandler {
         return this.webhookFallBack(channel, channelId, message, false);
 
       // ! Note quite sure this is safe
-      webhookClient.send(message).catch(async (err) => {
-        return this.webhookFallBack(channel, channelId, message, false);
-      });
-    } else {
-      if (
-        channel
-          ?.permissionsFor(clientMember)
-          .has([PermissionFlagsBits.EmbedLinks])
-      ) {
-        const guildSettings = await this.client.database.getGuild(
-          channel.guild.id
+      webhookClient
+        .send(message)
+        .catch(async () =>
+          this.webhookFallBack(channel, channelId, message, false)
         );
+    } else if (
+      channel
+        ?.permissionsFor(clientMember)
+        .has([PermissionFlagsBits.EmbedLinks])
+    ) {
+      /* const guildSettings = */ await this.client.database.getGuild(
+        channel.guild.id
+      );
 
-        // ! Not sure what this is
-        /* message.embeds = message?.embeds ?? [];
+      // ! Not sure what this is
+      /* message.embeds = message?.embeds ?? [];
 
         message.embeds.unshift(
           new EmbedBuilder()
-            .setColor('#FE0001')
+            .setColor('config.colors.danger)
             .setDescription(
               '🛑 ' +
                 this.c.translation.get(
@@ -205,23 +208,22 @@ export default class WebhookHandler {
             )
         ); */
 
-        return channel.send(message).catch((err) => {
-          console.log(err);
-          console.log(message);
-        });
-      }
+      return channel.send(message).catch((err) => {
+        this.client.logger.error(err);
+        this.client.logger.error(message);
+      });
     }
   }
 
   /**
    * Send a message to a channel with a webhook
-   * @param {object} channel the channel to send the message to
-   * @param {string} channelId the channel id
-   * @param {object} message the message to send
+   * @param channel the channel to send the message to
+   * @param channelId the channel id
+   * @param message the message to send
    * @returns void
    */
   async sendWebhook(
-    channel: TextChannel | null = null,
+    channel: TextChannel | undefined | null,
     channelId: string,
     message: MessagePayload | WebhookMessageCreateOptions,
     thread?: boolean
@@ -236,7 +238,7 @@ export default class WebhookHandler {
     if (webhookData?.webhookToken) webhookData.token = webhookData.webhookToken;
 
     if (!webhookData?.id || !webhookData?.token) {
-      let webhook = await this.createWebhook(
+      const webhook = await this.createWebhook(
         channel,
         channelId,
         'Would You',
@@ -251,13 +253,16 @@ export default class WebhookHandler {
         id: webhook.id,
         token: webhook.token,
       });
+
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
 
-      const fallbackThread = await webhookClient.send(message).catch((err) => {
-        return this.webhookFallBack(channel, channelId, message, false);
-      });
+      const fallbackThread = await webhookClient
+        .send(message)
+        .catch(() => this.webhookFallBack(channel, channelId, message, false));
+
       if (!thread) return;
+
       this.client.rest.post(
         `/channels/${channelId}/messages/${fallbackThread.id}/threads`,
         {
@@ -272,12 +277,17 @@ export default class WebhookHandler {
         id: webhookData?.id,
         token: webhookData?.token,
       });
+
       if (!webhook) return this.webhookFallBack(channel, channelId, message);
 
-      const webhookThread = await webhook.send(message).catch((err) => {
-        return this.webhookFallBack(channel, channelId, message, err);
-      });
+      const webhookThread = await webhook
+        .send(message)
+        .catch((error) =>
+          this.webhookFallBack(channel, channelId, message, error)
+        );
+
       if (!thread) return;
+
       this.client.rest.post(
         `/channels/${channelId}/messages/${webhookThread.id}/threads`,
         {

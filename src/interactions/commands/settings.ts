@@ -188,7 +188,7 @@ const command: CoreCommand = {
             components: [dailyButtons, dailyButtons2, dailyButtons3],
             ephemeral: true,
           })
-          .catch(() => {});
+          .catch(client.logger.error);
         break;
 
       case 'general':
@@ -285,7 +285,7 @@ const command: CoreCommand = {
                 : [generalButtons],
             ephemeral: true,
           })
-          .catch(() => {});
+          .catch(client.logger.error);
         break;
 
       case 'welcomes':

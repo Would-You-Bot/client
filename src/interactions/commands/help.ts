@@ -1,6 +1,7 @@
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
   ChatInputCommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
@@ -81,12 +82,12 @@ export default {
         .setLabel(
           client.translation.get(guildDb?.language, 'Help.button.title')
         )
-        .setStyle(5)
+        .setStyle(ButtonStyle.Link)
         .setEmoji('💫')
         .setURL(config.links.support),
       new ButtonBuilder()
         .setLabel('Invite')
-        .setStyle(5)
+        .setStyle(ButtonStyle.Link)
         .setEmoji(config.emojis.logo.id)
         .setURL(config.links.invite)
     );
@@ -95,8 +96,6 @@ export default {
         embeds: [helpembed],
         components: [button],
       })
-      .catch((err) => {
-        return;
-      });
+      .catch(client.logger.error);
   },
 };

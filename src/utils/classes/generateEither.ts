@@ -1,23 +1,40 @@
-const Canvas = require('@napi-rs/canvas');
-const { join } = require('path');
+import Canvas from '@napi-rs/canvas';
+import path from 'path';
+
 Canvas.GlobalFonts.registerFromPath(
-  join(__dirname, '..', 'data', 'Fonts', 'OpenSans-Bold.ttf'),
+  path.join(__dirname, '..', 'data', 'Fonts', 'OpenSans-Bold.ttf'),
   'OpenSans'
 );
 
+interface User {
+  icon: string;
+}
+
 class Either {
-  constructor() {}
+  rowOne?: User[];
+  rowTwo?: User[];
+  language?: string;
+  text1?: string;
+  text2?: string;
+
+  constructor() {
+    this.rowOne = undefined;
+    this.rowTwo = undefined;
+    this.language = undefined;
+    this.text1 = undefined;
+    this.text2 = undefined;
+  }
 
   /**
-   *
-   * @param {Array} rowOne
-   * @param {Array} rowTwo
-   * @returns {Either}
+   * Set both rows of users
+   * @param rowOne The first row of users
+   * @param rowTwo The second row of users
+   * @returns The Either class
    */
-  setVotes(rowOne, rowTwo) {
+  setVotes(rowOne: User[], rowTwo: User[]) {
     if (!Array.isArray(rowOne && rowTwo)) {
       throw new Error(
-        'Expected rows array instead got ' + typeof rowOne || typeof rowTwo
+        `Expected rows array instead got ${typeof rowOne || typeof rowTwo}`
       );
     }
     this.rowOne = rowOne;
@@ -27,44 +44,44 @@ class Either {
 
   /**
    * The guildDb.language
-   * @param {language} language
-   * @returns {Either}
+   * @param language The language
+   * @returns The Either class
    */
-  setLanguage(language) {
+  setLanguage(language?: string) {
     if (!language) {
-      throw new Error('Expected language instead got ' + typeof language);
+      throw new Error(`Expected language instead got ${typeof language}`);
     }
     this.language = language;
     return this;
   }
 
   /**
-   *
-   * @param {String} text1
-   * @returns {Either}
+   * Add the first text
+   * @param text1 The first text
+   * @returns The Either class
    */
-  addFirstText(text1) {
+  addFirstText(text1: string) {
     this.text1 = text1;
     return this;
   }
 
   /**
-   *
-   * @param {String} text2
-   * @returns {Either}
+   * Add the second text
+   * @param text2 The second text
+   * @returns The Either class
    */
-  addSecondText(text2) {
+  addSecondText(text2: string) {
     this.text2 = text2;
     return this;
   }
 
   /**
-   *
-   * @param {String} text1
-   * @param {String} text2
-   * @returns {Either}
+   * Set both texts
+   * @param text1 The first text
+   * @param text2 The second text
+   * @returns The Either class
    */
-  setTexts(text1, text2) {
+  setTexts(text1: string, text2: string) {
     this.text1 = text1;
     this.text2 = text2;
     return this;
@@ -72,36 +89,43 @@ class Either {
 
   /**
    * This function builds the canvas
-   * @returns {Promise<Buffer>}
+   * @returns The canvas
    */
-  async build() {
+  async build(): Promise<Buffer | undefined> {
+    if (!this.rowOne || !this.rowTwo || !this.text1 || !this.text2) return;
+
     const canvas = Canvas.createCanvas(600, 300);
     const ctx = canvas.getContext('2d');
 
-    const image = await Canvas.loadImage('./src/data/images/template.png');
-    await ctx.drawImage(image, 0, 0, 600, 300);
+    const image = await Canvas.loadImage('./src/constants/images/template.png');
+    ctx.drawImage(image, 0, 0, 600, 300);
 
-    let imageFile = './src/data/images/rather-en.png';
+    let imageFile = './src/constants/images/rather-en.png';
     switch (this.language) {
       case 'de_DE':
-        imageFile = './src/data/images/rather-de.png';
+        imageFile = './src/constants/images/rather-de.png';
         break;
       case 'en_EN':
-        imageFile = './src/data/images/rather-en.png';
+        imageFile = './src/constants/images/rather-en.png';
         break;
       case 'es_ES':
-        imageFile = './src/data/images/rather-es.png';
+        imageFile = './src/constants/images/rather-es.png';
         break;
+      default: {
+        imageFile = './src/constants/images/rather-en.png';
+      }
     }
     const translation = await Canvas.loadImage(imageFile);
     ctx.drawImage(translation, 0, 0, 600, 300);
 
-    function calcFontSize(textLength, fontSize, maxLength) {
+    function calcFontSize(
+      textLength: number,
+      fontSize: number,
+      maxLength: number
+    ) {
       let size = fontSize;
-      while (textLength > maxLength) {
-        size--;
-        return size;
-      }
+      while (textLength > maxLength) size -= 1;
+      return size;
     }
 
     const fontsize1 = calcFontSize(ctx.measureText(this.text1).width, 15, 180);
@@ -115,17 +139,17 @@ class Either {
     ctx.fillStyle = '#000000';
     ctx.fillText(this.text2, 140, 242);
 
-    var rad = 15;
+    const rad = 15;
 
     const sliced = this.rowOne.slice(0, 3);
 
-    var pos = rad * sliced.length + 430;
-    var yPos = 162;
+    let pos = rad * sliced.length + 430;
+    const yPos = 162;
     sliced.reverse();
 
-    for (let i = 0; i < sliced.length; i++) {
+    for (let i = 0; i < sliced.length; i += 1) {
       ctx.beginPath();
-      let user = sliced[i];
+      const user = sliced[i];
 
       const a = Canvas.createCanvas(rad * 2, rad * 2);
       const context = a.getContext('2d');
@@ -146,13 +170,13 @@ class Either {
 
     const sliced2 = this.rowTwo.slice(0, 3);
 
-    var pos1 = rad * sliced2.length + 430;
-    var yPos1 = 248;
+    let pos1 = rad * sliced2.length + 430;
+    const yPos1 = 248;
     sliced2.reverse();
 
-    for (let i = 0; i < sliced2.length; i++) {
+    for (let i = 0; i < sliced2.length; i += 1) {
       ctx.beginPath();
-      let user = sliced2[i];
+      const user = sliced2[i];
 
       const a = Canvas.createCanvas(rad * 2, rad * 2);
       const context = a.getContext('2d');

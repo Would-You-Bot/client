@@ -1,7 +1,7 @@
 import config from '@config';
 import fs from 'fs';
 
-export const ensureDirectories = async () => {
+const ensureDirectories = async () => {
   const directories = [
     ['./static', './tmp'],
     ['./tmp/logs'],
@@ -14,3 +14,5 @@ export const ensureDirectories = async () => {
     });
   });
 };
+
+export default ensureDirectories;

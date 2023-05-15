@@ -2,6 +2,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonInteraction,
+  ButtonStyle,
   EmbedBuilder,
 } from 'discord.js';
 
@@ -18,8 +19,9 @@ const button: CoreButton = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
-    const { General } =
-      await require(`../data/rather-${guildDb.language}.json`);
+    const { General } = (
+      await import(`../../constants/rather-${guildDb.language}.json`)
+    ).default;
     if (!guildDb.replay)
       return interaction.reply({
         ephemeral: true,
@@ -34,7 +36,7 @@ const button: CoreButton = {
       mainRow.addComponents([
         new ButtonBuilder()
           .setLabel('Invite')
-          .setStyle(5)
+          .setStyle(ButtonStyle.Link)
           .setEmoji(config.emojis.logo.id)
           .setURL(config.links.invite),
       ]);
@@ -42,7 +44,7 @@ const button: CoreButton = {
     mainRow.addComponents([
       new ButtonBuilder()
         .setLabel('New Question')
-        .setStyle(1)
+        .setStyle(ButtonStyle.Primary)
         .setEmoji(config.emojis.replay.id)
         .setCustomId(`wouldyourather`)
         .setDisabled(!guildDb.replay),
@@ -81,7 +83,7 @@ const button: CoreButton = {
         embeds: [ratherembed],
         components: [vote.row, mainRow],
       })
-      .catch((err) => console.log(err));
+      .catch(client.logger.error);
   },
 };
 

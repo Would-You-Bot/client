@@ -3,6 +3,7 @@ import { CronJob } from 'cron';
 import { EmbedBuilder, TextChannel } from 'discord.js';
 import momentTimezone from 'moment-timezone';
 
+import config from '@config';
 import { ExtendedClient } from 'src/client';
 
 export default class DailyMessage {
@@ -16,7 +17,7 @@ export default class DailyMessage {
    * Start the daily message Schedule
    */
   start() {
-    new CronJob(
+    const job = new CronJob(
       '0 */30 * * * *',
       async () => {
         await this.runSchedule();
@@ -25,6 +26,7 @@ export default class DailyMessage {
       true,
       'Europe/Berlin'
     );
+    job.start();
   }
 
   /**
@@ -43,11 +45,11 @@ export default class DailyMessage {
 
     this.client.logger.info(
       `${colors.white('Daily Message')} ${colors.gray('>')} ${colors.green(
-        'Running daily message check for ' + guilds.length + ' guilds'
+        `Running daily message check for ${guilds.length} guilds`
       )}`
     );
 
-    for (let i = 0; i < guilds.length; i++) {
+    for (let i = 0; i < guilds.length; i += 1) {
       const db = guilds[i];
       if (!db?.dailyChannel) continue;
       if (!db.dailyMsg) continue;
@@ -55,15 +57,15 @@ export default class DailyMessage {
       setTimeout(async () => {
         const channel = (await this.client.channels
           .fetch(db.dailyChannel)
-          .catch((err) => console.log(err))) as TextChannel | null;
+          .catch(this.client.logger.error)) as TextChannel | null;
 
         if (!channel) return;
 
         const { General }: { General: string[] } = (
-          await import(`../data/rather-${db.language}.json`)
+          await import(`../../constants/rather-${db.language}.json`)
         ).default;
         const { WhatYouDo }: { WhatYouDo: string[] } = (
-          await import(`../data/wwyd-${db.language}.json`)
+          await import(`../../constants/wwyd-${db.language}.json`)
         ).default;
 
         // An array of random questions (regular is default)
@@ -90,7 +92,7 @@ export default class DailyMessage {
                 },
                 db.dailyThread
               )
-              .catch((err) => console.log(err));
+              .catch(this.client.logger.error);
 
           randomMessages = [
             ...db.customMessages
@@ -105,7 +107,7 @@ export default class DailyMessage {
         const selectedRandomMessage = randomMessages[dailyId];
 
         const embed = new EmbedBuilder()
-          .setColor('#0598F6')
+          .setColor(config.colors.primary)
           .setFooter({
             text: `Daily Message | Type: ${db.customTypes.replace(/^\w/, (c) =>
               c.toUpperCase()
@@ -123,9 +125,7 @@ export default class DailyMessage {
             },
             db.dailyThread
           )
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch(this.client.logger.error);
       }, i * 2500); // Timeout to cater to the discord ratelimit
     }
   }

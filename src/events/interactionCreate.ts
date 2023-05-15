@@ -33,7 +33,7 @@ const event: CoreEvent = {
         try {
           command.execute(interaction, client, null);
         } catch (err) {
-          if (err) console.error(err);
+          if (err) client.logger.error(err);
           return interaction.reply({
             content: 'An error occurred while trying to execute that command.',
             ephemeral: true,
@@ -48,7 +48,7 @@ const event: CoreEvent = {
 
       if (!guildDb) return;
 
-      // ? const { inter } = require(`../languages/${guildDb.language || "en_EN"}.json`);
+      // ? const { inter } = import(`@constants/languages/${guildDb.language || "en_EN"}.json`);
 
       if (interaction.isChatInputCommand()) {
         const command = client.commands.get(interaction.commandName);
@@ -56,7 +56,7 @@ const event: CoreEvent = {
         try {
           command.execute(interaction, client, guildDb);
         } catch (err) {
-          if (err) console.error(err);
+          if (err) client.logger.error(err);
           interaction.reply({
             content: 'An error occurred while trying to execute that command.',
             ephemeral: true,
@@ -71,7 +71,7 @@ const event: CoreEvent = {
                 guildDb.replayCooldown / 1000 + Date.now() / 1000
               )}:R> you can use buttons again!`,
             })
-            .catch(() => {});
+            .catch(client.logger.error);
         } else if (
           guildDb.replayType === 'Channels' &&
           client.used.has(`${interaction.user.id}-${interaction.channel.id}`)
@@ -87,7 +87,7 @@ const event: CoreEvent = {
                   Date.now() / 1000
               )}:R> you can use buttons again!`,
             })
-            .catch(() => {});
+            .catch(client.logger.error);
         }
 
         let button = client.buttons.get(interaction.customId);
@@ -101,7 +101,7 @@ const event: CoreEvent = {
               content: 'Please use the command again.',
               ephemeral: true,
             })
-            .catch(() => {});
+            .catch(client.logger.error);
 
         try {
           if (
@@ -145,7 +145,7 @@ const event: CoreEvent = {
 
           return button.execute(interaction, client, guildDb);
         } catch (err) {
-          if (err) console.error(err);
+          if (err) client.logger.error(err);
           return interaction.reply({
             content: 'An error occurred while trying to execute that command.',
             ephemeral: true,

@@ -1,6 +1,7 @@
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
   ChatInputCommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
@@ -25,8 +26,9 @@ const command: CoreCommand = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
-    const { Funny, Basic, Young, Food, RuleBreak } =
-      await require(`../data/nhie-${guildDb.language}.json`);
+    const { Funny, Basic, Young, Food, RuleBreak } = (
+      await import(`../../constants/nhie-${guildDb.language}.json`)
+    ).default;
     const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak];
     const randomNever = Math.floor(Math.random() * neverArray.length);
 
@@ -43,7 +45,7 @@ const command: CoreCommand = {
       mainRow.addComponents([
         new ButtonBuilder()
           .setLabel('Invite')
-          .setStyle(5)
+          .setStyle(ButtonStyle.Link)
           .setEmoji(config.emojis.logo.id)
           .setURL(config.links.invite),
       ]);
@@ -51,7 +53,7 @@ const command: CoreCommand = {
     mainRow.addComponents([
       new ButtonBuilder()
         .setLabel('New Question')
-        .setStyle(1)
+        .setStyle(ButtonStyle.Primary)
         .setEmoji(config.emojis.replay.id)
         .setCustomId(`neverhaveiever`),
     ]);
@@ -70,7 +72,7 @@ const command: CoreCommand = {
 
     interaction
       .reply({ embeds: [ratherembed], components: [vote.row, mainRow] })
-      .catch((err) => console.log(err));
+      .catch(client.logger.error);
   },
 };
 

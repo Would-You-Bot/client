@@ -1,12 +1,12 @@
 import {
   ActionRowBuilder,
+  ButtonInteraction,
   ChannelSelectMenuBuilder,
   ChannelType,
 } from 'discord.js';
 
 import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreButton } from '@typings/core';
-import { ButtonInteraction } from 'discord.js';
 import { ExtendedClient } from 'src/client';
 
 const button: CoreButton = {

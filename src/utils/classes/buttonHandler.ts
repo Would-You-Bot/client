@@ -1,7 +1,6 @@
 import colors from 'colors';
 import { Collection } from 'discord.js';
 import fs from 'fs';
-import path from 'path';
 
 import { ExtendedClient } from 'src/client';
 
@@ -15,12 +14,15 @@ export default class ButtonHandler {
   /**
    * Load the buttons
    */
-  async load() {
-    for (const file of fs
-      .readdirSync(path.join(__dirname, '..', 'buttons'))
-      .filter((file) => file.endsWith('.ts'))) {
-      const button = (await import(`@interactions/buttons/${file}`)).default;
-      this.client.buttons.set(button.name, button);
+  async load(): Promise<void> {
+    for (const fileName of fs
+      .readdirSync('./src/interactions/buttons')
+      .filter((name) => name.endsWith('.js'))) {
+      this.client.logger.debug(`Importing button: ${fileName}`);
+
+      const button = await import(`../../interactions/buttons/${fileName}`);
+
+      this.client.buttons.set(button.default.name, button.default);
     }
     this.client.logger.info(
       `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
@@ -32,7 +34,7 @@ export default class ButtonHandler {
   /**
    * Reload the buttons collection
    */
-  reload() {
+  reload(): void {
     this.client.buttons = new Collection();
     this.load();
   }

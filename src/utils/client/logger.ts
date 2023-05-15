@@ -4,7 +4,7 @@ import * as winston from 'winston';
 
 import config from '@config';
 
-const logsDir = `./tmp/logs/${config.logFolder}`;
+const logsDir = `./tmp/logs/${config?.logFolder}`;
 
 // Create logs directory if it doesn't exist
 if (!fs.existsSync(logsDir)) {
@@ -28,6 +28,9 @@ const levelColor = (level: string) => {
     case 'trace': {
       return colors.magenta(level.toUpperCase());
     }
+    default: {
+      return colors.white(level.toUpperCase());
+    }
   }
 };
 
@@ -43,9 +46,9 @@ const consoleFormat = winston.format.combine(
     if (stack) {
       message += `\n${stack}`; // Append the stack trace to the message if it is present
     }
-    return `${colors.gray(timestamp)} (${colors.magenta(
-      ms
-    )}) [${level}]: ${message}`;
+    return `${colors.gray(timestamp)} (${colors.magenta(ms)}) [${levelColor(
+      level
+    )}]: ${message}`;
   })
 );
 
@@ -55,7 +58,7 @@ const logger = winston.createLogger({
   transports: [
     // Console transport
     new winston.transports.Console({
-      level: config.env.debug ? 'debug' : 'info',
+      level: config?.env.debug ? 'debug' : 'info',
     }),
     // File transports
     new winston.transports.File({

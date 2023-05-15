@@ -2,6 +2,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonInteraction,
+  ButtonStyle,
   EmbedBuilder,
 } from 'discord.js';
 
@@ -18,7 +19,9 @@ const button: CoreButton = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
-    const { WhatYouDo } = require(`../data/wwyd-${guildDb.language}.json`);
+    const { WhatYouDo } = (
+      await import(`../../constants/wwyd-${guildDb.language}.json`)
+    ).default;
     const randomNever = Math.floor(Math.random() * WhatYouDo.length);
     const wwydstring = WhatYouDo[randomNever];
 
@@ -35,7 +38,7 @@ const button: CoreButton = {
       row.addComponents([
         new ButtonBuilder()
           .setLabel('Invite')
-          .setStyle(5)
+          .setStyle(ButtonStyle.Link)
           .setEmoji(config.emojis.logo.id)
           .setURL(config.links.invite),
       ]);
@@ -43,7 +46,7 @@ const button: CoreButton = {
     row.addComponents([
       new ButtonBuilder()
         .setLabel('New Question')
-        .setStyle(1)
+        .setStyle(ButtonStyle.Primary)
         .setEmoji(config.emojis.replay.id)
         .setCustomId(`wwyd`),
     ]);
@@ -53,7 +56,7 @@ const button: CoreButton = {
         embeds: [wwydembed],
         components: [row],
       })
-      .catch((err) => console.log(err));
+      .catch(client.logger.error);
   },
 };
 

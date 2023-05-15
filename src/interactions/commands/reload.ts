@@ -7,7 +7,7 @@ import { ExtendedClient } from 'src/client';
 
 const cat = fs
   .readdirSync(`./src/interactions/commands/`)
-  .filter((d) => d.endsWith('.ts'));
+  .filter((d) => d.endsWith('.js'));
 
 const command: CoreCommand = {
   data: new SlashCommandBuilder()
@@ -40,14 +40,14 @@ const command: CoreCommand = {
 
     if (!cmd) return;
 
-    if (!cat.find((e) => e.replace('.ts', '') === cmd.toLowerCase()))
+    if (!cat.find((e) => e.replace('.js', '') === cmd.toLowerCase()))
       return interaction.editReply({
         content: 'You must provide a valid command to reload it!',
       });
 
     try {
-      delete require.cache[require.resolve(`./${cmd}.ts`)];
-      const pull = require(`./${cmd}.ts`);
+      delete require.cache[require.resolve(`./${cmd}.js`)];
+      const pull = (await import(`./${cmd}.js`)).default;
       client.commands.delete(cmd);
       client.commands.set(cmd, pull);
       return interaction.editReply({

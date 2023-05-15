@@ -12,6 +12,7 @@ import {
   User,
 } from 'discord.js';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 import config from '@config';
@@ -26,7 +27,7 @@ import TranslationHandler from '@utils/classes/translationHandler';
 import VoteLogger from '@utils/classes/voteLogger';
 import Voting from '@utils/classes/votingHandler';
 import WebhookHandler from '@utils/classes/webhookHandler';
-import { logger } from './utils';
+import { logger } from './utils/client';
 
 // User filter to filter all users out of the cache expect the bot
 const userFilter = (user: User, client: ExtendedClient) =>
@@ -42,13 +43,13 @@ export class ExtendedClient extends Client {
   // Client functions
   logger = logger.child({});
   // Uncomment this to bind a centralized error handler to the client
-  // error = error;
+  // error = error
 
   // Classes
   commands: Collection<string, any> = new Collection();
   buttons: Collection<string, any> = new Collection();
   used: Record<string, any> = new Map();
-  database: DatabaseHandler = new DatabaseHandler(config.env.MONGODB_URI);
+  database: DatabaseHandler = new DatabaseHandler(`${config.env.MONGODB_URI}`);
   translation: TranslationHandler = new TranslationHandler();
   cooldownHandler: CooldownHandler;
   cluster: ClusterClient<DjsDiscordClient>;

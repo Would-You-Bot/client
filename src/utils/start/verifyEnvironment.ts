@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const { env } = process;
 
 const verifyEnvironment = (): NodeJS.ProcessEnv => {
@@ -30,7 +34,7 @@ const verifyEnvironment = (): NodeJS.ProcessEnv => {
 
     // External Keys/Tokens
     'TOPGG_TOKEN',
-    'VOTE_WEBHOOK,',
+    'VOTE_WEBHOOK',
     // 'VOTE_CHANNEL',
   ];
 

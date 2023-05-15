@@ -9,6 +9,7 @@ import { CoreEvent } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
 const event: CoreEvent = {
+  once: true,
   name: Events.ClientReady,
   async execute(client: ExtendedClient) {
     if (!client.user?.id) return;
@@ -21,12 +22,13 @@ const event: CoreEvent = {
     if (client.cluster.id === 0) {
       const commandFiles = fs
         .readdirSync('./src/interactions/commands/')
-        .filter((file) => file.endsWith('.ts'));
+        .filter((file) => file.endsWith('.js'));
 
       const commands: any[] = [];
 
       for (const file of commandFiles) {
-        const command = require(`../commands/${file}`);
+        const command = (await import(`../interactions/commands/${file}`))
+          .default;
         commands.push(command.data.toJSON());
         client.commands.set(command.data.name, command);
       }
@@ -37,10 +39,9 @@ const event: CoreEvent = {
 
       setTimeout(async () => {
         try {
-          if (process.env.STATUS === 'PRODUCTION') {
-            if (process.env.TOPGGTOKEN) {
-              const ap = AutoPoster(`${process.env.TOPGGTOKEN}`, client);
-            }
+          if (config.isProduction()) {
+            // const ap = AutoPoster(`${config.env.TOPGG_TOKEN}`, client);
+
             // If the bot is in production mode it will load slash commands for all guilds
             await rest.put(
               Routes.applicationCommands(client.user?.id as string),
@@ -48,14 +49,14 @@ const event: CoreEvent = {
                 body: commands,
               }
             );
-            console.log(
+            client.logger.info(
               `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
                 'Successfully registered commands globally'
               )}`
             );
           } else {
-            if (!process.env.GUILD_ID)
-              return console.log(
+            if (!config.env.LOG_GUILD)
+              return client.logger.info(
                 colors.red(
                   "Looks like your bot is not in production mode and you don't have a guild id set in .env"
                 )
@@ -63,27 +64,27 @@ const event: CoreEvent = {
             await rest.put(
               Routes.applicationGuildCommands(
                 client.user?.id as string,
-                process.env.GUILD_ID
+                config.env.LOG_GUILD
               ),
               {
                 body: commands,
               }
             );
-            console.log(
+            client.logger.info(
               `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
                 'Successfully registered commands locally'
               )}`
             );
           }
         } catch (err) {
-          if (err) console.error(err);
+          if (err) client.logger.error(err);
         }
       }, 2500);
     }
 
     const setStatus = () => {
       client.user?.setPresence({
-        activities: [{ name: `${process.env.BOTSTATUS || 'Would you?'}` }],
+        activities: [{ name: `${config.status || 'Would you?'}` }],
         status: 'dnd',
       });
     };

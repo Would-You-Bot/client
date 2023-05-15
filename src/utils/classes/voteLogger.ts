@@ -1,10 +1,11 @@
 import config from '@config';
-import Topgg from '@top-gg/sdk';
+import { Api, Webhook } from '@top-gg/sdk';
 import axios from 'axios';
 import colors from 'colors';
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
   User,
   WebhookClient,
   hideLinkEmbed,
@@ -14,7 +15,7 @@ import express from 'express';
 import { ExtendedClient } from 'src/client';
 
 const app = express();
-const webhook = new Topgg.Webhook(process.env.WEBHOOKTOKEN);
+const webhook = new Webhook(config.env.PUBLIC_WEBHOOK);
 
 interface TopGGUserData {
   id: string;
@@ -34,6 +35,8 @@ interface TopGGUserData {
   bannerURL: string;
 }
 
+/* 
+* Not required for now
 interface TopGGUser {
   cache_expiry: number;
   cached: boolean;
@@ -43,21 +46,22 @@ interface TopGGUser {
     activities: any[];
     clientStatus: string[];
   };
-  connections: {};
+  connections: object;
 }
+ */
 
 export default class VoteLogger {
   client: ExtendedClient;
-  api: Topgg.Api;
+  api: Api;
   votes: Map<string, any>;
 
   constructor(client: ExtendedClient) {
     this.client = client;
-    this.api = new Topgg.Api(config.env.TOPGG_TOKEN);
+    this.api = new Api(config.env.TOPGG_TOKEN);
     this.votes = new Map();
 
     this.getVotes().then(() => {
-      console.log(
+      this.client.logger.info(
         `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
           'Successfully updated votes'
         )}`
@@ -66,7 +70,7 @@ export default class VoteLogger {
 
     setInterval(() => {
       this.getVotes().then(() => {
-        console.log(
+        this.client.logger.info(
           `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
             'Successfully updated votes'
           )}`
@@ -105,7 +109,7 @@ export default class VoteLogger {
             },
           })
           .then((res) => res?.data?.data)
-          .catch((err) => {
+          .catch(() => {
             userData = this.client?.users?.cache?.get(vote.user) ?? null;
             return userData; // Return the value to be assigned to userData
           });
@@ -113,31 +117,24 @@ export default class VoteLogger {
         if (!userData) return;
         if (userData.username) return;
 
-        let emojis = [
-          '<a:jammiesyou:1009965703484424282>',
-          '<a:nyancatyou:1009965705808056350>',
-          '<a:partyparrotyou:1009965704621080678>',
-          '<a:shootyou:1009965706978267136>',
-          '<a:catjamyou:1009965950101110806>',
-          '<a:patyou:1009964589678612581>',
-          '<a:patyoufast:1009964759216574586>',
-        ];
-
         const button = new ActionRowBuilder<ButtonBuilder>().addComponents([
           new ButtonBuilder()
             .setLabel('Vote!')
-            .setStyle(5)
+            .setStyle(ButtonStyle.Link)
             .setEmoji('💻')
             .setURL('https://top.gg/bot/981649513427111957/vote'),
         ]);
 
-        const emojisRandom = emojis[Math.floor(Math.random() * emojis.length)];
+        const emojisRandom =
+          config.voteEmojis[
+            Math.floor(Math.random() * config.voteEmojis.length)
+          ];
 
         const webhookClient = new WebhookClient({
           url: config.env.VOTE_WEBHOOK,
         });
 
-        console.log(
+        this.client.logger.info(
           `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
             `${userData.tag} voted for me!`
           )}`
@@ -158,7 +155,7 @@ export default class VoteLogger {
               ? { avatarURL: userData.avatarURL }
               : {}),
           })
-          .catch((err) => console.log(err));
+          .catch(this.client.logger.error);
       })
     );
 

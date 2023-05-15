@@ -1,10 +1,13 @@
+import {
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+  SlashCommandBuilder,
+} from 'discord.js';
+
 import config from '@config';
 import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreCommand } from '@typings/core';
-import { ChatInputCommandInteraction } from 'discord.js';
 import { ExtendedClient } from 'src/client';
-
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
 const command: CoreCommand = {
   data: new SlashCommandBuilder()
@@ -62,7 +65,7 @@ const command: CoreCommand = {
       .reply({
         embeds: [guideEmbed],
       })
-      .catch((err) => console.log(err));
+      .catch(client.logger.error);
   },
 };
 

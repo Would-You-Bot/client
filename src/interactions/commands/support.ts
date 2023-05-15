@@ -53,7 +53,7 @@ const command: CoreCommand = {
         embeds: [supportembed],
         components: [supportbutton],
       })
-      .catch((err) => console.log(err));
+      .catch(client.logger.error);
   },
 };
 

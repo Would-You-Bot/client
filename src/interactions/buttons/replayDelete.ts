@@ -49,7 +49,7 @@ const button: CoreButton = {
                 .join('\n')}`
         }`
       )
-      .setColor('#0598F6')
+      .setColor(config.colors.primary)
       .setFooter({
         text: client.translation.get(
           guildDb?.language,

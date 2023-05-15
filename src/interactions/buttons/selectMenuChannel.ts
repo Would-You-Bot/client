@@ -133,3 +133,6 @@ const button: CoreButton = {
     }); */
   },
 };
+
+
+export default button

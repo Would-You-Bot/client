@@ -2,6 +2,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonInteraction,
+  ButtonStyle,
   EmbedBuilder,
 } from 'discord.js';
 
@@ -18,8 +19,9 @@ const button: CoreButton = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
-    const { Funny, Basic, Young, Food, RuleBreak } =
-      await require(`../data/nhie-${guildDb.language}.json`);
+    const { Funny, Basic, Young, Food, RuleBreak } = (
+      await import(`../../constants/nhie-${guildDb.language}.json`)
+    ).default;
     const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak];
     const randomNever = Math.floor(Math.random() * neverArray.length);
 
@@ -40,7 +42,7 @@ const button: CoreButton = {
       mainRow.addComponents([
         new ButtonBuilder()
           .setLabel('Invite')
-          .setStyle(5)
+          .setStyle(ButtonStyle.Link)
           .setEmoji(config.emojis.logo.id)
           .setURL(config.links.invite),
       ]);
@@ -48,7 +50,7 @@ const button: CoreButton = {
     mainRow.addComponents([
       new ButtonBuilder()
         .setLabel('New Question')
-        .setStyle(1)
+        .setStyle(ButtonStyle.Primary)
         .setEmoji(config.emojis.replay.id)
         .setCustomId(`neverhaveiever`),
     ]);
@@ -70,9 +72,7 @@ const button: CoreButton = {
         embeds: [ratherembed],
         components: [vote.row, mainRow],
       })
-      .catch((err) => {
-        return console.log(err);
-      });
+      .catch(client.logger.error);
   },
 };
 

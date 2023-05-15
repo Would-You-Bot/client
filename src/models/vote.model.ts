@@ -1,10 +1,15 @@
 import { Document, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
+enum VoteType {
+  WouldYouRather,
+  NeverHaveIEver,
+}
+
 interface VoteSchema extends SchemaTimestampsConfig {
   id: string;
   guild: string;
   channel: string;
-  type: number;
+  type: VoteType;
   votes: {
     op_one: string[];
     op_two: string[];
@@ -21,7 +26,11 @@ export default model<VoteDocument>(
       id: { type: String, required: true },
       guild: { type: String, required: false },
       channel: { type: String, required: true },
-      type: { type: Number, default: 0 }, // 0 = wouldyourather, 1 = neverhaveiever
+      type: {
+        type: Number,
+        enum: [VoteType.WouldYouRather, VoteType.NeverHaveIEver],
+        default: VoteType.WouldYouRather,
+      },
       votes: {
         op_one: { type: Array, default: [] },
         op_two: { type: Array, default: [] },

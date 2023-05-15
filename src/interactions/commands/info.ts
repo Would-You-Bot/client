@@ -41,7 +41,7 @@ const command: CoreCommand = {
     });
 
     const infoEmbed = new EmbedBuilder()
-      .setColor('#5865f4')
+      .setColor(config.colors.primary)
       .setTitle('Bot Info')
       .addFields(
         {
@@ -91,7 +91,7 @@ const command: CoreCommand = {
 
     interaction
       .reply({ embeds: [infoEmbed], ephemeral: false })
-      .catch(() => {});
+      .catch(client.logger.error);
   },
 };
 

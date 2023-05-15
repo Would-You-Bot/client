@@ -26,8 +26,9 @@ const command: CoreCommand = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
-    const { General } =
-      await require(`../data/rather-${guildDb.language}.json`);
+    const { General } = (
+      await import(`../../constants/rather-${guildDb.language}.json`)
+    ).default;
     const randomrather = Math.floor(Math.random() * General.length);
 
     let ratherembed = new EmbedBuilder()
@@ -75,9 +76,7 @@ const command: CoreCommand = {
         components: [vote.row, mainRow],
         fetchReply: true,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(client.logger.error);
   },
 };
 

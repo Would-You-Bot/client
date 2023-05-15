@@ -1,3 +1,7 @@
+import fs from 'fs/promises';
+
+import { logger } from '@utils/client';
+
 interface Language {
   [key: string]: object;
 }
@@ -15,28 +19,72 @@ export default class TranslationHandler {
     this.availableLanguages = ['de_DE', 'en_EN', 'es_ES'];
     this.translations = {};
 
+    this.loadLanguages();
+  }
+
+  private async loadLanguages() {
     // Initialize default languages
-    for (const l of this.availableLanguages) {
-      const data = require(`../languages/${l}.json`);
-      this.initLanguage(l, data);
+    for (const lang of this.availableLanguages) {
+      try {
+        logger.debug(`Importing language: ${lang}`);
+
+        const json = await fs.readFile(
+          `./src/constants/languages/${lang}.json`,
+          'utf-8'
+        );
+        const data = JSON.parse(json);
+        this.initLanguage(lang, data);
+      } catch (error) {
+        logger.error(error);
+      }
     }
 
     // Initialize what would you do
-    for (const l of this.availableLanguages) {
-      const data = require(`../data/wwyd-${l}.json`);
-      this.initLanguage(l + '_wwyd', data);
+    for (const lang of this.availableLanguages) {
+      try {
+        logger.debug(`Importing language: ${lang}`);
+
+        const json = await fs.readFile(
+          `./src/constants/wwyd-${lang}.json`,
+          'utf-8'
+        );
+        const data = JSON.parse(json);
+        this.initLanguage(`${lang}_wwyd`, data);
+      } catch (error) {
+        logger.error(error);
+      }
     }
 
     // Initialize rather
-    for (const l of this.availableLanguages) {
-      const data = require(`../data/rather-${l}.json`);
-      this.initLanguage(l + '_rather', data);
+    for (const lang of this.availableLanguages) {
+      try {
+        logger.debug(`Importing language: ${lang}`);
+
+        const json = await fs.readFile(
+          `./src/constants/rather-${lang}.json`,
+          'utf-8'
+        );
+        const data = JSON.parse(json);
+        this.initLanguage(`${lang}_rather`, data);
+      } catch (error) {
+        logger.error(error);
+      }
     }
 
     // Initialize never have I ever
-    for (const l of this.availableLanguages) {
-      const data = require(`../data/nhie-${l}.json`);
-      this.initLanguage(l + '_nhie', data);
+    for (const lang of this.availableLanguages) {
+      try {
+        logger.debug(`Importing language: ${lang}`);
+
+        const json = await fs.readFile(
+          `./src/constants/nhie-${lang}.json`,
+          'utf-8'
+        );
+        const data = JSON.parse(json);
+        this.initLanguage(`${lang}_nhie`, data);
+      } catch (error) {
+        logger.error(error);
+      }
     }
   }
 
@@ -54,7 +102,7 @@ export default class TranslationHandler {
    * @param value the value to check
    * @returns if the value is a valid translation key
    */
-  private checkRegex(value: string) {
+  private static checkRegex(value: string) {
     return /^[a-z]{2}_[A-Z]{2}(?:_rather|_wwyd|_nhie)?$/.test(value);
   }
 
@@ -64,7 +112,8 @@ export default class TranslationHandler {
    * @returns the language data
    */
   private getLanguage(language: string) {
-    if (!this.checkRegex(language)) return this.translations['en_EN'];
+    if (!TranslationHandler.checkRegex(language))
+      return this.translations.en_EN;
     return this.translations[language];
   }
 
@@ -73,7 +122,7 @@ export default class TranslationHandler {
    * @param language the language key
    */
   addLanguage(language: string) {
-    if (!this.checkRegex(language))
+    if (!TranslationHandler.checkRegex(language))
       throw new Error('Invalid language format. Example: en_EN');
 
     this.availableLanguages.push(language);
@@ -82,14 +131,22 @@ export default class TranslationHandler {
   /**
    * Reload the translation handler
    */
-  reload() {
+  async reload() {
     this.translations = {};
-    for (const l of this.availableLanguages) {
+    for (const lang of this.availableLanguages) {
       try {
-        const d = require(`../languages/${l}.json`);
-        if (!d) continue;
-        this.initLanguage(l, d);
-      } catch (e) {}
+        logger.debug(`Importing language: ${lang}`);
+
+        const json = await fs.readFile(
+          `./src/constants/languages/${lang}.json`,
+          'utf-8'
+        );
+        const data = JSON.parse(json);
+        if (!data) break;
+        this.initLanguage(lang, data);
+      } catch (error) {
+        logger.error(error);
+      }
     }
   }
 
@@ -108,37 +165,35 @@ export default class TranslationHandler {
   ): string {
     if (!language) language = 'en_EN';
 
-    const l = this.getLanguage(language);
-    const p = path.split('.');
-    let c: null | Record<string, string> | object | string = null;
+    const lang = this.getLanguage(language);
+    const paths = path.split('.');
+    let cmd: null | Record<string, string> | object | string | any = null;
 
-    if (p.length > 0) {
-      for (const i of p) {
+    if (paths.length > 0) {
+      for (const i of paths) {
         try {
-          if (!c) {
-            if (!l.hasOwnProperty(i)) break;
-            c = l[i];
+          if (!cmd) {
+            if (!(i in lang)) break;
+            cmd = lang[i];
           } else {
-            if (!(c as Record<string, string>).hasOwnProperty(i)) break;
-            c = (c as Record<string, string>)[i];
+            if (!(i in cmd)) break;
+            cmd = cmd[i];
           }
         } catch (err) {
           break;
         }
       }
-    } else {
-      return path;
-    }
+    } else return path;
 
-    if (!c) return path;
+    if (!cmd) return path;
 
-    if (data && typeof c === 'string') {
-      return c.replace(
+    if (data && typeof cmd === 'string') {
+      return cmd.replace(
         /{(\w+)}/g,
         (match: string, key: string) => data[key] ?? match
       );
     }
 
-    return c.toString();
+    return cmd.toString();
   }
 }

@@ -8,6 +8,7 @@ import {
 import { ExtendedClient } from 'src/client';
 
 export interface CoreEvent {
+  once?: boolean;
   name: Events;
   execute: (client: ExtendedClient, ...args: any) => Promise<any>;
 }

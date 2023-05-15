@@ -1,6 +1,7 @@
 import colors from 'colors';
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import QuickChart from 'quickchart-js';
+
 import { v4 as uuidv4 } from 'uuid';
 
 import voteModel from '@models/vote.model';
@@ -17,17 +18,17 @@ interface SaveVotingProps {
   type: number;
   until: number;
   channelId: string;
-  op_one: string[];
-  op_two: string[];
+  opOne: string[];
+  opTwo: string[];
 }
 
 export default class Voting {
   client: ExtendedClient;
-  _cache: Map<string, any>;
+  cache: Map<string, any>;
 
   constructor(client: ExtendedClient) {
     this.client = client;
-    this._cache = new Map();
+    this.cache = new Map();
   }
 
   async saveVoting({
@@ -35,25 +36,24 @@ export default class Voting {
     type = 0,
     until,
     channelId,
-    op_one,
-    op_two,
+    opOne,
+    opTwo,
   }: SaveVotingProps) {
     const id = uuidv4();
 
-    const vote = new voteModel({
+    const vote = await voteModel.create({
       id,
       guild: guildId,
       channel: channelId,
-      type: type,
-      until: until,
+      type,
+      until,
       votes: {
-        op_one,
-        op_two,
+        opOne,
+        opTwo,
       },
     });
-    await vote.save();
 
-    this._cache.set(id, vote);
+    this.cache.set(id, vote);
 
     return id;
   }
@@ -63,8 +63,8 @@ export default class Voting {
     channelId: string | null = null,
     until: number = 0,
     type: number = 0,
-    op_one?: string[],
-    op_two?: string[]
+    opOne?: string[],
+    opTwo?: string[]
   ) {
     if (!guildId || !channelId) return;
 
@@ -76,8 +76,8 @@ export default class Voting {
       channelId,
       until,
       type,
-      op_one: op_one ? op_one : [],
-      op_two: op_two ? op_two : [],
+      opOne: opOne ? opOne : [],
+      opTwo: opTwo ? opTwo : [],
     });
 
     const row = new ActionRowBuilder<ButtonBuilder>();
@@ -124,7 +124,7 @@ export default class Voting {
   }
 
   getVoting(id: string) {
-    return this._cache.get(id);
+    return this.cache.get(id);
   }
 
   async deleteVoting(id: string) {
@@ -132,14 +132,14 @@ export default class Voting {
       id: id,
     });
 
-    this._cache.delete(id);
+    this.cache.delete(id);
   }
 
   async addVote(id: string, userId: string, option: number = 1) {
     const vote = this.getVoting(id);
     if (!vote) return false;
 
-    const options = ['op_one', 'op_two'];
+    const options = ['opOne', 'opTwo'];
 
     options.forEach((option) => {
       vote.votes[option] = vote.votes[option].filter(
@@ -149,7 +149,7 @@ export default class Voting {
 
     vote.votes[options[option]].push(userId);
 
-    this._cache.set(id, vote);
+    this.cache.set(id, vote);
     await vote.save();
 
     return true;
@@ -164,13 +164,13 @@ export default class Voting {
       g = this.client.database.getGuild(String(vote.guildId));
 
     const all_votes = Number(
-      vote.votes.op_one?.length + vote.votes.op_two?.length
+      vote.votes.opOne?.length + vote.votes.opTwo?.length
     );
-    const option_1 = Number(vote.votes.op_one?.length);
-    const option_2 = Number(vote.votes.op_two?.length);
+    const option_1 = Number(vote.votes.opOne?.length);
+    const option_2 = Number(vote.votes.opTwo?.length);
 
-    const numbers: { [key: string]: number } = { op_one: 1, op_two: 2 };
-    const phrases: { [key: string]: string } = { op_one: 'Yes', op_two: 'No' };
+    const numbers: { [key: string]: number } = { opOne: 1, opTwo: 2 };
+    const phrases: { [key: string]: string } = { opOne: 'Yes', opTwo: 'No' };
     const chartData = Object.keys(vote.votes).map((e) =>
       Number(all_votes > 0 ? vote.votes[e].length : 1)
     );
@@ -232,11 +232,13 @@ export default class Voting {
       if (!votes) return;
       votes.forEach((vote) => {
         if (olderthen(new Date(`${vote.createdAt}`), 30))
-          return voteModel.deleteOne({ id: vote.id }).catch(() => {});
-        this._cache.set(vote.id, vote);
+          return voteModel
+            .deleteOne({ id: vote.id })
+            .catch(this.client.logger.error);
+        this.cache.set(vote.id, vote);
       });
 
-      console.log(
+      this.client.logger.info(
         `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
           'Successfully loaded votes from database'
         )}`

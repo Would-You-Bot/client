@@ -149,7 +149,7 @@ const button: CoreButton = {
                   : config.emojis.close.full
               }`
           )
-          .setColor('#0598F6');
+          .setColor(config.colors.primary);
 
         const dailyButtons =
             new ActionRowBuilder<ButtonBuilder>().addComponents(

@@ -5,16 +5,20 @@ import {
   ReClusterManager,
 } from 'discord-hybrid-sharding';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-import { logger } from './utils';
+import config from '@config';
+import { logger } from './utils/client';
 
-const manager = new ClusterManager(`${__dirname}/index.ts`, {
+if (config.debug) logger.info('Running application in debug mode.');
+
+const manager = new ClusterManager(`${__dirname}/app.js`, {
   totalClusters: 1,
   totalShards: 1,
   shardsPerClusters: 2,
   mode: 'process',
-  token: process.env.TOKEN,
+  token: process.env.BOT_TOKEN_DEV,
 });
 
 manager.extend(
@@ -28,8 +32,8 @@ manager.extend(
 manager.on('clusterCreate', (cluster) => {
   logger.info(
     `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-      'Successfully created cluster #' + cluster.id
-    )}`
+      'Successfully created cluster #'
+    )}${cluster.id}`
   );
 });
 

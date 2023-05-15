@@ -33,6 +33,7 @@ export interface LimitsConfig {
 
 export interface MainConfig {
   productionId: string;
+  status: string;
   links: {
     invite: string;
     website: string;
@@ -50,10 +51,11 @@ export interface MainConfig {
     danger: `#${string}`;
     blurple: `#${string}`;
   };
+  voteEmojis: string[];
 }
 
 export interface ConfigType extends MainConfig {
-  logFolder?: string | boolean;
+  logFolder: string;
   emojis: EmojisConfig;
   limits: LimitsConfig;
 

@@ -4,6 +4,13 @@ import config from '@config';
 import { CoreEvent } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
+const filterGuildName = (name: string) =>
+  name
+    .replace('Discord', '')
+    .replace('discord', '')
+    .replace('Everyone', '')
+    .replace('everyone', '');
+
 const event: CoreEvent = {
   name: Events.GuildCreate,
   async execute(client: ExtendedClient, guild: Guild) {
@@ -57,17 +64,9 @@ const event: CoreEvent = {
           avatarURL: guild.iconURL({ size: 1024 }) || undefined,
           allowedMentions: { parse: [] },
         })
-        .catch((err) => console.log(err));
+        .catch(client.logger.error);
     }
   },
-};
-
-const filterGuildName = (name: string) => {
-  return name
-    .replace('Discord', '')
-    .replace('discord', '')
-    .replace('Everyone', '')
-    .replace('everyone', '');
 };
 
 export default event;

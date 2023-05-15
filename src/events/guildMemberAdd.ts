@@ -20,7 +20,7 @@ const event: CoreEvent = {
     if (guildDb && guildDb?.welcome) {
       const channel = (await member.guild.channels
         .fetch(guildDb.welcomeChannel)
-        .catch(() => {})) as TextChannel | null;
+        .catch(client.logger.error)) as TextChannel | null;
 
       if (!channel || !client.user?.id) return;
 
@@ -38,7 +38,7 @@ const event: CoreEvent = {
         return;
 
       const { General } = await import(
-        `../data/rather-${guildDb.language}.json`
+        `../constants/rather-${guildDb.language}.json`
       );
       const randomrather = Math.floor(Math.random() * General.length);
       let mention = undefined;
@@ -55,9 +55,7 @@ const event: CoreEvent = {
 
       return channel
         .send({ content: mention, embeds: [welcomeEmbed] })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(client.logger.error);
     }
   },
 };

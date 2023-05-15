@@ -1,9 +1,14 @@
 import colors from 'colors';
 
 import { ExtendedClient } from './client';
-import { ensureDirectories } from './utils';
+import { ensureDirectories } from './utils/start';
 
-export default async (client: ExtendedClient) => {
+export const client = new ExtendedClient();
+
+(async () => {
+  client.logger.info('Starting client');
+  client.logger.debug('Debug Enabled');
+
   // Run startup functions
   await ensureDirectories();
 
@@ -16,4 +21,6 @@ export default async (client: ExtendedClient) => {
       `Client authenticated in ${time} seconds`
     )}`
   );
-};
+})();
+
+export default {};

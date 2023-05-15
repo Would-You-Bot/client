@@ -54,9 +54,7 @@ const command: CoreCommand = {
       .reply({
         embeds: [votemebed],
       })
-      .catch((err) => {
-        return console.log(err);
-      });
+      .catch(client.logger.error);
   },
 };
 

@@ -60,7 +60,7 @@ const event: CoreEvent = {
             }) || undefined,
           allowedMentions: { parse: [] },
         })
-        .catch((err) => console.log(err));
+        .catch(client.logger.error);
     }
   },
 };

@@ -68,6 +68,7 @@ const button: CoreButton = {
               'Settings.intervalSame'
             ),
           });
+
         if (isFormat(value) === false)
           return modalInteraction.reply({
             ephemeral: true,

@@ -1,12 +1,16 @@
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
+  ChatInputCommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
 } from 'discord.js';
 
 import config from '@config';
+import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreCommand } from '@typings/core';
+import { ExtendedClient } from 'src/client';
 
 const command: CoreCommand = {
   data: new SlashCommandBuilder()
@@ -17,7 +21,11 @@ const command: CoreCommand = {
       de: 'Zeigt den Ping des Clients an',
       'es-ES': 'Muestra el ping del cliente',
     }),
-  async execute(interaction, client, guildDb) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     const pingembed = new EmbedBuilder()
 
       .setColor(config.colors.primary)
@@ -46,7 +54,7 @@ const command: CoreCommand = {
         .setLabel(
           client.translation.get(guildDb?.language, 'Ping.button.title')
         )
-        .setStyle(5)
+        .setStyle(ButtonStyle.Link)
         .setEmoji('💻')
         .setURL('https://discordstatus.com/')
     );
@@ -56,7 +64,7 @@ const command: CoreCommand = {
         components: [button],
         ephemeral: true,
       })
-      .catch((err) => console.log(err));
+      .catch(client.logger.error);
   },
 };
 

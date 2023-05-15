@@ -26,7 +26,8 @@ const command: CoreCommand = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
-    const { WhatYouDo } = require(`../data/wwyd-${guildDb.language}.json`);
+    const { WhatYouDo } = (await import(`../..//wwyd-${guildDb.language}.json`))
+      .default;
     const randomNever = Math.floor(Math.random() * WhatYouDo.length);
     const wwydstring = WhatYouDo[randomNever];
 
@@ -58,7 +59,7 @@ const command: CoreCommand = {
 
     interaction
       .reply({ embeds: [wwydembed], components: [row] })
-      .catch((err) => console.log(err));
+      .catch(client.logger.error);
   },
 };
 

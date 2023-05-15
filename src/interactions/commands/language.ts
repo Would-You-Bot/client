@@ -105,7 +105,7 @@ const command: CoreCommand = {
           embeds: [languageEmbed],
           ephemeral: true,
         })
-        .catch((err) => {});
+        .catch(client.logger.error);
     } else {
       const errorembed = new EmbedBuilder()
         .setColor(config.colors.danger)
@@ -119,9 +119,7 @@ const command: CoreCommand = {
           embeds: [errorembed],
           ephemeral: true,
         })
-        .catch((err) => {
-          return;
-        });
+        .catch(client.logger.error);
     }
   },
 };

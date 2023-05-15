@@ -1,6 +1,7 @@
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
   ChannelType,
   EmbedBuilder,
   Events,
@@ -47,12 +48,12 @@ const event: CoreEvent = {
       const supportbutton = new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setLabel('Invite')
-          .setStyle(5)
+          .setStyle(ButtonStyle.Link)
           .setEmoji('📋')
           .setURL(config.links.invite),
         new ButtonBuilder()
           .setLabel('Support')
-          .setStyle(5)
+          .setStyle(ButtonStyle.Link)
           .setEmoji('❤️')
           .setURL(config.links.support)
       );
@@ -71,7 +72,7 @@ const event: CoreEvent = {
             embeds: [embed],
             components: [supportbutton],
           })
-          .catch(() => {});
+          .catch(client.logger.error);
     }
   },
 };

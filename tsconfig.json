@@ -5,32 +5,38 @@
     }
   },
   "compilerOptions": {
-    "strict": true,
-    "module": "ESNext",
-    "target": "ESNext",
     "moduleResolution": "node",
+    "module": "NodeNext",
+    "target": "ESNext",
     "lib": [
       "ESNext"
     ],
     "outDir": "dist",
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitThis": true,
+    "strictPropertyInitialization": false,
+    "useUnknownInCatchVariables": false,
     "sourceMap": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "noEmitOnError": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmitOnError": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "removeComments": true,
     "importHelpers": true,
+    "noEmit": false,
+    "allowJs": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "baseUrl": "./",
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
     "paths": {
       "@config": [
-        "src/config.ts"
+        "src/config"
       ],
       "@constants/*": [
         "src/constants/*"
@@ -62,12 +68,13 @@
     }
   },
   "include": [
-    "config/**/*",
-    "src/**/*",
-    "environment.d.ts"
+    "src/**/*.*",
+    "environment.d.ts",
+    "package.json",
+    "register.cjs"
   ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
-  ]
+  ],
 }
