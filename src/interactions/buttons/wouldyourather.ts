@@ -19,9 +19,12 @@ const button: CoreButton = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
+    if (!interaction.guildId) return;
+
     const { General } = (
       await import(`../../constants/rather-${guildDb.language}.json`)
     ).default;
+
     if (!guildDb.replay)
       return interaction.reply({
         ephemeral: true,
@@ -51,13 +54,13 @@ const button: CoreButton = {
     ]);
 
     const time = 60_000;
-    const three_minutes = 3 * 60 * 1e3;
+    const threeMinutes = 3 * 60 * 1e3;
 
     const randomrather = Math.floor(Math.random() * General.length);
     const vote = await client.voting.generateVoting(
       interaction.guildId,
       interaction.channelId,
-      time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
+      time < threeMinutes ? 0 : ~~((Date.now() + time) / 1000),
       0
     );
 

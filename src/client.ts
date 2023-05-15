@@ -30,18 +30,19 @@ import WebhookHandler from '@utils/classes/webhookHandler';
 import { logger } from './utils/client';
 
 // User filter to filter all users out of the cache expect the bot
-const userFilter = (user: User, client: ExtendedClient) =>
-  user?.id !== client?.user?.id;
+/* const userFilter = (user: User, client: ExtendedClient) =>
+  user?.id !== client?.user?.id; */
 
 export class ExtendedClient extends Client {
   // Client variables
   botStartTime: number = new Date().getTime();
-  synced: boolean = false; // Value for client to know if its synced with database
-  databaseLatency: number = 0;
+  synced = false; // Value for client to know if its synced with database
+  databaseLatency = 0;
   developers: User[] = [];
+  client: ClusterClient<Client>;
 
   // Client functions
-  logger = logger.child({});
+  logger = logger;
   // Uncomment this to bind a centralized error handler to the client
   // error = error
 
@@ -116,15 +117,7 @@ export class ExtendedClient extends Client {
     this.cooldownHandler = new CooldownHandler(this);
     this.cooldownHandler.startSweeper();
 
-    this.database
-      .connectToDatabase()
-      .then(() =>
-        this.logger.info(
-          `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-            'Successfully connected to the database'
-          )}`
-        )
-      );
+    this.database.connectToDatabase();
     this.database.startSweeper(this);
 
     // Keep Alive system after the necessary things that are allowed to crash are loaded
@@ -157,7 +150,7 @@ export class ExtendedClient extends Client {
    * Check if the client is synced with the database - used to prevent code from running unless client is synced with database
    * @returns Promise<boolean>
    */
-  public isSynced = () => {
+  public isSynced() {
     return new Promise((resolve) => {
       const checkSynced = () => {
         if (this.synced === true) resolve(true);
@@ -165,7 +158,7 @@ export class ExtendedClient extends Client {
       };
       checkSynced();
     });
-  };
+  }
 
   /**
    * Check if the guild has the debugMode value or user is a developer
@@ -173,10 +166,12 @@ export class ExtendedClient extends Client {
    * @param userId The user id
    * @returns boolean
    */
-  public checkDebug = (
+  public checkDebug(
     guildDatabase: GuildProfileDocument,
     userId: string
-  ): boolean => {
+  ): boolean {
     return guildDatabase?.debugMode ?? config.developers.includes(userId);
-  };
+  }
 }
+
+export default {};

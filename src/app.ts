@@ -1,5 +1,6 @@
 import colors from 'colors';
 
+import { initDiscordLogs } from '@utils/client';
 import { ExtendedClient } from './client';
 import { ensureDirectories } from './utils/start';
 
@@ -8,6 +9,10 @@ export const client = new ExtendedClient();
 (async () => {
   client.logger.info('Starting client');
   client.logger.debug('Debug Enabled');
+  if (client.cluster.maintenance)
+    client.logger.info(
+      `Client on maintenance mode with ${client.cluster.maintenance}`
+    );
 
   // Run startup functions
   await ensureDirectories();
@@ -21,6 +26,8 @@ export const client = new ExtendedClient();
       `Client authenticated in ${time} seconds`
     )}`
   );
+
+  initDiscordLogs();
 })();
 
 export default {};

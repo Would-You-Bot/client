@@ -50,7 +50,6 @@ module.exports = {
     'max-len': 0,
     'linebreak-style': ['error', 'windows'],
     'import/extensions': 'off',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'lines-between-class-members': 'off',
     'no-await-in-loop': 'off',
     'no-restricted-syntax': 'off',
@@ -58,6 +57,7 @@ module.exports = {
     'prefer-destructuring': 'off',
     'consistent-return': 'off',
     'no-continue': 'off',
+    'import/no-extraneous-dependencies': 'off',
   },
 
   settings: {

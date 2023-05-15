@@ -19,13 +19,16 @@ const button: CoreButton = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
+    if (!interaction.guildId) return;
+
     const { Funny, Basic, Young, Food, RuleBreak } = (
       await import(`../../constants/nhie-${guildDb.language}.json`)
     ).default;
+
     const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak];
     const randomNever = Math.floor(Math.random() * neverArray.length);
 
-    let ratherembed = new EmbedBuilder()
+    const ratherembed = new EmbedBuilder()
       .setColor(config.colors.primary)
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`,

@@ -46,13 +46,10 @@ export default class DatabaseHandler {
   async connectToDatabase() {
     try {
       const connection = await mongoose.connect(this.connectionString);
-      logger.info(
-        `${colors.white('Database')} ${colors.gray('>')} ${colors.green(
-          'Successfully loaded database'
-        )}`
-      );
+      logger.info(colors.green('Successfully connected to the database'));
       return connection;
     } catch (error) {
+      logger.error(colors.red('Failed to connect to database.'));
       logger.error(error);
     }
   }

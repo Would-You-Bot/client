@@ -1,5 +1,6 @@
 import { Document, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
+/* eslint-disable no-shadow */
 enum VoteType {
   WouldYouRather,
   NeverHaveIEver,

@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import config from '@config';
-import { logger } from './utils/client';
+import logger from './utils/client/loggerOffline';
 
 if (config.debug) logger.info('Running application in debug mode.');
 
@@ -35,6 +35,18 @@ manager.on('clusterCreate', (cluster) => {
       'Successfully created cluster #'
     )}${cluster.id}`
   );
+});
+
+manager.on('clusterReady', (cluster) => {
+  logger.info(
+    `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
+      'Successfully initialized cluster #'
+    )}${cluster.id}`
+  );
+});
+
+manager.on('debug', (message) => {
+  logger.debug(message);
 });
 
 manager.spawn({ timeout: -1 });

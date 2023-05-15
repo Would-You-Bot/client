@@ -26,9 +26,12 @@ const command: CoreCommand = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
+    if (!interaction.guildId) return;
+
     const { General } = (
       await import(`../../constants/rather-${guildDb.language}.json`)
     ).default;
+
     const randomrather = Math.floor(Math.random() * General.length);
 
     let ratherembed = new EmbedBuilder()
@@ -59,12 +62,12 @@ const command: CoreCommand = {
     ]);
 
     const time = 60_000;
-    const three_minutes = 3 * 60 * 1e3;
+    const threeMinutes = 3 * 60 * 1e3;
 
     const vote = await client.voting.generateVoting(
       interaction.guildId,
       interaction.channelId,
-      time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
+      time < threeMinutes ? 0 : ~~((Date.now() + time) / 1000),
       0
     );
 

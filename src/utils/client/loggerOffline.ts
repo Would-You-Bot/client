@@ -6,7 +6,7 @@ import * as winston from 'winston';
 import config from '@config';
 import addDiscordLog from './logValues';
 
-const logsDir = `./tmp/logs/${config.logFolder}`;
+const logsDir = `./tmp/logs/${config?.logFolder}`;
 
 // Create logs directory if it doesn't exist
 if (!fs.existsSync(logsDir)) {

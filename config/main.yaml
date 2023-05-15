@@ -7,8 +7,8 @@ links:
   invite: https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands
   # or https://wouldyoubot.gg/invite
   website: https://wouldyoubot.gg/
-  support: https://wouldyoubot.gg/discord
-  vote: https://wouldyoubot.gg/vote
+  support: https://discord.gg/vMyXAxEznS
+  vote: https://top.gg/bot/981649513427111957/vote
   tos: https://wouldyoubot.gg/terms
   privacy: https://wouldyoubot.gg/privacy
   logo: https://wouldyoubot.gg/Logo.png
@@ -18,6 +18,7 @@ developers:
   - '268843733317976066' # ForGetFulSkyBro#9999
   - '799319682862809169' # Marc#0309
   - '896657711104667719' # Slekup#6682
+  - '805898988402376725' # Finn#3000
 
 colors:
   primary: '#0598F4'
