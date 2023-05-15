@@ -33,6 +33,9 @@ import { logger } from './utils/client';
 /* const userFilter = (user: User, client: ExtendedClient) =>
   user?.id !== client?.user?.id; */
 
+/**
+ * Extended client class
+ */
 export class ExtendedClient extends Client {
   // Client variables
   botStartTime: number = new Date().getTime();
@@ -170,7 +173,10 @@ export class ExtendedClient extends Client {
     guildDatabase: GuildProfileDocument,
     userId: string
   ): boolean {
-    return guildDatabase?.debugMode ?? config.developers.includes(userId);
+    const debugApproved =
+      guildDatabase?.debugMode ?? config.developers.includes(userId);
+    if (debugApproved) this.logger.debug('Debug approved');
+    return debugApproved;
   }
 }
 

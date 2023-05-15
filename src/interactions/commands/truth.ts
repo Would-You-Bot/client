@@ -17,7 +17,10 @@ const command: CoreCommand = {
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
     guildDb: GuildProfileDocument
-  ) {},
+  ) {
+    // ! temp if statement to prevent eslint warning
+    if (!interaction.guild || !client.user || !guildDb) return null;
+  },
 };
 
 export default command;

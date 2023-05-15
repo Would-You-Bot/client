@@ -57,37 +57,38 @@ const button: CoreButton = {
       });
 
     const welcomeButtons = new ActionRowBuilder<ButtonBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId('welcome')
-          .setLabel(
-            client.translation.get(guildDb?.language, 'Settings.button.welcome')
+      new ButtonBuilder()
+        .setCustomId('welcome')
+        .setLabel(
+          client.translation.get(guildDb?.language, 'Settings.button.welcome')
+        )
+        .setStyle(
+          guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary
+        ),
+      new ButtonBuilder()
+        .setCustomId('welcomeChannel')
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            'Settings.button.welcomeChannel'
           )
-          .setStyle(
-            guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary
-          ),
-        new ButtonBuilder()
-          .setCustomId('welcomeChannel')
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              'Settings.button.welcomeChannel'
-            )
+        )
+        .setStyle(
+          guildDb.welcomeChannel ? ButtonStyle.Success : ButtonStyle.Secondary
+        )
+    );
+
+    const welcomeButtons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId('welcomePing')
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            'Settings.button.welcomePing'
           )
-          .setStyle(
-            guildDb.welcomeChannel ? ButtonStyle.Success : ButtonStyle.Secondary
-          )
-      ),
-      welcomeButtons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId('welcomePing')
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              'Settings.button.welcomePing'
-            )
-          )
-          .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success)
-      );
+        )
+        .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success)
+    );
 
     await client.database.updateGuild(interaction.guild.id, {
       welcomePing: !check,

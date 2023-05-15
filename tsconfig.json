@@ -77,4 +77,25 @@
     "node_modules",
     "**/*.spec.ts"
   ],
+  "typedocOptions": {
+    "name": "Would You Documentation",
+    "entryPoints": [
+      "src/**/*"
+    ],
+    "exclude": [
+      "node_modules",
+      "**/*.spec.ts"
+    ],
+    "externalPattern": [
+      "**/node_modules/**"
+    ],
+    "includes": [
+      "src"
+    ],
+    "json": "json-docs",
+    "out": "docs",
+    "includeVersion": true,
+    "readme": "README.md",
+    "showConfig": false
+  }
 }

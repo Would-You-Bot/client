@@ -32,7 +32,7 @@ const button: CoreButton = {
         iconURL: client.user?.avatarURL() || undefined,
       });
 
-    const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    const buttons = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setLabel('Accept')
         .setStyle(ButtonStyle.Danger)
@@ -45,7 +45,7 @@ const button: CoreButton = {
         .setCustomId('decline')
     );
 
-    return interaction.update({ embeds: [typeEmbed], components: [button] });
+    return interaction.update({ embeds: [typeEmbed], components: [buttons] });
   },
 };
 

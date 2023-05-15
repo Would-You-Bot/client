@@ -46,7 +46,7 @@ function isValid(timezone: string) {
 
 function dateType(timezone: string) {
   if (!timezone.includes('/')) return false;
-  let text = timezone.split('/');
+  const text = timezone.split('/');
 
   if (text.length === 2) return true;
   else return false;
@@ -152,43 +152,45 @@ const button: CoreButton = {
           .setColor(config.colors.primary);
 
         const dailyButtons =
-            new ActionRowBuilder<ButtonBuilder>().addComponents(
-              new ButtonBuilder()
-                .setCustomId('dailyMsg')
-                .setLabel(
-                  client.translation.get(
-                    guildDb?.language,
-                    'Settings.button.dailyMsg'
-                  )
+          new ActionRowBuilder<ButtonBuilder>().addComponents(
+            new ButtonBuilder()
+              .setCustomId('dailyMsg')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.dailyMsg'
                 )
-                .setStyle(
-                  guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary
-                ),
-              new ButtonBuilder()
-                .setCustomId('dailyChannel')
-                .setLabel(
-                  client.translation.get(
-                    guildDb?.language,
-                    'Settings.button.dailyChannel'
-                  )
+              )
+              .setStyle(
+                guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary
+              ),
+            new ButtonBuilder()
+              .setCustomId('dailyChannel')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.dailyChannel'
                 )
-                .setStyle(
-                  guildDb.dailyChannel
-                    ? ButtonStyle.Success
-                    : ButtonStyle.Secondary
-                ),
-              new ButtonBuilder()
-                .setCustomId('dailyType')
-                .setLabel(
-                  client.translation.get(
-                    guildDb?.language,
-                    'Settings.button.dailyType'
-                  )
+              )
+              .setStyle(
+                guildDb.dailyChannel
+                  ? ButtonStyle.Success
+                  : ButtonStyle.Secondary
+              ),
+            new ButtonBuilder()
+              .setCustomId('dailyType')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.dailyType'
                 )
-                .setStyle(ButtonStyle.Primary)
-                .setEmoji('📝')
-            ),
-          dailyButtons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+              )
+              .setStyle(ButtonStyle.Primary)
+              .setEmoji('📝')
+          );
+
+        const dailyButtons2 =
+          new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId('dailyTimezone')
               .setLabel(
@@ -220,8 +222,10 @@ const button: CoreButton = {
               )
               .setStyle(ButtonStyle.Primary)
               .setEmoji('⏰')
-          ),
-          dailyButtons3 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+          );
+
+        const dailyButtons3 =
+          new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId('dailyThread')
               .setLabel(

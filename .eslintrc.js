@@ -58,6 +58,9 @@ module.exports = {
     'consistent-return': 'off',
     'no-continue': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'no-else-return': 'off',
+    'no-unneeded-ternary': 'off',
+    'no-nested-ternary': 'off',
   },
 
   settings: {

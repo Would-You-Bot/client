@@ -7,11 +7,7 @@ import { ExtendedClient } from 'src/client';
 const event: CoreEvent = {
   name: Events.ShardResume,
   async execute(client: ExtendedClient, id: string) {
-    client.logger.info(
-      `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-        `Shard ${id} resumed`
-      )}`
-    );
+    client.logger.info(colors.green(`Shard ${id} resumed`));
   },
 };
 

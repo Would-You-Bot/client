@@ -60,21 +60,23 @@ export default {
         inline: false,
       })
       .setDescription(
-        client.translation.get(guildDb?.language, 'Help.embed.description') +
-          `\n\n${commands
-            .filter((e) => e.name !== 'reload')
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map((n) => {
-              if (n.descriptionLocalizations)
-                return `</${n.name}:${n.id}> - ${
-                  type === 'de'
-                    ? n.descriptionLocalizations.de
-                    : type === 'es'
-                    ? n.descriptionLocalizations['es-ES']
-                    : n.description
-                }`;
-            })
-            .join('\n')}`
+        `${client.translation.get(
+          guildDb?.language,
+          'Help.embed.description'
+        )}\n\n${commands
+          .filter((e) => e.name !== 'reload' && e.descriptionLocalizations)
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map(
+            (n) =>
+              `</${n.name}:${n.id}> - ${
+                type === 'de'
+                  ? n.descriptionLocalizations?.de
+                  : type === 'es'
+                  ? n.descriptionLocalizations?.['es-ES']
+                  : n.description
+              }`
+          )
+          .join('\n')}`
       );
 
     const button = new ActionRowBuilder<ButtonBuilder>().addComponents(

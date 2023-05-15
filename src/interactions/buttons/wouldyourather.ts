@@ -60,7 +60,7 @@ const button: CoreButton = {
     const vote = await client.voting.generateVoting(
       interaction.guildId,
       interaction.channelId,
-      time < threeMinutes ? 0 : ~~((Date.now() + time) / 1000),
+      time < threeMinutes ? 0 : Math.floor((Date.now() + time) / 1000),
       0
     );
 
@@ -73,7 +73,7 @@ const button: CoreButton = {
         ephemeral: true,
       });
 
-    let ratherembed = new EmbedBuilder()
+    const ratherEmbed = new EmbedBuilder()
       .setColor(config.colors.primary)
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomrather}`,
@@ -83,7 +83,7 @@ const button: CoreButton = {
 
     return interaction
       .reply({
-        embeds: [ratherembed],
+        embeds: [ratherEmbed],
         components: [vote.row, mainRow],
       })
       .catch(client.logger.error);

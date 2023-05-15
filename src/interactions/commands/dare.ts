@@ -1,9 +1,4 @@
-import {
-  ChatInputCommandInteraction,
-  EmbedBuilder,
-  SlashCommandBuilder,
-} from 'discord.js';
-import { version } from 'package.json';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 
 import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreCommand } from '@typings/core';
@@ -22,7 +17,10 @@ const command: CoreCommand = {
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
     guildDb: GuildProfileDocument
-  ) {},
+  ) {
+    // ! temp if statement to prevent eslint warning
+    if (!interaction.guild || !client.user || !guildDb) return null;
+  },
 };
 
 export default command;

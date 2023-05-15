@@ -4,6 +4,13 @@ import config from '@config';
 import { CoreEvent } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
+const filterGuildName = (name: string) =>
+  name
+    .replace('Discord', '')
+    .replace('discord', '')
+    .replace('Everyone', '')
+    .replace('everyone', '');
+
 const event: CoreEvent = {
   name: Events.GuildDelete,
   async execute(client: ExtendedClient, guild: Guild) {
@@ -63,14 +70,6 @@ const event: CoreEvent = {
         .catch(client.logger.error);
     }
   },
-};
-
-const filterGuildName = (name: string) => {
-  return name
-    .replace('Discord', '')
-    .replace('discord', '')
-    .replace('Everyone', '')
-    .replace('everyone', '');
 };
 
 export default event;

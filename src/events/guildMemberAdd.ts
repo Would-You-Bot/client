@@ -1,13 +1,13 @@
-import config from '@config';
-import { CoreEvent } from '@typings/core';
 import {
   EmbedBuilder,
   Events,
+  GuildMember,
   PermissionFlagsBits,
   TextChannel,
 } from 'discord.js';
 
-import { GuildMember } from 'discord.js';
+import config from '@config';
+import { CoreEvent } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
 const event: CoreEvent = {
@@ -40,14 +40,13 @@ const event: CoreEvent = {
       const { General } = await import(
         `../constants/rather-${guildDb.language}.json`
       );
+
       const randomrather = Math.floor(Math.random() * General.length);
-      let mention = undefined;
 
-      if (guildDb.welcomePing) {
-        mention = `<@${member.user.id}>`;
-      }
+      let mention: string | undefined;
+      if (guildDb.welcomePing) mention = `<@${member.user.id}>`;
 
-      let welcomeEmbed = new EmbedBuilder()
+      const welcomeEmbed = new EmbedBuilder()
         .setTitle(`Welcome ${member.user.username}!`)
         .setColor(config.colors.primary)
         .setThumbnail(member.user.avatarURL())

@@ -138,37 +138,39 @@ const button: CoreButton = {
           : ButtonStyle.Secondary;
 
         const dailyButtons =
-            new ActionRowBuilder<ButtonBuilder>().addComponents(
-              new ButtonBuilder()
-                .setCustomId('dailyMsg')
-                .setLabel(
-                  client.translation.get(
-                    guildDb?.language,
-                    'Settings.button.dailyMsg'
-                  )
+          new ActionRowBuilder<ButtonBuilder>().addComponents(
+            new ButtonBuilder()
+              .setCustomId('dailyMsg')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.dailyMsg'
                 )
-                .setStyle(useButtonStyle),
-              new ButtonBuilder()
-                .setCustomId('dailyChannel')
-                .setLabel(
-                  client.translation.get(
-                    guildDb?.language,
-                    'Settings.button.dailyChannel'
-                  )
+              )
+              .setStyle(useButtonStyle),
+            new ButtonBuilder()
+              .setCustomId('dailyChannel')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.dailyChannel'
                 )
-                .setStyle(useButtonStyle),
-              new ButtonBuilder()
-                .setCustomId('dailyType')
-                .setLabel(
-                  client.translation.get(
-                    guildDb?.language,
-                    'Settings.button.dailyType'
-                  )
+              )
+              .setStyle(useButtonStyle),
+            new ButtonBuilder()
+              .setCustomId('dailyType')
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  'Settings.button.dailyType'
                 )
-                .setStyle(ButtonStyle.Primary)
-                .setEmoji('📝')
-            ),
-          dailyButtons2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+              )
+              .setStyle(ButtonStyle.Primary)
+              .setEmoji('📝')
+          );
+
+        const dailyButtons2 =
+          new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId('dailyTimezone')
               .setLabel(
@@ -198,8 +200,10 @@ const button: CoreButton = {
               )
               .setStyle(ButtonStyle.Primary)
               .setEmoji('⏰')
-          ),
-          dailyButtons3 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+          );
+
+        const dailyButtons3 =
+          new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId('dailyThread')
               .setLabel(

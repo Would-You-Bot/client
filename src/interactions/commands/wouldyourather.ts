@@ -1,6 +1,7 @@
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
   ChatInputCommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
@@ -9,7 +10,6 @@ import {
 import config from '@config';
 import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreCommand } from '@typings/core';
-import { ButtonStyle } from 'discord.js';
 import { ExtendedClient } from 'src/client';
 
 const command: CoreCommand = {
@@ -34,7 +34,7 @@ const command: CoreCommand = {
 
     const randomrather = Math.floor(Math.random() * General.length);
 
-    let ratherembed = new EmbedBuilder()
+    const ratherEmbed = new EmbedBuilder()
       .setColor(config.colors.primary)
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomrather}`,
@@ -67,7 +67,7 @@ const command: CoreCommand = {
     const vote = await client.voting.generateVoting(
       interaction.guildId,
       interaction.channelId,
-      time < threeMinutes ? 0 : ~~((Date.now() + time) / 1000),
+      time < threeMinutes ? 0 : Math.floor((Date.now() + time) / 1000),
       0
     );
 
@@ -75,7 +75,7 @@ const command: CoreCommand = {
 
     await interaction
       .reply({
-        embeds: [ratherembed],
+        embeds: [ratherEmbed],
         components: [vote.row, mainRow],
         fetchReply: true,
       })

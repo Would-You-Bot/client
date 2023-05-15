@@ -57,7 +57,16 @@ const button: CoreButton = {
         )
           return;
         const value = modalInteraction.components[0].components[0].value;
-        if (isNaN(parseInt(value))) return;
+        if (Number.isNaN(parseInt(value, 10))) return;
+
+        if (isNumericRegex(value) === false)
+          return modalInteraction.reply({
+            ephemeral: true,
+            content: client.translation.get(
+              guildDb?.language,
+              'Settings.cooldownInvalid'
+            ),
+          });
 
         if (guildDb.replayCooldown.toString() === value)
           return modalInteraction.reply({
@@ -68,21 +77,12 @@ const button: CoreButton = {
             ),
           });
 
-        if (parseInt(value) < 2000)
+        if (parseInt(value, 10) < 2000)
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
               guildDb?.language,
               'Settings.cooldownMin'
-            ),
-          });
-
-        if (isNumericRegex(value) === false)
-          return modalInteraction.reply({
-            ephemeral: true,
-            content: client.translation.get(
-              guildDb?.language,
-              'Settings.cooldownInvalid'
             ),
           });
 

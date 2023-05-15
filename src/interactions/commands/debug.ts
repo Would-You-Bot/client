@@ -139,7 +139,7 @@ const command: CoreCommand = {
                 'Debug.embed.isChannel',
                 {
                   is:
-                    interaction?.channel?.id == guildDb?.dailyChannel
+                    interaction?.channel?.id === guildDb?.dailyChannel
                       ? client.translation.get(
                           guildDb?.language,
                           'Debug.embed.is'
@@ -336,6 +336,12 @@ const command: CoreCommand = {
             embeds: [debugEmbed],
           })
           .catch(client.logger.error);
+      }
+      default: {
+        return interaction.reply({
+          ephemeral: true,
+          content: client.translation.get(guildDb?.language, 'Debug.invalid'),
+        });
       }
     }
   },

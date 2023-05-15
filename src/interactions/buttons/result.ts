@@ -1,23 +1,12 @@
-import {
-  ActionRowBuilder,
-  ButtonInteraction,
-  ChannelSelectMenuBuilder,
-  ChannelType,
-  EmbedBuilder,
-} from 'discord.js';
+import { ButtonInteraction, EmbedBuilder } from 'discord.js';
 
-import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
 const button: CoreButton = {
   name: 'result',
   description: 'The voting result',
-  async execute(
-    interaction: ButtonInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ButtonInteraction, client: ExtendedClient) {
     const customId = interaction.customId.split('_');
 
     const votingResults = await client.voting.getVotingResults(customId[1]);

@@ -30,19 +30,11 @@ manager.extend(
 );
 
 manager.on('clusterCreate', (cluster) => {
-  logger.info(
-    `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-      'Successfully created cluster #'
-    )}${cluster.id}`
-  );
+  logger.info(colors.green(`Successfully created cluster #${cluster.id}`));
 });
 
 manager.on('clusterReady', (cluster) => {
-  logger.info(
-    `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-      'Successfully initialized cluster #'
-    )}${cluster.id}`
-  );
+  logger.info(colors.green(`Successfully initialized cluster #${cluster.id}`));
 });
 
 manager.on('debug', (message) => {

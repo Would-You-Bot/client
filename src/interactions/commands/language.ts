@@ -40,7 +40,7 @@ const command: CoreCommand = {
   ) {
     if (!interaction.guildId) return;
 
-    let languageEmbed = new EmbedBuilder();
+    const languageEmbed = new EmbedBuilder();
 
     if (client.checkDebug(guildDb, interaction?.user?.id)) {
       switch (interaction.options.getSubcommand()) {
@@ -92,6 +92,16 @@ const command: CoreCommand = {
           languageEmbed
             .setTitle('¡Idioma cambiado!')
             .setDescription('¡Has seleccionado el español como nuevo idioma!')
+            .setFooter({
+              text: 'Would You',
+              iconURL: client.user?.avatarURL() || undefined,
+            });
+          break;
+        }
+        default: {
+          languageEmbed
+            .setTitle('Error!')
+            .setDescription('Something went wrong, please try again later!')
             .setFooter({
               text: 'Would You',
               iconURL: client.user?.avatarURL() || undefined,

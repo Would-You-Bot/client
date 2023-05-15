@@ -14,7 +14,8 @@
     "copyfiles:register": "cp register.cjs ./dist/register.cjs",
     "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants && npm run copyfiles:env && npm run copyfiles:register",
     "start": "npm run build && tsc-alias && npm run copyfiles && cd dist && node src/cluster.js",
-    "dev": "nodemon --watch src/** --ext ts,json --ignore src/**/*.spec.js --exec npm run start"
+    "dev": "nodemon --watch src/** --ext ts,json --ignore src/**/*.spec.js --exec npm run start",
+    "docs": "rimraf docs && typedoc"
   },
   "repository": {
     "type": "git",
@@ -77,6 +78,7 @@
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.6",
+    "typedoc": "^0.24.7",
     "typescript": "^5.0.4"
   },
   "files": [

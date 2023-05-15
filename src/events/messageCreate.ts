@@ -7,7 +7,6 @@ import {
   Events,
   Message,
   PermissionFlagsBits,
-  TextChannel,
 } from 'discord.js';
 
 import config from '@config';

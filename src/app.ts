@@ -21,11 +21,7 @@ export const client = new ExtendedClient();
   const authStart = Date.now();
   await client.authenticate();
   const time = ((Date.now() - authStart) / 1000).toFixed(2);
-  client.logger.info(
-    `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-      `Client authenticated in ${time} seconds`
-    )}`
-  );
+  client.logger.info(colors.green(`Client authenticated in ${time} seconds`));
 
   initDiscordLogs();
 })();

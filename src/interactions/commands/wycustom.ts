@@ -6,7 +6,6 @@ import {
   ChatInputCommandInteraction,
   CollectedInteraction,
   EmbedBuilder,
-  Message,
   PermissionFlagsBits,
   SlashCommandBuilder,
 } from 'discord.js';
@@ -18,10 +17,10 @@ import { ExtendedClient } from 'src/client';
 
 function makeID(length: number) {
   let result = '';
-  let characters =
+  const characters =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i += 1) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
@@ -109,7 +108,7 @@ const command: CoreCommand = {
   ) {
     if (!interaction.guildId) return;
 
-    let typeEmbed = new EmbedBuilder();
+    const typeEmbed = new EmbedBuilder();
     let message: string;
 
     class Paginator {
@@ -120,7 +119,7 @@ const command: CoreCommand = {
 
       constructor(
         pages: [] = [],
-        { filter, timeout }: { filter?: Function; timeout: number } = {
+        { filter, timeout }: { filter?: () => boolean; timeout: number } = {
           filter: () => true,
           timeout: 5 * 6e4,
         }
@@ -129,6 +128,8 @@ const command: CoreCommand = {
         this.timeout = Number(timeout) || 5 * 6e4;
         this.page = 0;
         this.endPage = this.pages.length - 1;
+
+        if (filter) filter();
       }
 
       add(page: EmbedBuilder) {
@@ -141,15 +142,15 @@ const command: CoreCommand = {
         return this;
       }
 
-      setTransform(fn: Function) {
-        const _pages = [];
+      setTransform(fn: (...args: any) => any) {
+        const pages = [];
         let i = 0;
         const ln = this.pages.length;
         for (const page of this.pages) {
-          _pages.push(fn(page, i, ln));
-          i++;
+          pages.push(fn(page, i, ln));
+          i += 1;
         }
-        this.pages = _pages;
+        this.pages = pages;
         return this;
       }
 
@@ -164,8 +165,6 @@ const command: CoreCommand = {
           ephemeral: true,
         });
         const collector = msg.createMessageComponentCollector();
-
-        collector.on('collect', async (inter: CollectedInteraction) => {});
 
         collector.on(
           'collect',
@@ -188,27 +187,31 @@ const command: CoreCommand = {
                       await inter.update({
                         embeds: [this.pages[0]],
                       });
-                      return (this.page = 0);
+                      this.page = 0;
+                      return;
                     }
                   case 'prev':
                     if (this.pages[this.page - 1]) {
-                      return inter.update({
-                        embeds: [this.pages[--this.page]],
+                      inter.update({
+                        embeds: [this.pages[(this.page -= 1)]],
                       });
+                      return;
                     } else {
-                      return inter.reply({
+                      inter.reply({
                         ephemeral: true,
                         content: client.translation.get(
                           guildDb?.language,
                           'wyCustom.error.paginate'
                         ),
                       });
+                      return;
                     }
                   case 'next':
                     if (this.pages[this.page + 1]) {
-                      return inter.update({
-                        embeds: [this.pages[++this.page]],
+                      inter.update({
+                        embeds: [this.pages[(this.page += 1)]],
                       });
+                      return;
                     } else {
                       return inter.reply({
                         ephemeral: true,
@@ -231,12 +234,16 @@ const command: CoreCommand = {
                       await inter.update({
                         embeds: [this.pages[this.pages.length - 1]],
                       });
-                      return (this.page = this.pages.length - 1);
+                      this.page = this.pages.length - 1;
+                      return;
                     }
+                  default: {
+                    return;
+                  }
                 }
               }
-            } catch (e) {
-              return;
+            } catch (error) {
+              client.logger.error(error);
             }
           }
         );
@@ -244,7 +251,7 @@ const command: CoreCommand = {
     }
     if (client.checkDebug(guildDb, interaction?.user?.id)) {
       switch (interaction.options.getSubcommand()) {
-        case 'add':
+        case 'add': {
           if (!client.voteLogger.votes.has(interaction.user.id)) {
             if (guildDb.customMessages.length >= 30)
               return interaction.reply({
@@ -261,7 +268,7 @@ const command: CoreCommand = {
             ?.toLowerCase() as string;
           message = interaction.options.getString('message') as string;
 
-          let newID = makeID(6);
+          const newID = makeID(6);
           typeEmbed
             .setTitle(
               client.translation.get(
@@ -301,7 +308,8 @@ const command: CoreCommand = {
             true
           );
           break;
-        case 'remove':
+        }
+        case 'remove': {
           message = interaction.options.getString('message') as string;
 
           typeEmbed
@@ -322,8 +330,9 @@ const command: CoreCommand = {
               ephemeral: true,
               content: 'There is no custom WouldYou message with that ID!',
             });
-          let filtered = guildDb.customMessages.filter(
-            (c) => c.id.toString() != message
+
+          const filtered = guildDb.customMessages.filter(
+            (c) => c.id.toString() !== message
           );
 
           await client.database.updateGuild(
@@ -334,7 +343,8 @@ const command: CoreCommand = {
             true
           );
           break;
-        case 'removeall':
+        }
+        case 'removeall': {
           if (guildDb.customMessages.length === 0)
             return interaction.reply({
               content: client.translation.get(
@@ -374,7 +384,8 @@ const command: CoreCommand = {
             ephemeral: true,
           });
           break;
-        case 'view':
+        }
+        case 'view': {
           if (guildDb.customMessages.length === 0)
             return interaction.reply({
               ephemeral: true,
@@ -394,7 +405,7 @@ const command: CoreCommand = {
             data = guildDb.customMessages
               .filter((c) => c.type === 'useless')
               .map(
-                (s, i) =>
+                (s) =>
                   `${client.translation.get(
                     guildDb?.language,
                     'wyCustom.success.embedAdd.descID'
@@ -438,7 +449,7 @@ const command: CoreCommand = {
             data = guildDb.customMessages
               .filter((c) => c.type === 'useful')
               .map(
-                (s, i) =>
+                (s) =>
                   `${client.translation.get(
                     guildDb?.language,
                     'wyCustom.success.embedAdd.descID'
@@ -503,7 +514,8 @@ const command: CoreCommand = {
           );
 
           return page.start(interaction, buttons);
-        case 'import':
+        }
+        case 'import': {
           const attachemnt = interaction.options.get('attachment');
 
           if (!attachemnt?.attachment)
@@ -596,13 +608,13 @@ const command: CoreCommand = {
                   ),
                 });
 
-              let wouldyourather = guildDb.customMessages.filter(
+              const wouldyourather = guildDb.customMessages.filter(
                 (c) => c.type === 'wouldyourather'
               ).length;
-              let neverhaveiever = guildDb.customMessages.filter(
+              const neverhaveiever = guildDb.customMessages.filter(
                 (c) => c.type === 'neverhaveiever'
               ).length;
-              let wwyd = guildDb.customMessages.filter(
+              const wwyd = guildDb.customMessages.filter(
                 (c) => c.type === 'wwyd'
               ).length;
 
@@ -648,8 +660,8 @@ const command: CoreCommand = {
                       'wyCustom.error.import.att22'
                     ),
                   });
-                response.data.wouldyourather.map((msg: string) => {
-                  let newID = makeID(6);
+                response.data.wouldyourather.forEach((msg: string) => {
+                  const newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
                     msg,
@@ -669,8 +681,8 @@ const command: CoreCommand = {
                       'wyCustom.error.import.att23'
                     ),
                   });
-                response.data.neverhaveiever.map((msg: string) => {
-                  let newID = makeID(6);
+                response.data.neverhaveiever.forEach((msg: string) => {
+                  const newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
                     msg,
@@ -690,8 +702,8 @@ const command: CoreCommand = {
                       'wyCustom.error.import.att24'
                     ),
                   });
-                response.data.wwyd.map((msg: string) => {
-                  let newID = makeID(6);
+                response.data.wwyd.forEach((msg: string) => {
+                  const newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
                     msg,
@@ -715,16 +727,17 @@ const command: CoreCommand = {
                 ),
               });
             })
-            .catch((e) => {
-              return interaction.editReply(
+            .catch((error) =>
+              interaction.editReply(
                 `${client.translation.get(
                   guildDb?.language,
                   'wyCustom.error.import.att15'
-                )}\n\nError: ${e}`
-              );
-            });
+                )}\n\nError: ${error}`
+              )
+            );
           break;
-        case 'export':
+        }
+        case 'export': {
           if (guildDb.customMessages.length === 0)
             return interaction.reply({
               ephemeral: true,
@@ -736,19 +749,19 @@ const command: CoreCommand = {
 
           await interaction.deferReply();
 
-          let wouldyourather = guildDb.customMessages.filter(
+          const wouldyourather = guildDb.customMessages.filter(
             (c) => c.type === 'wouldyourather'
           );
-          let neverhaveiever = guildDb.customMessages.filter(
+          const neverhaveiever = guildDb.customMessages.filter(
             (c) => c.type === 'neverhaveiever'
           );
-          let wwyd = guildDb.customMessages.filter((c) => c.type === 'wwyd');
+          const wwyd = guildDb.customMessages.filter((c) => c.type === 'wwyd');
 
           let text = `{\n`;
           if (wouldyourather.length > 0) {
             text += `\n"wouldyourather": [`;
-            wouldyourather.map((a, i) => {
-              i = i++ + 1;
+            wouldyourather.forEach((a, i) => {
+              i += 1;
               text += `\n"${a.msg}"${wouldyourather.length !== i ? ',' : ''}`;
             });
             text += `\n]`;
@@ -756,8 +769,8 @@ const command: CoreCommand = {
 
           if (neverhaveiever.length > 0) {
             text += `\n"neverhaveiever": [`;
-            neverhaveiever.map((a, i) => {
-              i = i++ + 1;
+            neverhaveiever.forEach((a, i) => {
+              i += 1;
               text += `\n"${a.msg}"${neverhaveiever.length !== i ? ',' : ''}`;
             });
             text += `\n]`;
@@ -765,8 +778,8 @@ const command: CoreCommand = {
 
           if (wwyd.length > 0) {
             text += `\n"wwyd": [`;
-            wwyd.map((a, i) => {
-              i = i++ + 1;
+            wwyd.forEach((a, i) => {
+              i += 1;
               text += `\n"${a.msg}"${wwyd.length !== i ? ',' : ''}`;
             });
             text += `\n]`;
@@ -785,6 +798,10 @@ const command: CoreCommand = {
               },
             ],
           });
+        }
+
+        default:
+          break;
       }
 
       return interaction

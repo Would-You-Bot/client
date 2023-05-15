@@ -24,11 +24,7 @@ export default class ButtonHandler {
 
       this.client.buttons.set(button.default.name, button.default);
     }
-    this.client.logger.info(
-      `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-        'Successfully loaded buttons'
-      )}`
-    );
+    this.client.logger.info(colors.green('Successfully loaded buttons'));
   }
 
   /**

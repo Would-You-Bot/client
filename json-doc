@@ -1,0 +1,16 @@
+{
+	"id": 0,
+	"name": "documentation",
+	"variant": "project",
+	"kind": 1,
+	"flags": {},
+	"packageName": "would-you",
+	"packageVersion": "3.0.0",
+	"readme": [
+		{
+			"kind": "text",
+			"text": "# Would-You Bot\r\n\r\n<a href=\"https://wouldyoubot.com\">![image](https://user-images.githubusercontent.com/74737739/187047295-6a10fe06-3178-45ff-8b9a-9882a164afc3.png) </a>\r\n\r\n---\r\n\r\n### Description\r\n\r\nWould-You bot is a open sourced discord bot that provides activties to keep your server active. We plan to see servers strive in activty with this discord bot.\r\n\r\n### Motive\r\n\r\nWe strive to help servers with their activty.\r\n\r\n### Plans\r\n\r\nWe plan to grow server whilst growing our discord bot.\r\n\r\n### Website\r\n\r\n[Our website](https://wouldyoubot.com)\r\n\r\n---\r\n\r\n#### Would you rather die or use this bot. Your choice!"
+		}
+	],
+	"symbolIdMap": {}
+}

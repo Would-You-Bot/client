@@ -6,7 +6,6 @@ import {
 import { version } from 'package.json';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreCommand } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
@@ -21,13 +20,12 @@ const command: CoreCommand = {
     }),
   async execute(
     interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
+    client: ExtendedClient
   ) {
     if (!client.uptime) return;
 
     const unixstamp =
-      Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime / 1000);
+      Math.floor(Date.now() / 1000 || 0) - Math.floor(client.uptime / 1000);
 
     function round(num: number) {
       const m = Number((Math.abs(num) * 100).toPrecision(15));
@@ -83,8 +81,9 @@ const command: CoreCommand = {
       )
       .setThumbnail(client.user?.displayAvatarURL() || null)
       .setFooter({
-        text:
-          interaction.user.tag + ' Shard #' + interaction?.guild?.shardId ?? 0,
+        text: `${interaction.user.tag} Shard #${
+          interaction?.guild?.shardId ?? 0
+        }`,
         iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp();

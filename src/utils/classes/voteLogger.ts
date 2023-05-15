@@ -61,20 +61,12 @@ export default class VoteLogger {
     this.votes = new Map();
 
     this.getVotes().then(() => {
-      this.client.logger.info(
-        `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-          'Successfully updated votes'
-        )}`
-      );
+      this.client.logger.info(colors.green('Successfully updated votes'));
     });
 
     setInterval(() => {
       this.getVotes().then(() => {
-        this.client.logger.info(
-          `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-            'Successfully updated votes'
-          )}`
-        );
+        this.client.logger.info(colors.green('Successfully updated votes'));
       });
     }, 15 * 60 * 1000);
   }
@@ -134,11 +126,7 @@ export default class VoteLogger {
           url: config.env.VOTE_WEBHOOK,
         });
 
-        this.client.logger.info(
-          `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-            `${userData.tag} voted for me!`
-          )}`
-        );
+        this.client.logger.info(colors.green(`${userData.tag} voted for me!`));
 
         webhookClient
           .send({

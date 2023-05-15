@@ -1,4 +1,3 @@
-import config from '@config';
 import { CoreEvent } from '@typings/core';
 import { Events } from 'discord.js';
 

@@ -246,9 +246,7 @@ export default class Voting {
       });
 
       this.client.logger.info(
-        `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-          'Successfully loaded votes from database'
-        )}`
+        colors.green('Successfully loaded votes from database')
       );
     }, 500);
   }

@@ -1,12 +1,5 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonInteraction,
-  ButtonStyle,
-  EmbedBuilder,
-} from 'discord.js';
+import { ButtonInteraction } from 'discord.js';
 
-import config from '@config';
 import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
@@ -19,8 +12,10 @@ const button: CoreButton = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
+    // ! temp if statement to prevent eslint warning
+    if (!interaction.guild || !client.user || !guildDb) return null;
+
     // ! This code was trying to get `values` from a button interaction
-    if (!interaction.guild) return;
 
     /* const newChannel = interaction.values[0];
     const dailyMsgs = new EmbedBuilder()
@@ -134,5 +129,4 @@ const button: CoreButton = {
   },
 };
 
-
-export default button
+export default button;

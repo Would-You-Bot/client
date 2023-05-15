@@ -67,7 +67,7 @@ const command: CoreCommand = {
     const vote = await client.voting.generateVoting(
       interaction.guildId,
       interaction.channelId,
-      time < threeMinutes ? 0 : ~~((Date.now() + time) / 1000),
+      time < threeMinutes ? 0 : Math.floor((Date.now() + time) / 1000),
       1
     );
 

@@ -22,6 +22,7 @@ const button: CoreButton = {
     const { WhatYouDo } = (
       await import(`../../constants/wwyd-${guildDb.language}.json`)
     ).default;
+
     const randomNever = Math.floor(Math.random() * WhatYouDo.length);
     const wwydstring = WhatYouDo[randomNever];
 

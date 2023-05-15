@@ -33,7 +33,7 @@ const verifyEnvironment = (): NodeJS.ProcessEnv => {
     // 'DEBUG_CHANNEL',
 
     // External Keys/Tokens
-    'TOPGG_TOKEN',
+    // 'TOPGG_TOKEN',
     'VOTE_WEBHOOK',
     // 'VOTE_CHANNEL',
   ];

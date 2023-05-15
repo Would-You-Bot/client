@@ -40,7 +40,8 @@ const event: CoreEvent = {
       setTimeout(async () => {
         try {
           if (config.isProduction()) {
-            // const ap = AutoPoster(`${config.env.TOPGG_TOKEN}`, client);
+            if (config.env.TOPGG_TOKEN)
+              AutoPoster(`${config.env.TOPGG_TOKEN}`, client);
 
             // If the bot is in production mode it will load slash commands for all guilds
             await rest.put(
@@ -50,9 +51,7 @@ const event: CoreEvent = {
               }
             );
             client.logger.info(
-              `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-                'Successfully registered commands globally'
-              )}`
+              colors.green('Successfully registered commands globally')
             );
           } else {
             if (!config.env.LOG_GUILD)
@@ -71,9 +70,7 @@ const event: CoreEvent = {
               }
             );
             client.logger.info(
-              `${colors.white('Would You?')} ${colors.gray('>')} ${colors.green(
-                'Successfully registered commands locally'
-              )}`
+              colors.green('Successfully registered commands locally')
             );
           }
         } catch (err) {

@@ -1,17 +1,10 @@
-import config from '@config';
+import { ButtonInteraction } from 'discord.js';
+
 import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreButton } from '@typings/core';
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonInteraction,
-  ButtonStyle,
-  ComponentType,
-  EmbedBuilder,
-} from 'discord.js';
 import { ExtendedClient } from 'src/client';
 
-const modalObject = {
+/* const modalObject = {
   title: 'Replay Cooldown',
   custom_id: 'replaymodal',
   components: [
@@ -31,7 +24,7 @@ const modalObject = {
 
 function isNumericRegex(str: string) {
   return /^[0-9]+$/.test(str);
-}
+} */
 
 const button: CoreButton = {
   name: 'selectMenuReplay',
@@ -41,7 +34,11 @@ const button: CoreButton = {
     client: ExtendedClient,
     guildDb: GuildProfileDocument
   ) {
+    // ! temp if statement to prevent eslint warning
+    if (!interaction.guild || !client.user || !guildDb) return null;
+
     // ! This code was trying to get `values` from a button interaction
+
     /* if (!interaction.guild) return;
 
     if (guildDb.replayChannels.find((c) => c.id === interaction.values[0]))
