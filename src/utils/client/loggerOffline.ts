@@ -13,29 +13,6 @@ if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }
 
-/* const levelColor = (level: string) => {
-  switch (level) {
-    case 'error': {
-      return colors.red(level.toUpperCase());
-    }
-    case 'warn': {
-      return colors.yellow(level.toUpperCase());
-    }
-    case 'info': {
-      return colors.green(level.toUpperCase());
-    }
-    case 'debug': {
-      return colors.blue(level.toUpperCase());
-    }
-    case 'trace': {
-      return colors.magenta(level.toUpperCase());
-    }
-    default: {
-      return colors.white(level.toUpperCase());
-    }
-  }
-}; */
-
 const consoleFormat = winston.format.combine(
   // winston.format.prettyPrint(),
   winston.format.colorize(),

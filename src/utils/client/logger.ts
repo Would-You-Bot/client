@@ -4,16 +4,25 @@ import { format } from 'logform';
 import * as winston from 'winston';
 
 import config from '@config';
+import { getClusterId } from './getCluster';
 import addDiscordLog from './logValues';
 
 const logsDir = `./tmp/logs/${config.logFolder}`;
+const clusterLogsDir = `./tmp/logs/${
+  config.logFolder
+}/cluster-${getClusterId()}`;
 
 // Create logs directory if it doesn't exist
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }
 
-/* const levelColor = (level: string) => {
+// Create cluster logs directory if it doesn't exist
+if (!fs.existsSync(clusterLogsDir)) {
+  fs.mkdirSync(clusterLogsDir, { recursive: true });
+}
+
+const levelColor = (level: string) => {
   switch (level) {
     case 'error': {
       return colors.red(level.toUpperCase());
@@ -34,7 +43,7 @@ if (!fs.existsSync(logsDir)) {
       return colors.white(level.toUpperCase());
     }
   }
-}; */
+};
 
 const consoleFormat = winston.format.combine(
   // winston.format.prettyPrint(),
@@ -48,11 +57,19 @@ const consoleFormat = winston.format.combine(
     // Append the stack trace to the message if it is present
     if (stack) message += `\n${stack}`;
 
-    addDiscordLog(level, `(${ms}) [${level}]: ${message}`);
+    const clusterId = getClusterId();
 
-    return `${colors.gray(timestamp)} (${colors.magenta(
-      ms
-    )}) [${level}]: ${message}`;
+    addDiscordLog(
+      level,
+      `(${ms}) [Cluster ${clusterId}] [${level}]: ${message}`
+    );
+
+    /* eslint-disable no-control-regex */
+    const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
+
+    return `${colors.gray(timestamp)} (${colors.magenta(ms)}) [${colors.white(
+      `Cluster ${clusterId}`
+    )}] [${levelColor(level.replace(ANSI_REGEX, ''))}]: ${message}`;
   })
 );
 
@@ -61,7 +78,12 @@ const fileFormat = winston.format.combine(
   format((info) => {
     /* eslint-disable no-control-regex */
     const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
-    info.message = info.message.replace(ANSI_REGEX, '');
+    info.level = info.level.replace(ANSI_REGEX, '');
+    const clusterId = getClusterId();
+    info.message = `[Cluster ${clusterId}] ${info.message.replace(
+      ANSI_REGEX,
+      ''
+    )}`;
     return info;
   })(),
   winston.format.timestamp(),
@@ -79,27 +101,27 @@ const logger = winston.createLogger({
     // File transports
     new winston.transports.File({
       level: 'info',
-      filename: `${logsDir}/info.log`,
+      filename: `${clusterLogsDir}/info.log`,
       format: fileFormat,
     }),
     new winston.transports.File({
       level: 'debug',
-      filename: `${logsDir}/debug.log`,
+      filename: `${clusterLogsDir}/debug.log`,
       format: fileFormat,
     }),
     new winston.transports.File({
       level: 'error',
-      filename: `${logsDir}/error.log`,
+      filename: `${clusterLogsDir}/error.log`,
       format: fileFormat,
     }),
     new winston.transports.File({
       level: 'warn',
-      filename: `${logsDir}/warn.log`,
+      filename: `${clusterLogsDir}/warn.log`,
       format: fileFormat,
     }),
     new winston.transports.File({
       level: 'trace',
-      filename: `${logsDir}/trace.log`,
+      filename: `${clusterLogsDir}/trace.log`,
       format: fileFormat,
     }),
   ],

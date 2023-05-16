@@ -96,8 +96,9 @@ export default class KeepAlive {
     });
 
     this.client.on('error', (e) => {
-      this.consoleError('Error', 'Bot got a error...', `${e}`);
       return;
+
+      this.consoleError('Error', 'Bot got a error...', `${e}`);
 
       // ! Disabled for now - will add a centralized error handler
       const embed = new EmbedBuilder()
@@ -123,8 +124,9 @@ export default class KeepAlive {
     });
 
     this.client.on('warn', async (info) => {
-      this.consoleError('Error', 'Bot got a warn...', info);
       return;
+
+      this.consoleError('Error', 'Bot got a warn...', info);
 
       // ! Disabled for now - will add a centralized error handler
       const embed = new EmbedBuilder()
@@ -150,10 +152,10 @@ export default class KeepAlive {
     });
 
     process.on('unhandledRejection', async (reason, p) => {
+      return;
+
       this.consoleError('Fatal Error', 'Unhandled Rejection/Catch');
       this.client.logger.error(`${reason} ${p}`);
-
-      return;
 
       // ! Disabled for now - will add a centralized error handler
       const embed = new EmbedBuilder()
@@ -184,10 +186,10 @@ export default class KeepAlive {
     });
 
     process.on('uncaughtException', async (err, origin) => {
+      return;
+
       this.consoleError('Fatal Error', 'Uncaught Exception/Catch');
       this.client.logger.error(`${err} ${origin}`);
-
-      return;
 
       // ! Disabled for now - will add a centralized error handler
       const embed = new EmbedBuilder()
@@ -216,11 +218,12 @@ export default class KeepAlive {
         })
         .catch(this.client.logger.error);
     });
+
     process.on('uncaughtExceptionMonitor', async (err, origin) => {
+      return;
+
       this.consoleError('Fatal Error', 'Uncaught Exception/Catch (MONITOR)');
       this.client.logger.error(`${err} ${origin}`);
-
-      return;
 
       // ! Disabled for now - will add a centralized error handler
       // ? This value does not exists anywhere in the codebase, it was previously referenced, but not defined as `global.CustomBot`

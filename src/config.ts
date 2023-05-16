@@ -35,7 +35,7 @@ export class Config implements ConfigType {
 
   // Environment
   env = env;
-  debug = env.NODE_ENV === 'production' ? env.DEBUG : false;
+  debug = env.NODE_ENV === 'production' ? false : env.DEBUG;
   envName: string;
   BOT_TOKEN: string;
 

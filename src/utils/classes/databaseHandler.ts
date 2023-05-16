@@ -49,8 +49,13 @@ export default class DatabaseHandler {
       logger.info(colors.green('Successfully connected to the database'));
       return connection;
     } catch (error) {
-      logger.error(colors.red('Failed to connect to database.'));
       logger.error(error);
+      logger.error(
+        colors.red(
+          `Failed to connect to database(${this.connectionString}), exiting process...`
+        )
+      );
+      process.exit(0);
     }
   }
 
