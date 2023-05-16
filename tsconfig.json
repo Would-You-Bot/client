@@ -78,10 +78,19 @@
     "**/*.spec.ts"
   ],
   "typedocOptions": {
-    "name": "Would You Documentation",
-    "entryPoints": [
-      "src/**/*"
+    "name": "Would You Bot - Official Documentation",
+    "customTitle": "Would You Bot - Official Documentation",
+    "customTitleLink": "https://slekup.github.io/would-you-bot/",
+    "customDescription": "Guys, this is very epic documentation!",
+    "plugin": [
+      "typedoc-plugin-mdn-links",
+      "typedoc-plugin-extras",
+      "typedoc-plugin-djs-links",
     ],
+    "entryPoints": [
+      "src"
+    ],
+    "entryPointStrategy": "Expand",
     "exclude": [
       "node_modules",
       "**/*.spec.ts"
@@ -92,10 +101,10 @@
     "includes": [
       "src"
     ],
-    "json": "json-docs",
     "out": "docs",
     "includeVersion": true,
     "readme": "README.md",
-    "showConfig": false
+    "showConfig": false,
+    "favicon": "https://wouldyoubot.gg/Logo.png",
   }
 }

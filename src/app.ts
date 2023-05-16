@@ -4,6 +4,9 @@ import { initDiscordLogs } from '@utils/client';
 import { ExtendedClient } from './client';
 import { ensureDirectories } from './utils/start';
 
+/**
+ * The client instance
+ */
 export const client = new ExtendedClient();
 
 (async () => {
@@ -25,5 +28,3 @@ export const client = new ExtendedClient();
 
   initDiscordLogs();
 })();
-
-export default {};

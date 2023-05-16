@@ -22,6 +22,9 @@ const env = verifyEnvironment();
 
 const d = new Date();
 
+/**
+ * The config class
+ */
 export class Config implements ConfigType {
   // Main config values
   productionId = main.productionId;
@@ -67,4 +70,7 @@ export class Config implements ConfigType {
 
 const config = new Config();
 
+/**
+ * The config instance (initialized config class)
+ */
 export default config;

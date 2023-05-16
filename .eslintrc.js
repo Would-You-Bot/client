@@ -61,6 +61,7 @@ module.exports = {
     'no-else-return': 'off',
     'no-unneeded-ternary': 'off',
     'no-nested-ternary': 'off',
+    'import/prefer-default-export': 'off',
   },
 
   settings: {

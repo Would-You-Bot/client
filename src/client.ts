@@ -1,4 +1,3 @@
-import colors from 'colors';
 import {
   ClusterClient,
   DjsDiscordClient,
