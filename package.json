@@ -16,7 +16,9 @@
     "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants && npm run copyfiles:env && npm run copyfiles:register",
     "start": "npm run build && tsc-alias && npm run copyfiles && cd dist && node src/cluster.js",
     "dev": "nodemon --watch src/** --ext ts,json --ignore src/**/*.spec.js --exec npm run start",
-    "docs": "rimraf docs && typedoc"
+    "docs": "rimraf docs && typedoc",
+    "format": "prettier --write \"**/*.js\"",
+    "format:check": "prettier --check \"**/*.js\""
   },
   "repository": {
     "type": "git",

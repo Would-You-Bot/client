@@ -1,4 +1,7 @@
-type Emoji = { full: string; id: string };
+export interface Emoji {
+  full: string;
+  id: string;
+}
 export interface EmojisConfig {
   verified: Emoji;
   partner: Emoji;

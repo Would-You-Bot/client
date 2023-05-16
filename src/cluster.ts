@@ -9,11 +9,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import config from '@config';
-import logger from './utils/client/loggerOffline';
+import loggerOffline from './utils/client/loggerOffline';
 
-if (config.debug) logger.info('Running application in debug mode.');
+if (config.debug) loggerOffline.info('Running application in debug mode.');
 
-const manager = new ClusterManager(`${__dirname}/app.js`, {
+const manager = new ClusterManager(`${__dirname}/index.js`, {
   totalClusters: 1,
   totalShards: 1,
   shardsPerClusters: 2,
@@ -30,15 +30,19 @@ manager.extend(
 );
 
 manager.on('clusterCreate', (cluster) => {
-  logger.info(colors.green(`Successfully created cluster #${cluster.id}`));
+  loggerOffline.info(
+    colors.green(`Successfully created cluster #${cluster.id}`)
+  );
 });
 
 manager.on('clusterReady', (cluster) => {
-  logger.info(colors.green(`Successfully initialized cluster #${cluster.id}`));
+  loggerOffline.info(
+    colors.green(`Successfully initialized cluster #${cluster.id}`)
+  );
 });
 
 manager.on('debug', (message) => {
-  logger.debug(message);
+  loggerOffline.debug(message);
 });
 
 manager.spawn({ timeout: -1 });

@@ -6,7 +6,7 @@ import * as winston from 'winston';
 import config from '@config';
 import addDiscordLog from './logValues';
 
-const logsDir = `./tmp/logs/${config?.logFolder}`;
+const logsDir = `./tmp/logs/${config.logFolder}`;
 
 // Create logs directory if it doesn't exist
 if (!fs.existsSync(logsDir)) {
@@ -45,7 +45,7 @@ const fileFormat = winston.format.combine(
   winston.format.json()
 );
 
-const logger = winston.createLogger({
+const loggerOffline = winston.createLogger({
   level: 'debug',
   format: consoleFormat,
   transports: [
@@ -82,4 +82,4 @@ const logger = winston.createLogger({
   ],
 });
 
-export default logger;
+export default loggerOffline;

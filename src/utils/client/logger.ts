@@ -127,4 +127,10 @@ const logger = winston.createLogger({
   ],
 });
 
+/**
+ * Initialize the logger.
+ * @returns Null.
+ */
+export const initLogger = () => null;
+
 export default logger;

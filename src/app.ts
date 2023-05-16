@@ -1,24 +1,17 @@
 import colors from 'colors';
 
-import { initDiscordLogs } from '@utils/client';
+import ensureDirectories from '@utils/start/ensureDirectories';
+import initializeHandlers from '@utils/start/initializeHandlers';
 import { ExtendedClient } from './client';
-import { ensureDirectories } from './utils/start';
 
 /**
- * The extended client class.
+ * Main app file.
+ * @param client The extended client.
  */
-export const client = new ExtendedClient();
-
-(async () => {
-  client.logger.info('Starting client');
-  client.logger.debug('Debug Enabled');
-  if (client.cluster.maintenance)
-    client.logger.info(
-      `Client on maintenance mode with ${client.cluster.maintenance}`
-    );
-
+const app = async (client: ExtendedClient) => {
   // Run startup functions
-  await ensureDirectories();
+  ensureDirectories();
+  await initializeHandlers(client);
 
   // Authenticate the client
   const authStart = Date.now();
@@ -26,5 +19,8 @@ export const client = new ExtendedClient();
   const time = ((Date.now() - authStart) / 1000).toFixed(2);
   client.logger.info(colors.green(`Client authenticated in ${time} seconds`));
 
-  initDiscordLogs();
-})();
+  const discordLog = await import('./utils/client/discordLog');
+  discordLog.initDiscordLogs(client);
+};
+
+export default app;

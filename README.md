@@ -30,6 +30,12 @@ Before committing, make sure to run `npm run lint` to lint the code. This will a
 
 > **Warning:** Do not remove any of the linting rules. If you think a rule should be removed, open an issue and explain why you think it should be removed.
 
+### Formatting
+
+Before committing, make sure to run `npm run format` to format the code. This will also be run automatically when you commit, but it is better to run it manually to make sure you don't commit code that isn't formatted correctly. You can also run `npm run format:check` to check if the code is formatted correctly. This will not format the code, it will only check if the code is formatted correctly.
+
+Additionally, it is recommended to install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension for VS Code. This will automatically format the code when you save (or based on the event you choose).
+
 ## Starting the Production Environment
 
 These instructions are for the `ubuntu` operating system. If you are using a different operating system, you will need to modify the commands to work with your operating system.

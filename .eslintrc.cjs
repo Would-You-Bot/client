@@ -24,7 +24,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  ignorePatterns: ['*.js', '*.json', 'node_modules/'],
+  ignorePatterns: ['*.js', '*.cjs', '*.json', 'node_modules/'],
   rules: {
     // Import plugin rules
     'import/first': 0, // Reports any imports that come after non-import statements
@@ -60,6 +60,7 @@ module.exports = {
 
     // TypeScript
     '@typescript-eslint/no-explicit-any': 2, // Disallows usage of the any type.
+    '@typescript-eslint/no-floating-promises': 0, // Disallows usage of promise functions without using await.
 
     // Normal ESLint rules
     'object-curly-spacing': 2, // Enforces consistent spacing inside braces

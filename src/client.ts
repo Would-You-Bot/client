@@ -16,17 +16,16 @@ dotenv.config();
 
 import config from '@config';
 import { GuildProfileDocument } from '@models/guildProfile.model';
-import ButtonHandler from '@utils/classes/buttonHandler';
+import { CoreButton, CoreCommand, CoreEvent } from '@typings/core';
 import CooldownHandler from '@utils/classes/cooldownHandler';
 import DailyMessage from '@utils/classes/dailyMessage';
 import DatabaseHandler from '@utils/classes/databaseHandler';
-import EventHandler from '@utils/classes/eventHandler';
 import KeepAlive from '@utils/classes/keepAlive';
 import TranslationHandler from '@utils/classes/translationHandler';
 import VoteLogger from '@utils/classes/voteLogger';
 import Voting from '@utils/classes/votingHandler';
 import WebhookHandler from '@utils/classes/webhookHandler';
-import { logger } from './utils/client';
+import logger from '@utils/client/logger';
 
 // User filter to filter all users out of the cache expect the bot
 /* const userFilter = (user: User, client: ExtendedClient) =>
@@ -49,21 +48,24 @@ export class ExtendedClient extends Client {
   // error = error
 
   // Classes
-  commands: Collection<string, any> = new Collection();
-  buttons: Collection<string, any> = new Collection();
-  used: Record<string, any> = new Map();
+  commands = new Collection<string, CoreCommand>();
+  buttons = new Collection<string, CoreButton>();
+  events = new Collection<string, CoreEvent>();
+  used = new Map<string, unknown>();
   database: DatabaseHandler = new DatabaseHandler(`${config.env.MONGODB_URI}`);
   translation: TranslationHandler = new TranslationHandler();
   cooldownHandler: CooldownHandler;
   cluster: ClusterClient<DjsDiscordClient>;
   webhookHandler: WebhookHandler;
   keepAlive: KeepAlive;
-  buttonHandler: ButtonHandler;
-  eventHandler: EventHandler;
   dailyMessage: DailyMessage;
   voteLogger: VoteLogger;
   voting: Voting;
 
+  /**
+   * Create a new client instance.
+   * @param customCacheOptions Custom cache options.
+   */
   constructor(customCacheOptions = {}) {
     super({
       intents: [
@@ -107,14 +109,8 @@ export class ExtendedClient extends Client {
     });
 
     /**
-     * Initialize and start all the classes
+     * Initialize and start all the classes.
      */
-
-    this.buttonHandler = new ButtonHandler(this);
-    this.buttonHandler.load();
-
-    this.eventHandler = new EventHandler(this);
-    this.eventHandler.load();
 
     this.cooldownHandler = new CooldownHandler(this);
     this.cooldownHandler.startSweeper();
@@ -132,7 +128,7 @@ export class ExtendedClient extends Client {
     this.dailyMessage.start();
 
     this.voteLogger = new VoteLogger(this);
-    if (this?.cluster?.id === 0) this.voteLogger.startAPI();
+    if (this.cluster.id === 0) this.voteLogger.startAPI();
 
     this.voting = new Voting(this);
     this.voting.start();
@@ -141,39 +137,31 @@ export class ExtendedClient extends Client {
   }
 
   /**
-   * Authenticate the client
-   * @returns Promise<string>
+   * Authenticate the client.
+   * @returns The client.
    */
   public authenticate() {
     return this.login(config.BOT_TOKEN);
   }
 
   /**
-   * Check if the client is synced with the database - used to prevent code from running unless client is synced with database
-   * @returns Promise<boolean>
+   * Check if the client is synced with the database - used to prevent code from running unless client is synced with database.
+   * @returns Whether the client is synced with the database.
    */
-  public isSynced() {
-    return new Promise((resolve) => {
-      const checkSynced = () => {
-        if (this.synced === true) resolve(true);
-        else setTimeout(checkSynced, 1); // check every 10ms
-      };
-      checkSynced();
-    });
-  }
+  public isSynced = () => (this.synced ? true : false);
 
   /**
-   * Check if the guild has the debugMode value or user is a developer
-   * @param guildDatabase The guild database
-   * @param userId The user id
-   * @returns boolean
+   * Check if the guild has the debugMode value or user is a developer.
+   * @param guildDatabase The guild database.
+   * @param userId The user id.
+   * @returns True if debug is approved otherwise false.
    */
   public checkDebug(
     guildDatabase: GuildProfileDocument,
     userId: string
   ): boolean {
     const debugApproved =
-      guildDatabase?.debugMode ?? config.developers.includes(userId);
+      guildDatabase.debugMode || config.developers.includes(userId);
     if (debugApproved) this.logger.debug('Debug approved');
     return debugApproved;
   }

@@ -71,7 +71,7 @@
     "src/**/*.*",
     "environment.d.ts",
     "package.json",
-    "register.js",
+    "register.cjs",
   ],
   "exclude": [
     "node_modules",

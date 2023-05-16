@@ -1,29 +1,36 @@
 import { readFileSync } from 'fs';
 import { parse } from 'yaml';
 
-import { ConfigType, EmojisConfig, MainConfig } from '@typings/config';
-import { verifyEnvironment } from '@utils/start';
+import {
+  ConfigType,
+  EmojisConfig,
+  LimitsConfig,
+  MainConfig,
+} from '@typings/config';
+import verifyEnvironment from '@utils/start/verifyEnvironment';
 
-const emojisConfig = readFileSync('./config/emojis.yaml', 'utf8');
-const limitsConfig = readFileSync('./config/limits.yaml', 'utf8');
-const mainConfig = readFileSync('./config/main.yaml', 'utf8');
-const main: MainConfig = parse(mainConfig);
+const emojisConfig: string = readFileSync('./config/emojis.yaml', 'utf8');
+const limitsConfig: string = readFileSync('./config/limits.yaml', 'utf8');
+const mainConfig: string = readFileSync('./config/main.yaml', 'utf8');
+const main: MainConfig = parse(mainConfig) as MainConfig;
 
-const emojiList = parse(emojisConfig);
-const emojisData: EmojisConfig = Object.keys(emojiList).reduce((acc, key) => {
-  acc[key] = {
+const emojiList = parse(emojisConfig) as Record<string, string>;
+const emojisData = {} as EmojisConfig;
+
+// Loop through each of the emoji strings and format them into an object with the full string and the id
+Object.keys(emojiList).reduce((acc, key: string) => {
+  emojisData[key] = {
     full: emojiList[key],
     id: emojiList[key].split(':')[2]?.replace('>', ''),
   };
-  return acc as EmojisConfig;
-}, {} as EmojisConfig);
+  return acc;
+});
 
 const env = verifyEnvironment();
-
 const d = new Date();
 
 /**
- * The config class
+ * The config class.
  */
 export class Config implements ConfigType {
   // Main config values
@@ -43,10 +50,13 @@ export class Config implements ConfigType {
   logFolder: string;
 
   // Other config files
-  limits = parse(limitsConfig);
+  limits = parse(limitsConfig) as LimitsConfig;
   emojis = emojisData;
   voteEmojis = main.voteEmojis;
 
+  /**
+   * The config class.
+   */
   constructor() {
     if (this.isProduction()) {
       this.envName = 'Main Bot';
@@ -62,15 +72,28 @@ export class Config implements ConfigType {
     this.logFolder = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}-${d.getHours()}-${d.getMinutes()}-${d.getSeconds()}`;
   }
 
-  // Additional config functions
+  /**
+   * Check if the bot is in development mode.
+   * @returns Whether the bot is in development mode.
+   */
   isDevelopment = (): boolean => this.env.NODE_ENV === 'development';
+
+  /**
+   * Check if the bot is in beta mode.
+   * @returns Whether the bot is in beta mode.
+   */
   isBeta = (): boolean => this.env.NODE_ENV === 'beta';
+
+  /**
+   * Check if the bot is in production mode.
+   * @returns Whether the bot is in production mode.
+   */
   isProduction = (): boolean => this.env.NODE_ENV === 'production';
 }
 
 const config = new Config();
 
 /**
- * The config instance (initialized config class)
+ * The config instance (initialized config class).
  */
 export default config;
