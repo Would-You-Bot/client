@@ -71,17 +71,17 @@
     "src/**/*.*",
     "environment.d.ts",
     "package.json",
-    "register.cjs"
+    "register.js",
   ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
   ],
   "typedocOptions": {
-    "name": "Would You Bot - Official Documentation",
-    "customTitle": "Would You Bot - Official Documentation",
+    "name": "Would You Bot | Developer Documentation",
+    "customTitle": "Would You Bot | Developer Documentation",
     "customTitleLink": "https://slekup.github.io/would-you-bot/",
-    "customDescription": "Guys, this is very epic documentation!",
+    "customDescription": "See the official developer documentation for Would You bot. Would You bot is an open-source discord bot that includes activities and questions to keep your server active!",
     "plugin": [
       "typedoc-plugin-mdn-links",
       "typedoc-plugin-extras",

@@ -5,7 +5,7 @@ import { ExtendedClient } from './client';
 import { ensureDirectories } from './utils/start';
 
 /**
- * The client instance
+ * The extended client class.
  */
 export const client = new ExtendedClient();
 

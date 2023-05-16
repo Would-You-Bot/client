@@ -28,6 +28,8 @@ The development environment does not currently use Docker, so you will need to i
 
 Before committing, make sure to run `npm run lint` to lint the code. This will also be run automatically when you commit, but it is better to run it manually to make sure you don't commit code that doesn't pass linting.
 
+> **Warning:** Do not remove any of the linting rules. If you think a rule should be removed, open an issue and explain why you think it should be removed.
+
 ## Starting the Production Environment
 
 These instructions are for the `ubuntu` operating system. If you are using a different operating system, you will need to modify the commands to work with your operating system.

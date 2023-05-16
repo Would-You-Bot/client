@@ -33,7 +33,7 @@ import { logger } from './utils/client';
   user?.id !== client?.user?.id; */
 
 /**
- * Extended client class
+ * A custom class representing the discord client.
  */
 export class ExtendedClient extends Client {
   // Client variables
