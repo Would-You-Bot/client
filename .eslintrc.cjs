@@ -74,6 +74,7 @@ module.exports = {
     'no-else-return': 0, // Disallows else blocks after return statements in if statements
     'no-unneeded-ternary': 0, // Disallows ternary operators when simpler alternatives exist
     'no-nested-ternary': 0, // Disallows nested ternary expressions
+    'id-length': ['error', { min: 2 }], // Enforces a minimum identifier length
   },
 
   settings: {
