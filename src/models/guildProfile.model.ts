@@ -1,33 +1,37 @@
 import { Document, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
-type ReplayChannel = { id: string; name: string; cooldown: number };
+export interface ReplayChannel {
+  id: string;
+  name: string;
+  cooldown: number;
+}
 
-export type CustomMessage = {
+export interface CustomMessage {
   id: string;
   type: string;
   msg: string;
-};
+}
 
-interface GuildProfileSchema extends SchemaTimestampsConfig {
+export interface GuildProfileSchema extends SchemaTimestampsConfig {
   guildID: string;
   language: string;
-  welcome: boolean;
-  welcomeChannel: string;
-  welcomePing: boolean;
-  dailyMsg: boolean;
-  dailyChannel: string;
-  dailyRole: string;
-  dailyTimezone: string;
-  dailyInterval: string;
-  dailyThread: boolean;
-  replay: boolean;
-  replayCooldown: number;
-  replayType: string;
-  replayChannels: ReplayChannel[];
-  botJoined: number;
-  customMessages: CustomMessage[];
-  customTypes: string;
-  debugMode: boolean;
+  welcome?: boolean;
+  welcomeChannel?: string;
+  welcomePing?: boolean;
+  dailyMsg?: boolean;
+  dailyChannel?: string;
+  dailyRole?: string;
+  dailyTimezone?: string;
+  dailyInterval?: string;
+  dailyThread?: boolean;
+  replay?: boolean;
+  replayCooldown?: number;
+  replayType?: string;
+  replayChannels?: ReplayChannel[];
+  botJoined?: number;
+  customMessages?: CustomMessage[];
+  customTypes?: string;
+  debugMode?: boolean;
 }
 
 export type GuildProfileDocument = GuildProfileSchema & Document;

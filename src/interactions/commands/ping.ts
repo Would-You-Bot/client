@@ -21,6 +21,11 @@ const command: CoreCommand = {
       de: 'Zeigt den Ping des Clients an',
       'es-ES': 'Muestra el ping del cliente',
     }),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
@@ -30,21 +35,21 @@ const command: CoreCommand = {
 
       .setColor(config.colors.primary)
       .setFooter({
-        text: client.translation.get(guildDb?.language, 'Ping.embed.footer'),
+        text: client.translation.get(guildDb.language, 'Ping.embed.footer'),
         iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp()
-      .setTitle(client.translation.get(guildDb?.language, 'Ping.embed.title'))
+      .setTitle(client.translation.get(guildDb.language, 'Ping.embed.title'))
       .addFields(
         {
-          name: client.translation.get(guildDb?.language, 'Ping.embed.client'),
+          name: client.translation.get(guildDb.language, 'Ping.embed.client'),
           value: `> **${Math.abs(
             Date.now() - interaction.createdTimestamp
           )}**ms`,
           inline: false,
         },
         {
-          name: client.translation.get(guildDb?.language, 'Ping.embed.api'),
+          name: client.translation.get(guildDb.language, 'Ping.embed.api'),
           value: `> **${Math.round(client.ws.ping)}**ms`,
           inline: false,
         }
@@ -52,7 +57,7 @@ const command: CoreCommand = {
     const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setLabel(
-          client.translation.get(guildDb?.language, 'Ping.button.title')
+          client.translation.get(guildDb.language, 'Ping.button.title')
         )
         .setStyle(ButtonStyle.Link)
         .setEmoji('💻')

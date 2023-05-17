@@ -7,6 +7,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'seletcMenuWelcome',
   description: 'Select Menu Welcome',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,

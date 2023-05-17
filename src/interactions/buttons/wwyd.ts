@@ -14,6 +14,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'wwyd',
   description: 'What would you do',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -30,7 +35,7 @@ const button: CoreButton = {
       .setColor(config.colors.primary)
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`,
-        iconURL: interaction.user?.avatarURL() || undefined,
+        iconURL: interaction.user.avatarURL() || undefined,
       })
       .setDescription(wwydstring);
 

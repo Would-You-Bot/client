@@ -14,6 +14,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'wycustom_accept',
   description: 'WyCustom Accept',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -24,7 +29,7 @@ const button: CoreButton = {
     const typeEmbed = new EmbedBuilder()
       .setTitle(
         client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'wyCustom.success.embedRemoveAll.accept'
         )
       )

@@ -23,15 +23,30 @@ interface SaveVotingProps {
   opTwo: string[];
 }
 
+/**
+ *
+ */
 export default class Voting {
   client: ExtendedClient;
   cache: Map<string, any>;
 
+  /**
+   * @param client
+   */
   constructor(client: ExtendedClient) {
     this.client = client;
     this.cache = new Map();
   }
 
+  /**
+   * @param root0
+   * @param root0.guildId
+   * @param root0.type
+   * @param root0.until
+   * @param root0.channelId
+   * @param root0.opOne
+   * @param root0.opTwo
+   */
   async saveVoting({
     guildId,
     type = 0,
@@ -59,6 +74,14 @@ export default class Voting {
     return id;
   }
 
+  /**
+   * @param guildId
+   * @param channelId
+   * @param until
+   * @param type
+   * @param opOne
+   * @param opTwo
+   */
   async generateVoting(
     guildId: string | undefined,
     channelId: string | undefined,
@@ -138,10 +161,16 @@ export default class Voting {
     };
   }
 
+  /**
+   * @param id
+   */
   getVoting(id: string) {
     return this.cache.get(id);
   }
 
+  /**
+   * @param id
+   */
   async deleteVoting(id: string) {
     await voteModel.deleteOne({
       id,
@@ -150,6 +179,11 @@ export default class Voting {
     this.cache.delete(id);
   }
 
+  /**
+   * @param id
+   * @param userId
+   * @param option
+   */
   async addVote(id: string, userId: string, option = 1) {
     const vote = this.getVoting(id);
     if (!vote) return false;
@@ -168,6 +202,9 @@ export default class Voting {
     return true;
   }
 
+  /**
+   * @param id
+   */
   async getVotingResults(id: string) {
     const vote = this.getVoting(id);
     if (!vote) return false;
@@ -176,8 +213,8 @@ export default class Voting {
     const optionOne = Number(vote.votes.opOne?.length);
     const optionTwo = Number(vote.votes.opTwo?.length);
 
-    const numbers: { [key: string]: number } = { opOne: 1, opTwo: 2 };
-    const phrases: { [key: string]: string } = { opOne: 'Yes', opTwo: 'No' };
+    const numbers: Record<string, number> = { opOne: 1, opTwo: 2 };
+    const phrases: Record<string, string> = { opOne: 'Yes', opTwo: 'No' };
     const chartData = Object.keys(vote.votes).map((e) =>
       Number(allVotes > 0 ? vote.votes[e].length : 1)
     );
@@ -222,9 +259,13 @@ export default class Voting {
   }
 
   /**
-   * Start the daily message Schedule
+   * Start the daily message Schedule.
    */
   start() {
+    /**
+     * @param date
+     * @param daysBetween
+     */
     const olderthen = (date: Date, daysBetween: number) => {
       const then = new Date();
       then.setDate(then.getDate() - daysBetween);

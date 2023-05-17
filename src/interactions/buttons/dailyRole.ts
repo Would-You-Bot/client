@@ -11,6 +11,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'dailyRole',
   description: 'Daily Role',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -24,7 +29,7 @@ const button: CoreButton = {
 
     interaction.update({
       embeds: [],
-      content: client.translation.get(guildDb?.language, 'Settings.dailyRole'),
+      content: client.translation.get(guildDb.language, 'Settings.dailyRole'),
       components: [inter],
     });
   },

@@ -1,15 +1,15 @@
 import Canvas from '@napi-rs/canvas';
 import path from 'path';
 
-Canvas.GlobalFonts.registerFromPath(
-  path.join(__dirname, '..', 'data', 'Fonts', 'OpenSans-Bold.ttf'),
-  'OpenSans'
-);
+Canvas.GlobalFonts.registerFromPath(path.join(__dirname, '..', 'data', 'Fonts', 'OpenSans-Bold.ttf'), 'OpenSans');
 
 interface User {
   icon: string;
 }
 
+/**
+ *
+ */
 class Either {
   rowOne?: User[];
   rowTwo?: User[];
@@ -17,6 +17,9 @@ class Either {
   text1?: string;
   text2?: string;
 
+  /**
+   * Create a new Either instance.
+   */
   constructor() {
     this.rowOne = undefined;
     this.rowTwo = undefined;
@@ -26,16 +29,14 @@ class Either {
   }
 
   /**
-   * Set both rows of users
-   * @param rowOne The first row of users
-   * @param rowTwo The second row of users
-   * @returns The Either class
+   * Set both rows of users.
+   * @param rowOne The first row of users.
+   * @param rowTwo The second row of users.
+   * @returns The Either class.
    */
-  setVotes(rowOne: User[], rowTwo: User[]) {
+  setVotes(rowOne?: User[], rowTwo?: User[]) {
     if (!Array.isArray(rowOne && rowTwo)) {
-      throw new Error(
-        `Expected rows array instead got ${typeof rowOne || typeof rowTwo}`
-      );
+      throw new Error(`Expected rows array instead got ${typeof rowOne} and ${typeof rowTwo}`);
     }
     this.rowOne = rowOne;
     this.rowTwo = rowTwo;
@@ -43,9 +44,9 @@ class Either {
   }
 
   /**
-   * The guildDb.language
-   * @param language The language
-   * @returns The Either class
+   * The guildDb.language.
+   * @param language The language.
+   * @returns The Either class.
    */
   setLanguage(language?: string) {
     if (!language) {
@@ -56,9 +57,9 @@ class Either {
   }
 
   /**
-   * Add the first text
-   * @param text1 The first text
-   * @returns The Either class
+   * Add the first text.
+   * @param text1 The first text.
+   * @returns The Either class.
    */
   addFirstText(text1: string) {
     this.text1 = text1;
@@ -66,9 +67,9 @@ class Either {
   }
 
   /**
-   * Add the second text
-   * @param text2 The second text
-   * @returns The Either class
+   * Add the second text.
+   * @param text2 The second text.
+   * @returns The Either class.
    */
   addSecondText(text2: string) {
     this.text2 = text2;
@@ -76,10 +77,10 @@ class Either {
   }
 
   /**
-   * Set both texts
-   * @param text1 The first text
-   * @param text2 The second text
-   * @returns The Either class
+   * Set both texts.
+   * @param text1 The first text.
+   * @param text2 The second text.
+   * @returns The Either class.
    */
   setTexts(text1: string, text2: string) {
     this.text1 = text1;
@@ -88,8 +89,8 @@ class Either {
   }
 
   /**
-   * This function builds the canvas
-   * @returns The canvas
+   * This function builds the canvas.
+   * @returns The canvas.
    */
   async build(): Promise<Buffer | undefined> {
     if (!this.rowOne || !this.rowTwo || !this.text1 || !this.text2) return;
@@ -118,11 +119,14 @@ class Either {
     const translation = await Canvas.loadImage(imageFile);
     ctx.drawImage(translation, 0, 0, 600, 300);
 
-    function calcFontSize(
-      textLength: number,
-      fontSize: number,
-      maxLength: number
-    ) {
+    /**
+     * Calculate the font size.
+     * @param textLength The length of the text.
+     * @param fontSize The font size.
+     * @param maxLength The max length of the text.
+     * @returns The font size.
+     */
+    function calcFontSize(textLength: number, fontSize: number, maxLength: number) {
       let size = fontSize;
       while (textLength > maxLength) size -= 1;
       return size;
@@ -147,9 +151,9 @@ class Either {
     const yPos = 162;
     sliced.reverse();
 
-    for (let i = 0; i < sliced.length; i += 1) {
+    for (let index = 0; index < sliced.length; index += 1) {
       ctx.beginPath();
-      const user = sliced[i];
+      const user = sliced[index];
 
       const a = Canvas.createCanvas(rad * 2, rad * 2);
       const context = a.getContext('2d');

@@ -8,6 +8,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'replayDelete',
   description: 'Replay Delete',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,

@@ -12,19 +12,23 @@ import { ExtendedClient } from 'src/client';
 
 const event: CoreEvent = {
   name: Events.GuildMemberAdd,
+  /**
+   * @param client
+   * @param member
+   */
   async execute(client: ExtendedClient, member: GuildMember) {
     // Always do simple if checks before the main code. This is a little but not so little performance boost :)
-    if (member?.user?.bot) return;
+    if (member.user.bot) return;
 
     const guildDb = await client.database.getGuild(member.guild.id, false);
-    if (guildDb && guildDb?.welcome) {
+    if (guildDb && guildDb.welcome) {
       const channel = (await member.guild.channels
         .fetch(guildDb.welcomeChannel)
         .catch(client.logger.error)) as TextChannel | null;
 
       if (!channel || !client.user?.id) return;
 
-      const clientMember = await member.guild.members.fetch(client.user?.id);
+      const clientMember = await member.guild.members.fetch(client.user.id);
 
       if (
         !channel

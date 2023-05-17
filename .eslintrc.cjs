@@ -24,7 +24,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  ignorePatterns: ['*.js', '*.cjs', '*.json', 'node_modules/'],
+  ignorePatterns: ['*.js', '*.cjs', '*.json', 'node_modules/', 'dist/', 'docs/', 'config/', '.github/', 'migrations/'],
   rules: {
     // Import plugin rules
     'import/first': 0, // Reports any imports that come after non-import statements
@@ -61,6 +61,7 @@ module.exports = {
     // TypeScript
     '@typescript-eslint/no-explicit-any': 2, // Disallows usage of the any type.
     '@typescript-eslint/no-floating-promises': 0, // Disallows usage of promise functions without using await.
+    '@typescript-eslint/explicit-member-accessibility': 2, // Enforces accessibility modifiers on class properties and methods.
 
     // Normal ESLint rules
     'object-curly-spacing': 2, // Enforces consistent spacing inside braces
@@ -75,6 +76,7 @@ module.exports = {
     'no-unneeded-ternary': 0, // Disallows ternary operators when simpler alternatives exist
     'no-nested-ternary': 0, // Disallows nested ternary expressions
     'id-length': ['error', { min: 2 }], // Enforces a minimum identifier length
+    'max-classes-per-file': 0, // Enforces a maximum number of classes per file
   },
 
   settings: {

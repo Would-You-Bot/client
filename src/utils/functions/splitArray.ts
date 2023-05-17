@@ -1,4 +1,8 @@
 // Splits an array into chunks
+/**
+ * @param array
+ * @param max
+ */
 const splitArray = (array: any[], max: number): any[][] => {
   const result = array.reduce((resultArray, item, index) => {
     const chunkIndex = Math.floor(index / max);

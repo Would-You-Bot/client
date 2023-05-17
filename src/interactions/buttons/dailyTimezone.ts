@@ -31,6 +31,9 @@ const modalObject = {
   ],
 };
 
+/**
+ * @param timezone
+ */
 function isValid(timezone: string) {
   if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
     return false;
@@ -44,6 +47,9 @@ function isValid(timezone: string) {
   }
 }
 
+/**
+ * @param timezone
+ */
 function dateType(timezone: string) {
   if (!timezone.includes('/')) return false;
   const text = timezone.split('/');
@@ -55,6 +61,11 @@ function dateType(timezone: string) {
 const button: CoreButton = {
   name: 'dailyTimezone',
   description: 'Daily Message Toggle',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -63,6 +74,9 @@ const button: CoreButton = {
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
+        /**
+         * @param mInter
+         */
         filter: (mInter) => mInter.customId === modalObject.custom_id,
         time: 60000,
       })
@@ -80,7 +94,7 @@ const button: CoreButton = {
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.errorSame'
             ),
           });
@@ -88,7 +102,7 @@ const button: CoreButton = {
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.errorInvalid'
             ),
           });
@@ -96,7 +110,7 @@ const button: CoreButton = {
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.errorInvalid'
             ),
           });
@@ -104,44 +118,44 @@ const button: CoreButton = {
         const dailyMsgs = new EmbedBuilder()
           .setTitle(
             client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.dailyTitle'
             )
           )
           .setDescription(
             `${client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.dailyMsg'
             )}: ${
               guildDb.dailyMsg
                 ? config.emojis.check.full
                 : config.emojis.close.full
             }\n${client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.dailyChannel'
             )}: ${
               guildDb.dailyChannel
                 ? `<#${guildDb.dailyChannel}>`
                 : config.emojis.close.full
             }\n${client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.dailyRole'
             )}: ${
               guildDb.dailyRole
                 ? `<@&${guildDb.dailyRole}>`
                 : config.emojis.close.full
             }\n${client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.dailyTimezone'
             )}: ${value}\n${client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.dailyInterval'
             )}: ${guildDb.dailyInterval}\n${client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.dailyType'
             )}: ${guildDb.customTypes}` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.dailyThread'
               )}: ${
                 guildDb.dailyThread
@@ -157,7 +171,7 @@ const button: CoreButton = {
               .setCustomId('dailyMsg')
               .setLabel(
                 client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.button.dailyMsg'
                 )
               )
@@ -168,7 +182,7 @@ const button: CoreButton = {
               .setCustomId('dailyChannel')
               .setLabel(
                 client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.button.dailyChannel'
                 )
               )
@@ -181,7 +195,7 @@ const button: CoreButton = {
               .setCustomId('dailyType')
               .setLabel(
                 client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.button.dailyType'
                 )
               )
@@ -195,7 +209,7 @@ const button: CoreButton = {
               .setCustomId('dailyTimezone')
               .setLabel(
                 client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.button.dailyTimezone'
                 )
               )
@@ -205,7 +219,7 @@ const button: CoreButton = {
               .setCustomId('dailyRole')
               .setLabel(
                 client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.button.dailyRole'
                 )
               )
@@ -216,7 +230,7 @@ const button: CoreButton = {
               .setCustomId('dailyInterval')
               .setLabel(
                 client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.button.dailyInterval'
                 )
               )
@@ -230,7 +244,7 @@ const button: CoreButton = {
               .setCustomId('dailyThread')
               .setLabel(
                 client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.button.dailyThread'
                 )
               )

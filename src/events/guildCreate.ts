@@ -4,6 +4,9 @@ import config from '@config';
 import { CoreEvent } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
+/**
+ * @param name
+ */
 const filterGuildName = (name: string) =>
   name
     .replace('Discord', '')
@@ -13,11 +16,15 @@ const filterGuildName = (name: string) =>
 
 const event: CoreEvent = {
   name: Events.GuildCreate,
+  /**
+   * @param client
+   * @param guild
+   */
   async execute(client: ExtendedClient, guild: Guild) {
-    if (!guild?.name) return;
+    if (!guild.name) return;
 
     // Create and save the settings in the cache so that we don't need to do that at a command run
-    await client.database.getGuild(guild?.id, true);
+    await client.database.getGuild(guild.id, true);
 
     const webhookPrivate = new WebhookClient({
       url: config.env.PRIVATE_WEBHOOK,

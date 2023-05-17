@@ -34,6 +34,11 @@ const command: CoreCommand = {
           { name: 'Welcomes', value: 'welcomes' }
         )
     ),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
@@ -45,13 +50,13 @@ const command: CoreCommand = {
           const dailyMsgs = new EmbedBuilder()
             .setTitle(
               client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.dailyTitle'
               )
             )
             .setDescription(
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.dailyMsg'
               )}: ${
                 guildDb.dailyMsg
@@ -59,7 +64,7 @@ const command: CoreCommand = {
                   : config.emojis.close.full
               }\n` +
                 `${client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.embed.dailyChannel'
                 )}: ${
                   guildDb.dailyChannel
@@ -67,7 +72,7 @@ const command: CoreCommand = {
                     : config.emojis.close.full
                 }\n` +
                 `${client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.embed.dailyRole'
                 )}: ${
                   guildDb.dailyRole
@@ -75,19 +80,19 @@ const command: CoreCommand = {
                     : config.emojis.close.full
                 }\n` +
                 `${client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.embed.dailyTimezone'
                 )}: ${guildDb.dailyTimezone}\n` +
                 `${client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.embed.dailyInterval'
                 )}: ${guildDb.dailyInterval}\n` +
                 `${client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.embed.dailyType'
-                )}: ${guildDb?.customTypes}\n` +
+                )}: ${guildDb.customTypes}\n` +
                 `${client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.embed.dailyThread'
                 )}: ${
                   guildDb.dailyThread
@@ -103,7 +108,7 @@ const command: CoreCommand = {
                 .setCustomId('dailyMsg')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.dailyMsg'
                   )
                 )
@@ -114,7 +119,7 @@ const command: CoreCommand = {
                 .setCustomId('dailyChannel')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.dailyChannel'
                   )
                 )
@@ -127,7 +132,7 @@ const command: CoreCommand = {
                 .setCustomId('dailyType')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.dailyType'
                   )
                 )
@@ -141,7 +146,7 @@ const command: CoreCommand = {
                 .setCustomId('dailyTimezone')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.dailyTimezone'
                   )
                 )
@@ -151,7 +156,7 @@ const command: CoreCommand = {
                 .setCustomId('dailyRole')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.dailyRole'
                   )
                 )
@@ -164,7 +169,7 @@ const command: CoreCommand = {
                 .setCustomId('dailyInterval')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.dailyInterval'
                   )
                 )
@@ -178,7 +183,7 @@ const command: CoreCommand = {
                 .setCustomId('dailyThread')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.dailyThread'
                   )
                 )
@@ -204,18 +209,18 @@ const command: CoreCommand = {
           const generalMsg = new EmbedBuilder()
             .setTitle(
               client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.generalTitle'
               )
             )
             .setDescription(
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.replayType'
               )}: ${guildDb.replayType}\n${
                 guildDb.replayType === 'Channels'
                   ? `${client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       'Settings.embed.replayChannels'
                     )}: ${
                       guildDb.replayChannels.length > 0
@@ -223,12 +228,12 @@ const command: CoreCommand = {
                             .map((c) => `<#${c.id}>: ${c.cooldown}`)
                             .join('\n')}`
                         : client.translation.get(
-                            guildDb?.language,
+                            guildDb.language,
                             `Settings.embed.replayChannelsNone`
                           )
                     }`
                   : `${client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       'Settings.embed.replayCooldown'
                     )}: ${guildDb.replayCooldown}`
               }`
@@ -236,7 +241,7 @@ const command: CoreCommand = {
             .setColor(config.colors.primary)
             .setFooter({
               text: client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.footer'
               ),
               iconURL: client.user?.avatarURL() || undefined,
@@ -252,7 +257,7 @@ const command: CoreCommand = {
                 )
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.replayCooldown'
                   )
                 )
@@ -265,7 +270,7 @@ const command: CoreCommand = {
                 .setCustomId('replayType')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.replayType'
                   )
                 )
@@ -279,7 +284,7 @@ const command: CoreCommand = {
                 .setCustomId('replayDeleteChannels')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.replayDeleteChannels'
                   )
                 )
@@ -304,13 +309,13 @@ const command: CoreCommand = {
           const welcomes = new EmbedBuilder()
             .setTitle(
               client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.welcomeTitle'
               )
             )
             .setDescription(
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.welcome'
               )}: ${
                 guildDb.welcome
@@ -318,7 +323,7 @@ const command: CoreCommand = {
                   : config.emojis.close.full
               }\n` +
                 `${client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.embed.welcomePing'
                 )}: ${
                   guildDb.welcomePing
@@ -326,7 +331,7 @@ const command: CoreCommand = {
                     : config.emojis.close.full
                 }\n` +
                 `${client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.embed.welcomeChannel'
                 )}: ${
                   guildDb.welcomeChannel
@@ -337,7 +342,7 @@ const command: CoreCommand = {
             .setColor(config.colors.primary)
             .setFooter({
               text: client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.footer'
               ),
               iconURL: client.user?.avatarURL() || undefined,
@@ -349,7 +354,7 @@ const command: CoreCommand = {
                 .setCustomId('welcome')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.welcome'
                   )
                 )
@@ -360,7 +365,7 @@ const command: CoreCommand = {
                 .setCustomId('welcomeChannel')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.welcomeChannel'
                   )
                 )
@@ -377,7 +382,7 @@ const command: CoreCommand = {
                 .setCustomId('welcomePing')
                 .setLabel(
                   client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'Settings.button.welcomePing'
                   )
                 )
@@ -399,20 +404,20 @@ const command: CoreCommand = {
         const errorEmbed = new EmbedBuilder()
           .setTitle(
             client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.errorTitle'
             )
           )
           .setDescription(
             client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.errorDescription'
             )
           )
           .setColor(config.colors.danger)
           .setFooter({
             text: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.footer'
             ),
             iconURL: client.user?.avatarURL() || undefined,

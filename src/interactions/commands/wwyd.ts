@@ -21,6 +21,11 @@ const command: CoreCommand = {
       de: 'Was würdest du in dieser Situation tun',
       'es-ES': '¿Qué harías en esta situación?',
     }),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
@@ -35,7 +40,7 @@ const command: CoreCommand = {
       .setColor(config.colors.primary)
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`,
-        iconURL: interaction.user?.avatarURL() || undefined,
+        iconURL: interaction.user.avatarURL() || undefined,
       })
       .setDescription(wwydstring);
 

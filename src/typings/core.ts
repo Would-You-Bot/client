@@ -1,29 +1,17 @@
-import {
-  ButtonInteraction,
-  ChatInputCommandInteraction,
-  Events,
-  SlashCommandBuilder,
-  SlashCommandSubcommandsOnlyBuilder,
-} from 'discord.js';
-
-import { ExtendedClient } from 'src/client';
+import { Events, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 
 export interface CoreEvent {
   disabled?: boolean;
   once?: boolean;
   name: Events;
-  execute: (client: ExtendedClient, ...args: unknown[]) => Promise<unknown>;
+  execute: (...args: unknown[]) => Promise<unknown>;
 }
 
 export interface CoreButton {
   disabled?: boolean;
   id: string;
   description: string;
-  execute: (
-    interaction: ButtonInteraction,
-    client: ExtendedClient,
-    ...args: unknown[]
-  ) => Promise<unknown>;
+  execute: (...args: unknown[]) => Promise<unknown>;
 }
 
 export interface CoreCommand {
@@ -39,9 +27,5 @@ export interface CoreCommand {
         | 'addRoleOption'
       >
     | SlashCommandSubcommandsOnlyBuilder;
-  execute: (
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    ...args: unknown[]
-  ) => Promise<unknown>;
+  execute: (...args: unknown[]) => Promise<unknown>;
 }

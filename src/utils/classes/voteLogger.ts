@@ -50,11 +50,17 @@ interface TopGGUser {
 }
  */
 
+/**
+ *
+ */
 export default class VoteLogger {
   client: ExtendedClient;
   api: Api;
   votes: Map<string, any>;
 
+  /**
+   * @param client
+   */
   constructor(client: ExtendedClient) {
     this.client = client;
     this.api = new Api(config.env.TOPGG_TOKEN);
@@ -72,7 +78,7 @@ export default class VoteLogger {
   }
 
   /**
-   * Get all votes from top.gg
+   * Get all votes from top.gg.
    */
   async getVotes() {
     const votes = await this.api.getVotes();
@@ -85,7 +91,7 @@ export default class VoteLogger {
   }
 
   /**
-   * Start the api for the vote tracker
+   * Start the api for the vote tracker.
    */
   public startAPI() {
     app.post(
@@ -100,9 +106,9 @@ export default class VoteLogger {
               Accept: 'application/json',
             },
           })
-          .then((res) => res?.data?.data)
+          .then((res) => res.data?.data)
           .catch(() => {
-            userData = this.client?.users?.cache?.get(vote.user) ?? null;
+            userData = this.client.users.cache.get(vote.user) ?? null;
             return userData; // Return the value to be assigned to userData
           });
 

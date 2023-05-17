@@ -21,6 +21,11 @@ const command: CoreCommand = {
       de: 'Bekomme eine nie habe ich jemals Nachricht.',
       'es-ES': 'Consigue un mensaje Nunca he tenido',
     }),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,

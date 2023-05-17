@@ -9,11 +9,17 @@ import {
 import webhookModel from '@models/webhookCache.model';
 import { ExtendedClient } from 'src/client';
 
+/**
+ *
+ */
 export default class WebhookHandler {
   client: ExtendedClient;
   webhooks: Map<string, any>;
   webhookModel = webhookModel;
 
+  /**
+   * @param client
+   */
   constructor(client: ExtendedClient) {
     this.client = client;
     this.webhooks = new Map();
@@ -21,9 +27,9 @@ export default class WebhookHandler {
   }
 
   /**
-   * Get a webhook from the cache and if not in cache fetch it
-   * @param channelId The channel id
-   * @returns The webhook or null
+   * Get a webhook from the cache and if not in cache fetch it.
+   * @param channelId The channel id.
+   * @returns The webhook or null.
    */
   private async getWebhook(channelId: string) {
     if (this.webhooks.has(`${channelId}`)) return this.webhooks.get(channelId);
@@ -45,13 +51,13 @@ export default class WebhookHandler {
   }
 
   /**
-   * Create a webhook in a channel & save it to the database and cache
-   * @param channel the channel to create the webhook in
-   * @param channelId the channel id
-   * @param name the name of the webhook
-   * @param avatar the avatar of the webhook (url)
-   * @param reason the reason for creating the webhook
-   * @returns The webhook or null
+   * Create a webhook in a channel & save it to the database and cache.
+   * @param channel The channel to create the webhook in.
+   * @param channelId The channel id.
+   * @param name The name of the webhook.
+   * @param avatar The avatar of the webhook (url).
+   * @param reason The reason for creating the webhook.
+   * @returns The webhook or null.
    */
   private async createWebhook(
     channel: TextChannel | undefined | null,
@@ -84,7 +90,7 @@ export default class WebhookHandler {
 
       if (!webhook) return null;
 
-      if (webhook?.id) {
+      if (webhook.id) {
         this.webhooks.set(`${channelId}`, {
           id: webhook.id,
           token: webhook.token,
@@ -118,6 +124,12 @@ export default class WebhookHandler {
     }
   }
 
+  /**
+   * @param channel
+   * @param channelId
+   * @param message
+   * @param error
+   */
   async webhookFallBack(
     channel: TextChannel | undefined | null,
     channelId: string,
@@ -139,7 +151,7 @@ export default class WebhookHandler {
         (typeof error.message === 'string' &&
           error.message.includes('Unknown Webhook'))) &&
       channel
-        ?.permissionsFor(clientMember)
+        .permissionsFor(clientMember)
         .has([PermissionFlagsBits.ManageWebhooks])
     ) {
       const webhooks = await channel.fetchWebhooks();
@@ -149,7 +161,7 @@ export default class WebhookHandler {
         webhooks.forEach((web) => {
           i += 1;
           setInterval(() => {
-            if (web?.owner?.id === this.client.user?.id) {
+            if (web.owner?.id === this.client.user?.id) {
               web
                 .delete('Deleting old webhook, to create a new one')
                 .catch(this.client.logger.error);
@@ -186,7 +198,7 @@ export default class WebhookHandler {
         );
     } else if (
       channel
-        ?.permissionsFor(clientMember)
+        .permissionsFor(clientMember)
         .has([PermissionFlagsBits.EmbedLinks])
     ) {
       /* const guildSettings = */ await this.client.database.getGuild(
@@ -216,11 +228,12 @@ export default class WebhookHandler {
   }
 
   /**
-   * Send a message to a channel with a webhook
-   * @param channel the channel to send the message to
-   * @param channelId the channel id
-   * @param message the message to send
-   * @returns void
+   * Send a message to a channel with a webhook.
+   * @param channel The channel to send the message to.
+   * @param channelId The channel id.
+   * @param message The message to send.
+   * @param thread
+   * @returns Void.
    */
   async sendWebhook(
     channel: TextChannel | undefined | null,
@@ -246,7 +259,7 @@ export default class WebhookHandler {
         'Webhook token unavailable, creating new webhook'
       );
 
-      if (!webhook?.id || !webhook?.token)
+      if (!webhook?.id || !webhook.token)
         return this.webhookFallBack(channel, channelId, message, false);
 
       const webhookClient = new WebhookClient({

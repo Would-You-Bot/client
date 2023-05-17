@@ -14,6 +14,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'replayType',
   description: 'Replay type',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -24,20 +29,20 @@ const button: CoreButton = {
     const newType = guildDb.replayType === 'Channels' ? 'Guild' : 'Channels';
     const generalMsg = new EmbedBuilder()
       .setTitle(
-        client.translation.get(guildDb?.language, 'Settings.embed.generalTitle')
+        client.translation.get(guildDb.language, 'Settings.embed.generalTitle')
       )
       .setDescription(
         `${client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Settings.embed.replayType'
         )}: ${newType}\n${
           guildDb.replayType === 'Channels'
             ? `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.replayCooldown'
               )}: ${guildDb.replayCooldown}`
             : `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Settings.embed.replayChannels'
               )}: ${
                 guildDb.replayChannels.length > 0
@@ -45,7 +50,7 @@ const button: CoreButton = {
                       .map((c) => `<#${c.id}>: ${c.cooldown}`)
                       .join('\n')}`
                   : client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       `Settings.embed.replayChannelsNone`
                     )
               }`
@@ -54,7 +59,7 @@ const button: CoreButton = {
       .setColor(config.colors.primary)
       .setFooter({
         text: client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Settings.embed.footer'
         ),
         iconURL: client.user?.avatarURL() || undefined,
@@ -69,7 +74,7 @@ const button: CoreButton = {
         )
         .setLabel(
           client.translation.get(
-            guildDb?.language,
+            guildDb.language,
             'Settings.button.replayCooldown'
           )
         )
@@ -80,7 +85,7 @@ const button: CoreButton = {
         .setCustomId('replayType')
         .setLabel(
           client.translation.get(
-            guildDb?.language,
+            guildDb.language,
             'Settings.button.replayType'
           )
         )
@@ -93,7 +98,7 @@ const button: CoreButton = {
         .setCustomId('replayDeleteChannels')
         .setLabel(
           client.translation.get(
-            guildDb?.language,
+            guildDb.language,
             'Settings.button.replayDeleteChannels'
           )
         )

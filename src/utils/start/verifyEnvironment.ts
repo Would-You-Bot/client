@@ -4,6 +4,9 @@ dotenv.config();
 
 const { env } = process;
 
+/**
+ *
+ */
 const verifyEnvironment = (): NodeJS.ProcessEnv => {
   if (!env) throw new Error('env is not defined in .env file');
 
@@ -39,7 +42,7 @@ const verifyEnvironment = (): NodeJS.ProcessEnv => {
   ];
 
   /**
-   * Check if all keys are defined and are strings
+   * Check if all keys are defined and are strings.
    */
   envKeys.forEach((key) => {
     if (!env[key]) throw new Error(`env.${key} is not defined in .env file`);

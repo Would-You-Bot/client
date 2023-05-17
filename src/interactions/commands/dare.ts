@@ -13,6 +13,11 @@ const command: CoreCommand = {
       de: 'Zeigt einige Informationen über den Bot.',
       'es-ES': 'Muestra información sobre el bot.',
     }),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,

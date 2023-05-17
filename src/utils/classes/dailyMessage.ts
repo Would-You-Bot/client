@@ -6,15 +6,21 @@ import momentTimezone from 'moment-timezone';
 import config from '@config';
 import { ExtendedClient } from 'src/client';
 
+/**
+ *
+ */
 export default class DailyMessage {
   client: ExtendedClient;
 
+  /**
+   * @param client
+   */
   constructor(client: ExtendedClient) {
     this.client = client;
   }
 
   /**
-   * Start the daily message Schedule
+   * Start the daily message Schedule.
    */
   start() {
     const job = new CronJob(
@@ -30,8 +36,8 @@ export default class DailyMessage {
   }
 
   /**
-   * Run the daily message Schedule
-   * @returns void
+   * Run the daily message Schedule.
+   * @returns Void.
    */
   async runSchedule() {
     let guilds = await this.client.database.getAll();
@@ -51,7 +57,7 @@ export default class DailyMessage {
 
     for (let i = 0; i < guilds.length; i += 1) {
       const db = guilds[i];
-      if (!db?.dailyChannel) continue;
+      if (!db.dailyChannel) continue;
       if (!db.dailyMsg) continue;
 
       setTimeout(async () => {

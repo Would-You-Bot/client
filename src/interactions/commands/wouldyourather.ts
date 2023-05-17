@@ -21,6 +21,11 @@ const command: CoreCommand = {
       de: 'Erhalte eine Würdest du eher Frage.',
       'es-ES': 'Obtiene une pregunta ¿Qué prefieres?',
     }),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
@@ -38,7 +43,7 @@ const command: CoreCommand = {
       .setColor(config.colors.primary)
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomrather}`,
-        iconURL: interaction.user?.avatarURL() || undefined,
+        iconURL: interaction.user.avatarURL() || undefined,
       })
       .setDescription(General[randomrather]);
 

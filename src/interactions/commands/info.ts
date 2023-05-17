@@ -18,6 +18,10 @@ const command: CoreCommand = {
       de: 'Zeigt einige Informationen über den Bot.',
       'es-ES': 'Muestra información sobre el bot.',
     }),
+  /**
+   * @param interaction
+   * @param client
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient
@@ -27,6 +31,9 @@ const command: CoreCommand = {
     const unixstamp =
       Math.floor(Date.now() / 1000 || 0) - Math.floor(client.uptime / 1000);
 
+    /**
+     * @param num
+     */
     function round(num: number) {
       const m = Number((Math.abs(num) * 100).toPrecision(15));
       return (Math.round(m) / 100) * Math.sign(num);
@@ -82,7 +89,7 @@ const command: CoreCommand = {
       .setThumbnail(client.user?.displayAvatarURL() || null)
       .setFooter({
         text: `${interaction.user.tag} Shard #${
-          interaction?.guild?.shardId ?? 0
+          interaction.guild?.shardId ?? 0
         }`,
         iconURL: client.user?.avatarURL() || undefined,
       })

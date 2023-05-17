@@ -6,6 +6,10 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'result',
   description: 'The voting result',
+  /**
+   * @param interaction
+   * @param client
+   */
   async execute(interaction: ButtonInteraction, client: ExtendedClient) {
     const customId = interaction.customId.split('_');
 

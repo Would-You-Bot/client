@@ -2,17 +2,18 @@ import fs from 'fs/promises';
 
 import { logger } from '@utils/client';
 
-interface Language {
-  [key: string]: object;
-}
+type Language = Record<string, object>;
 
+/**
+ *
+ */
 export default class TranslationHandler {
   availableLanguages: string[];
-  translations: { [key: string]: Language };
+  translations: Record<string, Language>;
 
   /**
-   * Get a translation from the language file
-   * @param the language keys
+   * Get a translation from the language file.
+   * @param the Language keys.
    */
   constructor(/* languages: string[] | null */) {
     // this.availableLanguages = languages ?? ['de_DE', 'en_EN', 'es_ES'];
@@ -22,6 +23,9 @@ export default class TranslationHandler {
     this.loadLanguages();
   }
 
+  /**
+   *
+   */
   private async loadLanguages() {
     // Initialize default languages
     for (const lang of this.availableLanguages) {
@@ -89,27 +93,27 @@ export default class TranslationHandler {
   }
 
   /**
-   * Init a language and add it to the translations
-   * @param key the language key
-   * @param language the language object
+   * Init a language and add it to the translations.
+   * @param key The language key.
+   * @param language The language object.
    */
   private initLanguage(key: string, language: Language) {
     this.translations[key] = language;
   }
 
   /**
-   * Check if a key is a valid translation key
-   * @param value the value to check
-   * @returns if the value is a valid translation key
+   * Check if a key is a valid translation key.
+   * @param value The value to check.
+   * @returns If the value is a valid translation key.
    */
   private static checkRegex(value: string) {
     return /^[a-z]{2}_[A-Z]{2}(?:_rather|_wwyd|_nhie)?$/.test(value);
   }
 
   /**
-   * Get the language data
-   * @param language the language key
-   * @returns the language data
+   * Get the language data.
+   * @param language The language key.
+   * @returns The language data.
    */
   private getLanguage(language: string) {
     if (!TranslationHandler.checkRegex(language))
@@ -118,8 +122,8 @@ export default class TranslationHandler {
   }
 
   /**
-   * Add an available language to the languages array
-   * @param language the language key
+   * Add an available language to the languages array.
+   * @param language The language key.
    */
   addLanguage(language: string) {
     if (!TranslationHandler.checkRegex(language))
@@ -129,7 +133,7 @@ export default class TranslationHandler {
   }
 
   /**
-   * Reload the translation handler
+   * Reload the translation handler.
    */
   async reload() {
     this.translations = {};
@@ -151,11 +155,11 @@ export default class TranslationHandler {
   }
 
   /**
-   * Get a translation from the language file
-   * @param language the language key
-   * @param path the path to the translation
-   * @param data the data to replace in the translation
-   * @returns the translation which could be string or null
+   * Get a translation from the language file.
+   * @param language The language key.
+   * @param path The path to the translation.
+   * @param data The data to replace in the translation.
+   * @returns The translation which could be string or null.
    * @example const translation = getTranslation('en_EN', 'commands.ping.pong', {ping: 100});
    */
   get(

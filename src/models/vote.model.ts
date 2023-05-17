@@ -2,8 +2,8 @@ import { Document, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
 /* eslint-disable no-shadow */
 enum VoteType {
-  WouldYouRather,
-  NeverHaveIEver,
+  WouldYouRather = 0,
+  NeverHaveIEver = 1,
 }
 
 interface VoteSchema extends SchemaTimestampsConfig {
@@ -33,10 +33,9 @@ export default model<VoteDocument>(
         default: VoteType.WouldYouRather,
       },
       votes: {
-        op_one: { type: Array, default: [] },
-        op_two: { type: Array, default: [] },
+        op_one: { type: [String], default: [] },
+        op_two: { type: [String], default: [] },
       },
-
       until: { type: Date, required: false },
     },
     { timestamps: true }

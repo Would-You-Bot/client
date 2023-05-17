@@ -21,6 +21,11 @@ export default {
       de: 'Hilfe Befehl!',
       'es-ES': 'Comando de ayuda!',
     }),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
@@ -43,25 +48,25 @@ export default {
     const helpembed = new EmbedBuilder()
       .setColor(config.colors.primary)
       .setFooter({
-        text: client.translation.get(guildDb?.language, 'Help.embed.footer'),
+        text: client.translation.get(guildDb.language, 'Help.embed.footer'),
         iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp()
-      .setTitle(client.translation.get(guildDb?.language, 'Help.embed.title'))
+      .setTitle(client.translation.get(guildDb.language, 'Help.embed.title'))
       .addFields({
         name: client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Help.embed.Fields.privacyname'
         ),
         value: client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Help.embed.Fields.privacy'
         ),
         inline: false,
       })
       .setDescription(
         `${client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Help.embed.description'
         )}\n\n${commands
           .filter((e) => e.name !== 'reload' && e.descriptionLocalizations)
@@ -82,7 +87,7 @@ export default {
     const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setLabel(
-          client.translation.get(guildDb?.language, 'Help.button.title')
+          client.translation.get(guildDb.language, 'Help.button.title')
         )
         .setStyle(ButtonStyle.Link)
         .setEmoji('💫')

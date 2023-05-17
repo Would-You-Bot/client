@@ -12,18 +12,24 @@ const errorWebhook = new WebhookClient({
   url: config.env.ERROR_WEBHOOK,
 });
 
+/**
+ *
+ */
 export default class KeepAlive {
   client: ExtendedClient;
 
+  /**
+   * @param client
+   */
   constructor(client: ExtendedClient) {
     this.client = client;
   }
 
   /**
-   * Log a message to the console
-   * @param type The type of the message
-   * @param msg The message
-   * @param _optionalData Optional data
+   * Log a message to the console.
+   * @param type The type of the message.
+   * @param msg The message.
+   * @param _optionalData Optional data.
    */
   private consoleError(type: string, msg: string, _optionalData = '') {
     this.client.logger.error(
@@ -33,7 +39,7 @@ export default class KeepAlive {
   }
 
   /**
-   * Start the keep alive system (listener to the process)
+   * Start the keep alive system (listener to the process).
    */
   start() {
     this.client.rest.on('rateLimited', (log) => {

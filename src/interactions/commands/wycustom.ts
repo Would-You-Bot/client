@@ -15,6 +15,9 @@ import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreCommand } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
+/**
+ * @param length
+ */
 function makeID(length: number) {
   let result = '';
   const characters =
@@ -101,6 +104,11 @@ const command: CoreCommand = {
         .setName('export')
         .setDescription('Exports custom messages into a JSON file.')
     ),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
@@ -111,15 +119,27 @@ const command: CoreCommand = {
     const typeEmbed = new EmbedBuilder();
     let message: string;
 
+    /**
+     *
+     */
     class Paginator {
       pages: EmbedBuilder[];
       timeout: number;
       page: number;
       endPage: number;
 
+      /**
+       * @param pages
+       * @param root0
+       * @param root0.filter
+       * @param root0.timeout
+       */
       constructor(
         pages: [] = [],
         { filter, timeout }: { filter?: () => boolean; timeout: number } = {
+          /**
+           *
+           */
           filter: () => true,
           timeout: 5 * 6e4,
         }
@@ -132,16 +152,25 @@ const command: CoreCommand = {
         if (filter) filter();
       }
 
+      /**
+       * @param page
+       */
       add(page: EmbedBuilder) {
         this.pages.push(page);
         return this;
       }
 
+      /**
+       * @param page
+       */
       setEndPage(page: number) {
         if (page) this.endPage = page;
         return this;
       }
 
+      /**
+       * @param fn
+       */
       setTransform(fn: (...args: any) => any) {
         const pages = [];
         let i = 0;
@@ -154,6 +183,10 @@ const command: CoreCommand = {
         return this;
       }
 
+      /**
+       * @param channel
+       * @param buttons
+       */
       async start(
         channel: ChatInputCommandInteraction,
         buttons: ActionRowBuilder<ButtonBuilder>
@@ -179,7 +212,7 @@ const command: CoreCommand = {
                       return inter.reply({
                         ephemeral: true,
                         content: client.translation.get(
-                          guildDb?.language,
+                          guildDb.language,
                           'wyCustom.error.paginate'
                         ),
                       });
@@ -200,7 +233,7 @@ const command: CoreCommand = {
                       inter.reply({
                         ephemeral: true,
                         content: client.translation.get(
-                          guildDb?.language,
+                          guildDb.language,
                           'wyCustom.error.paginate'
                         ),
                       });
@@ -216,7 +249,7 @@ const command: CoreCommand = {
                       return inter.reply({
                         ephemeral: true,
                         content: client.translation.get(
-                          guildDb?.language,
+                          guildDb.language,
                           'wyCustom.error.paginate'
                         ),
                       });
@@ -226,7 +259,7 @@ const command: CoreCommand = {
                       return inter.reply({
                         ephemeral: true,
                         content: client.translation.get(
-                          guildDb?.language,
+                          guildDb.language,
                           'wyCustom.error.paginate'
                         ),
                       });
@@ -249,7 +282,7 @@ const command: CoreCommand = {
         );
       }
     }
-    if (client.checkDebug(guildDb, interaction?.user?.id)) {
+    if (client.checkDebug(guildDb, interaction.user.id)) {
       switch (interaction.options.getSubcommand()) {
         case 'add': {
           if (!client.voteLogger.votes.has(interaction.user.id)) {
@@ -257,7 +290,7 @@ const command: CoreCommand = {
               return interaction.reply({
                 ephemeral: true,
                 content: client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'wyCustom.error.maximum'
                 ),
               });
@@ -265,27 +298,27 @@ const command: CoreCommand = {
 
           const option = interaction.options
             .getString('options')
-            ?.toLowerCase() as string;
-          message = interaction.options.getString('message') as string;
+            ?.toLowerCase()!;
+          message = interaction.options.getString('message')!;
 
           const newID = makeID(6);
           typeEmbed
             .setTitle(
               client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.success.embedAdd.title'
               )
             )
             .setColor(config.colors.primary)
             .setDescription(
               `**${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.success.embedAdd.descID'
               )}**: ${newID}\n**${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.success.embedAdd.descCat'
               )}**: ${option}\n\n**${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.success.embedAdd.descCont'
               )}**: \`${message}\``
             )
@@ -310,12 +343,12 @@ const command: CoreCommand = {
           break;
         }
         case 'remove': {
-          message = interaction.options.getString('message') as string;
+          message = interaction.options.getString('message')!;
 
           typeEmbed
             .setTitle(
               client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.success.embedRemove.title'
               )
             )
@@ -348,7 +381,7 @@ const command: CoreCommand = {
           if (guildDb.customMessages.length === 0)
             return interaction.reply({
               content: client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.success.embedRemoveAll.none'
               ),
               ephemeral: true,
@@ -357,7 +390,7 @@ const command: CoreCommand = {
           typeEmbed
             .setTitle(
               client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.success.embedRemoveAll.title'
               )
             )
@@ -390,7 +423,7 @@ const command: CoreCommand = {
             return interaction.reply({
               ephemeral: true,
               content: client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.error.empty'
               ),
             });
@@ -407,10 +440,10 @@ const command: CoreCommand = {
               .map(
                 (s) =>
                   `${client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.success.embedAdd.descID'
                   )}: ${s.id}\n${client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.success.embedAdd.descMsg'
                   )}: ${s.msg}`
               );
@@ -428,13 +461,13 @@ const command: CoreCommand = {
                 new EmbedBuilder()
                   .setTitle(
                     client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       'wyCustom.success.paginator.title'
                     )
                   )
                   .setDescription(
                     `${client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       'wyCustom.success.paginator.descCatUseful'
                     )}\n\n${e.slice(0, 5).join('\n\n').toString()}`
                   )
@@ -451,10 +484,10 @@ const command: CoreCommand = {
               .map(
                 (s) =>
                   `${client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.success.embedAdd.descID'
                   )}: ${s.id}\n${client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.success.embedAdd.descMsg'
                   )}: ${s.msg}`
               );
@@ -472,13 +505,13 @@ const command: CoreCommand = {
                 new EmbedBuilder()
                   .setTitle(
                     client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       'wyCustom.success.paginator.title'
                     )
                   )
                   .setDescription(
                     `${client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       'wyCustom.success.paginator.descCatUseless'
                     )}\n\n${e.slice(0, 5).join('\n\n').toString()}`
                   )
@@ -522,7 +555,7 @@ const command: CoreCommand = {
             return interaction.reply({
               ephemeral: true,
               content: client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.error.import.att1'
               ),
             });
@@ -531,7 +564,7 @@ const command: CoreCommand = {
             return interaction.reply({
               ephemeral: true,
               content: client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.error.import.att2'
               ),
             });
@@ -548,7 +581,7 @@ const command: CoreCommand = {
               if (response.data.length === 0)
                 return interaction.editReply({
                   content: client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.error.import.att3'
                   ),
                 });
@@ -559,7 +592,7 @@ const command: CoreCommand = {
               )
                 return interaction.editReply({
                   content: client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.error.import.att4'
                   ),
                 });
@@ -570,7 +603,7 @@ const command: CoreCommand = {
               )
                 return interaction.editReply({
                   content: client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.error.import.att5'
                   ),
                 });
@@ -581,7 +614,7 @@ const command: CoreCommand = {
               )
                 return interaction.editReply({
                   content: client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.error.import.att16'
                   ),
                 });
@@ -592,7 +625,7 @@ const command: CoreCommand = {
               )
                 return interaction.editReply({
                   content: client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.error.import.att17'
                   ),
                 });
@@ -603,7 +636,7 @@ const command: CoreCommand = {
               )
                 return interaction.editReply({
                   content: client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.error.import.att18'
                   ),
                 });
@@ -624,7 +657,7 @@ const command: CoreCommand = {
               )
                 return interaction.editReply({
                   content: client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.error.import.att19'
                   ),
                 });
@@ -634,7 +667,7 @@ const command: CoreCommand = {
               )
                 return interaction.editReply({
                   content: client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.error.import.att20'
                   ),
                 });
@@ -644,7 +677,7 @@ const command: CoreCommand = {
               )
                 return interaction.editReply({
                   content: client.translation.get(
-                    guildDb?.language,
+                    guildDb.language,
                     'wyCustom.error.import.att21'
                   ),
                 });
@@ -656,7 +689,7 @@ const command: CoreCommand = {
                 )
                   return interaction.editReply({
                     content: client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       'wyCustom.error.import.att22'
                     ),
                   });
@@ -677,7 +710,7 @@ const command: CoreCommand = {
                 )
                   return interaction.editReply({
                     content: client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       'wyCustom.error.import.att23'
                     ),
                   });
@@ -698,7 +731,7 @@ const command: CoreCommand = {
                 )
                   return interaction.editReply({
                     content: client.translation.get(
-                      guildDb?.language,
+                      guildDb.language,
                       'wyCustom.error.import.att24'
                     ),
                   });
@@ -713,7 +746,7 @@ const command: CoreCommand = {
               }
 
               await client.database.updateGuild(
-                interaction.guildId as string,
+                interaction.guildId!,
                 {
                   customMessages: guildDb.customMessages,
                 },
@@ -722,7 +755,7 @@ const command: CoreCommand = {
 
               return interaction.editReply({
                 content: client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'wyCustom.success.import'
                 ),
               });
@@ -730,7 +763,7 @@ const command: CoreCommand = {
             .catch((error) =>
               interaction.editReply(
                 `${client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'wyCustom.error.import.att15'
                 )}\n\nError: ${error}`
               )
@@ -742,7 +775,7 @@ const command: CoreCommand = {
             return interaction.reply({
               ephemeral: true,
               content: client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'wyCustom.error.export.none'
               ),
             });
@@ -788,7 +821,7 @@ const command: CoreCommand = {
 
           return interaction.editReply({
             content: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'wyCustom.success.export'
             ),
             files: [
@@ -815,7 +848,7 @@ const command: CoreCommand = {
         .setColor(config.colors.danger)
         .setTitle('Error!')
         .setDescription(
-          client.translation.get(guildDb?.language, 'Language.embed.error')
+          client.translation.get(guildDb.language, 'Language.embed.error')
         );
       return interaction
         .reply({

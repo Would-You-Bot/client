@@ -14,6 +14,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'neverhaveiever',
   description: 'never have i ever',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,

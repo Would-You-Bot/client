@@ -1,6 +1,7 @@
 import colors from 'colors';
 
 import { initLogger } from '@utils/client';
+import connectToDatabase from '@utils/start/databaseConnection';
 import ensureDirectories from '@utils/start/ensureDirectories';
 import initializeHandlers from '@utils/start/initializeHandlers';
 import { ExtendedClient } from './client';
@@ -13,6 +14,12 @@ const app = async (client: ExtendedClient) => {
   // Run startup functions
   ensureDirectories();
   await initializeHandlers(client);
+
+  // Connect to database
+  await connectToDatabase();
+
+  // Sync database
+  // Initialize translations
 
   // Authenticate the client
   const authStart = Date.now();

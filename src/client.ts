@@ -1,25 +1,13 @@
-import {
-  ClusterClient,
-  DjsDiscordClient,
-  getInfo,
-} from 'discord-hybrid-sharding';
-import {
-  Client,
-  Collection,
-  GatewayIntentBits,
-  Options,
-  User,
-} from 'discord.js';
+import { ClusterClient, DjsDiscordClient, getInfo } from 'discord-hybrid-sharding';
+import { Client, Collection, GatewayIntentBits, Options, User } from 'discord.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreButton, CoreCommand, CoreEvent } from '@typings/core';
-import CooldownHandler from '@utils/classes/cooldownHandler';
+import { GuildProfiles, Webhooks } from '@utils/classes';
 import DailyMessage from '@utils/classes/dailyMessage';
-import DatabaseHandler from '@utils/classes/databaseHandler';
 import KeepAlive from '@utils/classes/keepAlive';
 import TranslationHandler from '@utils/classes/translationHandler';
 import VoteLogger from '@utils/classes/voteLogger';
@@ -27,46 +15,42 @@ import Voting from '@utils/classes/votingHandler';
 import WebhookHandler from '@utils/classes/webhookHandler';
 import logger from '@utils/client/logger';
 
-// User filter to filter all users out of the cache expect the bot
-/* const userFilter = (user: User, client: ExtendedClient) =>
-  user?.id !== client?.user?.id; */
-
 /**
  * A custom class representing the discord client.
  */
 export class ExtendedClient extends Client {
   // Client variables
-  botStartTime: number = new Date().getTime();
-  synced = false; // Value for client to know if its synced with database
-  databaseLatency = 0;
-  developers: User[] = [];
-  client: ClusterClient<Client>;
+  public botStartTime: number = new Date().getTime();
+  public synced = false; // Value for client to know if its synced with database
+  public databaseLatency = 0;
+  public developers: User[] = [];
+  public client: ClusterClient<Client>;
+  public cluster: ClusterClient<DjsDiscordClient>;
 
   // Client functions
-  logger = logger;
+  public logger = logger;
   // Uncomment this to bind a centralized error handler to the client
   // error = error
 
   // Classes
-  commands = new Collection<string, CoreCommand>();
-  buttons = new Collection<string, CoreButton>();
-  events = new Collection<string, CoreEvent>();
-  used = new Map<string, unknown>();
-  database: DatabaseHandler = new DatabaseHandler(`${config.env.MONGODB_URI}`);
-  translation: TranslationHandler = new TranslationHandler();
-  cooldownHandler: CooldownHandler;
-  cluster: ClusterClient<DjsDiscordClient>;
-  webhookHandler: WebhookHandler;
-  keepAlive: KeepAlive;
-  dailyMessage: DailyMessage;
-  voteLogger: VoteLogger;
-  voting: Voting;
+  public commands = new Collection<string, CoreCommand>();
+  public buttons = new Collection<string, CoreButton>();
+  public events = new Collection<string, CoreEvent>();
+  public guildProfiles: GuildProfiles;
+  public webhooks = Webhooks;
+  public used = new Map<string, unknown>();
+  public translation: TranslationHandler = new TranslationHandler();
+  public webhookHandler: WebhookHandler;
+  public keepAlive: KeepAlive;
+  public dailyMessage: DailyMessage;
+  public voteLogger: VoteLogger;
+  public voting: Voting;
 
   /**
    * Create a new client instance.
    * @param customCacheOptions Custom cache options.
    */
-  constructor(customCacheOptions = {}) {
+  public constructor(customCacheOptions = {}) {
     super({
       intents: [
         GatewayIntentBits.Guilds,
@@ -82,25 +66,15 @@ export class ExtendedClient extends Client {
         PresenceManager: 0,
         ThreadManager: 0,
         ThreadMemberManager: 0,
-        // CategoryChannelChildManager: 0,
         MessageManager: 0,
         ReactionUserManager: {
           maxSize: 1000000,
-          // ! Undefined options
-          // sweepFilter: (user: User, this) => userFilter(user, this),
-          // sweepInterval: 5 * 60 * 1000,
         },
         UserManager: {
           maxSize: 1000000,
-          // ! Undefined options
-          // sweepFilter: (user: User, this) => userFilter(user, this),
-          // sweepInterval: 5 * 60 * 1000,
         },
         GuildMemberManager: {
           maxSize: 1000000,
-          // ! Undefined options
-          // sweepFilter: (user: User, this) => userFilter(user, this),
-          // sweepInterval: 5 * 60 * 1000,
         },
         ...customCacheOptions,
       }),
@@ -108,15 +82,8 @@ export class ExtendedClient extends Client {
       shardCount: getInfo().TOTAL_SHARDS,
     });
 
-    /**
-     * Initialize and start all the classes.
-     */
-
-    this.cooldownHandler = new CooldownHandler(this);
-    this.cooldownHandler.startSweeper();
-
-    this.database.connectToDatabase();
-    this.database.startSweeper(this);
+    this.guildProfiles = new GuildProfiles(this.guilds.cache.map((guild) => guild.id));
+    this.webhooks = new Webhooks(this.guilds.cache.map((guild) => guild.id));
 
     // Keep Alive system after the necessary things that are allowed to crash are loaded
     this.keepAlive = new KeepAlive(this);
@@ -149,22 +116,6 @@ export class ExtendedClient extends Client {
    * @returns Whether the client is synced with the database.
    */
   public isSynced = () => (this.synced ? true : false);
-
-  /**
-   * Check if the guild has the debugMode value or user is a developer.
-   * @param guildDatabase The guild database.
-   * @param userId The user id.
-   * @returns True if debug is approved otherwise false.
-   */
-  public checkDebug(
-    guildDatabase: GuildProfileDocument,
-    userId: string
-  ): boolean {
-    const debugApproved =
-      guildDatabase.debugMode || config.developers.includes(userId);
-    if (debugApproved) this.logger.debug('Debug approved');
-    return debugApproved;
-  }
 }
 
 export default {};

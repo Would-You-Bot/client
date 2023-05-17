@@ -12,6 +12,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'replayChannels',
   description: 'Replay Channels',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -20,7 +25,7 @@ const button: CoreButton = {
     if (guildDb.replayChannels.length >= 15)
       return interaction.reply({
         content: client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Settings.replayChannelLimit'
         ),
         ephemeral: true,
@@ -37,7 +42,7 @@ const button: CoreButton = {
     interaction.update({
       embeds: [],
       content: client.translation.get(
-        guildDb?.language,
+        guildDb.language,
         'Settings.replayChannel'
       ),
       components: [inter],

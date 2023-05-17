@@ -4,6 +4,9 @@ import config from '@config';
 import { CoreEvent } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
+/**
+ * @param name
+ */
 const filterGuildName = (name: string) =>
   name
     .replace('Discord', '')
@@ -13,11 +16,15 @@ const filterGuildName = (name: string) =>
 
 const event: CoreEvent = {
   name: Events.GuildDelete,
+  /**
+   * @param client
+   * @param guild
+   */
   async execute(client: ExtendedClient, guild: Guild) {
-    if (!guild?.name) return;
+    if (!guild.name) return;
 
     // Only delete the guild settings from the cache we don't want a data lose but also don't need not used data in the cache :)
-    await client.database.deleteGuild(guild?.id, true);
+    await client.database.deleteGuild(guild.id, true);
 
     const webhookPrivate = new WebhookClient({
       url: config.env.PRIVATE_WEBHOOK,

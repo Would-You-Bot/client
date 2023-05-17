@@ -40,6 +40,11 @@ const command: CoreCommand = {
           "Debug the current channel to view some permissons information's."
         )
     ),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
@@ -47,14 +52,14 @@ const command: CoreCommand = {
   ) {
     if (!interaction.guild || !interaction.guildId || !client.user?.id) return;
     if (!interaction.channel) return;
-    if (interaction.channel?.type !== ChannelType.GuildText) return;
+    if (interaction.channel.type !== ChannelType.GuildText) return;
 
-    if (client.checkDebug(guildDb, interaction.user?.id)) {
+    if (client.checkDebug(guildDb, interaction.user.id)) {
       const errorembed = new EmbedBuilder()
         .setColor(config.colors.danger)
         .setTitle('Error!')
         .setDescription(
-          client.translation.get(guildDb?.language, 'Debug.permissions')
+          client.translation.get(guildDb.language, 'Debug.permissions')
         );
       return interaction
         .reply({
@@ -67,31 +72,31 @@ const command: CoreCommand = {
     switch (interaction.options.getSubcommand()) {
       case 'webhook': {
         if (
-          !guildDb?.dailyChannel ||
-          !interaction.guild.channels.cache.has(guildDb?.dailyChannel)
+          !guildDb.dailyChannel ||
+          !interaction.guild.channels.cache.has(guildDb.dailyChannel)
         )
           return interaction.reply({
             ephemeral: true,
             content: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Debug.channelNotSet'
             ),
           });
 
-        await client.webhookHandler.sendWebhook(null, guildDb?.dailyChannel, {
+        await client.webhookHandler.sendWebhook(null, guildDb.dailyChannel, {
           content: client.translation.get(
-            guildDb?.language,
+            guildDb.language,
             'Debug.testMessage'
           ),
         });
 
         return interaction.reply({
           ephemeral: true,
-          content: client.translation.get(guildDb?.language, 'Debug.tryToSent'),
+          content: client.translation.get(guildDb.language, 'Debug.tryToSent'),
         });
       }
       case 'mode': {
-        if (guildDb?.debugMode) {
+        if (guildDb.debugMode) {
           await client.database.updateGuild(
             interaction.guildId,
             {
@@ -103,7 +108,7 @@ const command: CoreCommand = {
           return interaction.reply({
             ephemeral: true,
             content: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Debug.disabled'
             ),
           });
@@ -118,7 +123,7 @@ const command: CoreCommand = {
 
           return interaction.reply({
             ephemeral: true,
-            content: client.translation.get(guildDb?.language, 'Debug.enabled'),
+            content: client.translation.get(guildDb.language, 'Debug.enabled'),
           });
         }
       }
@@ -127,204 +132,204 @@ const command: CoreCommand = {
           .setColor(config.colors.primary)
           .setTimestamp()
           .setTitle(
-            client.translation.get(guildDb?.language, 'Debug.embed.title')
+            client.translation.get(guildDb.language, 'Debug.embed.title')
           )
           .setDescription(
             `**${client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Debug.embed.settings'
             )}:**\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.isChannel',
                 {
                   is:
-                    interaction?.channel?.id === guildDb?.dailyChannel
+                    interaction.channel.id === guildDb.dailyChannel
                       ? client.translation.get(
-                          guildDb?.language,
+                          guildDb.language,
                           'Debug.embed.is'
                         )
                       : client.translation.get(
-                          guildDb?.language,
+                          guildDb.language,
                           'Debug.embed.isnot'
                         ),
                 }
               )}\n` +
               `**${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.channel'
               )}:**\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.manageWebhook',
                 {
                   can: interaction.channel
                     .permissionsFor(client.user.id)
                     ?.has([PermissionFlagsBits.ManageWebhooks])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
               )}\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.embedLinks',
                 {
                   can: interaction.channel
                     .permissionsFor(client.user.id)
                     ?.has([PermissionFlagsBits.EmbedLinks])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
               )}\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.sendMessages',
                 {
                   can: interaction.channel
                     .permissionsFor(client.user.id)
                     ?.has([PermissionFlagsBits.SendMessages])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
               )}\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.viewChannel',
                 {
                   can: interaction.channel
-                    .permissionsFor(client?.user.id)
+                    .permissionsFor(client.user.id)
                     ?.has([PermissionFlagsBits.ViewChannel])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
               )}\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.readMessageHistory',
                 {
                   can: interaction.channel
                     .permissionsFor(client.user.id)
                     ?.has([PermissionFlagsBits.ReadMessageHistory])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
               )}\n` +
               '\n' +
               `**${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.global'
               )}:**\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.g_manageWebhooks',
                 {
-                  can: interaction?.guild?.members?.me?.permissions?.has([
+                  can: interaction.guild.members.me?.permissions.has([
                     PermissionFlagsBits.ManageWebhooks,
                   ])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
               )}\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.g_embedLinks',
                 {
-                  can: interaction?.guild?.members?.me?.permissions?.has([
+                  can: interaction.guild.members.me?.permissions.has([
                     PermissionFlagsBits.EmbedLinks,
                   ])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
               )}\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.g_sendMessages',
                 {
-                  can: interaction?.guild?.members?.me?.permissions?.has([
+                  can: interaction.guild.members.me?.permissions.has([
                     PermissionFlagsBits.SendMessages,
                   ])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
               )}\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.g_viewChannel',
                 {
-                  can: interaction?.guild?.members?.me?.permissions?.has([
+                  can: interaction.guild.members.me?.permissions.has([
                     PermissionFlagsBits.ViewChannel,
                   ])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
               )}\n` +
               `${client.translation.get(
-                guildDb?.language,
+                guildDb.language,
                 'Debug.embed.g_readMessageHistory',
                 {
-                  can: interaction?.guild?.members?.me?.permissions?.has([
+                  can: interaction.guild.members.me?.permissions.has([
                     PermissionFlagsBits.ReadMessageHistory,
                   ])
                     ? client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.can'
                       )
                     : client.translation.get(
-                        guildDb?.language,
+                        guildDb.language,
                         'Debug.embed.cannot'
                       ),
                 }
@@ -340,7 +345,7 @@ const command: CoreCommand = {
       default: {
         return interaction.reply({
           ephemeral: true,
-          content: client.translation.get(guildDb?.language, 'Debug.invalid'),
+          content: client.translation.get(guildDb.language, 'Debug.invalid'),
         });
       }
     }

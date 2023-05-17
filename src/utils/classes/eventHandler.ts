@@ -2,15 +2,21 @@ import fs from 'fs';
 
 import { ExtendedClient } from 'src/client';
 
+/**
+ *
+ */
 export default class EventHandler {
   client: ExtendedClient;
 
+  /**
+   * @param client
+   */
   constructor(client: ExtendedClient) {
     this.client = client;
   }
 
   /**
-   * Load the buttons
+   * Load the buttons.
    */
   async load() {
     fs.readdir('./src/events/', (err, files) => {
@@ -21,6 +27,9 @@ export default class EventHandler {
 
         const event = (await import(`../../events/${fileName}`)).default;
 
+        /**
+         * @param args
+         */
         const execute = (...args: any[]) => event.execute(...args, this.client);
 
         try {
@@ -34,7 +43,7 @@ export default class EventHandler {
   }
 
   /**
-   * Reload the buttons
+   * Reload the buttons.
    */
   reload() {
     this.client.removeAllListeners();

@@ -11,6 +11,9 @@ import { ExtendedClient } from 'src/client';
 const event: CoreEvent = {
   once: true,
   name: Events.ClientReady,
+  /**
+   * @param client
+   */
   async execute(client: ExtendedClient) {
     if (!client.user?.id) return;
 
@@ -45,7 +48,7 @@ const event: CoreEvent = {
 
             // If the bot is in production mode it will load slash commands for all guilds
             await rest.put(
-              Routes.applicationCommands(client.user?.id as string),
+              Routes.applicationCommands(client.user?.id!),
               {
                 body: commands,
               }
@@ -62,7 +65,7 @@ const event: CoreEvent = {
               );
             await rest.put(
               Routes.applicationGuildCommands(
-                client.user?.id as string,
+                client.user?.id!,
                 config.env.LOG_GUILD
               ),
               {
@@ -79,6 +82,9 @@ const event: CoreEvent = {
       }, 2500);
     }
 
+    /**
+     *
+     */
     const setStatus = () => {
       client.user?.setPresence({
         activities: [{ name: `${config.status || 'Would you?'}` }],

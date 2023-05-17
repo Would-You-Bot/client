@@ -21,6 +21,11 @@ const command: CoreCommand = {
       de: 'Link zu unserem Support Server',
       'es-ES': 'Link para nuestro servidor de soporte',
     }),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
@@ -29,13 +34,13 @@ const command: CoreCommand = {
     const supportembed = new EmbedBuilder()
       .setColor(config.colors.danger)
       .setTitle(
-        client.translation.get(guildDb?.language, 'Support.embed.title')
+        client.translation.get(guildDb.language, 'Support.embed.title')
       )
       .setDescription(
-        client.translation.get(guildDb?.language, 'Support.embed.description')
+        client.translation.get(guildDb.language, 'Support.embed.description')
       )
       .setFooter({
-        text: client.translation.get(guildDb?.language, 'Support.embed.footer'),
+        text: client.translation.get(guildDb.language, 'Support.embed.footer'),
         iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp();

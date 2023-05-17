@@ -30,6 +30,9 @@ const modalObject = {
   ],
 };
 
+/**
+ * @param str
+ */
 function isNumericRegex(str: string) {
   return /^[0-9]+$/.test(str); // regex for extra 0,00000002% speeds :trol:
 }
@@ -37,6 +40,11 @@ function isNumericRegex(str: string) {
 const button: CoreButton = {
   name: 'replayCooldown',
   description: 'Daily Message Toggle',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -45,6 +53,9 @@ const button: CoreButton = {
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
+        /**
+         * @param mInter
+         */
         filter: (mInter) => mInter.customId === modalObject.custom_id,
         time: 60000,
       })
@@ -59,11 +70,11 @@ const button: CoreButton = {
         const value = modalInteraction.components[0].components[0].value;
         if (Number.isNaN(parseInt(value, 10))) return;
 
-        if (isNumericRegex(value) === false)
+        if (!isNumericRegex(value))
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.cooldownInvalid'
             ),
           });
@@ -72,7 +83,7 @@ const button: CoreButton = {
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.replaySame'
             ),
           });
@@ -81,7 +92,7 @@ const button: CoreButton = {
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.cooldownMin'
             ),
           });
@@ -89,16 +100,16 @@ const button: CoreButton = {
         const generalMsg = new EmbedBuilder()
           .setTitle(
             client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.generalTitle'
             )
           )
           .setDescription(
             `${client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.replayType'
             )}: ${guildDb.replayType}\n${client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.replayCooldown'
             )}: ${
               guildDb.replayCooldown ? `${value}` : config.emojis.close.full
@@ -107,7 +118,7 @@ const button: CoreButton = {
           .setColor(config.colors.primary)
           .setFooter({
             text: client.translation.get(
-              guildDb?.language,
+              guildDb.language,
               'Settings.embed.footer'
             ),
             iconURL: client.user?.avatarURL() || undefined,
@@ -119,7 +130,7 @@ const button: CoreButton = {
               .setCustomId('replayCooldown')
               .setLabel(
                 client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.button.replayCooldown'
                 )
               )
@@ -132,7 +143,7 @@ const button: CoreButton = {
               .setCustomId('replayType')
               .setLabel(
                 client.translation.get(
-                  guildDb?.language,
+                  guildDb.language,
                   'Settings.button.replayType'
                 )
               )

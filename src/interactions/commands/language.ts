@@ -33,6 +33,11 @@ const command: CoreCommand = {
         .setName('spanish')
         .setDescription('Set the language to spanish')
     ),
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ChatInputCommandInteraction,
     client: ExtendedClient,
@@ -42,7 +47,7 @@ const command: CoreCommand = {
 
     const languageEmbed = new EmbedBuilder();
 
-    if (client.checkDebug(guildDb, interaction?.user?.id)) {
+    if (client.checkDebug(guildDb, interaction.user.id)) {
       switch (interaction.options.getSubcommand()) {
         case 'english': {
           await client.database.updateGuild(
@@ -121,7 +126,7 @@ const command: CoreCommand = {
         .setColor(config.colors.danger)
         .setTitle('Error!')
         .setDescription(
-          client.translation.get(guildDb?.language, 'Language.embed.error')
+          client.translation.get(guildDb.language, 'Language.embed.error')
         );
 
       return interaction

@@ -12,6 +12,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'dailyChannel',
   description: 'Daily Channel',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -28,7 +33,7 @@ const button: CoreButton = {
     interaction.update({
       embeds: [],
       content: client.translation.get(
-        guildDb?.language,
+        guildDb.language,
         'Settings.dailyChannel'
       ),
       components: [inter],

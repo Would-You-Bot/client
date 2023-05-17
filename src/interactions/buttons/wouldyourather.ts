@@ -14,6 +14,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'wouldyourather',
   description: 'would you rather',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -29,7 +34,7 @@ const button: CoreButton = {
       return interaction.reply({
         ephemeral: true,
         content: client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Rather.replays.disabled'
         ),
       });
@@ -67,7 +72,7 @@ const button: CoreButton = {
     if (!vote)
       return interaction.reply({
         content: client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Rather.voting.error'
         ),
         ephemeral: true,
@@ -77,7 +82,7 @@ const button: CoreButton = {
       .setColor(config.colors.primary)
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomrather}`,
-        iconURL: interaction.user?.avatarURL() || undefined,
+        iconURL: interaction.user.avatarURL() || undefined,
       })
       .setDescription(General[randomrather]);
 

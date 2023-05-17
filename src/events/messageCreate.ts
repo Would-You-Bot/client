@@ -17,21 +17,25 @@ const Cooldown = new Set();
 
 const event: CoreEvent = {
   name: Events.MessageCreate,
+  /**
+   * @param client
+   * @param message
+   */
   async execute(client: ExtendedClient, message: Message) {
     if (!client.user?.id) return;
 
     // Always check the permissions before doing any actions to avoid a ratelimit IP ban =)
     if (
       message.channel.type === ChannelType.GuildText &&
-      message?.channel
-        ?.permissionsFor(client?.user?.id)
+      message.channel
+        .permissionsFor(client.user.id)
         ?.has([
           PermissionFlagsBits.ViewChannel,
           PermissionFlagsBits.SendMessages,
           PermissionFlagsBits.EmbedLinks,
         ])
     ) {
-      if (Cooldown.has(message?.channel?.id)) return;
+      if (Cooldown.has(message.channel.id)) return;
 
       const embed = new EmbedBuilder()
         .setAuthor({
@@ -57,9 +61,9 @@ const event: CoreEvent = {
           .setURL(config.links.support)
       );
 
-      Cooldown.add(message?.channel?.id);
+      Cooldown.add(message.channel.id);
       setTimeout(() => {
-        Cooldown.delete(message?.channel?.id);
+        Cooldown.delete(message.channel.id);
       }, 10000);
 
       if (

@@ -7,6 +7,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'selectMenuRole',
   description: 'Select Menu Role',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,

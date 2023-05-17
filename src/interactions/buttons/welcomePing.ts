@@ -14,6 +14,11 @@ import { ExtendedClient } from 'src/client';
 const button: CoreButton = {
   name: 'welcomePing',
   description: 'Welcome User Pings',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
@@ -25,21 +30,21 @@ const button: CoreButton = {
 
     const welcomes = new EmbedBuilder()
       .setTitle(
-        client.translation.get(guildDb?.language, 'Settings.embed.welcomeTitle')
+        client.translation.get(guildDb.language, 'Settings.embed.welcomeTitle')
       )
       .setDescription(
         `${client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Settings.embed.welcome'
         )}: ${
           guildDb.welcome ? config.emojis.check.full : config.emojis.close.full
         }\n${client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Settings.embed.welcomePing'
         )}: ${
           check ? config.emojis.close.full : config.emojis.check.full
         }\n${client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Settings.embed.welcomeChannel'
         )}: ${
           guildDb.welcomeChannel
@@ -50,7 +55,7 @@ const button: CoreButton = {
       .setColor(config.colors.primary)
       .setFooter({
         text: client.translation.get(
-          guildDb?.language,
+          guildDb.language,
           'Settings.embed.footer'
         ),
         iconURL: client.user?.avatarURL() || undefined,
@@ -60,7 +65,7 @@ const button: CoreButton = {
       new ButtonBuilder()
         .setCustomId('welcome')
         .setLabel(
-          client.translation.get(guildDb?.language, 'Settings.button.welcome')
+          client.translation.get(guildDb.language, 'Settings.button.welcome')
         )
         .setStyle(
           guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary
@@ -69,7 +74,7 @@ const button: CoreButton = {
         .setCustomId('welcomeChannel')
         .setLabel(
           client.translation.get(
-            guildDb?.language,
+            guildDb.language,
             'Settings.button.welcomeChannel'
           )
         )
@@ -83,7 +88,7 @@ const button: CoreButton = {
         .setCustomId('welcomePing')
         .setLabel(
           client.translation.get(
-            guildDb?.language,
+            guildDb.language,
             'Settings.button.welcomePing'
           )
         )

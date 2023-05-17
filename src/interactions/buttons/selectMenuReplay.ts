@@ -29,6 +29,11 @@ function isNumericRegex(str: string) {
 const button: CoreButton = {
   name: 'selectMenuReplay',
   description: 'Select Menu Replay',
+  /**
+   * @param interaction
+   * @param client
+   * @param guildDb
+   */
   async execute(
     interaction: ButtonInteraction,
     client: ExtendedClient,
