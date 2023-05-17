@@ -22,6 +22,11 @@ if (!fs.existsSync(clusterLogsDir)) {
   fs.mkdirSync(clusterLogsDir, { recursive: true });
 }
 
+/**
+ * Returns a color based on the log level.
+ * @param level The log level.
+ * @returns The colored log level.
+ */
 const levelColor = (level: string) => {
   switch (level) {
     case 'error': {
