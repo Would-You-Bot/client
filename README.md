@@ -204,6 +204,34 @@ The config file will convert each emoji string into an emoji object which contai
 └── update.sh
 ```
 
+## CI/CD Pipeline
+
+The CI/CD pipeline is done using GitHub Actions. The workflow files are located in the `.github/workflows` folder. The workflow files are named based on what they do or their purpose.
+
+**`pipeline-ci.yml`**
+
+This workflow is run on every push and pull request to every branch in the repository. It will install dependencies, lint the code, compile the code, and format the code. If any of these steps fail, the workflow will send the error log to a discord channel via a webhook with some brief details and a pastebin link including the full error log.
+
+These are the GitHub secrets you must add to your repository in order for it to work.
+
+| Secret Name           | Description                                           |
+| --------------------- | ----------------------------------------------------- |
+| `DISCORD_WEBHOOK_URL` | The webhook URL to send the error logs to.            |
+| PASTEBIN_API_KEY      | The Pastebin API key to use to upload the error logs. |
+
+**`pipeline-cd.yml`**
+
+This workflow is run on every pull request to the `main` branch. It will install dependencies, lint the code, compile the code, format the code, build the docker images, push the docker images to a docker registry, and deploy the new images to the production server. If any of these steps fail, the workflow will send the error log to a discord channel via a webhook with some brief details and a pastebin link including the full error log.
+
+These are the GitHub secrets you must add to your repository in order for it to work.
+
+| Secret Name           | Description                                           |
+| --------------------- | ----------------------------------------------------- |
+| `DISCORD_WEBHOOK_URL` | The webhook URL to send the error logs to.            |
+| PASTEBIN_API_KEY      | The Pastebin API key to use to upload the error logs. |
+| DOCKER_USERNAME       | The username to use to login to the docker registry.  |
+| DOCKER_PASSWORD       | The password to use to login to the docker registry.  |
+
 # Project Details
 
 ## Contributing
