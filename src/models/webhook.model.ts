@@ -1,23 +1,18 @@
-import { Document, Schema, SchemaTimestampsConfig, model } from 'mongoose';
+import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
-export interface WebhookSchema extends SchemaTimestampsConfig {
-  guildId: string;
-  channelId: string;
-  webhook: {
-    id: string;
-    token: string;
-  };
-}
+import { CoreWebhook } from '@typings/core';
 
-export interface WebhookDocument extends WebhookSchema, Document {}
+export interface WebhookSchema extends CoreWebhook, SchemaTimestampsConfig {}
 
-export default model<WebhookDocument>(
+export type WebhookDocument = HydratedDocument<WebhookSchema>;
+
+export const WebhookModel = model<WebhookDocument>(
   'webhook',
   new Schema<WebhookSchema>(
     {
-      guildId: { type: String, required: true },
-      channelId: { type: String, required: true },
-      webhook: {
+      guildId: { type: String, index: true, required: true },
+      channelId: { type: String, index: true, unique: true, required: true },
+      data: {
         id: { type: String, required: true },
         token: { type: String, required: true },
       },

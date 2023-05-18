@@ -5,7 +5,7 @@ import { ExtendedClient } from 'src/client';
  * @param client The extended client.
  */
 const databaseSync = async (client: ExtendedClient) => {
-  await Promise.all([client.guildProfiles.sync(), client.webhooks.sync()]);
+  await Promise.all([await client.guildProfiles.sync(), await client.webhooks.sync()]);
 };
 
 export default databaseSync;

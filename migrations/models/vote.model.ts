@@ -12,8 +12,8 @@ interface VoteSchema extends SchemaTimestampsConfig {
   channel: string;
   type: VoteType;
   votes: {
-    op_one: string[];
-    op_two: string[];
+    optionOne: string[];
+    optionTwo: string[];
   };
   until: Date;
 }
@@ -33,8 +33,8 @@ export default model<VoteDocument>(
         default: VoteType.WouldYouRather,
       },
       votes: {
-        op_one: { type: [String], default: [] },
-        op_two: { type: [String], default: [] },
+        optionOne: { type: [String], default: [] },
+        optionTwo: { type: [String], default: [] },
       },
       until: { type: Date, required: false },
     },

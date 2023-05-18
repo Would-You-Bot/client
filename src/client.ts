@@ -7,12 +7,7 @@ dotenv.config();
 import config from '@config';
 import { CoreButton, CoreCommand, CoreEvent } from '@typings/core';
 import { GuildProfiles, Webhooks } from '@utils/classes';
-import DailyMessage from '@utils/classes/dailyMessage';
-import KeepAlive from '@utils/classes/keepAlive';
 import TranslationHandler from '@utils/classes/translationHandler';
-import VoteLogger from '@utils/classes/voteLogger';
-import Voting from '@utils/classes/votingHandler';
-import WebhookHandler from '@utils/classes/webhookHandler';
 import logger from '@utils/client/logger';
 
 /**
@@ -37,10 +32,9 @@ export class ExtendedClient extends Client {
   public buttons = new Collection<string, CoreButton>();
   public events = new Collection<string, CoreEvent>();
   public guildProfiles: GuildProfiles;
-  public webhooks = Webhooks;
+  public webhooks: Webhooks;
   public used = new Map<string, unknown>();
   public translation: TranslationHandler = new TranslationHandler();
-  public webhookHandler: WebhookHandler;
   public keepAlive: KeepAlive;
   public dailyMessage: DailyMessage;
   public voteLogger: VoteLogger;
@@ -82,6 +76,7 @@ export class ExtendedClient extends Client {
       shardCount: getInfo().TOTAL_SHARDS,
     });
 
+    // Initialize classes
     this.guildProfiles = new GuildProfiles(this.guilds.cache.map((guild) => guild.id));
     this.webhooks = new Webhooks(this.guilds.cache.map((guild) => guild.id));
 
@@ -99,8 +94,6 @@ export class ExtendedClient extends Client {
 
     this.voting = new Voting(this);
     this.voting.start();
-
-    this.webhookHandler = new WebhookHandler(this);
   }
 
   /**

@@ -29,3 +29,12 @@ export interface CoreCommand {
     | SlashCommandSubcommandsOnlyBuilder;
   execute: (...args: unknown[]) => Promise<unknown>;
 }
+
+export interface CoreWebhook {
+  guildId: string;
+  channelId: string;
+  data: {
+    id: string;
+    token: string;
+  };
+}

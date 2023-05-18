@@ -1,12 +1,12 @@
 import { WebhookClient, WebhookEditOptions, WebhookMessageCreateOptions } from 'discord.js';
 
-import webhookModel, { WebhookDocument, WebhookSchema } from '@models/webhook.model';
+import { WebhookDocument, WebhookModel, WebhookSchema } from '@models/Webhook.model';
 import { logger } from '@utils/client';
 
 /**
  * Webhook class.
  */
-class Webhook {
+export class Webhook {
   public id: string;
   public token: string;
   public guildId: string;
@@ -38,7 +38,7 @@ class Webhook {
   public async fetch(): Promise<Webhook | undefined> {
     try {
       // Fetch the webhook from the database
-      const webhook = await webhookModel.findOne({
+      const webhook = await WebhookModel.findOne({
         guildId: this.guildId,
       });
 
@@ -58,7 +58,7 @@ class Webhook {
    */
   public async delete(): Promise<boolean> {
     try {
-      const deletedWebhook = await webhookModel.findOneAndDelete({
+      const deletedWebhook = await WebhookModel.findOneAndDelete({
         guildId: this.guildId,
         channelId: this.channelId,
       });
@@ -148,7 +148,7 @@ export default class Webhooks {
 
       try {
         // Fetch the webhook from the database
-        const webhookDoc = await webhookModel.findOne({
+        const webhookDoc = await WebhookModel.findOne({
           guildId: this.guildIds,
         });
 
@@ -160,13 +160,15 @@ export default class Webhooks {
 
         // Set the webhook to the cache
         this.cache.set(id, webhook);
+
+        return webhook;
       } catch (error) {
         logger.error(error);
       }
     } else {
       try {
         // Fetch all webhooks from the database
-        const webhookDocs = await webhookModel.find({
+        const webhookDocs = await WebhookModel.find({
           guildId: { $in: this.guildIds },
         });
 
@@ -192,7 +194,17 @@ export default class Webhooks {
   public async create(webhookData: WebhookSchema): Promise<Webhook | undefined> {
     try {
       // Create a new webhook document
-      const webhookDoc = await webhookModel.create(webhookData);
+      const webhookDoc = await WebhookModel.findOneAndUpdate(
+        {
+          guildId: webhookData.guildId,
+          channelId: webhookData.channelId,
+        },
+        webhookData,
+        {
+          upsert: true,
+          new: true,
+        }
+      );
 
       // Create a new guild profile instance
       const webhook = new Webhook(webhookDoc);

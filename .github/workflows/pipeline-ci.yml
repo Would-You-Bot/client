@@ -72,7 +72,7 @@ jobs:
               -d "api_dev_key=$PASTEBIN_API_KEY" \
               -d "api_option=paste" \
               -d "api_paste_private=1" \ 		
-              --data-urlencode "api_paste_code@${ERROR_MESSAGE_FILE}" \
+              -d "api_paste_code=$PASTEBIN_API_KEY" \
               https://pastebin.com/api/api_post.php)
             UPLOAD_LINK=$(echo "$UPLOAD_RESULT" | cut -d '/' -f 4)
             if [ "$UPLOAD_LINK" != "null" ]; then

@@ -77,6 +77,7 @@ module.exports = {
     'no-nested-ternary': 0, // Disallows nested ternary expressions
     'id-length': ['error', { min: 2 }], // Enforces a minimum identifier length
     'max-classes-per-file': 0, // Enforces a maximum number of classes per file
+    'no-shadow': 0, // Disallows variable declarations from shadowing variables declared in the outer scope - Was causing problems
   },
 
   settings: {

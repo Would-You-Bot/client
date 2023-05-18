@@ -1,46 +1,16 @@
-import { Document, Schema, SchemaTimestampsConfig, model } from 'mongoose';
+import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
-export interface ReplayChannel {
-  id: string;
-  name: string;
-  cooldown: number;
-}
+import { AllGuildQuestionTypes, GuildProfile, GuildQuestionType } from '@typings/guild';
 
-export interface CustomMessage {
-  id: string;
-  type: string;
-  msg: string;
-}
+export interface GuildProfileSchema extends GuildProfile, SchemaTimestampsConfig {}
 
-export interface GuildProfileSchema extends SchemaTimestampsConfig {
-  guildID: string;
-  language: string;
-  welcome?: boolean;
-  welcomeChannel?: string;
-  welcomePing?: boolean;
-  dailyMsg?: boolean;
-  dailyChannel?: string;
-  dailyRole?: string;
-  dailyTimezone?: string;
-  dailyInterval?: string;
-  dailyThread?: boolean;
-  replay?: boolean;
-  replayCooldown?: number;
-  replayType?: string;
-  replayChannels?: ReplayChannel[];
-  botJoined?: number;
-  customMessages?: CustomMessage[];
-  customTypes?: string;
-  debugMode?: boolean;
-}
+export type GuildProfileDocument = HydratedDocument<GuildProfileSchema>;
 
-export type GuildProfileDocument = GuildProfileSchema & Document;
-
-export default model<GuildProfileDocument>(
-  'guildProfile',
+export const GuildProfileModel = model<GuildProfileDocument>(
+  'GuildProfile',
   new Schema<GuildProfileSchema>(
     {
-      guildID: {
+      guildId: {
         type: String,
         required: true,
         unique: true,
@@ -50,74 +20,103 @@ export default model<GuildProfileDocument>(
         default: 'en_EN',
         required: true,
       },
+      questionType: {
+        type: Number,
+        enum: AllGuildQuestionTypes,
+        default: GuildQuestionType.Default,
+        required: true,
+      },
+      premium: {
+        enabled: {
+          type: Boolean,
+          default: false,
+        },
+        permanent: {
+          type: Boolean,
+          default: false,
+        },
+        expires: {
+          type: Date,
+          required: false,
+        },
+      },
       welcome: {
-        type: Boolean,
-        default: false,
+        enabled: {
+          type: Boolean,
+          default: false,
+        },
+        channel: {
+          type: String,
+          required: false,
+        },
+        ping: {
+          type: Boolean,
+          required: false,
+        },
       },
-      welcomeChannel: {
-        type: String,
-        default: null,
-      },
-      welcomePing: {
-        type: Boolean,
-        default: false,
-      },
-      dailyMsg: {
-        type: Boolean,
-        default: false,
-      },
-      dailyChannel: {
-        type: String,
-        default: null,
-      },
-      dailyRole: {
-        type: String,
-        default: null,
-      },
-      dailyTimezone: {
-        type: String,
-        default: 'America/Chicago',
-      },
-      dailyInterval: {
-        type: String,
-        default: '12:00',
-      },
-      dailyThread: {
-        type: Boolean,
-        default: false,
+      daily: {
+        enabled: {
+          type: Boolean,
+          default: false,
+        },
+        channel: {
+          type: String,
+          required: false,
+        },
+        role: {
+          type: String,
+          required: false,
+        },
+        timezone: {
+          type: String,
+          default: 'America/Chicago',
+        },
+        interval: {
+          type: String,
+          default: '12:00',
+        },
+        thread: {
+          type: Boolean,
+          required: false,
+        },
       },
       replay: {
-        type: Boolean,
-        default: true,
-      },
-      replayCooldown: {
-        type: Number,
-        default: 30000,
-      },
-      replayType: {
-        type: String,
-        default: 'Guild',
-      },
-      replayChannels: [
-        {
-          type: Object,
-          default: {},
+        enabled: {
+          type: Boolean,
+          default: true,
         },
-      ],
+        cooldown: {
+          type: Number,
+          default: 30000,
+        },
+        type: {
+          type: String,
+          default: 'Guild',
+        },
+        channels: {
+          type: [
+            {
+              id: {
+                type: String,
+                required: true,
+              },
+              name: {
+                type: String,
+                required: true,
+              },
+              cooldown: {
+                type: Number,
+                required: true,
+              },
+            },
+          ],
+          default: [],
+        },
+      },
       botJoined: {
         type: Number,
       },
-      customMessages: [
-        {
-          type: Object,
-          default: {},
-        },
-      ],
-      customTypes: {
-        type: String,
-        default: 'mixed',
-      },
-      debugMode: {
+      debug: {
         type: Boolean,
         default: false,
       },
