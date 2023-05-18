@@ -76,8 +76,9 @@
       },
       "paginator": {
         "title": "Mensajes personalizados de Would You",
-        "descCatUseful": "**Categoría**: útil",
-        "descCatUseless": "**Categoría**: inútil"
+        "descCatNHIE": "**Categoría**: Nunca he",
+        "descCatWYR": "**Categoría**: Preferirías",
+        "descCatWWYD": "**Categoría**: Qué harías si"
       }
     }
   },

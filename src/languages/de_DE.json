@@ -76,8 +76,9 @@
       },
       "paginator": {
         "title": "Would You benutzerdefinierte Nachrichten",
-        "descCatUseful": "**Kategorie**: useful",
-        "descCatUseless": "**Kategorie**: useless"
+        "descCatNHIE": "**Kategorie**: Nie habe ich je",
+        "descCatWYR": "**Kategorie**: Would You Rather",
+        "descCatWWYD": "**Kategorie**: Was würdest du tun"
       }
     }
   },

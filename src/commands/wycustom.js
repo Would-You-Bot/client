@@ -291,9 +291,9 @@ module.exports = {
 
                     const page = new Paginator([], {})
 
-                    if (guildDb.customMessages.filter(c => c.type === "useless" > 0)) {
+                    if (guildDb.customMessages.filter(c => c.type === "neverhaveiever" > 0)) {
                         let data;
-                        data = guildDb.customMessages.filter(c => c.type === "useless").map(
+                        data = guildDb.customMessages.filter(c => c.type === "neverhaveiever").map(
                             (s, i) =>
                                 `${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descID')}: ${s.id}\n${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descMsg')}: ${s.msg}`
                         );
@@ -304,12 +304,12 @@ module.exports = {
                         );
 
                         Math.ceil(data.length / 5);
-                        data = data.map(e => page.add(new EmbedBuilder().setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.paginator.title')).setDescription(`${client.translation.get(guildDb?.language, 'wyCustom.success.paginator.descCatUseful')}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
+                        data = data.map(e => page.add(new EmbedBuilder().setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.paginator.title')).setDescription(`${client.translation.get(guildDb?.language, 'wyCustom.success.paginator.descCatNHIE')}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
                     }
 
-                    if (guildDb.customMessages.filter(c => c.type === "useful" > 0)) {
+                    if (guildDb.customMessages.filter(c => c.type === "wouldyourather" > 0)) {
                         let data;
-                        data = guildDb.customMessages.filter(c => c.type === "useful").map(
+                        data = guildDb.customMessages.filter(c => c.type === "wouldyourather").map(
                             (s, i) =>
                                 `${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descID')}: ${s.id}\n${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descMsg')}: ${s.msg}`
                         );
@@ -320,7 +320,23 @@ module.exports = {
                         );
 
                         Math.ceil(data.length / 5);
-                        data = data.map(e => page.add(new EmbedBuilder().setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.paginator.title')).setDescription(`${client.translation.get(guildDb?.language, 'wyCustom.success.paginator.descCatUseless')}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
+                        data = data.map(e => page.add(new EmbedBuilder().setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.paginator.title')).setDescription(`${client.translation.get(guildDb?.language, 'wyCustom.success.paginator.descCatWYR')}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
+                    }
+
+                    if (guildDb.customMessages.filter(c => c.type === "wwyd" > 0)) {
+                        let data;
+                        data = guildDb.customMessages.filter(c => c.type === "wwyd").map(
+                            (s, i) =>
+                                `${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descID')}: ${s.id}\n${client.translation.get(guildDb?.language, 'wyCustom.success.embedAdd.descMsg')}: ${s.msg}`
+                        );
+                        data = Array.from({
+                                length: Math.ceil(data.length / 5)
+                            },
+                            (a, r) => data.slice(r * 5, r * 5 + 5)
+                        );
+
+                        Math.ceil(data.length / 5);
+                        data = data.map(e => page.add(new EmbedBuilder().setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.paginator.title')).setDescription(`${client.translation.get(guildDb?.language, 'wyCustom.success.paginator.descCatWWYD')}\n\n${e.slice(0, 5).join("\n\n").toString()}`)))
                     }
 
                     page.setTransform((embed, index, total) => embed.setFooter({
@@ -362,7 +378,7 @@ module.exports = {
                     })
 
                     // Let give the bot some more time to fetch it :)
-                    await interaction.deferReply({ ephemeral: tru });
+                    await interaction.deferReply({ ephemeral: true });
 
                     axios
                         .get(attachemnt.attachment.url, {

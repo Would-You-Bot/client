@@ -78,8 +78,9 @@
       },
       "paginator": {
         "title": "Would You Custom Messages",
-        "descCatUseful": "**Category**: useful",
-        "descCatUseless": "**Category**: useless"
+        "descCatNHIE": "**Category**: Never Have I Ever",
+        "descCatWYR": "**Category**: Would You Rather",
+        "descCatWWYD": "**Category**: What Would You Do"
       }
     }
   },
