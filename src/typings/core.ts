@@ -1,17 +1,22 @@
 import { Events, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 
+export interface CoreCron {
+  name: string;
+  execute: (...parameters: unknown[]) => Promise<undefined>; // defined the class in the cron file
+}
+
 export interface CoreEvent {
   disabled?: boolean;
   once?: boolean;
   name: Events;
-  execute: (...args: unknown[]) => Promise<unknown>;
+  execute: (...parameters: unknown[]) => Promise<unknown>;
 }
 
 export interface CoreButton {
   disabled?: boolean;
   id: string;
   description: string;
-  execute: (...args: unknown[]) => Promise<unknown>;
+  execute: (...parameters: unknown[]) => Promise<unknown>;
 }
 
 export interface CoreCommand {
@@ -27,7 +32,7 @@ export interface CoreCommand {
         | 'addRoleOption'
       >
     | SlashCommandSubcommandsOnlyBuilder;
-  execute: (...args: unknown[]) => Promise<unknown>;
+  execute: (...parameters: unknown[]) => Promise<unknown>;
 }
 
 export interface CoreWebhook {
@@ -37,4 +42,10 @@ export interface CoreWebhook {
     id: string;
     token: string;
   };
+}
+
+export enum CoreLanguage {
+  English = 'en',
+  German = 'de',
+  Spanish = 'es',
 }

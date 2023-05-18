@@ -1,3 +1,5 @@
+import { CoreLanguage } from './core';
+
 export enum BaseQuestionType {
   WouldYouRather = 0,
   NeverHaveIEver = 1,
@@ -7,7 +9,7 @@ export enum BaseQuestionType {
 
 interface BaseQuestion {
   id: string;
-  text: string;
+  translations: Record<CoreLanguage, string>;
   choices?: [number, number];
 }
 
@@ -17,8 +19,17 @@ export interface BasePack {
   questions: BaseQuestion[];
 }
 
-export interface CustomPack extends BasePack {
+interface CustomQuestion {
+  id: string;
+  tex: string;
+  choices?: [number, number];
+}
+
+export interface CustomPack {
   guildId: string;
+  name: string;
+  questionType: BaseQuestionType;
+  questions: CustomQuestion[];
 }
 
 export interface UserChoices {

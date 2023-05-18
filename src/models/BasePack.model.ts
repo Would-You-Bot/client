@@ -14,7 +14,11 @@ export const BasePackModel = model<BasePackDocument>(
     questions: [
       {
         id: { type: String, unique: true, required: true },
-        text: { type: String, required: true },
+        translations: {
+          en: { type: String, required: true },
+          de: { type: String, required: true },
+          es: { type: String, required: true },
+        },
         choices: [
           {
             type: Number,

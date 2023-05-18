@@ -1,5 +1,6 @@
 import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
+import { CoreLanguage } from '@typings/core';
 import { AllGuildQuestionTypes, GuildProfile, GuildQuestionType } from '@typings/guild';
 
 export interface GuildProfileSchema extends GuildProfile, SchemaTimestampsConfig {}
@@ -17,7 +18,7 @@ export const GuildProfileModel = model<GuildProfileDocument>(
       },
       language: {
         type: String,
-        default: 'en_EN',
+        default: CoreLanguage.English,
         required: true,
       },
       questionType: {

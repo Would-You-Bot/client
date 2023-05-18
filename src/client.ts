@@ -7,7 +7,6 @@ dotenv.config();
 import config from '@config';
 import { CoreButton, CoreCommand, CoreEvent } from '@typings/core';
 import { GuildProfiles, Webhooks } from '@utils/classes';
-import TranslationHandler from '@utils/classes/translationHandler';
 import logger from '@utils/client/logger';
 
 /**
@@ -34,11 +33,6 @@ export class ExtendedClient extends Client {
   public guildProfiles: GuildProfiles;
   public webhooks: Webhooks;
   public used = new Map<string, unknown>();
-  public translation: TranslationHandler = new TranslationHandler();
-  public keepAlive: KeepAlive;
-  public dailyMessage: DailyMessage;
-  public voteLogger: VoteLogger;
-  public voting: Voting;
 
   /**
    * Create a new client instance.
@@ -77,14 +71,9 @@ export class ExtendedClient extends Client {
     });
 
     // Initialize classes
+    this.cluster = new ClusterClient(this);
     this.guildProfiles = new GuildProfiles(this.guilds.cache.map((guild) => guild.id));
     this.webhooks = new Webhooks(this.guilds.cache.map((guild) => guild.id));
-
-    // Keep Alive system after the necessary things that are allowed to crash are loaded
-    this.keepAlive = new KeepAlive(this);
-    this.keepAlive.start();
-
-    this.cluster = new ClusterClient(this);
 
     this.dailyMessage = new DailyMessage(this);
     this.dailyMessage.start();

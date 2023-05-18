@@ -1,3 +1,5 @@
+import { CoreLanguage } from './core';
+
 export interface ReplayChannel {
   id: string;
   name: string;
@@ -20,7 +22,7 @@ export const AllGuildQuestionTypes = [GuildQuestionType.Default, GuildQuestionTy
 
 export interface GuildProfile {
   guildId: string;
-  language: string;
+  language: CoreLanguage;
   premium: {
     enabled: boolean;
     permanent?: boolean;
