@@ -1,4 +1,8 @@
+import { CronJob } from 'cron';
+
+import { CoreCron, CoreCustomCron } from '@typings/core';
 import { loadFiles } from '@utils/client';
+import { validateAndFormatTimezone, validateCronExpression } from '@utils/functions';
 import { ExtendedClient } from 'src/client';
 
 /**
@@ -6,12 +10,63 @@ import { ExtendedClient } from 'src/client';
  * @param client The extended client.
  */
 const initializeCrons = async (client: ExtendedClient): Promise<void> => {
-  const cronFiles = await loadFiles('crons');
-  for (const cronFile of cronFiles) {
-    const cron = (await import(`../../crons/${cronFile}`)) as {
-      default: (client: ExtendedClient) => Promise<void>;
-    };
-    cron.default(client);
+  const customCronFiles = await loadFiles('crons/custom');
+  for (const customCronFile of customCronFiles) {
+    client.logger.debug(`Importing custom cron: ${customCronFile}`);
+
+    // Load the cron
+    const customCron = (
+      (await import(`../../crons/custom/${customCronFile}`)) as {
+        default: CoreCustomCron<ExtendedClient>;
+      }
+    ).default;
+
+    client.logger.debug(`Initializing custom cron: ${customCron.name} (${customCron.id})`);
+
+    // Execute the custon cron
+    customCron.execute(client);
+  }
+
+  // Load all of the client crons
+  const clientCronFiles = await loadFiles('crons/client');
+
+  for (const clientCronFile of clientCronFiles) {
+    // Load the cron
+    const clientCron = (
+      (await import(`../../crons/client/${clientCronFile}`)) as {
+        default: CoreCron;
+      }
+    ).default;
+
+    // Validate the cron expression
+    if (!validateCronExpression(clientCron.expression)) {
+      client.logger.error(`Invalid cron expression for ${clientCron.name} (${clientCron.id})`);
+      return;
+    }
+
+    // Validate the timezone
+    const timezone = validateAndFormatTimezone(clientCron.timezone);
+
+    // If the timezone is invalid, log an error and return
+    if (!timezone) {
+      client.logger.error(`Invalid timezone for ${clientCron.name} (${clientCron.id})`);
+      return;
+    }
+
+    // Create the cron job
+    const job = new CronJob(
+      clientCron.expression,
+      () => {
+        client.logger.debug(`Running cron ${clientCron.name} (${clientCron.id})`);
+        clientCron.execute(client);
+      },
+      null,
+      false,
+      clientCron.timezone
+    );
+
+    // Start the cron job
+    job.start();
   }
 };
 

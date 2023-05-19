@@ -1,7 +1,7 @@
 import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
 import { CoreLanguage } from '@typings/core';
-import { AllGuildQuestionTypes, GuildProfile, GuildQuestionType } from '@typings/guild';
+import { GuildProfile } from '@typings/guild';
 
 export interface GuildProfileSchema extends GuildProfile, SchemaTimestampsConfig {}
 
@@ -16,15 +16,13 @@ export const GuildProfileModel = model<GuildProfileDocument>(
         required: true,
         unique: true,
       },
+      timezone: {
+        type: String,
+        default: 'America/Chicago',
+      },
       language: {
         type: String,
         default: CoreLanguage.English,
-        required: true,
-      },
-      questionType: {
-        type: Number,
-        enum: AllGuildQuestionTypes,
-        default: GuildQuestionType.Default,
         required: true,
       },
       premium: {
@@ -67,10 +65,6 @@ export const GuildProfileModel = model<GuildProfileDocument>(
         role: {
           type: String,
           required: false,
-        },
-        timezone: {
-          type: String,
-          default: 'America/Chicago',
         },
         interval: {
           type: String,

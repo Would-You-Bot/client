@@ -1,10 +1,17 @@
 import { Events, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 
-export interface CoreCron {
+export interface CoreCron<T = unknown> {
   id: string;
   name: string;
-  interval: string;
-  execute: (...parameters: unknown[]) => Promise<void>; // defined the class in the cron file
+  expression: string;
+  timezone: string;
+  execute: (client: T) => Promise<void>;
+}
+
+export interface CoreCustomCron<T = unknown> {
+  id: string;
+  name: string;
+  execute: (client: T) => Promise<void>;
 }
 
 export interface CoreEvent {
@@ -32,6 +39,11 @@ export interface CoreCommand {
         | 'addUserOption'
         | 'addChannelOption'
         | 'addRoleOption'
+        | 'addMentionableOption'
+        | 'addNumberOption'
+        | 'addIntegerOption'
+        | 'addStringOption'
+        | 'addChoices'
       >
     | SlashCommandSubcommandsOnlyBuilder;
   execute: (...parameters: unknown[]) => Promise<unknown>;

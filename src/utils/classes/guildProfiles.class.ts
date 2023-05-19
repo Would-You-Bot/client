@@ -9,9 +9,9 @@ import { logger } from '@utils/client';
  */
 class GuildProfile implements IGuildProfile {
   public guildId: string;
+  public timezone: string;
   public language: CoreLanguage;
   public premium: GuildPremium;
-  public questionType: number;
   public welcome: GuildWelcome;
   public daily: GuildDaily;
   public botJoined: number;
@@ -136,6 +136,17 @@ export default class GuildProfiles {
   }
 
   /**
+   * First type for the fetch method without guild id and returns array of guild profiles.
+   */
+  public fetch(): Promise<GuildProfile[] | undefined>;
+
+  /**
+   * Second type for the fetch method with guild id and returns a single guild profile.
+   * @param guildId The guild id.
+   */
+  public fetch(guildId: string): Promise<GuildProfile | undefined>;
+
+  /**
    * Fetch a guild profile if the id is provided or all guild profiles if an id is not provided.
    * @param guildId The guild id if fetching a single guild profile.
    * @returns The guild profile document or all guild profile if successsful.
@@ -153,6 +164,7 @@ export default class GuildProfiles {
         if (!guildProfileDoc) {
           const createdGuildProfile = await this.create({
             guildId,
+            timezone: 'America/New_York',
             language: CoreLanguage.English,
             premium: {
               enabled: false,
@@ -162,10 +174,13 @@ export default class GuildProfiles {
             },
             daily: {
               enabled: false,
+              time: '12:00',
+              thread: false,
             },
             botJoined: Date.now(),
             debug: false,
           });
+
           return createdGuildProfile;
         }
 
@@ -186,11 +201,12 @@ export default class GuildProfiles {
         if (guildProfileDocs.length === 0) return;
 
         // Loop through all guild profile documents and create a new guild profile instance for each one
-        const guildProfiles = guildProfileDocs.map((guildProfileDoc) => {
+        const guildProfiles: GuildProfile[] = guildProfileDocs.map((guildProfileDoc) => {
           const guildProfile = new GuildProfile(guildProfileDoc);
           this.cache.set(guildProfile.guildId, guildProfile);
           return guildProfile;
         });
+
         return guildProfiles;
       } catch (error) {
         logger.error(error);

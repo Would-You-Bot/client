@@ -109,7 +109,8 @@ const create = async (client: ExtendedClient, guildId: string, channelId: string
       return;
     }
 
-    const guild = await client.guilds.fetch(guildId);
+    const guild = client.guilds.cache.get(guildId);
+    if (!guild) return;
     const webhooksInChannel = await guild.channels.fetchWebhooks(channelId);
 
     if (webhooksInChannel.size >= 10) {
@@ -178,7 +179,7 @@ const get = async (client: ExtendedClient, guildId: string, channelId: string) =
   // Get the guild and channel
   const guild = client.guilds.cache.get(guildId);
   if (!guild) return;
-  const channel = guild.channels.cache.get(channelId) as TextChannel | undefined;
+  const channel = guild.channels.cache.get(channelId) as TextChannel | null;
   if (!channel) return;
 
   // If there is no saved webhook for this channel, create a new one

@@ -30,9 +30,8 @@ export interface GuildDaily {
   enabled: boolean;
   channel?: string;
   role?: string;
-  timezone?: string;
-  interval?: string;
-  thread?: boolean;
+  time: string;
+  thread: boolean;
 }
 
 export interface ReplayChannel {
@@ -43,6 +42,7 @@ export interface ReplayChannel {
 
 export interface GuildProfile {
   guildId: string;
+  timezone: string;
   language: CoreLanguage;
   premium: GuildPremium;
   welcome: GuildWelcome;

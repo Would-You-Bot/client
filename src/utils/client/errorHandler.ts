@@ -2,7 +2,7 @@
 import config from '@config';
 
 import { stripIndents } from '@utils/functions';
-import { AttachmentBuilder, BaseInteraction, EmbedBuilder, Guild, TextChannel } from 'discord.js';
+import { AttachmentBuilder, BaseInteraction, EmbedBuilder, TextChannel } from 'discord.js';
 import { ExtendedClient } from 'src/client';
 import webhookManager from './webhookManager';
 
@@ -60,7 +60,7 @@ export const clientError = async (
       interaction.reply({ embeds: [informEmbed], ephemeral: true }).catch(client.logger.error);
 
     // Get the dev guild
-    const guild = (await client.guilds.fetch(config.env.DEV_GUILD).catch(client.logger.error)) as Guild | undefined;
+    const guild = client.guilds.cache.get(config.env.DEV_GUILD);
     if (!guild) {
       client.logger.error('Failed to fetch dev guild.');
       return;
