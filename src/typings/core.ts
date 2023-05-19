@@ -4,7 +4,7 @@ export interface CoreCron {
   id: string;
   name: string;
   interval: string;
-  execute: (...parameters: unknown[]) => Promise<undefined>; // defined the class in the cron file
+  execute: (...parameters: unknown[]) => Promise<void>; // defined the class in the cron file
 }
 
 export interface CoreEvent {

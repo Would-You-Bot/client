@@ -14,9 +14,8 @@ await (async () => {
    * @param params The client error handler parameters.
    * @returns The client error handler.
    */
-  client.error = async (params: ClientErrorParams): Promise<undefined> => {
+  client.error = async (params: ClientErrorParams): Promise<void> => {
     await clientError(client, params);
-    return undefined;
   };
   client.logger = logger;
 

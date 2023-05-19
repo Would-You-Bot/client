@@ -1,6 +1,7 @@
 import colors from 'colors';
 
-import { initLogger, initializeProcessErrorHandling } from '@utils/client';
+import { initLogger } from '@utils/client';
+import { initializeProcessErrorHandling } from '@utils/client/errorHandler';
 import connectToDatabase from '@utils/start/databaseConnection';
 import ensureDirectories from '@utils/start/ensureDirectories';
 import initializeHandlers from '@utils/start/initializeHandlers';

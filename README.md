@@ -20,6 +20,7 @@ Would You bot is an open-source discord bot that includes activities and questio
   - [Starting the Development Environment](#starting-the-development-environment)
     - [Linting](#linting)
     - [Formatting](#formatting)
+    - [NPM Scripts](#npm-scripts)
   - [Starting the Production Environment](#starting-the-production-environment)
     - [Updating the Production Environment](#updating-the-production-environment)
     - [Viewing Logs](#viewing-logs)
@@ -70,6 +71,24 @@ Before committing, make sure to run `npm run lint` to lint the code. This will a
 Before committing, make sure to run `npm run format` to format the code. This will also be run automatically when you commit, but it is better to run it manually to make sure you don't commit code that isn't formatted correctly. You can also run `npm run format:check` to check if the code is formatted correctly. This will not format the code, it will only check if the code is formatted correctly.
 
 Additionally, it is recommended to install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension for VS Code. This will automatically format the code when you save (or based on the event you choose).
+
+### NPM Scripts
+
+You can run the below scripts with `npm run <script>`.
+
+| Script         | Description                                                          |
+| -------------- | -------------------------------------------------------------------- |
+| `lint`         | Lints the code.                                                      |
+| `lint:fix`     | Lints the code and fixes any fixable errors.                         |
+| `clean`        | Deletes the the build directory and cleans any cache.                |
+| `build`        | Builds the project.                                                  |
+| `copyfiles`    | Copies the config files to the `dist` folder.                        |
+| `start`        | Builds the project, copies the config files, and starts the project. |
+| `dev`          | Starts the project in development mode.                              |
+| `docs`         | Generates the documentation.                                         |
+| `format`       | Formats the code.                                                    |
+| `format:check` | Checks if the code is formatted correctly.                           |
+| `migrate`      | Runs the migrations.                                                 |
 
 ## Starting the Production Environment
 

@@ -5,40 +5,32 @@ dotenv.config();
 const { env } = process;
 
 /**
- *
+ * Verify the environment variables are all provided and of type 'string'.
+ * @returns The verified environment variables.
  */
 const verifyEnvironment = (): NodeJS.ProcessEnv => {
-  if (!env) throw new Error('env is not defined in .env file');
-
   const envKeys = [
-    // Environment
     'NODE_ENV',
     'DEBUG',
 
-    // Database
     'MONGODB_URI',
 
-    // Discord bot
     'BOT_TOKEN_DEV',
     'BOT_TOKEN_BETA',
     'BOT_TOKEN_PROD',
 
-    // Discord logging - channels must be in the log guild
-    'LOG_GUILD',
-    'ERROR_PING_ROLE',
-    'WARN_WEBHOOK',
-    'ERROR_WEBHOOK',
-    'DEBUG_WEBHOOK',
-    'PRIVATE_WEBHOOK',
-    'PUBLIC_WEBHOOK',
-    // 'WARN_CHANNEL',
-    // 'ERROR_CHANNEL',
-    // 'DEBUG_CHANNEL',
+    'TOPGG_TOKEN',
 
-    // External Keys/Tokens
-    // 'TOPGG_TOKEN',
-    'VOTE_WEBHOOK',
-    // 'VOTE_CHANNEL',
+    'DEV_GUILD',
+    'DEV_ROLE',
+    'PREMIUM_CHANNEL',
+    'GUILD_CHANNEL',
+    'ALERTS_CHANNEL',
+    'INFO_CHANNEL',
+    'WARN_CHANNEL',
+    'ERROR_CHANNEL',
+    'DEBUG_CHANNEL',
+    'VOTE_CHANNEL',
   ];
 
   /**
@@ -46,8 +38,7 @@ const verifyEnvironment = (): NodeJS.ProcessEnv => {
    */
   envKeys.forEach((key) => {
     if (!env[key]) throw new Error(`env.${key} is not defined in .env file`);
-    if (typeof env[key] !== 'string')
-      throw new Error(`env.${key} is not a string`);
+    if (typeof env[key] !== 'string') throw new Error(`env.${key} is not a string`);
   });
 
   return env;

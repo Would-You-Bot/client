@@ -13,6 +13,8 @@ const cron: CoreCron = {
   execute: async (...args) => {
     const client = args[0] as ExtendedClient;
 
+    return;
+
     /* 
     TODO:
     - loop through every guild with daily messages enabled

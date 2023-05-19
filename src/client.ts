@@ -31,7 +31,7 @@ export class ExtendedClient extends Client {
 
   // Client functions - Initialized after the client is initialized
   public logger: Logger;
-  public error: (params: ClientErrorParams) => Promise<undefined>;
+  public error: (params: ClientErrorParams) => Promise<void>;
 
   // Classes
   public commands = new Collection<string, CoreCommand>();

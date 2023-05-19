@@ -4,11 +4,11 @@ import { parse } from 'yaml';
 import { ConfigType, EmojisConfig, LimitsConfig, MainConfig } from '@typings/config';
 import verifyEnvironment from '@utils/start/verifyEnvironment';
 
+// Load the config files
 const emojisConfig: string = readFileSync('./config/emojis.yaml', 'utf8');
 const limitsConfig: string = readFileSync('./config/limits.yaml', 'utf8');
 const mainConfig: string = readFileSync('./config/main.yaml', 'utf8');
 const main: MainConfig = parse(mainConfig) as MainConfig;
-
 const emojiList = parse(emojisConfig) as Record<string, string>;
 const emojisData = {} as EmojisConfig;
 

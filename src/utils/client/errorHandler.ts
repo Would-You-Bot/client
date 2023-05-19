@@ -46,7 +46,7 @@ export interface ClientErrorParams {
 export const clientError = async (
   client: ExtendedClient,
   { error, title, description, footer, interaction }: ClientErrorParams
-): Promise<undefined> => {
+): Promise<void> => {
   try {
     client.logger.error(error);
 
