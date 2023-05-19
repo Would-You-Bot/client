@@ -81,39 +81,6 @@ export const GuildProfileModel = model<GuildProfileDocument>(
           required: false,
         },
       },
-      replay: {
-        enabled: {
-          type: Boolean,
-          default: true,
-        },
-        cooldown: {
-          type: Number,
-          default: 30000,
-        },
-        type: {
-          type: String,
-          default: 'Guild',
-        },
-        channels: {
-          type: [
-            {
-              id: {
-                type: String,
-                required: true,
-              },
-              name: {
-                type: String,
-                required: true,
-              },
-              cooldown: {
-                type: Number,
-                required: true,
-              },
-            },
-          ],
-          default: [],
-        },
-      },
       botJoined: {
         type: Number,
       },

@@ -1,5 +1,5 @@
 import { ClusterClient, DjsDiscordClient, getInfo } from 'discord-hybrid-sharding';
-import { Client, Collection, GatewayIntentBits, Options, User } from 'discord.js';
+import { BaseInteraction, Client, Collection, GatewayIntentBits, Options, User } from 'discord.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -7,7 +7,15 @@ dotenv.config();
 import config from '@config';
 import { CoreButton, CoreCommand, CoreEvent } from '@typings/core';
 import { GuildProfiles, Webhooks } from '@utils/classes';
-import logger from '@utils/client/logger';
+import { Logger } from 'winston';
+
+interface ClientErrorParams {
+  error: Error | string;
+  title?: string;
+  description?: string;
+  footer?: string;
+  interaction?: BaseInteraction;
+}
 
 /**
  * A custom class representing the discord client.
@@ -21,10 +29,9 @@ export class ExtendedClient extends Client {
   public client: ClusterClient<Client>;
   public cluster: ClusterClient<DjsDiscordClient>;
 
-  // Client functions
-  public logger = logger;
-  // Uncomment this to bind a centralized error handler to the client
-  // error = error
+  // Client functions - Initialized after the client is initialized
+  public logger: Logger;
+  public error: (params: ClientErrorParams) => Promise<undefined>;
 
   // Classes
   public commands = new Collection<string, CoreCommand>();
@@ -75,14 +82,15 @@ export class ExtendedClient extends Client {
     this.guildProfiles = new GuildProfiles(this.guilds.cache.map((guild) => guild.id));
     this.webhooks = new Webhooks(this.guilds.cache.map((guild) => guild.id));
 
-    this.dailyMessage = new DailyMessage(this);
+    // TODO: Replace these
+    /* this.dailyMessage = new DailyMessage(this);
     this.dailyMessage.start();
 
     this.voteLogger = new VoteLogger(this);
     if (this.cluster.id === 0) this.voteLogger.startAPI();
 
     this.voting = new Voting(this);
-    this.voting.start();
+    this.voting.start(); */
   }
 
   /**
@@ -97,7 +105,9 @@ export class ExtendedClient extends Client {
    * Check if the client is synced with the database - used to prevent code from running unless client is synced with database.
    * @returns Whether the client is synced with the database.
    */
-  public isSynced = () => (this.synced ? true : false);
+  public get isSynced() {
+    return this.synced ? true : false;
+  }
 }
 
 export default {};

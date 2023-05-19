@@ -1,6 +1,6 @@
 import colors from 'colors';
 
-import { initLogger } from '@utils/client';
+import { initLogger, initializeProcessErrorHandling } from '@utils/client';
 import connectToDatabase from '@utils/start/databaseConnection';
 import ensureDirectories from '@utils/start/ensureDirectories';
 import initializeHandlers from '@utils/start/initializeHandlers';
@@ -14,6 +14,7 @@ const app = async (client: ExtendedClient) => {
   // Run startup functions
   ensureDirectories();
   await initializeHandlers(client);
+  initializeProcessErrorHandling(client);
 
   // Connect to database
   await connectToDatabase();

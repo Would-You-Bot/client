@@ -140,7 +140,7 @@ const create = async (client: ExtendedClient, guildId: string, channelId: string
     const updatedWebhook = await client.webhooks.create({
       channelId,
       guildId,
-      webhook: { id: createdWebhook.id, token: createdWebhook.token },
+      data: { id: createdWebhook.id, token: createdWebhook.token },
     });
 
     if (!updatedWebhook) {

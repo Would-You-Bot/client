@@ -1,7 +1,9 @@
 import { Events, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 
 export interface CoreCron {
+  id: string;
   name: string;
+  interval: string;
   execute: (...parameters: unknown[]) => Promise<undefined>; // defined the class in the cron file
 }
 

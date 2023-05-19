@@ -22,68 +22,68 @@ Object.keys(emojiList).reduce((acc, key: string) => {
 });
 
 const env = verifyEnvironment();
-const d = new Date();
+const date = new Date();
 
 /**
  * The config class.
  */
 export class Config implements ConfigType {
   // Main config values
-  productionId = main.productionId;
-  links = main.links;
-  developers = main.developers;
-  colors = main.colors;
-  status = main.status;
+  public productionId = main.productionId;
+  public links = main.links;
+  public developers = main.developers;
+  public colors = main.colors;
+  public status = main.status;
 
   // Environment
-  env = env;
-  debug = env.NODE_ENV === 'production' ? false : env.DEBUG;
-  envName: string;
-  BOT_TOKEN: string;
+  public env = env;
+  public debug = env.NODE_ENV === 'production' ? false : env.DEBUG;
+  public envName: string;
+  public BOT_TOKEN: string;
 
   // Programatically generated config values
-  logFolder: string;
+  public logFolder: string;
 
   // Other config files
-  limits = parse(limitsConfig) as LimitsConfig;
-  emojis = emojisData;
-  voteEmojis = main.voteEmojis;
+  public limits = parse(limitsConfig) as LimitsConfig;
+  public emojis = emojisData;
+  public voteEmojis = main.voteEmojis;
 
   /**
    * The config class.
    */
-  constructor() {
+  public constructor() {
     if (this.isProduction()) {
-      this.envName = 'Main Bot';
+      this.envName = 'Would You Production';
       this.BOT_TOKEN = env.BOT_TOKEN_PROD;
     } else if (this.isBeta()) {
-      this.envName = 'Beta Bot';
+      this.envName = 'Would You Beta';
       this.BOT_TOKEN = env.BOT_TOKEN_BETA;
     } else {
-      this.envName = 'Dev Bot';
+      this.envName = 'Would You Dev';
       this.BOT_TOKEN = env.BOT_TOKEN_DEV;
     }
 
-    this.logFolder = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}-${d.getHours()}-${d.getMinutes()}-${d.getSeconds()}`;
+    this.logFolder = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
   }
 
   /**
    * Check if the bot is in development mode.
    * @returns Whether the bot is in development mode.
    */
-  isDevelopment = (): boolean => this.env.NODE_ENV === 'development';
+  public isDevelopment = (): boolean => this.env.NODE_ENV === 'development';
 
   /**
    * Check if the bot is in beta mode.
    * @returns Whether the bot is in beta mode.
    */
-  isBeta = (): boolean => this.env.NODE_ENV === 'beta';
+  public isBeta = (): boolean => this.env.NODE_ENV === 'beta';
 
   /**
    * Check if the bot is in production mode.
    * @returns Whether the bot is in production mode.
    */
-  isProduction = (): boolean => this.env.NODE_ENV === 'production';
+  public isProduction = (): boolean => this.env.NODE_ENV === 'production';
 }
 
 const config = new Config();

@@ -1,7 +1,6 @@
-import { WebhookClient, WebhookEditOptions, WebhookMessageCreateOptions } from 'discord.js';
-
 import { WebhookDocument, WebhookModel, WebhookSchema } from '@models/Webhook.model';
 import { logger } from '@utils/client';
+import { WebhookClient, WebhookEditOptions, WebhookMessageCreateOptions } from 'discord.js';
 
 /**
  * Webhook class.
@@ -24,9 +23,9 @@ export class Webhook {
    * Assign the webhook document to the class.
    * @param doc The webhook document.
    */
-  protected assign(doc: WebhookDocument) {
-    this.id = doc.webhook.id;
-    this.token = doc.webhook.token;
+  private assign(doc: WebhookDocument) {
+    this.id = doc.data.id;
+    this.token = doc.data.token;
     this.guildId = doc.guildId;
     this.channelId = doc.channelId;
   }
@@ -126,7 +125,7 @@ export class Webhook {
  */
 export default class Webhooks {
   public cache = new Map<string, Webhook>();
-  protected guildIds: string[];
+  private guildIds: string[];
 
   /**
    * Webhooks class constructor.

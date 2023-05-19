@@ -7,11 +7,19 @@ const cron: CoreCron = {
   interval: '0 0 * * *',
   /**
    * The function to execute.
-   * @param client The extended client.
+   * @param args The extended client.
    * @returns The result of the execution.
    */
-  execute: async (...params) => {
-    const client = params[0] as ExtendedClient;
+  execute: async (...args) => {
+    const client = args[0] as ExtendedClient;
+
+    /* 
+    TODO:
+    - loop through every guild with daily messages enabled
+    - get the channel (delete if doesn't exist)
+    - get a random question
+    - send the question to the channel
+    */
 
     return undefined;
   },

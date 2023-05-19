@@ -1,6 +1,6 @@
-# Would-You Bot
+# Would You Bot
 
-Would-You bot is an open-source discord bot that includes activities and questions to keep your server active!
+Would You bot is an open-source discord bot that includes activities and questions to keep your server active!
 
 ## Resources
 
@@ -11,6 +11,41 @@ Would-You bot is an open-source discord bot that includes activities and questio
 - [Vote](https://top.gg/bot/981649513427111957/vote)
 - [Terms of Service](https://wouldyoubot.gg/terms)
 - [Privacy Policy](https://wouldyoubot.gg/privacy)
+
+## Table of Contents
+
+- [Would You Bot](#would-you-bot)
+  - [Resources](#resources)
+- [Getting Started](#getting-started)
+  - [Starting the Development Environment](#starting-the-development-environment)
+    - [Linting](#linting)
+    - [Formatting](#formatting)
+  - [Starting the Production Environment](#starting-the-production-environment)
+    - [Updating the Production Environment](#updating-the-production-environment)
+    - [Viewing Logs](#viewing-logs)
+  - [Logging and Debugging](#logging-and-debugging)
+    - [Console Logs](#console-logs)
+    - [Logs Folder](#logs-folder)
+    - [Discord Logs](#discord-logs)
+  - [Using VS Code](#using-vs-code)
+    - [Highly Recommended Extensions](#highly-recommended-extensions)
+    - [Optionally Recommended Extensions](#optionally-recommended-extensions)
+    - [VS Code Snippets](#vs-code-snippets)
+- [Protocols and Conventions](#protocols-and-conventions)
+  - [Documentation](#documentation)
+  - [Other](#other)
+- [Technical Details](#technical-details)
+  - [Technologies Used](#technologies-used)
+  - [Configuration](#configuration)
+    - [Private Configuration](#private-configuration)
+    - [Public Configuration](#public-configuration)
+  - [Project Structure](#project-structure)
+  - [CI/CD Pipeline](#cicd-pipeline)
+    - [Integration](#integration)
+    - [Deployment](#deployment)
+- [Project Details](#project-details)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 # Getting Started
 
@@ -70,17 +105,17 @@ To view the logs on the server-side, type `docker-compose logs -t -f ` in the ro
 
 ## Logging and Debugging
 
-**Console Logs**
+### Console Logs
 
 Logs are always outputted to the console. Debug logs are only outputted to the console in development, and if the `DEBUG` environment variable is set to `'true'`.
 
-**Logs folder**: `tmp/logs`
+### Logs folder
 
 For each instance of the main process, a new folder will be created in the `tmp/logs` folder. This folder will contain the logs for that instance. The logs will be split into multiple files, each file represents a different level of logging. the levels are `error`, `warn`, `info`, and `debug`. The logs will be split into multiple files because it makes it easier to find the logs you are looking for.
 
 For each cluster, a further sub-folder may be made with a new set of log files just for that cluster. For example, the mentioned log level files would be in the directory: `tmp/logs/cluster-0/`.
 
-**Discord logs**
+### Discord logs
 
 Logs are also sent to discord to allow for easier and more accessible debugging, as not everyone will have access to the host system, especially in production. The channels for the different log levels are defined in the `.env` file.
 
@@ -208,6 +243,8 @@ The config file will convert each emoji string into an emoji object which contai
 
 The CI/CD pipeline is done using GitHub Actions. The workflow files are located in the `.github/workflows` folder. The workflow files are named based on what they do or their purpose.
 
+### Integration
+
 **`pipeline-ci.yml`**
 
 This workflow is run on every push and pull request to every branch in the repository. It will install dependencies, lint the code, compile the code, and format the code. If any of these steps fail, the workflow will send the error log to a discord channel via a webhook with some brief details and a pastebin link including the full error log.
@@ -218,6 +255,8 @@ These are the GitHub secrets you must add to your repository in order for it to 
 | --------------------- | ----------------------------------------------------- |
 | `DISCORD_WEBHOOK_URL` | The webhook URL to send the error logs to.            |
 | PASTEBIN_API_KEY      | The Pastebin API key to use to upload the error logs. |
+
+### Deployment
 
 **`pipeline-cd.yml`**
 

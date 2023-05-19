@@ -1,35 +1,21 @@
 import config from '@config';
-import guildProfileModel, {
-  CustomMessage,
-  GuildProfileDocument,
-  GuildProfileSchema,
-  ReplayChannel,
-} from '@models/guildProfile.model';
+import { GuildProfileDocument, GuildProfileModel, GuildProfileSchema } from '@models/GuildProfile.model';
+import { CoreLanguage } from '@typings/core';
+import { GuildDaily, GuildPremium, GuildWelcome, GuildProfile as IGuildProfile } from '@typings/guild';
 import { logger } from '@utils/client';
 
 /**
  * The guild profile class.
  */
-class GuildProfile {
-  public guildID: string;
-  public language: string;
-  public welcome?: boolean;
-  public welcomeChannel?: string;
-  public welcomePing?: boolean;
-  public dailyMsg?: boolean;
-  public dailyChannel?: string;
-  public dailyRole?: string;
-  public dailyTimezone?: string;
-  public dailyInterval?: string;
-  public dailyThread?: boolean;
-  public replay?: boolean;
-  public replayCooldown?: number;
-  public replayType?: string;
-  public replayChannels?: ReplayChannel[];
-  public botJoined?: number;
-  public customMessages?: CustomMessage[];
-  public customTypes?: string;
-  public debugMode?: boolean;
+class GuildProfile implements IGuildProfile {
+  public guildId: string;
+  public language: CoreLanguage;
+  public premium: GuildPremium;
+  public questionType: number;
+  public welcome: GuildWelcome;
+  public daily: GuildDaily;
+  public botJoined: number;
+  public debug?: boolean;
 
   /**
    * Create a new guild profile instance.
@@ -44,25 +30,13 @@ class GuildProfile {
    * @param doc The guild profile document.
    */
   private assign(doc: GuildProfileDocument): void {
-    this.guildID = doc.guildID;
+    this.guildId = doc.guildId;
     this.language = doc.language;
+    this.premium = doc.premium;
     this.welcome = doc.welcome;
-    this.welcomeChannel = doc.welcomeChannel;
-    this.welcomePing = doc.welcomePing;
-    this.dailyMsg = doc.dailyMsg;
-    this.dailyChannel = doc.dailyChannel;
-    this.dailyRole = doc.dailyRole;
-    this.dailyTimezone = doc.dailyTimezone;
-    this.dailyInterval = doc.dailyInterval;
-    this.dailyThread = doc.dailyThread;
-    this.replay = doc.replay;
-    this.replayCooldown = doc.replayCooldown;
-    this.replayType = doc.replayType;
-    this.replayChannels = doc.replayChannels;
+    this.daily = doc.daily;
     this.botJoined = doc.botJoined;
-    this.customMessages = doc.customMessages;
-    this.customTypes = doc.customTypes;
-    this.debugMode = doc.debugMode;
+    this.debug = doc.debug;
   }
 
   /**
@@ -72,7 +46,7 @@ class GuildProfile {
   public async fetch(): Promise<GuildProfile | undefined> {
     try {
       // Fetch the guild profile from the database
-      const guildProfileDoc = await guildProfileModel.findOne({ guildID: this.guildID });
+      const guildProfileDoc = await GuildProfileModel.findOne({ guildId: this.guildId });
 
       // If the guild profile does not exist return undefined
       if (!guildProfileDoc) return;
@@ -92,9 +66,9 @@ class GuildProfile {
   public async updateGuild(newGuildProfile: GuildProfileSchema): Promise<GuildProfile | undefined> {
     try {
       // Update the guild profile in the database
-      const updatedGuildProfileDoc = await guildProfileModel.findOneAndUpdate(
+      const updatedGuildProfileDoc = await GuildProfileModel.findOneAndUpdate(
         {
-          guildID: this.guildID,
+          guildId: this.guildId,
         },
         {
           $set: newGuildProfile,
@@ -121,7 +95,7 @@ class GuildProfile {
   public async delete(): Promise<boolean> {
     try {
       // Delete the guild profile from the database
-      const deletedGuildProfile = await guildProfileModel.findOneAndDelete({ guildID: this.guildID });
+      const deletedGuildProfile = await GuildProfileModel.findOneAndDelete({ guildId: this.guildId });
 
       // If the guild profile was not deleted return false
       if (!deletedGuildProfile) return false;
@@ -140,7 +114,7 @@ class GuildProfile {
    * @returns True if debug is approved otherwise false.
    */
   public debugEnabled(userId: string): boolean {
-    const debugApproved = this.debugMode ?? config.developers.includes(userId);
+    const debugApproved = this.debug ?? config.developers.includes(userId);
     return debugApproved;
   }
 }
@@ -150,7 +124,7 @@ class GuildProfile {
  */
 export default class GuildProfiles {
   public cache = new Map<string, GuildProfile>();
-  protected guildIds: string[];
+  private guildIds: string[];
 
   /**
    * Create a new guild profile instance.
@@ -173,15 +147,27 @@ export default class GuildProfiles {
 
       try {
         // Fetch the guild profile document
-        const guildProfileDoc = await guildProfileModel.findById(guildId);
+        const guildProfileDoc = await GuildProfileModel.findById(guildId);
 
         // If the guild profile does not exist create a new one
-        if (!guildProfileDoc)
-          return this.create({
-            guildID: guildId,
-            language: 'en_EN',
-            botJoined: Date.now() / 1000 || 0,
+        if (!guildProfileDoc) {
+          const createdGuildProfile = await this.create({
+            guildId,
+            language: CoreLanguage.English,
+            premium: {
+              enabled: false,
+            },
+            welcome: {
+              enabled: false,
+            },
+            daily: {
+              enabled: false,
+            },
+            botJoined: Date.now(),
+            debug: false,
           });
+          return createdGuildProfile;
+        }
 
         // Create a new guild profile instance
         const guildProfile = new GuildProfile(guildProfileDoc);
@@ -196,13 +182,13 @@ export default class GuildProfiles {
     } else {
       // If an id is not provided fetch all guild profiles
       try {
-        const guildProfileDocs = await guildProfileModel.find({ guildID: { $in: this.guildIds } });
+        const guildProfileDocs = await GuildProfileModel.find({ guildId: { $in: this.guildIds } });
         if (guildProfileDocs.length === 0) return;
 
         // Loop through all guild profile documents and create a new guild profile instance for each one
         const guildProfiles = guildProfileDocs.map((guildProfileDoc) => {
           const guildProfile = new GuildProfile(guildProfileDoc);
-          this.cache.set(guildProfile.guildID, guildProfile);
+          this.cache.set(guildProfile.guildId, guildProfile);
           return guildProfile;
         });
         return guildProfiles;
@@ -220,13 +206,13 @@ export default class GuildProfiles {
   public async create(guildProfileData: GuildProfileSchema): Promise<GuildProfile | undefined> {
     try {
       // Create a new guild profile document
-      const guildProfileDoc = await guildProfileModel.create(guildProfileData);
+      const guildProfileDoc = await GuildProfileModel.create(guildProfileData);
 
       // Create a new guild profile instance
       const guildProfile = new GuildProfile(guildProfileDoc);
 
       // Add the guild profile to the cache
-      this.cache.set(guildProfile.guildID, guildProfile);
+      this.cache.set(guildProfile.guildId, guildProfile);
 
       return guildProfile;
     } catch (error) {
