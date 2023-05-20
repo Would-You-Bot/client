@@ -44,7 +44,7 @@ module.exports = {
                 new ButtonBuilder()
                     .setCustomId("dailyRole")
                     .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyRole'))
-                    .setStyle("Success"),
+                    .setStyle("Secondary"),
                 new ButtonBuilder()
                     .setCustomId("dailyInterval")
                     .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyInterval'))

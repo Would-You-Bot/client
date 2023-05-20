@@ -1,5 +1,5 @@
 module.exports = async (client, interaction) => {
-    const restrict = ["dailyChannel", "replayType", "replayDelete", "replayDeleteChannels", "replayChannels", "selectMenuReplay", "welcomeChannel", "dailyInterval", "dailyType", "replayCooldown", "welcomePing", "welcome", "welcomeChannel", "dailyRole", "dailyTimezone", "dailyMsg", "dailyThread", "votemodal"]
+    const restrict = ["dailyChannel", "deleteDailyRole", "replayType", "replayDelete", "replayDeleteChannels", "replayChannels", "selectMenuReplay", "welcomeChannel", "dailyInterval", "dailyType", "replayCooldown", "welcomePing", "welcome", "welcomeChannel", "dailyRole", "dailyTimezone", "dailyMsg", "dailyThread", "votemodal"]
     if (!interaction.guild) {
         if (interaction.isChatInputCommand()) {
             const command = client.commands.get(interaction.commandName);
