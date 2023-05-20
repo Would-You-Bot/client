@@ -5,31 +5,34 @@ export interface CoreCron<T = unknown> {
   name: string;
   expression: string;
   timezone: string;
-  execute: (client: T) => Promise<void>;
+  execute: (client: T) => Promise<unknown>;
+  disabled?: boolean;
 }
 
 export interface CoreCustomCron<T = unknown> {
   id: string;
   name: string;
-  execute: (client: T) => Promise<void>;
+  execute: (client: T) => Promise<unknown>;
+  disabled?: boolean;
 }
 
-export interface CoreEvent {
-  disabled?: boolean;
+export interface CoreEvent<T = unknown, P extends unknown[] = unknown[]> {
   once?: boolean;
   name: Events;
-  execute: (...parameters: unknown[]) => Promise<unknown>;
+  execute: (client: T, ...params: P) => Promise<unknown>;
+  disabled?: boolean;
 }
 
 export interface CoreButton {
-  disabled?: boolean;
   id: string;
   description: string;
   execute: (...parameters: unknown[]) => Promise<unknown>;
+  disabled?: boolean;
+  developer?: boolean;
+  perUser?: boolean;
 }
 
 export interface CoreCommand {
-  disabled?: boolean;
   data:
     | Omit<
         SlashCommandBuilder,
@@ -47,6 +50,9 @@ export interface CoreCommand {
       >
     | SlashCommandSubcommandsOnlyBuilder;
   execute: (...parameters: unknown[]) => Promise<unknown>;
+  autocomplete: (...parameters: unknown[]) => Promise<unknown>;
+  disabled?: boolean;
+  developer?: boolean;
 }
 
 export interface CoreWebhook {
