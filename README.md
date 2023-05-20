@@ -44,6 +44,7 @@ Would You bot is an open-source discord bot that includes activities and questio
   - [CI/CD Pipeline](#cicd-pipeline)
     - [Integration](#integration)
     - [Deployment](#deployment)
+  - [Security & Protection](#security-and-protection)
 - [Project Details](#project-details)
   - [Contributing](#contributing)
   - [License](#license)
@@ -273,7 +274,7 @@ These are the GitHub secrets you must add to your repository in order for it to 
 | Secret Name           | Description                                           |
 | --------------------- | ----------------------------------------------------- |
 | `DISCORD_WEBHOOK_URL` | The webhook URL to send the error logs to.            |
-| PASTEBIN_API_KEY      | The Pastebin API key to use to upload the error logs. |
+| `PASTEBIN_API_KEY`    | The Pastebin API key to use to upload the error logs. |
 
 ### Deployment
 
@@ -286,9 +287,23 @@ These are the GitHub secrets you must add to your repository in order for it to 
 | Secret Name           | Description                                           |
 | --------------------- | ----------------------------------------------------- |
 | `DISCORD_WEBHOOK_URL` | The webhook URL to send the error logs to.            |
-| PASTEBIN_API_KEY      | The Pastebin API key to use to upload the error logs. |
-| DOCKER_USERNAME       | The username to use to login to the docker registry.  |
-| DOCKER_PASSWORD       | The password to use to login to the docker registry.  |
+| `PASTEBIN_API_KEY`    | The Pastebin API key to use to upload the error logs. |
+| `DOCKER_USERNAME`     | The username to use to login to the docker registry.  |
+| `DOCKER_PASSWORD`     | The password to use to login to the docker registry.  |
+
+# Security and Protection
+
+## Rate Limiting
+
+Defined in the `config/limits.yaml` file are the cooldowns for using interactions. This is to prevent users from spamming the interactions. The cooldowns are defined in milliseconds. The cooldowns are defined per user, per channel, and per guild. This means that if a user uses an interaction in one channel, they will not be able to use it in another channel. If a user uses an interaction in one guild, they will not be able to use it in another guild.
+
+## Encryption
+
+Sensitive data is encrypted using the `crypto` module. The encryption info is defined in the `.env` file. The encrypted data is stored in the database. When the data is retrieved from the database, it is decrypted using the same key and iv that was used to encrypt it.
+
+## Developer Permissions
+
+Based on the list of user IDs in the `config/main.yaml` file, developer only interactions will be disabled for users that are not developers. This is to prevent users from using interactions that are not meant for them.
 
 # Project Details
 

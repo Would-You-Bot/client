@@ -5,6 +5,9 @@ declare global {
       DEBUG: string;
 
       MONGODB_URI: string;
+      SECRET_KEY: string;
+      SECRET_IV: string;
+      ENCRYPTION_METHOD: string;
 
       BOT_TOKEN_DEV: string;
       BOT_TOKEN_BETA: string;
