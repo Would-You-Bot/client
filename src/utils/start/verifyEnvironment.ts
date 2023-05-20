@@ -14,6 +14,9 @@ const verifyEnvironment = (): NodeJS.ProcessEnv => {
     'DEBUG',
 
     'MONGODB_URI',
+    'SECRET_KEY',
+    'SECRET_IV',
+    'ENCRYPTION_METHOD',
 
     'BOT_TOKEN_DEV',
     'BOT_TOKEN_BETA',

@@ -1,5 +1,6 @@
 import { WebhookDocument, WebhookModel, WebhookSchema } from '@models/Webhook.model';
 import { logger } from '@utils/client';
+import { decrypt, encrypt } from '@utils/functions';
 import { WebhookClient, WebhookEditOptions, WebhookMessageCreateOptions } from 'discord.js';
 
 /**
@@ -23,9 +24,10 @@ export class Webhook {
    * Assign the webhook document to the class.
    * @param doc The webhook document.
    */
-  private assign(doc: WebhookDocument) {
+  private assign(doc: WebhookDocument): void {
     this.id = doc.data.id;
-    this.token = doc.data.token;
+    const encryptedToken = decrypt(doc.data.token);
+    if (encryptedToken) this.token = encryptedToken;
     this.guildId = doc.guildId;
     this.channelId = doc.channelId;
   }
@@ -76,7 +78,7 @@ export class Webhook {
    * @param options The webhook message options.
    * @returns The webhook client.
    */
-  public async send(options: WebhookMessageCreateOptions) {
+  public async send(options: WebhookMessageCreateOptions): Promise<WebhookClient | undefined> {
     try {
       const webhook = await this.fetch();
 
@@ -171,7 +173,7 @@ export default class Webhooks {
           guildId: { $in: this.guildIds },
         });
 
-        // Loop through all all webhook documents and create a new webhook class for each
+        // Loop through all all webhook documents and set a new webhook class for each
         const webhooks = webhookDocs.map((webhookDoc) => {
           const webhook = new Webhook(webhookDoc);
           this.cache.set(webhook.id, webhook);
@@ -198,7 +200,14 @@ export default class Webhooks {
           guildId: webhookData.guildId,
           channelId: webhookData.channelId,
         },
-        webhookData,
+        {
+          $set: {
+            data: {
+              id: webhookData.data.id,
+              token: encrypt(webhookData.data.token),
+            },
+          },
+        },
         {
           upsert: true,
           new: true,
