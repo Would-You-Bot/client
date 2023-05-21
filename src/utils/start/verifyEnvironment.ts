@@ -26,6 +26,10 @@ const verifyEnvironment = (): NodeJS.ProcessEnv => {
 
     'DEV_GUILD',
     'DEV_ROLE',
+
+    'PUBLIC_VOTE_CHANNEL',
+    'PUBLIC_GUILD_CHANNEL',
+
     'PREMIUM_CHANNEL',
     'GUILD_CHANNEL',
     'ALERTS_CHANNEL',
@@ -33,7 +37,6 @@ const verifyEnvironment = (): NodeJS.ProcessEnv => {
     'WARN_CHANNEL',
     'ERROR_CHANNEL',
     'DEBUG_CHANNEL',
-    'VOTE_CHANNEL',
   ];
 
   /**

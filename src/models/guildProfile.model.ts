@@ -92,6 +92,9 @@ export const GuildProfileModel = model<GuildProfileDocument>(
         default: Date.now(),
         required: true,
       },
+      botLeft: {
+        type: Number,
+      },
       debug: {
         type: Boolean,
         default: false,

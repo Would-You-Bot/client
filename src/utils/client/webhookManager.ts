@@ -170,7 +170,7 @@ const create = async (client: ExtendedClient, guildId: string, channelId: string
  * @param channelId The channel id.
  * @returns The webhook or undefined.
  */
-const get = async (client: ExtendedClient, guildId: string, channelId: string) => {
+const get = async (client: ExtendedClient, guildId: string, channelId: string): Promise<WebhookClient | undefined> => {
   if (!isValid(client, guildId, channelId, 'get')) return;
 
   // Get the stored webhook if it exists

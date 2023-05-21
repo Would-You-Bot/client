@@ -16,7 +16,7 @@ let processingError = false;
  * @param message The final message to send.
  * @returns Whether the message was sent or not.
  */
-const sendMessage = async (channel: TextChannel, message: string) => {
+const sendMessage = async (channel: TextChannel, message: string): Promise<boolean> => {
   try {
     await channel.send(`\`\`\`yaml\n${message}\`\`\``);
     return true;
@@ -29,14 +29,12 @@ const sendMessage = async (channel: TextChannel, message: string) => {
  * Sends info messages to the Discord channel.
  * @param client The extended client.
  */
-const sendInfo = async (client: ExtendedClient) => {
+const sendInfo = async (client: ExtendedClient): Promise<void> => {
   if (!(infoQueue.length > 0) || processingInfo) return;
 
   processingInfo = true;
 
-  const channel = (await client.channels.fetch('1107648942574948372')) as
-    | TextChannel
-    | undefined;
+  const channel = (await client.channels.fetch('1107648942574948372')) as TextChannel | undefined;
 
   if (!channel) {
     processingInfo = false;
@@ -80,14 +78,12 @@ const sendInfo = async (client: ExtendedClient) => {
  * Sends warn messages to the Discord channel.
  * @param client The extended client.
  */
-const sendWarn = async (client: ExtendedClient) => {
+const sendWarn = async (client: ExtendedClient): Promise<void> => {
   if (!(warnQueue.length > 0) || processingWarn) return;
 
   processingWarn = true;
 
-  const channel = (await client.channels.fetch('1106024493631160453')) as
-    | TextChannel
-    | undefined;
+  const channel = (await client.channels.fetch('1106024493631160453')) as TextChannel | undefined;
 
   if (!channel) {
     processingWarn = false;
@@ -131,14 +127,12 @@ const sendWarn = async (client: ExtendedClient) => {
  * Sends error messages to the Discord channel.
  * @param client The extended client.
  */
-const sendError = async (client: ExtendedClient) => {
+const sendError = async (client: ExtendedClient): Promise<void> => {
   if (!(errorQueue.length > 0) || processingError) return;
 
   processingError = true;
 
-  const channel = (await client.channels.fetch('1106024503315812392')) as
-    | TextChannel
-    | undefined;
+  const channel = (await client.channels.fetch('1106024503315812392')) as TextChannel | undefined;
 
   if (!channel) {
     processingError = false;
@@ -182,14 +176,12 @@ const sendError = async (client: ExtendedClient) => {
  * Sends debug messages to the Discord channel.
  * @param client The extended client.
  */
-const sendDebug = async (client: ExtendedClient) => {
+const sendDebug = async (client: ExtendedClient): Promise<void> => {
   if (!(debugQueue.length > 0) || processingDebug) return;
 
   processingDebug = true;
 
-  const channel = (await client.channels.fetch('1106024539470692373')) as
-    | TextChannel
-    | undefined;
+  const channel = (await client.channels.fetch('1106024539470692373')) as TextChannel | undefined;
 
   if (!channel) {
     processingDebug = false;
@@ -233,7 +225,7 @@ const sendDebug = async (client: ExtendedClient) => {
  * Initialize the discord log functions to run in intervals..
  * @param client The extended client.
  */
-export const initDiscordLogs = (client: ExtendedClient) => {
+export const initDiscordLogs = (client: ExtendedClient): void => {
   // Initialize the info logs to send to discord in internals
   setInterval(() => {
     sendInfo(client);
@@ -252,7 +244,7 @@ export const initDiscordLogs = (client: ExtendedClient) => {
   // Initialize the debug logs to send to discord in internals
   setInterval(() => {
     sendDebug(client);
-  }, 1000 * 5);
+  }, 1000 * 1);
 };
 
 export default {};

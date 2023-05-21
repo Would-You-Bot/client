@@ -18,7 +18,7 @@ export interface CoreCustomCron<T = unknown> {
 
 export interface CoreEvent<T = unknown, P extends unknown[] = unknown[]> {
   once?: boolean;
-  name: Events;
+  name: Events | Events.Raw | Events.VoiceServerUpdate;
   execute: (client: T, ...params: P) => Promise<unknown> | unknown;
   disabled?: boolean;
 }

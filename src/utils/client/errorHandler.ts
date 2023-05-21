@@ -10,7 +10,7 @@ import webhookManager from './webhookManager';
  * Initialize error handling for the client that deals with unhandled rejections and uncaught exceptions.
  * @param client The client.
  */
-export const initializeProcessErrorHandling = (client: ExtendedClient) => {
+export const initializeProcessErrorHandling = (client: ExtendedClient): void => {
   process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
     client.logger.error(`${String(reason)} ${JSON.stringify(promise)}`);
   });

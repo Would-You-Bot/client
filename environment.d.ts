@@ -17,6 +17,10 @@ declare global {
 
       DEV_GUILD: string;
       DEV_ROLE: string;
+
+      PUBLIC_VOTE_CHANNEL: string;
+      PUBLIC_GUILD_CHANNEL: string;
+
       PREMIUM_CHANNEL: string;
       GUILD_CHANNEL: string;
       ALERTS_CHANNEL: string;
@@ -24,7 +28,6 @@ declare global {
       WARN_CHANNEL: string;
       ERROR_CHANNEL: string;
       DEBUG_CHANNEL: string;
-      VOTE_CHANNEL: string;
     }
   }
 }

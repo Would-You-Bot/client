@@ -8,19 +8,19 @@ interface User {
 }
 
 /**
- *
+ * The Either class.
  */
 class Either {
-  rowOne?: User[];
-  rowTwo?: User[];
-  language?: string;
-  text1?: string;
-  text2?: string;
+  private rowOne?: User[];
+  private rowTwo?: User[];
+  private language?: string;
+  private text1?: string;
+  private text2?: string;
 
   /**
    * Create a new Either instance.
    */
-  constructor() {
+  public constructor() {
     this.rowOne = undefined;
     this.rowTwo = undefined;
     this.language = undefined;
@@ -34,7 +34,7 @@ class Either {
    * @param rowTwo The second row of users.
    * @returns The Either class.
    */
-  setVotes(rowOne?: User[], rowTwo?: User[]) {
+  public setVotes(rowOne?: User[], rowTwo?: User[]): this {
     if (!Array.isArray(rowOne && rowTwo)) {
       throw new Error(`Expected rows array instead got ${typeof rowOne} and ${typeof rowTwo}`);
     }
@@ -48,7 +48,7 @@ class Either {
    * @param language The language.
    * @returns The Either class.
    */
-  setLanguage(language?: string) {
+  public setLanguage(language?: string): this {
     if (!language) {
       throw new Error(`Expected language instead got ${typeof language}`);
     }
@@ -61,7 +61,7 @@ class Either {
    * @param text1 The first text.
    * @returns The Either class.
    */
-  addFirstText(text1: string) {
+  public addFirstText(text1: string): this {
     this.text1 = text1;
     return this;
   }
@@ -71,7 +71,7 @@ class Either {
    * @param text2 The second text.
    * @returns The Either class.
    */
-  addSecondText(text2: string) {
+  public addSecondText(text2: string): this {
     this.text2 = text2;
     return this;
   }
@@ -82,7 +82,7 @@ class Either {
    * @param text2 The second text.
    * @returns The Either class.
    */
-  setTexts(text1: string, text2: string) {
+  public setTexts(text1: string, text2: string): this {
     this.text1 = text1;
     this.text2 = text2;
     return this;
@@ -92,7 +92,7 @@ class Either {
    * This function builds the canvas.
    * @returns The canvas.
    */
-  async build(): Promise<Buffer | undefined> {
+  public async build(): Promise<Buffer | undefined> {
     if (!this.rowOne || !this.rowTwo || !this.text1 || !this.text2) return;
 
     const canvas = Canvas.createCanvas(600, 300);
@@ -126,7 +126,7 @@ class Either {
      * @param maxLength The max length of the text.
      * @returns The font size.
      */
-    function calcFontSize(textLength: number, fontSize: number, maxLength: number) {
+    function calcFontSize(textLength: number, fontSize: number, maxLength: number): number {
       let size = fontSize;
       while (textLength > maxLength) size -= 1;
       return size;
@@ -151,12 +151,11 @@ class Either {
     const yPos = 162;
     sliced.reverse();
 
-    for (let index = 0; index < sliced.length; index += 1) {
+    for (const user of sliced) {
       ctx.beginPath();
-      const user = sliced[index];
 
-      const a = Canvas.createCanvas(rad * 2, rad * 2);
-      const context = a.getContext('2d');
+      const avatarCanvas = Canvas.createCanvas(rad * 2, rad * 2);
+      const context = avatarCanvas.getContext('2d');
 
       context.beginPath();
       context.arc(rad, rad, rad, 0, Math.PI * 2, true);
@@ -166,7 +165,7 @@ class Either {
       const avatar = await Canvas.loadImage(user.icon);
       context.drawImage(avatar, 0, 0, rad * 2, rad * 2);
 
-      ctx.drawImage(a, pos, yPos);
+      ctx.drawImage(avatarCanvas, pos, yPos);
 
       ctx.closePath();
       pos -= rad;
@@ -178,12 +177,11 @@ class Either {
     const yPos1 = 248;
     sliced2.reverse();
 
-    for (let i = 0; i < sliced2.length; i += 1) {
+    for (const user of sliced2) {
       ctx.beginPath();
-      const user = sliced2[i];
 
-      const a = Canvas.createCanvas(rad * 2, rad * 2);
-      const context = a.getContext('2d');
+      const avatarCanvas = Canvas.createCanvas(rad * 2, rad * 2);
+      const context = avatarCanvas.getContext('2d');
 
       context.beginPath();
       context.arc(rad, rad, rad, 0, Math.PI * 2, true);
@@ -193,7 +191,7 @@ class Either {
       const avatar = await Canvas.loadImage(user.icon);
       context.drawImage(avatar, 0, 0, rad * 2, rad * 2);
 
-      ctx.drawImage(a, pos1, yPos1);
+      ctx.drawImage(avatarCanvas, pos1, yPos1);
 
       ctx.closePath();
       pos1 -= rad;

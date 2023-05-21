@@ -108,8 +108,17 @@ export class ExtendedClient extends Client {
    * Check if the client is synced with the database - used to prevent code from running unless client is synced with database.
    * @returns Whether the client is synced with the database.
    */
-  public get isSynced(): boolean {
-    return this.synced ? true : false;
+  public isSynced(): Promise<boolean> {
+    return new Promise((resolve) => {
+      /**
+       * Check if the client is synced with the database.
+       */
+      const checkSynced = (): void => {
+        if (this.synced) resolve(true);
+        else setTimeout(checkSynced, 1); // check every 10ms
+      };
+      checkSynced();
+    });
   }
 }
 

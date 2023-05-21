@@ -40,7 +40,7 @@ export class Webhook {
     try {
       // Fetch the webhook from the database
       const webhook = await WebhookModel.findOne({
-        guildId: this.guildId,
+        guildId: this.id,
       });
 
       // If the webhook does not exist return undefined
@@ -102,7 +102,7 @@ export class Webhook {
    * @param options The webhook message options.
    * @returns The webhook client.
    */
-  public async edit(options: WebhookEditOptions) {
+  public async edit(options: WebhookEditOptions): Promise<WebhookClient | undefined> {
     try {
       const webhook = await this.fetch();
 
@@ -138,19 +138,30 @@ export default class Webhooks {
   }
 
   /**
-   * Fetch a webhook if the id is provided or all webhooks if an id is not provided.
-   * @param id The webhook id if fetching a single webhook.
+   * Fetch method type without channelId.
+   */
+  public async fetch(): Promise<Webhook[] | undefined>;
+
+  /**
+   * Fetch method type with channelId.
+   * @param channelId The channel id.
+   */
+  public async fetch(channelId?: string): Promise<Webhook | undefined>;
+
+  /**
+   * Fetch a webhook if the channel id is provided or all webhooks if a channel id is not provided.
+   * @param channelId The channel id.
    * @returns The webhook, all webhooks, or undefined.
    */
-  public async fetch(id?: string): Promise<Webhook | Webhook[] | undefined> {
-    if (id) {
+  public async fetch(channelId?: string): Promise<Webhook | Webhook[] | undefined> {
+    if (channelId) {
       // If the webhook is in the cache return it
-      if (this.cache.has(id)) return this.cache.get(id);
+      if (this.cache.has(channelId)) return this.cache.get(channelId);
 
       try {
         // Fetch the webhook from the database
         const webhookDoc = await WebhookModel.findOne({
-          guildId: this.guildIds,
+          channelId,
         });
 
         // If the webhook does not exist return undefined
@@ -160,7 +171,7 @@ export default class Webhooks {
         const webhook = new Webhook(webhookDoc);
 
         // Set the webhook to the cache
-        this.cache.set(id, webhook);
+        this.cache.set(channelId, webhook);
 
         return webhook;
       } catch (error) {
@@ -184,6 +195,31 @@ export default class Webhooks {
       } catch (error) {
         logger.error(error);
       }
+    }
+  }
+
+  /**
+   * Fetch all webhooks for a guild.
+   * @param guildId The guild id.
+   * @returns All webhooks or undefined.
+   */
+  public async fetchAll(guildId: string): Promise<Webhook[] | undefined> {
+    try {
+      // Fetch all webhooks from the database
+      const webhookDocs = await WebhookModel.find({
+        guildId,
+      });
+
+      // Loop through all all webhook documents and set a new webhook class for each
+      const webhooks = webhookDocs.map((webhookDoc) => {
+        const webhook = new Webhook(webhookDoc);
+        this.cache.set(webhook.id, webhook);
+        return webhook;
+      });
+
+      return webhooks;
+    } catch (error) {
+      logger.error(error);
     }
   }
 

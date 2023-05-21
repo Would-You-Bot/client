@@ -10,11 +10,13 @@ import { ExtendedClient } from 'src/client';
  * @param client The extended client.
  */
 const initializeCrons = async (client: ExtendedClient): Promise<void> => {
+  // Get all of the custom cron file names
   const customCronFiles = await loadFiles('crons/custom');
+
   for (const customCronFile of customCronFiles) {
     client.logger.debug(`Importing custom cron: ${customCronFile}`);
 
-    // Load the cron
+    // Load the custom cron
     const customCron = (
       (await import(`../../crons/custom/${customCronFile}`)) as {
         default: CoreCustomCron<ExtendedClient>;
@@ -27,11 +29,13 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
     customCron.execute(client);
   }
 
-  // Load all of the client crons
-  const clientCronFiles = await loadFiles('crons/client');
+  // Get all of the client cron file names
+  const clientCronFileNames = await loadFiles('crons/client');
 
-  for (const clientCronFile of clientCronFiles) {
-    // Load the cron
+  for (const clientCronFile of clientCronFileNames) {
+    client.logger.debug(`Importing client cron: ${clientCronFile}`);
+
+    // Load the client cron
     const clientCron = (
       (await import(`../../crons/client/${clientCronFile}`)) as {
         default: CoreCron;
@@ -53,11 +57,11 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
       return;
     }
 
-    // Create the cron job
+    // Create the cron job for the client cron
     const job = new CronJob(
       clientCron.expression,
       () => {
-        client.logger.debug(`Running cron ${clientCron.name} (${clientCron.id})`);
+        client.logger.debug(`Running cron: ${clientCron.name} (${clientCron.id})`);
         clientCron.execute(client);
       },
       null,

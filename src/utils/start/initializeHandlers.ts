@@ -5,7 +5,7 @@ import { ExtendedClient } from 'src/client';
  * @param client The extended client.
  * @returns A logged error or nothing.
  */
-const initializeHandlers = async (client: ExtendedClient) => {
+const initializeHandlers = async (client: ExtendedClient): Promise<void> => {
   client.logger.info('Initializing handlers');
   const handlers = ['button', 'command', 'event'];
   for (const handler of handlers) {
@@ -17,7 +17,10 @@ const initializeHandlers = async (client: ExtendedClient) => {
     };
 
     // If the handler doesn't have a default export, log it
-    if (!handlerFile.default) return client.logger.error(`Handler: ${handler} is missing a default export`);
+    if (!handlerFile.default) {
+      client.logger.error(`Handler: ${handler} is missing a default export`);
+      return;
+    }
 
     // Initialize the handler
     await handlerFile.default(client);

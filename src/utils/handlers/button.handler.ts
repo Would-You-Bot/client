@@ -6,7 +6,7 @@ import { ExtendedClient } from 'src/client';
  * Load the buttons.
  * @param client The extended client.
  */
-const buttonHandler = async (client: ExtendedClient) => {
+const buttonHandler = async (client: ExtendedClient): Promise<void> => {
   client.buttons.clear();
 
   const files = await loadFiles('interactions/buttons');
@@ -14,9 +14,9 @@ const buttonHandler = async (client: ExtendedClient) => {
   for (const fileName of files) {
     client.logger.debug(`Importing button: ${fileName}`);
 
-    const buttonFile = (await import(
-      `../../interactions/buttons/${fileName}`
-    )) as { default: CoreButton | undefined } | undefined;
+    const buttonFile = (await import(`../../interactions/buttons/${fileName}`)) as
+      | { default: CoreButton | undefined }
+      | undefined;
 
     if (!buttonFile?.default?.id) continue;
 

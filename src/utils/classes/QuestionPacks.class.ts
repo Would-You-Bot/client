@@ -89,7 +89,7 @@ class CustomPacks {
    */
   public constructor(guildIds: string[]) {
     // Fetch all custom packs on initialization.
-    this.fetch(guildIds);
+    this.fetchAll(guildIds);
   }
 
   /**
@@ -108,7 +108,7 @@ class CustomPacks {
    * @param guildIds The guild IDs.
    * @returns The custom packs.
    */
-  private async fetch(guildIds: string[]): Promise<Map<string, ICustomPack> | undefined> {
+  private async fetchAll(guildIds: string[]): Promise<Map<string, ICustomPack> | undefined> {
     try {
       // Fetch the custom packs from the database.
       const customPacks = await CustomPackModel.find({
@@ -332,6 +332,30 @@ class CustomPacks {
       logger.error(error);
     }
   }
+
+  /**
+   * Get all custom packs for a guild from the database and cache.
+   * @param guildId The guild ID.
+   * @returns The custom packs.
+   */
+  public async deleteAll(guildId: string): Promise<number | undefined> {
+    try {
+      // Delete all packs from the database.
+      const deletedCustomPacks = await CustomPackModel.deleteMany({
+        guildId,
+      });
+
+      // Delete all packs from the cache.
+      for (const [key, customPack] of this.cache.entries()) {
+        if (customPack.guildId === guildId) this.cache.delete(key);
+      }
+
+      // Return the number of deleted packs.
+      return deletedCustomPacks.deletedCount;
+    } catch (error) {
+      logger.error(error);
+    }
+  }
 }
 
 /**
@@ -351,21 +375,6 @@ export default class QuestionPacks {
     this.base = new BasePacks(this.guildIds);
     this.custom = new CustomPacks(this.guildIds);
   }
-
-  /**
-   * Random method type for base pack questions.
-   */
-  // public async random(questionType: GuildQuestionType.Base): Promise<BaseQuestion | undefined>;
-
-  /**
-   * Random method type for custom pack questions.
-   */
-  // public async random(questionType: GuildQuestionType.Custom): Promise<CustomQuestion | undefined>;
-
-  /**
-   * Random method type for either base or custom pack questions.
-   */
-  // public async random(questionType: GuildQuestionType.Mixed): Promise<CustomQuestion | BaseQuestion | undefined>;
 
   /**
    * Get a random question.

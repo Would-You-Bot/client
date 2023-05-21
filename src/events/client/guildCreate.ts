@@ -2,6 +2,7 @@ import { EmbedBuilder, Events, Guild, WebhookClient } from 'discord.js';
 
 import config from '@config';
 import { CoreEvent, CoreLanguage } from '@typings/core';
+import { GuildQuestionType } from '@typings/guild';
 import { ExtendedClient } from 'src/client';
 
 /**
@@ -9,7 +10,7 @@ import { ExtendedClient } from 'src/client';
  * @param name The name of the guild.
  * @returns The filtered guild name.
  */
-const filterGuildName = (name: string) =>
+const filterGuildName = (name: string): string =>
   name.replace('Discord', '').replace('discord', '').replace('Everyone', '').replace('everyone', '');
 
 const event: CoreEvent<ExtendedClient, [Guild]> = {
@@ -28,6 +29,7 @@ const event: CoreEvent<ExtendedClient, [Guild]> = {
       guildId: guild.id,
       timezone: 'America/New_York',
       language: CoreLanguage.English,
+      questionType: GuildQuestionType.Base,
       premium: {
         enabled: false,
       },
@@ -43,7 +45,7 @@ const event: CoreEvent<ExtendedClient, [Guild]> = {
       debug: false,
     });
 
-    // Create a webhook client
+    // Initialize the private webhook client
     const webhook = new WebhookClient({
       url: config.env.GUILD_CHANNEL,
     });
@@ -53,7 +55,7 @@ const event: CoreEvent<ExtendedClient, [Guild]> = {
       guild.partnered ? config.emojis.partner.full : ''
     }`;
 
-    // Send the webhook with the embed
+    // Send the join message to the private guild channel
     await webhook.send({
       username: filterGuildName(guild.name),
       avatarURL: guild.iconURL({ size: 1024 }) ?? undefined,
@@ -76,6 +78,18 @@ const event: CoreEvent<ExtendedClient, [Guild]> = {
           }),
       ],
       allowedMentions: { parse: [] },
+    });
+
+    // Initialize the public webhook client
+    const publicWebhook = new WebhookClient({
+      url: config.env.PUBLIC_GUILD_CHANNEL,
+    });
+
+    // Send the join message to the public guild channel
+    publicWebhook.send({
+      username: filterGuildName(guild.name),
+      avatarURL: guild.iconURL({ size: 1024 }) ?? undefined,
+      content: `${config.emojis.goodCheck.full} Joined ${guild.name}. I'm now in ${client.guilds.cache.size} servers.`,
     });
   },
 };

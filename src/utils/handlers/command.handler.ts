@@ -6,7 +6,7 @@ import { ExtendedClient } from 'src/client';
  * Load the commands.
  * @param client The extended client.
  */
-const commandHandler = async (client: ExtendedClient) => {
+const commandHandler = async (client: ExtendedClient): Promise<void> => {
   client.slashCommand.clear();
 
   const files = await loadFiles('interactions/commands');

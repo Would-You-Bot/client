@@ -43,5 +43,6 @@ export interface GuildProfile {
   welcome: GuildWelcome;
   daily: GuildDaily;
   botJoined: number;
+  botLeft?: number;
   debug?: boolean;
 }
