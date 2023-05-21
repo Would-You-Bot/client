@@ -3,7 +3,8 @@ import { EmbedBuilder, Guild, TextChannel } from 'discord.js';
 
 import config from '@config';
 import { CoreCustomCron } from '@typings/core';
-import { GuildProfile } from '@typings/guild';
+import { GuildProfile, GuildQuestionType } from '@typings/guild';
+import { BaseQuestion, CustomQuestion } from '@typings/pack';
 import { timeToCronExpression, validateAndFormatTimezone, validateCronExpression } from '@utils/functions';
 import { ExtendedClient } from 'src/client';
 
@@ -14,7 +15,11 @@ import { ExtendedClient } from 'src/client';
  * @param guildProfile The guild profile.
  * @returns Nothing.
  */
-const sendDailyQuestion = async (client: ExtendedClient, guild: Guild, guildProfile: GuildProfile) => {
+const sendDailyQuestion = async (
+  client: ExtendedClient,
+  guild: Guild,
+  guildProfile: GuildProfile
+): Promise<unknown> => {
   client.logger.debug(`Sending daily question to (${guildProfile.guildId})`);
 
   if (!guildProfile.daily.enabled) return;
@@ -27,14 +32,29 @@ const sendDailyQuestion = async (client: ExtendedClient, guild: Guild, guildProf
     return;
   }
 
-  // TODO: Get random question
   // Get a random question
-  const question = 'This is a test question';
+  const randomQuestionData = await client.packs.random(guildProfile.questionType);
+
+  if (!randomQuestionData) {
+    client.logger.error(`No questions found for ${guildProfile.guildId}`);
+    return;
+  }
+
+  let randomQuestion: string;
+  if (guildProfile.questionType === GuildQuestionType.Base)
+    randomQuestion = (randomQuestionData as BaseQuestion).translations[guildProfile.language];
+  else if (guildProfile.questionType === GuildQuestionType.Custom)
+    randomQuestion = (randomQuestionData as CustomQuestion).text;
+  else if ((randomQuestionData as CustomQuestion).text) {
+    randomQuestion = (randomQuestionData as BaseQuestion).translations[guildProfile.language];
+  } else {
+    randomQuestion = (randomQuestionData as CustomQuestion).text;
+  }
 
   // Create the daily question embed
   const embed = new EmbedBuilder()
     .setTitle('Daily Question')
-    .setDescription(question)
+    .setDescription(randomQuestion)
     .setColor(config.colors.primary)
     .setFooter({
       text: `Daily Question | ${client.user?.username ?? 'Would You'}`,

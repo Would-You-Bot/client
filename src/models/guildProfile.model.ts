@@ -1,7 +1,7 @@
 import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
 import { CoreLanguage } from '@typings/core';
-import { GuildProfile } from '@typings/guild';
+import { AllGuildQuestionTypes, GuildProfile, GuildQuestionType } from '@typings/guild';
 
 export interface GuildProfileSchema extends GuildProfile, SchemaTimestampsConfig {}
 
@@ -19,20 +19,29 @@ export const GuildProfileModel = model<GuildProfileDocument>(
       timezone: {
         type: String,
         default: 'America/Chicago',
+        required: true,
       },
       language: {
         type: String,
         default: CoreLanguage.English,
         required: true,
       },
+      questionType: {
+        type: Number,
+        enum: AllGuildQuestionTypes,
+        default: GuildQuestionType.Base,
+        required: true,
+      },
       premium: {
         enabled: {
           type: Boolean,
           default: false,
+          required: true,
         },
         permanent: {
           type: Boolean,
           default: false,
+          required: true,
         },
         expires: {
           type: Date,
@@ -43,6 +52,7 @@ export const GuildProfileModel = model<GuildProfileDocument>(
         enabled: {
           type: Boolean,
           default: false,
+          required: true,
         },
         channel: {
           type: String,
@@ -50,13 +60,14 @@ export const GuildProfileModel = model<GuildProfileDocument>(
         },
         ping: {
           type: Boolean,
-          required: false,
+          required: true,
         },
       },
       daily: {
         enabled: {
           type: Boolean,
           default: false,
+          required: true,
         },
         channel: {
           type: String,
@@ -69,18 +80,22 @@ export const GuildProfileModel = model<GuildProfileDocument>(
         interval: {
           type: String,
           default: '12:00',
+          required: true,
         },
         thread: {
           type: Boolean,
-          required: false,
+          required: true,
         },
       },
       botJoined: {
         type: Number,
+        default: Date.now(),
+        required: true,
       },
       debug: {
         type: Boolean,
         default: false,
+        required: true,
       },
     },
     { timestamps: true }

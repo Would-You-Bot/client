@@ -2,6 +2,8 @@ import { EmbedBuilder, Events, GuildMember, PermissionFlagsBits, TextChannel } f
 
 import config from '@config';
 import { CoreEvent } from '@typings/core';
+import { GuildQuestionType } from '@typings/guild';
+import { BaseQuestion, CustomQuestion } from '@typings/pack';
 import { ExtendedClient } from 'src/client';
 
 const event: CoreEvent<ExtendedClient, [GuildMember]> = {
@@ -33,9 +35,24 @@ const event: CoreEvent<ExtendedClient, [GuildMember]> = {
     ];
     if (!channel.permissionsFor(clientMember).has(requiredPerms)) return;
 
-    // TODO: Get a random question from a json file
     // Get a random question
-    const randomQuestion = 'Test random question';
+    const randomQuestionData = await client.packs.random(guildProfile.questionType);
+
+    if (!randomQuestionData) {
+      client.logger.error(`No questions found for ${guildProfile.guildId}`);
+      return;
+    }
+
+    let randomQuestion: string;
+    if (guildProfile.questionType === GuildQuestionType.Base)
+      randomQuestion = (randomQuestionData as BaseQuestion).translations[guildProfile.language];
+    else if (guildProfile.questionType === GuildQuestionType.Custom)
+      randomQuestion = (randomQuestionData as CustomQuestion).text;
+    else if ((randomQuestionData as CustomQuestion).text) {
+      randomQuestion = (randomQuestionData as BaseQuestion).translations[guildProfile.language];
+    } else {
+      randomQuestion = (randomQuestionData as CustomQuestion).text;
+    }
 
     const welcomeEmbed = new EmbedBuilder()
       .setTitle(`Welcome ${member.user.username}!`)

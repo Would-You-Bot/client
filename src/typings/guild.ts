@@ -7,12 +7,12 @@ export interface CustomMessage {
 }
 
 export enum GuildQuestionType {
-  Default = 0,
+  Base = 0,
   Custom = 1,
   Mixed = 2,
 }
 
-export const AllGuildQuestionTypes = [GuildQuestionType.Default, GuildQuestionType.Custom, GuildQuestionType.Mixed];
+export const AllGuildQuestionTypes = [GuildQuestionType.Base, GuildQuestionType.Custom, GuildQuestionType.Mixed];
 
 export interface GuildPremium {
   enabled: boolean;
@@ -34,15 +34,10 @@ export interface GuildDaily {
   thread: boolean;
 }
 
-export interface ReplayChannel {
-  id: string;
-  name: string;
-  cooldown: number;
-}
-
 export interface GuildProfile {
   guildId: string;
   timezone: string;
+  questionType: GuildQuestionType;
   language: CoreLanguage;
   premium: GuildPremium;
   welcome: GuildWelcome;

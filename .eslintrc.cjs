@@ -62,6 +62,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 2, // Disallows usage of the any type.
     '@typescript-eslint/no-floating-promises': 0, // Disallows usage of promise functions without using await.
     '@typescript-eslint/explicit-member-accessibility': 2, // Enforces accessibility modifiers on class properties and methods.
+    '@typescript-eslint/explicit-function-return-type': [2, { allowExpressions: true }], // Enforces return type declaration of functions.
 
     // Normal ESLint rules
     'object-curly-spacing': 2, // Enforces consistent spacing inside braces

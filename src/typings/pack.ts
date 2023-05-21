@@ -7,28 +7,28 @@ export enum BaseQuestionType {
   TruthOrDare = 3,
 }
 
-interface BaseQuestion {
+export interface BaseQuestion {
   id: string;
+  questionType: BaseQuestionType;
   translations: Record<CoreLanguage, string>;
   choices?: [number, number];
 }
 
 export interface BasePack {
   name: string;
-  questionType: BaseQuestionType;
   questions: BaseQuestion[];
 }
 
-interface CustomQuestion {
+export interface CustomQuestion {
   id: string;
-  tex: string;
+  questionType: BaseQuestionType;
+  text: string;
   choices?: [number, number];
 }
 
 export interface CustomPack {
   guildId: string;
   name: string;
-  questionType: BaseQuestionType;
   questions: CustomQuestion[];
 }
 

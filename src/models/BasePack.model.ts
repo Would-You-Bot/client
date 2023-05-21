@@ -1,6 +1,6 @@
 import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
-import { BasePack } from '@typings/questions';
+import { BasePack } from '@typings/pack';
 
 export interface BasePackSchema extends BasePack, SchemaTimestampsConfig {}
 
@@ -10,10 +10,10 @@ export const BasePackModel = model<BasePackDocument>(
   'BasePack',
   new Schema<BasePackSchema>({
     name: { type: String, trim: true, required: true },
-    questionType: { type: Number, required: true },
     questions: [
       {
         id: { type: String, unique: true, required: true },
+        questionType: { type: Number, required: true },
         translations: {
           en: { type: String, required: true },
           de: { type: String, required: true },

@@ -1,4 +1,4 @@
-import { UserChoices } from '@typings/questions';
+import { UserChoices } from '@typings/pack';
 import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
 export interface UserChoicesSchema extends UserChoices, SchemaTimestampsConfig {}

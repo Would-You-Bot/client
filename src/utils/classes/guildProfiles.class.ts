@@ -1,7 +1,13 @@
 import config from '@config';
 import { GuildProfileDocument, GuildProfileModel, GuildProfileSchema } from '@models/GuildProfile.model';
 import { CoreLanguage } from '@typings/core';
-import { GuildDaily, GuildPremium, GuildWelcome, GuildProfile as IGuildProfile } from '@typings/guild';
+import {
+  GuildDaily,
+  GuildPremium,
+  GuildQuestionType,
+  GuildWelcome,
+  GuildProfile as IGuildProfile,
+} from '@typings/guild';
 import { logger } from '@utils/client';
 
 /**
@@ -11,6 +17,7 @@ class GuildProfile implements IGuildProfile {
   public guildId: string;
   public timezone: string;
   public language: CoreLanguage;
+  public questionType: GuildQuestionType;
   public premium: GuildPremium;
   public welcome: GuildWelcome;
   public daily: GuildDaily;
@@ -138,13 +145,13 @@ export default class GuildProfiles {
   /**
    * First type for the fetch method without guild id and returns array of guild profiles.
    */
-  public fetch(): Promise<GuildProfile[] | undefined>;
+  public async fetch(): Promise<GuildProfile[] | undefined>;
 
   /**
    * Second type for the fetch method with guild id and returns a single guild profile.
    * @param guildId The guild id.
    */
-  public fetch(guildId: string): Promise<GuildProfile | undefined>;
+  public async fetch(guildId: string): Promise<GuildProfile | undefined>;
 
   /**
    * Fetch a guild profile if the id is provided or all guild profiles if an id is not provided.
@@ -166,6 +173,7 @@ export default class GuildProfiles {
             guildId,
             timezone: 'America/New_York',
             language: CoreLanguage.English,
+            questionType: GuildQuestionType.Base,
             premium: {
               enabled: false,
             },

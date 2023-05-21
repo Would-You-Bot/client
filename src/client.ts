@@ -42,7 +42,6 @@ export class ExtendedClient extends Client {
   public guildProfiles: GuildProfiles;
   public packs: QuestionPacks;
   public webhooks: Webhooks;
-  public used = new Map<string, unknown>();
 
   /**
    * Create a new client instance.
@@ -89,9 +88,7 @@ export class ExtendedClient extends Client {
     this.webhooks = new Webhooks(guildIds);
 
     // TODO: Replace these
-    /* this.dailyMessage = new DailyMessage(this);
-    this.dailyMessage.start();
-
+    /*
     this.voteLogger = new VoteLogger(this);
     if (this.cluster.id === 0) this.voteLogger.startAPI();
 
@@ -103,7 +100,7 @@ export class ExtendedClient extends Client {
    * Authenticate the client.
    * @returns The client.
    */
-  public authenticate() {
+  public authenticate(): Promise<string> {
     return this.login(config.BOT_TOKEN);
   }
 
@@ -111,7 +108,7 @@ export class ExtendedClient extends Client {
    * Check if the client is synced with the database - used to prevent code from running unless client is synced with database.
    * @returns Whether the client is synced with the database.
    */
-  public get isSynced() {
+  public get isSynced(): boolean {
     return this.synced ? true : false;
   }
 }
