@@ -1,10 +1,6 @@
-import {
-  ActionRowBuilder,
-  ButtonInteraction,
-  StringSelectMenuBuilder,
-} from 'discord.js';
+import { ActionRowBuilder, ButtonInteraction, StringSelectMenuBuilder } from 'discord.js';
 
-import { GuildProfileDocument } from '@models/guildProfile.model';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
 import { CoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
@@ -16,11 +12,7 @@ const button: CoreButton = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ButtonInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ButtonInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     const inter = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId('selectMenuType')
@@ -34,8 +26,7 @@ const button: CoreButton = {
           {
             label: 'Mixed',
             value: 'mixed',
-            description:
-              'This changes it to use both custom & default messages.',
+            description: 'This changes it to use both custom & default messages.',
           },
           {
             label: 'Custom',

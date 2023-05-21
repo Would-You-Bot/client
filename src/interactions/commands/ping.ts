@@ -8,17 +8,17 @@ import {
 } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
-import { CoreCommand } from '@typings/core';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
+import { CoreSlashCommand } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreCommand = {
+const command: CoreSlashCommand = {
   data: new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Displays the clients ping')
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: 'Zeigt den Ping des Clients an',
+      'de': 'Zeigt den Ping des Clients an',
       'es-ES': 'Muestra el ping del cliente',
     }),
   /**
@@ -26,11 +26,7 @@ const command: CoreCommand = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     const pingembed = new EmbedBuilder()
 
       .setColor(config.colors.primary)
@@ -43,9 +39,7 @@ const command: CoreCommand = {
       .addFields(
         {
           name: client.translation.get(guildDb.language, 'Ping.embed.client'),
-          value: `> **${Math.abs(
-            Date.now() - interaction.createdTimestamp
-          )}**ms`,
+          value: `> **${Math.abs(Date.now() - interaction.createdTimestamp)}**ms`,
           inline: false,
         },
         {
@@ -56,9 +50,7 @@ const command: CoreCommand = {
       );
     const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
-        .setLabel(
-          client.translation.get(guildDb.language, 'Ping.button.title')
-        )
+        .setLabel(client.translation.get(guildDb.language, 'Ping.button.title'))
         .setStyle(ButtonStyle.Link)
         .setEmoji('💻')
         .setURL('https://discordstatus.com/')

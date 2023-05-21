@@ -1,13 +1,7 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonInteraction,
-  ButtonStyle,
-  EmbedBuilder,
-} from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
 import { CoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
@@ -19,76 +13,37 @@ const button: CoreButton = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ButtonInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ButtonInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     if (!interaction.guild) return;
 
     const newType = guildDb.replayType === 'Channels' ? 'Guild' : 'Channels';
     const generalMsg = new EmbedBuilder()
-      .setTitle(
-        client.translation.get(guildDb.language, 'Settings.embed.generalTitle')
-      )
+      .setTitle(client.translation.get(guildDb.language, 'Settings.embed.generalTitle'))
       .setDescription(
-        `${client.translation.get(
-          guildDb.language,
-          'Settings.embed.replayType'
-        )}: ${newType}\n${
+        `${client.translation.get(guildDb.language, 'Settings.embed.replayType')}: ${newType}\n${
           guildDb.replayType === 'Channels'
-            ? `${client.translation.get(
-                guildDb.language,
-                'Settings.embed.replayCooldown'
-              )}: ${guildDb.replayCooldown}`
-            : `${client.translation.get(
-                guildDb.language,
-                'Settings.embed.replayChannels'
-              )}: ${
+            ? `${client.translation.get(guildDb.language, 'Settings.embed.replayCooldown')}: ${guildDb.replayCooldown}`
+            : `${client.translation.get(guildDb.language, 'Settings.embed.replayChannels')}: ${
                 guildDb.replayChannels.length > 0
-                  ? `\n${guildDb.replayChannels
-                      .map((c) => `<#${c.id}>: ${c.cooldown}`)
-                      .join('\n')}`
-                  : client.translation.get(
-                      guildDb.language,
-                      `Settings.embed.replayChannelsNone`
-                    )
+                  ? `\n${guildDb.replayChannels.map((c) => `<#${c.id}>: ${c.cooldown}`).join('\n')}`
+                  : client.translation.get(guildDb.language, `Settings.embed.replayChannelsNone`)
               }`
         }`
       )
       .setColor(config.colors.primary)
       .setFooter({
-        text: client.translation.get(
-          guildDb.language,
-          'Settings.embed.footer'
-        ),
+        text: client.translation.get(guildDb.language, 'Settings.embed.footer'),
         iconURL: client.user?.avatarURL() || undefined,
       });
 
     const generalButtons = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
-        .setCustomId(
-          guildDb.replayType === 'Channels'
-            ? 'replayCooldown'
-            : 'replayChannels'
-        )
-        .setLabel(
-          client.translation.get(
-            guildDb.language,
-            'Settings.button.replayCooldown'
-          )
-        )
-        .setStyle(
-          guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary
-        ),
+        .setCustomId(guildDb.replayType === 'Channels' ? 'replayCooldown' : 'replayChannels')
+        .setLabel(client.translation.get(guildDb.language, 'Settings.button.replayCooldown'))
+        .setStyle(guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary),
       new ButtonBuilder()
         .setCustomId('replayType')
-        .setLabel(
-          client.translation.get(
-            guildDb.language,
-            'Settings.button.replayType'
-          )
-        )
+        .setLabel(client.translation.get(guildDb.language, 'Settings.button.replayType'))
         .setStyle(ButtonStyle.Primary)
         .setEmoji('📝')
     );
@@ -96,12 +51,7 @@ const button: CoreButton = {
     const chanDelete = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId('replayDeleteChannels')
-        .setLabel(
-          client.translation.get(
-            guildDb.language,
-            'Settings.button.replayDeleteChannels'
-          )
-        )
+        .setLabel(client.translation.get(guildDb.language, 'Settings.button.replayDeleteChannels'))
         .setStyle(ButtonStyle.Danger)
     );
 
@@ -112,10 +62,7 @@ const button: CoreButton = {
     return interaction.update({
       content: null,
       embeds: [generalMsg],
-      components:
-        newType === 'Channels'
-          ? [generalButtons, chanDelete]
-          : [generalButtons],
+      components: newType === 'Channels' ? [generalButtons, chanDelete] : [generalButtons],
     });
   },
 };

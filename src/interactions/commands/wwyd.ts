@@ -8,17 +8,17 @@ import {
 } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
-import { CoreCommand } from '@typings/core';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
+import { CoreSlashCommand } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreCommand = {
+const command: CoreSlashCommand = {
   data: new SlashCommandBuilder()
     .setName('wwyd')
     .setDescription('What would you do in this situation')
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: 'Was würdest du in dieser Situation tun',
+      'de': 'Was würdest du in dieser Situation tun',
       'es-ES': '¿Qué harías en esta situación?',
     }),
   /**
@@ -26,13 +26,8 @@ const command: CoreCommand = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
-    const { WhatYouDo } = (await import(`../..//wwyd-${guildDb.language}.json`))
-      .default;
+  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+    const { WhatYouDo } = (await import(`../..//wwyd-${guildDb.language}.json`)).default;
     const randomNever = Math.floor(Math.random() * WhatYouDo.length);
     const wwydstring = WhatYouDo[randomNever];
 
@@ -62,9 +57,7 @@ const command: CoreCommand = {
         .setCustomId(`wwyd`),
     ]);
 
-    interaction
-      .reply({ embeds: [wwydembed], components: [row] })
-      .catch(client.logger.error);
+    interaction.reply({ embeds: [wwydembed], components: [row] }).catch(client.logger.error);
   },
 };
 

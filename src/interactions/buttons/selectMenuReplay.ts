@@ -1,6 +1,6 @@
 import { ButtonInteraction } from 'discord.js';
 
-import { GuildProfileDocument } from '@models/guildProfile.model';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
 import { CoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
@@ -34,11 +34,7 @@ const button: CoreButton = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ButtonInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ButtonInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     // ! temp if statement to prevent eslint warning
     if (!interaction.guild || !client.user || !guildDb) return null;
 

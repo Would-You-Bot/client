@@ -8,17 +8,17 @@ import {
 } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
-import { CoreCommand } from '@typings/core';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
+import { CoreSlashCommand } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreCommand = {
+const command: CoreSlashCommand = {
   data: new SlashCommandBuilder()
     .setName('neverhaveiever')
     .setDescription('Get a never have I ever message.')
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: 'Bekomme eine nie habe ich jemals Nachricht.',
+      'de': 'Bekomme eine nie habe ich jemals Nachricht.',
       'es-ES': 'Consigue un mensaje Nunca he tenido',
     }),
   /**
@@ -26,16 +26,11 @@ const command: CoreCommand = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     if (!interaction.guildId) return;
 
-    const { Funny, Basic, Young, Food, RuleBreak } = (
-      await import(`../../constants/nhie-${guildDb.language}.json`)
-    ).default;
+    const { Funny, Basic, Young, Food, RuleBreak } = (await import(`../../constants/nhie-${guildDb.language}.json`))
+      .default;
 
     const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak];
     const randomNever = Math.floor(Math.random() * neverArray.length);
@@ -78,9 +73,7 @@ const command: CoreCommand = {
 
     if (!vote) return;
 
-    interaction
-      .reply({ embeds: [ratherembed], components: [vote.row, mainRow] })
-      .catch(client.logger.error);
+    interaction.reply({ embeds: [ratherembed], components: [vote.row, mainRow] }).catch(client.logger.error);
   },
 };
 

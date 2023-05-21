@@ -1,16 +1,16 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 
-import { GuildProfileDocument } from '@models/guildProfile.model';
-import { CoreCommand } from '@typings/core';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
+import { CoreSlashCommand } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreCommand = {
+const command: CoreSlashCommand = {
   data: new SlashCommandBuilder()
     .setName('truth')
     .setDescription('Shows information about the bot.')
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: 'Zeigt einige Informationen über den Bot.',
+      'de': 'Zeigt einige Informationen über den Bot.',
       'es-ES': 'Muestra información sobre el bot.',
     }),
   /**
@@ -18,11 +18,7 @@ const command: CoreCommand = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     // ! temp if statement to prevent eslint warning
     if (!interaction.guild || !client.user || !guildDb) return null;
   },

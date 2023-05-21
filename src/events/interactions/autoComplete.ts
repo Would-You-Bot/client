@@ -16,7 +16,7 @@ const event: CoreEvent<ExtendedClient, [AutocompleteInteraction]> = {
     if (!interaction.isAutocomplete()) return;
 
     // Get the command
-    const command = client.commands.get(interaction.commandName);
+    const command = client.slashCommand.get(interaction.commandName);
 
     // If the command could not be found
     if (!command) {

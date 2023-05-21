@@ -1,13 +1,7 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonInteraction,
-  ButtonStyle,
-  EmbedBuilder,
-} from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
 import { CoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
@@ -19,16 +13,11 @@ const button: CoreButton = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ButtonInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ButtonInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     if (!interaction.guildId) return;
 
-    const { Funny, Basic, Young, Food, RuleBreak } = (
-      await import(`../../constants/nhie-${guildDb.language}.json`)
-    ).default;
+    const { Funny, Basic, Young, Food, RuleBreak } = (await import(`../../constants/nhie-${guildDb.language}.json`))
+      .default;
 
     const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak];
     const randomNever = Math.floor(Math.random() * neverArray.length);

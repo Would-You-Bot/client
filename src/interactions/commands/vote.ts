@@ -1,21 +1,17 @@
-import {
-  ChatInputCommandInteraction,
-  EmbedBuilder,
-  SlashCommandBuilder,
-} from 'discord.js';
+import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
-import { CoreCommand } from '@typings/core';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
+import { CoreSlashCommand } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreCommand = {
+const command: CoreSlashCommand = {
   data: new SlashCommandBuilder()
     .setName('vote')
     .setDescription('Vote for me!')
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: 'Stimme für mich ab!',
+      'de': 'Stimme für mich ab!',
       'es-ES': '¡Vota por mí!',
     }),
   /**
@@ -23,29 +19,23 @@ const command: CoreCommand = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     const votemebed = new EmbedBuilder()
       .setColor(config.colors.blurple)
       .setTitle(client.translation.get(guildDb.language, 'Vote.embed.title'))
       .addFields(
         {
           name: 'Top.gg',
-          value: `> [ ${client.translation.get(
-            guildDb.language,
-            'Vote.embed.value'
-          )}  ](https://top.gg/bot/${config.productionId}/vote)`,
+          value: `> [ ${client.translation.get(guildDb.language, 'Vote.embed.value')}  ](https://top.gg/bot/${
+            config.productionId
+          }/vote)`,
           inline: true,
         },
         {
           name: 'Voidbots',
-          value: `> [ ${client.translation.get(
-            guildDb.language,
-            'Vote.embed.value'
-          )}  ](https://voidbots.net/bot/${config.productionId})`,
+          value: `> [ ${client.translation.get(guildDb.language, 'Vote.embed.value')}  ](https://voidbots.net/bot/${
+            config.productionId
+          })`,
           inline: true,
         }
       )

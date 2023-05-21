@@ -1,14 +1,8 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonInteraction,
-  ButtonStyle,
-  EmbedBuilder,
-} from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreButton } from '@typings/core';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
 import { ExtendedClient } from 'src/client';
 
 const button: CoreButton = {
@@ -19,14 +13,8 @@ const button: CoreButton = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ButtonInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
-    const { WhatYouDo } = (
-      await import(`../../constants/wwyd-${guildDb.language}.json`)
-    ).default;
+  async execute(interaction: ButtonInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+    const { WhatYouDo } = (await import(`../../constants/wwyd-${guildDb.language}.json`)).default;
 
     const randomNever = Math.floor(Math.random() * WhatYouDo.length);
     const wwydstring = WhatYouDo[randomNever];

@@ -1,14 +1,8 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonInteraction,
-  ButtonStyle,
-  EmbedBuilder,
-} from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
 import { CoreButton } from '@typings/core';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
 import { ExtendedClient } from 'src/client';
 
 const button: CoreButton = {
@@ -19,24 +13,15 @@ const button: CoreButton = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ButtonInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ButtonInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     if (!interaction.guildId) return;
 
-    const { General } = (
-      await import(`../../constants/rather-${guildDb.language}.json`)
-    ).default;
+    const { General } = (await import(`../../constants/rather-${guildDb.language}.json`)).default;
 
     if (!guildDb.replay)
       return interaction.reply({
         ephemeral: true,
-        content: client.translation.get(
-          guildDb.language,
-          'Rather.replays.disabled'
-        ),
+        content: client.translation.get(guildDb.language, 'Rather.replays.disabled'),
       });
 
     const mainRow = new ActionRowBuilder<ButtonBuilder>();
@@ -71,10 +56,7 @@ const button: CoreButton = {
 
     if (!vote)
       return interaction.reply({
-        content: client.translation.get(
-          guildDb.language,
-          'Rather.voting.error'
-        ),
+        content: client.translation.get(guildDb.language, 'Rather.voting.error'),
         ephemeral: true,
       });
 

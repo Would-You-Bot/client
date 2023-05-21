@@ -8,7 +8,7 @@ import {
 } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
 import { CoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
@@ -45,11 +45,7 @@ const button: CoreButton = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ButtonInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ButtonInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
@@ -62,94 +58,54 @@ const button: CoreButton = {
       .then(async (modalInteraction) => {
         if (!modalInteraction.isFromMessage()) return;
         if (!interaction.guild) return;
-        if (
-          modalInteraction.components[0].components[0].type !==
-          ComponentType.TextInput
-        )
-          return;
+        if (modalInteraction.components[0].components[0].type !== ComponentType.TextInput) return;
         const value = modalInteraction.components[0].components[0].value;
         if (Number.isNaN(parseInt(value, 10))) return;
 
         if (!isNumericRegex(value))
           return modalInteraction.reply({
             ephemeral: true,
-            content: client.translation.get(
-              guildDb.language,
-              'Settings.cooldownInvalid'
-            ),
+            content: client.translation.get(guildDb.language, 'Settings.cooldownInvalid'),
           });
 
         if (guildDb.replayCooldown.toString() === value)
           return modalInteraction.reply({
             ephemeral: true,
-            content: client.translation.get(
-              guildDb.language,
-              'Settings.replaySame'
-            ),
+            content: client.translation.get(guildDb.language, 'Settings.replaySame'),
           });
 
         if (parseInt(value, 10) < 2000)
           return modalInteraction.reply({
             ephemeral: true,
-            content: client.translation.get(
-              guildDb.language,
-              'Settings.cooldownMin'
-            ),
+            content: client.translation.get(guildDb.language, 'Settings.cooldownMin'),
           });
 
         const generalMsg = new EmbedBuilder()
-          .setTitle(
-            client.translation.get(
-              guildDb.language,
-              'Settings.embed.generalTitle'
-            )
-          )
+          .setTitle(client.translation.get(guildDb.language, 'Settings.embed.generalTitle'))
           .setDescription(
-            `${client.translation.get(
-              guildDb.language,
-              'Settings.embed.replayType'
-            )}: ${guildDb.replayType}\n${client.translation.get(
-              guildDb.language,
-              'Settings.embed.replayCooldown'
-            )}: ${
+            `${client.translation.get(guildDb.language, 'Settings.embed.replayType')}: ${
+              guildDb.replayType
+            }\n${client.translation.get(guildDb.language, 'Settings.embed.replayCooldown')}: ${
               guildDb.replayCooldown ? `${value}` : config.emojis.close.full
             }\n`
           )
           .setColor(config.colors.primary)
           .setFooter({
-            text: client.translation.get(
-              guildDb.language,
-              'Settings.embed.footer'
-            ),
+            text: client.translation.get(guildDb.language, 'Settings.embed.footer'),
             iconURL: client.user?.avatarURL() || undefined,
           });
 
-        const generalButtons =
-          new ActionRowBuilder<ButtonBuilder>().addComponents(
-            new ButtonBuilder()
-              .setCustomId('replayCooldown')
-              .setLabel(
-                client.translation.get(
-                  guildDb.language,
-                  'Settings.button.replayCooldown'
-                )
-              )
-              .setStyle(
-                guildDb.replayCooldown
-                  ? ButtonStyle.Success
-                  : ButtonStyle.Secondary
-              ),
-            new ButtonBuilder()
-              .setCustomId('replayType')
-              .setLabel(
-                client.translation.get(
-                  guildDb.language,
-                  'Settings.button.replayType'
-                )
-              )
-              .setStyle(ButtonStyle.Primary)
-              .setEmoji('📝')
-          );
+        const generalButtons = new ActionRowBuilder<ButtonBuilder>().addComponents(
+          new ButtonBuilder()
+            .setCustomId('replayCooldown')
+            .setLabel(client.translation.get(guildDb.language, 'Settings.button.replayCooldown'))
+            .setStyle(guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary),
+          new ButtonBuilder()
+            .setCustomId('replayType')
+            .setLabel(client.translation.get(guildDb.language, 'Settings.button.replayType'))
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji('📝')
+        );
 
         await client.database.updateGuild(interaction.guild.id, {
           replayCooldown: value,

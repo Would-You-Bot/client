@@ -1,0 +1,24 @@
+{
+  "slash": {
+    "scope": "typescript",
+    "prefix": "$event",
+    "body": [
+      "import { Events } from 'discord.js';",
+      "",
+      "import { CoreEvent } from '@typings/core';",
+      "import { ExtendedClient } from 'src/client';",
+      "",
+      "const event: CoreEvent<ExtendedClient, []> = {",
+      "  name: Events.ClientReady,",
+      "  /**",
+      "   * Execute the event.",
+      "   * @param client The extended client.",
+      "   */",
+      "  execute(client: ExtendedClient): void {},",
+      "};",
+      "",
+      "export default event;",
+    ],
+    "description": "Event file"
+  }
+}

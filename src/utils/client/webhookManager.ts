@@ -1,4 +1,4 @@
-import { Webhook } from '@utils/classes/webhooks.class';
+import { Webhook } from '@utils/classes/Webhooks.class';
 import colors from 'colors';
 import { PermissionFlagsBits, TextChannel, WebhookClient } from 'discord.js';
 import { ExtendedClient } from 'src/client';

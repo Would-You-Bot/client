@@ -1,48 +1,29 @@
-import {
-  ChatInputCommandInteraction,
-  EmbedBuilder,
-  PermissionFlagsBits,
-  SlashCommandBuilder,
-} from 'discord.js';
+import { ChatInputCommandInteraction, EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
-import { CoreCommand } from '@typings/core';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
+import { CoreSlashCommand } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreCommand = {
+const command: CoreSlashCommand = {
   data: new SlashCommandBuilder()
     .setName('language')
     .setDescription('Change the language for the current guild')
     .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
-      de: 'Ändere die Sprache für den aktuellen Server',
+      'de': 'Ändere die Sprache für den aktuellen Server',
       'es-ES': 'Cambiar el idioma del bot en el servidor',
     })
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName('english')
-        .setDescription('Set the language to english')
-    )
-    .addSubcommand((subcommand) =>
-      subcommand.setName('german').setDescription('Set the language to german')
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName('spanish')
-        .setDescription('Set the language to spanish')
-    ),
+    .addSubcommand((subcommand) => subcommand.setName('english').setDescription('Set the language to english'))
+    .addSubcommand((subcommand) => subcommand.setName('german').setDescription('Set the language to german'))
+    .addSubcommand((subcommand) => subcommand.setName('spanish').setDescription('Set the language to spanish')),
   /**
    * @param interaction
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     if (!interaction.guildId) return;
 
     const languageEmbed = new EmbedBuilder();
@@ -125,9 +106,7 @@ const command: CoreCommand = {
       const errorembed = new EmbedBuilder()
         .setColor(config.colors.danger)
         .setTitle('Error!')
-        .setDescription(
-          client.translation.get(guildDb.language, 'Language.embed.error')
-        );
+        .setDescription(client.translation.get(guildDb.language, 'Language.embed.error'));
 
       return interaction
         .reply({

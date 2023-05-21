@@ -1,4 +1,4 @@
-import { Events, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
+import { ContextMenuCommandBuilder, Events, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 
 export interface CoreCron<T = unknown> {
   id: string;
@@ -19,7 +19,7 @@ export interface CoreCustomCron<T = unknown> {
 export interface CoreEvent<T = unknown, P extends unknown[] = unknown[]> {
   once?: boolean;
   name: Events;
-  execute: (client: T, ...params: P) => Promise<unknown>;
+  execute: (client: T, ...params: P) => Promise<unknown> | unknown;
   disabled?: boolean;
 }
 
@@ -32,7 +32,7 @@ export interface CoreButton {
   perUser?: boolean;
 }
 
-export interface CoreCommand {
+export interface CoreSlashCommand {
   data:
     | Omit<
         SlashCommandBuilder,
@@ -49,6 +49,14 @@ export interface CoreCommand {
         | 'addChoices'
       >
     | SlashCommandSubcommandsOnlyBuilder;
+  execute: (...parameters: unknown[]) => Promise<unknown>;
+  autocomplete: (...parameters: unknown[]) => Promise<unknown>;
+  disabled?: boolean;
+  developer?: boolean;
+}
+
+export interface CoreContextMenuCommand {
+  data: ContextMenuCommandBuilder;
   execute: (...parameters: unknown[]) => Promise<unknown>;
   autocomplete: (...parameters: unknown[]) => Promise<unknown>;
   disabled?: boolean;

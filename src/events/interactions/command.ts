@@ -34,7 +34,7 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
     if (!guildProfile)
       return interaction.reply({ content: 'An error occurred while fetching the guild profile.', ephemeral: true });
 
-    const command = client.commands.get(commandName);
+    const command = client.slashCommand.get(commandName);
 
     // If the command is not found
     if (!command)

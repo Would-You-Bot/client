@@ -5,8 +5,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import config from '@config';
-import { CoreButton, CoreCommand, CoreEvent } from '@typings/core';
+import { CoreButton, CoreContextMenuCommand, CoreEvent, CoreSlashCommand } from '@typings/core';
 import { GuildProfiles, Webhooks } from '@utils/classes';
+import QuestionPacks from '@utils/classes/QuestionPacks.class';
 import { Logger } from 'winston';
 
 interface ClientErrorParams {
@@ -34,10 +35,12 @@ export class ExtendedClient extends Client {
   public error: (params: ClientErrorParams) => Promise<void>;
 
   // Classes
-  public commands = new Collection<string, CoreCommand>();
+  public slashCommand = new Collection<string, CoreSlashCommand>();
+  public contextMenuCommands = new Collection<string, CoreContextMenuCommand>();
   public buttons = new Collection<string, CoreButton>();
   public events = new Collection<string, CoreEvent>();
   public guildProfiles: GuildProfiles;
+  public packs: QuestionPacks;
   public webhooks: Webhooks;
   public used = new Map<string, unknown>();
 
@@ -77,10 +80,13 @@ export class ExtendedClient extends Client {
       shardCount: getInfo().TOTAL_SHARDS,
     });
 
+    const guildIds = this.guilds.cache.map((guild) => guild.id);
+
     // Initialize classes
     this.cluster = new ClusterClient(this);
-    this.guildProfiles = new GuildProfiles(this.guilds.cache.map((guild) => guild.id));
-    this.webhooks = new Webhooks(this.guilds.cache.map((guild) => guild.id));
+    this.guildProfiles = new GuildProfiles(guildIds);
+    this.packs = new QuestionPacks(guildIds);
+    this.webhooks = new Webhooks(guildIds);
 
     // TODO: Replace these
     /* this.dailyMessage = new DailyMessage(this);

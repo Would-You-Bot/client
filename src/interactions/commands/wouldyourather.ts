@@ -8,17 +8,17 @@ import {
 } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/guildProfile.model';
-import { CoreCommand } from '@typings/core';
+import { GuildProfileDocument } from '@models/GuildProfile.model';
+import { CoreSlashCommand } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreCommand = {
+const command: CoreSlashCommand = {
   data: new SlashCommandBuilder()
     .setName('wouldyourather')
     .setDescription('Get a would you rather question.')
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: 'Erhalte eine Würdest du eher Frage.',
+      'de': 'Erhalte eine Würdest du eher Frage.',
       'es-ES': 'Obtiene une pregunta ¿Qué prefieres?',
     }),
   /**
@@ -26,16 +26,10 @@ const command: CoreCommand = {
    * @param client
    * @param guildDb
    */
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
+  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
     if (!interaction.guildId) return;
 
-    const { General } = (
-      await import(`../../constants/rather-${guildDb.language}.json`)
-    ).default;
+    const { General } = (await import(`../../constants/rather-${guildDb.language}.json`)).default;
 
     const randomrather = Math.floor(Math.random() * General.length);
 
