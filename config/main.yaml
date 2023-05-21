@@ -1,0 +1,37 @@
+# If you want to add another value, also include it in the `MainConfig` type in `/src/typings/config.ts` and add it to `/src/config.ts`
+
+productionId: '981649513427111957'
+status: 'Would you?'
+
+links:
+  invite: https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands
+  # or https://wouldyoubot.gg/invite
+  website: https://wouldyoubot.gg/
+  support: https://discord.gg/vMyXAxEznS
+  vote: https://top.gg/bot/981649513427111957/vote
+  tos: https://wouldyoubot.gg/terms
+  privacy: https://wouldyoubot.gg/privacy
+  logo: https://wouldyoubot.gg/Logo.png
+
+developers:
+  - '347077478726238228' # Dominik#5555
+  - '268843733317976066' # ForGetFulSkyBro#9999
+  - '799319682862809169' # Marc#0309
+  - '896657711104667719' # Slekup#6682
+  - '805898988402376725' # Finn#3000
+
+colors:
+  primary: '#0598F4'
+  success: '#0598F4'
+  warning: '#0598F4'
+  danger: '#0598F4'
+  blurple: '#5865F4'
+
+voteEmojis:
+  - '<a:jammiesyou:1009965703484424282>'
+  - '<a:nyancatyou:1009965705808056350>'
+  - '<a:partyparrotyou:1009965704621080678>'
+  - '<a:shootyou:1009965706978267136>'
+  - '<a:catjamyou:1009965950101110806>'
+  - '<a:patyou:1009964589678612581>'
+  - '<a:patyoufast:1009964759216574586>'

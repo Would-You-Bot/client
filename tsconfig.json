@@ -1,0 +1,111 @@
+{
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "NodeNext",
+    "target": "ESNext",
+    "lib": [
+      "ESNext"
+    ],
+    "outDir": "dist",
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitThis": true,
+    "strictPropertyInitialization": false,
+    "useUnknownInCatchVariables": false,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmitOnError": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "importHelpers": true,
+    "noEmit": false,
+    "allowJs": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@config": [
+        "src/config"
+      ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@crons/*": [
+        "src/crons/*"
+      ],
+      "@events/*": [
+        "src/events/*"
+      ],
+      "@interactions/*": [
+        "src/interactions/*"
+      ],
+      "@interface/*": [
+        "src/interface/*"
+      ],
+      "@models/*": [
+        "src/models/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@typings/*": [
+        "src/typings/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.*",
+    "environment.d.ts",
+    "package.json",
+    "register.cjs",
+    "migrations/GuildProfile.model.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "typedocOptions": {
+    "name": "Would You Bot | Developer Documentation",
+    "customTitle": "Would You Bot | Developer Documentation",
+    "customTitleLink": "https://slekup.github.io/would-you-bot/",
+    "customDescription": "See the official developer documentation for Would You bot. Would You bot is an open-source discord bot that includes activities and questions to keep your server active!",
+    "plugin": [
+      "typedoc-plugin-mdn-links",
+      "typedoc-plugin-extras",
+      "typedoc-plugin-djs-links",
+    ],
+    "entryPoints": [
+      "src"
+    ],
+    "entryPointStrategy": "Expand",
+    "exclude": [
+      "node_modules",
+      "**/*.spec.ts"
+    ],
+    "externalPattern": [
+      "**/node_modules/**"
+    ],
+    "includes": [
+      "src"
+    ],
+    "out": "docs",
+    "includeVersion": true,
+    "readme": "README.md",
+    "showConfig": false,
+    "favicon": "https://wouldyoubot.gg/Logo.png",
+  }
+}
