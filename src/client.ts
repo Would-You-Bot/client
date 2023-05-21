@@ -6,8 +6,7 @@ dotenv.config();
 
 import config from '@config';
 import { CoreButton, CoreContextMenuCommand, CoreEvent, CoreSlashCommand } from '@typings/core';
-import { GuildProfiles, Webhooks } from '@utils/classes';
-import QuestionPacks from '@utils/classes/QuestionPacks.class';
+import { GuildProfiles, QuestionPacks, Webhooks } from '@utils/classes';
 import { Logger } from 'winston';
 
 interface ClientErrorParams {
