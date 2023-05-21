@@ -48,3 +48,13 @@ export const timeToCronExpression = (time: string): string | null => {
 
   return null; // Return null if the time is invalid
 };
+
+/**
+ * Validate a time.
+ * @param time The time to validate.
+ * @returns Whether the time is valid.
+ */
+export const validateTime = (time: string): boolean => {
+  const timeRegex = /^(?:[01]\d|2[0-3]):(?:00|30)$/; // Regular expression to validate HH:MM format
+  return timeRegex.test(time);
+};

@@ -1,0 +1,295 @@
+export default {
+  Ping: {
+    embed: {
+      title: '🏓 Pong!',
+      api: 'Latencia de la API',
+      client: 'Latencia del cliente',
+      footer: 'Would You',
+    },
+    button: {
+      title: 'Latencia de la API de Discord',
+    },
+  },
+  Language: {
+    embed: {
+      error: '¡Te falta el permiso `Manage guild` para usar este comando!',
+      footer: 'Would You',
+    },
+  },
+  Wwyd: {
+    embed: {
+      title: '¿Qué harías **tú**?',
+      footer: 'Explica qué y por qué.',
+    },
+  },
+  Support: {
+    embed: {
+      title: 'Would You - Soporte',
+      description:
+        'Si alguna vez necesitas ayuda con algo, simplemente comunícate con el **equipo de soporte** en nuestro **[Servidor de soporte](https://discord.gg/vMyXAxEznS)!**',
+      footer: 'Would You',
+    },
+  },
+  wyCustom: {
+    error: {
+      paginate: 'No puedes continuar para ese lado.',
+      maximum: 'Has alcanzado la cantidad máxima de mensajes personalizados. ¡Puedes ganar más votando por el bot!',
+      empty: '¡Actualmente no hay mensajes personalizados para ver!',
+      import: {
+        att1: '¡Debes proporcionar un archivo JSON válido!',
+        att2: '¡Debes proporcionar un archivo JSON válido!',
+        att3: '¡El JSON que proporcionaste no tenía ningún dato! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)',
+        att4: '¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)',
+        att5: '¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)',
+        att15: 'Se produjo un error al ejecutar este comando, por favor infórmelo al servidor de soporte.',
+        att16:
+          'El JSON que proporcionaste tenía demasiados datos para la categoría wouldyourather, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!',
+        att17:
+          'El JSON que proporcionaste tenía demasiados datos para la categoría neverhaveiever, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!',
+        att18:
+          'El JSON que proporcionaste tenía demasiados datos para la categoría wwyd, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!',
+        att19:
+          'No puedes tener más de 30 mensajes personalizados en una importación para la categoría wouldyourather. ¡Puedes ganar más votando por el bot!',
+        att20:
+          'No puedes tener más de 30 mensajes personalizados en una importación para la categoría neverhaveiever. ¡Puedes ganar más votando por el bot!',
+        att21:
+          'No puedes tener más de 30 mensajes personalizados en una importación para la categoría wwyd. ¡Puedes ganar más votando por el bot!',
+        att22:
+          'Al añadir los mensajes de tu archivo con tus mensajes personalizados actuales **wouldyourather** el número de mensajes superará los 30, que es el límite. ¡Puedes ganar más votando por el bot!',
+        att23:
+          'Al añadir los mensajes de tu archivo con tus mensajes personalizados actuales **neverhaveiever** el número de mensajes superará los 30, que es el límite. ¡Puedes ganar más votando por el bot!',
+        att24:
+          'Al añadir los mensajes de tu archivo con tus mensajes personalizados actuales **wwyd** el número de mensajes superará los 30, que es el límite. ¡Puedes ganar más votando por el bot!',
+      },
+      export: {
+        none: '¡No tienes ningun mensaje personalizado para exportar!',
+      },
+    },
+    success: {
+      import: '¡Importó con éxito los mensajes personalizados!',
+      export: '¡Exportó con éxito sus mensajes personalizados!',
+      embedAdd: {
+        title: '¡Se creó con éxito el mensaje Would You!',
+        descID: 'ID',
+        descMsg: 'Mensaje',
+        descCat: 'Categoría',
+        descCont: 'Contenido',
+      },
+      embedRemove: {
+        title: '¡Se eliminó con éxito ese mensaje Would You!',
+      },
+      embedRemoveAll: {
+        title: '¿Estás seguro de que deseas eliminar todos los mensajes personalizados de Would You?',
+        accept: '¡Eliminó con éxito todos los mensajes personalizados de Would You!',
+        decline: 'Has rechazado eliminar todos los mensajes personalizados de Would You.',
+        none: '¡Actualmente no tienes ningún mensaje personalizado para eliminar!',
+      },
+      paginator: {
+        title: 'Mensajes personalizados de Would You',
+        descCatUseful: '**Categoría**: útil',
+        descCatUseless: '**Categoría**: inútil',
+      },
+    },
+  },
+  wyType: {
+    embed: {
+      title: 'Tipo de Would You cambiado!',
+      descDef: 'Los mensajes por defecto ahora se utilizarán para los comandos.',
+      descBoth: 'Tanto los mensajes por defecto como los mensajes personalizados se utilizarán para los comandos.',
+      descCust: 'Los mensajes personalizados ahora se utilizarán para los comandos.',
+    },
+  },
+  Custom: {
+    embed: {
+      title: '¿Querrías este poder?',
+      footer: 'Would You',
+    },
+  },
+  WouldYou: {
+    embed: {
+      Usefulname: '¿Querrías este poder?',
+      Uselessname: '¿Querrías este poder?',
+      footer: 'Would You',
+    },
+    replays: {
+      disabled: '¡Volver a jugar está actualmente deshabilitado en este servidor!',
+    },
+    stats: {
+      of: 'de',
+      taking: ' querría este poder.',
+      user: 'usuario',
+      users: 'usuarios',
+    },
+  },
+  Random: {
+    embed: {
+      text1: 'Querrías este poder pero',
+      text2: 'puedes elegir un efecto secundario?',
+      footer: 'Would You',
+    },
+  },
+  Help: {
+    embed: {
+      title: 'Información',
+      description: '**Would You** es un bot creado para aumentar la actividad del servidor de Discord.',
+      footer: 'Would You',
+      Fields: {
+        name: '**Mis Comandos**',
+        value:
+          '`/Would You` - Inicia una discusión sobre poderes aleatorios.\n`/ping` - Pong!\n`/language` - Cambia el idioma del bot para el servidor.\n`/help` - Muestra esta información.\n`/rather` - Te da dos poderes para elegir.\n`/custom` - envía un mensaje personalizado en el chat!\n`/welcome` - ¡Agrega o elimina el canal de bienvenida!\n`/support`: si alguna vez necesitas ayuda con el bot, ¡usa este comando para obtener ayuda del equipo de soporte!',
+        privacyname: '**Política de privacidad**',
+        privacy:
+          'Valoramos tu privacidad. Si tienes alguna duda sobre tus datos, consulta nuestra política de privacidad [aquí](https://wouldyoubot.gg/privacy).',
+      },
+    },
+    button: {
+      title: 'Nuestro Discord',
+    },
+  },
+  Vote: {
+    embed: {
+      title: '¡Votar ayuda **Would You** a ganar más usuarios, asegúrate de votar todos los días!',
+      value: 'Clica para votar',
+      footer: 'Would You',
+    },
+  },
+  Rather: {
+    embed: {
+      uselessname: 'Would you rather',
+      uselessname2: 'o',
+      usefulname: 'Would you rather',
+      usefulname2: 'o',
+      footer: 'Would You Rather',
+      thispower: 'Según la votación, la mayoría de los usuarios preferirían:',
+    },
+    replays: {
+      disabled: '¡Volver a jugar está actualmente deshabilitado en este servidor!',
+    },
+    button: {
+      nocustom: '¡Actualmente no hay mensajes personalizados! Haga algunos o cambie el tipo usando /Would You type',
+    },
+  },
+  REPLAY: {
+    embed: {
+      title: 'Repeticiones de Would You',
+      description: 'Configuraste repeticiones con éxito',
+      errorDesc: '¡Para usar este comando necesitas votar por el bot!',
+      errorAlready: 'Las repeticiones ya están deshabilitadas.',
+      errorAlready2: 'Las repeticiones ya están habilitadas.',
+      cooldownSuccess: 'El cooldown fue habilitado con éxito para ',
+      cooldownSuccess2: ' segundos!',
+      success: 'Las repeticiones fueran deshabilitadas.',
+      missingPerms: '¡Te falta el permiso `Manage guild` para usar este comando!',
+    },
+  },
+  Guide: {
+    embed: {
+      title: 'Would You | Guía',
+      description: 'Guía para utilizar todo el potencial de Would You',
+      name1: 'Cómo usar correctamente Would You!',
+      value1:
+        'Cria un canal dedicado para el bot o permita que los usuarios usen el bot en el chat principal.\n > El propósito de Would You es hacer que los chats sean más activos, por lo que sería muy irónico negar el uso de Would You en los chats principales.\n > Si desea utilizar el bot en todo su potencial, utilice el comando </welcome:1011374285350260914> y configure un canal de bienvenida. El canal se utilizará para enviar un mensaje cada vez que un usuario se una.',
+      name2: '¿Por qué necesito eso?',
+      value2:
+        '> La intención detrás de esto es ayudar a los nuevos usuarios a ser parte de la conversación, ¡dándoles un tema del que hablar inmediatamente después de unirse! Esto no solo hace que el servidor sea más activo, sino que también hace que los nuevos usuarios se sientan más incluidos justo después de unirse al servidor y los alienta a quedarse por más tiempo.',
+      name3: '¿Algún consejo más?',
+      value3:
+        '> ¡Sí! Asegúrate de hablar sobre el tema en lugar de hacer spam de comandos. ¡Esto ayudará a los miembros a construir una conversación y hacer que el servidor sea más activo en minutos! ¡Hay una imagen adjunta con un excelente ejemplo de cómo usar el bot!',
+      footer: 'Would You',
+    },
+  },
+  inter: {
+    error: 'Ocurrió un error al intentar ejecutar ese comando.',
+    wait: 'Debes esperar 30 segundos entre cada pulsación de botón.',
+    again: 'Por favor utiliza el comando de nuevo.',
+  },
+  webhookManager: {
+    noWebhook:
+      'Debido a un cambio necesario para el rendimiento, ¡necesito permisos de **Gestión de Webhooks** para enviar este mensaje! (Si tengo estos permisos pero sigue apareciendo este mensaje, ¡asegúrate de que puedo crear un Webhook!',
+  },
+  Settings: {
+    errorSame:
+      'La zona horaria proporcionada es la misma zona horaria que ya está definida. Asegúrese de elegir una zona horaria diferente.',
+    errorInvalid:
+      'La zona horaria proporcionada no es válida, puedes elegir una zona horaria válida aquí: [Selector de Zona Horaria](https://kevinnovak.github.io/Time-Zone-Picker/)',
+    intervalSame:
+      'El intervalo proporcionado es el mismo que ya está establecido. Asegúrese de elegir un intervalo diferente.',
+    intervalInvalid:
+      'El intervalo proporcionado no es válido. ¡Asegúrese de que su intervalo está en formato 24 h y los minutos son 00 o 30!',
+    dailyChannel: '¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!',
+    dailyType: '¡Selecciona un tipo de mensaje diario que quieres enviar!',
+    dailyRole: '¡Selecciona un rol que quieres hacer ping en los Mensajes Diarios!',
+    replaySame:
+      'El tiempo de reutilización proporcionado es el mismo que ya está establecido. Asegúrese de elegir un tiempo de reutilización diferente.',
+    voteSame:
+      'El tiempo de espera de votación proporcionado es el mismo tiempo de espera que ya está establecido. Asegúrese de elegir un tiempo de espera diferente.',
+    cooldownInvalid:
+      'El tiempo de reutilización proporcionado no es válido. ¡Asegúrese de que el tiempo de reutilización solo incluye números!',
+    embed: {
+      generalTitle: 'Would You - Configuración general',
+      replayCooldown: '**Tiempo de Repetición**',
+      dailyInterval: '**Intervalo**',
+      dailyTitle: 'Would You - Mensajes Diarios',
+      dailyType: '**Tipo**',
+      dailyMsg: '**Habilitado**',
+      dailyRole: '**Papel**',
+      dailyChannel: '**Canal**',
+      dailyTimezone: '**Timezone**',
+      welcomeTitle: 'Would You - Bienvenidas',
+      welcome: '**Habilitado**',
+      welcomeChannel: '**Canal**',
+      welcomePing: '**Pings de usuario**',
+      footer: 'Would You',
+      dailyThread: '**Hilos**',
+    },
+    button: {
+      dailyInterval: 'Establecer intervalo',
+      dailyChannel: 'Establecer canal',
+      dailyRole: 'Establecer rol',
+      dailyTimezone: 'Establecer zona horaria',
+      dailyType: 'Definir tipo',
+      dailyMsg: 'Alternar Mensajes Diarios',
+      replayCooldown: 'Establecer tiempo de reutilización',
+      welcomeChannel: 'Establecer canal',
+      welcome: 'Alternar Bienvenidas',
+      welcomePing: 'Alternar ping de usuario',
+      dailyThread: 'Hilo conductor',
+    },
+  },
+  Debug: {
+    permissions: 'No tienes los permisos necesarios para usar este comando.',
+    channelNotSet: 'El canal para el mensaje diario no está configurado o no puedo acceder a él.',
+    tryToSent:
+      '¡Intentaré enviar un mensaje de prueba ahora! Si no pasa nada, ¡verifique el servidor de soporte del bot!',
+    testMessage: 'Este es un mensaje de prueba para verificar si el webhook para mensajes diarios funciona.',
+    enabled:
+      'El modo debug fue **habilitado**. Tenga en cuenta que los desarrolladores de WouldYou ahora pueden acceder a los comandos **sin** tener los permisos necesarios.',
+    disabled:
+      'El modo debug fue **deshabilitado**. Tenga en cuenta que los desarrolladores de WouldYou ya no pueden acceder a los comandos **sin** tener los permisos necesarios.',
+    embed: {
+      title: 'Depurar',
+      settings: 'Configuraciones',
+      isChannel: 'Este canal **{is}** el canal de mensajes diarios.',
+      is: 'es',
+      isnot: 'no es',
+      channel: 'Este canal',
+      can: 'puede',
+      cannot: 'no puede',
+      manageWebhook: 'Yo **{can}** administrar webhooks en este canal.',
+      embedLinks: 'Yo **{can}** enviar embeds en este canal.',
+      sendMessages: 'Yo **{can}** enviar mensajes en este canal.',
+      viewChannel: 'Yo **{can}** ver este canal.',
+      readMessageHistory: 'Yo **{can}** leer el historial de mensajes de este canal.',
+      global: 'Global',
+      g_manageWebhooks: 'Yo **{can}** administrar webhooks en este servidor.',
+      g_embedLinks: 'Yo **{can}** enviar embeds en este servidor.',
+      g_sendMessages: 'Yo **{can}** enviar mensajes en este servidor.',
+      g_viewChannel: 'Yo **{can}** ver canales en este servidor.',
+      g_readMessageHistory: 'Yo **{can}** leer el historial de mensajes en este servidor.',
+    },
+  },
+  Voting: {
+    Yes: 'Sí',
+    No: 'No',
+  },
+};

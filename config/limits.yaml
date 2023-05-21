@@ -1,5 +1,6 @@
 # index 0 = default, 1 = premium limit (ms)
 cooldown:
+  global: [100, 100]
   slash: [500, 500]
   context: [500, 500]
   button: [500, 500]

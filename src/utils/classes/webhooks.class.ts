@@ -34,22 +34,25 @@ export class Webhook {
 
   /**
    * Fetch a webhook.
-   * @returns The webhook or undefined.
+   * @returns The webhook.
    */
-  public async fetch(): Promise<Webhook | undefined> {
+  public async fetch(): Promise<Webhook> {
     try {
       // Fetch the webhook from the database
       const webhook = await WebhookModel.findOne({
         guildId: this.id,
       });
 
-      // If the webhook does not exist return undefined
-      if (!webhook) return;
+      // If the webhook does not exist throw an error
+      if (!webhook) throw new Error(`Webhook not found: ${this.id}`);
 
       // Assign the webhook document to the class
       this.assign(webhook);
+
+      return this;
     } catch (error) {
       logger.error(error);
+      throw new Error(String(error));
     }
   }
 
@@ -78,22 +81,24 @@ export class Webhook {
    * @param options The webhook message options.
    * @returns The webhook client.
    */
-  public async send(options: WebhookMessageCreateOptions): Promise<WebhookClient | undefined> {
+  public send(options: WebhookMessageCreateOptions): WebhookClient {
     try {
-      const webhook = await this.fetch();
-
-      if (!webhook) return;
-
+      // Create a new webhook client
       const webhookClient = new WebhookClient({
         id: this.id,
         token: this.token,
       });
 
+      // Send the webhook message
       webhookClient.send(options);
+
+      // Destroy the webhook client
+      webhookClient.destroy();
 
       return webhookClient;
     } catch (error) {
       logger.error(error);
+      throw new Error(String(error));
     }
   }
 
@@ -102,22 +107,24 @@ export class Webhook {
    * @param options The webhook message options.
    * @returns The webhook client.
    */
-  public async edit(options: WebhookEditOptions): Promise<WebhookClient | undefined> {
+  public edit(options: WebhookEditOptions): WebhookClient {
     try {
-      const webhook = await this.fetch();
-
-      if (!webhook) return;
-
+      // Create a new webhook client
       const webhookClient = new WebhookClient({
         id: this.id,
         token: this.token,
       });
 
+      // Edit the webhook message
       webhookClient.edit(options);
+
+      // Destroy the webhook client
+      webhookClient.destroy();
 
       return webhookClient;
     } catch (error) {
       logger.error(error);
+      throw new Error(String(error));
     }
   }
 }
@@ -140,23 +147,27 @@ export default class Webhooks {
   /**
    * Fetch method type without channelId.
    */
-  public async fetch(): Promise<Webhook[] | undefined>;
+  public async fetch(): Promise<Webhook[]>;
 
   /**
    * Fetch method type with channelId.
    * @param channelId The channel id.
    */
-  public async fetch(channelId?: string): Promise<Webhook | undefined>;
+  public async fetch(channelId?: string): Promise<Webhook>;
 
   /**
    * Fetch a webhook if the channel id is provided or all webhooks if a channel id is not provided.
    * @param channelId The channel id.
-   * @returns The webhook, all webhooks, or undefined.
+   * @returns The webhook, all webhooks, or throw an error.
    */
-  public async fetch(channelId?: string): Promise<Webhook | Webhook[] | undefined> {
+  public async fetch(channelId?: string): Promise<Webhook | Webhook[]> {
     if (channelId) {
       // If the webhook is in the cache return it
-      if (this.cache.has(channelId)) return this.cache.get(channelId);
+      if (this.cache.has(channelId)) {
+        const cachedChannel = this.cache.get(channelId);
+        if (cachedChannel) return cachedChannel;
+        throw new Error(`Webhook not found: ${channelId}`);
+      }
 
       try {
         // Fetch the webhook from the database
@@ -164,8 +175,8 @@ export default class Webhooks {
           channelId,
         });
 
-        // If the webhook does not exist return undefined
-        if (!webhookDoc) return;
+        // If the webhook does not exist throw an error
+        if (!webhookDoc) throw new Error(`Webhook not found: ${channelId}`);
 
         // Create a new webhook class
         const webhook = new Webhook(webhookDoc);
@@ -176,6 +187,7 @@ export default class Webhooks {
         return webhook;
       } catch (error) {
         logger.error(error);
+        throw new Error(String(error));
       }
     } else {
       try {
@@ -194,6 +206,7 @@ export default class Webhooks {
         return webhooks;
       } catch (error) {
         logger.error(error);
+        throw new Error(String(error));
       }
     }
   }
@@ -201,9 +214,9 @@ export default class Webhooks {
   /**
    * Fetch all webhooks for a guild.
    * @param guildId The guild id.
-   * @returns All webhooks or undefined.
+   * @returns All webhooks or throw an error.
    */
-  public async fetchAll(guildId: string): Promise<Webhook[] | undefined> {
+  public async fetchAll(guildId: string): Promise<Webhook[]> {
     try {
       // Fetch all webhooks from the database
       const webhookDocs = await WebhookModel.find({
@@ -220,15 +233,16 @@ export default class Webhooks {
       return webhooks;
     } catch (error) {
       logger.error(error);
+      throw new Error(String(error));
     }
   }
 
   /**
    * Create a webhook.
    * @param webhookData The webhook data to create a webhook with.
-   * @returns The webhook or undefined.
+   * @returns The webhook or throw an error.
    */
-  public async create(webhookData: WebhookSchema): Promise<Webhook | undefined> {
+  public async create(webhookData: WebhookSchema): Promise<Webhook> {
     try {
       // Create a new webhook document
       const webhookDoc = await WebhookModel.findOneAndUpdate(
@@ -259,6 +273,7 @@ export default class Webhooks {
       return webhook;
     } catch (error) {
       logger.error(error);
+      throw new Error(String(error));
     }
   }
 
@@ -270,6 +285,7 @@ export default class Webhooks {
       await this.fetch();
     } catch (error) {
       logger.error(error);
+      throw new Error(String(error));
     }
   }
 }

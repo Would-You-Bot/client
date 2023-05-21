@@ -1,4 +1,11 @@
-import { ContextMenuCommandBuilder, Events, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
+import {
+  ButtonInteraction,
+  ContextMenuCommandBuilder,
+  Events,
+  ModalSubmitInteraction,
+  SlashCommandBuilder,
+  SlashCommandSubcommandsOnlyBuilder,
+} from 'discord.js';
 
 export interface CoreCron<T = unknown> {
   id: string;
@@ -23,13 +30,21 @@ export interface CoreEvent<T = unknown, P extends unknown[] = unknown[]> {
   disabled?: boolean;
 }
 
-export interface CoreButton {
+export interface CoreButton<T = unknown, I = ButtonInteraction, A = string[]> {
   id: string;
   description: string;
-  execute: (...parameters: unknown[]) => Promise<unknown>;
+  execute: (client: T, interaction: I, args: A) => Promise<unknown> | unknown;
   disabled?: boolean;
   developer?: boolean;
   perUser?: boolean;
+}
+
+export interface CoreModal<T = unknown, I = ModalSubmitInteraction, A = string[]> {
+  id: string;
+  description: string;
+  execute: (client: T, interaction: I, args?: A) => Promise<unknown> | unknown;
+  disabled?: boolean;
+  developer?: boolean;
 }
 
 export interface CoreSlashCommand {

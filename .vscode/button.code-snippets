@@ -1,0 +1,35 @@
+{
+  "slash": {
+    "scope": "typescript",
+    "prefix": "$button",
+    "body": [
+      "import { ButtonInteraction } from 'discord.js';",
+      "",
+      "import { CoreButton } from '@typings/core';",
+      "import { ExtendedClient } from 'src/client';",
+      "",
+      "const button: CoreButton<ExtendedClient> = {",
+      "  id: 'button-id',",
+      "  description: 'Button description',",
+      "  perUser: false,",
+      "  /**",
+      "   * The function that is executed when the button is pressed.",
+      "   * @param client The extended client.",
+      "   * @param interaction The button interaction.",
+      "   * @param args The arguments passed to the button.",
+      "   * @returns A promise that resolves to an unknown value.",
+      "   */",
+      "  execute: async (client: ExtendedClient, interaction: ButtonInteraction, args: string[]): Promise<unknown> => {",
+      "    const firstArgument = args[1];",
+      "",
+      "    await interaction.reply(`Button pressed! \\${firstArgument}`);",
+      "",
+      "    return 'anything';",
+      "  },",
+      "};",
+      "",
+      "export default button;",
+    ],
+    "description": "Button file"
+  }
+}

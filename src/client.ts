@@ -5,8 +5,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import config from '@config';
-import { CoreButton, CoreContextMenuCommand, CoreEvent, CoreSlashCommand } from '@typings/core';
+import { CoreButton, CoreContextMenuCommand, CoreEvent, CoreModal, CoreSlashCommand } from '@typings/core';
 import { GuildProfiles, QuestionPacks, Webhooks } from '@utils/classes';
+import { Translations } from '@utils/classes/Translations.class';
 import { Logger } from 'winston';
 
 interface ClientErrorParams {
@@ -28,6 +29,7 @@ export class ExtendedClient extends Client {
   public developers: User[] = [];
   public client: ClusterClient<Client>;
   public cluster: ClusterClient<DjsDiscordClient>;
+  public translations: Translations = new Translations();
 
   // Client functions - Initialized after the client is initialized
   public logger: Logger;
@@ -37,6 +39,7 @@ export class ExtendedClient extends Client {
   public slashCommand = new Collection<string, CoreSlashCommand>();
   public contextMenuCommands = new Collection<string, CoreContextMenuCommand>();
   public buttons = new Collection<string, CoreButton>();
+  public modals = new Collection<string, CoreModal>();
   public events = new Collection<string, CoreEvent>();
   public guildProfiles: GuildProfiles;
   public packs: QuestionPacks;
