@@ -1,7 +1,7 @@
-import { Webhook } from '@utils/classes/Webhooks.class';
 import colors from 'colors';
 import { PermissionFlagsBits, TextChannel, WebhookClient } from 'discord.js';
 import { ExtendedClient } from 'src/client';
+import { Webhook } from 'src/webhooks.class';
 
 const queue: string[] = [];
 
