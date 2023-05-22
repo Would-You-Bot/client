@@ -1,5 +1,3 @@
-import { CoreLanguage } from './core';
-
 export interface CustomMessage {
   id: string;
   type: string;
@@ -34,11 +32,17 @@ export interface GuildDaily {
   thread: boolean;
 }
 
+export enum GuildLanguage {
+  English = 'en',
+  German = 'de',
+  Spanish = 'es',
+}
+
 export interface GuildProfile {
   guildId: string;
   timezone: string;
   questionType: GuildQuestionType;
-  language: CoreLanguage;
+  language: GuildLanguage;
   premium: GuildPremium;
   welcome: GuildWelcome;
   daily: GuildDaily;

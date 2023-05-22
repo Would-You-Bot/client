@@ -1,19 +1,15 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
-import { GuildProfile } from '@utils/classes';
-import { ExtendedClient } from 'src/client';
+import { CoreInterface } from '@typings/core';
 
 /**
- * The daily message interface.
+ * The daily question interface.
  * @param client The extended client.
  * @param guildProfile The guild profile.
  * @returns An object containing the embed and buttons.
  */
-const dailyMessageInterface = (
-  client: ExtendedClient,
-  guildProfile: GuildProfile
-): { embed: EmbedBuilder; buttons: ActionRowBuilder<ButtonBuilder> } => {
+export default <CoreInterface>((client, guildProfile) => {
   const translations = client.translations[guildProfile.language];
 
   const embed = new EmbedBuilder()
@@ -57,7 +53,7 @@ const dailyMessageInterface = (
       .setEmoji('⏰'),
     new ButtonBuilder()
       .setCustomId('daily*thread')
-      .setLabel(translations.settings.daily.button.thread)
+      .setLabel(translations.settings.daily.button.thread[guildProfile.daily.thread ? 'disable' : 'enable'])
       .setStyle(useButtonStyle)
       .setDisabled(!guildProfile.daily.enabled)
   );
@@ -66,6 +62,4 @@ const dailyMessageInterface = (
     buttons,
     embed,
   };
-};
-
-export default dailyMessageInterface;
+});

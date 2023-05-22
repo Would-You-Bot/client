@@ -1,9 +1,8 @@
 import { Events } from 'discord.js';
 
 import { CoreEvent } from '@typings/core';
-import { ExtendedClient } from 'src/client';
 
-const event: CoreEvent<ExtendedClient, [string, number]> = {
+export default <CoreEvent>{
   name: Events.ShardResume,
   /**
    * Executes the shard resume event.
@@ -11,9 +10,7 @@ const event: CoreEvent<ExtendedClient, [string, number]> = {
    * @param id The shard id.
    * @param replayedEvents The number of replayed events.
    */
-  execute(client: ExtendedClient, id: string, replayedEvents: number) {
+  execute(client, id: string, replayedEvents: number) {
     client.logger.info(`Shard resume: ${id} (${replayedEvents} events replayed)`);
   },
 };
-
-export default event;

@@ -1,9 +1,8 @@
 import { Events } from 'discord.js';
 
 import { CoreEvent } from '@typings/core';
-import { ExtendedClient } from 'src/client';
 
-const event: CoreEvent<ExtendedClient, [Error, string]> = {
+export default <CoreEvent>{
   name: Events.ShardError,
   /**
    * Executes the shard error event.
@@ -11,9 +10,7 @@ const event: CoreEvent<ExtendedClient, [Error, string]> = {
    * @param error The error.
    * @param shardId The shard id.
    */
-  execute(client: ExtendedClient, error: Error, shardId: string) {
+  execute(client, error: Error, shardId: string) {
     client.logger.error(`Shard error: ${shardId}\nError: ${String(error)}`);
   },
 };
-
-export default event;

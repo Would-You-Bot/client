@@ -4,9 +4,8 @@ import { AutoPoster } from 'topgg-autoposter';
 import config from '@config';
 import { CoreEvent } from '@typings/core';
 import { registerCommands } from '@utils/start';
-import { ExtendedClient } from 'src/client';
 
-const event: CoreEvent<ExtendedClient> = {
+export default <CoreEvent>{
   once: true,
   name: Events.ClientReady,
   /**
@@ -14,7 +13,7 @@ const event: CoreEvent<ExtendedClient> = {
    * @param client The extended client.
    * @returns A promise.
    */
-  async execute(client: ExtendedClient) {
+  async execute(client) {
     if (!client.user?.id) return;
 
     client.user.setPresence({
@@ -35,5 +34,3 @@ const event: CoreEvent<ExtendedClient> = {
     });
   },
 };
-
-export default event;

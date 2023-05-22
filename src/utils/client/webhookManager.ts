@@ -1,7 +1,7 @@
+import { IExtendedClient } from '@typings/core';
+import { Webhook } from '@utils/classes/Webhooks.class';
 import colors from 'colors';
 import { PermissionFlagsBits, TextChannel, WebhookClient } from 'discord.js';
-import { ExtendedClient } from 'src/client';
-import { Webhook } from 'src/webhooks.class';
 
 const queue: string[] = [];
 
@@ -29,7 +29,7 @@ const updateQueue = {
    * @param client The extended client.
    * @returns The webhook.
    */
-  get: async (channelId: string, client: ExtendedClient): Promise<Webhook> =>
+  get: async (channelId: string, client: IExtendedClient): Promise<Webhook> =>
     new Promise((resolve, reject) => {
       // Check every 10ms if the channelId has been removed from the queue
       const ms = 10; // milliseconds
@@ -44,7 +44,7 @@ const updateQueue = {
         if (!queue.includes(channelId)) {
           clearInterval(intervalId);
           client.webhooks.fetch(channelId).then((channelWebhook) => {
-            resolve(channelWebhook as Webhook);
+            resolve(channelWebhook);
           });
         }
 
@@ -66,7 +66,7 @@ const updateQueue = {
  * @param method The method.
  * @returns If the webhook is valid.
  */
-const isValid = (client: ExtendedClient, guildId: string, channelId: string, method: string): boolean => {
+const isValid = (client: IExtendedClient, guildId: string, channelId: string, method: string): boolean => {
   // If the guild does not exist
   const guild = client.guilds.cache.get(guildId);
   if (!guild) {
@@ -94,7 +94,7 @@ const isValid = (client: ExtendedClient, guildId: string, channelId: string, met
  * @param channelId The channel id.
  * @returns The webhook or undefined.
  */
-const create = async (client: ExtendedClient, guildId: string, channelId: string): Promise<Webhook | undefined> => {
+const create = async (client: IExtendedClient, guildId: string, channelId: string): Promise<Webhook | undefined> => {
   try {
     const timeStart = Date.now();
 
@@ -144,11 +144,11 @@ const create = async (client: ExtendedClient, guildId: string, channelId: string
       data: { id: createdWebhook.id, token: createdWebhook.token },
     });
 
-    if (!updatedWebhook) {
+    /* if (!updatedWebhook) {
       updateQueue.remove(channelId);
       client.logger.error(`Cannot create webhook document for ${channelId} in ${guildId}`);
       return;
-    }
+    } */
 
     // Remove channel from queue
     updateQueue.remove(channelId);
@@ -170,7 +170,7 @@ const create = async (client: ExtendedClient, guildId: string, channelId: string
  * @param channelId The channel id.
  * @returns The webhook or undefined.
  */
-const get = async (client: ExtendedClient, guildId: string, channelId: string): Promise<WebhookClient | undefined> => {
+const get = async (client: IExtendedClient, guildId: string, channelId: string): Promise<WebhookClient | undefined> => {
   if (!isValid(client, guildId, channelId, 'get')) return;
 
   // Get the stored webhook if it exists

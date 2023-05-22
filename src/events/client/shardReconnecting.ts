@@ -3,7 +3,7 @@ import { Events } from 'discord.js';
 import { CoreEvent } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const event: CoreEvent<ExtendedClient, [string]> = {
+export default <CoreEvent>{
   name: Events.ShardReconnecting,
   /**
    * Executes the shard reconnecting event.
@@ -14,5 +14,3 @@ const event: CoreEvent<ExtendedClient, [string]> = {
     client.logger.info(`Shard reconnecting: ${id}`);
   },
 };
-
-export default event;

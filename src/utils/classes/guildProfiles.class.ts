@@ -1,8 +1,8 @@
 import config from '@config';
 import { GuildProfileDocument, GuildProfileModel, GuildProfileSchema } from '@models/GuildProfile.model';
-import { CoreLanguage } from '@typings/core';
 import {
   GuildDaily,
+  GuildLanguage,
   GuildPremium,
   GuildQuestionType,
   GuildWelcome,
@@ -16,7 +16,7 @@ import { logger } from '@utils/client';
 export class GuildProfile implements IGuildProfile {
   public guildId: string;
   public timezone: string;
-  public language: CoreLanguage;
+  public language: GuildLanguage;
   public questionType: GuildQuestionType;
   public premium: GuildPremium;
   public welcome: GuildWelcome;
@@ -182,7 +182,7 @@ export default class GuildProfiles {
           const createdGuildProfile = await this.create({
             guildId,
             timezone: 'America/New_York',
-            language: CoreLanguage.English,
+            language: GuildLanguage.English,
             questionType: GuildQuestionType.Base,
             premium: {
               enabled: false,

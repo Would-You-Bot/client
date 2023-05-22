@@ -1,0 +1,32 @@
+{
+  "interface": {
+    "scope": "typescript",
+    "prefix": "$interface",
+    "body": [
+      "import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from 'discord.js';",
+      "",
+      "import { CoreInterface } from '@typings/core';",
+      "",
+      "/**",
+      " * The function return the default interface.",
+      " * @param client The extended client.",
+      " * @param guildProfile The guild profile.",
+      " * @returns An object containing the embed and buttons.",
+      " */",
+      "export default <CoreInterface>((client, guildProfile) => {",
+      "\tconst translations = client.translations[guildProfile.language];",
+      "",
+      "\tconst embed = new EmbedBuilder().setDescription(translations.name);",
+      "",
+      "\tconst row = new ActionRowBuilder<ButtonBuilder>();",
+      "",
+      "\treturn {",
+      "\t\tembeds: [embed],",
+      "\t\tbuttons: [row],",
+      "\t};",
+      "});",
+      ""
+    ],
+    "description": "Interface snippet"
+  }
+}

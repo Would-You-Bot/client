@@ -7,7 +7,7 @@ import es from '@constants/languages/es';
 /**
  * The translations class.
  */
-export class Translations {
+export default class Translations {
   public de: ITranslations;
   public en: ITranslations;
   public es: ITranslations;

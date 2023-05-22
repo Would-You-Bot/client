@@ -3,7 +3,7 @@ import { ComponentType, ModalSubmitInteraction } from 'discord.js';
 import { CoreModal } from '@typings/core';
 import { validateTime } from '@utils/functions';
 import { ExtendedClient } from 'src/client';
-import dailyMessageInterface from 'src/interfaces/settings/dailyMessage';
+import dailySettingsInterface from 'src/interfaces/settings/daily';
 
 const modal: CoreModal<ExtendedClient> = {
   id: 'daily-time',
@@ -21,14 +21,20 @@ const modal: CoreModal<ExtendedClient> = {
     if (interaction.components[0].components[0].type !== ComponentType.TextInput) return;
     const value = interaction.components[0].components[0].value;
 
-    const guildProfile = await client.guildProfiles.fetch(interaction.guild.id);
+    const guildProfile = await client.guildProfiles.fetch(interaction.guild.id).catch((error) => {
+      client.logger.error(error);
+      return undefined;
+    });
+
+    if (!guildProfile) return;
+
     const translations = client.translations[guildProfile.language];
 
     // Check if the time is the same as the currently set one one
     if (guildProfile.daily.time === value)
       return interaction.reply({
         ephemeral: true,
-        content: translations.settings.timezone.same,
+        content: translations.settings.general.content.sameTimezone,
       });
 
     //            const roleMenu = new ActionRowBuilder<RoleSelectMenuBuilder>().addComponents(
@@ -43,7 +49,7 @@ const modal: CoreModal<ExtendedClient> = {
       'daily.time': value,
     });
 
-    const useInterface = dailyMessageInterface(client, guildProfile);
+    const useInterface = dailySettingsInterface(client, guildProfile);
 
     return interaction.update({
       content: '',

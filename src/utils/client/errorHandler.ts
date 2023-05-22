@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import config from '@config';
 
+import { IExtendedClient } from '@typings/core';
 import { stripIndents } from '@utils/functions';
 import { AttachmentBuilder, BaseInteraction, EmbedBuilder, TextChannel } from 'discord.js';
-import { ExtendedClient } from 'src/client';
 import webhookManager from './webhookManager';
 
 /**
  * Initialize error handling for the client that deals with unhandled rejections and uncaught exceptions.
  * @param client The client.
  */
-export const initializeProcessErrorHandling = (client: ExtendedClient): void => {
+export const initializeProcessErrorHandling = (client: IExtendedClient): void => {
   process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
     client.logger.error(`${String(reason)} ${JSON.stringify(promise)}`);
   });
@@ -24,7 +24,7 @@ export const initializeProcessErrorHandling = (client: ExtendedClient): void => 
   });
 };
 
-export interface ClientErrorParams {
+interface ClientErrorParams {
   error: Error | string;
   title?: string;
   description?: string;
@@ -44,7 +44,7 @@ export interface ClientErrorParams {
  * @returns The client error handler.
  */
 export const clientError = async (
-  client: ExtendedClient,
+  client: IExtendedClient,
   { error, title, description, footer, interaction }: ClientErrorParams
 ): Promise<void> => {
   try {

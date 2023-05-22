@@ -2,9 +2,8 @@ import { AttachmentBuilder, ChannelType, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
 import { GuildProfileDocument, GuildProfileModel } from '@models/GuildProfile.model';
-import { CoreCron } from '@typings/core';
+import { CoreCron, IExtendedClient } from '@typings/core';
 import { GuildData, exportGuildData } from '@utils/client';
-import { ExtendedClient } from 'src/client';
 
 const guildsData: GuildData[] = [];
 let guildProfilesDeleted = 0;
@@ -27,9 +26,13 @@ const resetData = (): void => {
  * @param guildProfileDoc The guild profile document.
  * @returns A Promise.
  */
-const deleteGuildData = async (client: ExtendedClient, guildProfileDoc: GuildProfileDocument): Promise<void> => {
+const deleteGuildData = async (client: IExtendedClient, guildProfileDoc: GuildProfileDocument): Promise<void> => {
   // Fetch the guild and guild profile
-  const guildProfile = await client.guildProfiles.fetch(guildProfileDoc.guildId);
+  const guildProfile = await client.guildProfiles.fetch(guildProfileDoc.guildId).catch((error) => {
+    client.logger.error(error);
+    return undefined;
+  });
+
   if (!guildProfile) return;
 
   // Delete the guild profile
@@ -38,7 +41,10 @@ const deleteGuildData = async (client: ExtendedClient, guildProfileDoc: GuildPro
   guildProfilesDeleted += 1;
 
   // Fetch all webhooks in the guild
-  const guildWebhooks = await client.webhooks.fetchAll(guildProfileDoc.guildId);
+  const guildWebhooks = await client.webhooks.fetchAll(guildProfileDoc.guildId).catch((error) => {
+    client.logger.error(error);
+    return undefined;
+  });
 
   // If the guild has webhooks
   if (guildWebhooks) {
@@ -61,7 +67,7 @@ const deleteGuildData = async (client: ExtendedClient, guildProfileDoc: GuildPro
   client.logger.debug(`[CLEAN CRON] Deleted all guild data for ${guildProfileDoc.guildId}`);
 };
 
-const cron: CoreCron<ExtendedClient> = {
+export default <CoreCron>{
   id: 'cleanCron',
   name: 'Clean Cron',
   expression: '0 * * * *',
@@ -71,7 +77,7 @@ const cron: CoreCron<ExtendedClient> = {
    * @param client The extended client.
    * @returns Nothing.
    */
-  execute: async (client: ExtendedClient) => {
+  execute: async (client: IExtendedClient) => {
     // Get all guild profiles
     const allGuildProfiles = await GuildProfileModel.find(
       {},
@@ -133,5 +139,3 @@ const cron: CoreCron<ExtendedClient> = {
     resetData();
   },
 };
-
-export default cron;

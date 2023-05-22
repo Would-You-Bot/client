@@ -15,12 +15,17 @@ export interface CoreTranslations {
 
 export interface BotTranslations {
   settings: {
-    timezone: {
-      same: string;
-      invalid: string;
-    };
-    questionType: {
-      same: string;
+    general: {
+      content: {
+        sameTimezone: string;
+        invalidTimezone: string;
+        sameQuestionType: string;
+        questionType: string;
+      };
+      embed: {
+        title: `{name} - ${string}`;
+        description: string;
+      };
     };
     // language: {};
     // premium: {}
@@ -48,18 +53,14 @@ export interface BotTranslations {
       };
     };
     // debug: {}
-    interface: {
-      general: {
-        embed: {
-          title: `{name} - ${string}`;
-          description: string;
-        };
+    welcome: {
+      content: {
+        channel: string;
+        role: string;
       };
-      welcome: {
-        embed: {
-          title: `{name} - ${string}`;
-          description: string;
-        };
+      embed: {
+        title: `{name} - ${string}`;
+        description: string;
       };
     };
   };

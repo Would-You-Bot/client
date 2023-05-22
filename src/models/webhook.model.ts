@@ -1,6 +1,13 @@
 import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
 
-import { CoreWebhook } from '@typings/core';
+interface CoreWebhook {
+  guildId: string;
+  channelId: string;
+  data: {
+    id: string;
+    token: string;
+  };
+}
 
 export interface WebhookSchema extends CoreWebhook, SchemaTimestampsConfig {}
 

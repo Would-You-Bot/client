@@ -1,14 +1,21 @@
-import { ClusterClient, DjsDiscordClient, getInfo } from 'discord-hybrid-sharding';
-import { BaseInteraction, Client, Collection, GatewayIntentBits, Options, User } from 'discord.js';
+import { ClusterClient, getInfo } from 'discord-hybrid-sharding';
+import { BaseInteraction, Client, Collection, GatewayIntentBits, Options } from 'discord.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 import config from '@config';
-import { CoreButton, CoreContextMenuCommand, CoreEvent, CoreModal, CoreSlashCommand } from '@typings/core';
-import { GuildProfiles, QuestionPacks, Webhooks } from '@utils/classes';
-import { Translations } from '@utils/classes/Translations.class';
-import { Logger } from 'winston';
+import {
+  CoreButton,
+  CoreContextMenuCommand,
+  CoreEvent,
+  CoreModal,
+  CoreSlashCommand,
+  IExtendedClient,
+} from '@typings/core';
+import { GuildProfiles, QuestionPacks, Translations, Webhooks } from '@utils/classes';
+import { logger } from '@utils/client';
+import { clientError } from '@utils/client/errorHandler';
 
 interface ClientErrorParams {
   error: Error | string;
@@ -21,29 +28,24 @@ interface ClientErrorParams {
 /**
  * A custom class representing the discord client.
  */
-export class ExtendedClient extends Client {
+export class ExtendedClient extends Client implements IExtendedClient {
   // Client variables
-  public botStartTime: number = new Date().getTime();
-  public synced = false; // Value for client to know if its synced with database
+  public botStartTime = new Date().getTime();
+  public synced = false;
   public databaseLatency = 0;
-  public developers: User[] = [];
-  public client: ClusterClient<Client>;
-  public cluster: ClusterClient<DjsDiscordClient>;
-  public translations: Translations = new Translations();
-
-  // Client functions - Initialized after the client is initialized
-  public logger: Logger;
-  public error: (params: ClientErrorParams) => Promise<void>;
+  public developers = [];
+  public cluster = new ClusterClient(this);
+  public translations = new Translations();
 
   // Classes
-  public slashCommand = new Collection<string, CoreSlashCommand>();
+  public slashCommands = new Collection<string, CoreSlashCommand>();
   public contextMenuCommands = new Collection<string, CoreContextMenuCommand>();
   public buttons = new Collection<string, CoreButton>();
   public modals = new Collection<string, CoreModal>();
   public events = new Collection<string, CoreEvent>();
-  public guildProfiles: GuildProfiles;
-  public packs: QuestionPacks;
-  public webhooks: Webhooks;
+  public guildProfiles;
+  public packs;
+  public webhooks;
 
   /**
    * Create a new client instance.
@@ -97,6 +99,16 @@ export class ExtendedClient extends Client {
     this.voting = new Voting(this);
     this.voting.start(); */
   }
+
+  // Client functions - Initialized after the client is initialized
+  public logger = logger;
+  /**
+   * Log an error.
+   * @param params The parameters for the error.
+   */
+  public error = async (params: ClientErrorParams): Promise<void> => {
+    await clientError(this, params);
+  };
 
   /**
    * Authenticate the client.

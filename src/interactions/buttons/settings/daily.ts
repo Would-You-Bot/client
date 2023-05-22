@@ -1,6 +1,5 @@
 import {
   ActionRowBuilder,
-  ButtonInteraction,
   ChannelSelectMenuBuilder,
   ChannelType,
   EmbedBuilder,
@@ -12,10 +11,9 @@ import {
 
 import config from '@config';
 import { CoreButton } from '@typings/core';
-import { ExtendedClient } from 'src/client';
-import dailyMessageInterface from 'src/interfaces/settings/dailyMessage';
+import dailySettingsInterface from 'src/interfaces/settings/daily';
 
-const button: CoreButton<ExtendedClient> = {
+export default <CoreButton>{
   id: 'daily',
   description: 'Edit the daily messages settings.',
   /**
@@ -25,7 +23,7 @@ const button: CoreButton<ExtendedClient> = {
    * @param args The arguments passed to the button.
    * @returns A promise that resolves to an unknown value.
    */
-  execute: async (client: ExtendedClient, interaction: ButtonInteraction, args: string[]): Promise<unknown> => {
+  execute: async (client, interaction, args: string[]) => {
     if (!interaction.guildId) return;
 
     const setting = args[1];
@@ -40,6 +38,8 @@ const button: CoreButton<ExtendedClient> = {
     // Check if the guild profile exists
     if (!guildProfile) return;
 
+    const translations = client.translations[guildProfile.language];
+
     try {
       switch (setting) {
         case 'enabled':
@@ -52,12 +52,12 @@ const button: CoreButton<ExtendedClient> = {
               'daily.enabled': state === 'true' ? true : false,
             });
 
-            const useInterface = dailyMessageInterface(client, guildProfile);
+            const useInterface = dailySettingsInterface(client, guildProfile);
 
             interaction.update({
               content: '',
-              embeds: [useInterface.embed],
-              components: [useInterface.buttons],
+              embeds: useInterface.embeds,
+              components: useInterface.components,
             });
           }
           break;
@@ -76,7 +76,7 @@ const button: CoreButton<ExtendedClient> = {
               embeds: [
                 new EmbedBuilder()
                   .setColor(config.colors.primary)
-                  .setDescription(client.translations[guildProfile.language].settings.daily.content.channel),
+                  .setDescription(translations.settings.daily.content.channel),
               ],
               components: [channelMenu],
             });
@@ -95,7 +95,7 @@ const button: CoreButton<ExtendedClient> = {
               embeds: [
                 new EmbedBuilder()
                   .setColor(config.colors.primary)
-                  .setDescription(client.translations[guildProfile.language].settings.daily.content.role),
+                  .setDescription(translations.settings.daily.content.role),
               ],
               components: [roleMenu],
             });
@@ -115,6 +115,7 @@ const button: CoreButton<ExtendedClient> = {
                     .setLabel('Enter a 24 hour dailymsg interval (HH:MM).')
                     .setMinLength(5)
                     .setMaxLength(5)
+                    .setRequired(true)
                 )
               );
 
@@ -132,12 +133,12 @@ const button: CoreButton<ExtendedClient> = {
               'daily.thread': state === 'true' ? true : false,
             });
 
-            const useInterface = dailyMessageInterface(client, guildProfile);
+            const useInterface = dailySettingsInterface(client, guildProfile);
 
             interaction.update({
               content: '',
-              embeds: [useInterface.embed],
-              components: [useInterface.buttons],
+              embeds: useInterface.embeds,
+              components: useInterface.components,
             });
 
             interaction.reply({
@@ -152,11 +153,9 @@ const button: CoreButton<ExtendedClient> = {
       }
     } catch (error) {
       interaction.reply({
-        content: client.translations[guildProfile.language].error.interaction,
+        content: translations.error.interaction,
         ephemeral: true,
       });
     }
   },
 };
-
-export default button;

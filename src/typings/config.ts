@@ -11,7 +11,7 @@ export interface EmojisConfig {
   arrowRight: Emoji;
   check: Emoji;
   mention: Emoji;
-  replay: Emoji;
+  refresh: Emoji;
   close: Emoji;
   help: Emoji;
   [key: string]: Emoji;

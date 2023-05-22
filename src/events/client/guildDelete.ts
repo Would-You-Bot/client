@@ -2,7 +2,6 @@ import { EmbedBuilder, Events, Guild, WebhookClient } from 'discord.js';
 
 import config from '@config';
 import { CoreEvent } from '@typings/core';
-import { ExtendedClient } from 'src/client';
 
 /**
  * Filters the guild name to remove certain words.
@@ -12,7 +11,7 @@ import { ExtendedClient } from 'src/client';
 const filterGuildName = (name: string): string =>
   name.replace('Discord', '').replace('discord', '').replace('Everyone', '').replace('everyone', '');
 
-const event: CoreEvent<ExtendedClient, [Guild]> = {
+export default <CoreEvent>{
   name: Events.GuildDelete,
   /**
    * Executes the event.
@@ -20,7 +19,7 @@ const event: CoreEvent<ExtendedClient, [Guild]> = {
    * @param guild The guild that was deleted.
    * @returns A promise.
    */
-  async execute(client: ExtendedClient, guild: Guild) {
+  async execute(client, guild: Guild) {
     if (!guild.name) return;
 
     // Initialize the private webhook client
@@ -71,5 +70,3 @@ const event: CoreEvent<ExtendedClient, [Guild]> = {
     });
   },
 };
-
-export default event;

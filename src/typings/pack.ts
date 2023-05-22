@@ -1,16 +1,17 @@
-import { CoreLanguage } from './core';
+import { GuildLanguage } from './guild';
 
 export enum BaseQuestionType {
   WouldYouRather = 0,
   NeverHaveIEver = 1,
   WhatWouldYouDo = 2,
   TruthOrDare = 3,
+  HigherOrLower = 4,
 }
 
 export interface BaseQuestion {
   id: string;
   questionType: BaseQuestionType;
-  translations: Record<CoreLanguage, string>;
+  translations: Record<GuildLanguage, string>;
   choices?: [number, number];
 }
 
@@ -27,7 +28,7 @@ export interface CustomQuestion {
 }
 
 export interface CustomPack {
-  guildId: string;
+  userId: string;
   name: string;
   questions: CustomQuestion[];
 }

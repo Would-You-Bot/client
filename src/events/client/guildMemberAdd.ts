@@ -4,9 +4,8 @@ import config from '@config';
 import { CoreEvent } from '@typings/core';
 import { GuildQuestionType } from '@typings/guild';
 import { BaseQuestion, CustomQuestion } from '@typings/pack';
-import { ExtendedClient } from 'src/client';
 
-const event: CoreEvent<ExtendedClient, [GuildMember]> = {
+export default <CoreEvent>{
   name: Events.GuildMemberAdd,
   /**
    * Executes the event.
@@ -14,14 +13,14 @@ const event: CoreEvent<ExtendedClient, [GuildMember]> = {
    * @param member The member that joined the guild.
    * @returns A promise.
    */
-  async execute(client: ExtendedClient, member: GuildMember) {
+  async execute(client, member: GuildMember) {
     // Always do simple if checks before the main code. This is a little but not so little performance boost :)
     if (member.user.bot) return;
 
     // Fetch the guild profile
     const guildProfile = await client.guildProfiles.fetch(member.guild.id);
 
-    if (!guildProfile?.welcome.enabled || !guildProfile.welcome.channel || !guildProfile.welcome.ping) return;
+    if (!guildProfile.welcome.enabled || !guildProfile.welcome.channel || !guildProfile.welcome.ping) return;
 
     const channel = (await member.guild.channels.fetch(guildProfile.welcome.channel)) as TextChannel | null;
 
@@ -37,11 +36,6 @@ const event: CoreEvent<ExtendedClient, [GuildMember]> = {
 
     // Get a random question
     const randomQuestionData = await client.packs.random(guildProfile.questionType);
-
-    if (!randomQuestionData) {
-      client.logger.error(`No questions found for ${guildProfile.guildId}`);
-      return;
-    }
 
     let randomQuestion: string;
     if (guildProfile.questionType === GuildQuestionType.Base)
@@ -63,5 +57,3 @@ const event: CoreEvent<ExtendedClient, [GuildMember]> = {
     return channel.send({ content: `<@${member.user.id}>`, embeds: [welcomeEmbed] }).catch(client.logger.error);
   },
 };
-
-export default event;

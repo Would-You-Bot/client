@@ -2,7 +2,7 @@ import { CronJob } from 'cron';
 import { EmbedBuilder, Guild, TextChannel } from 'discord.js';
 
 import config from '@config';
-import { CoreCustomCron } from '@typings/core';
+import { CoreCustomCron, IExtendedClient } from '@typings/core';
 import { GuildProfile, GuildQuestionType } from '@typings/guild';
 import { BaseQuestion, CustomQuestion } from '@typings/pack';
 import { timeToCronExpression, validateAndFormatTimezone, validateCronExpression } from '@utils/functions';
@@ -16,7 +16,7 @@ import { ExtendedClient } from 'src/client';
  * @returns Nothing.
  */
 const sendDailyQuestion = async (
-  client: ExtendedClient,
+  client: IExtendedClient,
   guild: Guild,
   guildProfile: GuildProfile
 ): Promise<unknown> => {
@@ -34,11 +34,6 @@ const sendDailyQuestion = async (
 
   // Get a random question
   const randomQuestionData = await client.packs.random(guildProfile.questionType);
-
-  if (!randomQuestionData) {
-    client.logger.error(`No questions found for ${guildProfile.guildId}`);
-    return;
-  }
 
   let randomQuestion: string;
   if (guildProfile.questionType === GuildQuestionType.Base)
@@ -74,7 +69,7 @@ const sendDailyQuestion = async (
     });
 };
 
-const cron: CoreCustomCron<ExtendedClient> = {
+export default <CoreCustomCron>{
   id: 'dailyQuestion',
   name: 'Daily Question',
   /**
@@ -86,7 +81,6 @@ const cron: CoreCustomCron<ExtendedClient> = {
     for (const guild of Array.from(client.guilds.cache.values())) {
       // Fetch the guild profile
       const guildProfile = await client.guildProfiles.fetch(guild.id);
-      if (!guildProfile) return;
 
       // If nessesary values are not set, return
       if (!guildProfile.daily.enabled) return;
@@ -130,5 +124,3 @@ const cron: CoreCustomCron<ExtendedClient> = {
     }
   },
 };
-
-export default cron;

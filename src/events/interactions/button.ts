@@ -3,11 +3,10 @@ import { BaseInteraction, Events } from 'discord.js';
 import config from '@config';
 import { CoreEvent } from '@typings/core';
 import buttonMiddleware from '@utils/middleware/button.middleware';
-import { ExtendedClient } from 'src/client';
 
 const cooldown = new Set();
 
-const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
+export default <CoreEvent>{
   name: Events.InteractionCreate,
   /**
    * Execute the event handler.
@@ -15,7 +14,7 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
    * @param interaction The interaction.
    * @returns A promise.
    */
-  execute: async (client: ExtendedClient, interaction: BaseInteraction): Promise<unknown> => {
+  execute: async (client, interaction: BaseInteraction): Promise<unknown> => {
     if (!interaction.isButton()) return;
     if (!interaction.guild || !interaction.channel?.id || !client.user) return;
     const { customId, user, guild } = interaction;
@@ -28,7 +27,10 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
       });
 
     // Fetch the guild profile
-    const guildProfile = await client.guildProfiles.fetch(guild.id);
+    const guildProfile = await client.guildProfiles.fetch(guild.id).catch((error) => {
+      client.logger.error(error);
+      return undefined;
+    });
 
     // If the guild profile is not found
     if (!guildProfile)
@@ -100,10 +102,10 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
           args.shift();
 
           // Execute the button with args
-          await button.execute(interaction, client, args);
+          await button.execute(client, interaction, args);
         } else {
           // Execute the button without args
-          await button.execute(interaction, client);
+          await button.execute(client, interaction);
         }
       }
 
@@ -118,5 +120,3 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
     }
   },
 };
-
-export default event;

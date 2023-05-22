@@ -1,9 +1,8 @@
 import { EmbedBuilder, Events, Guild, WebhookClient } from 'discord.js';
 
 import config from '@config';
-import { CoreEvent, CoreLanguage } from '@typings/core';
-import { GuildQuestionType } from '@typings/guild';
-import { ExtendedClient } from 'src/client';
+import { CoreEvent } from '@typings/core';
+import { GuildLanguage, GuildQuestionType } from '@typings/guild';
 
 /**
  * Filters the guild name to remove certain words.
@@ -13,7 +12,7 @@ import { ExtendedClient } from 'src/client';
 const filterGuildName = (name: string): string =>
   name.replace('Discord', '').replace('discord', '').replace('Everyone', '').replace('everyone', '');
 
-const event: CoreEvent<ExtendedClient, [Guild]> = {
+export default <CoreEvent>{
   name: Events.GuildCreate,
   /**
    * Executes the event.
@@ -21,14 +20,14 @@ const event: CoreEvent<ExtendedClient, [Guild]> = {
    * @param guild The guild that was created.
    * @returns A promise.
    */
-  async execute(client: ExtendedClient, guild: Guild): Promise<unknown> {
+  async execute(client, guild: Guild) {
     if (!guild.name) return;
 
     // Create and save the settings in the cache so that we don't need to do that at a command run
     await client.guildProfiles.create({
       guildId: guild.id,
       timezone: 'America/New_York',
-      language: CoreLanguage.English,
+      language: GuildLanguage.English,
       questionType: GuildQuestionType.Base,
       premium: {
         enabled: false,
@@ -93,5 +92,3 @@ const event: CoreEvent<ExtendedClient, [Guild]> = {
     });
   },
 };
-
-export default event;

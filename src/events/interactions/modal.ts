@@ -2,9 +2,8 @@ import { BaseInteraction, Events } from 'discord.js';
 
 import config from '@config';
 import { CoreEvent } from '@typings/core';
-import { ExtendedClient } from 'src/client';
 
-const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
+export default <CoreEvent>{
   name: Events.InteractionCreate,
   /**
    * Execute the event.
@@ -12,7 +11,7 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
    * @param interaction The interaction.
    * @returns A promise that resolves to an unknown value.
    */
-  async execute(client: ExtendedClient, interaction: BaseInteraction): Promise<void> {
+  async execute(client, interaction: BaseInteraction): Promise<void> {
     if (!interaction.isModalSubmit()) return;
     if (!client.user) return;
 
@@ -74,5 +73,3 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
     }
   },
 };
-
-export default event;

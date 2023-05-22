@@ -1,5 +1,6 @@
 import { ChatInputCommandInteraction, PermissionFlagsBits } from 'discord.js';
-import { ExtendedClient } from 'src/client';
+
+import { IExtendedClient } from '@typings/core';
 
 /**
  * The command middleware.
@@ -7,7 +8,7 @@ import { ExtendedClient } from 'src/client';
  * @param interaction The interaction.
  * @returns A promise.
  */
-const commandMiddleware = async (client: ExtendedClient, interaction: ChatInputCommandInteraction) => {
+const commandMiddleware = async (client: IExtendedClient, interaction: ChatInputCommandInteraction): Promise<void> => {
   const { user, guild, commandName } = interaction;
   if (!guild) return;
 

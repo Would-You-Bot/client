@@ -11,11 +11,10 @@ import {
 
 import config from '@config';
 import { CoreEvent } from '@typings/core';
-import { ExtendedClient } from 'src/client';
 
 const cooldown = new Set();
 
-const event: CoreEvent<ExtendedClient, [Message]> = {
+export default <CoreEvent>{
   name: Events.MessageCreate,
   /**
    * Execute the event handler.
@@ -23,7 +22,7 @@ const event: CoreEvent<ExtendedClient, [Message]> = {
    * @param message The message.
    * @returns A promise.
    */
-  async execute(client: ExtendedClient, message: Message): Promise<unknown> {
+  async execute(client, message: Message): Promise<unknown> {
     if (!client.user?.id) return;
     if (message.channel.type !== ChannelType.GuildText) return;
     const requiredPerms = [
@@ -66,5 +65,3 @@ const event: CoreEvent<ExtendedClient, [Message]> = {
         .catch(client.logger.error);
   },
 };
-
-export default event;

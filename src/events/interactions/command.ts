@@ -3,11 +3,10 @@ import { BaseInteraction, ChatInputCommandInteraction, Events } from 'discord.js
 import config from '@config';
 import { CoreEvent } from '@typings/core';
 import commandMiddleware from '@utils/middleware/command.middleware';
-import { ExtendedClient } from 'src/client';
 
 const cooldown = new Set();
 
-const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
+export default <CoreEvent>{
   name: Events.InteractionCreate,
   /**
    * Execute the event handler.
@@ -15,7 +14,7 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
    * @param interaction The interaction.
    * @returns A promise.
    */
-  execute: async (client: ExtendedClient, interaction: BaseInteraction): Promise<unknown> => {
+  execute: async (client, interaction: BaseInteraction): Promise<unknown> => {
     if (!interaction.isCommand()) return;
     if (!interaction.guild || !interaction.channel?.id || !client.user) return;
     const { commandName, guild, user } = interaction;
@@ -28,13 +27,16 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
       });
 
     // Fetch the guild profile
-    const guildProfile = await client.guildProfiles.fetch(guild.id);
+    const guildProfile = await client.guildProfiles.fetch(guild.id).catch((error) => {
+      client.logger.error(error);
+      return undefined;
+    });
 
     // If the guild profile is not found
     if (!guildProfile)
       return interaction.reply({ content: 'An error occurred while fetching the guild profile.', ephemeral: true });
 
-    const command = client.slashCommand.get(commandName);
+    const command = client.slashCommands.get(commandName);
 
     // If the command is not found
     if (!command)
@@ -61,7 +63,7 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
       // Remove the user from the cooldown set after the specified button cooldown time
       setTimeout(() => cooldown.delete(user.id), config.limits.cooldown.button[guildProfile.premium.enabled ? 1 : 0]);
 
-      command.execute(interaction, client, guildProfile);
+      command.execute(client, interaction, guildProfile);
 
       // Run the command middleware
       commandMiddleware(client, interaction as ChatInputCommandInteraction);
@@ -74,5 +76,3 @@ const event: CoreEvent<ExtendedClient, [BaseInteraction]> = {
     }
   },
 };
-
-export default event;

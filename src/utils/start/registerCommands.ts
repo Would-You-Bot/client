@@ -2,13 +2,13 @@ import colors from 'colors';
 import { ApplicationCommand, REST, Routes } from 'discord.js';
 
 import config from '@config';
-import { ExtendedClient } from 'src/client';
+import { IExtendedClient } from '@typings/core';
 
 /**
  * Register commands.
  * @param client The extended client.
  */
-const registerCommands = async (client: ExtendedClient) => {
+export default async (client: IExtendedClient): Promise<void> => {
   if (client.cluster.id !== 0) return;
   if (!client.user?.id) return;
 
@@ -20,7 +20,7 @@ const registerCommands = async (client: ExtendedClient) => {
 
   // Create a new array for all of the slash and context commands
   const commandJsonData = [
-    ...Array.from(client.slashCommand.values()).map((command) => command.data),
+    ...Array.from(client.slashCommands.values()).map((command) => command.data),
     ...Array.from(client.contextMenuCommands.values()).map((command) => command.data),
   ];
 
@@ -81,5 +81,3 @@ const registerCommands = async (client: ExtendedClient) => {
     }
   })();
 };
-
-export default registerCommands;

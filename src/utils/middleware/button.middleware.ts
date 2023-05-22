@@ -1,5 +1,6 @@
 import { ButtonInteraction, PermissionFlagsBits } from 'discord.js';
-import { ExtendedClient } from 'src/client';
+
+import { IExtendedClient } from '@typings/core';
 
 /**
  * The button middleware.
@@ -7,7 +8,7 @@ import { ExtendedClient } from 'src/client';
  * @param interaction The interaction.
  * @returns A promise.
  */
-const buttonMiddleware = async (client: ExtendedClient, interaction: ButtonInteraction) => {
+const buttonMiddleware = async (client: IExtendedClient, interaction: ButtonInteraction): Promise<void> => {
   const { user, guild, customId } = interaction;
   if (!guild) return;
 

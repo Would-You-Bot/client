@@ -63,6 +63,8 @@ module.exports = {
     '@typescript-eslint/no-floating-promises': 0, // Disallows usage of promise functions without using await.
     '@typescript-eslint/explicit-member-accessibility': 2, // Enforces accessibility modifiers on class properties and methods.
     '@typescript-eslint/explicit-function-return-type': [2, { allowExpressions: true }], // Enforces return type declaration of functions.
+    '@typescript-eslint/no-empty-interface': 0, // Disallows the declaration of empty interfaces.
+    '@typescript-eslint/consistent-type-assertions': 0, // Enforces consistent usage of type assertions.
 
     // Normal ESLint rules
     'object-curly-spacing': 2, // Enforces consistent spacing inside braces

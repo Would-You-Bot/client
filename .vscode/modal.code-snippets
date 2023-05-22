@@ -1,5 +1,5 @@
 {
-  "slash": {
+  "modal": {
     "scope": "typescript",
     "prefix": "$modal",
     "body": [
