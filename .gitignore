@@ -1,11 +1,4 @@
-# Dependency directories
 node_modules/
-
-# Environment variables
 .env
-
-# Temp files
 tmp/
-
-# TypeScript build
 dist/

@@ -229,10 +229,10 @@ const command: CoreSlashCommand = {
                       embeds: [this.pages[this.pages.length - 1]],
                     });
                     this.page = this.pages.length - 1;
-                    return;
+                    
                   }
                 default: {
-                  return;
+                  
                 }
               }
             }

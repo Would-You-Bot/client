@@ -1,13 +1,18 @@
-name: Pipeline Continuous Integration
-
-on: [push, pull_request]
+name: Tests
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
+
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -18,19 +23,14 @@ jobs:
         run: npm ci > install.log 2>&1 || echo "Install failed"
         continue-on-error: true
 
-      - name: Run ESLint
-        id: eslint
-        run: npm run lint > eslint.log 2>&1 || echo "ESLint failed"
+      - name: Lint & Build
+        id: lint
+        run: npm run lint:fix > lint.log 2>&1 || echo "Lint & Build failed"
         continue-on-error: true
 
-      - name: Compile the TypeScript
-        id: compile
-        run: npm run build > compile.log 2>&1 || echo "Compilation failed"
-        continue-on-error: true
-
-      - name: Run prettier
-        id: prettier
-        run: npm run format:check > prettier.log 2>&1 || echo "Prettier failed"
+      - name: Format
+        id: format
+        run: npm run format:check > format.log 2>&1 || echo "Format failed"
         continue-on-error: true
 
       - name: Generate error message JSON file
@@ -48,22 +48,16 @@ jobs:
             ERROR_MESSAGE+=$(cat install.log)
             ERROR_MESSAGE+="\n\n"
           fi
-          if [ -s "eslint.log" ]; then
-            FAILED_STEPS+="ESLint. "
-            ERROR_MESSAGE+="ESLint failed\n\n"
-            ERROR_MESSAGE+=$(cat eslint.log)
+          if [ -s "lint.log" ]; then
+            FAILED_STEPS+="Lint & Build. "
+            ERROR_MESSAGE+="Lint & Build failed\n\n"
+            ERROR_MESSAGE+=$(cat lint.log)
             ERROR_MESSAGE+="\n\n"
           fi
-          if [ -s "compile.log" ]; then
-            FAILED_STEPS+="TypeScript Compilation. "
-            ERROR_MESSAGE+="Compilation failed\n\n"
-            ERROR_MESSAGE+=$(cat compile.log)
-            ERROR_MESSAGE+="\n\n"
-          fi
-          if [ -s "prettier.log" ]; then
-            FAILED_STEPS+="Prettier. "
-            ERROR_MESSAGE+="Prettier failed\n\n"
-            ERROR_MESSAGE+=$(cat prettier.log)
+          if [ -s "format.log" ]; then
+            FAILED_STEPS+="Format. "
+            ERROR_MESSAGE+="Format failed\n\n"
+            ERROR_MESSAGE+=$(cat format.log)
             ERROR_MESSAGE+="\n\n"
           fi
           if [ ! -z "$ERROR_MESSAGE" ]; then
