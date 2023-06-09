@@ -1,10 +1,11 @@
+import { ensureDirectories } from '@slekup/utils';
 import colors from 'colors';
 
+import config from '@config';
 import { initLogger } from '@utils/client';
 import { initializeProcessErrorHandling } from '@utils/client/errorHandler';
 import initializeVoteLog from '@utils/client/voteLog';
 import connectToDatabase from '@utils/start/databaseConnection';
-import ensureDirectories from '@utils/start/ensureDirectories';
 import initializeHandlers from '@utils/start/initializeHandlers';
 import { ExtendedClient } from './client';
 
@@ -14,7 +15,7 @@ import { ExtendedClient } from './client';
  */
 const app = async (client: ExtendedClient): Promise<void> => {
   // Run startup functions
-  ensureDirectories();
+  ensureDirectories([['./static', './tmp'], ['./tmp/logs'], [`./tmp/logs/${config.logFolder}`]]);
   await initializeHandlers(client);
   initializeProcessErrorHandling(client);
   initializeVoteLog(client);

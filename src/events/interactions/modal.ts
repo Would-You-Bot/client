@@ -1,9 +1,9 @@
 import { BaseInteraction, Events } from 'discord.js';
 
 import config from '@config';
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   name: Events.InteractionCreate,
   /**
    * Execute the event.

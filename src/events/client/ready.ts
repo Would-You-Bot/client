@@ -2,10 +2,10 @@ import { Events } from 'discord.js';
 import { AutoPoster } from 'topgg-autoposter';
 
 import config from '@config';
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 import { registerCommands } from '@utils/start';
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   once: true,
   name: Events.ClientReady,
   /**

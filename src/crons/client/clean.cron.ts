@@ -2,7 +2,7 @@ import { AttachmentBuilder, ChannelType, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
 import { GuildProfileDocument, GuildProfileModel } from '@models/GuildProfile.model';
-import { CoreCron, IExtendedClient } from '@typings/core';
+import { CoreCronOptions, IExtendedClient } from '@typings/core';
 import { GuildData, exportGuildData } from '@utils/client';
 
 const guildsData: GuildData[] = [];
@@ -67,7 +67,7 @@ const deleteGuildData = async (client: IExtendedClient, guildProfileDoc: GuildPr
   client.logger.debug(`[CLEAN CRON] Deleted all guild data for ${guildProfileDoc.guildId}`);
 };
 
-export default <CoreCron>{
+export default <CoreCronOptions>{
   id: 'cleanCron',
   name: 'Clean Cron',
   expression: '0 * * * *',

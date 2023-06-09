@@ -1,8 +1,9 @@
+import { tests } from 'builder-validation';
 import { CronJob } from 'cron';
 
-import { CoreCron, CoreCustomCron } from '@typings/core';
+import { CoreCronOptions, CoreCustomCronOptions } from '@typings/core';
 import { loadFiles } from '@utils/client';
-import { validateAndFormatTimezone, validateCronExpression } from '@utils/functions';
+import { validateAndFormatTimezone } from '@utils/functions';
 import { ExtendedClient } from 'src/client';
 
 /**
@@ -19,7 +20,7 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
     // Load the custom cron
     const customCron = (
       (await import(`../../crons/custom/${customCronFile}`)) as {
-        default: CoreCustomCron<ExtendedClient>;
+        default: CoreCustomCronOptions;
       }
     ).default;
 
@@ -38,12 +39,12 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
     // Load the client cron
     const clientCron = (
       (await import(`../../crons/client/${clientCronFile}`)) as {
-        default: CoreCron;
+        default: CoreCronOptions;
       }
     ).default;
 
     // Validate the cron expression
-    if (!validateCronExpression(clientCron.expression)) {
+    if (!tests.testCronExpression(clientCron.expression)) {
       client.logger.error(`Invalid cron expression for ${clientCron.name} (${clientCron.id})`);
       return;
     }

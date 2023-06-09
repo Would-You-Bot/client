@@ -1,8 +1,8 @@
 import { AutocompleteInteraction, Events } from 'discord.js';
 
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   name: Events.InteractionCreate,
   /**
    * Execute the auto complete event handler.
@@ -15,7 +15,7 @@ export default <CoreEvent>{
     if (!interaction.isAutocomplete()) return;
 
     // Get the command
-    const command = client.slashCommands.get(interaction.commandName);
+    const command = client.commands.get(interaction.commandName);
 
     // If the command could not be found
     if (!command) {

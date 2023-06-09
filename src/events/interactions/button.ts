@@ -1,12 +1,12 @@
 import { BaseInteraction, Events } from 'discord.js';
 
 import config from '@config';
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 import buttonMiddleware from '@utils/middleware/button.middleware';
 
 const cooldown = new Set();
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   name: Events.InteractionCreate,
   /**
    * Execute the event handler.

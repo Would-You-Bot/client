@@ -1,5 +1,5 @@
 /**
- * Gets the ID from a bot token - credit to Meister#9667.
+ * Gets the ID from a bot token.
  * @param token The bot token to get the ID from.
  * @returns The ID of the user.
  */

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import config from '@config';
 
+import { stripIndents } from '@slekup/utils';
 import { IExtendedClient } from '@typings/core';
-import { stripIndents } from '@utils/functions';
 import { AttachmentBuilder, BaseInteraction, EmbedBuilder, TextChannel } from 'discord.js';
 import webhookManager from './webhookManager';
 

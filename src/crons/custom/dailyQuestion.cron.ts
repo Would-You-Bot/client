@@ -1,11 +1,12 @@
+import { functions, tests } from 'builder-validation';
 import { CronJob } from 'cron';
 import { EmbedBuilder, Guild, TextChannel } from 'discord.js';
 
 import config from '@config';
-import { CoreCustomCron, IExtendedClient } from '@typings/core';
+import { CoreCustomCronOptions, IExtendedClient } from '@typings/core';
 import { GuildProfile, GuildQuestionType } from '@typings/guild';
 import { BaseQuestion, CustomQuestion } from '@typings/pack';
-import { timeToCronExpression, validateAndFormatTimezone, validateCronExpression } from '@utils/functions';
+import { validateAndFormatTimezone } from '@utils/functions';
 import { ExtendedClient } from 'src/client';
 
 /**
@@ -69,7 +70,7 @@ const sendDailyQuestion = async (
     });
 };
 
-export default <CoreCustomCron>{
+export default <CoreCustomCronOptions>{
   id: 'dailyQuestion',
   name: 'Daily Question',
   /**
@@ -86,7 +87,7 @@ export default <CoreCustomCron>{
       if (!guildProfile.daily.enabled) return;
       if (!guildProfile.daily.channel) return;
 
-      const expression = timeToCronExpression(guildProfile.daily.time);
+      const expression = functions.timeToCronExpression(guildProfile.daily.time);
 
       if (!expression) {
         client.logger.error(`Invalid time for daily question ${guildProfile.guildId}`);
@@ -94,7 +95,7 @@ export default <CoreCustomCron>{
       }
 
       // Validate the cron expression
-      if (!validateCronExpression(expression)) {
+      if (!tests.testCronExpression(expression)) {
         client.logger.error(`Invalid cron expression for ${guildProfile.guildId}`);
         return;
       }

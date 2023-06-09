@@ -72,7 +72,6 @@
     "environment.d.ts",
     "package.json",
     "register.cjs",
-    "migrations/GuildProfile.model.ts",
   ],
   "exclude": [
     "node_modules",

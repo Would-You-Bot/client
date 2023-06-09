@@ -1,16 +1,12 @@
 import { ClusterClient, getInfo } from 'discord-hybrid-sharding';
 import { BaseInteraction, Client, Collection, GatewayIntentBits, Options } from 'discord.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 import config from '@config';
 import {
-  CoreButton,
-  CoreContextMenuCommand,
-  CoreEvent,
-  CoreModal,
-  CoreSlashCommand,
+  ExportedCoreButton,
+  ExportedCoreCommand,
+  ExportedCoreEvent,
+  ExportedCoreModal,
   IExtendedClient,
 } from '@typings/core';
 import { GuildProfiles, QuestionPacks, Translations, Webhooks } from '@utils/classes';
@@ -38,11 +34,10 @@ export class ExtendedClient extends Client implements IExtendedClient {
   public translations = new Translations();
 
   // Classes
-  public slashCommands = new Collection<string, CoreSlashCommand>();
-  public contextMenuCommands = new Collection<string, CoreContextMenuCommand>();
-  public buttons = new Collection<string, CoreButton>();
-  public modals = new Collection<string, CoreModal>();
-  public events = new Collection<string, CoreEvent>();
+  public commands = new Collection<string, ExportedCoreCommand>();
+  public buttons = new Collection<string, ExportedCoreButton>();
+  public modals = new Collection<string, ExportedCoreModal>();
+  public events = new Collection<string, ExportedCoreEvent>();
   public guildProfiles;
   public packs;
   public webhooks;

@@ -1,12 +1,12 @@
 import { BaseInteraction, ChatInputCommandInteraction, Events } from 'discord.js';
 
 import config from '@config';
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 import commandMiddleware from '@utils/middleware/command.middleware';
 
 const cooldown = new Set();
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   name: Events.InteractionCreate,
   /**
    * Execute the event handler.
@@ -36,7 +36,7 @@ export default <CoreEvent>{
     if (!guildProfile)
       return interaction.reply({ content: 'An error occurred while fetching the guild profile.', ephemeral: true });
 
-    const command = client.slashCommands.get(commandName);
+    const command = client.commands.get(commandName);
 
     // If the command is not found
     if (!command)

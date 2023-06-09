@@ -2,10 +2,10 @@ import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from '
 import { version } from 'package.json';
 
 import config from '@config';
-import { CoreSlashCommand } from '@typings/core';
+import { CoreCommandOptions } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreSlashCommand = {
+const command: CoreCommandOptions = {
   data: new SlashCommandBuilder()
     .setName('info')
     .setDescription('Shows information about the bot.')

@@ -1,7 +1,7 @@
+import { tests } from 'builder-validation';
 import { ComponentType, ModalSubmitInteraction } from 'discord.js';
 
 import { CoreModal } from '@typings/core';
-import { validateTime } from '@utils/functions';
 import { ExtendedClient } from 'src/client';
 import dailySettingsInterface from 'src/interfaces/settings/daily';
 
@@ -34,14 +34,14 @@ const modal: CoreModal<ExtendedClient> = {
     if (guildProfile.daily.time === value)
       return interaction.reply({
         ephemeral: true,
-        content: translations.settings.general.content.sameTimezone,
+        content: translations.dailySettings.content.sameTime,
       });
 
     //            const roleMenu = new ActionRowBuilder<RoleSelectMenuBuilder>().addComponents(
-    if (!validateTime(value))
+    if (!tests.validateTime(value))
       return interaction.reply({
         ephemeral: true,
-        content: translations.settings.daily.content.invalidTime,
+        content: translations.dailySettings.content.invalidTime,
       });
 
     // Update the daily time

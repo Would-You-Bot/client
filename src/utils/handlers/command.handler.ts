@@ -1,4 +1,4 @@
-import { CoreSlashCommand } from '@typings/core';
+import { CoreCommandOptions } from '@typings/core';
 import loadFiles from '@utils/client/loadFiles';
 import { ExtendedClient } from 'src/client';
 
@@ -15,7 +15,7 @@ const commandHandler = async (client: ExtendedClient): Promise<void> => {
     client.logger.debug(`Importing command: ${fileName}`);
 
     const commandFile = (await import(`../../interactions/commands/${fileName}`)) as
-      | { default: CoreSlashCommand | undefined }
+      | { default: CoreCommandOptions | undefined }
       | undefined;
 
     if (!commandFile?.default?.data.name) continue;

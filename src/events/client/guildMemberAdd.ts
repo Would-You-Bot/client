@@ -1,11 +1,11 @@
 import { EmbedBuilder, Events, GuildMember, PermissionFlagsBits, TextChannel } from 'discord.js';
 
 import config from '@config';
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 import { GuildQuestionType } from '@typings/guild';
 import { BaseQuestion, CustomQuestion } from '@typings/pack';
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   name: Events.GuildMemberAdd,
   /**
    * Executes the event.

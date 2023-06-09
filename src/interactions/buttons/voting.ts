@@ -1,9 +1,9 @@
 import { ButtonInteraction } from 'discord.js';
 
-import { CoreButton } from '@typings/core';
+import { ICoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const button: CoreButton = {
+const button: ICoreButton = {
   name: 'voting',
   description: 'voting shit',
   /**

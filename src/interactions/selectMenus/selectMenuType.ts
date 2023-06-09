@@ -1,10 +1,10 @@
 import { ButtonInteraction } from 'discord.js';
 
-import { CoreButton } from '@typings/core';
 import { GuildProfileDocument } from '@models/GuildProfile.model';
+import { ICoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const button: CoreButton = {
+const button: ICoreButton = {
   name: 'selectMenuType',
   description: 'Select Menu Type',
   /**

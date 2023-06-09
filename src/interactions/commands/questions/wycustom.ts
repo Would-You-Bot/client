@@ -12,7 +12,7 @@ import {
 
 import config from '@config';
 import { GuildProfileDocument } from '@models/GuildProfile.model';
-import { CoreSlashCommand } from '@typings/core';
+import { CoreCommandOptions } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
 /**
@@ -28,7 +28,7 @@ function makeID(length: number) {
   return result;
 }
 
-const command: CoreSlashCommand = {
+const command: CoreCommandOptions = {
   data: new SlashCommandBuilder()
     .setName('wycustom')
     .setDescription('Adds custom WouldYou messages.')
@@ -229,10 +229,8 @@ const command: CoreSlashCommand = {
                       embeds: [this.pages[this.pages.length - 1]],
                     });
                     this.page = this.pages.length - 1;
-                    
                   }
                 default: {
-                  
                 }
               }
             }

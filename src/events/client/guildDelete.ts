@@ -1,7 +1,7 @@
 import { EmbedBuilder, Events, Guild, WebhookClient } from 'discord.js';
 
 import config from '@config';
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 
 /**
  * Filters the guild name to remove certain words.
@@ -11,7 +11,7 @@ import { CoreEvent } from '@typings/core';
 const filterGuildName = (name: string): string =>
   name.replace('Discord', '').replace('discord', '').replace('Everyone', '').replace('everyone', '');
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   name: Events.GuildDelete,
   /**
    * Executes the event.

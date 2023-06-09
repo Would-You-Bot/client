@@ -1,9 +1,9 @@
 import { Events } from 'discord.js';
 
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   name: Events.ShardReconnecting,
   /**
    * Executes the shard reconnecting event.

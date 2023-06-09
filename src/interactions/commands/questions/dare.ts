@@ -1,10 +1,10 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 
 import { GuildProfileDocument } from '@models/GuildProfile.model';
-import { CoreSlashCommand } from '@typings/core';
+import { CoreCommandOptions } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreSlashCommand = {
+const command: CoreCommandOptions = {
   data: new SlashCommandBuilder()
     .setName('dare')
     .setDescription('Shows information about the bot.')

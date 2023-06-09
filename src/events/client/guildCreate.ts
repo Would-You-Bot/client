@@ -1,7 +1,7 @@
 import { EmbedBuilder, Events, Guild, WebhookClient } from 'discord.js';
 
 import config from '@config';
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 import { GuildLanguage, GuildQuestionType } from '@typings/guild';
 
 /**
@@ -12,7 +12,7 @@ import { GuildLanguage, GuildQuestionType } from '@typings/guild';
 const filterGuildName = (name: string): string =>
   name.replace('Discord', '').replace('discord', '').replace('Everyone', '').replace('everyone', '');
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   name: Events.GuildCreate,
   /**
    * Executes the event.

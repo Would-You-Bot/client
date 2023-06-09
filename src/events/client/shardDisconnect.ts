@@ -1,8 +1,8 @@
 import { Events } from 'discord.js';
 
-import { CoreEvent } from '@typings/core';
+import { CoreEventOptions } from '@typings/core';
 
-export default <CoreEvent>{
+export default <CoreEventOptions>{
   name: Events.ShardDisconnect,
   /**
    * Executes the shard disconnect event.

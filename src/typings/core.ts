@@ -8,7 +8,6 @@ import {
   ButtonInteraction,
   Client,
   Collection,
-  ContextMenuCommandBuilder,
   EmbedBuilder,
   Events,
   ModalSubmitInteraction,
@@ -20,6 +19,10 @@ import { Logger } from 'winston';
 
 import { GuildProfile, GuildProfiles, QuestionPacks, Translations, Webhooks } from '@utils/classes';
 
+/**
+ * Client Error.
+ */
+
 interface ClientErrorParams {
   error: Error | string;
   title?: string;
@@ -30,79 +33,116 @@ interface ClientErrorParams {
 
 export interface IExtendedClient extends Client {}
 
-export interface CoreCron {
-  id: string;
-  name: string;
-  expression: string;
-  timezone: string;
-  execute: (client: IExtendedClient) => Promise<unknown>;
-  disabled?: boolean;
-}
+/**
+ * Core Button.
+ */
 
-export interface CoreCustomCron {
-  id: string;
-  name: string;
-  execute: (client: IExtendedClient) => Promise<unknown>;
-  disabled?: boolean;
-}
+export type CoreButtonExecute = (
+  client: IExtendedClient,
+  interaction: ButtonInteraction,
+  args: string[]
+) => Promise<unknown> | unknown;
 
-export interface CoreEvent<P extends unknown[] = unknown[]> {
-  once?: boolean;
-  name: Events | Events.Raw | Events.VoiceServerUpdate;
-  execute: (client: IExtendedClient, ...params: P) => Promise<unknown> | unknown;
-  disabled?: boolean;
-}
-
-export interface CoreButton {
+export interface CoreButtonOptions {
   id: string;
   description: string;
-  execute: (client: IExtendedClient, interaction: ButtonInteraction, args?: string[]) => Promise<unknown> | unknown;
   disabled?: boolean;
   developer?: boolean;
   perUser?: boolean;
 }
 
-export interface CoreModal {
+export interface ExportedCoreButton extends CoreButtonOptions {
+  execute: CoreButtonExecute;
+}
+
+/**
+ * Core Command.
+ */
+
+export type CoreCommandExecute = (client: IExtendedClient, ...parameters: unknown[]) => Promise<unknown>;
+
+export type CoreCommandAutocomplete = (client: IExtendedClient, ...parameters: unknown[]) => Promise<unknown>;
+
+export type CoreCommandData =
+  | Omit<
+      SlashCommandBuilder,
+      | 'addSubcommand'
+      | 'addSubcommandGroup'
+      | 'addBooleanOption'
+      | 'addUserOption'
+      | 'addChannelOption'
+      | 'addRoleOption'
+      | 'addMentionableOption'
+      | 'addNumberOption'
+      | 'addIntegerOption'
+      | 'addStringOption'
+      | 'addChoices'
+    >
+  | SlashCommandSubcommandsOnlyBuilder;
+
+export interface CoreCommandOptions {
+  data: CoreCommandData;
+  disabled?: boolean;
+  developer?: boolean;
+}
+
+export interface ExportedCoreCommand extends CoreCommandOptions {
+  execute: CoreCommandExecute;
+  autocomplete?: CoreCommandAutocomplete;
+}
+
+/**
+ * Core Cron.
+ */
+
+export type CoreCronExecute = (client: IExtendedClient) => Promise<unknown>;
+
+export interface CoreCronOptions {
   id: string;
-  description: string;
-  execute: (
-    client: IExtendedClient,
-    interaction: ModalSubmitInteraction,
-    args?: string[]
-  ) => Promise<unknown> | unknown;
+  name: string;
+  expression: string;
+  timezone: string;
   disabled?: boolean;
-  developer?: boolean;
 }
 
-export interface CoreSlashCommand {
-  data:
-    | Omit<
-        SlashCommandBuilder,
-        | 'addSubcommand'
-        | 'addSubcommandGroup'
-        | 'addBooleanOption'
-        | 'addUserOption'
-        | 'addChannelOption'
-        | 'addRoleOption'
-        | 'addMentionableOption'
-        | 'addNumberOption'
-        | 'addIntegerOption'
-        | 'addStringOption'
-        | 'addChoices'
-      >
-    | SlashCommandSubcommandsOnlyBuilder;
-  execute: (client: IExtendedClient, ...parameters: unknown[]) => Promise<unknown>;
-  autocomplete: (client: IExtendedClient, ...parameters: unknown[]) => Promise<unknown>;
-  disabled?: boolean;
-  developer?: boolean;
+export interface ExportedCoreCron extends CoreCronOptions {
+  execute: CoreCronExecute;
 }
 
-export interface CoreContextMenuCommand {
-  data: ContextMenuCommandBuilder;
-  execute: (client: IExtendedClient, ...parameters: unknown[]) => Promise<unknown>;
+export interface CoreCustomCronOptions {
+  id: string;
+  name: string;
   disabled?: boolean;
-  developer?: boolean;
 }
+
+export interface ExportedCoreCustomCron extends CoreCustomCronOptions {
+  execute: CoreCronExecute;
+}
+
+/**
+ * Core Event.
+ */
+
+export type CoreEventExecute<P extends unknown[] = unknown[]> = (
+  client: IExtendedClient,
+  ...params: P
+) => Promise<unknown> | unknown;
+
+export type CoreEventName = Events | Events.Raw | Events.VoiceServerUpdate;
+
+export interface CoreEventOptions {
+  once?: boolean;
+  name: CoreEventName;
+  disabled?: boolean;
+}
+
+export interface ExportedCoreEvent<P extends unknown[] = unknown[]> extends CoreEventOptions {
+  execute: CoreEventExecute<P>;
+}
+
+/**
+ * Core Interface.
+ */
 
 export type CoreInterface = (
   client: IExtendedClient,
@@ -115,6 +155,31 @@ export type CoreInterface = (
   files?: AttachmentBuilder[];
 };
 
+/**
+ * Core Modal.
+ */
+
+type CoreModalExecute = (
+  client: IExtendedClient,
+  interaction: ModalSubmitInteraction,
+  args?: string[]
+) => Promise<unknown> | unknown;
+
+export interface CoreModalOptions {
+  id: string;
+  description: string;
+  disabled?: boolean;
+  developer?: boolean;
+}
+
+export interface ExportedCoreModal extends CoreModalOptions {
+  execute: CoreModalExecute;
+}
+
+/**
+ * Core Select Menu.
+ */
+
 export interface IExtendedClient extends Client {
   botStartTime: number;
   synced: boolean;
@@ -123,11 +188,10 @@ export interface IExtendedClient extends Client {
   cluster: ClusterClient<DjsDiscordClient>;
   translations: Translations;
 
-  slashCommands: Collection<string, CoreSlashCommand>;
-  contextMenuCommands: Collection<string, CoreContextMenuCommand>;
-  buttons: Collection<string, CoreButton>;
-  modals: Collection<string, CoreModal>;
-  events: Collection<string, CoreEvent>;
+  commands: Collection<string, CoreCommandOptions>;
+  buttons: Collection<string, CoreButtonOptions>;
+  modals: Collection<string, CoreModalOptions>;
+  events: Collection<string, CoreEventOptions>;
 
   guildProfiles: GuildProfiles;
   packs: QuestionPacks;

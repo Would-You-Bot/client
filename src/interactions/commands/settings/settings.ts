@@ -10,10 +10,10 @@ import {
 
 import config from '@config';
 import { GuildProfileDocument } from '@models/GuildProfile.model';
-import { CoreSlashCommand } from '@typings/core';
+import { CoreCommandOptions } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreSlashCommand = {
+const command: CoreCommandOptions = {
   data: new SlashCommandBuilder()
     .setName('settings')
     .setDescription('Change settings for Daily Messages and Welcomes')

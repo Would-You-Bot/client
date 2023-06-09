@@ -2,10 +2,10 @@ import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from '
 
 import config from '@config';
 import { GuildProfileDocument } from '@models/GuildProfile.model';
-import { CoreSlashCommand } from '@typings/core';
+import { CoreCommandOptions } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const command: CoreSlashCommand = {
+const command: CoreCommandOptions = {
   data: new SlashCommandBuilder()
     .setName('guide')
     .setDescription('guide to use the bot and increase activity')

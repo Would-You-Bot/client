@@ -1,11 +1,11 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
-import { CoreButton } from '@typings/core';
 import { GuildProfileDocument } from '@models/GuildProfile.model';
+import { ICoreButton } from '@typings/core';
 import { ExtendedClient } from 'src/client';
 
-const button: CoreButton = {
+const button: ICoreButton = {
   name: 'welcomePing',
   description: 'Welcome User Pings',
   /**
