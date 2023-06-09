@@ -1,53 +1,16 @@
-# Would You Bot
+<div align="center">
 
-Would You bot is an open-source discord bot that includes activities and questions to keep your server active!
+![Would You Banner](https://i.imgur.com/HSsvZMe.png)
 
-## Resources
+[Website](https://wouldyoubot.com) • [Support](https://wouldyoubot.gg/discord) • [Invite](https://wouldyoubot.gg/invite) • [Vote](https://top.gg/bot/981649513427111957/vote) • [ToS](https://wouldyoubot.gg/terms) • [Privacy](https://wouldyoubot.gg/privacy)
 
-- [Documentation](https://slekup.github.io/would-you-bot/)
-- [Website](https://wouldyoubot.com)
-- [Support Server](https://wouldyoubot.gg/discord)
-- [Bot Invite](https://wouldyoubot.gg/invite)
-- [Vote](https://top.gg/bot/981649513427111957/vote)
-- [Terms of Service](https://wouldyoubot.gg/terms)
-- [Privacy Policy](https://wouldyoubot.gg/privacy)
+---
 
-## Table of Contents
+Would You bot provides activities and questions to keep your server active!
 
-- [Would You Bot](#would-you-bot)
-  - [Resources](#resources)
-- [Getting Started](#getting-started)
-  - [Starting the Development Environment](#starting-the-development-environment)
-    - [Linting](#linting)
-    - [Formatting](#formatting)
-    - [NPM Scripts](#npm-scripts)
-  - [Starting the Production Environment](#starting-the-production-environment)
-    - [Updating the Production Environment](#updating-the-production-environment)
-    - [Viewing Logs](#viewing-logs)
-  - [Logging and Debugging](#logging-and-debugging)
-    - [Console Logs](#console-logs)
-    - [Logs Folder](#logs-folder)
-    - [Discord Logs](#discord-logs)
-  - [Using VS Code](#using-vs-code)
-    - [Highly Recommended Extensions](#highly-recommended-extensions)
-    - [Optionally Recommended Extensions](#optionally-recommended-extensions)
-    - [VS Code Snippets](#vs-code-snippets)
-- [Protocols and Conventions](#protocols-and-conventions)
-  - [Documentation](#documentation)
-  - [Other](#other)
-- [Technical Details](#technical-details)
-  - [Technologies Used](#technologies-used)
-  - [Configuration](#configuration)
-    - [Private Configuration](#private-configuration)
-    - [Public Configuration](#public-configuration)
-  - [Project Structure](#project-structure)
-  - [CI/CD Pipeline](#cicd-pipeline)
-    - [Integration](#integration)
-    - [Deployment](#deployment)
-  - [Security & Protection](#security-and-protection)
-- [Project Details](#project-details)
-  - [Contributing](#contributing)
-  - [License](#license)
+---
+
+</div>
 
 # Getting Started
 
