@@ -3,7 +3,7 @@
  * @param input The input to strip indentation from.
  * @returns The stripped indentation.
  */
-const stripIndents = (input: string) => {
+const stripIndents = (input: string): string => {
   // Find the minimum number of leading spaces in non-empty lines
   const minIndent = input
     .split('\n')

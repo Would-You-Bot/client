@@ -68,7 +68,7 @@
     }
   },
   "include": [
-    "src/**/*.*",
+    "src/**/*",
     "environment.d.ts",
     "package.json",
     "register.cjs",

@@ -25,7 +25,7 @@ if (!fs.existsSync(clusterLogsDir)) {
  * @param level The log level.
  * @returns The colored log level.
  */
-const levelColor = (level: string) => {
+const levelColor = (level: string): string => {
   switch (level) {
     case 'error': {
       return colors.red(level.toUpperCase());

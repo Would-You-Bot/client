@@ -12,7 +12,7 @@ const encryptionIV = crypto.createHash('sha512').update(config.env.SECRET_IV).di
  * @param data The data to encrypt.
  * @returns The encrypted data.
  */
-export const encrypt = (data: string) => {
+export const encrypt = (data: string): string | undefined => {
   try {
     // Creates cipher with encryption method and secret key
     const cipher = crypto.createCipheriv(config.env.ENCRYPTION_METHOD, key, encryptionIV);
@@ -29,7 +29,7 @@ export const encrypt = (data: string) => {
  * @param data The encrypted data to decrypt.
  * @returns The decrypted data.
  */
-export const decrypt = (data: string) => {
+export const decrypt = (data: string): string | undefined => {
   try {
     const buff = Buffer.from(data, 'base64');
     const decipher = crypto.createDecipheriv(config.env.ENCRYPTION_METHOD, key, encryptionIV);

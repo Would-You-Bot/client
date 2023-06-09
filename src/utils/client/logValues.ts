@@ -11,7 +11,7 @@ const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
  * @param level The level of the log.
  * @param message The log message.
  */
-const addDiscordLog = (level: string, message: string) => {
+const addDiscordLog = (level: string, message: string): void => {
   const lvl = level.replace(ANSI_REGEX, '');
 
   if (lvl === 'info') infoQueue.push(message);
