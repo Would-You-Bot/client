@@ -21,7 +21,7 @@ Object.keys(emojiList).reduce((acc, key: string) => {
   return acc;
 });
 
-const env = verifyEnvironment();
+const env = verifyEnvironment;
 const date = new Date();
 
 /**

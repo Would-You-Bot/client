@@ -9,7 +9,7 @@ export type CustomPackDocument = HydratedDocument<CustomPackSchema>;
 export const CustomPackModel = model<CustomPackDocument>(
   'CustomPack',
   new Schema<CustomPackSchema>({
-    guildId: { type: String, required: true },
+    userId: { type: String, required: true },
     name: { type: String, trim: true, required: true },
     questions: [
       {

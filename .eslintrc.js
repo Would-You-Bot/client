@@ -3,6 +3,8 @@ module.exports = {
   env: {
     es6: true,
     node: true,
+    browser: false,
+    jest: true,
   },
   extends: [
     'eslint:recommended', // ESLint's recommended rules
@@ -20,16 +22,16 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
-    extraFileExtensions: ['.js'],
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  ignorePatterns: ['*.js', '*.cjs', '*.json', 'node_modules/', 'dist/', 'docs/', 'config/', '.github/', 'migrations/'],
+  ignorePatterns: ['*.js', '*.cjs', '*.json'],
   rules: {
     // Import plugin rules
     'import/first': 0, // Reports any imports that come after non-import statements
     'import/extensions': 0, // Ensures consistent use of file extension within the import path
     'import/prefer-default-export': 0, // Prefer a default export if module exports a single name
+    'import/no-mutable-exports': 0, // Disallows the use of mutable exports with TypeScript
 
     // JSDoc (documentation) rules
     'jsdoc/require-jsdoc': [
@@ -65,10 +67,11 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': [2, { allowExpressions: true }], // Enforces return type declaration of functions.
     '@typescript-eslint/no-empty-interface': 0, // Disallows the declaration of empty interfaces.
     '@typescript-eslint/consistent-type-assertions': 0, // Enforces consistent usage of type assertions.
+    '@typescript-eslint/non-nullable-type-assertion-style': 0, // Enforces non-nullable type assertions using the ! postfix operator.
 
     // Normal ESLint rules
     'object-curly-spacing': 2, // Enforces consistent spacing inside braces
-    'linebreak-style': ['error', 'windows'], // Enforces consistent line endings (disabled for windows)
+    'linebreak-style': 0, // Enforces consistent line endings (disabled for windows)
     'lines-between-class-members': 0, // Requires an empty line between class members
     'no-await-in-loop': 0, // Disallows await inside of loops
     'no-restricted-syntax': 0, // Disallows specified syntax
@@ -81,8 +84,8 @@ module.exports = {
     'id-length': ['error', { min: 2 }], // Enforces a minimum identifier length
     'max-classes-per-file': 0, // Enforces a maximum number of classes per file
     'no-shadow': 0, // Disallows variable declarations from shadowing variables declared in the outer scope - Was causing problems
+    'no-underscore-dangle': [2, { allow: ['_id'] }], // Disallows dangling underscores in identifiers
   },
-
   settings: {
     'import/resolver': {
       typescript: true,

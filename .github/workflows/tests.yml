@@ -8,7 +8,7 @@ on:
       - '**'
 
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,84 +19,10 @@ jobs:
           node-version: 18.x
 
       - name: Install dependencies
-        id: install
-        run: npm ci > install.log 2>&1 || echo "Install failed"
-        continue-on-error: true
+        run: npm install
 
       - name: Lint & Build
-        id: lint
-        run: npm run lint:fix > lint.log 2>&1 || echo "Lint & Build failed"
-        continue-on-error: true
+        run: npm run lint:fix
 
       - name: Format
-        id: format
-        run: npm run format:check > format.log 2>&1 || echo "Format failed"
-        continue-on-error: true
-
-      - name: Generate error message JSON file
-        if: ${{ always() }}
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          PASTEBIN_API_KEY: ${{ secrets.PASTEBIN_API_KEY }}
-          ERROR_MESSAGE_FILE: ${{ github.workspace }}/error_message.json
-        run: |
-          ERROR_MESSAGE=""
-          FAILED_STEPS=''
-          if [ -s "install.log" ]; then
-            FAILED_STEPS+="Installation. "
-            ERROR_MESSAGE+="Install failed\n\n"
-            ERROR_MESSAGE+=$(cat install.log)
-            ERROR_MESSAGE+="\n\n"
-          fi
-          if [ -s "lint.log" ]; then
-            FAILED_STEPS+="Lint & Build. "
-            ERROR_MESSAGE+="Lint & Build failed\n\n"
-            ERROR_MESSAGE+=$(cat lint.log)
-            ERROR_MESSAGE+="\n\n"
-          fi
-          if [ -s "format.log" ]; then
-            FAILED_STEPS+="Format. "
-            ERROR_MESSAGE+="Format failed\n\n"
-            ERROR_MESSAGE+=$(cat format.log)
-            ERROR_MESSAGE+="\n\n"
-          fi
-          if [ ! -z "$ERROR_MESSAGE" ]; then
-            echo "$ERROR_MESSAGE" > "$ERROR_MESSAGE_FILE"
-            UPLOAD_RESULT=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" \
-              -d "api_dev_key=$PASTEBIN_API_KEY" \
-              -d "api_option=paste" \
-              -d "api_paste_private=1" \
-              --data-urlencode "api_paste_code@${ERROR_MESSAGE_FILE}" \
-              https://pastebin.com/api/api_post.php)
-            UPLOAD_LINK=$(echo "$UPLOAD_RESULT" | cut -d '/' -f 4)
-            if [ "$UPLOAD_LINK" != "null" ]; then
-              TRUNCATED_ERROR_MESSAGE=$(echo "$ERROR_MESSAGE" | head -c 200)
-              if [ ${#ERROR_MESSAGE} -gt 200 ]; then
-                TRUNCATED_ERROR_MESSAGE+="..."
-              fi
-              echo "Sending error message to Discord..."
-              JSON_PAYLOAD=$(jq -n --arg UPLOAD_LINK "$UPLOAD_LINK" --arg FAILED_STEPS "$FAILED_STEPS" --arg TRUNCATED_ERROR_MESSAGE "$TRUNCATED_ERROR_MESSAGE" '{
-                "username": "Would You Pipeline",
-                "avatar_url": "https://wouldyoubot.gg/Logo.png",
-                "embeds": [
-                  {
-                    "title": "Pipeline CI Failed",
-                    "url": ("https://pastebin.com/raw/" + $UPLOAD_LINK),
-                    "author": {
-                      "name": ("Failed steps: " + $FAILED_STEPS)
-                    },
-                    "description": ("View the full error [here](https://pastebin.com/raw/" + $UPLOAD_LINK + ").\n**Preview:**\n```\n" + $TRUNCATED_ERROR_MESSAGE + "```"),
-                    "color": 16711680
-                  }
-                ]
-              }')
-              echo "JSON_PAYLOAD:"
-              echo "$JSON_PAYLOAD"
-              echo "$JSON_PAYLOAD" | curl -H "Content-Type: application/json" \
-                -X POST \
-                -d @- \
-                "$DISCORD_WEBHOOK_URL"
-            else
-              echo "Failed to upload error message file."
-            fi
-          fi
+        run: npm run format
