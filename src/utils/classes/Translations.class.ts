@@ -1,8 +1,8 @@
 import { Translations as ITranslations } from '@typings/translations';
 
-import de from '@constants/languages/de';
-import en from '@constants/languages/en';
-import es from '@constants/languages/es';
+import en from '@constants/languages/english';
+import de from '@constants/languages/german';
+import es from '@constants/languages/spanish';
 
 /**
  * The translations class.

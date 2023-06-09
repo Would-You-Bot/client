@@ -8,60 +8,81 @@ export interface CoreTranslations {
   description: string;
   error: {
     interaction: string;
-    cooldown: `${string}{cooldown}${string}`;
-    permissions: `${string}{permissions}${string}`;
+    cooldown: string;
+    permissions: string;
+    noCustom: string;
+  };
+  terms: {
+    yes: string;
+    no: string;
+    vote: string;
+    votingResults: string;
+    id: string;
+    message: string;
+    category: string;
+    content: string;
+    enable: string;
+    disable: string;
   };
 }
 
+/* type BotInterface = Record<
+  string,
+  {
+    content?: Record<string, string>;
+    embed?: Record<string, string | Record<string, string> | { name: string; value: string }[]>;
+    buttons?: Record<string, string | Record<string, string>>;
+  }
+>; */
+
 export interface BotTranslations {
-  settings: {
-    general: {
-      content: {
-        sameTimezone: string;
-        invalidTimezone: string;
-        sameQuestionType: string;
-        questionType: string;
-      };
-      embed: {
-        title: `{name} - ${string}`;
-        description: string;
+  customImport: {
+    content: {
+      imported: string;
+    };
+  };
+  generalSettings: {
+    content: {
+      sameTimezone: string;
+      invalidTimezone: string;
+      sameQuestionType: string;
+      questionType: string;
+    };
+    embed: {
+      title: string;
+      description: string;
+    };
+  };
+  // language: {};
+  // premium: {}
+  // welcome: {};
+  dailySettings: {
+    content: {
+      sameTime: string;
+      invalidTime: string;
+      channel: string;
+      role: string;
+    };
+    embed: { title: string; description: string };
+    buttons: {
+      channel: string;
+      role: string;
+      time: string;
+      thread: {
+        enable: string;
+        disable: string;
       };
     };
-    // language: {};
-    // premium: {}
-    // welcome: {};
-    daily: {
-      content: {
-        sameTime: string;
-        invalidTime: string;
-        channel: string;
-        role: string;
-      };
-      embed: { title: `{name} - ${string}`; description: string };
-      button: {
-        enabled: {
-          enable: string;
-          disable: string;
-        };
-        channel: string;
-        role: string;
-        time: string;
-        thread: {
-          enable: string;
-          disable: string;
-        };
-      };
+  };
+  // debug: {}
+  welcomeSettings: {
+    content: {
+      channel: string;
+      role: string;
     };
-    // debug: {}
-    welcome: {
-      content: {
-        channel: string;
-        role: string;
-      };
-      embed: {
-        title: `{name} - ${string}`;
-        description: string;
-      };
+    embed: {
+      title: string;
+      description: string;
     };
   };
   ping: {
@@ -70,7 +91,7 @@ export interface BotTranslations {
       api: string;
       client: string;
     };
-    button: {
+    buttons: {
       label: string;
     };
   };
@@ -81,14 +102,14 @@ export interface BotTranslations {
   };
   support: {
     embed: {
-      title: `{name} - ${string}`;
+      title: string;
       description: string;
     };
   };
   help: {
     embed: {
       title: string;
-      description: `**{name}** ${string}`;
+      description: string;
       fields: [
         {
           name: string;
@@ -106,11 +127,11 @@ export interface BotTranslations {
   };
   guide: {
     embed: {
-      title: `{name} - ${string}`;
-      description: `${string}{name}${string}`;
+      title: string;
+      description: string;
       fields: [
         {
-          name: `${string}{name}${string}`;
+          name: string;
           value: string;
         },
         {
@@ -128,6 +149,7 @@ export interface BotTranslations {
   vote: {
     embed: {
       title: string;
+      value: string;
     };
     button: {
       label: string;
