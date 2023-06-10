@@ -30,13 +30,15 @@ export default <CoreEventOptions>{
       PermissionFlagsBits.SendMessages,
       PermissionFlagsBits.EmbedLinks,
     ];
-    if (!message.channel.permissionsFor(client.user.id)?.has(requiredPerms)) return;
+    if (!message.channel.permissionsFor(client.user.id)?.has(requiredPerms))
+      return;
     if (cooldown.has(message.channel.id)) return;
 
     const embed = new EmbedBuilder()
       .setAuthor({
         name: 'Hello, my name is Would You.',
-        iconURL: 'https://cdn.discordapp.com/emojis/953349395955470406.gif?size=40&quality=lossless',
+        iconURL:
+          'https://cdn.discordapp.com/emojis/953349395955470406.gif?size=40&quality=lossless',
       })
       .setDescription(
         `My purpose is to help users have better engagement in your servers to bring up more activity! You can use ${config.emojis.help.full} to see all of my commands.`
@@ -44,8 +46,16 @@ export default <CoreEventOptions>{
       .setColor(config.colors.primary);
 
     const buttons = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder().setLabel('Invite').setStyle(ButtonStyle.Link).setEmoji('📋').setURL(config.links.invite),
-      new ButtonBuilder().setLabel('Support').setStyle(ButtonStyle.Link).setEmoji('❤️').setURL(config.links.support)
+      new ButtonBuilder()
+        .setLabel('Invite')
+        .setStyle(ButtonStyle.Link)
+        .setEmoji('📋')
+        .setURL(config.links.invite),
+      new ButtonBuilder()
+        .setLabel('Support')
+        .setStyle(ButtonStyle.Link)
+        .setEmoji('❤️')
+        .setURL(config.links.support)
     );
 
     // Add the channel to the cooldown set
@@ -56,7 +66,10 @@ export default <CoreEventOptions>{
     }, 1000 * 10);
 
     // If the user mentions the bot
-    if (message.content && new RegExp(`^(<@!?${client.user.id}>)`).test(message.content))
+    if (
+      message.content &&
+      new RegExp(`^(<@!?${client.user.id}>)`).test(message.content)
+    )
       return message.channel
         .send({
           embeds: [embed],

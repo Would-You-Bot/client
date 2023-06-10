@@ -1,4 +1,9 @@
-import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
+import {
+  HydratedDocument,
+  Schema,
+  SchemaTimestampsConfig,
+  model,
+} from 'mongoose';
 
 interface CoreWebhook {
   guildId: string;

@@ -8,7 +8,10 @@ import { IExtendedClient } from '@typings/core';
  * @param interaction The interaction.
  * @returns A promise.
  */
-const commandMiddleware = async (client: IExtendedClient, interaction: ChatInputCommandInteraction): Promise<void> => {
+const commandMiddleware = async (
+  client: IExtendedClient,
+  interaction: ChatInputCommandInteraction
+): Promise<void> => {
   const { user, guild, commandName } = interaction;
   if (!guild) return;
 
@@ -23,9 +26,9 @@ const commandMiddleware = async (client: IExtendedClient, interaction: ChatInput
         : member.permissions.has(PermissionFlagsBits.ModerateMembers)
         ? '(mod)'
         : ''
-    } used \`${commandName}\` in ${guild.name} (${guild.memberCount}) <t:${(Date.now() / 1000).toFixed(
-      0
-    )}:R> ${`unsaved`}`
+    } used \`${commandName}\` in ${guild.name} (${guild.memberCount}) <t:${(
+      Date.now() / 1000
+    ).toFixed(0)}:R> ${`unsaved`}`
   );
 };
 

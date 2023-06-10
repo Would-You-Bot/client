@@ -1,8 +1,14 @@
-import { EmbedBuilder, Events, GuildMember, PermissionFlagsBits, TextChannel } from 'discord.js';
+import {
+  EmbedBuilder,
+  Events,
+  GuildMember,
+  PermissionFlagsBits,
+  TextChannel,
+} from 'discord.js';
 
 import config from '@config';
 import { CoreEventOptions } from '@typings/core';
-import { GuildQuestionType } from '@typings/guild';
+import { GuildPackType } from '@typings/guild';
 import { BaseQuestion, CustomQuestion } from '@typings/pack';
 
 export default <CoreEventOptions>{
@@ -20,9 +26,16 @@ export default <CoreEventOptions>{
     // Fetch the guild profile
     const guildProfile = await client.guildProfiles.fetch(member.guild.id);
 
-    if (!guildProfile.welcome.enabled || !guildProfile.welcome.channel || !guildProfile.welcome.ping) return;
+    if (
+      !guildProfile.welcome.enabled ||
+      !guildProfile.welcome.channel ||
+      !guildProfile.welcome.ping
+    )
+      return;
 
-    const channel = (await member.guild.channels.fetch(guildProfile.welcome.channel)) as TextChannel | null;
+    const channel = (await member.guild.channels.fetch(
+      guildProfile.welcome.channel
+    )) as TextChannel | null;
 
     if (!channel || !client.user?.id) return;
 
@@ -35,15 +48,21 @@ export default <CoreEventOptions>{
     if (!channel.permissionsFor(clientMember).has(requiredPerms)) return;
 
     // Get a random question
-    const randomQuestionData = await client.packs.random(guildProfile.questionType);
+    const randomQuestionData = await client.packs.random(
+      guildProfile.questionType
+    );
 
     let randomQuestion: string;
-    if (guildProfile.questionType === GuildQuestionType.Base)
-      randomQuestion = (randomQuestionData as BaseQuestion).translations[guildProfile.language];
-    else if (guildProfile.questionType === GuildQuestionType.Custom)
+    if (guildProfile.questionType === GuildPackType.Base)
+      randomQuestion = (randomQuestionData as BaseQuestion).translations[
+        guildProfile.language
+      ];
+    else if (guildProfile.questionType === GuildPackType.Custom)
       randomQuestion = (randomQuestionData as CustomQuestion).text;
     else if ((randomQuestionData as CustomQuestion).text) {
-      randomQuestion = (randomQuestionData as BaseQuestion).translations[guildProfile.language];
+      randomQuestion = (randomQuestionData as BaseQuestion).translations[
+        guildProfile.language
+      ];
     } else {
       randomQuestion = (randomQuestionData as CustomQuestion).text;
     }
@@ -54,6 +73,8 @@ export default <CoreEventOptions>{
       .setThumbnail(member.user.avatarURL())
       .setDescription(randomQuestion);
 
-    return channel.send({ content: `<@${member.user.id}>`, embeds: [welcomeEmbed] }).catch(client.logger.error);
+    return channel
+      .send({ content: `<@${member.user.id}>`, embeds: [welcomeEmbed] })
+      .catch(client.logger.error);
   },
 };

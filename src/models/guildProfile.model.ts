@@ -1,8 +1,20 @@
-import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
+import {
+  HydratedDocument,
+  Schema,
+  SchemaTimestampsConfig,
+  model,
+} from 'mongoose';
 
-import { AllGuildQuestionTypes, GuildLanguage, GuildProfile, GuildQuestionType } from '@typings/guild';
+import {
+  AllGuildQuestionTypes,
+  GuildLanguage,
+  GuildPackType,
+  GuildProfile,
+} from '@typings/guild';
 
-export interface GuildProfileSchema extends GuildProfile, SchemaTimestampsConfig {}
+export interface GuildProfileSchema
+  extends GuildProfile,
+    SchemaTimestampsConfig {}
 
 export type GuildProfileDocument = HydratedDocument<GuildProfileSchema>;
 
@@ -25,10 +37,10 @@ export const GuildProfileModel = model<GuildProfileDocument>(
         default: GuildLanguage.English,
         required: true,
       },
-      questionType: {
+      packType: {
         type: Number,
         enum: AllGuildQuestionTypes,
-        default: GuildQuestionType.Base,
+        default: GuildPackType.Base,
         required: true,
       },
       premium: {

@@ -1,7 +1,12 @@
 import { readFileSync } from 'fs';
 import { parse } from 'yaml';
 
-import { ConfigType, EmojisConfig, LimitsConfig, MainConfig } from '@typings/config';
+import {
+  ConfigType,
+  EmojisConfig,
+  LimitsConfig,
+  MainConfig,
+} from '@typings/config';
 import verifyEnvironment from '@utils/start/verifyEnvironment';
 
 // Load the config files

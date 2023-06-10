@@ -6,8 +6,10 @@ const core: CoreTranslations = {
     'Would You bot is an open-source discord bot that includes activities and questions to keep your server active!',
   error: {
     interaction: 'An error occurred. Please try again later.',
-    cooldown: 'You need to wait {cooldown} seconds before using this command again.',
-    permissions: 'You are missing the following permissions to use this interaction: {permissions}.',
+    cooldown:
+      'You need to wait {cooldown} seconds before using this command again.',
+    permissions:
+      'You are missing the following permissions to use this interaction: {permissions}.',
     noCustom: 'There are no custom questions for this server, please add some!',
   },
   terms: {

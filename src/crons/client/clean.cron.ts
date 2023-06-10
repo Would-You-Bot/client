@@ -1,7 +1,10 @@
 import { AttachmentBuilder, ChannelType, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument, GuildProfileModel } from '@models/GuildProfile.model';
+import {
+  GuildProfileDocument,
+  GuildProfileModel,
+} from '@models/GuildProfile.model';
 import { CoreCronOptions, IExtendedClient } from '@typings/core';
 import { GuildData, exportGuildData } from '@utils/client';
 
@@ -26,12 +29,17 @@ const resetData = (): void => {
  * @param guildProfileDoc The guild profile document.
  * @returns A Promise.
  */
-const deleteGuildData = async (client: IExtendedClient, guildProfileDoc: GuildProfileDocument): Promise<void> => {
+const deleteGuildData = async (
+  client: IExtendedClient,
+  guildProfileDoc: GuildProfileDocument
+): Promise<void> => {
   // Fetch the guild and guild profile
-  const guildProfile = await client.guildProfiles.fetch(guildProfileDoc.guildId).catch((error) => {
-    client.logger.error(error);
-    return undefined;
-  });
+  const guildProfile = await client.guildProfiles
+    .fetch(guildProfileDoc.guildId)
+    .catch((error) => {
+      client.logger.error(error);
+      return undefined;
+    });
 
   if (!guildProfile) return;
 
@@ -41,10 +49,12 @@ const deleteGuildData = async (client: IExtendedClient, guildProfileDoc: GuildPr
   guildProfilesDeleted += 1;
 
   // Fetch all webhooks in the guild
-  const guildWebhooks = await client.webhooks.fetchAll(guildProfileDoc.guildId).catch((error) => {
-    client.logger.error(error);
-    return undefined;
-  });
+  const guildWebhooks = await client.webhooks
+    .fetchAll(guildProfileDoc.guildId)
+    .catch((error) => {
+      client.logger.error(error);
+      return undefined;
+    });
 
   // If the guild has webhooks
   if (guildWebhooks) {
@@ -54,7 +64,9 @@ const deleteGuildData = async (client: IExtendedClient, guildProfileDoc: GuildPr
   }
 
   // Fetch all question packs in the guild
-  const deletedCustomPacks = await client.packs.custom.deleteAll(guildProfileDoc.guildId);
+  const deletedCustomPacks = await client.packs.custom.deleteAll(
+    guildProfileDoc.guildId
+  );
 
   if (deletedCustomPacks) {
     customPacksDeleted = deletedCustomPacks;
@@ -64,7 +76,9 @@ const deleteGuildData = async (client: IExtendedClient, guildProfileDoc: GuildPr
   const guildData = await exportGuildData(guildProfileDoc.guildId);
   guildsData.push(guildData);
 
-  client.logger.debug(`[CLEAN CRON] Deleted all guild data for ${guildProfileDoc.guildId}`);
+  client.logger.debug(
+    `[CLEAN CRON] Deleted all guild data for ${guildProfileDoc.guildId}`
+  );
 };
 
 export default <CoreCronOptions>{
@@ -89,7 +103,9 @@ export default <CoreCronOptions>{
     const oneMonth = 1000 * 60 * 60 * 24 * 30;
 
     for (const guildProfileDoc of allGuildProfiles) {
-      const shardId = client.shard?.broadcastEval((client) => client.guilds.cache.get(guildProfileDoc.guildId));
+      const shardId = client.shard?.broadcastEval((client) =>
+        client.guilds.cache.get(guildProfileDoc.guildId)
+      );
 
       // If the guild is still in the cache, continue to the next guild profile
       if (shardId) continue;
@@ -129,9 +145,12 @@ export default <CoreCronOptions>{
       );
 
     // Create the file attatchment with guilds data
-    const attachment = new AttachmentBuilder(Buffer.from(JSON.stringify(guildsData, null, 2)), {
-      name: `guilds.json`,
-    });
+    const attachment = new AttachmentBuilder(
+      Buffer.from(JSON.stringify(guildsData, null, 2)),
+      {
+        name: `guilds.json`,
+      }
+    );
 
     channel.send({ embeds: [embed], files: [attachment] });
 

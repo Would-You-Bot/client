@@ -10,7 +10,10 @@ export default <CoreEventOptions>{
    * @param interaction The autocomplete interaction.
    * @returns A promise.
    */
-  async execute(client, interaction: AutocompleteInteraction): Promise<unknown> {
+  async execute(
+    client,
+    interaction: AutocompleteInteraction
+  ): Promise<unknown> {
     if (!client.synced) return;
     if (!interaction.isAutocomplete()) return;
 
@@ -19,7 +22,9 @@ export default <CoreEventOptions>{
 
     // If the command could not be found
     if (!command) {
-      client.logger.error(`No command matching ${interaction.commandName} was found.`);
+      client.logger.error(
+        `No command matching ${interaction.commandName} was found.`
+      );
       return;
     }
 

@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from 'discord.js';
 
-import { CoreInterface } from '@typings/core';
+import { CoreInterfaceFunction } from '@typings/core';
 
 /**
  * The function return the default interface.
@@ -8,7 +8,7 @@ import { CoreInterface } from '@typings/core';
  * @param guildProfile The guild profile.
  * @returns An object containing the embed and buttons.
  */
-export default <CoreInterface>((client, guildProfile) => {
+export default <CoreInterfaceFunction>((client, guildProfile) => {
   const translations = client.translations[guildProfile.language];
 
   return {

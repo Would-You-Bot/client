@@ -42,7 +42,8 @@ export default {
         att3: 'Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)',
         att4: 'Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)',
         att5: 'Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [hier](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)',
-        att15: 'Bei der Ausführung dieses Befehls ist ein Fehler aufgetreten. Bitte melde ihn dem Support-Server!',
+        att15:
+          'Bei der Ausführung dieses Befehls ist ein Fehler aufgetreten. Bitte melde ihn dem Support-Server!',
         att16:
           'Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die wouldyourather Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!',
         att17:
@@ -80,9 +81,11 @@ export default {
         title: 'Diese Would You Nachricht wurde erfolgreich gelöscht!',
       },
       embedRemoveAll: {
-        title: 'Bist du sicher, dass du jede benutzerdefinierte Would You Nachricht löschen möchtest?',
+        title:
+          'Bist du sicher, dass du jede benutzerdefinierte Would You Nachricht löschen möchtest?',
         accept: 'Alle würdest du eher Nachrichten erfolgreich gelöscht!',
-        decline: 'Du hast das Löschen aller benutzerdefinierten Nachrichten abgelehnt.',
+        decline:
+          'Du hast das Löschen aller benutzerdefinierten Nachrichten abgelehnt.',
         none: 'Du hast momentan keine benutzerdefinierten Would You Nachrichten zu löschen!',
       },
       paginator: {
@@ -95,10 +98,12 @@ export default {
   wyType: {
     embed: {
       title: 'Would You Typ geändert!',
-      descDef: 'Für Would You Befehle werden nun Standartnachrichten verwendet.',
+      descDef:
+        'Für Would You Befehle werden nun Standartnachrichten verwendet.',
       descBoth:
         'Sowohl Standartnachrichten als auch benutzerdefinierte Nachrichten werden für Would You Befehle genutzt.',
-      descCust: 'Benutzerdefinierte Nachrichten werden nun für Would You Befehle verwendet.',
+      descCust:
+        'Benutzerdefinierte Nachrichten werden nun für Would You Befehle verwendet.',
     },
   },
   Custom: {
@@ -133,7 +138,8 @@ export default {
   Help: {
     embed: {
       title: 'Info',
-      description: '**Would You** ist ein Discord Bot, welcher dafür gemacht ist die Serveraktivität zu erhöhen.',
+      description:
+        '**Would You** ist ein Discord Bot, welcher dafür gemacht ist die Serveraktivität zu erhöhen.',
       footer: 'Would You',
       Fields: {
         name: '**Meine Befehle**',
@@ -150,7 +156,8 @@ export default {
   },
   Vote: {
     embed: {
-      title: 'Voten hilft **Would You** mehr Server zu erreichen. Also denk daran jeden Tag zu Voten!',
+      title:
+        'Voten hilft **Would You** mehr Server zu erreichen. Also denk daran jeden Tag zu Voten!',
       value: 'Klicke um zu Voten',
       footer: 'Would You',
     },
@@ -162,7 +169,8 @@ export default {
       usefulname: 'Würdest du eher',
       usefulname2: 'oder',
       footer: 'Würdest du eher',
-      thispower: 'Nach der Abstimmung würde die Mehrheit der Nutzer bevorziehen:',
+      thispower:
+        'Nach der Abstimmung würde die Mehrheit der Nutzer bevorziehen:',
     },
     replays: {
       disabled: 'Wiederholungen sind in diesem Server momentan deaktiviert!',
@@ -176,13 +184,15 @@ export default {
     embed: {
       title: 'Would You Wiederholungen',
       description: 'Du hast Wiederholungen erfolgreich gesetzt auf',
-      errorDesc: 'Um diesen Befehl nutzen zu können musst du für den Bot voten!',
+      errorDesc:
+        'Um diesen Befehl nutzen zu können musst du für den Bot voten!',
       errorAlready: 'Wiederholungen sind bereits deaktiviert',
       errorAlready2: 'Wiederholungen sind bereits aktiviert',
       cooldownSuccess: 'Erfolgreich einen Abkühlzeit gesetzt für ',
       cooldownSuccess2: ' sekunden!',
       success: 'Wiederholung wurde erfolgreich deaktiviert',
-      missingPerms: 'Dir fehlen die `Manage_GUILD` Rechte, um diesen Befehl auszuführen.',
+      missingPerms:
+        'Dir fehlen die `Manage_GUILD` Rechte, um diesen Befehl auszuführen.',
     },
   },
   Guide: {
@@ -202,7 +212,8 @@ export default {
     },
   },
   inter: {
-    error: 'Beim Versuch, diesen Befehl auszuführen, ist ein Fehler aufgetreten.',
+    error:
+      'Beim Versuch, diesen Befehl auszuführen, ist ein Fehler aufgetreten.',
     wait: 'Du musst 30 Sekunden warten, bevor du den Knopf erneut drücken kannst.',
     again: 'Bitte nutze den Befehl erneut.',
   },
@@ -219,14 +230,18 @@ export default {
       'Das angegebene Intervall ist der gleiche Intervall, der bereits gesetzt ist. Stelle sicher, dass du einen anderen Intervall wählst.',
     intervalInvalid:
       'Der vorausgesetzte Intervall war ungültig. Stelle sicher, dass dein Intervall im 24h-Format ist und entweder 00 oder 30 sind!',
-    dailyChannel: 'Wähle einen Kanal, in dem du tägliche Nachrichten haben möchtest!',
-    dailyType: 'Wähle eine Art der täglichen Nachricht aus, die du senden willst!',
-    dailyRole: 'Wähle eine Rolle, die du in täglichen Nachrichten gepingt haben möchtest!',
+    dailyChannel:
+      'Wähle einen Kanal, in dem du tägliche Nachrichten haben möchtest!',
+    dailyType:
+      'Wähle eine Art der täglichen Nachricht aus, die du senden willst!',
+    dailyRole:
+      'Wähle eine Rolle, die du in täglichen Nachrichten gepingt haben möchtest!',
     replaySame:
       'Die angegebene replay Cooldown ist derselbe Cooldown, der bereits gesetzt ist. Stelle sicher, dass du einen andere Cooldown wählst.',
     voteSame:
       'Die angegebene vote Cooldown ist derselbe Cooldown, der bereits gesetzt ist. Stelle sicher, dass du einen andere Cooldown wählst.',
-    cooldownInvalid: 'Der Cooldown ist ungültig. Stelle sicher, dass der Cooldown nur Zahlen enthält!',
+    cooldownInvalid:
+      'Der Cooldown ist ungültig. Stelle sicher, dass der Cooldown nur Zahlen enthält!',
     embed: {
       generalTitle: 'Would You - Generelle Einstellungen',
       replayCooldown: '**Replay Cooldown**',
@@ -259,8 +274,10 @@ export default {
     },
   },
   Debug: {
-    permissions: 'Du hast nicht die erforderlichen Berechtigungen, um diesen Befehl zu verwenden.',
-    channelNotSet: 'Der Kanal für die tägliche Nachricht ist nicht eingestellt oder ich kann nicht darauf zugreifen.',
+    permissions:
+      'Du hast nicht die erforderlichen Berechtigungen, um diesen Befehl zu verwenden.',
+    channelNotSet:
+      'Der Kanal für die tägliche Nachricht ist nicht eingestellt oder ich kann nicht darauf zugreifen.',
     tryToSent:
       'Ich werde jetzt versuchen, eine Testnachricht zu senden! Wenn nichts passiert, überprüfe den Support-Server des Bots!',
     testMessage:
@@ -282,13 +299,15 @@ export default {
       embedLinks: 'Ich **{can}** in diesem Kanal Embeds senden.',
       sendMessages: 'Ich **{can}** Nachrichten in diesem Kanal senden.',
       viewChannel: 'Ich **{can}** diesen Kanal sehen.',
-      readMessageHistory: 'Ich **{can}** den Nachrichtenverlauf in diesem Kanal lesen.',
+      readMessageHistory:
+        'Ich **{can}** den Nachrichtenverlauf in diesem Kanal lesen.',
       global: 'Global',
       g_manageWebhooks: 'Ich **{can}** Webhooks auf diesem Server verwalten.',
       g_embedLinks: 'Ich **{can}** auf diesem Server Einbettungen senden.',
       g_sendMessages: 'Ich **{can}** Nachrichten auf diesem Server senden.',
       g_viewChannel: 'Ich **{can}** Kanäle auf diesem Server anzeigen.',
-      g_readMessageHistory: 'Ich **{can}** den Nachrichtenverlauf auf diesem Server lesen.',
+      g_readMessageHistory:
+        'Ich **{can}** den Nachrichtenverlauf auf diesem Server lesen.',
     },
   },
   Voting: {

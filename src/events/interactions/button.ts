@@ -27,15 +27,18 @@ export default <CoreEventOptions>{
       });
 
     // Fetch the guild profile
-    const guildProfile = await client.guildProfiles.fetch(guild.id).catch((error) => {
-      client.logger.error(error);
-      return undefined;
-    });
+    const guildProfile = await client.guildProfiles
+      .fetch(guild.id)
+      .catch((error) => {
+        client.logger.error(error);
+        return undefined;
+      });
 
     // If the guild profile is not found
     if (!guildProfile)
       return interaction.reply({
-        content: 'The bot is currently starting up, please try again in a few seconds.',
+        content:
+          'The bot is currently starting up, please try again in a few seconds.',
         ephemeral: true,
       });
 
@@ -81,12 +84,17 @@ export default <CoreEventOptions>{
       // Add the user to the cooldown set
       cooldown.add(user.id);
       // Remove the user from the cooldown set after the specified button cooldown time
-      setTimeout(() => cooldown.delete(user.id), config.limits.cooldown.button[guildProfile.premium.enabled ? 1 : 0]);
+      setTimeout(
+        () => cooldown.delete(user.id),
+        config.limits.cooldown.button[guildProfile.premium.enabled ? 1 : 0]
+      );
 
       // If the button has arguments
       if (customId.includes('*')) {
         // Get the button argments
-        const args = customId.substring(customId.indexOf('*') + 1, customId.length).split('-');
+        const args = customId
+          .substring(customId.indexOf('*') + 1, customId.length)
+          .split('-');
 
         // If the interaction should not be used by other members
         if (button.perUser) {

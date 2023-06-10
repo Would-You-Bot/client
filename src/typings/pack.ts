@@ -1,6 +1,6 @@
 import { GuildLanguage } from './guild';
 
-export enum BaseQuestionType {
+export enum PackQuestionType {
   WouldYouRather = 0,
   NeverHaveIEver = 1,
   WhatWouldYouDo = 2,
@@ -9,20 +9,25 @@ export enum BaseQuestionType {
 }
 
 export interface BaseQuestion {
+  packId?: string;
   id: string;
-  questionType: BaseQuestionType;
+  questionType: PackQuestionType;
   translations: Record<GuildLanguage, string>;
   choices?: [number, number];
 }
 
 export interface BasePack {
   name: string;
+  description: string;
+  tags: string[];
+  likes: string[];
   questions: BaseQuestion[];
 }
 
 export interface CustomQuestion {
+  packId?: string;
   id: string;
-  questionType: BaseQuestionType;
+  questionType: PackQuestionType;
   text: string;
   choices?: [number, number];
 }
@@ -30,7 +35,11 @@ export interface CustomQuestion {
 export interface CustomPack {
   userId: string;
   name: string;
+  description: string;
+  tags: string[];
+  likes: string[];
   questions: CustomQuestion[];
+  visible: boolean;
 }
 
 export interface UserChoices {

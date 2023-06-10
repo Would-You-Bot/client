@@ -1,7 +1,14 @@
 import { Api, ShortUser, Webhook } from '@top-gg/sdk';
 import axios from 'axios';
 import colors from 'colors';
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, User, WebhookClient, hideLinkEmbed } from 'discord.js';
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  User,
+  WebhookClient,
+  hideLinkEmbed,
+} from 'discord.js';
 import express from 'express';
 
 import config from '@config';
@@ -81,7 +88,8 @@ const initializeVoteLog = (client: ExtendedClient): void => {
           .setURL('https://top.gg/bot/981649513427111957/vote'),
       ]);
 
-      const emojisRandom = config.voteEmojis[Math.floor(Math.random() * config.voteEmojis.length)];
+      const emojisRandom =
+        config.voteEmojis[Math.floor(Math.random() * config.voteEmojis.length)];
 
       const webhookClient = new WebhookClient({
         url: String(config.env.VOTE_WEBHOOK),
@@ -91,14 +99,18 @@ const initializeVoteLog = (client: ExtendedClient): void => {
 
       webhookClient
         .send({
-          content: `${emojisRandom} Voted for me on ${hideLinkEmbed('https://top.gg/bot/981649513427111957/vote')}`,
+          content: `${emojisRandom} Voted for me on ${hideLinkEmbed(
+            'https://top.gg/bot/981649513427111957/vote'
+          )}`,
           components: [button],
           username: `${userData.tag
             .replace('Discord', '')
             .replace('discord', '')
             .replace('Everyone', '')
             .replace('everyone', '')}`,
-          ...(userData.avatarURL && typeof userData.avatarURL === 'string' ? { avatarURL: userData.avatarURL } : {}),
+          ...(userData.avatarURL && typeof userData.avatarURL === 'string'
+            ? { avatarURL: userData.avatarURL }
+            : {}),
         })
         .catch(client.logger.error);
     });

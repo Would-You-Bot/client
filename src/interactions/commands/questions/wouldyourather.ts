@@ -26,10 +26,16 @@ const command: CoreCommandOptions = {
    * @param client
    * @param guildDb
    */
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     if (!interaction.guildId) return;
 
-    const { General } = (await import(`../../constants/rather-${guildDb.language}.json`)).default;
+    const { General } = (
+      await import(`../../constants/rather-${guildDb.language}.json`)
+    ).default;
 
     const randomrather = Math.floor(Math.random() * General.length);
 

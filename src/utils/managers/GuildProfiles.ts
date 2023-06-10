@@ -1,10 +1,14 @@
 import config from '@config';
-import { GuildProfileDocument, GuildProfileModel, GuildProfileSchema } from '@models/GuildProfile.model';
+import {
+  GuildProfileDocument,
+  GuildProfileModel,
+  GuildProfileSchema,
+} from '@models/GuildProfile.model';
 import {
   GuildDaily,
   GuildLanguage,
+  GuildPackType,
   GuildPremium,
-  GuildQuestionType,
   GuildWelcome,
   GuildProfile as IGuildProfile,
 } from '@typings/guild';
@@ -17,7 +21,7 @@ export class GuildProfile implements IGuildProfile {
   public guildId: string;
   public timezone: string;
   public language: GuildLanguage;
-  public questionType: GuildQuestionType;
+  public packType: GuildPackType;
   public premium: GuildPremium;
   public welcome: GuildWelcome;
   public daily: GuildDaily;
@@ -53,10 +57,13 @@ export class GuildProfile implements IGuildProfile {
   public async fetch(): Promise<GuildProfile> {
     try {
       // Fetch the guild profile from the database
-      const guildProfileDoc = await GuildProfileModel.findOne({ guildId: this.guildId });
+      const guildProfileDoc = await GuildProfileModel.findOne({
+        guildId: this.guildId,
+      });
 
       // If the guild profile does not exist return
-      if (!guildProfileDoc) throw new Error(`Guild profile not found: ${this.guildId}`);
+      if (!guildProfileDoc)
+        throw new Error(`Guild profile not found: ${this.guildId}`);
 
       // Assign the guild profile document to the class
       this.assign(guildProfileDoc);
@@ -72,7 +79,9 @@ export class GuildProfile implements IGuildProfile {
    * @param newValues The data values to update.
    * @returns The updated guild profile document.
    */
-  public async update(newValues: Record<string, unknown>): Promise<GuildProfile> {
+  public async update(
+    newValues: Record<string, unknown>
+  ): Promise<GuildProfile> {
     try {
       // Update the guild profile in the database
       const updatedGuildProfileDoc = await GuildProfileModel.findOneAndUpdate(
@@ -88,7 +97,10 @@ export class GuildProfile implements IGuildProfile {
       );
 
       // If the guild profile was not updated throw an error
-      if (!updatedGuildProfileDoc) throw new Error(`Guild profile not found, failed to update: ${this.guildId}`);
+      if (!updatedGuildProfileDoc)
+        throw new Error(
+          `Guild profile not found, failed to update: ${this.guildId}`
+        );
 
       // Assign the updated guild profile document to the class
       this.assign(updatedGuildProfileDoc);
@@ -107,7 +119,9 @@ export class GuildProfile implements IGuildProfile {
   public async delete(): Promise<boolean> {
     try {
       // Delete the guild profile from the database
-      const deletedGuildProfile = await GuildProfileModel.findOneAndDelete({ guildId: this.guildId });
+      const deletedGuildProfile = await GuildProfileModel.findOneAndDelete({
+        guildId: this.guildId,
+      });
 
       // If the guild profile was not deleted return false
       if (!deletedGuildProfile) return false;
@@ -183,7 +197,7 @@ export default class GuildProfiles {
             guildId,
             timezone: 'America/New_York',
             language: GuildLanguage.English,
-            questionType: GuildQuestionType.Base,
+            packType: GuildPackType.Base,
             premium: {
               enabled: false,
             },
@@ -216,15 +230,19 @@ export default class GuildProfiles {
     } else {
       // If an id is not provided fetch all guild profiles
       try {
-        const guildProfileDocs = await GuildProfileModel.find({ guildId: { $in: this.guildIds } });
+        const guildProfileDocs = await GuildProfileModel.find({
+          guildId: { $in: this.guildIds },
+        });
         if (guildProfileDocs.length === 0) return [];
 
         // Loop through all guild profile documents and create a new guild profile instance for each one
-        const guildProfiles: GuildProfile[] = guildProfileDocs.map((guildProfileDoc) => {
-          const guildProfile = new GuildProfile(guildProfileDoc);
-          this.cache.set(guildProfile.guildId, guildProfile);
-          return guildProfile;
-        });
+        const guildProfiles: GuildProfile[] = guildProfileDocs.map(
+          (guildProfileDoc) => {
+            const guildProfile = new GuildProfile(guildProfileDoc);
+            this.cache.set(guildProfile.guildId, guildProfile);
+            return guildProfile;
+          }
+        );
 
         return guildProfiles;
       } catch (error) {
@@ -239,7 +257,9 @@ export default class GuildProfiles {
    * @param guildProfileData The guild profile data.
    * @returns The guild profile if successsful.
    */
-  public async create(guildProfileData: GuildProfileSchema): Promise<GuildProfile> {
+  public async create(
+    guildProfileData: GuildProfileSchema
+  ): Promise<GuildProfile> {
     try {
       // Create a new guild profile document
       const guildProfileDoc = await GuildProfileModel.create(guildProfileData);

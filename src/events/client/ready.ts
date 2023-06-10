@@ -21,7 +21,8 @@ export default <CoreEventOptions>{
       status: 'idle',
     });
 
-    if (config.isProduction() && config.env.TOPGG_TOKEN) AutoPoster(`${config.env.TOPGG_TOKEN}`, client);
+    if (config.isProduction() && config.env.TOPGG_TOKEN)
+      AutoPoster(`${config.env.TOPGG_TOKEN}`, client);
 
     await registerCommands(client);
 

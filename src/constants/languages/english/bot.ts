@@ -18,7 +18,8 @@ const bot: BotTranslations = {
     },
     embed: {
       title: '{name} - General Settings',
-      description: '**Timezone**\n{timezone}\n**Question Type**\n{questionType}',
+      description:
+        '**Timezone**\n{timezone}\n**Question Type**\n{questionType}',
     },
   },
   dailySettings: {
@@ -52,7 +53,8 @@ const bot: BotTranslations = {
     },
     embed: {
       title: '{name} - Welcomes',
-      description: '**Enabled:**\n{enabled}\n**Channel:**\n{channel}\n**User Pings:**\n{ping}',
+      description:
+        '**Enabled:**\n{enabled}\n**Channel:**\n{channel}\n**User Pings:**\n{ping}',
     },
   },
   ping: {
@@ -67,7 +69,8 @@ const bot: BotTranslations = {
   },
   language: {
     embed: {
-      error: 'You are missing the `Manage Guild` permission to use this command!',
+      error:
+        'You are missing the `Manage Guild` permission to use this command!',
     },
   },
   support: {
@@ -80,7 +83,8 @@ const bot: BotTranslations = {
   help: {
     embed: {
       title: 'Help',
-      description: '**{name}** is a discord bot built to increase discord server activity.',
+      description:
+        '**{name}** is a discord bot built to increase discord server activity.',
       fields: [
         {
           name: '**My Commands**',
@@ -123,7 +127,8 @@ const bot: BotTranslations = {
   },
   vote: {
     embed: {
-      title: 'Voting helps **Would You** gain more users! Make sure to vote every day!',
+      title:
+        'Voting helps **Would You** gain more users! Make sure to vote every day!',
       value: 'Click to vote',
     },
     button: {

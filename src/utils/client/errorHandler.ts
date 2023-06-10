@@ -3,14 +3,21 @@ import config from '@config';
 
 import { stripIndents } from '@slekup/utils';
 import { IExtendedClient } from '@typings/core';
-import { AttachmentBuilder, BaseInteraction, EmbedBuilder, TextChannel } from 'discord.js';
+import {
+  AttachmentBuilder,
+  BaseInteraction,
+  EmbedBuilder,
+  TextChannel,
+} from 'discord.js';
 import webhookManager from './webhookManager';
 
 /**
  * Initialize error handling for the client that deals with unhandled rejections and uncaught exceptions.
  * @param client The client.
  */
-export const initializeProcessErrorHandling = (client: IExtendedClient): void => {
+export const initializeProcessErrorHandling = (
+  client: IExtendedClient
+): void => {
   process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
     client.logger.error(`${String(reason)} ${JSON.stringify(promise)}`);
   });
@@ -53,11 +60,15 @@ export const clientError = async (
     // Create the embed the user will see
     const informEmbed = new EmbedBuilder()
       .setColor(config.colors.danger)
-      .setDescription('An error occured. The developers have been notified of the issue, please try again later.');
+      .setDescription(
+        'An error occured. The developers have been notified of the issue, please try again later.'
+      );
 
     // Send the embed to the user
     if (interaction?.isRepliable())
-      interaction.reply({ embeds: [informEmbed], ephemeral: true }).catch(client.logger.error);
+      interaction
+        .reply({ embeds: [informEmbed], ephemeral: true })
+        .catch(client.logger.error);
 
     // Get the dev guild
     const guild = client.guilds.cache.get(config.env.DEV_GUILD);
@@ -67,9 +78,9 @@ export const clientError = async (
     }
 
     // Get the alerts channel
-    const channel = (await client.channels.fetch(config.env.ALERTS_CHANNEL).catch(client.logger.error)) as
-      | TextChannel
-      | undefined;
+    const channel = (await client.channels
+      .fetch(config.env.ALERTS_CHANNEL)
+      .catch(client.logger.error)) as TextChannel | undefined;
     if (!channel) {
       client.logger.error('Failed to fetch error webhook channel.');
       return;
@@ -98,7 +109,10 @@ export const clientError = async (
 
     // If the failed to fetch webhook, send the error embed with the client
     if (!webhook) {
-      channel.send({ content: 'Failed to use webhook, sending with bot...', embeds: [errorEmbed] });
+      channel.send({
+        content: 'Failed to use webhook, sending with bot...',
+        embeds: [errorEmbed],
+      });
       client.logger.error('Failed to fetch error webhook.');
       return;
     }

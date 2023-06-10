@@ -16,9 +16,9 @@ const eventHandler = async (client: ExtendedClient): Promise<void> => {
   for (const fileName of files) {
     client.logger.debug(`Importing event: ${fileName}`);
 
-    const eventFile = (await import(`../../interactions/events/${fileName}`)) as
-      | { default: CoreEventOptions | undefined }
-      | undefined;
+    const eventFile = (await import(
+      `../../interactions/events/${fileName}`
+    )) as { default: CoreEventOptions | undefined } | undefined;
 
     if (!eventFile?.default?.name) continue;
 
@@ -35,19 +35,29 @@ const eventHandler = async (client: ExtendedClient): Promise<void> => {
      * @param args The event arguments.
      * @returns A promise.
      */
-    const execute = async (client: ExtendedClient, ...args: unknown[]): Promise<void> => {
+    const execute = async (
+      client: ExtendedClient,
+      ...args: unknown[]
+    ): Promise<void> => {
       await event.execute(client, ...args);
     };
 
     client.events.set(event.name, event);
 
     try {
-      if (event.once) client.once(event.name as Events.Raw | Events.VoiceServerUpdate, execute);
+      if (event.once)
+        client.once(
+          event.name as Events.Raw | Events.VoiceServerUpdate,
+          execute
+        );
       else
-        client.on(event.name as Events.Raw | Events.VoiceServerUpdate, async (...args) => {
-          await client.isSynced();
-          execute(client, ...(args as unknown[]));
-        });
+        client.on(
+          event.name as Events.Raw | Events.VoiceServerUpdate,
+          async (...args) => {
+            await client.isSynced();
+            execute(client, ...(args as unknown[]));
+          }
+        );
     } catch (error) {
       client.error({ title: 'Event Handler', error: String(error) });
     }

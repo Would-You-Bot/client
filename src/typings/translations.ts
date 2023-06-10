@@ -176,4 +176,7 @@ export interface GameTranslations {
   };
 }
 
-export interface Translations extends CoreTranslations, BotTranslations, GameTranslations {}
+export interface Translations
+  extends CoreTranslations,
+    BotTranslations,
+    GameTranslations {}

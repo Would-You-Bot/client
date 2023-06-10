@@ -18,7 +18,11 @@ const command: CoreCommandOptions = {
    * @param client
    * @param guildDb
    */
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     // ! temp if statement to prevent eslint warning
     if (!interaction.guild || !client.user || !guildDb) return null;
   },

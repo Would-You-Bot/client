@@ -14,16 +14,18 @@ const commandHandler = async (client: ExtendedClient): Promise<void> => {
   for (const fileName of files) {
     client.logger.debug(`Importing command: ${fileName}`);
 
-    const commandFile = (await import(`../../interactions/commands/${fileName}`)) as
-      | { default: CoreCommandOptions | undefined }
-      | undefined;
+    const commandFile = (await import(
+      `../../interactions/commands/${fileName}`
+    )) as { default: CoreCommandOptions | undefined } | undefined;
 
     if (!commandFile?.default?.data.name) continue;
 
     const command = commandFile.default;
 
     if (command.disabled) {
-      client.logger.warn(`Button: ${command.data.name} is disabled, skipping...`);
+      client.logger.warn(
+        `Button: ${command.data.name} is disabled, skipping...`
+      );
       continue;
     }
 

@@ -1,5 +1,8 @@
 import { CustomPackDocument, CustomPackModel } from '@models/CustomPack.model';
-import { GuildProfileDocument, GuildProfileModel } from '@models/GuildProfile.model';
+import {
+  GuildProfileDocument,
+  GuildProfileModel,
+} from '@models/GuildProfile.model';
 import { WebhookDocument, WebhookModel } from '@models/Webhook.model';
 
 export interface GuildData {

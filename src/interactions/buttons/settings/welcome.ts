@@ -18,10 +18,12 @@ export default new CoreButton({
 
   const setting = args[0];
 
-  const guildProfile = await client.guildProfiles.fetch(interaction.guildId).catch((error) => {
-    client.logger.error(error);
-    return undefined;
-  });
+  const guildProfile = await client.guildProfiles
+    .fetch(interaction.guildId)
+    .catch((error) => {
+      client.logger.error(error);
+      return undefined;
+    });
 
   if (!guildProfile) return null;
 
@@ -31,12 +33,13 @@ export default new CoreButton({
     case 'channel':
       {
         // Create the channel menu
-        const channelMenu = new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(
-          new ChannelSelectMenuBuilder()
-            .setCustomId('welcome-channel')
-            .setPlaceholder('Select a channel')
-            .addChannelTypes(ChannelType.GuildText)
-        );
+        const channelMenu =
+          new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(
+            new ChannelSelectMenuBuilder()
+              .setCustomId('welcome-channel')
+              .setPlaceholder('Select a channel')
+              .addChannelTypes(ChannelType.GuildText)
+          );
 
         interaction.reply({
           embeds: [
@@ -53,9 +56,12 @@ export default new CoreButton({
     case 'role':
       {
         // Create the role menu
-        const roleMenu = new ActionRowBuilder<RoleSelectMenuBuilder>().addComponents(
-          new RoleSelectMenuBuilder().setCustomId('welcome-role').setPlaceholder('Select a role')
-        );
+        const roleMenu =
+          new ActionRowBuilder<RoleSelectMenuBuilder>().addComponents(
+            new RoleSelectMenuBuilder()
+              .setCustomId('welcome-role')
+              .setPlaceholder('Select a role')
+          );
 
         interaction.reply({
           embeds: [

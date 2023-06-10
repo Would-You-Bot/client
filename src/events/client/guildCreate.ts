@@ -2,7 +2,7 @@ import { EmbedBuilder, Events, Guild, WebhookClient } from 'discord.js';
 
 import config from '@config';
 import { CoreEventOptions } from '@typings/core';
-import { GuildLanguage, GuildQuestionType } from '@typings/guild';
+import { GuildLanguage, GuildPackType } from '@typings/guild';
 
 /**
  * Filters the guild name to remove certain words.
@@ -10,7 +10,11 @@ import { GuildLanguage, GuildQuestionType } from '@typings/guild';
  * @returns The filtered guild name.
  */
 const filterGuildName = (name: string): string =>
-  name.replace('Discord', '').replace('discord', '').replace('Everyone', '').replace('everyone', '');
+  name
+    .replace('Discord', '')
+    .replace('discord', '')
+    .replace('Everyone', '')
+    .replace('everyone', '');
 
 export default <CoreEventOptions>{
   name: Events.GuildCreate,
@@ -28,7 +32,7 @@ export default <CoreEventOptions>{
       guildId: guild.id,
       timezone: 'America/New_York',
       language: GuildLanguage.English,
-      questionType: GuildQuestionType.Base,
+      questionType: GuildPackType.Base,
       premium: {
         enabled: false,
       },
@@ -68,7 +72,9 @@ export default <CoreEventOptions>{
               ${emojis}
               **Name:** ${filterGuildName(guild.name)}
               **Users:** ${guild.memberCount.toLocaleString()}
-              **Features:** ${guild.features.map((feature) => `${feature}`).join(', ')}
+              **Features:** ${guild.features
+                .map((feature) => `${feature}`)
+                .join(', ')}
               **Server Count:** ${client.guilds.cache.size}
               `
           )

@@ -1,4 +1,9 @@
-import { CoreEventExecute, CoreEventName, CoreEventOptions, ExportedCoreEvent } from '@typings/core';
+import {
+  CoreEventExecute,
+  CoreEventName,
+  CoreEventOptions,
+  ExportedCoreEvent,
+} from '@typings/core';
 
 /**
  * The CoreEvent class, used to create a Event.

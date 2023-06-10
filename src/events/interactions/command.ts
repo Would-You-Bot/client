@@ -1,4 +1,8 @@
-import { BaseInteraction, ChatInputCommandInteraction, Events } from 'discord.js';
+import {
+  BaseInteraction,
+  ChatInputCommandInteraction,
+  Events,
+} from 'discord.js';
 
 import config from '@config';
 import { CoreEventOptions } from '@typings/core';
@@ -27,21 +31,27 @@ export default <CoreEventOptions>{
       });
 
     // Fetch the guild profile
-    const guildProfile = await client.guildProfiles.fetch(guild.id).catch((error) => {
-      client.logger.error(error);
-      return undefined;
-    });
+    const guildProfile = await client.guildProfiles
+      .fetch(guild.id)
+      .catch((error) => {
+        client.logger.error(error);
+        return undefined;
+      });
 
     // If the guild profile is not found
     if (!guildProfile)
-      return interaction.reply({ content: 'An error occurred while fetching the guild profile.', ephemeral: true });
+      return interaction.reply({
+        content: 'An error occurred while fetching the guild profile.',
+        ephemeral: true,
+      });
 
     const command = client.commands.get(commandName);
 
     // If the command is not found
     if (!command)
       return interaction.reply({
-        content: 'There is no code for this command. It may have updated, please try to re-use the command.',
+        content:
+          'There is no code for this command. It may have updated, please try to re-use the command.',
         ephemeral: true,
       });
 
@@ -61,7 +71,10 @@ export default <CoreEventOptions>{
       // Add the user to the cooldown set
       cooldown.add(user.id);
       // Remove the user from the cooldown set after the specified button cooldown time
-      setTimeout(() => cooldown.delete(user.id), config.limits.cooldown.button[guildProfile.premium.enabled ? 1 : 0]);
+      setTimeout(
+        () => cooldown.delete(user.id),
+        config.limits.cooldown.button[guildProfile.premium.enabled ? 1 : 0]
+      );
 
       command.execute(client, interaction, guildProfile);
 

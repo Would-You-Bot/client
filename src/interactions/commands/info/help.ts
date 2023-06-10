@@ -26,7 +26,11 @@ export default {
    * @param client
    * @param guildDb
    */
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     if (!client.application) return;
 
     const commands = await client.application.commands.fetch({
@@ -50,12 +54,21 @@ export default {
       .setTimestamp()
       .setTitle(client.translation.get(guildDb.language, 'Help.embed.title'))
       .addFields({
-        name: client.translation.get(guildDb.language, 'Help.embed.Fields.privacyname'),
-        value: client.translation.get(guildDb.language, 'Help.embed.Fields.privacy'),
+        name: client.translation.get(
+          guildDb.language,
+          'Help.embed.Fields.privacyname'
+        ),
+        value: client.translation.get(
+          guildDb.language,
+          'Help.embed.Fields.privacy'
+        ),
         inline: false,
       })
       .setDescription(
-        `${client.translation.get(guildDb.language, 'Help.embed.description')}\n\n${commands
+        `${client.translation.get(
+          guildDb.language,
+          'Help.embed.description'
+        )}\n\n${commands
           .filter((e) => e.name !== 'reload' && e.descriptionLocalizations)
           .sort((a, b) => a.name.localeCompare(b.name))
           .map(

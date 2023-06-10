@@ -1,7 +1,13 @@
 import { BasePackDocument, BasePackModel } from '@models/BasePack.model';
 import { CustomPackDocument, CustomPackModel } from '@models/CustomPack.model';
-import { GuildQuestionType } from '@typings/guild';
-import { BaseQuestion, CustomQuestion, BasePack as IBasePack, CustomPack as ICustomPack } from '@typings/pack';
+import { GuildPackType } from '@typings/guild';
+import {
+  BaseQuestion,
+  CustomQuestion,
+  BasePack as IBasePack,
+  CustomPack as ICustomPack,
+  PackQuestionType,
+} from '@typings/pack';
 import { logger } from '@utils/client';
 
 /**
@@ -60,18 +66,50 @@ class BasePacks {
   }
 
   /**
-   * Get a random base question.
-   * @returns A random base question.
+   * Get a random base pack.
+   * @param questionType The question type.
+   * @returns A random base pack.
+   * @throws If no base packs are found.
    */
-  public async random(): Promise<BaseQuestion> {
-    // Get a random pack.
-    const randomPackNum = Math.floor(Math.random() * this.cache.size);
-    const randomPackKey = Array.from(this.cache.keys())[randomPackNum];
-    const randomPack = this.cache.get(randomPackKey);
-    if (!randomPack) return this.random();
+  private getRandomPack(questionType?: PackQuestionType): IBasePack {
+    // Filter the packs by question type, if provided.
+    const packs = questionType
+      ? Array.from(this.cache.values()).filter((pack) =>
+          pack.questions.some(
+            (question) => question.questionType === questionType
+          )
+        )
+      : Array.from(this.cache.values());
+
+    if (packs.length === 0)
+      throw new Error(
+        `No base packs found${
+          questionType ? ` with questions of type: "${questionType}"` : ''
+        }.`
+      );
+
+    // Get a random pack from the filtered packs.
+    const randomPackIndex = Math.floor(Math.random() * this.cache.size);
+    const randomPack = packs[randomPackIndex];
+    randomPack.questions.filter(
+      (question) => question.questionType === questionType
+    );
+    return randomPack;
+  }
+
+  /**
+   * Get a random base question.
+   * @param questionType The question type.
+   * @returns A random base question.
+   * @throws If no base packs are found.
+   */
+  public random(questionType?: PackQuestionType): BaseQuestion {
+    const randomPack = this.getRandomPack(questionType);
 
     // Get a random question.
-    const randomQuestionNum = Math.floor(Math.random() * randomPack.questions.length);
+    const randomQuestionNum = Math.floor(
+      Math.random() * randomPack.questions.length
+    );
     const randomQuestion = randomPack.questions[randomQuestionNum];
 
     return randomQuestion;
@@ -109,7 +147,9 @@ class CustomPacks {
    * @param guildIds The guild IDs.
    * @returns The custom packs.
    */
-  private async fetchAll(guildIds: string[]): Promise<Map<string, ICustomPack>> {
+  private async fetchAll(
+    guildIds: string[]
+  ): Promise<Map<string, ICustomPack>> {
     try {
       // Fetch the custom packs from the database.
       const customPacks = await CustomPackModel.find({
@@ -158,7 +198,10 @@ class CustomPacks {
    * @param pack The new custom pack data.
    * @returns The updated custom pack if successful.
    */
-  public async update(guildId: string, pack: ICustomPack): Promise<ICustomPack> {
+  public async update(
+    guildId: string,
+    pack: ICustomPack
+  ): Promise<ICustomPack> {
     try {
       // Update the pack in the database.
       const customPack = await CustomPackModel.findOneAndUpdate(
@@ -171,7 +214,8 @@ class CustomPacks {
       );
 
       // If the pack doesn't exist, throw an error.
-      if (!customPack) throw new Error(`Custom pack not found: ${guildId} - ${pack.name}`);
+      if (!customPack)
+        throw new Error(`Custom pack not found: ${guildId} - ${pack.name}`);
 
       // Update the pack in the cache.
       this.cache.set(String(customPack.id), customPack.toObject());
@@ -209,21 +253,52 @@ class CustomPacks {
   }
 
   /**
-   * Get a random custom question.
-   * @returns A random custom question.
+   * Get a random custom pack.
+   * @param questionType The question type.
+   * @returns A random custom pack.
+   * @throws If no custom packs are found.
    */
-  public random(): CustomQuestion {
-    // Get a random pack.
-    const randomPackNum = Math.floor(Math.random() * this.cache.size);
-    const randomPackKey = Array.from(this.cache.keys())[randomPackNum];
-    const randomPack = this.cache.get(randomPackKey);
-    if (!randomPack) throw new Error('No custom packs found.');
+  private getRandomPack(questionType?: PackQuestionType): ICustomPack {
+    // Filter the packs by question type, if provided.
+    const packs = questionType
+      ? Array.from(this.cache.values()).filter((pack) =>
+          pack.questions.some(
+            (question) => question.questionType === questionType
+          )
+        )
+      : Array.from(this.cache.values());
+
+    if (packs.length === 0)
+      throw new Error(
+        `No custom packs found${
+          questionType ? ` with questions of type: "${questionType}"` : ''
+        }.`
+      );
+
+    // Get a random pack from the filtered packs.
+    const randomPackIndex = Math.floor(Math.random() * this.cache.size);
+    const randomPack = packs[randomPackIndex];
+    randomPack.questions.filter(
+      (question) => question.questionType === questionType
+    );
+    return randomPack;
+  }
+
+  /**
+   * Get a random custom question.
+   * @param questionType The question type.
+   * @returns A random custom question.
+   * @throws If no custom packs are found.
+   */
+  public random(questionType?: PackQuestionType): CustomQuestion {
+    const randomPack = this.getRandomPack(questionType);
 
     // Get a random question.
-    const randomQuestionNum = Math.floor(Math.random() * randomPack.questions.length);
+    const randomQuestionNum = Math.floor(
+      Math.random() * randomPack.questions.length
+    );
     const randomQuestion = randomPack.questions[randomQuestionNum];
 
-    // Return the random question.
     return randomQuestion;
   }
 
@@ -233,7 +308,10 @@ class CustomPacks {
    * @param question The question to add.
    * @returns The added question.
    */
-  public async addQuestion(packId: string, question: CustomQuestion): Promise<CustomQuestion> {
+  public async addQuestion(
+    packId: string,
+    question: CustomQuestion
+  ): Promise<CustomQuestion> {
     try {
       // Add the question to the pack in the database.
       const updatedPack = await CustomPackModel.findOneAndUpdate(
@@ -270,7 +348,11 @@ class CustomPacks {
    * @param question The question to update.
    * @returns The updated question.
    */
-  public async updateQuestion(packId: string, questionId: string, question: CustomQuestion): Promise<CustomQuestion> {
+  public async updateQuestion(
+    packId: string,
+    questionId: string,
+    question: CustomQuestion
+  ): Promise<CustomQuestion> {
     try {
       // Update the question in the pack in the database.
       const updatedPack = await CustomPackModel.findOneAndUpdate(
@@ -307,7 +389,10 @@ class CustomPacks {
    * @param questionId The question ID.
    * @returns Whether the question was deleted successfully.
    */
-  public async deleteQuestion(packId: string, questionId: string): Promise<boolean> {
+  public async deleteQuestion(
+    packId: string,
+    questionId: string
+  ): Promise<boolean> {
     try {
       // Delete the question from the pack in the database.
       const updatedPack = await CustomPackModel.findOneAndUpdate(
@@ -339,19 +424,19 @@ class CustomPacks {
 
   /**
    * Get all custom packs for a guild from the database and cache.
-   * @param guildId The guild ID.
+   * @param userId The guild ID.
    * @returns The custom packs.
    */
-  public async deleteAll(guildId: string): Promise<number> {
+  public async deleteAll(userId: string): Promise<number> {
     try {
       // Delete all packs from the database.
       const deletedCustomPacks = await CustomPackModel.deleteMany({
-        guildId,
+        guildId: userId,
       });
 
       // Delete all packs from the cache.
       for (const [key, customPack] of this.cache.entries()) {
-        if (customPack.guildId === guildId) this.cache.delete(key);
+        if (customPack.userId === userId) this.cache.delete(key);
       }
 
       // Return the number of deleted packs.
@@ -383,22 +468,29 @@ export default class QuestionPacks {
 
   /**
    * Get a random question.
+   * @param packType The question type.
    * @param questionType The question type.
    * @returns A random question.
    */
-  public async random(questionType: GuildQuestionType): Promise<CustomQuestion | BaseQuestion> {
+  public random(
+    packType: GuildPackType,
+    questionType?: PackQuestionType
+  ): CustomQuestion | BaseQuestion {
     const randomNum: number = Math.round(Math.random());
     try {
-      if (questionType === GuildQuestionType.Base || (questionType === GuildQuestionType.Mixed && randomNum === 0)) {
+      if (
+        packType === GuildPackType.Base ||
+        (packType === GuildPackType.Mixed && randomNum === 0)
+      ) {
         // If the question type is base or the random number is 0, return a random base question.
-        return this.base.random();
-      } else if (questionType === GuildQuestionType.Custom || randomNum === 1) {
+        return this.base.random(questionType);
+      } else if (packType === GuildPackType.Custom || randomNum === 1) {
         // If the question type is custom or the random number is 1, return a random custom question.
-        return this.custom.random();
+        return this.custom.random(questionType);
       }
 
       // If the question type is not recognized, throw an error.
-      throw new Error(`Question type not recognized: ${questionType}`);
+      throw new Error(`Question type not recognized: ${packType}`);
     } catch (error) {
       throw new Error(String(error));
     }

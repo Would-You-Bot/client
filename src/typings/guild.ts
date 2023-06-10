@@ -4,13 +4,17 @@ export interface CustomMessage {
   msg: string;
 }
 
-export enum GuildQuestionType {
+export enum GuildPackType {
   Base = 0,
   Custom = 1,
   Mixed = 2,
 }
 
-export const AllGuildQuestionTypes = [GuildQuestionType.Base, GuildQuestionType.Custom, GuildQuestionType.Mixed];
+export const AllGuildQuestionTypes = [
+  GuildPackType.Base,
+  GuildPackType.Custom,
+  GuildPackType.Mixed,
+];
 
 export interface GuildPremium {
   enabled: boolean;
@@ -41,7 +45,7 @@ export enum GuildLanguage {
 export interface GuildProfile {
   guildId: string;
   timezone: string;
-  questionType: GuildQuestionType;
+  packType: GuildPackType;
   language: GuildLanguage;
   premium: GuildPremium;
   welcome: GuildWelcome;

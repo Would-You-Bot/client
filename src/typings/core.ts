@@ -17,7 +17,13 @@ import {
 } from 'discord.js';
 import { Logger } from 'winston';
 
-import { GuildProfile, GuildProfiles, QuestionPacks, Translations, Webhooks } from '@utils/classes';
+import {
+  GuildProfile,
+  GuildProfiles,
+  QuestionPacks,
+  Translations,
+  Webhooks,
+} from '@utils/managers';
 
 /**
  * Client Error.
@@ -49,6 +55,7 @@ export interface CoreButtonOptions {
   disabled?: boolean;
   developer?: boolean;
   perUser?: boolean;
+  errorMessage?: string;
 }
 
 export interface ExportedCoreButton extends CoreButtonOptions {
@@ -59,9 +66,15 @@ export interface ExportedCoreButton extends CoreButtonOptions {
  * Core Command.
  */
 
-export type CoreCommandExecute = (client: IExtendedClient, ...parameters: unknown[]) => Promise<unknown>;
+export type CoreCommandExecute = (
+  client: IExtendedClient,
+  ...parameters: unknown[]
+) => Promise<unknown>;
 
-export type CoreCommandAutocomplete = (client: IExtendedClient, ...parameters: unknown[]) => Promise<unknown>;
+export type CoreCommandAutocomplete = (
+  client: IExtendedClient,
+  ...parameters: unknown[]
+) => Promise<unknown>;
 
 export type CoreCommandData =
   | Omit<
@@ -136,7 +149,8 @@ export interface CoreEventOptions {
   disabled?: boolean;
 }
 
-export interface ExportedCoreEvent<P extends unknown[] = unknown[]> extends CoreEventOptions {
+export interface ExportedCoreEvent<P extends unknown[] = unknown[]>
+  extends CoreEventOptions {
   execute: CoreEventExecute<P>;
 }
 
@@ -144,16 +158,23 @@ export interface ExportedCoreEvent<P extends unknown[] = unknown[]> extends Core
  * Core Interface.
  */
 
-export type CoreInterface = (
-  client: IExtendedClient,
-  guildProfile: GuildProfile,
-  params?: Record<string, unknown>
-) => {
+export interface CoreInterfaceOptions {
+  client?: IExtendedClient;
+  guildProfile?: GuildProfile;
+  interaction?: BaseInteraction;
+  [key: string]: unknown;
+}
+
+interface CoreInterfaceResult {
   content?: string;
   embeds?: EmbedBuilder[];
   components?: ActionRowBuilder<ButtonBuilder>[];
   files?: AttachmentBuilder[];
-};
+}
+
+export type CoreInterfaceFunction<T = CoreInterfaceOptions> = (
+  options: T
+) => CoreInterfaceResult | Promise<CoreInterfaceResult>;
 
 /**
  * Core Modal.

@@ -1,4 +1,8 @@
-import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import {
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+  SlashCommandBuilder,
+} from 'discord.js';
 import { version } from 'package.json';
 
 import config from '@config';
@@ -18,10 +22,14 @@ const command: CoreCommandOptions = {
    * @param interaction
    * @param client
    */
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient
+  ) {
     if (!client.uptime) return;
 
-    const unixstamp = Math.floor(Date.now() / 1000 || 0) - Math.floor(client.uptime / 1000);
+    const unixstamp =
+      Math.floor(Date.now() / 1000 || 0) - Math.floor(client.uptime / 1000);
 
     /**
      * @param num
@@ -54,12 +62,16 @@ const command: CoreCommandOptions = {
         },
         {
           name: 'Users 🐧',
-          value: `\`\`\`${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0).toLocaleString()}\`\`\``,
+          value: `\`\`\`${client.guilds.cache
+            .reduce((a, b) => a + b.memberCount, 0)
+            .toLocaleString()}\`\`\``,
           inline: true,
         },
         {
           name: 'Memory 🎇',
-          value: `\`\`\`${round(process.memoryUsage().heapUsed / 1000000000)}GB\n\`\`\``,
+          value: `\`\`\`${round(
+            process.memoryUsage().heapUsed / 1000000000
+          )}GB\n\`\`\``,
           inline: true,
         },
         {
@@ -76,12 +88,16 @@ const command: CoreCommandOptions = {
       )
       .setThumbnail(client.user?.displayAvatarURL() || null)
       .setFooter({
-        text: `${interaction.user.tag} Shard #${interaction.guild?.shardId ?? 0}`,
+        text: `${interaction.user.tag} Shard #${
+          interaction.guild?.shardId ?? 0
+        }`,
         iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp();
 
-    interaction.reply({ embeds: [infoEmbed], ephemeral: false }).catch(client.logger.error);
+    interaction
+      .reply({ embeds: [infoEmbed], ephemeral: false })
+      .catch(client.logger.error);
   },
 };
 

@@ -26,8 +26,13 @@ const command: CoreCommandOptions = {
    * @param client
    * @param guildDb
    */
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
-    const { WhatYouDo } = (await import(`../..//wwyd-${guildDb.language}.json`)).default;
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
+    const { WhatYouDo } = (await import(`../..//wwyd-${guildDb.language}.json`))
+      .default;
     const randomNever = Math.floor(Math.random() * WhatYouDo.length);
     const wwydstring = WhatYouDo[randomNever];
 
@@ -57,7 +62,9 @@ const command: CoreCommandOptions = {
         .setCustomId(`wwyd`),
     ]);
 
-    interaction.reply({ embeds: [wwydembed], components: [row] }).catch(client.logger.error);
+    interaction
+      .reply({ embeds: [wwydembed], components: [row] })
+      .catch(client.logger.error);
   },
 };
 

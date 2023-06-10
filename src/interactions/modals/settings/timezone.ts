@@ -44,16 +44,21 @@ const modal: CoreModal<ExtendedClient> = {
    * @param interaction The modal interaction.
    * @returns A promise that resolves to an unknown value.
    */
-  async execute(client: ExtendedClient, interaction: ModalSubmitInteraction): Promise<unknown> {
+  async execute(
+    client: ExtendedClient,
+    interaction: ModalSubmitInteraction
+  ): Promise<unknown> {
     if (!interaction.guild) return;
     if (!interaction.isFromMessage()) return;
     const input = interaction.fields.getTextInputValue('input');
 
     // Fetch the guild profile
-    const guildProfile = await client.guildProfiles.fetch(interaction.guild.id).catch((error) => {
-      client.logger.error(error);
-      return undefined;
-    });
+    const guildProfile = await client.guildProfiles
+      .fetch(interaction.guild.id)
+      .catch((error) => {
+        client.logger.error(error);
+        return undefined;
+      });
 
     // Return of the guild profile doesn't exist
     if (!guildProfile) return;

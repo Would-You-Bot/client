@@ -1,5 +1,11 @@
 import { ClusterClient, getInfo } from 'discord-hybrid-sharding';
-import { BaseInteraction, Client, Collection, GatewayIntentBits, Options } from 'discord.js';
+import {
+  BaseInteraction,
+  Client,
+  Collection,
+  GatewayIntentBits,
+  Options,
+} from 'discord.js';
 
 import config from '@config';
 import {
@@ -9,7 +15,12 @@ import {
   ExportedCoreModal,
   IExtendedClient,
 } from '@typings/core';
-import { GuildProfiles, QuestionPacks, Translations, Webhooks } from '@utils/classes';
+import {
+  GuildProfiles,
+  QuestionPacks,
+  Translations,
+  Webhooks,
+} from '@utils/classes';
 import { logger } from '@utils/client';
 import { clientError } from '@utils/client/errorHandler';
 

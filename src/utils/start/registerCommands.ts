@@ -21,7 +21,9 @@ export default async (client: IExtendedClient): Promise<void> => {
   // Create a new array for all of the slash and context commands
   const commandJsonData = [
     ...Array.from(client.commands.values()).map((command) => command.data),
-    ...Array.from(client.contextMenuCommands.values()).map((command) => command.data),
+    ...Array.from(client.contextMenuCommands.values()).map(
+      (command) => command.data
+    ),
   ];
 
   const regCmdStart = Date.now();
@@ -39,7 +41,9 @@ export default async (client: IExtendedClient): Promise<void> => {
 
         client.logger.info(
           colors.yellow(
-            `Successfully reloaded ${data.length} application (/) commands globally (PRODUCTION) in ${colors.bold(
+            `Successfully reloaded ${
+              data.length
+            } application (/) commands globally (PRODUCTION) in ${colors.bold(
               colors.white(`${time}s`)
             )}.`
           )
@@ -54,22 +58,29 @@ export default async (client: IExtendedClient): Promise<void> => {
 
         client.logger.info(
           colors.yellow(
-            `Successfully reloaded ${data.length} application (/) commands globally (BETA) in ${colors.bold(
+            `Successfully reloaded ${
+              data.length
+            } application (/) commands globally (BETA) in ${colors.bold(
               colors.white(`${time}s`)
             )}.`
           )
         );
       } else {
         // Register commands for test guild with beta bot
-        const data = (await rest.put(Routes.applicationGuildCommands(CLIENT_ID, `${config.env.DEV_GUILD}`), {
-          body: commandJsonData,
-        })) as ApplicationCommand[];
+        const data = (await rest.put(
+          Routes.applicationGuildCommands(CLIENT_ID, `${config.env.DEV_GUILD}`),
+          {
+            body: commandJsonData,
+          }
+        )) as ApplicationCommand[];
 
         const time = ((Date.now() - regCmdStart) / 1000).toFixed(2);
 
         client.logger.info(
           colors.yellow(
-            `Successfully reloaded ${data.length} application (/) commands in testing guild (DEV) in ${colors.bold(
+            `Successfully reloaded ${
+              data.length
+            } application (/) commands in testing guild (DEV) in ${colors.bold(
               colors.white(`${time}s`)
             )}.`
           )

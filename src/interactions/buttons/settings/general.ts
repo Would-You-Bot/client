@@ -1,4 +1,10 @@
-import { ActionRowBuilder, EmbedBuilder, ModalBuilder, StringSelectMenuBuilder, TextInputBuilder } from 'discord.js';
+import {
+  ActionRowBuilder,
+  EmbedBuilder,
+  ModalBuilder,
+  StringSelectMenuBuilder,
+  TextInputBuilder,
+} from 'discord.js';
 
 import config from '@config';
 import { CoreButton } from '@utils/builders';
@@ -12,10 +18,12 @@ export default new CoreButton({
   const setting = args[0];
 
   // Fetch the guild profile
-  const guildProfile = await client.guildProfiles.fetch(interaction.guildId).catch((error) => {
-    client.logger.error(error);
-    return undefined;
-  });
+  const guildProfile = await client.guildProfiles
+    .fetch(interaction.guildId)
+    .catch((error) => {
+      client.logger.error(error);
+      return undefined;
+    });
 
   // Check if the guild profile exists
   if (!guildProfile) return;
@@ -25,34 +33,38 @@ export default new CoreButton({
   switch (setting) {
     case 'question-type':
       {
-        const questionTypeMenu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-          new StringSelectMenuBuilder()
-            .setCustomId('general-question-type')
-            .setPlaceholder('Select a type')
-            .addOptions([
-              {
-                label: 'Regular',
-                value: 'regular',
-                description: 'This changes it to use only default messages.',
-              },
-              {
-                label: 'Mixed',
-                value: 'mixed',
-                description: 'This changes it to use both custom & default messages.',
-              },
-              {
-                label: 'Custom',
-                value: 'custom',
-                description: 'This changes it to use only custom messages.',
-              },
-            ])
-        );
+        const questionTypeMenu =
+          new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+            new StringSelectMenuBuilder()
+              .setCustomId('general-question-type')
+              .setPlaceholder('Select a type')
+              .addOptions([
+                {
+                  label: 'Regular',
+                  value: 'regular',
+                  description: 'This changes it to use only default messages.',
+                },
+                {
+                  label: 'Mixed',
+                  value: 'mixed',
+                  description:
+                    'This changes it to use both custom & default messages.',
+                },
+                {
+                  label: 'Custom',
+                  value: 'custom',
+                  description: 'This changes it to use only custom messages.',
+                },
+              ])
+          );
 
         await interaction.update({
           embeds: [
             new EmbedBuilder()
               .setColor(config.colors.primary)
-              .setDescription(translations.generalSettings.content.questionType),
+              .setDescription(
+                translations.generalSettings.content.questionType
+              ),
           ],
           components: [questionTypeMenu],
         });

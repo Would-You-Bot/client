@@ -26,11 +26,16 @@ const command: CoreCommandOptions = {
    * @param client
    * @param guildDb
    */
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     if (!interaction.guildId) return;
 
-    const { Funny, Basic, Young, Food, RuleBreak } = (await import(`../../constants/nhie-${guildDb.language}.json`))
-      .default;
+    const { Funny, Basic, Young, Food, RuleBreak } = (
+      await import(`../../constants/nhie-${guildDb.language}.json`)
+    ).default;
 
     const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak];
     const randomNever = Math.floor(Math.random() * neverArray.length);
@@ -73,7 +78,9 @@ const command: CoreCommandOptions = {
 
     if (!vote) return;
 
-    interaction.reply({ embeds: [ratherembed], components: [vote.row, mainRow] }).catch(client.logger.error);
+    interaction
+      .reply({ embeds: [ratherembed], components: [vote.row, mainRow] })
+      .catch(client.logger.error);
   },
 };
 

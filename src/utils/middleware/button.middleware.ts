@@ -8,7 +8,10 @@ import { IExtendedClient } from '@typings/core';
  * @param interaction The interaction.
  * @returns A promise.
  */
-const buttonMiddleware = async (client: IExtendedClient, interaction: ButtonInteraction): Promise<void> => {
+const buttonMiddleware = async (
+  client: IExtendedClient,
+  interaction: ButtonInteraction
+): Promise<void> => {
   const { user, guild, customId } = interaction;
   if (!guild) return;
 
@@ -16,10 +19,14 @@ const buttonMiddleware = async (client: IExtendedClient, interaction: ButtonInte
 
   client.logger.info(
     `${user.tag} (${
-      user.id === guild.ownerId ? 'owner' : member.permissions.has(PermissionFlagsBits.Administrator) ? 'admin' : ''
-    }) clicked \`${customId}\` in ${guild.name} (${guild.memberCount}) <t:${(Date.now() / 1000).toFixed(
-      0
-    )}:R> ${`unsaved`}`
+      user.id === guild.ownerId
+        ? 'owner'
+        : member.permissions.has(PermissionFlagsBits.Administrator)
+        ? 'admin'
+        : ''
+    }) clicked \`${customId}\` in ${guild.name} (${guild.memberCount}) <t:${(
+      Date.now() / 1000
+    ).toFixed(0)}:R> ${`unsaved`}`
   );
 };
 

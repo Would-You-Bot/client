@@ -14,9 +14,9 @@ const modalHandler = async (client: ExtendedClient): Promise<void> => {
   for (const fileName of files) {
     client.logger.debug(`Importing modal: ${fileName}`);
 
-    const modalFile = (await import(`../../interactions/modals/${fileName}`)) as
-      | { default: CoreModal | undefined }
-      | undefined;
+    const modalFile = (await import(
+      `../../interactions/modals/${fileName}`
+    )) as { default: CoreModal | undefined } | undefined;
 
     if (!modalFile?.default?.id) continue;
 

@@ -33,7 +33,8 @@ export default {
   wyCustom: {
     error: {
       paginate: 'No puedes continuar para ese lado.',
-      maximum: 'Has alcanzado la cantidad máxima de mensajes personalizados. ¡Puedes ganar más votando por el bot!',
+      maximum:
+        'Has alcanzado la cantidad máxima de mensajes personalizados. ¡Puedes ganar más votando por el bot!',
       empty: '¡Actualmente no hay mensajes personalizados para ver!',
       import: {
         att1: '¡Debes proporcionar un archivo JSON válido!',
@@ -41,7 +42,8 @@ export default {
         att3: '¡El JSON que proporcionaste no tenía ningún dato! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)',
         att4: '¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)',
         att5: '¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)',
-        att15: 'Se produjo un error al ejecutar este comando, por favor infórmelo al servidor de soporte.',
+        att15:
+          'Se produjo un error al ejecutar este comando, por favor infórmelo al servidor de soporte.',
         att16:
           'El JSON que proporcionaste tenía demasiados datos para la categoría wouldyourather, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!',
         att17:
@@ -79,9 +81,12 @@ export default {
         title: '¡Se eliminó con éxito ese mensaje Would You!',
       },
       embedRemoveAll: {
-        title: '¿Estás seguro de que deseas eliminar todos los mensajes personalizados de Would You?',
-        accept: '¡Eliminó con éxito todos los mensajes personalizados de Would You!',
-        decline: 'Has rechazado eliminar todos los mensajes personalizados de Would You.',
+        title:
+          '¿Estás seguro de que deseas eliminar todos los mensajes personalizados de Would You?',
+        accept:
+          '¡Eliminó con éxito todos los mensajes personalizados de Would You!',
+        decline:
+          'Has rechazado eliminar todos los mensajes personalizados de Would You.',
         none: '¡Actualmente no tienes ningún mensaje personalizado para eliminar!',
       },
       paginator: {
@@ -94,9 +99,12 @@ export default {
   wyType: {
     embed: {
       title: 'Tipo de Would You cambiado!',
-      descDef: 'Los mensajes por defecto ahora se utilizarán para los comandos.',
-      descBoth: 'Tanto los mensajes por defecto como los mensajes personalizados se utilizarán para los comandos.',
-      descCust: 'Los mensajes personalizados ahora se utilizarán para los comandos.',
+      descDef:
+        'Los mensajes por defecto ahora se utilizarán para los comandos.',
+      descBoth:
+        'Tanto los mensajes por defecto como los mensajes personalizados se utilizarán para los comandos.',
+      descCust:
+        'Los mensajes personalizados ahora se utilizarán para los comandos.',
     },
   },
   Custom: {
@@ -112,7 +120,8 @@ export default {
       footer: 'Would You',
     },
     replays: {
-      disabled: '¡Volver a jugar está actualmente deshabilitado en este servidor!',
+      disabled:
+        '¡Volver a jugar está actualmente deshabilitado en este servidor!',
     },
     stats: {
       of: 'de',
@@ -131,7 +140,8 @@ export default {
   Help: {
     embed: {
       title: 'Información',
-      description: '**Would You** es un bot creado para aumentar la actividad del servidor de Discord.',
+      description:
+        '**Would You** es un bot creado para aumentar la actividad del servidor de Discord.',
       footer: 'Would You',
       Fields: {
         name: '**Mis Comandos**',
@@ -148,7 +158,8 @@ export default {
   },
   Vote: {
     embed: {
-      title: '¡Votar ayuda **Would You** a ganar más usuarios, asegúrate de votar todos los días!',
+      title:
+        '¡Votar ayuda **Would You** a ganar más usuarios, asegúrate de votar todos los días!',
       value: 'Clica para votar',
       footer: 'Would You',
     },
@@ -163,10 +174,12 @@ export default {
       thispower: 'Según la votación, la mayoría de los usuarios preferirían:',
     },
     replays: {
-      disabled: '¡Volver a jugar está actualmente deshabilitado en este servidor!',
+      disabled:
+        '¡Volver a jugar está actualmente deshabilitado en este servidor!',
     },
     button: {
-      nocustom: '¡Actualmente no hay mensajes personalizados! Haga algunos o cambie el tipo usando /Would You type',
+      nocustom:
+        '¡Actualmente no hay mensajes personalizados! Haga algunos o cambie el tipo usando /Would You type',
     },
   },
   REPLAY: {
@@ -179,7 +192,8 @@ export default {
       cooldownSuccess: 'El cooldown fue habilitado con éxito para ',
       cooldownSuccess2: ' segundos!',
       success: 'Las repeticiones fueran deshabilitadas.',
-      missingPerms: '¡Te falta el permiso `Manage guild` para usar este comando!',
+      missingPerms:
+        '¡Te falta el permiso `Manage guild` para usar este comando!',
     },
   },
   Guide: {
@@ -216,9 +230,11 @@ export default {
       'El intervalo proporcionado es el mismo que ya está establecido. Asegúrese de elegir un intervalo diferente.',
     intervalInvalid:
       'El intervalo proporcionado no es válido. ¡Asegúrese de que su intervalo está en formato 24 h y los minutos son 00 o 30!',
-    dailyChannel: '¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!',
+    dailyChannel:
+      '¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!',
     dailyType: '¡Selecciona un tipo de mensaje diario que quieres enviar!',
-    dailyRole: '¡Selecciona un rol que quieres hacer ping en los Mensajes Diarios!',
+    dailyRole:
+      '¡Selecciona un rol que quieres hacer ping en los Mensajes Diarios!',
     replaySame:
       'El tiempo de reutilización proporcionado es el mismo que ya está establecido. Asegúrese de elegir un tiempo de reutilización diferente.',
     voteSame:
@@ -258,10 +274,12 @@ export default {
   },
   Debug: {
     permissions: 'No tienes los permisos necesarios para usar este comando.',
-    channelNotSet: 'El canal para el mensaje diario no está configurado o no puedo acceder a él.',
+    channelNotSet:
+      'El canal para el mensaje diario no está configurado o no puedo acceder a él.',
     tryToSent:
       '¡Intentaré enviar un mensaje de prueba ahora! Si no pasa nada, ¡verifique el servidor de soporte del bot!',
-    testMessage: 'Este es un mensaje de prueba para verificar si el webhook para mensajes diarios funciona.',
+    testMessage:
+      'Este es un mensaje de prueba para verificar si el webhook para mensajes diarios funciona.',
     enabled:
       'El modo debug fue **habilitado**. Tenga en cuenta que los desarrolladores de WouldYou ahora pueden acceder a los comandos **sin** tener los permisos necesarios.',
     disabled:
@@ -279,13 +297,15 @@ export default {
       embedLinks: 'Yo **{can}** enviar embeds en este canal.',
       sendMessages: 'Yo **{can}** enviar mensajes en este canal.',
       viewChannel: 'Yo **{can}** ver este canal.',
-      readMessageHistory: 'Yo **{can}** leer el historial de mensajes de este canal.',
+      readMessageHistory:
+        'Yo **{can}** leer el historial de mensajes de este canal.',
       global: 'Global',
       g_manageWebhooks: 'Yo **{can}** administrar webhooks en este servidor.',
       g_embedLinks: 'Yo **{can}** enviar embeds en este servidor.',
       g_sendMessages: 'Yo **{can}** enviar mensajes en este servidor.',
       g_viewChannel: 'Yo **{can}** ver canales en este servidor.',
-      g_readMessageHistory: 'Yo **{can}** leer el historial de mensajes en este servidor.',
+      g_readMessageHistory:
+        'Yo **{can}** leer el historial de mensajes en este servidor.',
     },
   },
   Voting: {

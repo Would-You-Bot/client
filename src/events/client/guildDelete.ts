@@ -9,7 +9,11 @@ import { CoreEventOptions } from '@typings/core';
  * @returns The filtered guild name.
  */
 const filterGuildName = (name: string): string =>
-  name.replace('Discord', '').replace('discord', '').replace('Everyone', '').replace('everyone', '');
+  name
+    .replace('Discord', '')
+    .replace('discord', '')
+    .replace('Everyone', '')
+    .replace('everyone', '');
 
 export default <CoreEventOptions>{
   name: Events.GuildDelete,
@@ -46,7 +50,9 @@ export default <CoreEventOptions>{
               ${emojis}
               **Name:** ${filterGuildName(guild.name)}
               **Users:** ${guild.memberCount.toLocaleString()}
-              **Features:** ${guild.features.map((feature) => `${feature}`).join(', ')}
+              **Features:** ${guild.features
+                .map((feature) => `${feature}`)
+                .join(', ')}
               **Server Count:** ${client.guilds.cache.size}
               `
           )

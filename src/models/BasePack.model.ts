@@ -1,4 +1,9 @@
-import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
+import {
+  HydratedDocument,
+  Schema,
+  SchemaTimestampsConfig,
+  model,
+} from 'mongoose';
 
 import { BasePack } from '@typings/pack';
 
@@ -10,6 +15,9 @@ export const BasePackModel = model<BasePackDocument>(
   'BasePack',
   new Schema<BasePackSchema>({
     name: { type: String, trim: true, required: true },
+    description: { type: String, trim: true, required: true },
+    tags: { type: [String], default: [], max: 5 },
+    likes: { type: [String], default: [] },
     questions: [
       {
         id: { type: String, unique: true, required: true },

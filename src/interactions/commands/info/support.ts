@@ -26,11 +26,17 @@ const command: CoreCommandOptions = {
    * @param client
    * @param guildDb
    */
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     const supportembed = new EmbedBuilder()
       .setColor(config.colors.danger)
       .setTitle(client.translation.get(guildDb.language, 'Support.embed.title'))
-      .setDescription(client.translation.get(guildDb.language, 'Support.embed.description'))
+      .setDescription(
+        client.translation.get(guildDb.language, 'Support.embed.description')
+      )
       .setFooter({
         text: client.translation.get(guildDb.language, 'Support.embed.footer'),
         iconURL: client.user?.avatarURL() || undefined,

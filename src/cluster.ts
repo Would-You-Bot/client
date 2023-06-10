@@ -1,5 +1,9 @@
 import colors from 'colors';
-import { ClusterManager, HeartbeatManager, ReClusterManager } from 'discord-hybrid-sharding';
+import {
+  ClusterManager,
+  HeartbeatManager,
+  ReClusterManager,
+} from 'discord-hybrid-sharding';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -29,12 +33,16 @@ manager.extend(
 
 // Log when a cluster is created
 manager.on('clusterCreate', (cluster) => {
-  loggerOffline.info(colors.green(`Successfully created cluster #${cluster.id}`));
+  loggerOffline.info(
+    colors.green(`Successfully created cluster #${cluster.id}`)
+  );
 });
 
 // Log when a cluster is ready
 manager.on('clusterReady', (cluster) => {
-  loggerOffline.info(colors.green(`Successfully initialized cluster #${cluster.id}`));
+  loggerOffline.info(
+    colors.green(`Successfully initialized cluster #${cluster.id}`)
+  );
 });
 
 // Debug cluster events

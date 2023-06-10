@@ -14,10 +14,16 @@ const connectToDatabase = async (): Promise<void> => {
   const connectionString = `${config.env.MONGODB_URI}`;
   try {
     const { connection } = await mongoose.connect(connectionString);
-    logger.info(colors.green(`Successfully connected to the database: ${connection.name}`));
+    logger.info(
+      colors.green(`Successfully connected to the database: ${connection.name}`)
+    );
   } catch (error) {
     logger.error(error);
-    logger.error(colors.red(`Failed to connect to database(${connectionString}), exiting process...`));
+    logger.error(
+      colors.red(
+        `Failed to connect to database(${connectionString}), exiting process...`
+      )
+    );
     process.exit(0);
   }
 };

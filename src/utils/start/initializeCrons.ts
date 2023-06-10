@@ -24,7 +24,9 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
       }
     ).default;
 
-    client.logger.debug(`Initializing custom cron: ${customCron.name} (${customCron.id})`);
+    client.logger.debug(
+      `Initializing custom cron: ${customCron.name} (${customCron.id})`
+    );
 
     // Execute the custon cron
     customCron.execute(client);
@@ -45,7 +47,9 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
 
     // Validate the cron expression
     if (!tests.testCronExpression(clientCron.expression)) {
-      client.logger.error(`Invalid cron expression for ${clientCron.name} (${clientCron.id})`);
+      client.logger.error(
+        `Invalid cron expression for ${clientCron.name} (${clientCron.id})`
+      );
       return;
     }
 
@@ -54,7 +58,9 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
 
     // If the timezone is invalid, log an error and return
     if (!timezone) {
-      client.logger.error(`Invalid timezone for ${clientCron.name} (${clientCron.id})`);
+      client.logger.error(
+        `Invalid timezone for ${clientCron.name} (${clientCron.id})`
+      );
       return;
     }
 
@@ -62,7 +68,9 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
     const job = new CronJob(
       clientCron.expression,
       () => {
-        client.logger.debug(`Running cron: ${clientCron.name} (${clientCron.id})`);
+        client.logger.debug(
+          `Running cron: ${clientCron.name} (${clientCron.id})`
+        );
         clientCron.execute(client);
       },
       null,

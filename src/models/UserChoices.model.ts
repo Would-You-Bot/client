@@ -1,7 +1,14 @@
 import { UserChoices } from '@typings/pack';
-import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
+import {
+  HydratedDocument,
+  Schema,
+  SchemaTimestampsConfig,
+  model,
+} from 'mongoose';
 
-export interface UserChoicesSchema extends UserChoices, SchemaTimestampsConfig {}
+export interface UserChoicesSchema
+  extends UserChoices,
+    SchemaTimestampsConfig {}
 
 export type UserChoicesDocument = HydratedDocument<UserChoicesSchema>;
 

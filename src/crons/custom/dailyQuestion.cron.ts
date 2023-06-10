@@ -4,7 +4,7 @@ import { EmbedBuilder, Guild, TextChannel } from 'discord.js';
 
 import config from '@config';
 import { CoreCustomCronOptions, IExtendedClient } from '@typings/core';
-import { GuildProfile, GuildQuestionType } from '@typings/guild';
+import { GuildPackType, GuildProfile } from '@typings/guild';
 import { BaseQuestion, CustomQuestion } from '@typings/pack';
 import { validateAndFormatTimezone } from '@utils/functions';
 import { ExtendedClient } from 'src/client';
@@ -27,22 +27,30 @@ const sendDailyQuestion = async (
   if (!guildProfile.daily.channel) return;
 
   // Fetch the daily question channel
-  const channel = (await guild.channels.fetch(guildProfile.daily.channel)) as TextChannel | null;
+  const channel = (await guild.channels.fetch(
+    guildProfile.daily.channel
+  )) as TextChannel | null;
   if (!channel) {
-    client.logger.warn(`Daily Message: Channel ${guildProfile.daily.channel} not found in guild ${guild.name}`);
+    client.logger.warn(
+      `Daily Message: Channel ${guildProfile.daily.channel} not found in guild ${guild.name}`
+    );
     return;
   }
 
   // Get a random question
-  const randomQuestionData = await client.packs.random(guildProfile.questionType);
+  const randomQuestionData = await client.packs.random(guildProfile.packType);
 
   let randomQuestion: string;
-  if (guildProfile.questionType === GuildQuestionType.Base)
-    randomQuestion = (randomQuestionData as BaseQuestion).translations[guildProfile.language];
-  else if (guildProfile.questionType === GuildQuestionType.Custom)
+  if (guildProfile.packType === GuildPackType.Base)
+    randomQuestion = (randomQuestionData as BaseQuestion).translations[
+      guildProfile.language
+    ];
+  else if (guildProfile.packType === GuildPackType.Custom)
     randomQuestion = (randomQuestionData as CustomQuestion).text;
   else if ((randomQuestionData as CustomQuestion).text) {
-    randomQuestion = (randomQuestionData as BaseQuestion).translations[guildProfile.language];
+    randomQuestion = (randomQuestionData as BaseQuestion).translations[
+      guildProfile.language
+    ];
   } else {
     randomQuestion = (randomQuestionData as CustomQuestion).text;
   }
@@ -87,16 +95,22 @@ export default <CoreCustomCronOptions>{
       if (!guildProfile.daily.enabled) return;
       if (!guildProfile.daily.channel) return;
 
-      const expression = functions.timeToCronExpression(guildProfile.daily.time);
+      const expression = functions.timeToCronExpression(
+        guildProfile.daily.time
+      );
 
       if (!expression) {
-        client.logger.error(`Invalid time for daily question ${guildProfile.guildId}`);
+        client.logger.error(
+          `Invalid time for daily question ${guildProfile.guildId}`
+        );
         return;
       }
 
       // Validate the cron expression
       if (!tests.testCronExpression(expression)) {
-        client.logger.error(`Invalid cron expression for ${guildProfile.guildId}`);
+        client.logger.error(
+          `Invalid cron expression for ${guildProfile.guildId}`
+        );
         return;
       }
 

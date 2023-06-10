@@ -1,7 +1,15 @@
-import { WebhookDocument, WebhookModel, WebhookSchema } from '@models/Webhook.model';
+import {
+  WebhookDocument,
+  WebhookModel,
+  WebhookSchema,
+} from '@models/Webhook.model';
 import { logger } from '@utils/client';
 import { decrypt, encrypt } from '@utils/functions';
-import { WebhookClient, WebhookEditOptions, WebhookMessageCreateOptions } from 'discord.js';
+import {
+  WebhookClient,
+  WebhookEditOptions,
+  WebhookMessageCreateOptions,
+} from 'discord.js';
 
 /**
  * Webhook class.

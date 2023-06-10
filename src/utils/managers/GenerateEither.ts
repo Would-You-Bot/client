@@ -1,7 +1,10 @@
 import Canvas from '@napi-rs/canvas';
 import path from 'path';
 
-Canvas.GlobalFonts.registerFromPath(path.join(__dirname, '..', 'data', 'Fonts', 'OpenSans-Bold.ttf'), 'OpenSans');
+Canvas.GlobalFonts.registerFromPath(
+  path.join(__dirname, '..', 'data', 'Fonts', 'OpenSans-Bold.ttf'),
+  'OpenSans'
+);
 
 interface User {
   icon: string;
@@ -36,7 +39,9 @@ class Either {
    */
   public setVotes(rowOne?: User[], rowTwo?: User[]): this {
     if (!Array.isArray(rowOne && rowTwo)) {
-      throw new Error(`Expected rows array instead got ${typeof rowOne} and ${typeof rowTwo}`);
+      throw new Error(
+        `Expected rows array instead got ${typeof rowOne} and ${typeof rowTwo}`
+      );
     }
     this.rowOne = rowOne;
     this.rowTwo = rowTwo;
@@ -126,7 +131,11 @@ class Either {
      * @param maxLength The max length of the text.
      * @returns The font size.
      */
-    function calcFontSize(textLength: number, fontSize: number, maxLength: number): number {
+    function calcFontSize(
+      textLength: number,
+      fontSize: number,
+      maxLength: number
+    ): number {
       let size = fontSize;
       while (textLength > maxLength) size -= 1;
       return size;

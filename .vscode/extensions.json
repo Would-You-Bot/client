@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments", // Better Comments
+    "HookyQR.JSDocTagComplete", // JSDoc Tag Complete
+    "usernamehw.errorlens", // Error Lens
+    "dbaeumer.vscode-eslint", // ESLint
+    "eamodio.gitlens", // GitLens
+    "VisualStudioExptTeam.vscodeintellicode", // Visual Studio IntelliCode
+    "johnpapa.vscode-peacock", // Peacock
+    "esbenp.prettier-vscode", // Prettier - Code formatter
+    "yoavbls.pretty-ts-errors", // Pretty TS Errors
+  ]
+}

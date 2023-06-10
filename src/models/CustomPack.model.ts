@@ -1,4 +1,9 @@
-import { HydratedDocument, Schema, SchemaTimestampsConfig, model } from 'mongoose';
+import {
+  HydratedDocument,
+  Schema,
+  SchemaTimestampsConfig,
+  model,
+} from 'mongoose';
 
 import { CustomPack } from '@typings/pack';
 
@@ -11,6 +16,9 @@ export const CustomPackModel = model<CustomPackDocument>(
   new Schema<CustomPackSchema>({
     userId: { type: String, required: true },
     name: { type: String, trim: true, required: true },
+    description: { type: String, trim: true, required: true },
+    tags: { type: [String], default: [], max: 5 },
+    likes: { type: [String], default: [] },
     questions: [
       {
         id: { type: String, unique: true, required: true },
@@ -25,5 +33,6 @@ export const CustomPackModel = model<CustomPackDocument>(
         ],
       },
     ],
+    visible: { type: Boolean, default: true },
   })
 );

@@ -1,5 +1,5 @@
 import { IExtendedClient } from '@typings/core';
-import { Webhook } from '@utils/classes/Webhooks.class';
+import { Webhook } from '@utils/managers/Webhooks.class';
 import colors from 'colors';
 import { PermissionFlagsBits, TextChannel, WebhookClient } from 'discord.js';
 
@@ -52,7 +52,11 @@ const updateQueue = {
         counter += 1;
         if (counter >= totalChecks) {
           clearInterval(intervalId);
-          reject(new Error(`Webhook for the channel (${channelId}) in queue was not created within 10 seconds.`));
+          reject(
+            new Error(
+              `Webhook for the channel (${channelId}) in queue was not created within 10 seconds.`
+            )
+          );
         }
       }, 10);
     }),
@@ -66,7 +70,12 @@ const updateQueue = {
  * @param method The method.
  * @returns If the webhook is valid.
  */
-const isValid = (client: IExtendedClient, guildId: string, channelId: string, method: string): boolean => {
+const isValid = (
+  client: IExtendedClient,
+  guildId: string,
+  channelId: string,
+  method: string
+): boolean => {
   // If the guild does not exist
   const guild = client.guilds.cache.get(guildId);
   if (!guild) {
@@ -82,7 +91,8 @@ const isValid = (client: IExtendedClient, guildId: string, channelId: string, me
   }
 
   // If the bot does not have Manage Webhooks permission
-  if (!guild.members.me?.permissions.has(PermissionFlagsBits.ManageWebhooks)) return false;
+  if (!guild.members.me?.permissions.has(PermissionFlagsBits.ManageWebhooks))
+    return false;
 
   return true;
 };
@@ -94,12 +104,17 @@ const isValid = (client: IExtendedClient, guildId: string, channelId: string, me
  * @param channelId The channel id.
  * @returns The webhook or undefined.
  */
-const create = async (client: IExtendedClient, guildId: string, channelId: string): Promise<Webhook | undefined> => {
+const create = async (
+  client: IExtendedClient,
+  guildId: string,
+  channelId: string
+): Promise<Webhook | undefined> => {
   try {
     const timeStart = Date.now();
 
     // Check if channel is in queue
-    if (queue.includes(channelId)) return await updateQueue.get(channelId, client);
+    if (queue.includes(channelId))
+      return await updateQueue.get(channelId, client);
     // Add channel to queue
     else updateQueue.add(channelId);
 
@@ -114,11 +129,15 @@ const create = async (client: IExtendedClient, guildId: string, channelId: strin
     const webhooksInChannel = await guild.channels.fetchWebhooks(channelId);
 
     if (webhooksInChannel.size >= 10) {
-      client.logger.error('Cannot create webhook, there are already 10 webhooks in this channel');
+      client.logger.error(
+        'Cannot create webhook, there are already 10 webhooks in this channel'
+      );
     }
 
     // If the bot does not have Manage Webhooks permission
-    if (!guild.members.me?.permissions.has(PermissionFlagsBits.ManageWebhooks)) {
+    if (
+      !guild.members.me?.permissions.has(PermissionFlagsBits.ManageWebhooks)
+    ) {
       updateQueue.remove(channelId);
       return;
     }
@@ -133,7 +152,9 @@ const create = async (client: IExtendedClient, guildId: string, channelId: strin
     // If the webhook could not be created
     if (!createdWebhook.token) {
       updateQueue.remove(channelId);
-      client.logger.error(`Cannot create webhook document, no token was returned for ${channelId} in ${guildId}`);
+      client.logger.error(
+        `Cannot create webhook document, no token was returned for ${channelId} in ${guildId}`
+      );
       return;
     }
 
@@ -154,7 +175,9 @@ const create = async (client: IExtendedClient, guildId: string, channelId: strin
     updateQueue.remove(channelId);
 
     const time = ((Date.now() - timeStart) / 1000).toFixed(2);
-    client.logger.debug(`Created webhook for ${channelId} in ${guildId} in ${colors.white(time)}s`);
+    client.logger.debug(
+      `Created webhook for ${channelId} in ${guildId} in ${colors.white(time)}s`
+    );
 
     // Return the webhook information from DB
     return updatedWebhook;
@@ -170,11 +193,17 @@ const create = async (client: IExtendedClient, guildId: string, channelId: strin
  * @param channelId The channel id.
  * @returns The webhook or undefined.
  */
-const get = async (client: IExtendedClient, guildId: string, channelId: string): Promise<WebhookClient | undefined> => {
+const get = async (
+  client: IExtendedClient,
+  guildId: string,
+  channelId: string
+): Promise<WebhookClient | undefined> => {
   if (!isValid(client, guildId, channelId, 'get')) return;
 
   // Get the stored webhook if it exists
-  let channelWebhook: Webhook | undefined = (await client.webhooks.fetch(channelId)) as Webhook | undefined;
+  let channelWebhook: Webhook | undefined = (await client.webhooks.fetch(
+    channelId
+  )) as Webhook | undefined;
 
   // Get the guild and channel
   const guild = client.guilds.cache.get(guildId);
@@ -183,7 +212,8 @@ const get = async (client: IExtendedClient, guildId: string, channelId: string):
   if (!channel) return;
 
   // If there is no saved webhook for this channel, create a new one
-  if (!channelWebhook) channelWebhook = await create(client, guildId, channelId);
+  if (!channelWebhook)
+    channelWebhook = await create(client, guildId, channelId);
 
   // If the webhook couldn't be created
   if (!channelWebhook) return;
@@ -211,7 +241,9 @@ const get = async (client: IExtendedClient, guildId: string, channelId: string):
 
     // If the webhook does not exist even after being creating, something is wrong with this code probably
     if (!webhookExists) {
-      client.logger.error('Something went wrong with webhooks, as one stored does not exist.');
+      client.logger.error(
+        'Something went wrong with webhooks, as one stored does not exist.'
+      );
       return;
     }
   }

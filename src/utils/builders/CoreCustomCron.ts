@@ -1,4 +1,8 @@
-import { CoreCronExecute, CoreCustomCronOptions, ExportedCoreCustomCron } from '@typings/core';
+import {
+  CoreCronExecute,
+  CoreCustomCronOptions,
+  ExportedCoreCustomCron,
+} from '@typings/core';
 
 /**
  * The CoreCron class, used to create a Cron.

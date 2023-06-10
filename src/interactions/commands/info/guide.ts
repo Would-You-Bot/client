@@ -1,4 +1,8 @@
-import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import {
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+  SlashCommandBuilder,
+} from 'discord.js';
 
 import config from '@config';
 import { GuildProfileDocument } from '@models/GuildProfile.model';
@@ -19,7 +23,11 @@ const command: CoreCommandOptions = {
    * @param client
    * @param guildDb
    */
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     const guideEmbed = new EmbedBuilder()
       .setColor(config.colors.primary)
       .setFooter({
@@ -45,7 +53,9 @@ const command: CoreCommandOptions = {
           inline: false,
         }
       )
-      .setDescription(client.translation.get(guildDb.language, 'Guide.embed.description'));
+      .setDescription(
+        client.translation.get(guildDb.language, 'Guide.embed.description')
+      );
 
     interaction
       .reply({

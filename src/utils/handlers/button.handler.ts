@@ -14,9 +14,9 @@ const buttonHandler = async (client: ExtendedClient): Promise<void> => {
   for (const fileName of files) {
     client.logger.debug(`Importing button: ${fileName}`);
 
-    const buttonFile = (await import(`../../interactions/buttons/${fileName}`)) as
-      | { default: ICoreButton | undefined }
-      | undefined;
+    const buttonFile = (await import(
+      `../../interactions/buttons/${fileName}`
+    )) as { default: ICoreButton | undefined } | undefined;
 
     if (!buttonFile?.default?.id) continue;
 

@@ -12,7 +12,11 @@ const button: ICoreButton = {
    * @param client
    * @param guildDb
    */
-  async execute(interaction: ButtonInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+  async execute(
+    interaction: ButtonInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     // ! temp if statement to prevent eslint warning
     if (!interaction.guild || !client.user || !guildDb) return null;
 

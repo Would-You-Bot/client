@@ -11,7 +11,9 @@ await (async () => {
 
   // If the client is on maintenance mode, log it
   if (typeof client.cluster.maintenance === 'string')
-    client.logger.info(`Client on maintenance mode with ${client.cluster.maintenance}`);
+    client.logger.info(
+      `Client on maintenance mode with ${client.cluster.maintenance}`
+    );
 
   // Load and start the application
   const app = (await import('./app')) as {

@@ -15,7 +15,11 @@ import { ExtendedClient } from './client';
  */
 const app = async (client: ExtendedClient): Promise<void> => {
   // Run startup functions
-  ensureDirectories([['./static', './tmp'], ['./tmp/logs'], [`./tmp/logs/${config.logFolder}`]]);
+  ensureDirectories([
+    ['./static', './tmp'],
+    ['./tmp/logs'],
+    [`./tmp/logs/${config.logFolder}`],
+  ]);
   await initializeHandlers(client);
   initializeProcessErrorHandling(client);
   initializeVoteLog(client);

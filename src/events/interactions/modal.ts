@@ -60,7 +60,9 @@ export default <CoreEventOptions>{
       // If the modal has arguments
       if (customId.includes('*')) {
         // Get the arguments
-        const args = customId.substring(customId.indexOf('*') + 1, customId.length).split('-');
+        const args = customId
+          .substring(customId.indexOf('*') + 1, customId.length)
+          .split('-');
 
         // Execute the modal with arguments
         await modal.execute(client, interaction, args);

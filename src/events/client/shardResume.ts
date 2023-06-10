@@ -11,6 +11,8 @@ export default <CoreEventOptions>{
    * @param replayedEvents The number of replayed events.
    */
   execute(client, id: string, replayedEvents: number) {
-    client.logger.info(`Shard resume: ${id} (${replayedEvents} events replayed)`);
+    client.logger.info(
+      `Shard resume: ${id} (${replayedEvents} events replayed)`
+    );
   },
 };

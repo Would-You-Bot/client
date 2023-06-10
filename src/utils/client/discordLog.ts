@@ -16,7 +16,10 @@ let processingError = false;
  * @param message The final message to send.
  * @returns Whether the message was sent or not.
  */
-const sendMessage = async (channel: TextChannel, message: string): Promise<boolean> => {
+const sendMessage = async (
+  channel: TextChannel,
+  message: string
+): Promise<boolean> => {
   try {
     await channel.send(`\`\`\`yaml\n${message}\`\`\``);
     return true;
@@ -34,7 +37,9 @@ const sendInfo = async (client: ExtendedClient): Promise<void> => {
 
   processingInfo = true;
 
-  const channel = (await client.channels.fetch('1107648942574948372')) as TextChannel | undefined;
+  const channel = (await client.channels.fetch('1107648942574948372')) as
+    | TextChannel
+    | undefined;
 
   if (!channel) {
     processingInfo = false;
@@ -83,7 +88,9 @@ const sendWarn = async (client: ExtendedClient): Promise<void> => {
 
   processingWarn = true;
 
-  const channel = (await client.channels.fetch('1106024493631160453')) as TextChannel | undefined;
+  const channel = (await client.channels.fetch('1106024493631160453')) as
+    | TextChannel
+    | undefined;
 
   if (!channel) {
     processingWarn = false;
@@ -132,7 +139,9 @@ const sendError = async (client: ExtendedClient): Promise<void> => {
 
   processingError = true;
 
-  const channel = (await client.channels.fetch('1106024503315812392')) as TextChannel | undefined;
+  const channel = (await client.channels.fetch('1106024503315812392')) as
+    | TextChannel
+    | undefined;
 
   if (!channel) {
     processingError = false;
@@ -181,7 +190,9 @@ const sendDebug = async (client: ExtendedClient): Promise<void> => {
 
   processingDebug = true;
 
-  const channel = (await client.channels.fetch('1106024539470692373')) as TextChannel | undefined;
+  const channel = (await client.channels.fetch('1106024539470692373')) as
+    | TextChannel
+    | undefined;
 
   if (!channel) {
     processingDebug = false;

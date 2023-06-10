@@ -26,7 +26,11 @@ const command: CoreCommandOptions = {
    * @param client
    * @param guildDb
    */
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient, guildDb: GuildProfileDocument) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    client: ExtendedClient,
+    guildDb: GuildProfileDocument
+  ) {
     const pingembed = new EmbedBuilder()
 
       .setColor(config.colors.primary)
@@ -39,7 +43,9 @@ const command: CoreCommandOptions = {
       .addFields(
         {
           name: client.translation.get(guildDb.language, 'Ping.embed.client'),
-          value: `> **${Math.abs(Date.now() - interaction.createdTimestamp)}**ms`,
+          value: `> **${Math.abs(
+            Date.now() - interaction.createdTimestamp
+          )}**ms`,
           inline: false,
         },
         {

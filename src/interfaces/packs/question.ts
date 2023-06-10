@@ -1,8 +1,13 @@
-import { ActionRowBuilder, BaseInteraction, ButtonBuilder, EmbedBuilder } from 'discord.js';
+import {
+  ActionRowBuilder,
+  BaseInteraction,
+  ButtonBuilder,
+  EmbedBuilder,
+} from 'discord.js';
 
 import config from '@config';
-import { CoreInterface } from '@typings/core';
-import { BaseQuestionType } from '@typings/pack';
+import { CoreInterfaceFunction } from '@typings/core';
+import { PackQuestionType } from '@typings/pack';
 
 /**
  * The function return the default interface.
@@ -13,10 +18,13 @@ import { BaseQuestionType } from '@typings/pack';
  * @param params.questionType The question type.
  * @returns An object containing the embed and buttons.
  */
-export default <CoreInterface>((
+export default <CoreInterfaceFunction>((
   client,
   guildProfile,
-  { interaction, questionType }: { interaction: BaseInteraction; questionType: BaseQuestionType }
+  {
+    interaction,
+    questionType,
+  }: { interaction: BaseInteraction; questionType: PackQuestionType }
 ) => {
   const translations = client.translations[guildProfile.language];
 
@@ -29,12 +37,14 @@ export default <CoreInterface>((
   });
 
   const row = new ActionRowBuilder<ButtonBuilder>().setComponents(
-    new ButtonBuilder().setCustomId(`question-results-${pack.id}-${question.id}`)
+    new ButtonBuilder().setCustomId(
+      `question-results-${pack.id}-${question.id}`
+    )
   );
 
   const row2 = new ActionRowBuilder<ButtonBuilder>().setComponents(
     new ButtonBuilder()
-      .setCustomId(`question-${BaseQuestionType.WouldYouRather}`)
+      .setCustomId(`question-${PackQuestionType.WouldYouRather}`)
       .setEmoji(config.emojis.refresh.full)
       .setLabel('New Question')
   );

@@ -1,4 +1,4 @@
-import { BaseQuestionType } from '@typings/pack';
+import { PackQuestionType } from '@typings/pack';
 import { CoreButton } from '@utils/builders';
 
 export default new CoreButton({
@@ -9,19 +9,19 @@ export default new CoreButton({
   const questionType = parseInt(args[1], 10);
 
   switch (questionType) {
-    case BaseQuestionType.WouldYouRather:
+    case PackQuestionType.WouldYouRather:
       break;
 
-    case BaseQuestionType.NeverHaveIEver:
+    case PackQuestionType.NeverHaveIEver:
       break;
 
-    case BaseQuestionType.WhatWouldYouDo:
+    case PackQuestionType.WhatWouldYouDo:
       break;
 
-    case BaseQuestionType.TruthOrDare:
+    case PackQuestionType.TruthOrDare:
       break;
 
-    case BaseQuestionType.HigherOrLower:
+    case PackQuestionType.HigherOrLower:
       break;
 
     default:

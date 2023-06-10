@@ -1,7 +1,12 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  EmbedBuilder,
+} from 'discord.js';
 
 import config from '@config';
-import { CoreInterface } from '@typings/core';
+import { CoreInterfaceFunction } from '@typings/core';
 import { GuildProfile } from '@utils/classes';
 import { ExtendedClient } from 'src/client';
 
@@ -11,7 +16,10 @@ import { ExtendedClient } from 'src/client';
  * @param guildProfile The guild profile.
  * @returns An object containing the embed and buttons.
  */
-const generalSettingsInterface: CoreInterface<ExtendedClient, GuildProfile> = (client, guildProfile) => {
+const generalSettingsInterface: CoreInterfaceFunction<
+  ExtendedClient,
+  GuildProfile
+> = (client, guildProfile) => {
   const translations = client.translations[guildProfile.language];
 
   const embed = new EmbedBuilder()
