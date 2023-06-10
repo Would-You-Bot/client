@@ -98,7 +98,7 @@ const bot: BotTranslations = {
         },
       ],
     },
-    button: {
+    buttons: {
       label: 'Our Discord',
     },
   },

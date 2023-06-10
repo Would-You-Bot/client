@@ -2,17 +2,15 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ChatInputCommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
 } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/GuildProfile.model';
-import { ExtendedClient } from 'src/client';
+import { GuildLanguage } from '@typings/guild';
+import CoreCommand from '@utils/builders/CoreCommand';
 
-export default {
-  requireGuild: true,
+export default new CoreCommand({
   data: new SlashCommandBuilder()
     .setName('help')
     .setDescription('Help command!')
@@ -21,86 +19,54 @@ export default {
       'de': 'Hilfe Befehl!',
       'es-ES': 'Comando de ayuda!',
     }),
-  /**
-   * @param interaction
-   * @param client
-   * @param guildDb
-   */
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
-    if (!client.application) return;
+}).execute(async (client, interaction) => {
+  if (!client.application || !interaction.guildId) return;
 
-    const commands = await client.application.commands.fetch({
-      withLocalizations: true,
-    });
+  const guildProfile = await client.guildProfiles.fetch(interaction.guildId);
 
-    let type: string;
-    if (guildDb.language === 'de_DE') {
-      type = 'de';
-    } else if (guildDb.language === 'en_EN') {
-      type = 'en';
-    } else if (guildDb.language === 'es_ES') {
-      type = 'es';
-    }
-    const helpembed = new EmbedBuilder()
-      .setColor(config.colors.primary)
-      .setFooter({
-        text: client.translation.get(guildDb.language, 'Help.embed.footer'),
-        iconURL: client.user?.avatarURL() || undefined,
-      })
-      .setTimestamp()
-      .setTitle(client.translation.get(guildDb.language, 'Help.embed.title'))
-      .addFields({
-        name: client.translation.get(
-          guildDb.language,
-          'Help.embed.Fields.privacyname'
-        ),
-        value: client.translation.get(
-          guildDb.language,
-          'Help.embed.Fields.privacy'
-        ),
-        inline: false,
-      })
-      .setDescription(
-        `${client.translation.get(
-          guildDb.language,
-          'Help.embed.description'
-        )}\n\n${commands
-          .filter((e) => e.name !== 'reload' && e.descriptionLocalizations)
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map(
-            (n) =>
-              `</${n.name}:${n.id}> - ${
-                type === 'de'
-                  ? n.descriptionLocalizations?.de
-                  : type === 'es'
-                  ? n.descriptionLocalizations?.['es-ES']
-                  : n.description
-              }`
-          )
-          .join('\n')}`
-      );
+  const translations = client.translations[guildProfile.language];
 
-    const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder()
-        .setLabel(client.translation.get(guildDb.language, 'Help.button.title'))
-        .setStyle(ButtonStyle.Link)
-        .setEmoji('💫')
-        .setURL(config.links.support),
-      new ButtonBuilder()
-        .setLabel('Invite')
-        .setStyle(ButtonStyle.Link)
-        .setEmoji(config.emojis.logo.id)
-        .setURL(config.links.invite)
-    );
-    await interaction
-      .reply({
-        embeds: [helpembed],
-        components: [button],
-      })
-      .catch(client.logger.error);
-  },
-};
+  const commands = await client.application.commands.fetch({
+    withLocalizations: true,
+  });
+
+  const helpembed = new EmbedBuilder()
+    .setColor(config.colors.primary)
+    .setTitle(translations.help.embed.title)
+    .setDescription(
+      `${translations.help.embed.description}\n\n${commands
+        .sort((first, second) => first.name.localeCompare(second.name))
+        .map(
+          (cmd) =>
+            `</${cmd.name}:${cmd.id}> - ${
+              guildProfile.language === GuildLanguage.German
+                ? cmd.descriptionLocalizations?.de ?? 'No description'
+                : guildProfile.language === GuildLanguage.Spanish
+                ? cmd.descriptionLocalizations?.['es-ES'] ?? 'No description'
+                : cmd.description
+            }`
+        )
+        .join('\n')}`
+    )
+    .addFields(translations.help.embed.fields)
+    .setTimestamp();
+
+  const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    new ButtonBuilder()
+      .setLabel(translations.help.buttons.label)
+      .setStyle(ButtonStyle.Link)
+      .setEmoji('💫')
+      .setURL(config.links.support),
+    new ButtonBuilder()
+      .setLabel('Invite')
+      .setStyle(ButtonStyle.Link)
+      .setEmoji(config.emojis.logo.id)
+      .setURL(config.links.invite)
+  );
+  await interaction
+    .reply({
+      embeds: [helpembed],
+      components: [button],
+    })
+    .catch(client.logger.error);
+});

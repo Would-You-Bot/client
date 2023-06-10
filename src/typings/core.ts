@@ -6,6 +6,7 @@ import {
   BaseInteraction,
   ButtonBuilder,
   ButtonInteraction,
+  ChatInputCommandInteraction,
   Client,
   Collection,
   EmbedBuilder,
@@ -68,13 +69,14 @@ export interface ExportedCoreButton extends CoreButtonOptions {
 
 export type CoreCommandExecute = (
   client: IExtendedClient,
+  interaction: ChatInputCommandInteraction,
   ...parameters: unknown[]
-) => Promise<unknown>;
+) => Promise<unknown> | unknown;
 
 export type CoreCommandAutocomplete = (
   client: IExtendedClient,
   ...parameters: unknown[]
-) => Promise<unknown>;
+) => Promise<unknown> | unknown;
 
 export type CoreCommandData =
   | Omit<

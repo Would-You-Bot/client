@@ -1,15 +1,9 @@
-import {
-  ChatInputCommandInteraction,
-  EmbedBuilder,
-  SlashCommandBuilder,
-} from 'discord.js';
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 
 import config from '@config';
-import { GuildProfileDocument } from '@models/GuildProfile.model';
-import { CoreCommandOptions } from '@typings/core';
-import { ExtendedClient } from 'src/client';
+import CoreCommand from '@utils/builders/CoreCommand';
 
-const command: CoreCommandOptions = {
+export default new CoreCommand({
   data: new SlashCommandBuilder()
     .setName('vote')
     .setDescription('Vote for me!')
@@ -18,49 +12,33 @@ const command: CoreCommandOptions = {
       'de': 'Stimme für mich ab!',
       'es-ES': '¡Vota por mí!',
     }),
-  /**
-   * @param interaction
-   * @param client
-   * @param guildDb
-   */
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    client: ExtendedClient,
-    guildDb: GuildProfileDocument
-  ) {
-    const votemebed = new EmbedBuilder()
-      .setColor(config.colors.blurple)
-      .setTitle(client.translation.get(guildDb.language, 'Vote.embed.title'))
-      .addFields(
-        {
-          name: 'Top.gg',
-          value: `> [ ${client.translation.get(
-            guildDb.language,
-            'Vote.embed.value'
-          )}  ](https://top.gg/bot/${config.productionId}/vote)`,
-          inline: true,
-        },
-        {
-          name: 'Voidbots',
-          value: `> [ ${client.translation.get(
-            guildDb.language,
-            'Vote.embed.value'
-          )}  ](https://voidbots.net/bot/${config.productionId})`,
-          inline: true,
-        }
-      )
-      .setThumbnail(client.user?.displayAvatarURL() || null)
-      .setFooter({
-        text: client.translation.get(guildDb.language, 'Vote.embed.footer'),
-        iconURL: client.user?.avatarURL() || undefined,
-      });
+}).execute(async (client, interaction) => {
+  if (!interaction.guildId) return;
 
-    return interaction
-      .reply({
-        embeds: [votemebed],
-      })
-      .catch(client.logger.error);
-  },
-};
+  const guildProfile = await client.guildProfiles.fetch(interaction.guildId);
 
-export default command;
+  const translations = client.translations[guildProfile.language];
+
+  const votemebed = new EmbedBuilder()
+    .setColor(config.colors.blurple)
+    .setTitle(translations.vote.embed.title)
+    .addFields(
+      {
+        name: 'Top.gg',
+        value: `> [ ${translations.vote.embed.value}  ](https://top.gg/bot/${config.productionId}/vote)`,
+        inline: true,
+      },
+      {
+        name: 'Voidbots',
+        value: `> [ ${translations.vote.embed.value}  ](https://voidbots.net/bot/${config.productionId})`,
+        inline: true,
+      }
+    )
+    .setThumbnail(client.user?.displayAvatarURL() ?? null);
+
+  return interaction
+    .reply({
+      embeds: [votemebed],
+    })
+    .catch(client.logger.error);
+});

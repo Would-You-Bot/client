@@ -85,7 +85,7 @@ const bot: BotTranslations = {
         },
       ],
     },
-    button: {
+    buttons: {
       label: '',
     },
   },

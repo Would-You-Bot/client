@@ -121,7 +121,7 @@ export interface BotTranslations {
         }
       ];
     };
-    button: {
+    buttons: {
       label: string;
     };
   };
