@@ -1,6 +1,5 @@
 import {
   ActionRowBuilder,
-  ButtonInteraction,
   ChannelSelectMenuBuilder,
   ChannelType,
   EmbedBuilder,
@@ -13,10 +12,10 @@ import { CoreButton } from '@utils/builders';
 export default new CoreButton({
   id: 'welcome',
   description: 'Edit welcome settings',
-}).execute(async (client, interaction: ButtonInteraction, args: string[]) => {
-  if (!interaction.guildId) return;
+}).execute(async (client, interaction, args) => {
+  if (!interaction.guildId || !args) return;
 
-  const setting = args[0];
+  const [setting] = args;
 
   const guildProfile = await client.guildProfiles
     .fetch(interaction.guildId)

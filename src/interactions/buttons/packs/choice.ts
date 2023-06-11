@@ -7,6 +7,8 @@ export default new CoreButton({
   id: 'choice',
   description: "Set a user's choice",
 }).execute(async (client, interaction, args) => {
+  if (!args) return;
+
   const [custom, packId, questionId, choice] = args;
 
   if (Number.isNaN(parseInt(choice, 10))) throw new Error('Invalid choice');

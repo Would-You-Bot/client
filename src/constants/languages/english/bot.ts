@@ -20,6 +20,8 @@ const bot: BotTranslations = {
       title: '{name} - General Settings',
       description:
         '**Timezone**\n{timezone}\n**Question Type**\n{questionType}',
+      timezone: 'Timezone',
+      packType: 'Pack Type',
     },
   },
   dailySettings: {
@@ -35,8 +37,14 @@ const bot: BotTranslations = {
       title: '{name} - Daily Messages',
       description:
         '**Enabled:**\n{enabled}\n**Channel:**\n{channel}\n**Role:**\n{role}\n**Time:**\n{time}\n**Thread:**\n{thread}',
+      dailyChannel: 'Daily Channel',
+      dailyRole: 'Daily Role',
+      dailyTime: 'Daily Time',
+      dailyThread: 'Daily Thread',
     },
     buttons: {
+      enable: 'Enable',
+      disable: 'Disable',
       channel: 'Set Channel',
       role: 'Set Role',
       time: 'Set Time',
@@ -55,6 +63,8 @@ const bot: BotTranslations = {
       title: '{name} - Welcomes',
       description:
         '**Enabled:**\n{enabled}\n**Channel:**\n{channel}\n**User Pings:**\n{ping}',
+      ping: 'Ping Role',
+      channel: 'Channel',
     },
   },
   ping: {

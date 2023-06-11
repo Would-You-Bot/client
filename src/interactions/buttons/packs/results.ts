@@ -8,6 +8,8 @@ export default new CoreButton({
   id: 'results',
   description: 'The user choice results',
 }).execute(async (client, interaction, args) => {
+  if (!args) return;
+
   const [custom, packId, questionId] = args;
 
   const query = UserChoicesModel.findOne({

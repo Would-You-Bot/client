@@ -13,9 +13,9 @@ export default new CoreButton({
   id: 'general',
   description: 'Button description',
 }).execute(async (client, interaction, args) => {
-  if (!interaction.guildId) return;
+  if (!interaction.guildId || !args) return;
 
-  const setting = args[0];
+  const [setting] = args;
 
   // Fetch the guild profile
   const guildProfile = await client.guildProfiles

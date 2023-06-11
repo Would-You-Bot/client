@@ -5,7 +5,7 @@ import { ExtendedClient } from './client';
  */
 export const client = new ExtendedClient();
 
-await (async () => {
+(async () => {
   client.logger.info('Starting client');
   client.logger.debug('Debug Enabled');
 

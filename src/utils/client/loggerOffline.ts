@@ -14,22 +14,20 @@ if (!fs.existsSync(logsDir)) {
 }
 
 const consoleFormat = winston.format.combine(
-  // winston.format.prettyPrint(),
   winston.format.colorize(),
   winston.format.timestamp(),
   winston.format.ms(),
   winston.format.errors({ stack: true }),
-  // winston.format.splat(),
-  // winston.format.json(),
   winston.format.printf(({ timestamp, ms, level, message, stack }) => {
+    let newMessage: string = message as string;
     // Append the stack trace to the message if it is present
-    if (stack) message += `\n${stack}`;
+    if (stack) newMessage += `\n${stack as string}`;
 
-    addDiscordLog(level, `(${ms}) [${level}]: ${message}`);
+    addDiscordLog(level, `(${ms as string}) [${level}]: ${newMessage}`);
 
-    return `${colors.gray(timestamp)} (${colors.magenta(
-      ms
-    )}) [${level}]: ${message}`;
+    return `${colors.gray(timestamp as string)} (${colors.magenta(
+      ms as string
+    )}) [${level}]: ${newMessage}`;
   })
 );
 
@@ -38,8 +36,9 @@ const fileFormat = winston.format.combine(
   format((info) => {
     /* eslint-disable no-control-regex */
     const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
-    info.message = info.message.replace(ANSI_REGEX, '');
-    return info;
+    const newInfo = info;
+    newInfo.message = (info.message as string).replace(ANSI_REGEX, '');
+    return newInfo;
   })(),
   winston.format.timestamp(),
   winston.format.json()

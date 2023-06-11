@@ -16,6 +16,8 @@ const bot: BotTranslations = {
     embed: {
       title: '',
       description: '',
+      timezone: '',
+      packType: '',
     },
   },
   dailySettings: {
@@ -28,8 +30,14 @@ const bot: BotTranslations = {
     embed: {
       title: '',
       description: '',
+      dailyChannel: '',
+      dailyRole: '',
+      dailyTime: '',
+      dailyThread: '',
     },
     buttons: {
+      enable: '',
+      disable: '',
       channel: '',
       role: '',
       time: '',
@@ -47,6 +55,8 @@ const bot: BotTranslations = {
     embed: {
       title: '',
       description: '',
+      ping: '',
+      channel: '',
     },
   },
   ping: {

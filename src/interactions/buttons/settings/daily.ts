@@ -17,10 +17,9 @@ export default new CoreButton({
   id: 'daily',
   description: 'Edit the daily messages settings.',
 }).execute(async (client, interaction, args) => {
-  if (!interaction.guildId) return;
+  if (!interaction.guildId || !args) return;
 
-  const setting = args[1];
-  const state = args[2];
+  const [setting, state] = args;
 
   // Fetch the guild profile
   const guildProfile = await client.guildProfiles
@@ -47,13 +46,12 @@ export default new CoreButton({
             'daily.enabled': state === 'true' ? true : false,
           });
 
-          const useInterface = dailySettingsInterface(client, guildProfile);
-
-          interaction.update({
-            content: '',
-            embeds: useInterface.embeds,
-            components: useInterface.components,
+          const useInterface = await dailySettingsInterface({
+            client,
+            interaction,
           });
+
+          interaction.update(useInterface);
         }
         break;
 
@@ -132,13 +130,12 @@ export default new CoreButton({
             'daily.thread': state === 'true' ? true : false,
           });
 
-          const useInterface = dailySettingsInterface(client, guildProfile);
-
-          interaction.update({
-            content: '',
-            embeds: useInterface.embeds,
-            components: useInterface.components,
+          const useInterface = await dailySettingsInterface({
+            client,
+            interaction,
           });
+
+          interaction.update(useInterface);
 
           interaction.reply({
             content: `The daily messages thread setting has been set to **${state}**.`,

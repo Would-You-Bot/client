@@ -1,5 +1,5 @@
 import { IExtendedClient } from '@typings/core';
-import { Webhook } from '@utils/managers/Webhooks.class';
+import { Webhook } from '@utils/managers/Webhooks';
 import colors from 'colors';
 import { PermissionFlagsBits, TextChannel, WebhookClient } from 'discord.js';
 

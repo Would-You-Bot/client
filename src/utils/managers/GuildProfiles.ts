@@ -47,7 +47,6 @@ export class GuildProfile implements IGuildProfile {
     this.welcome = doc.welcome;
     this.daily = doc.daily;
     this.botJoined = doc.botJoined;
-    this.debug = doc.debug;
   }
 
   /**
@@ -210,7 +209,6 @@ export default class GuildProfiles {
               thread: false,
             },
             botJoined: Date.now(),
-            debug: false,
           });
 
           return createdGuildProfile;
