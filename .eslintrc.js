@@ -25,15 +25,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  ignorePatterns: [
-    '*.js',
-    '*.cjs',
-    '*.json',
-    '*.png',
-    '*.jpg',
-    '*.ttf',
-    '*.psd',
-  ],
+  ignorePatterns: ['*.js', '*.cjs', '*.json'],
   rules: {
     // Import plugin rules
     'import/first': 0, // Reports any imports that come after non-import statements

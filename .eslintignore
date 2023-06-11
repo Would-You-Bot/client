@@ -2,3 +2,5 @@ node_modules/
 tmp/
 dist/
 package-lock.json
+src/constants/fonts/
+src/constants/images/
