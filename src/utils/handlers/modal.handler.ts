@@ -1,4 +1,4 @@
-import { CoreModal } from '@typings/core';
+import { ExportedCoreModal } from '@typings/core';
 import loadFiles from '@utils/client/loadFiles';
 import { ExtendedClient } from 'src/client';
 
@@ -16,7 +16,7 @@ const modalHandler = async (client: ExtendedClient): Promise<void> => {
 
     const modalFile = (await import(
       `../../interactions/modals/${fileName}`
-    )) as { default: CoreModal | undefined } | undefined;
+    )) as { default: ExportedCoreModal | undefined } | undefined;
 
     if (!modalFile?.default?.id) continue;
 

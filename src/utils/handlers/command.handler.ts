@@ -1,4 +1,4 @@
-import { CoreCommandOptions } from '@typings/core';
+import { ExportedCoreCommand } from '@typings/core';
 import loadFiles from '@utils/client/loadFiles';
 import { ExtendedClient } from 'src/client';
 
@@ -7,7 +7,7 @@ import { ExtendedClient } from 'src/client';
  * @param client The extended client.
  */
 const commandHandler = async (client: ExtendedClient): Promise<void> => {
-  client.slashCommand.clear();
+  client.commands.clear();
 
   const files = await loadFiles('interactions/commands');
 
@@ -16,7 +16,7 @@ const commandHandler = async (client: ExtendedClient): Promise<void> => {
 
     const commandFile = (await import(
       `../../interactions/commands/${fileName}`
-    )) as { default: CoreCommandOptions | undefined } | undefined;
+    )) as { default: ExportedCoreCommand | undefined } | undefined;
 
     if (!commandFile?.default?.data.name) continue;
 
@@ -29,7 +29,7 @@ const commandHandler = async (client: ExtendedClient): Promise<void> => {
       continue;
     }
 
-    client.slashCommand.set(command.data.name, command);
+    client.commands.set(command.data.name, command);
   }
 };
 

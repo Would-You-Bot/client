@@ -1,6 +1,6 @@
 import { Events } from 'discord.js';
 
-import { CoreEventOptions } from '@typings/core';
+import { ExportedCoreEvent } from '@typings/core';
 import loadFiles from '@utils/client/loadFiles';
 import { ExtendedClient } from 'src/client';
 
@@ -18,7 +18,7 @@ const eventHandler = async (client: ExtendedClient): Promise<void> => {
 
     const eventFile = (await import(
       `../../interactions/events/${fileName}`
-    )) as { default: CoreEventOptions | undefined } | undefined;
+    )) as { default: ExportedCoreEvent | undefined } | undefined;
 
     if (!eventFile?.default?.name) continue;
 

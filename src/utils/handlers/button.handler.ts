@@ -1,4 +1,4 @@
-import { ICoreButton } from '@typings/core';
+import { ExportedCoreButton } from '@typings/core';
 import loadFiles from '@utils/client/loadFiles';
 import { ExtendedClient } from 'src/client';
 
@@ -16,7 +16,7 @@ const buttonHandler = async (client: ExtendedClient): Promise<void> => {
 
     const buttonFile = (await import(
       `../../interactions/buttons/${fileName}`
-    )) as { default: ICoreButton | undefined } | undefined;
+    )) as { default: ExportedCoreButton | undefined } | undefined;
 
     if (!buttonFile?.default?.id) continue;
 
