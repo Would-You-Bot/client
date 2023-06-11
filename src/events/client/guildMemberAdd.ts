@@ -7,9 +7,8 @@ import {
 } from 'discord.js';
 
 import config from '@config';
-import { GuildPackType } from '@typings/guild';
-import { BaseQuestion, CustomQuestion } from '@typings/pack';
 import CoreEvent from '@utils/builders/CoreEvent';
+import { BaseQuestion, CustomQuestion, GuildPackType } from '@would-you/types';
 
 export default new CoreEvent({
   name: Events.GuildMemberAdd,

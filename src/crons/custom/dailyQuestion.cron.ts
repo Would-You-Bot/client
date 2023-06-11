@@ -4,10 +4,14 @@ import { EmbedBuilder, Guild, TextChannel } from 'discord.js';
 
 import config from '@config';
 import { IExtendedClient } from '@typings/core';
-import { GuildPackType, GuildProfile } from '@typings/guild';
-import { BaseQuestion, CustomQuestion } from '@typings/pack';
 import CoreCustomCron from '@utils/builders/CoreCustomCron';
 import { validateAndFormatTimezone } from '@utils/functions';
+import {
+  BaseQuestion,
+  CustomQuestion,
+  GuildPackType,
+  GuildProfile,
+} from '@would-you/types';
 
 /**
  * Send the daily question.

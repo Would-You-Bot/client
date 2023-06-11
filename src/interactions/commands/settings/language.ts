@@ -4,8 +4,8 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 
-import { GuildLanguage } from '@typings/guild';
 import CoreCommand from '@utils/builders/CoreCommand';
+import { GuildLanguage } from '@would-you/types';
 
 export default new CoreCommand({
   data: new SlashCommandBuilder()

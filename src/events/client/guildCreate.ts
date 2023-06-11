@@ -1,8 +1,8 @@
 import { EmbedBuilder, Events, Guild, WebhookClient } from 'discord.js';
 
 import config from '@config';
-import { GuildLanguage, GuildPackType } from '@typings/guild';
 import CoreEvent from '@utils/builders/CoreEvent';
+import { GuildLanguage, GuildPackType } from '@would-you/types';
 
 /**
  * Filters the guild name to remove certain words.

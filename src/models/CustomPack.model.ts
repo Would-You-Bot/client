@@ -5,7 +5,7 @@ import {
   model,
 } from 'mongoose';
 
-import { CustomPack } from '@typings/pack';
+import { CustomPack } from '@would-you/types';
 
 export interface CustomPackSchema extends CustomPack, SchemaTimestampsConfig {}
 

@@ -4,6 +4,7 @@ import {
   GuildProfileModel,
   GuildProfileSchema,
 } from '@models/GuildProfile.model';
+import { logger } from '@utils/client';
 import {
   GuildDaily,
   GuildLanguage,
@@ -11,8 +12,7 @@ import {
   GuildPremium,
   GuildWelcome,
   GuildProfile as IGuildProfile,
-} from '@typings/guild';
-import { logger } from '@utils/client';
+} from '@would-you/types';
 
 /**
  * The guild profile class.

@@ -272,8 +272,8 @@ Based on the list of user IDs in the `config/main.yaml` file, developer only int
 
 ## Contributing
 
-If you would like to contribute to the project, please read the [contributing guidelines](/CODE_OF_CONDUCT.md). If you have any questions, feel free to ask in the [support server](https://wouldyoubot.gg/discord).
+If you would like to contribute to the project, please read the [contributing guidelines](/.github/CODE_OF_CONDUCT.md). If you have any questions, feel free to ask in the [support server](https://wouldyoubot.gg/discord).
 
 ## License
 
-This project is licensed under a [Custom License](/LICENSE).
+This project is licensed under the [MIT License](/LICENSE).

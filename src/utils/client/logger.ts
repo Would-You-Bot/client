@@ -4,7 +4,7 @@ import { TransformableInfo, format } from 'logform';
 import * as winston from 'winston';
 
 import config from '@config';
-import addDiscordLog from './logValues';
+import { addDiscordLog } from './logValues';
 
 const logsDir = `./tmp/logs/${config.logFolder}`;
 let clusterId = 'unknown';
@@ -52,35 +52,24 @@ const levelColor = (level: string): string => {
  * The format for the console transport.
  */
 const consoleFormat = winston.format.combine(
-  // winston.format.prettyPrint(),
   winston.format.colorize(),
-  winston.format.timestamp(),
   winston.format.ms(),
   winston.format.errors({ stack: true }),
-  // winston.format.splat(),
-  // winston.format.json(),
-  winston.format.printf(
-    ({ timestamp, ms, level, message, stack }: TransformableInfo) => {
-      let msg = message as string;
+  winston.format.printf(({ ms, level, message, stack }: TransformableInfo) => {
+    let msg = message as string;
 
-      // Append the stack trace to the message if it is present
-      if (stack) msg += `\n${stack as string}`;
+    // Append the stack trace to the message if it is present
+    if (stack) msg += `\n${stack as string}`;
 
-      addDiscordLog(
-        level,
-        `(${ms as string}) [Cluster ${clusterId}] [${level}]: ${msg}`
-      );
+    addDiscordLog(level, `${ms as string} [${level}]: ${msg}`);
 
-      /* eslint-disable no-control-regex */
-      const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
+    /* eslint-disable no-control-regex */
+    const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
 
-      return `${colors.gray(timestamp as string)} (${colors.magenta(
-        ms as string
-      )}) [${colors.white(`Cluster ${clusterId}`)}] [${levelColor(
-        level.replace(ANSI_REGEX, '')
-      )}]: ${msg}`;
-    }
-  )
+    return `[${colors.gray('would-you')}] ${colors.cyan(
+      ms as string
+    )} [${levelColor(level.replace(ANSI_REGEX, ''))}]: ${msg}`;
+  })
 );
 
 /**
@@ -92,10 +81,7 @@ const fileFormat = winston.format.combine(
     /* eslint-disable no-control-regex */
     const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
     newInfo.level = info.level.replace(ANSI_REGEX, '');
-    newInfo.message = `[Cluster ${clusterId}] ${info.message.replace(
-      ANSI_REGEX,
-      ''
-    )}`;
+    newInfo.message = info.message.replace(ANSI_REGEX, '');
     return newInfo;
   })(),
   winston.format.timestamp(),

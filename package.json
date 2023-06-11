@@ -9,16 +9,16 @@
     "discord",
     "javascript"
   ],
-  "homepage": "https://github.com/Developer-Dungeon-Studio/Would-You#readme",
+  "homepage": "https://github.com/Would-You-Bot/Would-You#readme",
   "bugs": {
-    "url": "https://github.com/Developer-Dungeon-Studio/Would-You/issues"
+    "url": "https://github.com/Would-You-Bot/Would-You/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Developer-Dungeon-Studio/Would-You.git"
+    "url": "git+https://github.com/Would-You-Bot/Would-You.git"
   },
   "license": "MIT",
-  "author": "Dominik, ForGetFulSkyBro, Mezos, Slekup",
+  "author": "Slekup, Dominik, ForGetFulSkyBro",
   "main": "dist/src/cluster.js",
   "files": [
     "dist"
@@ -58,6 +58,7 @@
     "@napi-rs/canvas": "^0.1.41",
     "@slekup/utils": "^0.0.13",
     "@top-gg/sdk": "^3.1.5",
+    "@would-you/types": "^0.0.1",
     "axios": "^1.4.0",
     "builder-validation": "^0.0.1",
     "colors": "^1.4.0",

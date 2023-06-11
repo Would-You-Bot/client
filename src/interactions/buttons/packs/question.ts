@@ -1,5 +1,5 @@
-import { PackQuestionType } from '@typings/pack';
 import { CoreButton } from '@utils/builders';
+import { PackQuestionType } from '@would-you/types';
 
 export default new CoreButton({
   id: 'question',

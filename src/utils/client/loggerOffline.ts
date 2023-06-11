@@ -1,10 +1,9 @@
 import colors from 'colors';
 import * as fs from 'fs';
-import { format } from 'logform';
+import { TransformableInfo, format } from 'logform';
 import * as winston from 'winston';
 
 import config from '@config';
-import addDiscordLog from './logValues';
 
 const logsDir = `./tmp/logs/${config.logFolder}`;
 
@@ -13,31 +12,66 @@ if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }
 
+/**
+ * Returns a color based on the log level.
+ * @param level The log level.
+ * @returns The colored log level.
+ */
+const levelColor = (level: string): string => {
+  switch (level) {
+    case 'error': {
+      return colors.red(level.toUpperCase());
+    }
+    case 'warn': {
+      return colors.yellow(level.toUpperCase());
+    }
+    case 'info': {
+      return colors.green(level.toUpperCase());
+    }
+    case 'debug': {
+      return colors.blue(level.toUpperCase());
+    }
+    case 'trace': {
+      return colors.magenta(level.toUpperCase());
+    }
+    default: {
+      return colors.white(level.toUpperCase());
+    }
+  }
+};
+
+/**
+ * The format for the console transport.
+ */
 const consoleFormat = winston.format.combine(
   winston.format.colorize(),
-  winston.format.timestamp(),
   winston.format.ms(),
   winston.format.errors({ stack: true }),
-  winston.format.printf(({ timestamp, ms, level, message, stack }) => {
-    let newMessage: string = message as string;
+  winston.format.printf(({ ms, level, message, stack }: TransformableInfo) => {
+    let msg = message as string;
+
     // Append the stack trace to the message if it is present
-    if (stack) newMessage += `\n${stack as string}`;
+    if (stack) msg += `\n${stack as string}`;
 
-    addDiscordLog(level, `(${ms as string}) [${level}]: ${newMessage}`);
+    /* eslint-disable no-control-regex */
+    const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
 
-    return `${colors.gray(timestamp as string)} (${colors.magenta(
+    return `[${colors.gray('would-you')}] ${colors.cyan(
       ms as string
-    )}) [${level}]: ${newMessage}`;
+    )} [${levelColor(level.replace(ANSI_REGEX, ''))}]: ${msg}`;
   })
 );
 
-// Format for file transports that removes ANSI escape sequences
+/**
+ * Format for file transports that removes ANSI escape sequences.
+ */
 const fileFormat = winston.format.combine(
-  format((info) => {
+  format((info: { level: string; message: string }) => {
+    const newInfo = info;
     /* eslint-disable no-control-regex */
     const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
-    const newInfo = info;
-    newInfo.message = (info.message as string).replace(ANSI_REGEX, '');
+    newInfo.level = info.level.replace(ANSI_REGEX, '');
+    newInfo.message = info.message.replace(ANSI_REGEX, '');
     return newInfo;
   })(),
   winston.format.timestamp(),

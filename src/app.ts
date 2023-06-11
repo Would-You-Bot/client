@@ -40,8 +40,8 @@ const app = async (client: ExtendedClient): Promise<void> => {
   initLogger(client.cluster.id);
 
   // Initialize discord logging (sends logs to discord channels)
-  const discordLog = await import('./utils/client/discordLog');
-  discordLog.initDiscordLogs(client);
+  const { initDiscordLogger } = await import('./utils/client/discordLogger');
+  initDiscordLogger(client);
 };
 
 export default app;

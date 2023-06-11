@@ -1,14 +1,14 @@
 import { BasePackDocument, BasePackModel } from '@models/BasePack.model';
 import { CustomPackDocument, CustomPackModel } from '@models/CustomPack.model';
-import { GuildPackType } from '@typings/guild';
+import { logger } from '@utils/client';
 import {
   BaseQuestion,
   CustomQuestion,
+  GuildPackType,
   BasePack as IBasePack,
   CustomPack as ICustomPack,
   PackQuestionType,
-} from '@typings/pack';
-import { logger } from '@utils/client';
+} from '@would-you/types';
 
 /**
  * The base pack class.

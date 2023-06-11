@@ -1,7 +1,11 @@
-export const infoQueue: string[] = [];
-export const errorQueue: string[] = [];
-export const warnQueue: string[] = [];
-export const debugQueue: string[] = [];
+const customQueue: Record<string, string[]> = {
+  info: [],
+  error: [],
+  warn: [],
+  debug: [],
+};
+
+export default customQueue;
 
 /* eslint-disable no-control-regex */
 const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
@@ -11,13 +15,11 @@ const ANSI_REGEX = /\u001b\[[0-9]{1,2}m/gi;
  * @param level The level of the log.
  * @param message The log message.
  */
-const addDiscordLog = (level: string, message: string): void => {
+export const addDiscordLog = (level: string, message: string): void => {
   const lvl = level.replace(ANSI_REGEX, '');
 
-  if (lvl === 'info') infoQueue.push(message);
-  if (lvl === 'error') errorQueue.push(message);
-  if (lvl === 'warn') warnQueue.push(message);
-  debugQueue.push(message);
+  if (lvl === 'info') customQueue.info.push(message);
+  if (lvl === 'error') customQueue.error.push(message);
+  if (lvl === 'warn') customQueue.warn.push(message);
+  customQueue.debug.push(message);
 };
-
-export default addDiscordLog;

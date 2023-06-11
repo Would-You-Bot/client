@@ -5,7 +5,7 @@ import {
   model,
 } from 'mongoose';
 
-import { BasePack } from '@typings/pack';
+import { BasePack } from '@would-you/types';
 
 export interface BasePackSchema extends BasePack, SchemaTimestampsConfig {}
 

@@ -1,4 +1,4 @@
-import { UserChoices } from '@typings/pack';
+import { UserChoices } from '@would-you/types';
 import {
   HydratedDocument,
   Schema,

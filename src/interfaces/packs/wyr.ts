@@ -9,9 +9,13 @@ import {
 
 import config from '@config';
 import { IExtendedClient } from '@typings/core';
-import { GuildPackType } from '@typings/guild';
-import { BaseQuestion, CustomQuestion, PackQuestionType } from '@typings/pack';
 import CoreInterface from '@utils/builders/CoreInterface';
+import {
+  BaseQuestion,
+  CustomQuestion,
+  GuildPackType,
+  PackQuestionType,
+} from '@would-you/types';
 
 interface Params {
   client: IExtendedClient;

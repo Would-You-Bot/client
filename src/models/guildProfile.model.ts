@@ -10,7 +10,7 @@ import {
   GuildLanguage,
   GuildPackType,
   GuildProfile,
-} from '@typings/guild';
+} from '@would-you/types';
 
 export interface GuildProfileSchema
   extends GuildProfile,
