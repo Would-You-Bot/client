@@ -76,8 +76,6 @@
   "exclude": [
     "node_modules",
     "**/*.spec.ts",
-    "src/constants/Fonts",
-    "src/constants/Images",
   ],
   "typedocOptions": {
     "name": "Would You Bot | Developer Documentation",
