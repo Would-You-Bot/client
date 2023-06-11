@@ -45,7 +45,6 @@ export default <CoreEventOptions>{
         thread: false,
       },
       botJoined: Date.now(),
-      debug: false,
     });
 
     // Initialize the private webhook client

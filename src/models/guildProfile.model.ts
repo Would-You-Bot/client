@@ -106,11 +106,6 @@ export const GuildProfileModel = model<GuildProfileDocument>(
       botLeft: {
         type: Number,
       },
-      debug: {
-        type: Boolean,
-        default: false,
-        required: true,
-      },
     },
     { timestamps: true }
   )

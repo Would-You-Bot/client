@@ -52,5 +52,4 @@ export interface GuildProfile {
   daily: GuildDaily;
   botJoined: number;
   botLeft?: number;
-  debug?: boolean;
 }

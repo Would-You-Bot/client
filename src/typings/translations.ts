@@ -51,6 +51,8 @@ export interface BotTranslations {
     embed: {
       title: string;
       description: string;
+      timezone: string;
+      packType: string;
     };
   };
   // language: {};
@@ -63,8 +65,17 @@ export interface BotTranslations {
       channel: string;
       role: string;
     };
-    embed: { title: string; description: string };
+    embed: {
+      title: string;
+      description: string;
+      dailyChannel: string;
+      dailyRole: string;
+      dailyTime: string;
+      dailyThread: string;
+    };
     buttons: {
+      enable: string;
+      disable: string;
       channel: string;
       role: string;
       time: string;
@@ -74,7 +85,6 @@ export interface BotTranslations {
       };
     };
   };
-  // debug: {}
   welcomeSettings: {
     content: {
       channel: string;
@@ -83,6 +93,8 @@ export interface BotTranslations {
     embed: {
       title: string;
       description: string;
+      ping: string;
+      channel: string;
     };
   };
   ping: {
