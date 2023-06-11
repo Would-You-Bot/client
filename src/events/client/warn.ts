@@ -1,15 +1,9 @@
 import { Events } from 'discord.js';
 
-import { CoreEventOptions } from '@typings/core';
+import CoreEvent from '@utils/builders/CoreEvent';
 
-export default <CoreEventOptions>{
+export default new CoreEvent({
   name: Events.Warn,
-  /**
-   * Executes the warn event.
-   * @param client The extended client.
-   * @param info The info.
-   */
-  execute(client, info: string) {
-    client.logger.warn(`Warning: ${info}`);
-  },
-};
+}).execute((client, info: string) => {
+  client.logger.warn(`Warning: ${info}`);
+});

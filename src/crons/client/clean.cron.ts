@@ -5,7 +5,8 @@ import {
   GuildProfileDocument,
   GuildProfileModel,
 } from '@models/GuildProfile.model';
-import { CoreCronOptions, IExtendedClient } from '@typings/core';
+import { IExtendedClient } from '@typings/core';
+import CoreCron from '@utils/builders/CoreCron';
 import { GuildData, exportGuildData } from '@utils/client';
 
 const guildsData: GuildData[] = [];
@@ -81,80 +82,74 @@ const deleteGuildData = async (
   );
 };
 
-export default <CoreCronOptions>{
+export default new CoreCron({
   id: 'cleanCron',
   name: 'Clean Cron',
   expression: '0 * * * *',
   timezone: 'America/New_York',
-  /**
-   * The function to execute.
-   * @param client The extended client.
-   * @returns Nothing.
-   */
-  execute: async (client: IExtendedClient) => {
-    // Get all guild profiles
-    const allGuildProfiles = await GuildProfileModel.find(
-      {},
-      {
-        botLeft: 1,
-      }
+}).execute(async (client) => {
+  // Get all guild profiles
+  const allGuildProfiles = await GuildProfileModel.find(
+    {},
+    {
+      botLeft: 1,
+    }
+  );
+
+  const oneMonth = 1000 * 60 * 60 * 24 * 30;
+
+  for (const guildProfileDoc of allGuildProfiles) {
+    const shardId = client.shard?.broadcastEval((client) =>
+      client.guilds.cache.get(guildProfileDoc.guildId)
     );
 
-    const oneMonth = 1000 * 60 * 60 * 24 * 30;
+    // If the guild is still in the cache, continue to the next guild profile
+    if (shardId) continue;
 
-    for (const guildProfileDoc of allGuildProfiles) {
-      const shardId = client.shard?.broadcastEval((client) =>
-        client.guilds.cache.get(guildProfileDoc.guildId)
-      );
-
-      // If the guild is still in the cache, continue to the next guild profile
-      if (shardId) continue;
-
-      // If the guild profile does not have the botLeft property, meaning that it may not have been applied during the guildDelete event
-      if (!guildProfileDoc.botLeft) {
-        // Apply the botLeft property to the guild profile
-        guildProfileDoc.botLeft = Date.now();
-        await guildProfileDoc.save();
-        // Continue to the next guild profile
-        continue;
-      }
-
-      // Continue to the next guild profile if the bot has not been in the guild for more than 30 days
-      if (Date.now() - guildProfileDoc.botLeft < oneMonth) continue;
-
-      await deleteGuildData(client, guildProfileDoc);
+    // If the guild profile does not have the botLeft property, meaning that it may not have been applied during the guildDelete event
+    if (!guildProfileDoc.botLeft) {
+      // Apply the botLeft property to the guild profile
+      guildProfileDoc.botLeft = Date.now();
+      await guildProfileDoc.save();
+      // Continue to the next guild profile
+      continue;
     }
 
-    // Get the dev guild
-    const guild = client.guilds.cache.get(config.env.DEV_GUILD);
-    if (!guild) return;
+    // Continue to the next guild profile if the bot has not been in the guild for more than 30 days
+    if (Date.now() - guildProfileDoc.botLeft < oneMonth) continue;
 
-    // Get the guilds channel
-    const channel = guild.channels.cache.get(config.env.GUILD_CHANNEL);
-    if (!channel || channel.type !== ChannelType.GuildText) return;
+    await deleteGuildData(client, guildProfileDoc);
+  }
 
-    const embed = new EmbedBuilder()
-      .setTitle(`${guildProfilesDeleted} Guild's Data Deleted`)
-      .setColor(config.colors.danger)
-      .setDescription(
-        `
-      **Guild Profiles Deleted**: ${guildProfilesDeleted}
-      **Webhooks Deleted**: ${webhooksDeleted}
-      **Question Packs Deleted**: ${customPacksDeleted}
+  // Get the dev guild
+  const guild = client.guilds.cache.get(config.env.DEV_GUILD);
+  if (!guild) return;
+
+  // Get the guilds channel
+  const channel = guild.channels.cache.get(config.env.GUILD_CHANNEL);
+  if (!channel || channel.type !== ChannelType.GuildText) return;
+
+  const embed = new EmbedBuilder()
+    .setTitle(`${guildProfilesDeleted} Guild's Data Deleted`)
+    .setColor(config.colors.danger)
+    .setDescription(
       `
-      );
-
-    // Create the file attatchment with guilds data
-    const attachment = new AttachmentBuilder(
-      Buffer.from(JSON.stringify(guildsData, null, 2)),
-      {
-        name: `guilds.json`,
-      }
+    **Guild Profiles Deleted**: ${guildProfilesDeleted}
+    **Webhooks Deleted**: ${webhooksDeleted}
+    **Question Packs Deleted**: ${customPacksDeleted}
+    `
     );
 
-    channel.send({ embeds: [embed], files: [attachment] });
+  // Create the file attatchment with guilds data
+  const attachment = new AttachmentBuilder(
+    Buffer.from(JSON.stringify(guildsData, null, 2)),
+    {
+      name: `guilds.json`,
+    }
+  );
 
-    // Reset the data values
-    resetData();
-  },
-};
+  channel.send({ embeds: [embed], files: [attachment] });
+
+  // Reset the data values
+  resetData();
+});

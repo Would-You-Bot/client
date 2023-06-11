@@ -1,18 +1,9 @@
 import { Events } from 'discord.js';
 
-import { CoreEventOptions } from '@typings/core';
+import CoreEvent from '@utils/builders/CoreEvent';
 
-export default <CoreEventOptions>{
+export default new CoreEvent({
   name: Events.ShardResume,
-  /**
-   * Executes the shard resume event.
-   * @param client The extended client.
-   * @param id The shard id.
-   * @param replayedEvents The number of replayed events.
-   */
-  execute(client, id: string, replayedEvents: number) {
-    client.logger.info(
-      `Shard resume: ${id} (${replayedEvents} events replayed)`
-    );
-  },
-};
+}).execute((client, id: string, replayedEvents: number) => {
+  client.logger.info(`Shard resume: ${id} (${replayedEvents} events replayed)`);
+});

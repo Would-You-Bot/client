@@ -1,19 +1,11 @@
 import { AutocompleteInteraction, Events } from 'discord.js';
 
-import { CoreEventOptions } from '@typings/core';
+import CoreEvent from '@utils/builders/CoreEvent';
 
-export default <CoreEventOptions>{
+export default new CoreEvent({
   name: Events.InteractionCreate,
-  /**
-   * Execute the auto complete event handler.
-   * @param client The extended client.
-   * @param interaction The autocomplete interaction.
-   * @returns A promise.
-   */
-  async execute(
-    client,
-    interaction: AutocompleteInteraction
-  ): Promise<unknown> {
+}).execute(
+  async (client, interaction: AutocompleteInteraction): Promise<unknown> => {
     if (!client.synced) return;
     if (!interaction.isAutocomplete()) return;
 
@@ -28,10 +20,18 @@ export default <CoreEventOptions>{
       return;
     }
 
+    // If the command does not have an autocomplete function
+    if (!command.autocomplete) {
+      client.logger.error(
+        `Command ${interaction.commandName} does not have an autocomplete function.`
+      );
+      return;
+    }
+
     try {
       await command.autocomplete(client, interaction);
     } catch (error) {
       client.logger.error(error);
     }
-  },
-};
+  }
+);

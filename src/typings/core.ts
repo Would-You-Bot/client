@@ -47,7 +47,7 @@ export interface IExtendedClient extends Client {}
 export type CoreButtonExecute = (
   client: IExtendedClient,
   interaction: ButtonInteraction,
-  args: string[]
+  args?: string[]
 ) => Promise<unknown> | unknown;
 
 export interface CoreButtonOptions {
@@ -138,9 +138,10 @@ export interface ExportedCoreCustomCron extends CoreCustomCronOptions {
  * Core Event.
  */
 
-export type CoreEventExecute<P extends unknown[] = unknown[]> = (
+export type CoreEventExecute = (
   client: IExtendedClient,
-  ...params: P
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  ...params: any[]
 ) => Promise<unknown> | unknown;
 
 export type CoreEventName = Events | Events.Raw | Events.VoiceServerUpdate;
@@ -151,9 +152,8 @@ export interface CoreEventOptions {
   disabled?: boolean;
 }
 
-export interface ExportedCoreEvent<P extends unknown[] = unknown[]>
-  extends CoreEventOptions {
-  execute: CoreEventExecute<P>;
+export interface ExportedCoreEvent extends CoreEventOptions {
+  execute: CoreEventExecute;
 }
 
 /**
@@ -211,10 +211,10 @@ export interface IExtendedClient extends Client {
   cluster: ClusterClient<DjsDiscordClient>;
   translations: Translations;
 
-  commands: Collection<string, CoreCommandOptions>;
-  buttons: Collection<string, CoreButtonOptions>;
-  modals: Collection<string, CoreModalOptions>;
-  events: Collection<string, CoreEventOptions>;
+  commands: Collection<string, ExportedCoreCommand>;
+  buttons: Collection<string, ExportedCoreButton>;
+  modals: Collection<string, ExportedCoreModal>;
+  events: Collection<string, ExportedCoreEvent>;
 
   guildProfiles: GuildProfiles;
   packs: QuestionPacks;

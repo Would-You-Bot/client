@@ -3,11 +3,11 @@ import { CronJob } from 'cron';
 import { EmbedBuilder, Guild, TextChannel } from 'discord.js';
 
 import config from '@config';
-import { CoreCustomCronOptions, IExtendedClient } from '@typings/core';
+import { IExtendedClient } from '@typings/core';
 import { GuildPackType, GuildProfile } from '@typings/guild';
 import { BaseQuestion, CustomQuestion } from '@typings/pack';
+import CoreCustomCron from '@utils/builders/CoreCustomCron';
 import { validateAndFormatTimezone } from '@utils/functions';
-import { ExtendedClient } from 'src/client';
 
 /**
  * Send the daily question.
@@ -38,7 +38,7 @@ const sendDailyQuestion = async (
   }
 
   // Get a random question
-  const randomQuestionData = await client.packs.random(guildProfile.packType);
+  const randomQuestionData = client.packs.random(guildProfile.packType);
 
   let randomQuestion: string;
   if (guildProfile.packType === GuildPackType.Base)
@@ -78,64 +78,56 @@ const sendDailyQuestion = async (
     });
 };
 
-export default <CoreCustomCronOptions>{
+export default new CoreCustomCron({
   id: 'dailyQuestion',
   name: 'Daily Question',
-  /**
-   * The function to execute.
-   * @param client The extended client.
-   * @returns Nothing.
-   */
-  async execute(client: ExtendedClient): Promise<void> {
-    for (const guild of Array.from(client.guilds.cache.values())) {
-      // Fetch the guild profile
-      const guildProfile = await client.guildProfiles.fetch(guild.id);
+}).execute(async (client): Promise<void> => {
+  for (const guild of Array.from(client.guilds.cache.values())) {
+    // Fetch the guild profile
+    const guildProfile = await client.guildProfiles.fetch(guild.id);
 
-      // If nessesary values are not set, return
-      if (!guildProfile.daily.enabled) return;
-      if (!guildProfile.daily.channel) return;
+    // If nessesary values are not set, return
+    if (!guildProfile.daily.enabled) return;
+    if (!guildProfile.daily.channel) return;
 
-      const expression = functions.timeToCronExpression(
-        guildProfile.daily.time
+    const expression = functions.timeToCronExpression(guildProfile.daily.time);
+
+    if (!expression) {
+      client.logger.error(
+        `Invalid time for daily question ${guildProfile.guildId}`
       );
-
-      if (!expression) {
-        client.logger.error(
-          `Invalid time for daily question ${guildProfile.guildId}`
-        );
-        return;
-      }
-
-      // Validate the cron expression
-      if (!tests.testCronExpression(expression)) {
-        client.logger.error(
-          `Invalid cron expression for ${guildProfile.guildId}`
-        );
-        return;
-      }
-
-      // Validate the timezone
-      const timezone = validateAndFormatTimezone(guildProfile.timezone);
-
-      // If the timezone is invalid, log an error and return
-      if (!timezone) {
-        client.logger.error(`Invalid timezone for(${guildProfile.guildId})`);
-        return;
-      }
-
-      // Create the cron job
-      const job = new CronJob(
-        expression,
-        () => {
-          sendDailyQuestion(client, guild, guildProfile);
-        },
-        null,
-        false,
-        guildProfile.timezone
-      );
-
-      // Start the cron job
-      job.start();
+      return;
     }
-  },
-};
+
+    // Validate the cron expression
+    if (!tests.testCronExpression(expression)) {
+      client.logger.error(
+        `Invalid cron expression for ${guildProfile.guildId}`
+      );
+      return;
+    }
+
+    // Validate the timezone
+    const timezone = validateAndFormatTimezone(guildProfile.timezone);
+
+    // If the timezone is invalid, log an error and return
+    if (!timezone) {
+      client.logger.error(`Invalid timezone for(${guildProfile.guildId})`);
+      return;
+    }
+
+    // Create the cron job
+    const job = new CronJob(
+      expression,
+      () => {
+        sendDailyQuestion(client, guild, guildProfile);
+      },
+      null,
+      false,
+      guildProfile.timezone
+    );
+
+    // Start the cron job
+    job.start();
+  }
+});

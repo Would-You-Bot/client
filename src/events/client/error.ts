@@ -1,15 +1,9 @@
 import { Events } from 'discord.js';
 
-import { CoreEventOptions } from '@typings/core';
+import CoreEvent from '@utils/builders/CoreEvent';
 
-export default <CoreEventOptions>{
+export default new CoreEvent({
   name: Events.Error,
-  /**
-   * Execute the event.
-   * @param client The extended client.
-   * @param error The error.
-   */
-  execute(client, error: Error): void {
-    client.logger.error(error);
-  },
-};
+}).execute((client, error: Error): void => {
+  client.logger.error(error);
+});

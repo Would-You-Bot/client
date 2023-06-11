@@ -7,7 +7,7 @@ import {
 /**
  * The CoreCron class, used to create a Cron.
  */
-export default class CoreCron {
+export default class CoreCustomCron {
   private id: string;
   private name: string;
   private disabled?: boolean;
