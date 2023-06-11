@@ -1,12 +1,19 @@
 import {
   ActionRowBuilder,
+  BaseInteraction,
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
 } from 'discord.js';
 
 import config from '@config';
-import { CoreInterfaceFunction } from '@typings/core';
+import { IExtendedClient } from '@typings/core';
+import CoreInterface from '@utils/builders/CoreInterface';
+
+interface Params {
+  client: IExtendedClient;
+  interaction: BaseInteraction;
+}
 
 /**
  * The daily question interface.
@@ -14,14 +21,18 @@ import { CoreInterfaceFunction } from '@typings/core';
  * @param guildProfile The guild profile.
  * @returns An object containing the embed and buttons.
  */
-export default <CoreInterfaceFunction>((client, guildProfile) => {
+export default new CoreInterface<Params>(async ({ client, interaction }) => {
+  if (!interaction.guildId) throw new Error('No guild ID');
+
+  const guildProfile = await client.guildProfiles.fetch(interaction.guildId);
+
   const translations = client.translations[guildProfile.language];
 
   const embed = new EmbedBuilder()
-    .setTitle(translations.settings.daily.embed.title)
+    .setTitle(translations.dailySettings.embed.title)
     .setColor(config.colors.primary)
     .setDescription(
-      translations.settings.daily.embed.description
+      translations.dailySettings.embed.description
         .replace('{name}', translations.name)
         .replace(
           '{enabled}',
@@ -60,7 +71,7 @@ export default <CoreInterfaceFunction>((client, guildProfile) => {
         `daily*enabled-${guildProfile.daily.enabled ? 'false' : 'true'}`
       )
       .setLabel(
-        translations.settings.daily.button.enabled[
+        translations.dailySettings.buttons[
           guildProfile.daily.enabled ? 'disable' : 'enable'
         ]
       )
@@ -69,26 +80,26 @@ export default <CoreInterfaceFunction>((client, guildProfile) => {
       ),
     new ButtonBuilder()
       .setCustomId('daily*channel')
-      .setLabel(translations.settings.daily.button.channel)
+      .setLabel(translations.dailySettings.buttons.channel)
       .setStyle(
         guildProfile.daily.enabled ? ButtonStyle.Success : ButtonStyle.Secondary
       )
       .setDisabled(!guildProfile.daily.enabled),
     new ButtonBuilder()
       .setCustomId('daily*role')
-      .setLabel(translations.settings.daily.button.role)
+      .setLabel(translations.dailySettings.buttons.role)
       .setStyle(useButtonStyle)
       .setDisabled(!guildProfile.daily.enabled),
     new ButtonBuilder()
       .setCustomId('daily*time')
-      .setLabel(translations.settings.daily.button.time)
+      .setLabel(translations.dailySettings.buttons.time)
       .setStyle(ButtonStyle.Primary)
       .setDisabled(!guildProfile.daily.enabled)
       .setEmoji('⏰'),
     new ButtonBuilder()
       .setCustomId('daily*thread')
       .setLabel(
-        translations.settings.daily.button.thread[
+        translations.dailySettings.buttons.thread[
           guildProfile.daily.thread ? 'disable' : 'enable'
         ]
       )
@@ -97,7 +108,8 @@ export default <CoreInterfaceFunction>((client, guildProfile) => {
   );
 
   return {
-    buttons,
-    embed,
+    content: '',
+    buttons: [buttons],
+    embeds: [embed],
   };
-});
+}).build();

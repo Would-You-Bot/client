@@ -1,7 +1,7 @@
 import { tests } from 'builder-validation';
 import { CronJob } from 'cron';
 
-import { CoreCronOptions, CoreCustomCronOptions } from '@typings/core';
+import { ExportedCoreCron, ExportedCoreCustomCron } from '@typings/core';
 import { loadFiles } from '@utils/client';
 import { validateAndFormatTimezone } from '@utils/functions';
 import { ExtendedClient } from 'src/client';
@@ -20,7 +20,7 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
     // Load the custom cron
     const customCron = (
       (await import(`../../crons/custom/${customCronFile}`)) as {
-        default: CoreCustomCronOptions;
+        default: ExportedCoreCustomCron;
       }
     ).default;
 
@@ -41,7 +41,7 @@ const initializeCrons = async (client: ExtendedClient): Promise<void> => {
     // Load the client cron
     const clientCron = (
       (await import(`../../crons/client/${clientCronFile}`)) as {
-        default: CoreCronOptions;
+        default: ExportedCoreCron;
       }
     ).default;
 

@@ -15,14 +15,14 @@ import {
   ExportedCoreModal,
   IExtendedClient,
 } from '@typings/core';
+import { logger } from '@utils/client';
+import { clientError } from '@utils/client/errorHandler';
 import {
   GuildProfiles,
   QuestionPacks,
   Translations,
   Webhooks,
-} from '@utils/classes';
-import { logger } from '@utils/client';
-import { clientError } from '@utils/client/errorHandler';
+} from '@utils/managers';
 
 interface ClientErrorParams {
   error: Error | string;

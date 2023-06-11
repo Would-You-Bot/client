@@ -1,14 +1,19 @@
 import {
   ActionRowBuilder,
+  BaseInteraction,
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
 } from 'discord.js';
 
 import config from '@config';
-import { CoreInterfaceFunction } from '@typings/core';
-import { GuildProfile } from '@utils/classes';
-import { ExtendedClient } from 'src/client';
+import { IExtendedClient } from '@typings/core';
+import CoreInterface from '@utils/builders/CoreInterface';
+
+interface Params {
+  client: IExtendedClient;
+  interaction: BaseInteraction;
+}
 
 /**
  * The interface for the general settings.
@@ -16,16 +21,17 @@ import { ExtendedClient } from 'src/client';
  * @param guildProfile The guild profile.
  * @returns An object containing the embed and buttons.
  */
-const generalSettingsInterface: CoreInterfaceFunction<
-  ExtendedClient,
-  GuildProfile
-> = (client, guildProfile) => {
+export default new CoreInterface<Params>(async ({ client, interaction }) => {
+  if (!interaction.guildId) throw new Error('No guild ID');
+
+  const guildProfile = await client.guildProfiles.fetch(interaction.guildId);
+
   const translations = client.translations[guildProfile.language];
 
   const embed = new EmbedBuilder()
-    .setTitle(translations.settings.general.embed.title)
+    .setTitle(translations.generalSettings.embed.title)
     .setColor(config.colors.primary)
-    .setDescription(translations.settings.general.embed.description);
+    .setDescription(translations.generalSettings.embed.description);
 
   const row = new ActionRowBuilder<ButtonBuilder>().setComponents(
     new ButtonBuilder()
@@ -44,6 +50,4 @@ const generalSettingsInterface: CoreInterfaceFunction<
     embeds: [embed],
     components: [row],
   };
-};
-
-export default generalSettingsInterface;
+}).build();

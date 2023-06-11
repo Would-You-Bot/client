@@ -19,12 +19,9 @@ export default async (client: IExtendedClient): Promise<void> => {
   }).setToken(config.BOT_TOKEN);
 
   // Create a new array for all of the slash and context commands
-  const commandJsonData = [
-    ...Array.from(client.commands.values()).map((command) => command.data),
-    ...Array.from(client.contextMenuCommands.values()).map(
-      (command) => command.data
-    ),
-  ];
+  const commandJsonData = Array.from(client.commands.values()).map(
+    (command) => command.data
+  );
 
   const regCmdStart = Date.now();
 

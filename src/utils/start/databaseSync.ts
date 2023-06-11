@@ -1,10 +1,10 @@
-import { ExtendedClient } from 'src/client';
+import { IExtendedClient } from '@typings/core';
 
 /**
  * Sync the database to local cache.
  * @param client The extended client.
  */
-const databaseSync = async (client: ExtendedClient) => {
+const databaseSync = async (client: IExtendedClient): Promise<void> => {
   await Promise.all([
     await client.guildProfiles.sync(),
     await client.webhooks.sync(),

@@ -1,9 +1,10 @@
+import { StringSelectMenuInteraction } from 'discord.js';
+
 import { IExtendedClient } from '@typings/core';
-import { SelectMenuInteraction } from 'discord.js';
 
 type SelectMenuFunction = (
   client: IExtendedClient,
-  interaction: SelectMenuInteraction,
+  interaction: StringSelectMenuInteraction,
   args: string[]
 ) => Promise<unknown> | unknown;
 
