@@ -30,8 +30,7 @@ module.exports = {
       .addFields(
         {
           name: 'Developers 🐧',
-          value: `
-          \`\`\`dominikdev\nforgetfulskybro\nFinn#3000\nSlekup#6682\nMarc#0309\`\`\``,
+          value: '\`\`\`@dominikdev\n@forgetfulskybro\nFinn#3000\nSlekup#6682\nMarc#0309\`\`\`',
           inline: false,
         },
         {
