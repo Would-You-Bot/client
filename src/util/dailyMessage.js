@@ -58,7 +58,7 @@ module.exports = class DailyMessage {
                     } else {
                         randomDaily = [...General, ...WhatYouDo]
                     }
-                    array.push([...General, ...WhatYouDo])
+                    array.push(...General, ...WhatYouDo)
                     randomDaily = array[Math.floor(Math.random() * array.length)]
                 } else if (db.customTypes === "custom") {
                     if (db.customMessages.filter(c => c.type !== "nsfw").length === 0) {
@@ -74,7 +74,8 @@ module.exports = class DailyMessage {
                         });
                     }
 
-                    randomDaily.push(db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)]);
+                    randomDaily = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
+                    console.log(randomDaily)
                 }
 
                 dailyId = Math.floor(Math.random() * randomDaily.length)
@@ -84,7 +85,7 @@ module.exports = class DailyMessage {
                     .setFooter({
                         text: `Daily Message | Type: ${db.customTypes.replace(/^\w/, c => c.toUpperCase())} | ID: ${dailyId}`
                     })
-                    .setDescription(randomDaily[dailyId]);
+                    .setDescription(randomDaily);
                 await this.client.webhookHandler.sendWebhook(
                     channel,
                     db.dailyChannel,
