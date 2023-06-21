@@ -996,9 +996,9 @@ cookie@0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.5.0.tgz"
 
-cron@^2.1.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/cron/-/cron-2.2.0.tgz"
+cron@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/cron/-/cron-2.3.1.tgz#71caa566ffef60ada9183b8677df4afa9a214ad7"
   dependencies:
     luxon "^3.2.1"
 
