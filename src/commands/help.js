@@ -1,8 +1,8 @@
 const {
-    EmbedBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    SlashCommandBuilder,
+    MessageEmbed,
+    MessageActionRow,
+    MessageButton,
+    SlashCommandBuilder
 } = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 
@@ -22,16 +22,16 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        const commands = await client.application.commands.fetch({withLocalizations: true})
-        let type;
-        if (guildDb.language === "de_DE") {
-            type = "de"
-        } else if (guildDb.language === "en_EN") {
-            type = "en"
-        } else if (guildDb.language === "es_ES") {
-            type = "es"
-        }
-        const helpembed = new EmbedBuilder()
+        const languageMappings = {
+            de_DE: "de",
+            en_EN: "en",
+            es_ES: "es"
+        };
+
+        const commands = await client.application.commands.fetch({ withLocalizations: true });
+        const type = languageMappings[guildDb?.language] || "en";
+
+        const helpEmbed = new MessageEmbed()
             .setColor('#0598F6')
             .setFooter({
                 text: client.translation.get(guildDb?.language, 'Help.embed.footer'),
@@ -39,32 +39,38 @@ module.exports = {
             })
             .setTimestamp()
             .setTitle(client.translation.get(guildDb?.language, 'Help.embed.title'))
-            .addFields(
-                {
-                    name: client.translation.get(guildDb?.language, 'Help.embed.Fields.privacyname'),
-                    value: client.translation.get(guildDb?.language, 'Help.embed.Fields.privacy'),
-                    inline: false,
-                },
-            )
-            .setDescription(client.translation.get(guildDb?.language, 'Help.embed.description') + `\n\n${commands.filter(e => e.name !== "reload").sort((a, b) => a.name.localeCompare(b.name)).map(n => `</${n.name}:${n.id}> - ${type === "de" ? n.descriptionLocalizations.de : type === "es" ? n.descriptionLocalizations["es-ES"] : n.description}`).join("\n")}`);
+            .addFields({
+                name: client.translation.get(guildDb?.language, 'Help.embed.Fields.privacyname'),
+                value: client.translation.get(guildDb?.language, 'Help.embed.Fields.privacy'),
+                inline: false,
+            })
+            .setDescription(client.translation.get(guildDb?.language, 'Help.embed.description') + `\n\n${commands
+                .filter(e => e.name !== "reload")
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map(n => `</${n.name}:${n.id}> - ${type === "de" ? n.descriptionLocalizations.de : type === "es" ? n.descriptionLocalizations["es-ES"] : n.description}`)
+                .join("\n")}`);
 
-        const button = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-                .setLabel(client.translation.get(guildDb?.language, 'Help.button.title'))
-                .setStyle(5)
-                .setEmoji('💫')
-                .setURL('https://discord.gg/vMyXAxEznS'),
-            new ButtonBuilder()
-                .setLabel('Invite')
-                .setStyle(5)
-                .setEmoji('1009964111045607525')
-                .setURL('https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands'),
-        );
+        const inviteButtonLabel = client.translation.get(guildDb?.language, 'Help.button.title');
+        const inviteButtonURL = 'https://discord.gg/vMyXAxEznS';
+        const inviteButton = new MessageButton()
+            .setLabel(inviteButtonLabel)
+            .setStyle('LINK')
+            .setEmoji('💫')
+            .setURL(inviteButtonURL);
+
+        const addButtonLabel = 'Invite';
+        const addButtonURL = 'https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands';
+        const addButton = new MessageButton()
+            .setLabel(addButtonLabel)
+            .setStyle('LINK')
+            .setEmoji('1009964111045607525')
+            .setURL(addButtonURL);
+
+        const actionRow = new MessageActionRow().addComponents(inviteButton, addButton);
+
         await interaction.reply({
-            embeds: [helpembed],
-            components: [button],
-        }).catch((err) => {
-            return;
+            embeds: [helpEmbed],
+            components: [actionRow],
         });
     },
 };
