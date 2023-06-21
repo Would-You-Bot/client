@@ -40,20 +40,37 @@ module.exports = {
         if (guildDb.voteCooldown === value)
           return modalInteraction.reply({
             ephemeral: true,
-            content: client.translation.get(guildDb?.language, 'Settings.voteSame'),
+            content: client.translation.get(
+              guildDb?.language,
+              "Settings.voteSame"
+            ),
           });
         if (isNumericRegex(value) === false)
           return modalInteraction.reply({
             ephemeral: true,
-            content: client.translation.get(guildDb?.language, 'Settings.cooldownInvalid'),
+            content: client.translation.get(
+              guildDb?.language,
+              "Settings.cooldownInvalid"
+            ),
           });
 
         const generalMsg = new EmbedBuilder()
-          .setTitle(client.translation.get(guildDb?.language, 'Settings.embed.generalTitle'))
+          .setTitle(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.embed.generalTitle"
+            )
+          )
           .setDescription(
-            `${client.translation.get(guildDb?.language, 'Settings.embed.voteCooldown')}: ${
+            `${client.translation.get(
+              guildDb?.language,
+              "Settings.embed.voteCooldown"
+            )}: ${
               guildDb.voteCooldown ? `${value}` : `<:x_:1077962443013238814>`
-            }\n${client.translation.get(guildDb?.language, 'Settings.embed.replayCooldown')}: ${
+            }\n${client.translation.get(
+              guildDb?.language,
+              "Settings.embed.replayCooldown"
+            )}: ${
               guildDb.replayCooldown
                 ? `${guildDb.replayCooldown}`
                 : `<:x_:1077962443013238814>`
@@ -61,18 +78,31 @@ module.exports = {
           )
           .setColor("#0598F6")
           .setFooter({
-            text: client.translation.get(guildDb?.language, 'Settings.embed.footer'),
+            text: client.translation.get(
+              guildDb?.language,
+              "Settings.embed.footer"
+            ),
             iconURL: client.user.avatarURL(),
           });
 
         const generalButtons = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setCustomId("voteCooldown")
-            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.voteCooldown'))
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.voteCooldown"
+              )
+            )
             .setStyle(guildDb.voteCooldown ? "Success" : "Secondary"),
           new ButtonBuilder()
             .setCustomId("replayCooldown")
-            .setLabel(client.translation.get(guildDb?.language, 'Settings.button.replayCooldown'))
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.replayCooldown"
+              )
+            )
             .setStyle(guildDb.replayCooldown ? "Success" : "Secondary")
         );
 
