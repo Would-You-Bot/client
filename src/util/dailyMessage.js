@@ -39,7 +39,7 @@ module.exports = class DailyMessage {
             i++;
             setTimeout(async () => {
                 const channel = await this.client.channels.fetch(db.dailyChannel).catch(err => {
-                    console.log(err)
+                    console.log(err);
                 });
 
                 if (!channel?.id) return; // Always directly return before do to many actions
@@ -50,7 +50,9 @@ module.exports = class DailyMessage {
                 let randomDaily = [];
                 let dailyId;
                 if (db.customTypes === "regular") {
-                    randomDaily = [...General, ...WhatYouDo]
+                    let array = [];
+                    array.push (...General, ...WhatYouDo)
+                    randomDaily = array[Math.floor(Math.random() * array.length)]
                 } else if (db.customTypes === "mixed") {
                     let array = [];
                     if (db.customMessages.filter(c => c.type !== "nsfw").length != 0) {
@@ -70,12 +72,11 @@ module.exports = class DailyMessage {
                             },
                             db.dailyThread
                         ).catch(err => {
-                            console.log(err)
+                            console.log(err);
                         });
                     }
 
                     randomDaily = db.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * db.customMessages.filter(c => c.type !== "nsfw").length)].msg;
-                    console.log(randomDaily)
                 }
 
                 dailyId = Math.floor(Math.random() * randomDaily.length)
@@ -95,7 +96,7 @@ module.exports = class DailyMessage {
                     },
                     db.dailyThread
                 ).catch(err => {
-                    console.log(err)
+                    console.log(err);
                 });
                 
             }, i * 2500) // We do a little timeout here to work against discord ratelimit with 50reqs/second
