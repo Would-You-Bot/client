@@ -16,6 +16,11 @@
       "footer": "Would You"
     }
   },
+  "Welcome": {
+    "embed": {
+      "title": "Bienvenido"
+    }
+  },
   "Wwyd": {
     "embed": {
       "title": "¿Qué harías **tú**?",
@@ -218,7 +223,8 @@
       "welcomeChannel": "**Canal**",
       "welcomePing": "**Pings de usuario**",
       "footer": "Would You",
-      "dailyThread": "**Hilos**"
+      "dailyThread": "**Hilos**",
+      "error": "¡Te falta el permiso `Manage guild` para usar este comando!"
     },
     "button": {
       "dailyInterval": "Establecer intervalo",

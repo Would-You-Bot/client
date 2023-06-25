@@ -25,7 +25,7 @@ module.exports = async (client, member) => {
         if (guildDb.welcomePing) {mention = `<@${member.user.id}>`}
 
         let welcomeEmbed = new EmbedBuilder()
-        .setTitle(`Welcome ${member.user.username}!`)
+        .setTitle(`${client.translation.get(guildDb?.language, 'Welcome.embed.title')} ${member.user.username}!`)
         .setColor("#0598F6")
         .setThumbnail(member.user.avatarURL())
         .setDescription(`${General[randomrather]}`);
