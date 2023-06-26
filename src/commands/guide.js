@@ -44,7 +44,8 @@ module.exports = {
                     value: client.translation.get(guildDb?.language, 'Guide.embed.value3'),
                     inline: false,
                 },
-            )
+        )
+            .setImage('https://i.imgur.com/nA0yA0V.png')
             .setDescription(client.translation.get(guildDb?.language, 'Guide.embed.description'));
 
         await interaction.reply({
