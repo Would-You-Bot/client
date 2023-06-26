@@ -1,4 +1,4 @@
-const {EmbedBuilder, SlashCommandBuilder} = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 
 module.exports = {
@@ -44,7 +44,7 @@ module.exports = {
                     value: client.translation.get(guildDb?.language, 'Guide.embed.value3'),
                     inline: false,
                 },
-        )
+            )
             .setImage('https://i.imgur.com/nA0yA0V.png')
             .setDescription(client.translation.get(guildDb?.language, 'Guide.embed.description'));
 

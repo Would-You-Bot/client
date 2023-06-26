@@ -16,6 +16,11 @@
       "footer": "Would You"
     }
   },
+  "Welcome": {
+    "embed": {
+      "title": "Welcome"
+    }
+  },
   "Wwyd": {
     "embed": {
       "title": "What **would you** do?",
@@ -213,7 +218,6 @@
     "voteSame": "The provided vote cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
     "cooldownInvalid": "Provided cooldown was invalid. Make sure the cooldown only includes numbers!",
     "embed": {
-      "error": "You don't have the required permissions to use this command.",
       "generalTitle": "Would You - General Settings",
       "replayCooldown": "**Replay Cooldown**",
       "replayType": "**Replay Type**",
@@ -231,7 +235,8 @@
       "welcome": "**Enabled**",
       "welcomeChannel": "**Channel**",
       "welcomePing": "**User Pings**",
-      "footer": "Would You"
+      "footer": "Would You",
+      "error": "You are missing the `Manage Guild` permission to use this command!"
     },
     "button": {
       "dailyInterval": "Set Interval",

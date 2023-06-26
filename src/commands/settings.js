@@ -13,8 +13,8 @@ module.exports = {
     .setDescription("Change settings for Daily Messages and Welcomes")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "TBA",
-      "es-ES": "TBA",
+      de: "Ändere Einstellungen für täglichen Nachrichten und Willkommensnachrichten.",
+      "es-ES": "Cambiar la configuración de los mensajes diarios y las bienvenidas",
     })
     .addStringOption((option) =>
       option

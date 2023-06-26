@@ -16,6 +16,11 @@
       "footer": "Would You"
     }
   },
+  "Welcome": {
+    "embed": {
+      "title": "Willkommen"
+    }
+  },
   "Wwyd": {
     "embed": {
       "title": "Was **würdest du** tuen?",
@@ -218,7 +223,8 @@
       "welcomeChannel": "**Kanal**",
       "welcomePing": "**Benutzer Pings**",
       "footer": "Would You",
-      "dailyThread": "**Threads**"
+      "dailyThread": "**Threads**",
+      "error": "Dir fehlt die Berechtigung `Manage_GUILD` um diesen Befehl auszuführen."
     },
     "button": {
       "dailyInterval": "Intervall festlegen",
