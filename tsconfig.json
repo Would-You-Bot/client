@@ -5,7 +5,7 @@
     }
   },
   "compilerOptions": {
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "module": "NodeNext",
     "target": "ESNext",
     "lib": [
