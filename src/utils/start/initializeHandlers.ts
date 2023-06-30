@@ -12,7 +12,7 @@ const initializeHandlers = async (client: ExtendedClient): Promise<void> => {
     const handlerStart = Date.now();
 
     // Import the handler
-    const handlerFile = (await import(`../handlers/${handler}.handler.js`)) as {
+    const handlerFile = (await import(`../handlers/${handler}.js`)) as {
       default: ((extendedClient: ExtendedClient) => Promise<void>) | undefined;
     };
 
