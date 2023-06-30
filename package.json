@@ -26,7 +26,7 @@
   "scripts": {
     "build": "npm run clean && tsc --build --verbose",
     "clean": "rimraf dist",
-    "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants && npm run copyfiles:env && npm run copyfiles:register",
+    "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants && npm run copyfiles:env",
     "copyfiles:config": "copyfiles -u 1 ./config/**/*.yaml ./dist/config",
     "copyfiles:constants": "copyfiles -u 1 ./src/constants/**/*.* ./dist/src",
     "copyfiles:env": "cp .env ./dist/.env",
