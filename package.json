@@ -26,10 +26,9 @@
   "scripts": {
     "build": "npm run clean && tsc --build --verbose",
     "clean": "rimraf dist",
-    "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants && npm run copyfiles:env",
+    "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants",
     "copyfiles:config": "copyfiles -u 1 ./config/**/*.yaml ./dist/config",
     "copyfiles:constants": "copyfiles -u 1 ./src/constants/**/*.* ./dist/src",
-    "copyfiles:env": "cp .env ./dist/.env",
     "dev": "nodemon --watch src/** --ext ts,json --ignore src/**/*.spec.js --exec npm run start",
     "docs": "rimraf docs && typedoc",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -39,7 +38,7 @@
     "migrate": "ts-node ./migrations/index.ts",
     "precommit": "npm run lint:fix && npm run format",
     "prepare": "husky install",
-    "start": "npm run build && tsc-alias && npm run copyfiles && cd dist && node src/cluster.js"
+    "start": "npm run build && tsc-alias && npm run copyfiles && node dist/src/cluster.js"
   },
   "prettier": {
     "arrowParens": "always",
