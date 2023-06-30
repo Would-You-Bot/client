@@ -4,7 +4,6 @@ import colors from 'colors';
 import config from '@config';
 import { initLogger } from '@utils/client';
 import { initializeProcessErrorHandling } from '@utils/client/errorHandler';
-import initializeVoteLog from '@utils/client/voteLog';
 import connectToDatabase from '@utils/start/databaseConnection';
 import initializeHandlers from '@utils/start/initializeHandlers';
 import { ExtendedClient } from './client';
@@ -22,7 +21,6 @@ const app = async (client: ExtendedClient): Promise<void> => {
   ]);
   await initializeHandlers(client);
   initializeProcessErrorHandling(client);
-  initializeVoteLog(client);
 
   // Connect to database
   await connectToDatabase();
