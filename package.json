@@ -30,7 +30,6 @@
     "copyfiles:config": "copyfiles -u 1 ./config/**/*.yaml ./dist/config",
     "copyfiles:constants": "copyfiles -u 1 ./src/constants/**/*.* ./dist/src",
     "copyfiles:env": "cp .env ./dist/.env",
-    "copyfiles:register": "cp register.js ./dist/register.js",
     "dev": "nodemon --watch src/** --ext ts,json --ignore src/**/*.spec.js --exec npm run start",
     "docs": "rimraf docs && typedoc",
     "format": "prettier --write \"src/**/*.ts\"",
