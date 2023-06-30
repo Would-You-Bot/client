@@ -2,7 +2,7 @@ import { BaseInteraction, Events } from 'discord.js';
 
 import config from '@config';
 import CoreEvent from '@utils/builders/CoreEvent';
-import buttonMiddleware from '@utils/middleware/button.middleware';
+import buttonMiddleware from '@utils/middleware/button';
 
 const cooldown = new Set();
 

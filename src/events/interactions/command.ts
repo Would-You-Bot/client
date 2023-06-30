@@ -6,7 +6,7 @@ import {
 
 import config from '@config';
 import CoreEvent from '@utils/builders/CoreEvent';
-import commandMiddleware from '@utils/middleware/command.middleware';
+import commandMiddleware from '@utils/middleware/command';
 
 const cooldown = new Set();
 

@@ -1,6 +1,6 @@
 import { EmbedBuilder } from 'discord.js';
 
-import { UserChoicesModel } from '@models/UserChoices.model';
+import { UserChoicesModel } from '@models/UserChoices';
 import { stripIndents } from '@slekup/utils';
 import { CoreButton } from '@utils/builders';
 

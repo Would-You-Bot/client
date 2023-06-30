@@ -1,10 +1,7 @@
 import { AttachmentBuilder, ChannelType, EmbedBuilder } from 'discord.js';
 
 import config from '@config';
-import {
-  GuildProfileDocument,
-  GuildProfileModel,
-} from '@models/GuildProfile.model';
+import { GuildProfileDocument, GuildProfileModel } from '@models/GuildProfile';
 import { IExtendedClient } from '@typings/core';
 import CoreCron from '@utils/builders/CoreCron';
 import { GuildData, exportGuildData } from '@utils/client';

@@ -1,5 +1,5 @@
-import { BasePackDocument, BasePackModel } from '@models/BasePack.model';
-import { CustomPackDocument, CustomPackModel } from '@models/CustomPack.model';
+import { BasePackDocument, BasePackModel } from '@models/BasePack';
+import { CustomPackDocument, CustomPackModel } from '@models/CustomPack';
 import { logger } from '@utils/client';
 import {
   BaseQuestion,

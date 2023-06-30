@@ -3,7 +3,7 @@ import {
   GuildProfileDocument,
   GuildProfileModel,
   GuildProfileSchema,
-} from '@models/GuildProfile.model';
+} from '@models/GuildProfile';
 import { logger } from '@utils/client';
 import {
   GuildDaily,

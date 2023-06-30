@@ -1,8 +1,4 @@
-import {
-  WebhookDocument,
-  WebhookModel,
-  WebhookSchema,
-} from '@models/Webhook.model';
+import { WebhookDocument, WebhookModel, WebhookSchema } from '@models/Webhook';
 import { logger } from '@utils/client';
 import { decrypt, encrypt } from '@utils/functions';
 import {

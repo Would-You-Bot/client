@@ -1,6 +1,6 @@
 import { ordinalNumber } from '@slekup/utils';
 
-import { UserChoicesModel } from '@models/UserChoices.model';
+import { UserChoicesModel } from '@models/UserChoices';
 import { CoreButton } from '@utils/builders';
 
 export default new CoreButton({
