@@ -7,7 +7,8 @@ const newEnv = verifyEnvironment([
   'NODE_ENV',
   'DEBUG',
 
-  'MONGODB_URI',
+  'MONGODB_URI_DEV',
+  'MONGODB_URI_PROD',
   'SECRET_KEY',
   'SECRET_IV',
   'ENCRYPTION_METHOD',
