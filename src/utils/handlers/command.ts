@@ -30,6 +30,8 @@ const commandHandler = async (client: ExtendedClient): Promise<void> => {
     }
 
     client.commands.set(command.data.name, command);
+
+    client.logger.debug(`Command: ${command.data.name} imported.`);
   }
 };
 

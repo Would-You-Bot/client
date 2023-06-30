@@ -4,7 +4,8 @@ declare global {
       NODE_ENV: string;
       DEBUG: string;
 
-      MONGODB_URI: string;
+      MONGODB_URI_DEV: string;
+      MONGODB_URI_PROD: string;
       SECRET_KEY: string;
       SECRET_IV: string;
       ENCRYPTION_METHOD: string;

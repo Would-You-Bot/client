@@ -11,7 +11,9 @@ mongoose.set('strictQuery', true);
  * @returns The connection or an error.
  */
 const connectToDatabase = async (): Promise<void> => {
-  const connectionString = `${config.env.MONGODB_URI}`;
+  const connectionString = config.isProduction()
+    ? config.env.MONGODB_URI_PROD
+    : config.env.MONGODB_URI_DEV;
   try {
     const { connection } = await mongoose.connect(connectionString);
     logger.info(

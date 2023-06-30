@@ -58,6 +58,8 @@ const eventHandler = async (client: ExtendedClient): Promise<void> => {
             execute(client, ...(args as unknown[]));
           }
         );
+
+      client.logger.debug(`Event: ${event.name} imported.`);
     } catch (error) {
       client.error({ title: 'Event Handler', error: String(error) });
     }
