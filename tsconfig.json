@@ -5,8 +5,8 @@
     }
   },
   "compilerOptions": {
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
+    "moduleResolution": "Node",
+    "module": "Node16",
     "target": "ESNext",
     "lib": [
       "ESNext"
