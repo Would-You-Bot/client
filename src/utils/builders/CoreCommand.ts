@@ -30,17 +30,21 @@ export default class CoreCommand {
   /**
    * Sets the function to execute when the Command is pressed.
    * @param callback The callback function to execute when the Command is pressed.
+   * @returns The CoreCommand instance.
    */
-  public execute(callback: CoreCommandExecute): void {
+  public execute(callback: CoreCommandExecute): this {
     this.executeFunction = callback;
+    return this;
   }
 
   /**
    * Sets the function to execute when the Command is autocompleting.
    * @param callback The callback function to execute when the Command is autocompleting.
+   * @returns The CoreCommand instance.
    */
-  public autocomplete(callback: CoreCommandAutocomplete): void {
+  public autocomplete(callback: CoreCommandAutocomplete): this {
     this.autocompleteFunction = callback;
+    return this;
   }
 
   /**

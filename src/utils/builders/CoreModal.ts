@@ -50,9 +50,11 @@ export default class CoreModal {
   /**
    * Sets the function to execute when the Modal is pressed.
    * @param callback The callback function to execute when the Modal is pressed.
+   * @returns The CoreModal instance.
    */
-  public execute(callback: ModalFunction): void {
+  public execute(callback: ModalFunction): this {
     this.executeFunction = callback;
+    return this;
   }
 
   /**

@@ -38,9 +38,11 @@ export default class CoreButton {
   /**
    * Sets the function to execute when the button is pressed.
    * @param callback The callback function to execute when the button is pressed.
+   * @returns The CoreButton instance.
    */
-  public execute(callback: CoreButtonExecute): void {
+  public execute(callback: CoreButtonExecute): this {
     this.executeFunction = callback;
+    return this;
   }
 
   /**

@@ -3,7 +3,7 @@ import { ordinalNumber } from '@slekup/utils';
 import { UserChoicesModel } from '@models/UserChoices';
 import { CoreButton } from '@utils/builders';
 
-const button = new CoreButton({
+export default new CoreButton({
   id: 'choice',
   description: "Set a user's choice",
 }).execute(async (client, interaction, args) => {
@@ -36,5 +36,3 @@ const button = new CoreButton({
     ephemeral: true,
   });
 });
-
-export default button;

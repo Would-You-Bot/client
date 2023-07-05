@@ -31,9 +31,11 @@ export default class CoreCron {
   /**
    * Sets the function to execute when the Cron is pressed.
    * @param callback The callback function to execute when the Cron is pressed.
+   * @returns The CoreCron instance.
    */
-  public execute(callback: CoreCronExecute): void {
+  public execute(callback: CoreCronExecute): this {
     this.executeFunction = callback;
+    return this;
   }
 
   /**

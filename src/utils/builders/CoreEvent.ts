@@ -28,9 +28,11 @@ export default class CoreEvent {
   /**
    * Sets the function to execute when the Event is pressed.
    * @param callback The callback function to execute when the Event is pressed.
+   * @returns The CoreEvent instance.
    */
-  public execute(callback: CoreEventExecute): void {
+  public execute(callback: CoreEventExecute): this {
     this.executeFunction = callback;
+    return this;
   }
 
   /**

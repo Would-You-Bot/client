@@ -52,9 +52,11 @@ export default class CoreSelectMenu {
   /**
    * Sets the function to execute when the SelectMenu is pressed.
    * @param callback The callback function to execute when the SelectMenu is pressed.
+   * @returns The CoreSelectMenu instance.
    */
-  public execute(callback: SelectMenuFunction): void {
+  public execute(callback: SelectMenuFunction): this {
     this.executeFunction = callback;
+    return this;
   }
 
   /**

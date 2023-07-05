@@ -14,18 +14,14 @@ const buttonHandler = async (client: ExtendedClient): Promise<void> => {
   for (const fileName of files) {
     client.logger.debug(`Importing button: ${fileName}`);
 
-    const buttonFile = (await import(
+    const { default: button } = (await import(
       `../../interactions/buttons/${fileName}.js`
-    )) as unknown;
-
-    const button = (
-      buttonFile as {
-        default: ExportedCoreButton | undefined;
-      }
-    ).default;
+    )) as {
+      default: ExportedCoreButton | undefined;
+    };
 
     if (!button) {
-      client.logger.error(`Button: ${fileName} did not load properly`);
+      client.logger.error(`Button: ${fileName} did not load properly\n\n`);
       continue;
     }
 
