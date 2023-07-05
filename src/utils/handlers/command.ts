@@ -15,10 +15,18 @@ const commandHandler = async (client: ExtendedClient): Promise<void> => {
     client.logger.debug(`Importing command: ${fileName}`);
 
     const commandFile = (await import(
-      `../../interactions/commands/${fileName}`
+      `../../interactions/commands/${fileName}.js`
     )) as { default: ExportedCoreCommand | undefined } | undefined;
 
-    if (!commandFile?.default?.data.name) continue;
+    if (!commandFile?.default) {
+      client.logger.error(`Command: ${fileName} did not load properly`);
+      continue;
+    }
+
+    if (!commandFile.default.data.name) {
+      client.logger.error(`Command: ${fileName} is missing data or a name`);
+      continue;
+    }
 
     const command = commandFile.default;
 
@@ -30,8 +38,6 @@ const commandHandler = async (client: ExtendedClient): Promise<void> => {
     }
 
     client.commands.set(command.data.name, command);
-
-    client.logger.debug(`Command: ${command.data.name} imported.`);
   }
 };
 

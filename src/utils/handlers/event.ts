@@ -11,16 +11,19 @@ import { ExtendedClient } from 'src/client';
 const eventHandler = async (client: ExtendedClient): Promise<void> => {
   client.events.clear();
 
-  const files = await loadFiles('interactions/events');
+  const files = await loadFiles('events');
 
   for (const fileName of files) {
     client.logger.debug(`Importing event: ${fileName}`);
 
-    const eventFile = (await import(
-      `../../interactions/events/${fileName}`
-    )) as { default: ExportedCoreEvent | undefined } | undefined;
+    const eventFile = (await import(`../../events/${fileName}.js`)) as
+      | { default: ExportedCoreEvent | undefined }
+      | undefined;
 
-    if (!eventFile?.default?.name) continue;
+    if (!eventFile?.default) {
+      client.logger.error(`Event: ${fileName} did not load properly`);
+      continue;
+    }
 
     const event = eventFile.default;
 

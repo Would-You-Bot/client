@@ -24,7 +24,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run clean && tsc --build --verbose",
+    "build": "npm run clean && tsc --build --verbose && tsc-alias",
     "clean": "rimraf dist",
     "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants",
     "copyfiles:config": "copyfiles -u 1 ./config/**/*.yaml ./dist/config",
@@ -38,7 +38,7 @@
     "migrate": "ts-node ./migrations/index.ts",
     "precommit": "npm run lint:fix && npm run format",
     "prepare": "husky install",
-    "start": "npm run build && tsc-alias && npm run copyfiles && node dist/src/cluster.js"
+    "start": "npm run build && npm run copyfiles && node dist/src/cluster.js"
   },
   "prettier": {
     "arrowParens": "always",
@@ -66,6 +66,7 @@
     "discord.js": "^14.11.0",
     "dotenv": "^16.3.1",
     "fast-glob": "^3.2.12",
+    "glob": "^10.3.1",
     "logform": "^2.5.1",
     "moment-timezone": "^0.5.43",
     "mongoose": "^7.3.1",
@@ -101,6 +102,7 @@
     "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.6",
+    "turbo": "^1.10.6",
     "typedoc": "^0.24.8",
     "typedoc-plugin-djs-links": "^2.0.0",
     "typedoc-plugin-extras": "^2.3.3",

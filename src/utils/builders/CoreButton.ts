@@ -8,13 +8,13 @@ import {
  * The CoreButton class, used to create a button.
  */
 export default class CoreButton {
-  private id: string;
-  private description: string;
-  private executeFunction: CoreButtonExecute;
-  private disabled?: boolean;
-  private developer?: boolean;
-  private perUser?: boolean;
-  private errorMessage?: string;
+  public id: string;
+  public description: string;
+  public executeFunction: CoreButtonExecute;
+  public disabled?: boolean;
+  public developer?: boolean;
+  public perUser?: boolean;
+  public errorMessage?: string;
 
   /**
    * Creates a new CoreButton instance.

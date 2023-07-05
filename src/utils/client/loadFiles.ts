@@ -1,5 +1,5 @@
 import fg from 'fast-glob';
-import path from 'path';
+// import path from 'path';
 
 /**
  * Load files from a directory.
@@ -7,9 +7,11 @@ import path from 'path';
  * @returns The list of file names.
  */
 const loadFiles = async (dirName: string): Promise<string[]> => {
-  const dirPath = path.join(__dirname, `src/${dirName}/**/*.js`);
+  const dirPath = `dist/src/${dirName}/**/*.js`;
   const fileNames: string[] = await fg(dirPath);
-  return fileNames;
+  return fileNames.map((fileName) =>
+    fileName.replace(`dist/src/${dirName}/`, '').replace('.js', '')
+  );
 };
 
 export default loadFiles;

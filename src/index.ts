@@ -1,3 +1,4 @@
+import app from './app';
 import { ExtendedClient } from './client';
 
 /**
@@ -5,7 +6,7 @@ import { ExtendedClient } from './client';
  */
 export const client = new ExtendedClient();
 
-(async () => {
+(() => {
   client.logger.info('Starting client');
   client.logger.debug('Debug Enabled');
 
@@ -15,9 +16,5 @@ export const client = new ExtendedClient();
       `Client on maintenance mode with ${client.cluster.maintenance}`
     );
 
-  // Load and start the application
-  const app = (await import('./app')) as {
-    default: (clientParam: ExtendedClient) => Promise<void>;
-  };
-  app.default(client);
+  app(client);
 })();

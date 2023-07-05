@@ -15,20 +15,27 @@ const buttonHandler = async (client: ExtendedClient): Promise<void> => {
     client.logger.debug(`Importing button: ${fileName}`);
 
     const buttonFile = (await import(
-      `../../interactions/buttons/${fileName}`
-    )) as { default: ExportedCoreButton | undefined } | undefined;
+      `../../interactions/buttons/${fileName}.js`
+    )) as unknown;
 
-    if (!buttonFile?.default?.id) continue;
+    const button = (
+      buttonFile as {
+        default: ExportedCoreButton | undefined;
+      }
+    ).default;
 
-    const button = buttonFile.default;
-
-    if (button.disabled) {
-      client.logger.warn(`Button: ${button.id} is disabled, skipping...`);
+    if (!button) {
+      client.logger.error(`Button: ${fileName} did not load properly`);
       continue;
     }
 
     if (!button.id) {
-      client.logger.error(`Button: ${button.id} is missing an ID`);
+      client.logger.error(`Button: ${fileName} is missing an ID`);
+      continue;
+    }
+
+    if (button.disabled) {
+      client.logger.warn(`Button: ${button.id} is disabled, skipping...`);
       continue;
     }
 

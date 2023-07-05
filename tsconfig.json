@@ -5,8 +5,8 @@
     }
   },
   "compilerOptions": {
-    "moduleResolution": "Node",
-    "module": "CommonJS",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
     "target": "ESNext",
     "lib": [
       "ESNext"

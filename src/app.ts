@@ -12,7 +12,7 @@ import { ExtendedClient } from './client';
  * Main app file.
  * @param client The extended client.
  */
-const app = async (client: ExtendedClient): Promise<void> => {
+export default async (client: ExtendedClient): Promise<void> => {
   // Run startup functions
   ensureDirectories([
     ['./static', './tmp'],
@@ -38,8 +38,6 @@ const app = async (client: ExtendedClient): Promise<void> => {
   initLogger(client.cluster.id);
 
   // Initialize discord logging (sends logs to discord channels)
-  const { initDiscordLogger } = await import('./utils/client/discordLogger');
+  const { initDiscordLogger } = await import('./utils/client/discordLogger.js');
   initDiscordLogger(client);
 };
-
-export default app;

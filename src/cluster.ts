@@ -18,7 +18,7 @@ if (config.debug) loggerOffline.info('Running application in debug mode.');
 const manager = new ClusterManager(`${__dirname}/index.js`, {
   totalClusters: 1,
   totalShards: 1,
-  shardsPerClusters: 2,
+  shardsPerClusters: 10,
   mode: 'process',
   token: process.env.BOT_TOKEN_DEV,
 });
@@ -46,9 +46,9 @@ manager.on('clusterReady', (cluster) => {
 });
 
 // Debug cluster events
-manager.on('debug', (message) => {
-  loggerOffline.debug(message);
-});
+// manager.on('debug', (message) => {
+//   loggerOffline.debug(message);
+// });
 
 // Spawn the clusters
 manager.spawn({ timeout: -1 });
