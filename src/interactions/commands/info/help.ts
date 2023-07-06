@@ -30,11 +30,19 @@ export default new CoreCommand({
     withLocalizations: true,
   });
 
+  /**
+   * Replace the variables in a string.
+   * @param input The input.
+   * @returns The input with the variables replaced.
+   */
+  const replaceVars = (input: string): string =>
+    input.replaceAll('{name}', client.user?.username ?? 'Would You');
+
   const helpembed = new EmbedBuilder()
     .setColor(config.colors.primary)
     .setTitle(translations.help.embed.title)
     .setDescription(
-      `${translations.help.embed.description}\n\n${commands
+      `${replaceVars(translations.help.embed.description)}\n\n${commands
         .sort((first, second) => first.name.localeCompare(second.name))
         .map(
           (cmd) =>

@@ -25,9 +25,17 @@ export default new CoreCommand({
 
   const translations = client.translations[guildProfile.language];
 
+  /**
+   * Replace the variables in a string.
+   * @param input The input.
+   * @returns The input with the variables replaced.
+   */
+  const replaceVars = (input: string): string =>
+    input.replaceAll('{name}', client.user?.username ?? 'Would You');
+
   const supportembed = new EmbedBuilder()
     .setColor(config.colors.danger)
-    .setTitle(translations.support.embed.title)
+    .setTitle(replaceVars(translations.support.embed.title))
     .setDescription(translations.support.embed.description)
     .setTimestamp();
 

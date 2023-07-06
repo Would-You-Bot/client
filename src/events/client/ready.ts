@@ -14,6 +14,17 @@ export default new CoreEvent({
 
   if (!client.user?.id) return;
 
+  const developers = [];
+  for (const id of config.developers) {
+    try {
+      const devUser = await client.users.fetch(id);
+      developers.push(devUser.username);
+    } catch (error) {
+      developers.push(`Error: ${id}`);
+    }
+  }
+  client.setDevelopers(developers);
+
   client.user.setPresence({
     activities: [{ name: 'Booting up...' }],
     status: 'idle',

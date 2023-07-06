@@ -52,7 +52,6 @@ export default new CoreCommand({
     .reply({
       embeds: [pingembed],
       components: [button],
-      ephemeral: true,
     })
     .catch(client.logger.error);
 });

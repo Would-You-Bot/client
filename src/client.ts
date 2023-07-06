@@ -40,7 +40,7 @@ export class ExtendedClient extends Client implements IExtendedClient {
   public botStartTime = new Date().getTime();
   public synced = false;
   public databaseLatency = 0;
-  public developers = [];
+  public developers: string[] = [];
   public cluster = new ClusterClient(this);
   public translations = new Translations();
 
@@ -147,6 +147,14 @@ export class ExtendedClient extends Client implements IExtendedClient {
       };
       checkSynced();
     });
+  }
+
+  /**
+   * Set the developers.
+   * @param developers The developers.
+   */
+  public setDevelopers(developers: string[]): void {
+    this.developers = developers;
   }
 }
 

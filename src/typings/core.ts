@@ -207,7 +207,7 @@ export interface IExtendedClient extends Client {
   botStartTime: number;
   synced: boolean;
   databaseLatency: number;
-  developers: User[];
+  developers: string[];
   cluster: ClusterClient<DjsDiscordClient>;
   translations: Translations;
 
@@ -226,4 +226,5 @@ export interface IExtendedClient extends Client {
   authenticate: () => Promise<string>;
   setSynced: (synced: boolean) => void;
   ensureDatabaseSynced: () => Promise<boolean>;
+  setDevelopers: (developers: string[]) => void;
 }
