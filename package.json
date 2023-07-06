@@ -24,7 +24,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc --build --verbose && tsc-alias && npm run copyfiles",
+    "build": "tsc --build --verbose && tsc-alias",
     "build:clean": "npm run clean && tsc --build --verbose && tsc-alias && npm run copyfiles",
     "clean": "rimraf dist",
     "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants",
