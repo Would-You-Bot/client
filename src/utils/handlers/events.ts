@@ -51,18 +51,19 @@ const eventHandler = async (client: ExtendedClient): Promise<void> => {
       if (event.once)
         client.once(
           event.name as Events.Raw | Events.VoiceServerUpdate,
-          execute
+          async () => {
+            if (!(await client.isSynced())) return;
+            execute(client);
+          }
         );
       else
         client.on(
           event.name as Events.Raw | Events.VoiceServerUpdate,
           async (...args) => {
-            await client.isSynced();
+            if (!(await client.isSynced())) return;
             execute(client, ...(args as unknown[]));
           }
         );
-
-      client.logger.debug(`Event: ${event.name} imported.`);
     } catch (error) {
       client.error({ title: 'Event Handler', error: String(error) });
     }

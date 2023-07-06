@@ -7,7 +7,7 @@ import { ExtendedClient } from 'src/client';
  */
 const initializeHandlers = async (client: ExtendedClient): Promise<void> => {
   client.logger.info('Initializing handlers');
-  const handlers = ['button', 'command', 'modal', 'event'];
+  const handlers = ['buttons', 'commands', 'modals', 'events'];
   for (const handler of handlers) {
     const handlerStart = Date.now();
 

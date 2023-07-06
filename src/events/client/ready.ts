@@ -3,12 +3,15 @@ import { AutoPoster } from 'topgg-autoposter';
 
 import config from '@config';
 import CoreEvent from '@utils/builders/CoreEvent';
+import { logger } from '@utils/client';
 import { registerCommands } from '@utils/start';
 
 export default new CoreEvent({
   once: true,
   name: Events.ClientReady,
 }).execute(async (client) => {
+  logger.info(`Logged in as ${client.user?.tag ?? 'Unknown'}`);
+
   if (!client.user?.id) return;
 
   client.user.setPresence({
