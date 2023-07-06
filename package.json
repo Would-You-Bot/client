@@ -24,7 +24,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run clean && tsc --build --verbose && tsc-alias",
+    "build": "tsc --build --verbose && tsc-alias && npm run copyfiles",
+    "build:clean": "npm run clean && tsc --build --verbose && tsc-alias && npm run copyfiles",
     "clean": "rimraf dist",
     "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants",
     "copyfiles:config": "copyfiles -u 1 ./config/**/*.yaml ./dist/config",
@@ -38,7 +39,7 @@
     "migrate": "ts-node ./migrations/index.ts",
     "precommit": "npm run lint:fix && npm run format",
     "prepare": "husky install",
-    "start": "npm run build && npm run copyfiles && node dist/src/cluster.js"
+    "start": "turbo build && node dist/src/cluster.js"
   },
   "prettier": {
     "arrowParens": "always",
