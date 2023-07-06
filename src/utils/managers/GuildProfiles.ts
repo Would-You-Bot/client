@@ -188,7 +188,7 @@ export default class GuildProfiles {
 
       try {
         // Fetch the guild profile document
-        const guildProfileDoc = await GuildProfileModel.findById(guildId);
+        const guildProfileDoc = await GuildProfileModel.findOne({ guildId });
 
         // If the guild profile does not exist create a new one
         if (!guildProfileDoc) {
