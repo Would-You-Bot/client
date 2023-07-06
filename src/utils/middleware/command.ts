@@ -18,7 +18,7 @@ const commandMiddleware = async (
   const member = await guild.members.fetch(user.id);
 
   client.logger.info(
-    `${user.tag} ${
+    `${user.username} ${
       user.id === guild.ownerId
         ? '(owner)'
         : member.permissions.has(PermissionFlagsBits.Administrator)

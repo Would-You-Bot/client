@@ -10,7 +10,7 @@ export default new CoreEvent({
   once: true,
   name: Events.ClientReady,
 }).execute(async (client) => {
-  logger.info(`Logged in as ${client.user?.tag ?? 'Unknown'}`);
+  logger.info(`Logged in as ${client.user?.username ?? 'Unknown'}`);
 
   if (!client.user?.id) return;
 

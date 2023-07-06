@@ -71,6 +71,7 @@ export const GuildProfileModel = model<GuildProfileDocument>(
         },
         ping: {
           type: Boolean,
+          default: false,
           required: true,
         },
       },

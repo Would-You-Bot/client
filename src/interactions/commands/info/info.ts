@@ -23,7 +23,7 @@ export default new CoreCommand({
 
   for (const id of config.developers) {
     const devUser = client.users.cache.get(id);
-    if (devUser) developers.push(devUser.tag);
+    if (devUser) developers.push(devUser.username);
   }
 
   const infoEmbed = new EmbedBuilder()
@@ -72,7 +72,9 @@ export default new CoreCommand({
     )
     .setThumbnail(client.user?.displayAvatarURL() ?? null)
     .setFooter({
-      text: `${interaction.user.tag} Shard #${interaction.guild?.shardId ?? 0}`,
+      text: `${interaction.user.username} Shard #${
+        interaction.guild?.shardId ?? 0
+      }`,
       iconURL: client.user?.avatarURL() ?? undefined,
     })
     .setTimestamp();

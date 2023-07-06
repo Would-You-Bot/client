@@ -202,6 +202,7 @@ export default class GuildProfiles {
             },
             welcome: {
               enabled: false,
+              ping: false,
             },
             daily: {
               enabled: false,
