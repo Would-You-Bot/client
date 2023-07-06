@@ -30,7 +30,8 @@
     "copyfiles": "npm run copyfiles:config && npm run copyfiles:constants",
     "copyfiles:config": "copyfiles -u 1 ./config/**/*.yaml ./dist/config",
     "copyfiles:constants": "copyfiles -u 1 ./src/constants/**/*.* ./dist/src",
-    "dev": "nodemon --watch src/** --ext ts,json --ignore src/**/*.spec.js --exec npm run start",
+    "dev": "nodemon --watch src/** --ext ts,json --exec npm run dev:exec",
+    "dev:exec": "turbo build && npm run start",
     "docs": "rimraf docs && typedoc",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
@@ -39,7 +40,7 @@
     "migrate": "ts-node ./migrations/index.ts",
     "precommit": "npm run lint:fix && npm run format",
     "prepare": "husky install",
-    "start": "turbo build && node dist/src/cluster.js"
+    "start": "node dist/src/cluster.js"
   },
   "prettier": {
     "arrowParens": "always",
