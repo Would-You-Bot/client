@@ -1,4 +1,4 @@
-import { ExportedCoreCommand } from '@typings/core';
+import CoreCommand from '@utils/builders/CoreCommand';
 import loadFiles from '@utils/client/loadFiles';
 import { ExtendedClient } from 'src/client';
 
@@ -6,7 +6,7 @@ import { ExtendedClient } from 'src/client';
  * Load the commands.
  * @param client The extended client.
  */
-const commandHandler = async (client: ExtendedClient): Promise<void> => {
+export default async (client: ExtendedClient): Promise<void> => {
   client.commands.clear();
 
   const files = await loadFiles('interactions/commands');
@@ -16,14 +16,14 @@ const commandHandler = async (client: ExtendedClient): Promise<void> => {
 
     const commandFile = (await import(
       `../../interactions/commands/${fileName}.js`
-    )) as { default: ExportedCoreCommand | undefined } | undefined;
+    )) as { default: CoreCommand | undefined } | undefined;
 
     if (!commandFile?.default) {
       client.logger.error(`Command: ${fileName} did not load properly`);
       continue;
     }
 
-    if (!commandFile.default.data.name) {
+    if (!commandFile.default.export().data.name) {
       client.logger.error(`Command: ${fileName} is missing data or a name`);
       continue;
     }
@@ -37,8 +37,6 @@ const commandHandler = async (client: ExtendedClient): Promise<void> => {
       continue;
     }
 
-    client.commands.set(command.data.name, command);
+    client.commands.set(command.data.name, command.export());
   }
 };
-
-export default commandHandler;

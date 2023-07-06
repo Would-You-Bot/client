@@ -1,4 +1,4 @@
-import { ExportedCoreButton } from '@typings/core';
+import { CoreButton } from '@utils/builders';
 import loadFiles from '@utils/client/loadFiles';
 import { ExtendedClient } from 'src/client';
 
@@ -6,7 +6,7 @@ import { ExtendedClient } from 'src/client';
  * Load the buttons.
  * @param client The extended client.
  */
-const buttonHandler = async (client: ExtendedClient): Promise<void> => {
+export default async (client: ExtendedClient): Promise<void> => {
   client.buttons.clear();
 
   const files = await loadFiles('interactions/buttons');
@@ -17,7 +17,7 @@ const buttonHandler = async (client: ExtendedClient): Promise<void> => {
     const { default: button } = (await import(
       `../../interactions/buttons/${fileName}.js`
     )) as {
-      default: ExportedCoreButton | undefined;
+      default: CoreButton | undefined;
     };
 
     if (!button) {
@@ -35,8 +35,6 @@ const buttonHandler = async (client: ExtendedClient): Promise<void> => {
       continue;
     }
 
-    client.buttons.set(button.id, button);
+    client.buttons.set(button.id, button.export());
   }
 };
-
-export default buttonHandler;

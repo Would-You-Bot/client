@@ -5,6 +5,7 @@ import config from '@config';
 import { initLogger } from '@utils/client';
 import { initializeProcessErrorHandling } from '@utils/client/errorHandler';
 import connectToDatabase from '@utils/start/databaseConnection';
+import databaseSync from '@utils/start/databaseSync';
 import initializeHandlers from '@utils/start/initializeHandlers';
 import { ExtendedClient } from './client';
 
@@ -24,6 +25,7 @@ export default async (client: ExtendedClient): Promise<void> => {
 
   // Connect to database
   await connectToDatabase();
+  await databaseSync(client);
 
   // Sync database
   // Initialize translations

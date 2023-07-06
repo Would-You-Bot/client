@@ -125,10 +125,18 @@ export class ExtendedClient extends Client implements IExtendedClient {
   }
 
   /**
+   * Set whether the client is synced with the database.
+   * @param synced Whether the client is synced with the database.
+   */
+  public setSynced(synced: boolean): void {
+    this.synced = synced;
+  }
+
+  /**
    * Check if the client is synced with the database - used to prevent code from running unless client is synced with database.
    * @returns Whether the client is synced with the database.
    */
-  public isSynced(): Promise<boolean> {
+  public ensureDatabaseSynced(): Promise<boolean> {
     return new Promise((resolve) => {
       /**
        * Check if the client is synced with the database.

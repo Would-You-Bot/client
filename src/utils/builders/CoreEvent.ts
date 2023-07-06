@@ -9,10 +9,10 @@ import {
  * The CoreEvent class, used to create a Event.
  */
 export default class CoreEvent {
-  private once?: boolean;
-  private name: CoreEventName;
-  private disabled?: boolean;
-  private executeFunction: CoreEventExecute;
+  public once?: boolean;
+  public name: CoreEventName;
+  public disabled?: boolean;
+  public executeFunction: CoreEventExecute;
 
   /**
    * Creates a new CoreEvent instance.

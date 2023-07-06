@@ -182,7 +182,7 @@ export type CoreInterfaceFunction<T = CoreInterfaceOptions> = (
  * Core Modal.
  */
 
-type CoreModalExecute = (
+export type CoreModalExecute = (
   client: IExtendedClient,
   interaction: ModalSubmitInteraction,
   args?: string[]
@@ -224,5 +224,6 @@ export interface IExtendedClient extends Client {
   error: (params: ClientErrorParams) => Promise<void>;
 
   authenticate: () => Promise<string>;
-  isSynced: () => Promise<boolean>;
+  setSynced: (synced: boolean) => void;
+  ensureDatabaseSynced: () => Promise<boolean>;
 }

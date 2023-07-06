@@ -1,19 +1,4 @@
-import { IExtendedClient } from '@typings/core';
-import { ModalSubmitInteraction } from 'discord.js';
-
-type ModalFunction = (
-  client: IExtendedClient,
-  interaction: ModalSubmitInteraction,
-  args: string[]
-) => Promise<unknown> | unknown;
-
-interface ExportedCoreModal {
-  id: string;
-  description: string;
-  execute: ModalFunction;
-  disabled?: boolean;
-  developer?: boolean;
-}
+import { CoreModalExecute, ExportedCoreModal } from '@typings/core';
 
 interface CoreModalOptions {
   id: string;
@@ -27,12 +12,12 @@ interface CoreModalOptions {
  * The CoreModal class, used to create a Modal.
  */
 export default class CoreModal {
-  private id: string;
-  private description: string;
-  private executeFunction: ModalFunction;
-  private disabled?: boolean;
-  private developer?: boolean;
-  private perUser?: boolean;
+  public id: string;
+  public description: string;
+  public executeFunction: CoreModalExecute;
+  public disabled?: boolean;
+  public developer?: boolean;
+  public perUser?: boolean;
 
   /**
    * Creates a new CoreModal instance.
@@ -52,7 +37,7 @@ export default class CoreModal {
    * @param callback The callback function to execute when the Modal is pressed.
    * @returns The CoreModal instance.
    */
-  public execute(callback: ModalFunction): this {
+  public execute(callback: CoreModalExecute): this {
     this.executeFunction = callback;
     return this;
   }

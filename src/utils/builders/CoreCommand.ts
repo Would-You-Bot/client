@@ -10,11 +10,11 @@ import {
  * The CoreCommand class, used to create a Command.
  */
 export default class CoreCommand {
-  private data: CoreCommandData;
-  private executeFunction: CoreCommandExecute;
-  private autocompleteFunction?: CoreCommandAutocomplete;
-  private disabled?: boolean;
-  private developer?: boolean;
+  public data: CoreCommandData;
+  public executeFunction: CoreCommandExecute;
+  public autocompleteFunction?: CoreCommandAutocomplete;
+  public disabled?: boolean;
+  public developer?: boolean;
 
   /**
    * Creates a new CoreCommand instance.

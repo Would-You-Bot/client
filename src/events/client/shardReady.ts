@@ -4,7 +4,8 @@ import CoreEvent from '@utils/builders/CoreEvent';
 
 export default new CoreEvent({
   name: Events.ShardReady,
-}).execute((client, id: string, unavailableGuilds: Set<string>) => {
+}).execute((client, id: string, unavailableGuilds?: Set<string>) => {
   client.logger.info(`Shard ready: ${id}`);
-  client.logger.info(`Shards unavailable: ${unavailableGuilds.size}`);
+  if (unavailableGuilds?.size)
+    client.logger.info(`Shards unavailable: ${unavailableGuilds.size}`);
 });

@@ -1,4 +1,4 @@
-import { ExportedCoreModal } from '@typings/core';
+import CoreModal from '@utils/builders/CoreModal';
 import loadFiles from '@utils/client/loadFiles';
 import { ExtendedClient } from 'src/client';
 
@@ -6,7 +6,7 @@ import { ExtendedClient } from 'src/client';
  * Load the modals.
  * @param client The extended client.
  */
-const modalHandler = async (client: ExtendedClient): Promise<void> => {
+export default async (client: ExtendedClient): Promise<void> => {
   client.modals.clear();
 
   const files = await loadFiles('interactions/modals');
@@ -16,11 +16,14 @@ const modalHandler = async (client: ExtendedClient): Promise<void> => {
 
     const modalFile = (await import(
       `../../interactions/modals/${fileName}`
-    )) as { default: ExportedCoreModal | undefined } | undefined;
+    )) as { default: CoreModal | undefined } | undefined;
 
-    if (!modalFile?.default?.id) continue;
+    const modal = modalFile?.default;
 
-    const modal = modalFile.default;
+    if (!modal) {
+      client.logger.error(`Modal: ${fileName} did not load properly`);
+      continue;
+    }
 
     if (modal.disabled) {
       client.logger.warn(`Modal: ${modal.id} is disabled, skipping...`);
@@ -32,8 +35,6 @@ const modalHandler = async (client: ExtendedClient): Promise<void> => {
       continue;
     }
 
-    client.modals.set(modal.id, modal);
+    client.modals.set(modal.id, modal.export());
   }
 };
-
-export default modalHandler;

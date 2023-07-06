@@ -1,6 +1,6 @@
 import { Events } from 'discord.js';
 
-import { ExportedCoreEvent } from '@typings/core';
+import CoreEvent from '@utils/builders/CoreEvent';
 import loadFiles from '@utils/client/loadFiles';
 import { ExtendedClient } from 'src/client';
 
@@ -8,7 +8,7 @@ import { ExtendedClient } from 'src/client';
  * Load the events.
  * @param client The extended client.
  */
-const eventHandler = async (client: ExtendedClient): Promise<void> => {
+export default async (client: ExtendedClient): Promise<void> => {
   client.events.clear();
 
   const files = await loadFiles('events');
@@ -17,7 +17,7 @@ const eventHandler = async (client: ExtendedClient): Promise<void> => {
     client.logger.debug(`Importing event: ${fileName}`);
 
     const eventFile = (await import(`../../events/${fileName}.js`)) as
-      | { default: ExportedCoreEvent | undefined }
+      | { default: CoreEvent | undefined }
       | undefined;
 
     if (!eventFile?.default) {
@@ -32,42 +32,27 @@ const eventHandler = async (client: ExtendedClient): Promise<void> => {
       continue;
     }
 
-    /**
-     * Execute the event.
-     * @param client The extended client.
-     * @param args The event arguments.
-     * @returns A promise.
-     */
-    const execute = async (
-      client: ExtendedClient,
-      ...args: unknown[]
-    ): Promise<void> => {
-      await event.execute(client, ...args);
-    };
-
-    client.events.set(event.name, event);
+    client.events.set(event.name, event.export());
 
     try {
       if (event.once)
         client.once(
           event.name as Events.Raw | Events.VoiceServerUpdate,
           async () => {
-            if (!(await client.isSynced())) return;
-            execute(client);
+            await client.ensureDatabaseSynced();
+            await event.executeFunction(client);
           }
         );
       else
         client.on(
           event.name as Events.Raw | Events.VoiceServerUpdate,
-          async (...args) => {
-            if (!(await client.isSynced())) return;
-            execute(client, ...(args as unknown[]));
+          async (...args: unknown[]) => {
+            await client.ensureDatabaseSynced();
+            await event.executeFunction(client, ...args);
           }
         );
     } catch (error) {
-      client.error({ title: 'Event Handler', error: String(error) });
+      client.logger.error(`Event: ${event.name} failed to initialize`);
     }
   }
 };
-
-export default eventHandler;
