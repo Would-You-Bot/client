@@ -89,13 +89,11 @@ export class ExtendedClient extends Client implements IExtendedClient {
       shardCount: getInfo().TOTAL_SHARDS,
     });
 
-    const guildIds = this.guilds.cache.map((guild) => guild.id);
-
     // Initialize classes
     this.cluster = new ClusterClient(this);
-    this.guildProfiles = new GuildProfiles(guildIds);
-    this.packs = new QuestionPacks(guildIds);
-    this.webhooks = new Webhooks(guildIds);
+    this.guildProfiles = new GuildProfiles();
+    this.packs = new QuestionPacks();
+    this.webhooks = new Webhooks();
 
     // TODO: Replace these
     /*

@@ -1,4 +1,3 @@
-import config from '@config';
 import {
   GuildProfileDocument,
   GuildProfileModel,
@@ -20,13 +19,13 @@ import {
 export class GuildProfile implements IGuildProfile {
   public guildId: string;
   public timezone: string;
-  public language: GuildLanguage;
   public packType: GuildPackType;
+  public language: GuildLanguage;
   public premium: GuildPremium;
   public welcome: GuildWelcome;
   public daily: GuildDaily;
   public botJoined: number;
-  public debug?: boolean;
+  public botLeft?: number;
 
   /**
    * Create a new guild profile instance.
@@ -42,11 +41,14 @@ export class GuildProfile implements IGuildProfile {
    */
   private assign(doc: GuildProfileDocument): void {
     this.guildId = doc.guildId;
+    this.timezone = doc.timezone;
+    this.packType = doc.packType;
     this.language = doc.language;
     this.premium = doc.premium;
     this.welcome = doc.welcome;
     this.daily = doc.daily;
     this.botJoined = doc.botJoined;
+    if (doc.botLeft) this.botLeft = doc.botLeft;
   }
 
   /**
@@ -132,16 +134,6 @@ export class GuildProfile implements IGuildProfile {
       return false;
     }
   }
-
-  /**
-   * Check if the guild has the debugMode value or user is a developer.
-   * @param userId The user id.
-   * @returns True if debug is approved otherwise false.
-   */
-  public debugEnabled(userId: string): boolean {
-    const debugApproved = this.debug ?? config.developers.includes(userId);
-    return debugApproved;
-  }
 }
 
 /**
@@ -150,15 +142,6 @@ export class GuildProfile implements IGuildProfile {
 export default class GuildProfiles {
   public cache = new Map<string, GuildProfile>();
   private guildIds: string[];
-
-  /**
-   * Create a new guild profile instance.
-   * @param guildIds The guild ids.
-   */
-  public constructor(guildIds: string[]) {
-    this.guildIds = guildIds;
-    this.fetch();
-  }
 
   /**
    * First type for the fetch method without guild id and returns array of guild profiles.
@@ -187,6 +170,8 @@ export default class GuildProfiles {
       }
 
       try {
+        logger.debug(`Fetching guild profile: ${guildId}`);
+
         // Fetch the guild profile document
         const guildProfileDoc = await GuildProfileModel.findOne({ guildId });
 
@@ -227,6 +212,8 @@ export default class GuildProfiles {
         throw new Error(String(error));
       }
     } else {
+      logger.debug('Fetching all guild profiles');
+
       // If an id is not provided fetch all guild profiles
       try {
         const guildProfileDocs = await GuildProfileModel.find({
@@ -304,8 +291,10 @@ export default class GuildProfiles {
 
   /**
    * Sync the guild profiles to local cache.
+   * @param guildIds The guild ids.
    */
-  public async sync(): Promise<void> {
+  public async sync(guildIds: string[]): Promise<void> {
+    this.guildIds = guildIds;
     try {
       await this.fetch();
     } catch (error) {

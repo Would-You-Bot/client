@@ -14,7 +14,6 @@ import {
   ModalSubmitInteraction,
   SlashCommandBuilder,
   SlashCommandSubcommandsOnlyBuilder,
-  User,
 } from 'discord.js';
 import { Logger } from 'winston';
 

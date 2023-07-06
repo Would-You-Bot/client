@@ -38,6 +38,14 @@ export default new CoreCommand({
 
   const translations = client.translations[guildProfile.language];
 
+  /**
+   * Replace the variables in a string.
+   * @param input The input.
+   * @returns The input with the variables replaced.
+   */
+  const replaceVars = (input: string): string =>
+    input.replaceAll('{name}', client.user?.username ?? 'Would You');
+
   switch (interaction.options.getString('choose')) {
     case 'dailyMsgs':
       {
@@ -138,7 +146,7 @@ export default new CoreCommand({
     case 'general':
       {
         const generalMsg = new EmbedBuilder()
-          .setTitle(translations.generalSettings.embed.title)
+          .setTitle(replaceVars(translations.generalSettings.embed.title))
           .setDescription(
             `
             ${translations.generalSettings.embed.timezone}: ${guildProfile.timezone}

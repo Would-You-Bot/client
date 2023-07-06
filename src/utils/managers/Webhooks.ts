@@ -138,15 +138,7 @@ export class Webhook {
  */
 export default class Webhooks {
   public cache = new Map<string, Webhook>();
-  private guildIds: string[];
-
-  /**
-   * Webhooks class constructor.
-   * @param guildIds The guild ids for this cluster.
-   */
-  public constructor(guildIds: string[]) {
-    this.guildIds = guildIds;
-  }
+  public guildIds: string[] = [];
 
   /**
    * Fetch method type without channelId.
@@ -283,8 +275,10 @@ export default class Webhooks {
 
   /**
    * Sync the webhooks to local cache.
+   * @param guildIds The guild ids.
    */
-  public async sync(): Promise<void> {
+  public async sync(guildIds: string[]): Promise<void> {
+    this.guildIds = guildIds;
     try {
       await this.fetch();
     } catch (error) {

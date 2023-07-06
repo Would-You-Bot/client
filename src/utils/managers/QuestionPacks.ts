@@ -17,15 +17,6 @@ class BasePacks {
   private cache = new Map<string, IBasePack>();
 
   /**
-   * Base pack class constructor.
-   * @param guildIds The guild IDs.
-   */
-  public constructor(guildIds: string[]) {
-    // Fetch all base packs on initialization.
-    this.fetch(guildIds);
-  }
-
-  /**
    * Assign base packs to the cache.
    * @param docs The base pack documents.
    */
@@ -41,7 +32,7 @@ class BasePacks {
    * @param guildIds The guild IDs.
    * @returns The base packs.
    */
-  private async fetch(guildIds?: string[]): Promise<Map<string, IBasePack>> {
+  public async fetch(guildIds?: string[]): Promise<Map<string, IBasePack>> {
     try {
       if (guildIds) {
         // Fetch the base packs from the database.
@@ -123,15 +114,6 @@ class CustomPacks {
   private cache: Map<string, ICustomPack> = new Map<string, ICustomPack>();
 
   /**
-   * Custom pack class constructor.
-   * @param guildIds The guild IDs.
-   */
-  public constructor(guildIds: string[]) {
-    // Fetch all custom packs on initialization.
-    this.fetchAll(guildIds);
-  }
-
-  /**
    * Assign custom packs to the cache.
    * @param docs The custom pack documents.
    */
@@ -147,9 +129,7 @@ class CustomPacks {
    * @param guildIds The guild IDs.
    * @returns The custom packs.
    */
-  private async fetchAll(
-    guildIds: string[]
-  ): Promise<Map<string, ICustomPack>> {
+  public async fetchAll(guildIds: string[]): Promise<Map<string, ICustomPack>> {
     try {
       // Fetch the custom packs from the database.
       const customPacks = await CustomPackModel.find({
@@ -452,18 +432,15 @@ class CustomPacks {
  * The question pack class - parent class for interaction with both base and custom packs.
  */
 export default class QuestionPacks {
-  private guildIds: string[];
   public base: BasePacks;
   public custom: CustomPacks;
 
   /**
    * Question packs class constructor.
-   * @param guildIds The guild IDs.
    */
-  public constructor(guildIds: string[]) {
-    this.guildIds = guildIds;
-    this.base = new BasePacks(this.guildIds);
-    this.custom = new CustomPacks(this.guildIds);
+  public constructor() {
+    this.base = new BasePacks();
+    this.custom = new CustomPacks();
   }
 
   /**
@@ -494,5 +471,16 @@ export default class QuestionPacks {
     } catch (error) {
       throw new Error(String(error));
     }
+  }
+
+  /**
+   * Sync the question packs.
+   * @param guildIds The guild IDs.
+   */
+  public async sync(guildIds: string[]): Promise<void> {
+    await Promise.all([
+      await this.base.fetch(guildIds),
+      await this.custom.fetchAll(guildIds),
+    ]);
   }
 }

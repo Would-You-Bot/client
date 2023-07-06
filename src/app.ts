@@ -25,7 +25,6 @@ export default async (client: ExtendedClient): Promise<void> => {
 
   // Connect to database
   await connectToDatabase();
-  await databaseSync(client);
 
   // Sync database
   // Initialize translations
@@ -35,6 +34,8 @@ export default async (client: ExtendedClient): Promise<void> => {
   await client.authenticate();
   const time = ((Date.now() - authStart) / 1000).toFixed(2);
   client.logger.info(colors.green(`Client authenticated in ${time} seconds`));
+
+  await databaseSync(client);
 
   // Initialize the logger by passing the cluster id
   initLogger(client.cluster.id);
