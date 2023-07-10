@@ -24,6 +24,10 @@ const guildProfile = new Schema(
             type: Boolean,
             default: false,
         },
+        welcomeType: {
+            type: String,
+            default: "mixed",
+        },
         dailyMsg: {
             type: Boolean,
             default: false,
