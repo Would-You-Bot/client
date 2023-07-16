@@ -770,7 +770,7 @@
   version "0.1.41"
   resolved "https://registry.yarnpkg.com/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-0.1.41.tgz#41652565110359d300a7bd4ce86861efb25e10ec"
 
-"@napi-rs/canvas@^0.1.34":
+"@napi-rs/canvas@^0.1.41":
   version "0.1.41"
   resolved "https://registry.yarnpkg.com/@napi-rs/canvas/-/canvas-0.1.41.tgz#babd041abc1c243ee90c7f36cc5b649d116b21b0"
   optionalDependencies:
