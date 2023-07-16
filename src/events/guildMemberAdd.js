@@ -7,7 +7,7 @@ module.exports = async (client, member) => {
 
     const guildDb = await client.database.getGuild(member.guild.id, false);
     if (guildDb && guildDb?.welcome) {
-        const channel = await member.guild.channels.fetch(guildguildDb.welcomeChannel).catch(err => {
+        const channel = await member.guild.channels.fetch(guildDb.welcomeChannel).catch(err => {
         });
 
         if (!channel?.id) return;
@@ -18,8 +18,8 @@ module.exports = async (client, member) => {
             PermissionFlagsBits.EmbedLinks
         ])) return;
 
-        const { General } = await require(`../data/rather-${guildguildDb.language}.json`);
-        const { WhatYouDo } = await require(`../data/wwyd-${guildguildDb.language}.json`);
+        const { General } = await require(`../data/rather-${guildDb.language}.json`);
+        const { WhatYouDo } = await require(`../data/wwyd-${guildDb.language}.json`);
 
         let randomDaily = [];
         if (guildDb.customTypes === "regular") {
@@ -53,7 +53,7 @@ module.exports = async (client, member) => {
         }
 
         let mention = null
-        if (guildguildDb.welcomePing) {mention = `<@${member.user.id}>`}
+        if (guildDb.welcomePing) {mention = `<@${member.user.id}>`}
 
         let welcomeEmbed = new EmbedBuilder()
         .setTitle(`${client.translation.get(guildDb?.language, 'Welcome.embed.title')} ${member.user.username}!`)
