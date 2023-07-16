@@ -3,9 +3,8 @@ const { ClusterManager, ReClusterManager, HeartbeatManager } = require("discord-
 const { ChalkAdvanced } = require('chalk-advanced');
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
-    totalClusters: 1,
-    totalShards: 1,
-    shardsPerClusters: 2,
+    totalShards: "auto",
+    shardsPerClusters: 10,
     mode: "process",
     token: process.env.TOKEN,
 }, true);
