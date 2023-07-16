@@ -2,7 +2,7 @@ const {
     EmbedBuilder,
     ActionRowBuilder,
     ButtonBuilder,
-    SlashCommandBuilder,
+    SlashCommandBuilder
 } = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 
@@ -22,15 +22,14 @@ module.exports = {
      * @param {guildModel} guildDb
      */
     async execute(interaction, client, guildDb) {
-        const commands = await client.application.commands.fetch({withLocalizations: true})
-        let type;
-        if (guildDb.language === "de_DE") {
-            type = "de"
-        } else if (guildDb.language === "en_EN") {
-            type = "en"
-        } else if (guildDb.language === "es_ES") {
-            type = "es"
-        }
+        const languageMappings = {
+            de_DE: "de",
+            en_EN: "en",
+            es_ES: "es"
+        };
+
+        const commands = await client.application.commands.fetch({ withLocalizations: true });
+        const type = languageMappings[guildDb?.language] || "en";
         const helpembed = new EmbedBuilder()
             .setColor('#0598F6')
             .setFooter({
@@ -46,7 +45,14 @@ module.exports = {
                     inline: false,
                 },
             )
-            .setDescription(client.translation.get(guildDb?.language, 'Help.embed.description') + `\n\n${commands.filter(e => e.name !== "reload").sort((a, b) => a.name.localeCompare(b.name)).map(n => `</${n.name}:${n.id}> - ${type === "de" ? n.descriptionLocalizations.de : type === "es" ? n.descriptionLocalizations["es-ES"] : n.description}`).join("\n")}`);
+            .setDescription(
+              client.translation.get(guildDb?.language, 'Help.embed.description') +
+              `\n\n${commands
+                .filter((e) => e.name !== "reload")
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((n) => `</${n.name}:${n.id}> - ${type === "de" ? n.descriptionLocalizations.de : type === "es" ? n.descriptionLocalizations["es-ES"] : n.description}`)
+                .join("\n")}`
+            );
 
         const button = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
