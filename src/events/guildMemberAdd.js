@@ -7,7 +7,7 @@ module.exports = async (client, member) => {
 
     const guildDb = await client.database.getGuild(member.guild.id, false);
     if (guildDb && guildDb?.welcome) {
-        const channel = await member.guild.channels.fetch(guildDb.welcomeChannel).catch(err => {
+        const channel = await member.guild.channels.fetch(guildguildDb.welcomeChannel).catch(err => {
         });
 
         if (!channel?.id) return;
@@ -17,7 +17,6 @@ module.exports = async (client, member) => {
             PermissionFlagsBits.SendMessages,
             PermissionFlagsBits.EmbedLinks
         ])) return;
-
         const { General } = await require(`../data/rather-${guildDb.language}.json`);
         const { WhatYouDo } = await require(`../data/wwyd-${guildDb.language}.json`);
 
