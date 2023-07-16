@@ -37,12 +37,12 @@ module.exports = async (client, interaction) => {
                 });
             }
         } else if (interaction.isButton()) {
-            if (client.used.has(interaction.user.id)) {
+            if (guildDb.replayType === "Guild" && client.used.has(interaction.user.id)) {
                 return interaction.reply({
                     ephemeral: true,
                     content: `<t:${Math.floor(guildDb.replayCooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!`
                 }).catch(() => { });
-            } else if (guildDb.replayType === "Channels" && client.used.has(`${interaction.user.id}-${interaction.channel.id}`)) {
+            } else if (guildDb.replayType === "Channels" && client.used.has(`${interaction.user.id}-${interaction.channel.id}`) && guildDb.replayChannels.find(x => x.id === interaction.channel.id)) {
                 return interaction.reply({
                     ephemeral: true,
                     content: `<t:${Math.floor(guildDb.replayChannels.find(x => x.id === interaction.channel.id).cooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!`
