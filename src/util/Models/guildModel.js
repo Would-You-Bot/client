@@ -24,6 +24,10 @@ const guildProfile = new Schema(
             type: Boolean,
             default: false,
         },
+        welcomeType: {
+            type: String,
+            default: "mixed",
+        },
         dailyMsg: {
             type: Boolean,
             default: false,
@@ -56,10 +60,14 @@ const guildProfile = new Schema(
             type: Number,
             default: 30000,
         },
-        voteCooldown: {
-            type: Number,
-            default: 25000,
+        replayType: {
+            type: String,
+            default: "Guild",
         },
+        replayChannels: [{
+            type: Object,
+            default: {},
+        }],
         botJoined: {
             type: Number,
         },

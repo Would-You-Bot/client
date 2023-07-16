@@ -56,17 +56,9 @@ module.exports = {
         await interaction.reply({
             embeds: [pingembed],
             components: [button],
+            ephemeral: true,
         }).catch((err) => {
             return console.log(err);
         });
-        setTimeout(() => {
-            button.components[0].setDisabled(true);
-            interaction.editReply({
-                embeds: [pingembed],
-                components: [button],
-            }).catch((err) => {
-                return;
-            });
-        }, 120000);
     },
 };

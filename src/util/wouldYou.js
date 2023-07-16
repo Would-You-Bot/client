@@ -1,5 +1,5 @@
 // Main Bot Librarys
-const { Client, GatewayIntentBits, Options, Collection } = require("discord.js");
+const { Client, GatewayIntentBits, Options, Collection, LimitedCollection } = require("discord.js");
 const { getInfo, ClusterClient } = require("discord-hybrid-sharding");
 
 // Utils and Config
@@ -22,7 +22,7 @@ const Voting = require("./votingHandler");
 const userFilter = (u) => u?.id !== client?.user?.id;
 
 module.exports = class WouldYou extends Client {
-    constructor(customCacheOptions = {}) {
+    constructor() {
         super({
             intents: [
                 GatewayIntentBits.Guilds,
@@ -30,33 +30,34 @@ module.exports = class WouldYou extends Client {
                 GatewayIntentBits.GuildMessages,
                 GatewayIntentBits.GuildMessageReactions,
             ],
-            makeCache: Options.cacheWithLimits({
-                BaseGuildEmojiManager: 0,
-                GuildBanManager: 0,
-                GuildInviteManager: 0,
-                GuildStickerManager: 0,
-                PresenceManager: 0,
-                ThreadManager: 0,
-                ThreadMemberManager: 0,
-                CategoryChannelChildManager: 0,
-                MessageManager: 0,
-                ReactionUserManager: {
-                    maxSize: 1000000,
-                    sweepFilter: () => userFilter,
-                    sweepInterval: 5 * 60 * 1000,
-                },
-                UserManager: {
-                    maxSize: 1000000,
-                    sweepFilter: () => userFilter,
-                    sweepInterval: 5 * 60 * 1000,
-                },
-                GuildMemberManager: {
-                    maxSize: 1000000,
-                    sweepFilter: () => userFilter,
-                    sweepInterval: 5 * 60 * 1000,
-                },
-                ...customCacheOptions,
-            }),
+            makeCache: (manager) => {
+                switch (manager.name) {
+                    case 'GuildApplicationCommandManager':
+                    case 'ApplicationCommandPermissionsManager':
+                    case 'ThreadMemberManager':
+                    case 'ApplicationCommandManager':
+                    case 'BaseGuildEmojiManager':
+                    case 'GuildEmojiManager':
+                    case 'GuildEmojiRoleManager':
+                    case 'GuildInviteManager':
+                    case 'GuildStickerManager':
+                    case 'StageInstanceManager':
+                    case 'PresenceManager':
+                    case 'MessageManager':
+                    case 'GuildBanManager':
+                    case 'ThreadManager':
+                    case 'ReactionUserManager': return new LimitedCollection({ maxSize: 0 })
+                    case 'GuildMemberManager': return new LimitedCollection({
+                        maxSize: 20000,
+                        keepOverLimit: (member) => member.id === member.client.user.id
+                    })
+                    case 'UserManager': return new LimitedCollection({
+                        maxSize: 20000,
+                        keepOverLimit: (user) => user.id === user.client.user.id
+                    })
+                    default: return new Collection()
+                }
+            },
             shards: getInfo().SHARD_LIST,
             shardCount: getInfo().TOTAL_SHARDS,
         });

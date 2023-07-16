@@ -1,25 +1,12 @@
-const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-require('dotenv').config();
-
-module.exports = async (client, member) => {
-    // Always do simple if checks before the main code. This is a little but not so little performance boost :)
-    if (member?.user?.bot) return;
-
-    const guildDb = await client.database.getGuild(member.guild.id, false);
-    if (guildDb && guildDb?.welcome) {
-        const channel = await member.guild.channels.fetch(guildguildDb.welcomeChannel).catch(err => {
-        });
-
-        if (!channel?.id) return;
-
-        if (!channel?.permissionsFor(client?.user?.id)?.has([
-            PermissionFlagsBits.ViewChannel,
-            PermissionFlagsBits.SendMessages,
-            PermissionFlagsBits.EmbedLinks
-        ])) return;
-
-        const { General } = await require(`../data/rather-${guildguildDb.language}.json`);
-        const { WhatYouDo } = await require(`../data/wwyd-${guildguildDb.language}.json`);
+const { EmbedBuilder } = require('discord.js');
+module.exports = {
+    data: {
+        name: 'welcomeTest',
+        description: 'Welcome Test',
+    },
+    async execute(interaction, client, guildDb) {
+        const { General } = await require(`../data/rather-${guildDb.language}.json`);
+        const { WhatYouDo } = await require(`../data/wwyd-${guildDb.language}.json`);
 
         let randomDaily = [];
         if (guildDb.customTypes === "regular") {
@@ -53,17 +40,14 @@ module.exports = async (client, member) => {
         }
 
         let mention = null
-        if (guildguildDb.welcomePing) {mention = `<@${member.user.id}>`}
+        if (guildDb.welcomePing) {mention = `<@${interaction.member.user.id}>`}
 
         let welcomeEmbed = new EmbedBuilder()
-        .setTitle(`${client.translation.get(guildDb?.language, 'Welcome.embed.title')} ${member.user.username}!`)
+        .setTitle(`${client.translation.get(guildDb?.language, 'Welcome.embed.title')} ${interaction.member.user.username}!`)
         .setColor("#0598F6")
-        .setThumbnail(member.user.avatarURL())
+        .setThumbnail(interaction.member.user.avatarURL())
         .setDescription(randomDaily);
 
-
-        return channel.send({content: mention, embeds: [welcomeEmbed]}).catch((err) => {
-            console.log(err)
-        });
-    }
+        return interaction.reply({ content: `${client.translation.get(guildDb.language, "Settings.welcomeTestSuccess")}\n\n ${mention ? mention : ""}`, embeds: [welcomeEmbed], ephemeral: true })
+    },
 };

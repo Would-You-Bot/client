@@ -18,7 +18,8 @@ module.exports = {
           guildDb.welcomePing
             ? `<:check:1077962440815411241>`
             : `<:x_:1077962443013238814>`
-        }\n${client.translation.get(guildDb?.language, 'Settings.embed.welcomeChannel')}: <#${newChannel}>`
+        }\n${client.translation.get(guildDb?.language, 'Settings.embed.welcomeChannel')}: <#${newChannel}>\n` +
+        `${client.translation.get(guildDb?.language, 'Settings.embed.dailyType')}: ${guildDb.welcomeType}`
       )
       .setColor("#0598F6")
       .setFooter({
@@ -40,7 +41,17 @@ module.exports = {
         new ButtonBuilder()
           .setCustomId("welcomePing")
           .setLabel(client.translation.get(guildDb?.language, 'Settings.button.welcomePing'))
-          .setStyle(guildDb.welcomePing ? "Success" : "Secondary")
+          .setStyle(guildDb.welcomePing ? "Success" : "Secondary"),
+          new ButtonBuilder()
+          .setCustomId("welcomeType")
+          .setLabel(client.translation.get(guildDb?.language, 'Settings.button.dailyType'))
+          .setStyle("Primary")
+          .setEmoji("📝"),
+          new ButtonBuilder()
+          .setCustomId("welcomeTest")
+          .setLabel(client.translation.get(guildDb?.language, 'Settings.button.welcomeTest'))
+          .setStyle("Success")
+          .setEmoji("▶"),
       );
 
     await client.database.updateGuild(interaction.guild.id, {

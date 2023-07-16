@@ -16,6 +16,11 @@
       "footer": "Would You"
     }
   },
+  "Welcome": {
+    "embed": {
+      "title": "Welcome"
+    }
+  },
   "Wwyd": {
     "embed": {
       "title": "What **would you** do?",
@@ -78,8 +83,9 @@
       },
       "paginator": {
         "title": "Would You Custom Messages",
-        "descCatUseful": "**Category**: useful",
-        "descCatUseless": "**Category**: useless"
+        "descCatNHIE": "**Category**: Never Have I Ever",
+        "descCatWYR": "**Category**: Would You Rather",
+        "descCatWWYD": "**Category**: What Would You Do"
       }
     }
   },
@@ -199,16 +205,26 @@
     "intervalSame": "The provided interval is the same interval that is already set. Make sure to choose a different interval.",
     "intervalInvalid": "Provided interval was invalid. Make sure your interval is in the 24h format and mintues are either 00 or 30!",
     "dailyChannel": "Select a channel where you want Daily Messages to be!",
+    "replayChannel": "Select a channel that you want to add a replay cooldown to!",
+    "replayChannelNone": "You don't have any replay channels set!",
+    "replayCooldownMin": "Provided cooldown is too short, make sure cooldowns are above 2 seconds! (2000 milliseconds)",
+    "replayChannelAlready": "The provided channel already has a cooldown!",
+    "replayDelete": "Select a channel that you want to remove a replay cooldown from!",
+    "cooldownTooLong": "Provided cooldown was too long. Make sure the cooldown is less than 6 hours (21600000 milliseconds)!",
+    "replayChannelLimit": "You can only add 15 channels to the replay cooldown!",
     "dailyType": "Select a type of Daily Message you want to be sent!",
+    "welcomeType": "Select a type of Welcome Message you want to be sent!",
     "dailyRole": "Select a role that you want to be pinged in Daily Messages!",
     "replaySame": "The provided replay cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
     "voteSame": "The provided vote cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
     "cooldownInvalid": "Provided cooldown was invalid. Make sure the cooldown only includes numbers!",
+    "welcomeTestSuccess": "This is a test message of what welcome messages look like.",
     "embed": {
-      "error": "You don't have the required permissions to use this command.",
       "generalTitle": "Would You - General Settings",
-      "voteCooldown": "**Vote Cooldown**",
       "replayCooldown": "**Replay Cooldown**",
+      "replayType": "**Replay Type**",
+      "replayChannels": "**Replay Channels**",
+      "replayChannelsNone": "None",
       "dailyInterval": "**Interval**",
       "dailyTitle": "Would You - Daily Messages",
       "dailyType": "**Type**",
@@ -221,7 +237,8 @@
       "welcome": "**Enabled**",
       "welcomeChannel": "**Channel**",
       "welcomePing": "**User Pings**",
-      "footer": "Would You"
+      "footer": "Would You",
+      "error": "You are missing the `Manage Guild` permission to use this command!"
     },
     "button": {
       "dailyInterval": "Set Interval",
@@ -229,10 +246,12 @@
       "dailyRole": "Set Role",
       "dailyTimezone": "Set Timezone",
       "dailyType": "Set Type",
+      "welcomeTest": "Send Test",
       "dailyThread": "Toggle threads",
       "dailyMsg": "Toggle Daily Messages",
-      "voteCooldown": "Set Vote Cooldown",
       "replayCooldown": "Set Replay Cooldown",
+      "replayDeleteChannels": "Delete Replay Channels",
+      "replayType": "Replay Type",
       "welcomeChannel": "Set Channel",
       "welcome": "Toggle Welcomes",
       "welcomePing": "Toggle User Ping"

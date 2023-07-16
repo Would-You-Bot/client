@@ -1,4 +1,4 @@
-const {EmbedBuilder, SlashCommandBuilder} = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const guildModel = require('../util/Models/guildModel');
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
         const guideembed = new EmbedBuilder()
             .setColor('#0598F6')
             .setFooter({
-                text: client.translation.get(guildDb?.language, 'Guide.embed.footer}'),
+                text: client.translation.get(guildDb?.language, 'Guide.embed.footer'),
                 iconURL: client.user.avatarURL(),
             })
             .setTimestamp()
@@ -45,6 +45,7 @@ module.exports = {
                     inline: false,
                 },
             )
+            .setImage('https://i.imgur.com/nA0yA0V.png')
             .setDescription(client.translation.get(guildDb?.language, 'Guide.embed.description'));
 
         await interaction.reply({

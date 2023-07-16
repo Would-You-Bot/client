@@ -16,6 +16,11 @@
       "footer": "Would You"
     }
   },
+  "Welcome": {
+    "embed": {
+      "title": "Bienvenido"
+    }
+  },
   "Wwyd": {
     "embed": {
       "title": "¿Qué harías **tú**?",
@@ -76,8 +81,9 @@
       },
       "paginator": {
         "title": "Mensajes personalizados de Would You",
-        "descCatUseful": "**Categoría**: útil",
-        "descCatUseless": "**Categoría**: inútil"
+        "descCatNHIE": "**Categoría**: Nunca he",
+        "descCatWYR": "**Categoría**: Preferirías",
+        "descCatWWYD": "**Categoría**: Qué harías si"
       }
     }
   },
@@ -198,17 +204,19 @@
     "intervalInvalid": "El intervalo proporcionado no es válido. ¡Asegúrese de que su intervalo está en formato 24 h y los minutos son 00 o 30!",
     "dailyChannel": "¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!",
     "dailyType": "¡Selecciona un tipo de mensaje diario que quieres enviar!",
+    "welcomeType": "Selecciona el tipo de Mensaje de Bienvenida que quieres que te envíen.",
     "dailyRole": "¡Selecciona un rol que quieres hacer ping en los Mensajes Diarios!",
     "replaySame": "El tiempo de reutilización proporcionado es el mismo que ya está establecido. Asegúrese de elegir un tiempo de reutilización diferente.",
     "voteSame": "El tiempo de espera de votación proporcionado es el mismo tiempo de espera que ya está establecido. Asegúrese de elegir un tiempo de espera diferente.",
     "cooldownInvalid": "El tiempo de reutilización proporcionado no es válido. ¡Asegúrese de que el tiempo de reutilización solo incluye números!",
+    "welcomeTestSuccess": "Este es un mensaje de prueba de cómo son los mensajes de bienvenida.",
     "embed": {
       "generalTitle": "Would You - Configuración general",
-      "voteCooldown": "**Tiempo de Votación**",
       "replayCooldown": "**Tiempo de Repetición**",
       "dailyInterval": "**Intervalo**",
       "dailyTitle": "Would You - Mensajes Diarios",
       "dailyType": "**Tipo**",
+      "welcomeTest": "Enviar prueba",
       "dailyMsg": "**Habilitado**",
       "dailyRole": "**Papel**",
       "dailyChannel": "**Canal**",
@@ -218,7 +226,8 @@
       "welcomeChannel": "**Canal**",
       "welcomePing": "**Pings de usuario**",
       "footer": "Would You",
-      "dailyThread": "**Hilos**"
+      "dailyThread": "**Hilos**",
+      "error": "¡Te falta el permiso `Manage guild` para usar este comando!"
     },
     "button": {
       "dailyInterval": "Establecer intervalo",
@@ -227,7 +236,6 @@
       "dailyTimezone": "Establecer zona horaria",
       "dailyType": "Definir tipo",
       "dailyMsg": "Alternar Mensajes Diarios",
-      "voteCooldown": "Establecer tiempo de espera de voto",
       "replayCooldown": "Establecer tiempo de reutilización",
       "welcomeChannel": "Establecer canal",
       "welcome": "Alternar Bienvenidas",
