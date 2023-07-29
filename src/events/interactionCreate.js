@@ -36,7 +36,17 @@ module.exports = async (client, interaction) => {
                     ephemeral: true,
                 });
             }
-        } else if (interaction.isButton() && !restrict.includes(interaction.customId)) {
+        } else if (interaction.isButton()) {
+            let button = client.buttons.get(interaction.customId);
+            if (interaction.customId.startsWith("voting_")) button = client.buttons.get("voting");
+            if (interaction.customId.startsWith("result_")) button = client.buttons.get("result");
+            if (!button) return interaction.reply({
+                content: "Please use the command again.",
+                ephemeral: true
+            }).catch(() => { });
+
+            if (restrict.includes(interaction.customId) || interaction.customId.startsWith("voting_") || interaction.customId.startsWith("result_")) return button.execute(interaction, client, guildDb);
+
             if (guildDb.replayType === "Guild" && client.used.has(interaction.user.id)) {
                 return interaction.reply({
                     ephemeral: true,
@@ -48,14 +58,6 @@ module.exports = async (client, interaction) => {
                     content: `<t:${Math.floor(guildDb.replayChannels.find(x => x.id === interaction.channel.id).cooldown / 1000 + Date.now() / 1000)}:R> you can use buttons again!`
                 }).catch(() => { });
             }
-
-            let button = client.buttons.get(interaction.customId);
-            if (interaction.customId.startsWith("voting_")) button = client.buttons.get("voting");
-            if (interaction.customId.startsWith("result_")) button = client.buttons.get("result");
-            if (!button) return interaction.reply({
-                content: "Please use the command again.",
-                ephemeral: true
-            }).catch(() => { });
 
             try {
                 if (!interaction.customId.startsWith("voting_") && !interaction.customId.startsWith("result_")) {
