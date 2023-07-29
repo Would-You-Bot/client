@@ -36,7 +36,7 @@ module.exports = async (client, interaction) => {
                     ephemeral: true,
                 });
             }
-        } else if (interaction.isButton()) {
+        } else if (interaction.isButton() && !restrict.includes(interaction.customId)) {
             if (guildDb.replayType === "Guild" && client.used.has(interaction.user.id)) {
                 return interaction.reply({
                     ephemeral: true,
@@ -58,7 +58,7 @@ module.exports = async (client, interaction) => {
             }).catch(() => { });
 
             try {
-                if (!restrict.includes(interaction.customId) && !interaction.customId.startsWith("voting_") && !interaction.customId.startsWith("result_")) {
+                if (!interaction.customId.startsWith("voting_") && !interaction.customId.startsWith("result_")) {
                     if (guildDb.replayType === "Channels" && guildDb.replayChannels.find(x => x.id === interaction.channel.id)) {
                         client.used.set(`${interaction.user.id}-${interaction.channel.id}`, Date.now() + guildDb.replayChannels.find(x => x.id === interaction.channel.id).cooldown)
                         setTimeout(() => client.used.delete(`${interaction.user.id}-${interaction.channel.id}`), guildDb.replayChannels.find(x => x.id === interaction.channel.id).cooldown)
