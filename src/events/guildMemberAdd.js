@@ -7,7 +7,7 @@ module.exports = async (client, member) => {
 
     const guildDb = await client.database.getGuild(member.guild.id, false);
     if (guildDb && guildDb?.welcome) {
-        const channel = await member.guild.channels.fetch(guildguildDb.welcomeChannel).catch(err => {
+        const channel = await member.guild.channels.fetch(guildDb.welcomeChannel).catch(err => {
         });
 
         if (!channel?.id) return;
@@ -51,17 +51,47 @@ module.exports = async (client, member) => {
             randomDaily = guildDb.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * guildDb.customMessages.filter(c => c.type !== "nsfw").length)].msg;
         }
 
+        if (guildDb.customTypes === "regular") {
+            let array = [];
+            array.push(...General, ...WhatYouDo)
+            randomDaily = array[Math.floor(Math.random() * array.length)]
+        } else if (guildDb.customTypes === "mixed") {
+            let array = [];
+            if (guildDb.customMessages.filter(c => c.type !== "nsfw").length != 0) {
+                array.push(guildDb.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * guildDb.customMessages.filter(c => c.type !== "nsfw").length)].msg);
+            } else {
+                randomDaily = [...General, ...WhatYouDo]
+            }
+            array.push(...General, ...WhatYouDo)
+            randomDaily = array[Math.floor(Math.random() * array.length)]
+        } else if (guildDb.customTypes === "custom") {
+            if (guildDb.customMessages.filter(c => c.type !== "nsfw").length === 0) {
+                return this.client.webhookHandler.sendWebhook(
+                    channel,
+                    guildDb.dailyChannel,
+                    {
+                        content: 'There\'s currently no custom Would You messages to be displayed for daily messages! Either make new ones or turn off daily messages.',
+                    },
+                    guildDb.dailyThread
+                ).catch(err => {
+                    console.log(err);
+                });
+            }
+
+            randomDaily = guildDb.customMessages.filter(c => c.type !== "nsfw")[Math.floor(Math.random() * guildDb.customMessages.filter(c => c.type !== "nsfw").length)].msg;
+        }
+
         let mention = null
-        if (guildDb.welcomePing) {mention = `<@${member.user.id}>`}
+        if (guildDb.welcomePing) { mention = `<@${member.user.id}>` }
 
         let welcomeEmbed = new EmbedBuilder()
-        .setTitle(`${client.translation.get(guildDb?.language, 'Welcome.embed.title')} ${member.user.username}!`)
-        .setColor("#0598F6")
-        .setThumbnail(member.user.avatarURL())
-        .setDescription(randomDaily);
+            .setTitle(`${client.translation.get(guildDb?.language, 'Welcome.embed.title')} ${member.user.username}!`)
+            .setColor("#0598F6")
+            .setThumbnail(member.user.avatarURL())
+            .setDescription(randomDaily);
 
 
-        return channel.send({content: mention, embeds: [welcomeEmbed]}).catch((err) => {
+        return channel.send({ content: mention, embeds: [welcomeEmbed] }).catch((err) => {
             console.log(err)
         });
     }
