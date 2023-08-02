@@ -345,7 +345,7 @@ destroy@1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/destroy/-/destroy-1.2.0.tgz"
 
-discord-api-types@^0.37.41, discord-api-types@^0.37.46, discord-api-types@^0.37.50:
+discord-api-types@^0.37.41, discord-api-types@^0.37.50, discord-api-types@^0.37.51:
   version "0.37.51"
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.51.tgz#a9fe2ceddde1c9c2e4d29987d45241cd746b9319"
 
