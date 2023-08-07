@@ -1,15 +1,15 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 
-const { version } = require('../../package.json');
+const { version } = require("../../package.json");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('info')
-    .setDescription('Shows information about the bot.')
+    .setName("info")
+    .setDescription("Shows information about the bot.")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: 'Zeigt einige Informationen über den Bot.',
-      "es-ES": 'Muestra información sobre el bot.'
+      de: "Zeigt einige Informationen über den Bot.",
+      "es-ES": "Muestra información sobre el bot.",
     }),
   /**
    * @param {CommandInteraction} interaction
@@ -17,7 +17,8 @@ module.exports = {
    * @param {guildModel} guildDb
    */
   async execute(interaction, client, guildDb) {
-    const unixstamp = Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime / 1000);
+    const unixstamp =
+      Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime / 1000);
 
     function round(num) {
       const m = Number((Math.abs(num) * 100).toPrecision(15));
@@ -25,48 +26,50 @@ module.exports = {
     }
 
     const infoEmbed = new EmbedBuilder()
-      .setColor('#5865f4')
-      .setTitle('Bot Info')
+      .setColor("#5865f4")
+      .setTitle("Bot Info")
       .addFields(
         {
-          name: 'Developers 🐧',
-          value: '\`\`\`@dominikdev\n@forgetfulskybro\nFinn#3000\nSlekup#6682\nMarc#0309\`\`\`',
+          name: "Developers 🐧",
+          value:
+            "```@dominikdev\n@forgetfulskybro\nFinn#3000\nSlekup#6682\nMarc#0309```",
           inline: false,
         },
         {
-          name: 'Guilds 🏢',
+          name: "Guilds 🏢",
           value: `\`\`\`${client.guilds.cache.size}\`\`\``,
           inline: true,
         },
         {
-          name: 'Users 🐧',
+          name: "Users 🐧",
           value: `\`\`\`${client.guilds.cache
             .reduce((a, b) => a + b.memberCount, 0)
             .toLocaleString()}\`\`\``,
           inline: true,
         },
         {
-          name: 'Memory 🎇',
+          name: "Memory 🎇",
           value: `\`\`\`${round(
             process.memoryUsage().heapUsed / 1000000000,
           )}GB\n\`\`\``,
           inline: true,
         },
         {
-          name: 'Last Restart 🚀',
+          name: "Last Restart 🚀",
           value: `
           <t:${unixstamp}:R>`,
           inline: true,
         },
         {
-          name: 'Bot Version 🧾',
+          name: "Bot Version 🧾",
           value: `\`\`\`v${version}\`\`\``,
           inline: true,
         },
       )
       .setThumbnail(client.user.displayAvatarURL())
       .setFooter({
-        text: interaction.user.tag + ' Shard #' + interaction?.guild?.shardId ?? 0,
+        text:
+          interaction.user.tag + " Shard #" + interaction?.guild?.shardId ?? 0,
         iconURL: client.user.avatarURL(),
       })
       .setTimestamp();

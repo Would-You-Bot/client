@@ -13,7 +13,7 @@ const voteModel = new Schema(
 
     until: { type: Date, required: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = model("voteModel", voteModel);

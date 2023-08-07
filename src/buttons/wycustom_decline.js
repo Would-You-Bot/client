@@ -6,9 +6,13 @@ module.exports = {
     description: "WyCustom Decline",
   },
   async execute(interaction, client, guildDb) {
-
     const typeEmbed = new EmbedBuilder()
-      .setTitle(client.translation.get(guildDb?.language, 'wyCustom.success.embedRemoveAll.decline'))
+      .setTitle(
+        client.translation.get(
+          guildDb?.language,
+          "wyCustom.success.embedRemoveAll.decline",
+        ),
+      )
       .setColor("#0598F4")
       .setFooter({
         text: "Would You",
@@ -25,7 +29,7 @@ module.exports = {
         .setLabel("Decline")
         .setStyle(2)
         .setDisabled(true)
-        .setCustomId("decline")
+        .setCustomId("decline"),
     );
 
     return interaction.update({ embeds: [typeEmbed], components: [button] });
