@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   format:
-    if: github.repository == 'would-you-bot/client'
+    if: github.repository == 'Would-You-Bot/client'
     runs-on: ubuntu-latest
     name: Format Files
     steps:
@@ -32,7 +32,7 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         id: format-files
         with:
-          commit_message: "chorestyle: format files"
+          commit_message: "chore(style): format files"
           skip_checkout: true
           branch: "formatting-${{ github.sha }}"
           create_branch: true
