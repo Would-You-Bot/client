@@ -5,11 +5,12 @@
   "main": "src/cluster.js",
   "scripts": {
     "start": "node src/cluster.js",
-    "test": "nodemon src/cluster.js"
+    "test": "nodemon src/cluster.js",
+    "format": "prettier --write  \"src/**/*.js\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Developer-Dungeon-Studio/Would-You.git"
+    "url": "git+https://github.com/Would-You-Bot/client.git"
   },
   "keywords": [
     "Discordjs",
@@ -21,9 +22,9 @@
   "author": "Mezo, ForGetFulSkyBro, fb_sean",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Developer-Dungeon-Studio/Would-You/issues"
+    "url": "https://github.com/Would-You-Bot/client/issues"
   },
-  "homepage": "https://github.com/Developer-Dungeon-Studio/Would-You#readme",
+  "homepage": "https://wouldyoubot.gg",
   "dependencies": {
     "@discordjs/rest": "^2.0.0",
     "@napi-rs/canvas": "^0.1.41",
@@ -44,6 +45,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "nodemon": "3.0.1"
+    "nodemon": "3.0.1",
+    "prettier": "^3.0.1"
   }
 }
