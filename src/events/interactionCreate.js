@@ -80,7 +80,6 @@ module.exports = async (client, interaction) => {
         interaction.customId.startsWith("result_")
       )
         return button.execute(interaction, client, guildDb);
-
       if (
         guildDb.replayType === "Guild" &&
         client.used.has(interaction.user.id)
@@ -88,9 +87,8 @@ module.exports = async (client, interaction) => {
         return interaction
           .reply({
             ephemeral: true,
-            content: `<t:${Math.floor(
-              guildDb.replayCooldown / 1000 + Date.now() / 1000,
-            )}:R> you can use buttons again!`,
+            content: `You can use this button again <t:${Math.floor(client.used.get(interaction.user.id) / 1000,
+            )}:R>!`,
           })
           .catch(() => {});
       } else if (
