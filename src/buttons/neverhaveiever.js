@@ -6,6 +6,11 @@ module.exports = {
     description: "never have i ever",
   },
   async execute(interaction, client, guildDb) {
+    if (!interaction.channel.permissionsFor(interaction.user.id).has(PermissionFlagsBits.SendMessages))
+    return interaction.reply({
+      content: "You don't have permission to use this button in this channel!",
+      ephemeral: true,
+    });
     const { Funny, Basic, Young, Food, RuleBreak } =
       await require(`../data/nhie-${guildDb.language}.json`);
     const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak];
