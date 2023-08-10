@@ -15,15 +15,17 @@ module.exports = {
       de: "Ändere die Sprache für den aktuellen Server",
       "es-ES": "Cambiar el idioma del bot en el servidor",
     })
-    .addStringOption(option =>
-      option.setName('language')
-        .setDescription('The language you want to use.')
+    .addStringOption((option) =>
+      option
+        .setName("language")
+        .setDescription("The language you want to use.")
         .setRequired(true)
-    .addChoices(
-      { name: 'Deutsch', value: 'german' },
-      { name: 'English', value: 'english' },
-      { name: 'Español', value: 'spanish' },
-    )),
+        .addChoices(
+          { name: "Deutsch", value: "german" },
+          { name: "English", value: "english" },
+          { name: "Español", value: "spanish" },
+        ),
+    ),
 
   /**
    * @param {CommandInteraction} interaction
@@ -32,9 +34,7 @@ module.exports = {
    */
   async execute(interaction, client, guildDb) {
     let languageembed;
-    if (
-      interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
-    ) {
+    if (interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)) {
       switch (interaction.options.getString("language")) {
         case "english": {
           await client.database.updateGuild(
