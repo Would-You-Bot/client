@@ -87,7 +87,8 @@ module.exports = async (client, interaction) => {
         return interaction
           .reply({
             ephemeral: true,
-            content: `You can use this button again <t:${Math.floor(client.used.get(interaction.user.id) / 1000,
+            content: `You can use this button again <t:${Math.floor(
+              client.used.get(interaction.user.id) / 1000,
             )}:R>!`,
           })
           .catch(() => {});

@@ -1,4 +1,9 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, PermissionFlagsBits } = require("discord.js");
+const {
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  PermissionFlagsBits,
+} = require("discord.js");
 
 module.exports = {
   data: {
@@ -6,13 +11,17 @@ module.exports = {
     description: "would you rather",
   },
   async execute(interaction, client, guildDb) {
-    
-    if (!interaction.channel.permissionsFor(interaction.user.id).has(PermissionFlagsBits.SendMessages))
-    return interaction.reply({
-      content: "You don't have permission to use this button in this channel!",
-      ephemeral: true,
-    });
-    
+    if (
+      !interaction.channel
+        .permissionsFor(interaction.user.id)
+        .has(PermissionFlagsBits.SendMessages)
+    )
+      return interaction.reply({
+        content:
+          "You don't have permission to use this button in this channel!",
+        ephemeral: true,
+      });
+
     const { General } =
       await require(`../data/rather-${guildDb.language}.json`);
     if (!guildDb.replay)
