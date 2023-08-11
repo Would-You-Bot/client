@@ -25,16 +25,40 @@ module.exports = {
       return (Math.round(m) / 100) * Math.sign(num);
     }
 
-       console.log('Would You Cache Stats: \n');
-       console.log(`Guilds: ${client.guilds.cache.size}`);
-       console.log(`Users: ${client.users.cache.size}`);
-       console.log(`Guild Members: ${client.guilds.cache.reduce((acc, guild) => acc + guild.members.cache.size, 0)}`);
-       console.log(`Channels: ${client.channels.cache.size}`);
-       console.log(`Roles: ${client.guilds.cache.reduce((acc, guild) => acc + guild.roles.cache.size, 0)}`);
-       console.log(`VoiceStates: ${client.guilds.cache.reduce((acc, guild) => acc + guild.voiceStates.cache.size, 0)}`);
-       console.log(`Presences: ${client.guilds.cache.reduce((acc, guild) => acc + guild.presences.cache.size, 0)}`);
-       console.log(`RAM Usage: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(0)}/${(process.memoryUsage().rss / 1024 / 1024).toFixed(0)}MB`);
-       console.log('\n');
+    console.log("Would You Cache Stats: \n");
+    console.log(`Guilds: ${client.guilds.cache.size}`);
+    console.log(`Users: ${client.users.cache.size}`);
+    console.log(
+      `Guild Members: ${client.guilds.cache.reduce(
+        (acc, guild) => acc + guild.members.cache.size,
+        0,
+      )}`,
+    );
+    console.log(`Channels: ${client.channels.cache.size}`);
+    console.log(
+      `Roles: ${client.guilds.cache.reduce(
+        (acc, guild) => acc + guild.roles.cache.size,
+        0,
+      )}`,
+    );
+    console.log(
+      `VoiceStates: ${client.guilds.cache.reduce(
+        (acc, guild) => acc + guild.voiceStates.cache.size,
+        0,
+      )}`,
+    );
+    console.log(
+      `Presences: ${client.guilds.cache.reduce(
+        (acc, guild) => acc + guild.presences.cache.size,
+        0,
+      )}`,
+    );
+    console.log(
+      `RAM Usage: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
+        0,
+      )}/${(process.memoryUsage().rss / 1024 / 1024).toFixed(0)}MB`,
+    );
+    console.log("\n");
 
     const infoEmbed = new EmbedBuilder()
       .setColor("#5865f4")
@@ -42,8 +66,7 @@ module.exports = {
       .addFields(
         {
           name: "Developers 🐧",
-          value:
-            "```@dominikdev\n@forgetfulskybro\n@finndev```",
+          value: "```@dominikdev\n@forgetfulskybro\n@finndev```",
           inline: false,
         },
         {
