@@ -29,6 +29,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Fügt eigene WouldYou Fragen hinzu.",
       "es-ES": "Añade mensajes Would You personalizados.",
+      fr: "Ajoute des messages personnalisés au bot"
     })
     .addSubcommand((subcommand) =>
       subcommand

@@ -16,6 +16,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Bekomme eine nie habe ich jemals Nachricht.",
       "es-ES": "Consigue un mensaje Nunca he tenido",
+      fr: "Afficher une question que je n'ai jamais posée"
     }),
 
   /**

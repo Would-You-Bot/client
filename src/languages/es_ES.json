@@ -24,7 +24,9 @@
   "Wwyd": {
     "embed": {
       "title": "¿Qué harías **tú**?",
-      "footer": "Explica qué y por qué."
+      "footer": "Explica qué y por qué.",
+      "option1": "Opción 1",
+      "option2": "Opción 2"
     }
   },
   "Support": {
@@ -81,9 +83,9 @@
       },
       "paginator": {
         "title": "Mensajes personalizados de Would You",
-        "descCatNHIE": "**Categoría**: Nunca he",
-        "descCatWYR": "**Categoría**: Preferirías",
-        "descCatWWYD": "**Categoría**: Qué harías si"
+        "descCatNHIE": "**Categoría**: Nunca lo he hecho nunca",
+        "descCatWYR": "**Categoría**: ¿Podrías más bien",
+        "descCatWWYD": "**Categoría**: ¿Qué harías tú"
       }
     }
   },
@@ -133,7 +135,7 @@
         "name": "**Mis Comandos**",
         "value": "`/Would You` - Inicia una discusión sobre poderes aleatorios.\n`/ping` - Pong!\n`/language` - Cambia el idioma del bot para el servidor.\n`/help` - Muestra esta información.\n`/rather` - Te da dos poderes para elegir.\n`/custom` - envía un mensaje personalizado en el chat!\n`/welcome` - ¡Agrega o elimina el canal de bienvenida!\n`/support`: si alguna vez necesitas ayuda con el bot, ¡usa este comando para obtener ayuda del equipo de soporte!",
         "privacyname": "**Política de privacidad**",
-        "privacy": "Valoramos tu privacidad. Si tienes alguna duda sobre tus datos, consulta nuestra política de privacidad [aquí](https://wouldyoubot.gg/privacy)."
+        "privacy": "Valoramos tu privacidad. Si tienes alguna duda sobre tus datos, consulta la política de privacidad [aquí](https://wouldyoubot.gg/privacy)."
       }
     },
     "button": {
@@ -203,6 +205,13 @@
     "intervalSame": "El intervalo proporcionado es el mismo que ya está establecido. Asegúrese de elegir un intervalo diferente.",
     "intervalInvalid": "El intervalo proporcionado no es válido. ¡Asegúrese de que su intervalo está en formato 24 h y los minutos son 00 o 30!",
     "dailyChannel": "¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!",
+    "replayChannel": "Selecciona un canal al que quieras añadir un enfriamiento por repetición!",
+    "replayChannelNone": "¡No tienes ningún canal de repetición configurado!",
+    "replayCooldownMin": "El Enfriamiento proporcionado es demasiado corto, ¡asegúrate de que los Enfriamientos sean superiores a 2 segundos! (2000 milisegundos)",
+    "replayChannelAlready": "¡El canal proporcionado ya tiene un enfriamiento!",
+    "replayDelete": "Selecciona un canal del que quieras eliminar el enfriamiento por repetición",
+    "cooldownTooLong": "El enfriamiento proporcionado era demasiado largo. ¡Asegúrate de que el enfriamiento es inferior a 6 horas (21600000 milisegundos)!",
+    "replayChannelLimit": "¡Sólo puedes añadir 15 canales al enfriamiento de la repetición!",
     "dailyType": "¡Selecciona un tipo de mensaje diario que quieres enviar!",
     "welcomeType": "Selecciona el tipo de Mensaje de Bienvenida que quieres que te envíen.",
     "dailyRole": "¡Selecciona un rol que quieres hacer ping en los Mensajes Diarios!",
@@ -213,20 +222,22 @@
     "embed": {
       "generalTitle": "Would You - Configuración general",
       "replayCooldown": "**Tiempo de Repetición**",
+      "replayType": "**Tipo de reproducción**",
+      "replayChannels": "**Canales de reproducción**",
+      "replayChannelsNone": "Nada",
       "dailyInterval": "**Intervalo**",
       "dailyTitle": "Would You - Mensajes Diarios",
       "dailyType": "**Tipo**",
-      "welcomeTest": "Enviar prueba",
       "dailyMsg": "**Habilitado**",
       "dailyRole": "**Papel**",
       "dailyChannel": "**Canal**",
       "dailyTimezone": "**Timezone**",
+      "dailyThread": "**Hilos**",
       "welcomeTitle": "Would You - Bienvenidas",
       "welcome": "**Habilitado**",
       "welcomeChannel": "**Canal**",
       "welcomePing": "**Pings de usuario**",
       "footer": "Would You",
-      "dailyThread": "**Hilos**",
       "error": "¡Te falta el permiso `Manage guild` para usar este comando!"
     },
     "button": {
@@ -235,12 +246,15 @@
       "dailyRole": "Establecer rol",
       "dailyTimezone": "Establecer zona horaria",
       "dailyType": "Definir tipo",
+      "welcomeTest": "Enviar Prueba",
+      "dailyThread": "Hilo conductor",
       "dailyMsg": "Alternar Mensajes Diarios",
       "replayCooldown": "Establecer tiempo de reutilización",
+      "replayDeleteChannels": "Eliminar canales de repetición",
+      "replayType": "Modo de repetición",
       "welcomeChannel": "Establecer canal",
       "welcome": "Alternar Bienvenidas",
-      "welcomePing": "Alternar ping de usuario",
-      "dailyThread": "Hilo conductor"
+      "welcomePing": "Alternar ping de usuario"
     }
   },
   "Debug": {
@@ -274,6 +288,8 @@
   },
   "Voting": {
     "Yes": "Sí",
-    "No": "No"
+    "No": "No",
+    "Vote": "Votar: ",
+    "VotingResults": "Resultados de la votación"
   }
 }

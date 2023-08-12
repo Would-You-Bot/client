@@ -14,6 +14,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Ändert den Typ der Nachrichten, die verwendet werden.",
       "es-ES": "Cambia el tipo de mensajes que se utilizarán.",
+      fr: "Modifie le type de messages qui seront utilisés.",
     })
     .addSubcommand((subcommand) =>
       subcommand

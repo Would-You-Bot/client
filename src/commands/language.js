@@ -14,6 +14,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Ändere die Sprache für den aktuellen Server",
       "es-ES": "Cambiar el idioma del bot en el servidor",
+      fr: "Changer la langue du serveur actuel",
     })
     .addStringOption((option) =>
       option
@@ -21,9 +22,10 @@ module.exports = {
         .setDescription("The language you want to use.")
         .setRequired(true)
         .addChoices(
-          { name: "Deutsch", value: "german" },
-          { name: "English", value: "english" },
-          { name: "Español", value: "spanish" },
+          { name: "🇩🇪 Deutsch", value: "german" },
+          { name: "🇺🇸 English", value: "english" },
+          { name: "🇪🇸 Español", value: "spanish" },
+          { name: "🇫🇷 Français", value: "french" },
         ),
     ),
 
@@ -84,6 +86,24 @@ module.exports = {
           languageembed = new EmbedBuilder()
             .setTitle("¡Idioma cambiado!")
             .setDescription("¡Has seleccionado el español como nuevo idioma!")
+            .setFooter({
+              text: "Would You",
+              iconURL: client.user.avatarURL(),
+            });
+          break;
+        }
+        case "french": {
+          await client.database.updateGuild(
+            interaction.guildId,
+            {
+              language: "fr_FR",
+            },
+            true,
+          );
+
+          languageembed = new EmbedBuilder()
+            .setTitle("Langue changée!")
+            .setDescription("Français a été sélectionné comme nouvelle langue!")
             .setFooter({
               text: "Would You",
               iconURL: client.user.avatarURL(),

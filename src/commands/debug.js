@@ -17,6 +17,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Debug den would you bot",
       "es-ES": "Depurar el bot",
+      fr: "Déboguez le bot \"Would You\""
     })
     .addSubcommand((subcommand) =>
       subcommand

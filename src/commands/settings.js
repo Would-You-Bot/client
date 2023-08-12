@@ -16,6 +16,7 @@ module.exports = {
       de: "Ändere Einstellungen für täglichen Nachrichten und Willkommensnachrichten.",
       "es-ES":
         "Cambiar la configuración de los mensajes diarios y las bienvenidas",
+      fr: "Modifier les paramètres des messages quotidiens et des messages de bienvenue",
     })
     .addStringOption((option) =>
       option

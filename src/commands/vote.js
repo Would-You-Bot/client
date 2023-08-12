@@ -10,6 +10,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Stimme für mich ab!",
       "es-ES": "¡Vota por mí!",
+      fr: "Votez pour le bot pour nous soutenir"
     }),
 
   /**

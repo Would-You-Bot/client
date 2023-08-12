@@ -10,11 +10,12 @@ module.exports = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("help")
-    .setDescription("Help command!")
+    .setDescription("A list of every command")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Hilfe Befehl!",
-      "es-ES": "Comando de ayuda!",
+      de: "Eine Liste aller Befehle",
+      "es-ES": "Una lista de todos los comandos",
+      fr: "Une liste de chaque commande",
     }),
   /**
    * @param {CommandInteraction} interaction
@@ -26,6 +27,7 @@ module.exports = {
       de_DE: "de",
       en_EN: "en",
       es_ES: "es",
+      fr_FR: "fr",
     };
 
     const commands = await client.application.commands.fetch({
@@ -63,6 +65,8 @@ module.exports = {
                     ? n.descriptionLocalizations.de
                     : type === "es"
                     ? n.descriptionLocalizations["es-ES"]
+                    : type === "fr"
+                    ? n.descriptionLocalizations.fr
                     : n.description
                 }`,
             )
@@ -91,7 +95,7 @@ module.exports = {
         components: [button],
       })
       .catch((err) => {
-        return;
+        console.log(err)
       });
   },
 };
