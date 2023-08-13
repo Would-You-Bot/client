@@ -10,7 +10,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Zeigt einige Informationen über den Bot.",
       "es-ES": "Muestra información sobre el bot.",
-      fr: "Affiche des informations sur le bot"
+      fr: "Affiche des informations sur le bot",
     }),
   /**
    * @param {CommandInteraction} interaction

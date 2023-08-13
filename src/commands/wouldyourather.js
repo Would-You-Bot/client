@@ -16,7 +16,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Erhalte eine Würdest du eher Frage.",
       "es-ES": "Obtiene une pregunta ¿Qué prefieres?",
-      fr: "Obtenez une question préférez-vous."
+      fr: "Obtenez une question préférez-vous.",
     }),
 
   /**

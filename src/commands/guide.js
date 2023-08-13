@@ -10,7 +10,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Anleitung, um den Bot zu verwenden und die Aktivität zu erhöhen",
       "es-ES": "Guía para usar el bot y aumentar la actividad",
-      fr: "Un guide simple sur la façon d'utiliser le bot pour augmenter l'activité"
+      fr: "Un guide simple sur la façon d'utiliser le bot pour augmenter l'activité",
     }),
 
   /**
