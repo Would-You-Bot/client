@@ -15,7 +15,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Lädt slash commands neu.",
       "es-ES": "Recargar los slash commands.",
-      fr: "Recharge une commande"
+      fr: "Recharge une commande",
     })
     .addStringOption((option) =>
       option

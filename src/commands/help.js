@@ -95,7 +95,7 @@ module.exports = {
         components: [button],
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
   },
 };

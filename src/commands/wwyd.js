@@ -15,7 +15,7 @@ module.exports = {
     .setDescriptionLocalizations({
       de: "Was würdest du in dieser Situation tun",
       "es-ES": "¿Qué harías en esta situación?",
-      fr: "Que feriez-vous dans cette situation"
+      fr: "Que feriez-vous dans cette situation",
     }),
 
   /**
