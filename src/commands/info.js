@@ -18,6 +18,7 @@ module.exports = {
    * @param {guildModel} guildDb
    */
   async execute(interaction, client, guildDb) {
+
     const unixstamp =
       Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime / 1000);
 
