@@ -45,9 +45,7 @@ module.exports = {
    * @param {guildModel} guildDb
    */
   async execute(interaction, client, guildDb) {
-    if (
-      !interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)
-    ) {
+    if (!interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)) {
       const errorembed = new EmbedBuilder()
         .setColor("#F00505")
         .setTitle("Error!")
