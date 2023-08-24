@@ -18,7 +18,7 @@ const modalObject = {
 };
 
 function isFormat(str) {
-  return /^(?:[01]\d|2[0-3]):(?:00|30)$/.test(str);
+  return /^(?:[01]\d|2[0-4]):(?:00|30)$/.test(str);
 }
 
 module.exports = {
