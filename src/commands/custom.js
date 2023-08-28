@@ -218,7 +218,7 @@ module.exports = {
               }
             }
           } catch (e) {
-            return;
+            console.error(e);
           }
         });
       }
@@ -780,34 +780,41 @@ module.exports = {
           );
           let wwyd = guildDb.customMessages.filter((c) => c.type === "wwyd");
 
-          let text = `{\n`;
+          let text = "{\n";
+          let arrays = [];
+          
           if (wouldyourather.length > 0) {
-            text += `\n"wouldyourather": [`;
+            let arrayText = `"wouldyourather": [`;
             wouldyourather.map((a, i) => {
               i = i++ + 1;
-              text += `\n"${a.msg}"${wouldyourather.length !== i ? "," : ""}`;
+              arrayText += `\n"${a.msg}"${wouldyourather.length !== i ? "," : ""}`;
             });
-            text += `\n]`;
+            arrayText += `\n]`;
+            arrays.push(arrayText);
           }
-
+          
           if (neverhaveiever.length > 0) {
-            text += `\n"neverhaveiever": [`;
+            let arrayText = `"neverhaveiever": [`;
             neverhaveiever.map((a, i) => {
               i = i++ + 1;
-              text += `\n"${a.msg}"${neverhaveiever.length !== i ? "," : ""}`;
+              arrayText += `\n"${a.msg}"${neverhaveiever.length !== i ? "," : ""}`;
             });
-            text += `\n]`;
+            arrayText += `\n]`;
+            arrays.push(arrayText);
           }
-
+          
           if (wwyd.length > 0) {
-            text += `\n"wwyd": [`;
+            let arrayText = `"wwyd": [`;
             wwyd.map((a, i) => {
               i = i++ + 1;
-              text += `\n"${a.msg}"${wwyd.length !== i ? "," : ""}`;
+              arrayText += `\n"${a.msg}"${wwyd.length !== i ? "," : ""}`;
             });
-            text += `\n]`;
+            arrayText += `\n]`;
+            arrays.push(arrayText);
           }
-          text += `\n}`;
+          
+          text += arrays.join(",\n");
+          text += "\n}";
 
           return interaction.editReply({
             content: client.translation.get(

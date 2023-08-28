@@ -6,6 +6,7 @@ const {
   PermissionFlagsBits,
 } = require("discord.js");
 const guildModel = require("../util/Models/guildModel");
+const shuffle = require("../util/shuffle");
 
 module.exports = {
   requireGuild: true,
@@ -28,16 +29,34 @@ module.exports = {
   async execute(interaction, client, guildDb) {
     const { Funny, Basic, Young, Food, RuleBreak } =
       await require(`../data/nhie-${guildDb.language}.json`);
-    const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak];
-    const randomNever = Math.floor(Math.random() * neverArray.length);
+          const dbquestions = guildDb.customMessages.filter(
+      (c) => c.type !== "nsfw" && c.type === "neverhaveiever"
+    );
+
+    let nererhaveIever = [];
+
+    if(!dbquestions.length) guildDb.customTypes = "regular";
+
+    switch (guildDb.customTypes) {
+      case "regular":
+        nererhaveIever = shuffle([...Funny, ...Basic, ...Young, ...Food, ...RuleBreak]);
+        break;
+      case "mixed":
+        nererhaveIever = shuffle([...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...dbquestions.map((c) => c.msg)]);
+        break;
+      case "custom":
+        nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
+        break;
+    }
+    const Random = Math.floor(Math.random() * nererhaveIever.length);
 
     let ratherembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`,
+        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
         iconURL: interaction.user.avatarURL(),
       })
-      .setDescription(neverArray[randomNever]);
+      .setDescription(nererhaveIever[Random]);
 
     const mainRow = new ActionRowBuilder();
     if (Math.round(Math.random() * 15) < 3) {

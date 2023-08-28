@@ -4,11 +4,12 @@ const {
   ButtonBuilder,
   PermissionFlagsBits,
 } = require("discord.js");
+const shuffle = require("../util/shuffle");
 
 module.exports = {
   data: {
     name: "neverhaveiever",
-    description: "never have i ever",
+    description: "never have I ever",
   },
   async execute(interaction, client, guildDb) {
     if (
@@ -21,22 +22,36 @@ module.exports = {
           "You don't have permission to use this button in this channel!",
         ephemeral: true,
       });
-    const { Funny, Basic, Young, Food, RuleBreak } =
+      const { Funny, Basic, Young, Food, RuleBreak } =
       await require(`../data/nhie-${guildDb.language}.json`);
-    const neverArray = [...Funny, ...Basic, ...Young, ...Food, ...RuleBreak];
-    const randomNever = Math.floor(Math.random() * neverArray.length);
+          const dbquestions = guildDb.customMessages.filter(
+      (c) => c.type !== "nsfw" && c.type === "neverhaveiever"
+    );
 
-    let ratherembed = new EmbedBuilder()
+    let nererhaveIever = [];
+
+    if(!dbquestions.length) guildDb.customTypes = "regular";
+
+    switch (guildDb.customTypes) {
+      case "regular":
+        nererhaveIever = shuffle([...Funny, ...Basic, ...Young, ...Food, ...RuleBreak]);
+        break;
+      case "mixed":
+        nererhaveIever = shuffle([...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...dbquestions.map((c) => c.msg)]);
+        break;
+      case "custom":
+        nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
+        break;
+    }
+    const Random = Math.floor(Math.random() * nererhaveIever.length);
+
+    let nhiembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${randomNever}`,
+        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
         iconURL: interaction.user.avatarURL(),
       })
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomNever}`,
-        iconURL: interaction.user.avatarURL(),
-      })
-      .setDescription(neverArray[randomNever]);
+      .setDescription(nererhaveIever[Random]);
 
     const mainRow = new ActionRowBuilder();
     if (Math.round(Math.random() * 15) < 3) {
@@ -70,7 +85,7 @@ module.exports = {
 
     return interaction
       .reply({
-        embeds: [ratherembed],
+        embeds: [nhiembed],
         components: [row, mainRow],
       })
       .catch((err) => {

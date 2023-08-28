@@ -4,6 +4,7 @@ const {
   ButtonBuilder,
   PermissionFlagsBits,
 } = require("discord.js");
+const shuffle = require("../util/shuffle");
 
 module.exports = {
   data: {
@@ -22,8 +23,38 @@ module.exports = {
         ephemeral: true,
       });
 
-    const { General } =
+      const { General } =
       await require(`../data/rather-${guildDb.language}.json`);
+    const dbquestions = guildDb.customMessages.filter(
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather"
+    );
+
+    let wouldyourather = [];
+
+    if(!dbquestions.length) guildDb.customTypes = "regular";
+
+    switch (guildDb.customTypes) {
+      case "regular":
+        wouldyourather = shuffle([...General]);
+        break;
+      case "mixed":
+        wouldyourather = shuffle([...General, ...dbquestions.map((c) => c.msg)]);
+        break;
+      case "custom":
+        wouldyourather = shuffle(dbquestions.map((c) => c.msg));
+        break;
+    }
+
+    const Random = Math.floor(Math.random() * wouldyourather.length);
+
+    let ratherembed = new EmbedBuilder()
+      .setColor("#0598F6")
+      .setFooter({
+        text: `Requested by ${interaction.user.username} | Type: General | ID: ${Random}`,
+        iconURL: interaction.user.avatarURL(),
+      })
+      .setDescription(wouldyourather[Random]);
+      
     if (!guildDb.replay)
       return interaction.reply({
         ephemeral: true,
@@ -57,21 +88,12 @@ module.exports = {
     const time = 60_000;
     const three_minutes = 3 * 60 * 1e3;
 
-    const randomrather = Math.floor(Math.random() * General.length);
     const { row, id } = await client.voting.generateVoting(
       interaction.guildId,
       interaction.channelId,
       time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
       0,
     );
-
-    let ratherembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomrather}`,
-        iconURL: interaction.user.avatarURL(),
-      })
-      .setDescription(General[randomrather]);
 
     return interaction
       .reply({

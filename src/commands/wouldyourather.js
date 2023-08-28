@@ -6,6 +6,7 @@ const {
   PermissionFlagsBits,
 } = require("discord.js");
 const guildModel = require("../util/Models/guildModel");
+const shuffle = require("../util/shuffle");
 
 module.exports = {
   requireGuild: true,
@@ -28,15 +29,35 @@ module.exports = {
   async execute(interaction, client, guildDb) {
     const { General } =
       await require(`../data/rather-${guildDb.language}.json`);
-    const randomrather = Math.floor(Math.random() * General.length);
+    const dbquestions = guildDb.customMessages.filter(
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather"
+    );
+
+    let wouldyourather = [];
+
+    if(!dbquestions.length) guildDb.customTypes = "regular";
+
+    switch (guildDb.customTypes) {
+      case "regular":
+        wouldyourather = shuffle([...General]);
+        break;
+      case "mixed":
+        wouldyourather = shuffle([...General, ...dbquestions.map((c) => c.msg)]);
+        break;
+      case "custom":
+        wouldyourather = shuffle(dbquestions.map((c) => c.msg));
+        break;
+    }
+
+    const Random = Math.floor(Math.random() * wouldyourather.length);
 
     let ratherembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: General | ID: ${randomrather}`,
+        text: `Requested by ${interaction.user.username} | Type: General | ID: ${Random}`,
         iconURL: interaction.user.avatarURL(),
       })
-      .setDescription(General[randomrather]);
+      .setDescription(wouldyourather[Random]);
 
     const mainRow = new ActionRowBuilder();
     if (Math.round(Math.random() * 15) < 3) {
@@ -46,7 +67,7 @@ module.exports = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
           ),
       ]);
     }
@@ -66,7 +87,7 @@ module.exports = {
       interaction.guildId,
       interaction.channelId,
       time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
-      0,
+      0
     );
 
     await interaction
