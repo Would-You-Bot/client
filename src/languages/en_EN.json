@@ -258,7 +258,7 @@
     },
     "modal": {
       "dailyIntervalTitle": "Daily Post Time",
-      "dailyIntervalDescription": "At what time should the daily message be posted? (HH:MM)"
+      "dailyIntervalDescription": "When should the message be posted? (HH:MM)"
     }
   },
   "Debug": {
