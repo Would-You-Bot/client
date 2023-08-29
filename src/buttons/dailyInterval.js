@@ -1,21 +1,24 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
-const modalObject = {
-  title: "Daily Messages Interval",
-  custom_id: "dailyInterval",
-  components: [
-    {
-      type: 1,
-      components: [
-        {
-          type: 4,
-          style: 1,
-          custom_id: "input",
-          label: "At what time should the daily message be posted? (HH:MM)",
-        },
-      ],
-    },
-  ],
-};
+
+function getModalObject(title, label) {
+  return {
+    title: title,
+    custom_id: "dailyInterval",
+    components: [
+      {
+        type: 1,
+        components: [
+          {
+            type: 4,
+            style: 1,
+            custom_id: "input",
+            label: label,
+          },
+        ],
+      },
+    ],
+  };
+}
 
 function isFormat(str) {
   return /^(?:[01]\d|2[0-4]):(?:00|30)$/.test(str);
@@ -24,10 +27,16 @@ function isFormat(str) {
 module.exports = {
   data: {
     name: "dailyInterval",
-    description: "Daily Interval customization",
+    description: "Daily post time customization",
   },
   async execute(interaction, client, guildDb) {
-    interaction.showModal(modalObject);
+    interaction.showModal(getModalObject(
+      client.translation.get(
+        guildDb?.language, "Settings.modal.dailyIntervalTitle"
+      ),
+      client.translation.get(
+        guildDb?.language, "Settings.modal.dailyIntervalDescription"
+      )));
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
