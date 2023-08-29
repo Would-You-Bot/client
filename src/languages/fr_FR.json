@@ -258,7 +258,7 @@
       },
       "modal": {
         "dailyIntervalTitle": "Heure de publication quotidienne",
-        "dailyIntervalDescription": "À quelle heure le message quotidien doit-il être affiché ? (HH:MM)"
+        "dailyIntervalDescription": "Quand le message doit-il être publié? (HH:MM)"
       }
     },
     "Debug": {
