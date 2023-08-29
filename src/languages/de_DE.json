@@ -258,7 +258,7 @@
     },
     "modal": {
       "dailyIntervalTitle": "Tägliche Veröffentlichungszeit",
-      "dailyIntervalDescription": "Um welche Uhrzeit soll die tägliche Nachricht veröffentlicht werden? (HH:MM)"
+      "dailyIntervalDescription": "Wann sollen wir die Nachricht senden? (HH:MM)"
     }
   },
   "Debug": {
