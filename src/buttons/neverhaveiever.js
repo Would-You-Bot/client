@@ -22,22 +22,35 @@ module.exports = {
           "You don't have permission to use this button in this channel!",
         ephemeral: true,
       });
-      const { Funny, Basic, Young, Food, RuleBreak } =
+    const { Funny, Basic, Young, Food, RuleBreak } =
       await require(`../data/nhie-${guildDb.language}.json`);
-          const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "neverhaveiever"
+    const dbquestions = guildDb.customMessages.filter(
+      (c) => c.type !== "nsfw" && c.type === "neverhaveiever",
     );
 
     let nererhaveIever = [];
 
-    if(!dbquestions.length) guildDb.customTypes = "regular";
+    if (!dbquestions.length) guildDb.customTypes = "regular";
 
     switch (guildDb.customTypes) {
       case "regular":
-        nererhaveIever = shuffle([...Funny, ...Basic, ...Young, ...Food, ...RuleBreak]);
+        nererhaveIever = shuffle([
+          ...Funny,
+          ...Basic,
+          ...Young,
+          ...Food,
+          ...RuleBreak,
+        ]);
         break;
       case "mixed":
-        nererhaveIever = shuffle([...Funny, ...Basic, ...Young, ...Food, ...RuleBreak, ...dbquestions.map((c) => c.msg)]);
+        nererhaveIever = shuffle([
+          ...Funny,
+          ...Basic,
+          ...Young,
+          ...Food,
+          ...RuleBreak,
+          ...dbquestions.map((c) => c.msg),
+        ]);
         break;
       case "custom":
         nererhaveIever = shuffle(dbquestions.map((c) => c.msg));

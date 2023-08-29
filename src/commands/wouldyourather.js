@@ -30,19 +30,22 @@ module.exports = {
     const { General } =
       await require(`../data/rather-${guildDb.language}.json`);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wouldyourather"
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather",
     );
 
     let wouldyourather = [];
 
-    if(!dbquestions.length) guildDb.customTypes = "regular";
+    if (!dbquestions.length) guildDb.customTypes = "regular";
 
     switch (guildDb.customTypes) {
       case "regular":
         wouldyourather = shuffle([...General]);
         break;
       case "mixed":
-        wouldyourather = shuffle([...General, ...dbquestions.map((c) => c.msg)]);
+        wouldyourather = shuffle([
+          ...General,
+          ...dbquestions.map((c) => c.msg),
+        ]);
         break;
       case "custom":
         wouldyourather = shuffle(dbquestions.map((c) => c.msg));
@@ -67,7 +70,7 @@ module.exports = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
           ),
       ]);
     }
@@ -87,7 +90,7 @@ module.exports = {
       interaction.guildId,
       interaction.channelId,
       time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
-      0
+      0,
     );
 
     await interaction

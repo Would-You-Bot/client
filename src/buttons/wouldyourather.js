@@ -23,22 +23,25 @@ module.exports = {
         ephemeral: true,
       });
 
-      const { General } =
+    const { General } =
       await require(`../data/rather-${guildDb.language}.json`);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wouldyourather"
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather",
     );
 
     let wouldyourather = [];
 
-    if(!dbquestions.length) guildDb.customTypes = "regular";
+    if (!dbquestions.length) guildDb.customTypes = "regular";
 
     switch (guildDb.customTypes) {
       case "regular":
         wouldyourather = shuffle([...General]);
         break;
       case "mixed":
-        wouldyourather = shuffle([...General, ...dbquestions.map((c) => c.msg)]);
+        wouldyourather = shuffle([
+          ...General,
+          ...dbquestions.map((c) => c.msg),
+        ]);
         break;
       case "custom":
         wouldyourather = shuffle(dbquestions.map((c) => c.msg));
@@ -54,7 +57,7 @@ module.exports = {
         iconURL: interaction.user.avatarURL(),
       })
       .setDescription(wouldyourather[Random]);
-      
+
     if (!guildDb.replay)
       return interaction.reply({
         ephemeral: true,
