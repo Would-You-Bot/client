@@ -22,37 +22,40 @@ module.exports = {
           "You don't have permission to use this button in this channel!",
         ephemeral: true,
       });
-      const { WhatYouDo } = require(`../data/wwyd-${guildDb.language}.json`);
+    const { WhatYouDo } = require(`../data/wwyd-${guildDb.language}.json`);
 
-      const dbquestions = guildDb.customMessages.filter(
-        (c) => c.type !== "nsfw" && c.type === "wwyd"
-      );
-    
-      let whatwouldyoudo = [];
-    
-      if(!dbquestions.length) guildDb.customTypes = "regular";
-    
-      switch (guildDb.customTypes) {
-        case "regular":
-          whatwouldyoudo = shuffle([...WhatYouDo]);
-          break;
-        case "mixed":
-          whatwouldyoudo = shuffle([...WhatYouDo, ...dbquestions.map((c) => c.msg)]);
-          break;
-        case "custom":
-          whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    
-      const Random = Math.floor(Math.random() * whatwouldyoudo.length);
-    
-        const wwydembed = new EmbedBuilder()
-          .setColor("#0598F6")
-          .setFooter({
-            text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
-            iconURL: interaction.user.avatarURL(),
-          })
-          .setDescription(whatwouldyoudo[Random]);
+    const dbquestions = guildDb.customMessages.filter(
+      (c) => c.type !== "nsfw" && c.type === "wwyd",
+    );
+
+    let whatwouldyoudo = [];
+
+    if (!dbquestions.length) guildDb.customTypes = "regular";
+
+    switch (guildDb.customTypes) {
+      case "regular":
+        whatwouldyoudo = shuffle([...WhatYouDo]);
+        break;
+      case "mixed":
+        whatwouldyoudo = shuffle([
+          ...WhatYouDo,
+          ...dbquestions.map((c) => c.msg),
+        ]);
+        break;
+      case "custom":
+        whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
+        break;
+    }
+
+    const Random = Math.floor(Math.random() * whatwouldyoudo.length);
+
+    const wwydembed = new EmbedBuilder()
+      .setColor("#0598F6")
+      .setFooter({
+        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
+        iconURL: interaction.user.avatarURL(),
+      })
+      .setDescription(whatwouldyoudo[Random]);
 
     const row = new ActionRowBuilder();
     if (Math.round(Math.random() * 15) < 3) {

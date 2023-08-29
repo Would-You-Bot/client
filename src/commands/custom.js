@@ -782,27 +782,31 @@ module.exports = {
 
           let text = "{\n";
           let arrays = [];
-          
+
           if (wouldyourather.length > 0) {
             let arrayText = `"wouldyourather": [`;
             wouldyourather.map((a, i) => {
               i = i++ + 1;
-              arrayText += `\n"${a.msg}"${wouldyourather.length !== i ? "," : ""}`;
+              arrayText += `\n"${a.msg}"${
+                wouldyourather.length !== i ? "," : ""
+              }`;
             });
             arrayText += `\n]`;
             arrays.push(arrayText);
           }
-          
+
           if (neverhaveiever.length > 0) {
             let arrayText = `"neverhaveiever": [`;
             neverhaveiever.map((a, i) => {
               i = i++ + 1;
-              arrayText += `\n"${a.msg}"${neverhaveiever.length !== i ? "," : ""}`;
+              arrayText += `\n"${a.msg}"${
+                neverhaveiever.length !== i ? "," : ""
+              }`;
             });
             arrayText += `\n]`;
             arrays.push(arrayText);
           }
-          
+
           if (wwyd.length > 0) {
             let arrayText = `"wwyd": [`;
             wwyd.map((a, i) => {
@@ -812,7 +816,7 @@ module.exports = {
             arrayText += `\n]`;
             arrays.push(arrayText);
           }
-          
+
           text += arrays.join(",\n");
           text += "\n}";
 
