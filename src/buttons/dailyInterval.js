@@ -10,7 +10,7 @@ const modalObject = {
           type: 4,
           style: 1,
           custom_id: "input",
-          label: "Enter a 24 hour dailymsg interval (HH:MM).",
+          label: "At what time should the daily message be posted? (HH:MM)",
         },
       ],
     },
