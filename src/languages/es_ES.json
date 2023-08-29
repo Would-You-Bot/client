@@ -202,8 +202,8 @@
   "Settings": {
     "errorSame": "La zona horaria proporcionada es la misma zona horaria que ya está definida. Asegúrese de elegir una zona horaria diferente.",
     "errorInvalid": "La zona horaria proporcionada no es válida, puedes elegir una zona horaria válida aquí: [Selector de Zona Horaria](https://kevinnovak.github.io/Time-Zone-Picker/)",
-    "intervalSame": "El intervalo proporcionado es el mismo que ya está establecido. Asegúrese de elegir un intervalo diferente.",
-    "intervalInvalid": "El intervalo proporcionado no es válido. ¡Asegúrese de que su intervalo está en formato 24 h y los minutos son 00 o 30!",
+    "intervalSame": "La hora de publicación especificada es la misma que la ya establecida. Asegúrese de elegir una hora de publicación diferente.",
+    "intervalInvalid": "La hora de publicación especificada no es válida. Asegúrese de que la hora de publicación está en formato de 24 horas y termina en 00 o 30!",
     "dailyChannel": "¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!",
     "replayChannel": "Selecciona un canal al que quieras añadir un enfriamiento por repetición!",
     "replayChannelNone": "¡No tienes ningún canal de repetición configurado!",
@@ -225,7 +225,7 @@
       "replayType": "**Tipo de reproducción**",
       "replayChannels": "**Canales de reproducción**",
       "replayChannelsNone": "Nada",
-      "dailyInterval": "**Intervalo**",
+      "dailyInterval": "**Hora de publicación**",
       "dailyTitle": "Would You - Mensajes Diarios",
       "dailyType": "**Tipo**",
       "dailyMsg": "**Habilitado**",
@@ -241,7 +241,7 @@
       "error": "¡Te falta el permiso `Manage guild` para usar este comando!"
     },
     "button": {
-      "dailyInterval": "Establecer intervalo",
+      "dailyInterval": "Fijar la hora de publicación",
       "dailyChannel": "Establecer canal",
       "dailyRole": "Establecer rol",
       "dailyTimezone": "Establecer zona horaria",
@@ -255,6 +255,10 @@
       "welcomeChannel": "Establecer canal",
       "welcome": "Alternar Bienvenidas",
       "welcomePing": "Alternar ping de usuario"
+    },
+    "modal": {
+      "dailyIntervalTitle": "Hora de publicación diaria",
+      "dailyIntervalDescription": "¿Cuándo debe publicarse el mensaje? (HH:MM)"
     }
   },
   "Debug": {

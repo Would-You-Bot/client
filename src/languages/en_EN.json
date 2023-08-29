@@ -202,8 +202,8 @@
   "Settings": {
     "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
     "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
-    "intervalSame": "The provided interval is the same interval that is already set. Make sure to choose a different interval.",
-    "intervalInvalid": "Provided interval was invalid. Make sure your interval is in the 24h format and mintues are either 00 or 30!",
+    "intervalSame": "The provided post time is the same post time that is already set. Make sure to choose a different post time.",
+    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or 30!",
     "dailyChannel": "Select a channel where you want Daily Messages to be!",
     "replayChannel": "Select a channel that you want to add a replay cooldown to!",
     "replayChannelNone": "You don't have any replay channels set!",
@@ -225,7 +225,7 @@
       "replayType": "**Replay Type**",
       "replayChannels": "**Replay Channels**",
       "replayChannelsNone": "None",
-      "dailyInterval": "**Interval**",
+      "dailyInterval": "**Post Time**",
       "dailyTitle": "Would You - Daily Messages",
       "dailyType": "**Type**",
       "dailyMsg": "**Enabled**",
@@ -241,7 +241,7 @@
       "error": "You are missing the `Manage Guild` permission to use this command!"
     },
     "button": {
-      "dailyInterval": "Set Interval",
+      "dailyInterval": "Set Post Time",
       "dailyChannel": "Set Channel",
       "dailyRole": "Set Role",
       "dailyTimezone": "Set Timezone",
@@ -255,6 +255,10 @@
       "welcomeChannel": "Set Channel",
       "welcome": "Toggle Welcomes",
       "welcomePing": "Toggle User Ping"
+    },
+    "modal": {
+      "dailyIntervalTitle": "Daily Post Time",
+      "dailyIntervalDescription": "When should the message be posted? (HH:MM)"
     }
   },
   "Debug": {

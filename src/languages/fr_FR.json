@@ -202,8 +202,8 @@
     "Settings": {
       "errorSame": "Le fuseau horaire fourni est le même fuseau horaire que celui déjà défini. Assurez-vous de choisir un autre fuseau horaire.",
       "errorInvalid": "Le fuseau horaire fourni est invalide, vous pouvez choisir un fuseau horaire valide sur ce [sélecteur de fuseau horaire](https://kevinnovak.github.io/Time-Zone-Picker/)",
-      "intervalSame": "L'intervalle fourni est le même intervalle que celui déjà défini. Assurez-vous de choisir un intervalle différent.",
-      "intervalInvalid": "L'intervalle fourni n'était pas valide. Assurez-vous que votre intervalle est au format 24h et que les minutes sont soit 00 ou 30!",
+      "intervalSame": "L'heure de publication indiquée est la même que celle déjà définie. Assure-toi de choisir une autre heure de publication.",
+      "intervalInvalid": "L'heure de publication indiquée n'était pas valide. Assure-toi que ton heure de publication est au format 24h et se termine soit par 00 soit par 30 !",
       "dailyChannel": "Sélectionnez le channel où vous voulez que les messages quotidiens soient postés !",
       "replayChannel": "Sélectionnez un salon auquel vous souhaitez ajouter un temps de recharge !",
       "replayChannelNone": "Vous n'avez défini aucun salon de rediffusion !",
@@ -225,7 +225,7 @@
         "replayType": "**Type de rediffusion**",
         "replayChannels": "**Salon de rediffusion**",
         "replayChannelsNone": "Aucun",
-        "dailyInterval": "**Intervalle**",
+        "dailyInterval": "**Heure de publication**",
         "dailyTitle": "Voulez-vous - Messages Quotidiens",
         "dailyType": "**Type**",
         "dailyMsg": "**Activé**",
@@ -241,7 +241,7 @@
         "error": "Vous avez besoin de la permission `Gérer le serveur` pour utiliser cette commande!"
       },
       "button": {
-        "dailyInterval": "Définir l'intervalle",
+        "dailyInterval": "Définir l'heure de publication",
         "dailyChannel": "Définir le salon",
         "dailyRole": "Définir le rôle",
         "dailyTimezone": "Définir le fuseau horaire",
@@ -255,6 +255,10 @@
         "welcomeChannel": "Définir le salon",
         "welcome": "Activer/désactiver les accueils",
         "welcomePing": "Activer/désactiver le ping de l'utilisateur"
+      },
+      "modal": {
+        "dailyIntervalTitle": "Heure de publication quotidienne",
+        "dailyIntervalDescription": "Quand le message doit-il être publié? (HH:MM)"
       }
     },
     "Debug": {

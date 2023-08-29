@@ -202,8 +202,8 @@
   "Settings": {
     "errorSame": "Die gegebene Zeitzone ist die gleiche Zeitzone, die schon gesetzt ist. Stelle sicher, dass du eine andere Zeitzone wählst.",
     "errorInvalid": "Die gegebene Zeitzone ist ungültig, du kannst eine gültige Zeitzone von diesen auswählen [Zeitzonenwähler](https://kevinnovak.github.io/Time-Zone-Picker/)",
-    "intervalSame": "Das angegebene Intervall ist der gleiche Intervall, der bereits gesetzt ist. Stelle sicher, dass du einen anderen Intervall wählst.",
-    "intervalInvalid": "Der vorausgesetzte Intervall war ungültig. Stelle sicher, dass dein Intervall im 24h-Format ist und entweder 00 oder 30 sind!",
+    "intervalSame": "Die angegebene Veröffentlichungszeit ist die gleiche wie die bereits gesetzte. Stelle sicher, dass du einen andere Veröffentlichungszeit wählst.",
+    "intervalInvalid": "Die angegebene Veröffentlichungszeit war ungültig. Stelle sicher, dass deine Veröffentlichungszeit im 24h-Format ist und entweder mit 00 oder 30 endet!",
     "dailyChannel": "Wähle einen Kanal, in dem du tägliche Nachrichten haben möchtest!",
     "replayChannel": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
     "replayChannelNone": "Du hast keine Replay-Kanäle gesetzt!",
@@ -225,7 +225,7 @@
       "replayType": "**Replay-Typ**",
       "replayChannels": "**Replay-Kanäle**",
       "replayChannelsNone": "Keine",
-      "dailyInterval": "**Intervall**",
+      "dailyInterval": "**Veröffentlichungszeit**",
       "dailyTitle": "Would You - Tägliche Nachrichten",
       "dailyType": "**Typ**",
       "dailyMsg": "**Aktiviert**",
@@ -241,7 +241,7 @@
       "error": "Dir fehlen die `Manage Guild` rechte um diesen Befehl auszuführen!"
     },
     "button": {
-      "dailyInterval": "Intervall festlegen",
+      "dailyInterval": "Veröffentlichungszeit festlegen",
       "dailyChannel": "Kanal setzen",
       "dailyRole": "Rolle setzen",
       "dailyTimezone": "Zeitzone setzen",
@@ -255,6 +255,10 @@
       "welcomeChannel": "Kanal setzen",
       "welcome": "Begrüßungsnachrichten einstellen",
       "welcomePing": "Nutzer ping einstellen"
+    },
+    "modal": {
+      "dailyIntervalTitle": "Tägliche Veröffentlichungszeit",
+      "dailyIntervalDescription": "Wann sollen wir die Nachricht senden? (HH:MM)"
     }
   },
   "Debug": {
