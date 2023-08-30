@@ -30,13 +30,18 @@ module.exports = {
     description: "Daily post time customization",
   },
   async execute(interaction, client, guildDb) {
-    interaction.showModal(getModalObject(
-      client.translation.get(
-        guildDb?.language, "Settings.modal.dailyIntervalTitle"
+    interaction.showModal(
+      getModalObject(
+        client.translation.get(
+          guildDb?.language,
+          "Settings.modal.dailyIntervalTitle",
+        ),
+        client.translation.get(
+          guildDb?.language,
+          "Settings.modal.dailyIntervalDescription",
+        ),
       ),
-      client.translation.get(
-        guildDb?.language, "Settings.modal.dailyIntervalDescription"
-      )));
+    );
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
