@@ -44,7 +44,7 @@ module.exports = {
     description: "Daily Message Toggle",
   },
   async execute(interaction, client, guildDb) {
-    interaction.showModal(modalObject);
+    await interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,

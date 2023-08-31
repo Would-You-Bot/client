@@ -3,6 +3,9 @@ const {
   WebhookClient,
   EmbedBuilder,
 } = require("discord.js");
+const Cryptr = require('cryptr');
+
+const cryptr = new Cryptr(process.env.ENCRYPTION_KEY);
 
 module.exports = class WebhookHandler {
   constructor(client) {
@@ -27,14 +30,15 @@ module.exports = class WebhookHandler {
       channelId: channelId,
     });
     if (data) {
+      console.log(cryptr.encrypt(data.webhookToken))
       this.webhooks.set(`${channelId}`, {
         id: data.webhookId,
-        token: data.webhookToken,
+        token: cryptr.decrypt(data.webhookToken),
       });
 
       return {
         id: data.webhookId,
-        token: data.webhookToken,
+        token: cryptr.decrypt(data.webhookToken),
       };
     } else return null;
   };
@@ -86,19 +90,19 @@ module.exports = class WebhookHandler {
         await oldData.updateOne({
           channelId: channelId,
           webhookId: webhook.id,
-          webhookToken: webhook.token,
+          webhookToken: cryptr.encrypt(webhook.token),
         });
       } else {
         await this.webhookModel.create({
           channelId: channelId,
           webhookId: webhook.id,
-          webhookToken: webhook.token,
+          webhookToken: cryptr.encrypt(webhook.token),
         });
       }
 
       return {
         id: webhook.id,
-        token: webhook.token,
+        token: cryptr.encrypt(webhook.token),
       };
     } else return null;
   };
