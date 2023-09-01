@@ -3,7 +3,7 @@ const {
   WebhookClient,
   EmbedBuilder,
 } = require("discord.js");
-const Cryptr = require('cryptr');
+const Cryptr = require("cryptr");
 
 const cryptr = new Cryptr(process.env.ENCRYPTION_KEY);
 
@@ -30,7 +30,7 @@ module.exports = class WebhookHandler {
       channelId: channelId,
     });
     if (data) {
-      console.log(cryptr.encrypt(data.webhookToken))
+      console.log(cryptr.encrypt(data.webhookToken));
       this.webhooks.set(`${channelId}`, {
         id: data.webhookId,
         token: cryptr.decrypt(data.webhookToken),
