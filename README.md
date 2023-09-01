@@ -18,14 +18,14 @@ Would You bot provides activities and questions to keep your server active!
 
 The development environment does not currently use Docker, so you will need to install the dependencies manually.
 
-1. Install [Node.js](https://nodejs.org/en/) (version 18 or higher) and [pnpm](https://pnpm.io/installation).
-2. Install all dependencies by running `pnpm install` in the root directory.
+1. Install [Node.js](https://nodejs.org/en/) (version 17.9.x or higher) and npm.
+2. Install all dependencies by running `npm install` in the root directory.
 3. Create a `.env` file in the root directory, copy the contents of `.env.example` into `.env`, then fill in the values with your own values.
 4. Run `npm run test` to start the development environment. This will run all of the applications in development mode.
 
 ### Formatting
 
-Before committing, make sure to run `pnpm format` to format the code. This will also be run automatically when you commit, but it is better to run it manually to make sure you don't commit code that isn't formatted correctly. You can also run `pnpm format:check` to check if the code is formatted correctly. This will not format the code, it will only check if the code is formatted correctly.
+Before committing, make sure to run `npm format` to format the code. This will also be run automatically when you commit, but it is better to run it manually to make sure you don't commit code that isn't formatted correctly. You can also run `npm format` to check if the code is formatted correctly. This will not format the code, it will only check if the code is formatted correctly.
 
 Additionally, it is recommended to install the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension for VS Code. This will automatically format the code when you save (or based on the event you choose).
 
