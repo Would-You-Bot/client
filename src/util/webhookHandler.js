@@ -203,6 +203,7 @@ module.exports = class WebhookHandler {
     if (!channelId) return;
 
     const webhookData = await this.getWebhook(channelId);
+    const date = new Date();
 
     if (webhookData?.webhookId) webhookData.id = webhookData.webhookId;
     if (webhookData?.webhookToken) webhookData.token = webhookData.webhookToken;
@@ -241,7 +242,7 @@ module.exports = class WebhookHandler {
           "/threads",
         {
           headers: {
-            name: "Mixed - Daily Message",
+            name: `${[date.getFullYear(), date.getMonth(), date.getDate()].join('/')} - Daily Message`,
             auto_archive_duration: "1440",
           },
         },
@@ -261,7 +262,7 @@ module.exports = class WebhookHandler {
         "/channels/" + channelId + "/messages/" + webhookThread.id + "/threads",
         {
           body: {
-            name: "Mixed - Daily Message",
+            name: `${[date.getFullYear(), date.getMonth(), date.getDate()].join('/')} - Daily Message`,
             auto_archive_duration: "1440",
           },
         },
