@@ -1,22 +1,22 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
 
 const modalObject = {
-    title: "Daily Post Time",
-    custom_id: "dailyInterval",
-    components: [
-      {
-        type: 1,
-        components: [
-          {
-            type: 4,
-            style: 1,
-            custom_id: "input",
-            label: "When should the message be posted? (HH:MM)",
-          },
-        ],
-      },
-    ],
-  };
+  title: "Daily Post Time",
+  custom_id: "dailyInterval",
+  components: [
+    {
+      type: 1,
+      components: [
+        {
+          type: 4,
+          style: 1,
+          custom_id: "input",
+          label: "When should the message be posted? (HH:MM)",
+        },
+      ],
+    },
+  ],
+};
 
 function isFormat(str) {
   return /^(?:[01]\d|2[0-4]):(?:00|30)$/.test(str);

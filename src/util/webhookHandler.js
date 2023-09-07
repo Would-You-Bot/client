@@ -3,7 +3,7 @@ const {
   WebhookClient,
   EmbedBuilder,
 } = require("discord.js");
-const Cryptr = require('cryptr');
+const Cryptr = require("cryptr");
 
 const cryptr = new Cryptr(process.env.ENCRYPTION_KEY);
 
@@ -30,7 +30,6 @@ module.exports = class WebhookHandler {
       channelId: channelId,
     });
     if (data) {
-      console.log(cryptr.encrypt(data.TOPGG_WEBHOOK))
       this.webhooks.set(`${channelId}`, {
         id: data.webhookId,
         token: cryptr.decrypt(data.TOPGG_WEBHOOK),
@@ -203,6 +202,7 @@ module.exports = class WebhookHandler {
     if (!channelId) return;
 
     const webhookData = await this.getWebhook(channelId);
+    const date = new Date();
 
     if (webhookData?.webhookId) webhookData.id = webhookData.webhookId;
     if (webhookData?.TOPGG_WEBHOOK) webhookData.token = webhookData.TOPGG_WEBHOOK;
@@ -241,7 +241,11 @@ module.exports = class WebhookHandler {
           "/threads",
         {
           headers: {
-            name: "Mixed - Daily Message",
+            name: `${[
+              date.getFullYear(),
+              date.getMonth() + 1,
+              date.getDate(),
+            ].join("/")} - Daily Message`,
             auto_archive_duration: "1440",
           },
         },
@@ -261,7 +265,11 @@ module.exports = class WebhookHandler {
         "/channels/" + channelId + "/messages/" + webhookThread.id + "/threads",
         {
           body: {
-            name: "Mixed - Daily Message",
+            name: `${[
+              date.getFullYear(),
+              date.getMonth() + 1,
+              date.getDate(),
+            ].join("/")} - Daily Message`,
             auto_archive_duration: "1440",
           },
         },
