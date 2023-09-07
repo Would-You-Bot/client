@@ -6,10 +6,10 @@ const { inspect } = require("util");
 const { ChalkAdvanced } = require("chalk-advanced");
 
 const warnWebhook = new WebhookClient({
-  url: process.env.WARNWEBHOOKURL,
+  url: process.env.LOG_WARN,
 });
 const errorWebhook = new WebhookClient({
-  url: process.env.ERRORWEBHOOKURL,
+  url: process.env.LOG_ERROR,
 });
 
 module.exports = class KeepAlive {

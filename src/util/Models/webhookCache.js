@@ -9,7 +9,7 @@ const WebhookCache = Schema({
     type: String,
     default: null,
   },
-  webhookToken: {
+  TOPGG_WEBHOOK: {
     type: String,
     default: null,
   },

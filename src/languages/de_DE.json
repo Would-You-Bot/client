@@ -39,6 +39,7 @@
   "wyCustom": {
     "error": {
       "paginate": "Du kannst nichmehr weiter gehen :(",
+      "issue": "Diese Nachricht kann nicht abgerufen werden. Wiederhole den Befehl, um benutzerdefinierte Nachrichten anzuzeigen.",
       "maximum": "Du hast die maximale Anzahl an benutzerdefinierten Nachrichten erreicht. Du kannst mehr hinzufügen wenn du für den bot votest!",
       "empty": "Es gibt keine benutzerdefinierten nachrichten in diesem server!",
       "import": {
