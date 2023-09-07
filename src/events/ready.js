@@ -31,8 +31,8 @@ module.exports = async (client) => {
     setTimeout(async () => {
       try {
         if (process.env.STATUS === "PRODUCTION") {
-          if (process.env.TOPGGTOKEN) {
-            const ap = AutoPoster(`${process.env.TOPGGTOKEN}`, client);
+          if (process.env.TOPGG_TOKEN) {
+            const ap = AutoPoster(`${process.env.TOPGG_TOKEN}`, client);
           }
           // If the bot is in production mode it will load slash commands for all guilds
           await rest.put(Routes.applicationCommands(client.user.id), {
@@ -46,7 +46,7 @@ module.exports = async (client) => {
             )}`,
           );
         } else {
-          if (!process.env.GUILD_ID)
+          if (!process.env.TEST_GUILD_ID)
             return console.log(
               ChalkAdvanced.red(
                 "Looks like your bot is not in production mode and you don't have a guild id set in .env",
@@ -55,7 +55,7 @@ module.exports = async (client) => {
           await rest.put(
             Routes.applicationGuildCommands(
               client.user.id,
-              process.env.GUILD_ID,
+              process.env.TEST_GUILD_ID,
             ),
             {
               body: commands,

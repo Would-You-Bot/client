@@ -39,6 +39,7 @@
     "wyCustom": {
       "error": {
         "paginate": "Vous ne pouvez pas continuer ainsi.",
+        "issue": "Impossible de récupérer ce message. Refais la commande pour afficher les messages personnalisés.",
         "maximum": "Vous avez atteint le nombre maximum de messages personnalisés. Vous pouvez en gagner plus en votant pour le bot !",
         "empty": "Il n'y a actuellement aucun message personnalisé à afficher !",
         "import": {

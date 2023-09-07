@@ -47,7 +47,7 @@ module.exports = async (client, guild) => {
   });
 
   if (!global?.devBot) {
-    const webhookClient = new WebhookClient({ url: process.env.WEBHOOK });
+    const webhookClient = new WebhookClient({ url: LOG_GUILDS});
 
     await webhookClient
       .send({

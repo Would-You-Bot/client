@@ -39,6 +39,7 @@
   "wyCustom": {
     "error": {
       "paginate": "No puedes continuar para ese lado.",
+      "issue": "No se ha podido recuperar ese mensaje. Rehaz el comando para ver los mensajes personalizados",
       "maximum": "Has alcanzado la cantidad máxima de mensajes personalizados. ¡Puedes ganar más votando por el bot!",
       "empty": "¡Actualmente no hay mensajes personalizados para ver!",
       "import": {

@@ -7,6 +7,7 @@ const {
 } = require("discord.js");
 const axios = require("axios");
 const guildModel = require("../util/Models/guildModel");
+const Paginator = require("../util/pagination")
 require("dotenv").config();
 
 function makeID(length) {
@@ -103,126 +104,6 @@ module.exports = {
    */
   async execute(interaction, client, guildDb) {
     let typeEmbed, message;
-
-    class Paginator {
-      constructor(
-        pages = [],
-        { filter, timeout } = {
-          timeout: 5 * 6e4,
-        },
-      ) {
-        this.pages = Array.isArray(pages) ? pages : [];
-        this.timeout = Number(timeout) || 5 * 6e4;
-        this.page = 0;
-      }
-
-      add(page) {
-        this.pages.push(page);
-        return this;
-      }
-
-      setEndPage(page) {
-        if (page) this.endPage = page;
-        return this;
-      }
-
-      setTransform(fn) {
-        const _pages = [];
-        let i = 0;
-        const ln = this.pages.length;
-        for (const page of this.pages) {
-          _pages.push(fn(page, i, ln));
-          i++;
-        }
-        this.pages = _pages;
-        return this;
-      }
-
-      async start(channel, buttons) {
-        if (!this.pages.length) return;
-        const msg = await channel.reply({
-          embeds: [this.pages[0]],
-          components: [buttons],
-          ephemeral: true,
-        });
-        const collector = msg.createMessageComponentCollector();
-
-        collector.on("collect", async (inter) => {
-          try {
-            if (inter.isButton()) {
-              if (!inter) return;
-
-              switch (inter.customId) {
-                case "first":
-                  if (this.page === 0) {
-                    return inter.reply({
-                      ephemeral: true,
-                      content: client.translation.get(
-                        guildDb?.language,
-                        "wyCustom.error.paginate",
-                      ),
-                    });
-                  } else {
-                    await inter.update({
-                      embeds: [this.pages[0]],
-                      ephemeral: true,
-                    });
-                    return (this.page = 0);
-                  }
-                case "prev":
-                  if (this.pages[this.page - 1]) {
-                    return inter.update({
-                      embeds: [this.pages[--this.page]],
-                      ephemeral: true,
-                    });
-                  } else {
-                    return inter.reply({
-                      ephemeral: true,
-                      content: client.translation.get(
-                        guildDb?.language,
-                        "wyCustom.error.paginate",
-                      ),
-                    });
-                  }
-                case "next":
-                  if (this.pages[this.page + 1]) {
-                    return inter.update({
-                      embeds: [this.pages[++this.page]],
-                      ephemeral: true,
-                    });
-                  } else {
-                    return inter.reply({
-                      ephemeral: true,
-                      content: client.translation.get(
-                        guildDb?.language,
-                        "wyCustom.error.paginate",
-                      ),
-                    });
-                  }
-                case "last":
-                  if (this.page === this.pages.length - 1) {
-                    return inter.reply({
-                      ephemeral: true,
-                      content: client.translation.get(
-                        guildDb?.language,
-                        "wyCustom.error.paginate",
-                      ),
-                    });
-                  } else {
-                    await inter.update({
-                      embeds: [this.pages[this.pages.length - 1]],
-                      ephemeral: true,
-                    });
-                    return (this.page = this.pages.length - 1);
-                  }
-              }
-            }
-          } catch (e) {
-            console.error(e);
-          }
-        });
-      }
-    }
     if (
       interaction.member.permissions.has(PermissionFlagsBits.ManageGuild) ||
       global.checkDebug(guildDb, interaction?.user?.id)
@@ -365,8 +246,10 @@ module.exports = {
                 "wyCustom.error.empty",
               ),
             });
+          
+          if (client.paginate.get(interaction.user.id)) return interaction.reply({ content: `${client.translation.get(guildDb?.language, "wyCustom.error.paginate")} [Link](https://canary.discord.com/channels/${interaction.guild.id}/${client.paginate.get(interaction.user.id).channel}/${client.paginate.get(interaction.user.id).message})`, ephemeral: true})
 
-          const page = new Paginator([], {});
+          const page = new Paginator({ user: interaction.user.id, timeout: 180000, client });
 
           if (
             guildDb.customMessages.filter(
@@ -408,7 +291,8 @@ module.exports = {
                       guildDb?.language,
                       "wyCustom.success.paginator.descCatNHIE",
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
-                  ),
+                )
+                  .setColor("#0795F6"),
               ),
             );
           }
@@ -453,7 +337,8 @@ module.exports = {
                       guildDb?.language,
                       "wyCustom.success.paginator.descCatWYR",
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
-                  ),
+                )
+                  .setColor("#0795F6"),
               ),
             );
           }
@@ -494,38 +379,13 @@ module.exports = {
                       guildDb?.language,
                       "wyCustom.success.paginator.descCatWWYD",
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
-                  ),
+                )
+                  .setColor("#0795F6"),
               ),
             );
           }
 
-          page.setTransform((embed, index, total) =>
-            embed.setFooter({
-              text: `Would You | Page ${index + 1} / ${total}`,
-              iconURL: client.user.avatarURL(),
-            }),
-          );
-
-          const buttons = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-              .setCustomId("first")
-              .setLabel("⏪")
-              .setStyle("Primary"),
-            new ButtonBuilder()
-              .setCustomId("prev")
-              .setLabel("◀️")
-              .setStyle("Success"),
-            new ButtonBuilder()
-              .setCustomId("next")
-              .setLabel("▶️")
-              .setStyle("Success"),
-            new ButtonBuilder()
-              .setCustomId("last")
-              .setLabel("⏩")
-              .setStyle("Primary"),
-          );
-
-          return page.start(interaction, buttons);
+          return page.start(interaction);
         case "import":
           const attachemnt = interaction.options.get("attachment");
 

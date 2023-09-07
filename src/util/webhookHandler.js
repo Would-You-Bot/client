@@ -30,7 +30,6 @@ module.exports = class WebhookHandler {
       channelId: channelId,
     });
     if (data) {
-      console.log(cryptr.encrypt(data.webhookToken));
       this.webhooks.set(`${channelId}`, {
         id: data.webhookId,
         token: cryptr.decrypt(data.webhookToken),

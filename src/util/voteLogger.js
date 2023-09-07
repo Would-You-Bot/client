@@ -11,12 +11,12 @@ const express = require("express");
 const axios = require("axios");
 const { ChalkAdvanced } = require("chalk-advanced");
 const app = express();
-const webhook = new Topgg.Webhook(process.env.WEBHOOKTOKEN);
+const webhook = new Topgg.Webhook(process.env.TOPGG_WEBHOOK);
 
 module.exports = class VoteLogger {
   constructor(c) {
     this.c = c;
-    this.api = new Topgg.Api(process.env.TOPGGTOKEN);
+    this.api = new Topgg.Api(process.env.TOPGG_TOKEN);
     this.votes = new Map();
 
     this.getVotes().then(() => {
@@ -102,7 +102,7 @@ module.exports = class VoteLogger {
         const emojisRandom = emojis[Math.floor(Math.random() * emojis.length)];
 
         const webhookClient = new WebhookClient({
-          url: process.env.WEBHOOKVOTE,
+          url: process.env.LOG_VOTE,
         });
 
         console.log(

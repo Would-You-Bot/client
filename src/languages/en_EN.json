@@ -38,7 +38,8 @@
   },
   "wyCustom": {
     "error": {
-      "paginate": "You can't proceed that way any further.",
+      "issue": "Unable to fetch that message. Redo the command to view custom messages.",
+      "paginate": "You already are viewing custom messages:",
       "maximum": "You've reached the maximum amount of custom messages. You can gain more by voting for the bot!",
       "empty": "There currently is no custom Would You messages to view!",
       "import": {

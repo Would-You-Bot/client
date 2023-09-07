@@ -75,6 +75,9 @@ module.exports = class WouldYou extends Client {
     // It's creating a new collection for the commands.
     this.commands = new Collection();
 
+    // Allows for paginating  
+    this.paginate = new Collection();
+
     // The cooldown handler
     this.cooldownHandler = new CooldownHandler(this);
     this.cooldownHandler.startSweeper();
