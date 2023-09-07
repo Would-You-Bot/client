@@ -32,12 +32,12 @@ module.exports = class WebhookHandler {
     if (data) {
       this.webhooks.set(`${channelId}`, {
         id: data.webhookId,
-        token: cryptr.decrypt(data.TOPGG_WEBHOOK),
+        token: cryptr.decrypt(data.webhookToken),
       });
 
       return {
         id: data.webhookId,
-        token: cryptr.decrypt(data.TOPGG_WEBHOOK),
+        token: cryptr.decrypt(data.webhookToken),
       };
     } else return null;
   };
@@ -89,13 +89,13 @@ module.exports = class WebhookHandler {
         await oldData.updateOne({
           channelId: channelId,
           webhookId: webhook.id,
-          TOPGG_WEBHOOK: cryptr.encrypt(webhook.token),
+          webhookToken: cryptr.encrypt(webhook.token),
         });
       } else {
         await this.webhookModel.create({
           channelId: channelId,
           webhookId: webhook.id,
-          TOPGG_WEBHOOK: cryptr.encrypt(webhook.token),
+          webhookToken: cryptr.encrypt(webhook.token),
         });
       }
 
@@ -205,7 +205,7 @@ module.exports = class WebhookHandler {
     const date = new Date();
 
     if (webhookData?.webhookId) webhookData.id = webhookData.webhookId;
-    if (webhookData?.TOPGG_WEBHOOK) webhookData.token = webhookData.TOPGG_WEBHOOK;
+    if (webhookData?.webhookToken) webhookData.token = webhookData.webhookToken;
 
     if (!webhookData?.id || !webhookData?.token) {
       let webhook = await this.createWebhook(
@@ -217,7 +217,7 @@ module.exports = class WebhookHandler {
       );
 
       if (webhook?.webhookId) webhook.id = webhook.webhookId;
-      if (webhook?.TOPGG_WEBHOOK) webhook.token = webhook.TOPGG_WEBHOOK;
+      if (webhook?.webhookToken) webhook.token = webhook.webhookToken;
 
       if (!webhook?.id || !webhook?.token)
         return this.webhookFallBack(channel, channelId, message, false);
