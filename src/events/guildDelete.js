@@ -7,7 +7,7 @@ module.exports = async (client, guild) => {
   // Only delete the guild settings from the cache we don't want a data lose but also don't need not used data in the cache :)
   await client.database.deleteGuild(guild?.id, true);
 
-  const webhookPrivate = new WebhookClient({ url: process.env.WEBHOOKPRIVATE });
+  const webhookPrivate  = new WebhookClient({ url: process.env.LOG_PRIVATE });
 
   let features;
   if (
@@ -19,7 +19,7 @@ module.exports = async (client, guild) => {
       : `<:partner:1072265822577360982>`;
   }
 
-  await webhookPrivate.send({
+  await webhookPrivate .send({
     avatarURL: "https://wouldyoubot.gg/static/img/round.webp", // Make sure to update this if you ever change the link thx <3
     username: global?.devBot ? "Dev Bot" : "Main Bot",
     embeds: [
