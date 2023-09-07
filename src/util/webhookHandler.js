@@ -242,7 +242,7 @@ module.exports = class WebhookHandler {
           "/threads",
         {
           headers: {
-            name: `${[date.getFullYear(), date.getMonth(), date.getDate()].join('/')} - Daily Message`,
+            name: `${[date.getFullYear(), date.getMonth()+1, date.getDate()].join('/')} - Daily Message`,
             auto_archive_duration: "1440",
           },
         },
@@ -262,7 +262,7 @@ module.exports = class WebhookHandler {
         "/channels/" + channelId + "/messages/" + webhookThread.id + "/threads",
         {
           body: {
-            name: `${[date.getFullYear(), date.getMonth(), date.getDate()].join('/')} - Daily Message`,
+            name: `${[date.getFullYear(), date.getMonth()+1, date.getDate()].join('/')} - Daily Message`,
             auto_archive_duration: "1440",
           },
         },
