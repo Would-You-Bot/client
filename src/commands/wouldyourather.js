@@ -27,8 +27,9 @@ module.exports = {
    */
 
   async execute(interaction, client, guildDb) {
-    const { General } =
-      await require(`../data/rather-${guildDb.language}.json`);
+    const { General } = await require(
+      `../data/rather-${guildDb.language}.json`,
+    );
     const dbquestions = guildDb.customMessages.filter(
       (c) => c.type !== "nsfw" && c.type === "wouldyourather",
     );

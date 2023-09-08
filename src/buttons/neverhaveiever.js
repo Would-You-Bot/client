@@ -22,8 +22,9 @@ module.exports = {
           "You don't have permission to use this button in this channel!",
         ephemeral: true,
       });
-    const { Funny, Basic, Young, Food, RuleBreak } =
-      await require(`../data/nhie-${guildDb.language}.json`);
+    const { Funny, Basic, Young, Food, RuleBreak } = await require(
+      `../data/nhie-${guildDb.language}.json`,
+    );
     const dbquestions = guildDb.customMessages.filter(
       (c) => c.type !== "nsfw" && c.type === "neverhaveiever",
     );

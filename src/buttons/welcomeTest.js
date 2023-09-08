@@ -5,10 +5,12 @@ module.exports = {
     description: "Welcome Test",
   },
   async execute(interaction, client, guildDb) {
-    const { General } =
-      await require(`../data/rather-${guildDb.language}.json`);
-    const { WhatYouDo } =
-      await require(`../data/wwyd-${guildDb.language}.json`);
+    const { General } = await require(
+      `../data/rather-${guildDb.language}.json`,
+    );
+    const { WhatYouDo } = await require(
+      `../data/wwyd-${guildDb.language}.json`,
+    );
 
     let randomDaily = [];
     if (guildDb.customTypes === "regular") {
