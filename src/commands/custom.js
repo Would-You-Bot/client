@@ -7,7 +7,7 @@ const {
 } = require("discord.js");
 const axios = require("axios");
 const guildModel = require("../util/Models/guildModel");
-const Paginator = require("../util/pagination")
+const Paginator = require("../util/pagination");
 require("dotenv").config();
 
 function makeID(length) {
@@ -246,10 +246,25 @@ module.exports = {
                 "wyCustom.error.empty",
               ),
             });
-          
-          if (client.paginate.get(interaction.user.id)) return interaction.reply({ content: `${client.translation.get(guildDb?.language, "wyCustom.error.paginate")} [Link](https://canary.discord.com/channels/${interaction.guild.id}/${client.paginate.get(interaction.user.id).channel}/${client.paginate.get(interaction.user.id).message})`, ephemeral: true})
 
-          const page = new Paginator({ user: interaction.user.id, timeout: 180000, client });
+          if (client.paginate.get(interaction.user.id))
+            return interaction.reply({
+              content: `${client.translation.get(
+                guildDb?.language,
+                "wyCustom.error.paginate",
+              )} [Link](https://canary.discord.com/channels/${
+                interaction.guild.id
+              }/${client.paginate.get(interaction.user.id).channel}/${
+                client.paginate.get(interaction.user.id).message
+              })`,
+              ephemeral: true,
+            });
+
+          const page = new Paginator({
+            user: interaction.user.id,
+            timeout: 180000,
+            client,
+          });
 
           if (
             guildDb.customMessages.filter(
@@ -291,7 +306,7 @@ module.exports = {
                       guildDb?.language,
                       "wyCustom.success.paginator.descCatNHIE",
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
-                )
+                  )
                   .setColor("#0795F6"),
               ),
             );
@@ -337,7 +352,7 @@ module.exports = {
                       guildDb?.language,
                       "wyCustom.success.paginator.descCatWYR",
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
-                )
+                  )
                   .setColor("#0795F6"),
               ),
             );
@@ -379,7 +394,7 @@ module.exports = {
                       guildDb?.language,
                       "wyCustom.success.paginator.descCatWWYD",
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
-                )
+                  )
                   .setColor("#0795F6"),
               ),
             );

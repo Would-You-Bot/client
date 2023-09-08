@@ -7,7 +7,7 @@ module.exports = async (client, guild) => {
   // Only delete the guild settings from the cache we don't want a data lose but also don't need not used data in the cache :)
   await client.database.deleteGuild(guild?.id, true);
 
-  const webhookPrivate  = new WebhookClient({ url: process.env.LOG_PRIVATE });
+  const webhookPrivate = new WebhookClient({ url: process.env.LOG_PRIVATE });
 
   let features;
   if (
@@ -19,8 +19,9 @@ module.exports = async (client, guild) => {
       : `<:partner:1072265822577360982>`;
   }
 
-  await webhookPrivate .send({
-    avatarURL: "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96", // Make sure to update this if you ever change the link thx <3
+  await webhookPrivate.send({
+    avatarURL:
+      "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96", // Make sure to update this if you ever change the link thx <3
     username: global?.devBot ? "Dev Bot" : "Main Bot",
     embeds: [
       new EmbedBuilder()
@@ -47,7 +48,7 @@ module.exports = async (client, guild) => {
   });
 
   if (!global?.devBot) {
-    const webhookClient = new WebhookClient({ url: process.env.LOG_GUILDS});
+    const webhookClient = new WebhookClient({ url: process.env.LOG_GUILDS });
 
     await webhookClient
       .send({

@@ -27,8 +27,9 @@ module.exports = {
    */
 
   async execute(interaction, client, guildDb) {
-    const { Funny, Basic, Young, Food, RuleBreak } =
-      await require(`../data/nhie-${guildDb.language}.json`);
+    const { Funny, Basic, Young, Food, RuleBreak } = await require(
+      `../data/nhie-${guildDb.language}.json`,
+    );
     const dbquestions = guildDb.customMessages.filter(
       (c) => c.type !== "nsfw" && c.type === "neverhaveiever",
     );
