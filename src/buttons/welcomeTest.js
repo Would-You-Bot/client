@@ -1,4 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
+const Sentry = require("@sentry/node");
 module.exports = {
   data: {
     name: "welcomeTest",
@@ -48,7 +49,7 @@ module.exports = {
             guildDb.dailyThread,
           )
           .catch((err) => {
-            console.log(err);
+            Sentry.captureException(err);
           });
       }
 

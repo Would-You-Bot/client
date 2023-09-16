@@ -3,6 +3,7 @@ const { ChalkAdvanced } = require("chalk-advanced");
 const voteSchema = require("../util/Models/voteModel");
 const QuickChart = require("quickchart-js");
 const { v4: uuidv4 } = require("uuid");
+const Sentry = require("@sentry/node");
 
 const chart = new QuickChart();
 chart.setWidth(750);
@@ -207,7 +208,8 @@ module.exports = class Voting {
       const votes = await voteSchema.find();
       votes.forEach((vote) => {
         if (olderthen(new Date(vote.createdAt), 30))
-          return voteSchema.deleteOne({ id: vote.id }).catch((e) => {
+          return voteSchema.deleteOne({ id: vote.id }).catch((err) => {
+            Sentry.captureException(err);
             return;
           });
         this._cache.set(vote.id, vote);

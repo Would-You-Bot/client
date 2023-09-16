@@ -1,10 +1,7 @@
 const { readdirSync } = require("fs");
+const Sentry = require("@sentry/node");
 const {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
   SlashCommandBuilder,
-  CachedManager,
 } = require("discord.js");
 const cat = readdirSync(`./src/commands/`).filter((d) => d.endsWith(".js"));
 module.exports = {
@@ -57,9 +54,10 @@ module.exports = {
       return interaction.editReply({
         content: `Successfully reloaded command \`${cmd}\`!`,
       });
-    } catch (e) {
+    } catch (err) {
+      Sentry.captureException(err);
       return interaction.editReply({
-        content: `Errored reloading command: \`${cmd}\`!\nError: ${e.message}`,
+        content: `Errored reloading command: \`${cmd}\`!\nError: ${err.message}`,
       });
     }
   },

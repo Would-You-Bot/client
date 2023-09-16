@@ -3,6 +3,7 @@ const {
   WebhookClient,
   EmbedBuilder,
 } = require("discord.js");
+const Sentry = require("@sentry/node");
 const Cryptr = require("cryptr");
 
 const cryptr = new Cryptr(process.env.ENCRYPTION_KEY);
@@ -54,7 +55,7 @@ module.exports = class WebhookHandler {
    */
   createWebhook = async (channel = null, channelId, name, avatar, reason) => {
     if (!channel)
-      channel = await this.c.channels.fetch(channelId).catch((err) => {});
+      channel = await this.c.channels.fetch(channelId).catch((err) => {Sentry.captureException(err);});
 
     if (!channel) return null;
 
@@ -72,7 +73,7 @@ module.exports = class WebhookHandler {
         reason: reason ?? "Would You Webhook",
       })
       .catch((err) => {
-        return err;
+        return Sentry.captureException(err);
       });
 
     if (webhook?.id) {
@@ -108,8 +109,8 @@ module.exports = class WebhookHandler {
 
   webhookFallBack = async (channel = null, channelId, message, err = false) => {
     if (!channel)
-      channel = await this.c.channels.fetch(channelId).catch((er) => {
-        console.error(er);
+      channel = await this.c.channels.fetch(channelId).catch((err) => {
+        Sentry.captureException(err);
       });
 
     if (!channel) return;
@@ -132,7 +133,7 @@ module.exports = class WebhookHandler {
             if (web?.owner?.id === this.c?.user?.id) {
               web
                 .delete("Deleting old webhook, to create a new one")
-                .catch((err) => {});
+                .catch((err) => {Sentry.captureException(err);});
             }
           }, 1000 * i);
         });
@@ -182,8 +183,7 @@ module.exports = class WebhookHandler {
         );
 
         return channel.send(message).catch((err) => {
-          console.log(err);
-          console.log(message);
+          Sentry.captureException(err);
         });
       }
     }
@@ -230,6 +230,7 @@ module.exports = class WebhookHandler {
         return this.webhookFallBack(channel, channelId, message, false);
 
       const fallbackThread = await webhookClient.send(message).catch((err) => {
+        Sentry.captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);
       });
       if (!thread) return;
@@ -240,7 +241,7 @@ module.exports = class WebhookHandler {
           fallbackThread.id +
           "/threads",
         {
-          headers: {
+          body: {
             name: `${[
               date.getFullYear(),
               date.getMonth() + 1,
@@ -258,6 +259,7 @@ module.exports = class WebhookHandler {
       if (!webhook) return this.webhookFallBack(channel, channelId, message);
 
       const webhookThread = await webhook.send(message).catch((err) => {
+        Sentry.captureException(err);
         return this.webhookFallBack(channel, channelId, message, err);
       });
       if (!thread) return;

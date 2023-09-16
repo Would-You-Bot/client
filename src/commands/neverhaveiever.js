@@ -3,9 +3,9 @@ const {
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  PermissionFlagsBits,
 } = require("discord.js");
 const guildModel = require("../util/Models/guildModel");
+const Sentry = require("@sentry/node");
 const shuffle = require("../util/shuffle");
 
 module.exports = {
@@ -105,7 +105,7 @@ module.exports = {
     interaction
       .reply({ embeds: [ratherembed], components: [row, mainRow] })
       .catch((err) => {
-        return console.log(err);
+        Sentry.captureException(err);
       });
   },
 };

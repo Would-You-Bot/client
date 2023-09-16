@@ -1,5 +1,6 @@
 const { EmbedBuilder, PermissionFlagsBits } = require("discord.js");
 require("dotenv").config();
+const Sentry = require("@sentry/node");
 
 module.exports = async (client, member) => {
   // Always do simple if checks before the main code. This is a little but not so little performance boost :)
@@ -9,7 +10,7 @@ module.exports = async (client, member) => {
   if (guildDb && guildDb?.welcome) {
     const channel = await member.guild.channels
       .fetch(guildDb.welcomeChannel)
-      .catch((err) => {});
+      .catch((err) => {Sentry.captureException(err);});
 
     if (!channel?.id) return;
 
@@ -66,7 +67,7 @@ module.exports = async (client, member) => {
             guildDb.dailyThread,
           )
           .catch((err) => {
-            console.log(err);
+            Sentry.captureException(err);
           });
       }
 
@@ -113,7 +114,7 @@ module.exports = async (client, member) => {
             guildDb.dailyThread,
           )
           .catch((err) => {
-            console.log(err);
+            Sentry.captureException(err);
           });
       }
 
@@ -143,7 +144,7 @@ module.exports = async (client, member) => {
     return channel
       .send({ content: mention, embeds: [welcomeEmbed] })
       .catch((err) => {
-        console.log(err);
+        Sentry.captureException(err);
       });
   }
 };

@@ -1,5 +1,6 @@
 const { connect } = require("mongoose").set("strictQuery", true);
 const { ChalkAdvanced } = require("chalk-advanced");
+const Sentry = require("@sentry/node");
 
 module.exports = class DatabaseHandler {
   /**
@@ -39,7 +40,7 @@ module.exports = class DatabaseHandler {
       useNewUrlParser: true,
     })
       .catch((err) => {
-        console.log(err);
+        Sentry.captureException(err);
       })
       .then(() =>
         console.log(

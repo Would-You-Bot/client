@@ -4,6 +4,7 @@ const {
   ButtonBuilder,
   PermissionFlagsBits,
 } = require("discord.js");
+const Sentry = require("@sentry/node");
 const Cooldown = new Set();
 
 module.exports = async (client, message) => {
@@ -36,7 +37,7 @@ module.exports = async (client, message) => {
         .setStyle(5)
         .setEmoji("📋")
         .setURL(
-          "https://canary.discord.com/api/oauth2/authorize?client_id=981649513427111957&permissions=274878229504&scope=bot%20applications.commands",
+          "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
         ),
       new ButtonBuilder()
         .setLabel("Support")
@@ -59,6 +60,6 @@ module.exports = async (client, message) => {
           embeds: [embed],
           components: [supportbutton],
         })
-        .catch(() => {});
+        .catch((err) => {Sentry.captureException(err);});
   }
 };

@@ -1,3 +1,5 @@
+const Sentry = require("@sentry/node");
+
 module.exports = class TranslationHandler {
   /**
    * Get a translation from the language file
@@ -99,7 +101,7 @@ module.exports = class TranslationHandler {
         if (!d) continue;
 
         this.initLanguage(l, d);
-      } catch (e) {}
+      } catch (err) {Sentry.captureException(err);}
     }
   }
 
@@ -130,6 +132,7 @@ module.exports = class TranslationHandler {
             c = c[i];
           }
         } catch (err) {
+          Sentry.captureException(err);
           break;
         }
       }

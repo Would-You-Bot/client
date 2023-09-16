@@ -1,3 +1,5 @@
+const Sentry = require("@sentry/node");
+
 module.exports = async (client, interaction) => {
   const restrict = [
     "dailyChannel",
@@ -42,7 +44,7 @@ module.exports = async (client, interaction) => {
       try {
         command.execute(interaction, client, null);
       } catch (err) {
-        if (err) console.error(err);
+        Sentry.captureException(err);
         return interaction.reply({
           content: "An error occurred while trying to execute that command.",
           ephemeral: true,
@@ -58,7 +60,7 @@ module.exports = async (client, interaction) => {
       try {
         command.execute(interaction, client, guildDb);
       } catch (err) {
-        if (err) console.error(err);
+        Sentry.captureException(err);
         interaction.reply({
           content: "An error occurred while trying to execute that command.",
           ephemeral: true,
@@ -76,7 +78,7 @@ module.exports = async (client, interaction) => {
             content: "Please use the command again.",
             ephemeral: true,
           })
-          .catch(() => {});
+          .catch((err) => {Sentry.captureException(err);});
 
       if (
         restrict.includes(interaction.customId) ||
@@ -95,7 +97,7 @@ module.exports = async (client, interaction) => {
               client.used.get(interaction.user.id) / 1000,
             )}:R>!`,
           })
-          .catch(() => {});
+          .catch((err) => {Sentry.captureException(err);});
       } else if (
         guildDb.replayType === "Channels" &&
         client.used.has(`${interaction.user.id}-${interaction.channel.id}`) &&
@@ -112,7 +114,7 @@ module.exports = async (client, interaction) => {
                 Date.now() / 1000,
             )}:R> you can use buttons again!`,
           })
-          .catch(() => {});
+          .catch((err) => {Sentry.captureException(err);});
       }
 
       try {
@@ -154,7 +156,7 @@ module.exports = async (client, interaction) => {
 
         return button.execute(interaction, client, guildDb);
       } catch (err) {
-        if (err) console.error(err);
+        Sentry.captureException(err);
         return interaction.reply({
           content: "An error occurred while trying to execute that command.",
           ephemeral: true,

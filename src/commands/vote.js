@@ -1,5 +1,6 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const guildModel = require("../util/Models/guildModel");
+const Sentry = require("@sentry/node");
 
 module.exports = {
   requireGuild: true,
@@ -51,7 +52,7 @@ module.exports = {
         embeds: [votemebed],
       })
       .catch((err) => {
-        return console.log(err);
+        Sentry.captureException(err);
       });
   },
 };

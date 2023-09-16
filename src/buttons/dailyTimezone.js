@@ -1,4 +1,5 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
+const Sentry = require("@sentry/node");
 const modalObject = {
   title: "Daily Message Timezone",
   custom_id: "modal",
@@ -25,7 +26,8 @@ function isValid(tz) {
   try {
     Intl.DateTimeFormat(undefined, { timeZone: tz });
     return true;
-  } catch (ex) {
+  } catch (err) {
+    Sentry.captureException(err);
     return false;
   }
 }

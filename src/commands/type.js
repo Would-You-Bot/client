@@ -3,6 +3,7 @@ const {
   SlashCommandBuilder,
   PermissionFlagsBits,
 } = require("discord.js");
+const Sentry = require("@sentry/node");
 const guildModel = require("../util/Models/guildModel");
 
 module.exports = {
@@ -113,7 +114,7 @@ module.exports = {
           ephemeral: true,
         })
         .catch((err) => {
-          console.log(err);
+          Sentry.captureException(err);
         });
     } else {
       const errorembed = new EmbedBuilder()
@@ -129,7 +130,7 @@ module.exports = {
           ephemeral: true,
         })
         .catch((err) => {
-          console.log(err);
+          Sentry.captureException(err);
         });
     }
   },

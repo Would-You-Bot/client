@@ -4,6 +4,7 @@ const {
   ButtonBuilder,
   SlashCommandBuilder,
 } = require("discord.js");
+const Sentry = require("@sentry/node");
 const guildModel = require("../util/Models/guildModel");
 
 module.exports = {
@@ -63,7 +64,7 @@ module.exports = {
         ephemeral: true,
       })
       .catch((err) => {
-        return console.log(err);
+        Sentry.captureException(err);
       });
   },
 };

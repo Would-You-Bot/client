@@ -5,6 +5,7 @@ const {
   ActionRowBuilder,
   PermissionFlagsBits,
 } = require("discord.js");
+const Sentry = require("@sentry/node");
 const axios = require("axios");
 const guildModel = require("../util/Models/guildModel");
 const Paginator = require("../util/pagination");
@@ -626,12 +627,13 @@ module.exports = {
                 ),
               });
             })
-            .catch((e) => {
+            .catch((err) => {
+              Sentry.captureException(err);
               return interaction.editReply(
                 `${client.translation.get(
                   guildDb?.language,
                   "wyCustom.error.import.att15",
-                )}\n\nError: ${e}`,
+                )}\n\nError: ${err}`,
               );
             });
           break;
@@ -715,7 +717,7 @@ module.exports = {
           ephemeral: true,
         })
         .catch((err) => {
-          return;
+          Sentry.captureException(err);
         });
     } else {
       const errorembed = new EmbedBuilder()
@@ -729,7 +731,7 @@ module.exports = {
           embeds: [errorembed],
           ephemeral: true,
         })
-        .catch((err) => {});
+        .catch((err) => {Sentry.captureException(err);});
     }
   },
 };

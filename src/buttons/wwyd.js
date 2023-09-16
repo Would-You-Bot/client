@@ -4,6 +4,7 @@ const {
   ButtonBuilder,
   PermissionFlagsBits,
 } = require("discord.js");
+const Sentry = require("@sentry/node");
 const shuffle = require("../util/shuffle");
 
 module.exports = {
@@ -83,7 +84,7 @@ module.exports = {
         components: [row],
       })
       .catch((err) => {
-        return console.log(err);
+        Sentry.captureException(err);
       });
   },
 };

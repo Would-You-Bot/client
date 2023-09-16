@@ -7,6 +7,7 @@ const {
 } = require("discord.js");
 const guildModel = require("../util/Models/guildModel");
 const shuffle = require("../util/shuffle");
+const Sentry = require("@sentry/node");
 
 module.exports = {
   requireGuild: true,
@@ -52,7 +53,7 @@ module.exports = {
         wouldyourather = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
-
+    uwu("wouldyourather")
     const Random = Math.floor(Math.random() * wouldyourather.length);
 
     let ratherembed = new EmbedBuilder()
@@ -101,7 +102,7 @@ module.exports = {
         fetchReply: true,
       })
       .catch((err) => {
-        console.log(err);
+        Sentry.captureException(err);
       });
   },
 };

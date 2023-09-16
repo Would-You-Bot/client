@@ -2,10 +2,9 @@ const {
   CommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
   PermissionFlagsBits,
 } = require("discord.js");
+const Sentry = require("@sentry/node");
 const guildModel = require("../util/Models/guildModel");
 
 module.exports = {
@@ -58,7 +57,7 @@ module.exports = {
           ephemeral: true,
         })
         .catch((err) => {
-          console.log(err);
+          Sentry.captureException(err);
         });
     }
 
@@ -333,7 +332,7 @@ module.exports = {
           .reply({
             embeds: [debugEmbed],
           })
-          .catch((err) => {});
+          .catch((err) => {Sentry.captureException(err);});
       }
     }
   },

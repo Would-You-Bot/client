@@ -1,4 +1,5 @@
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
+const Sentry = require("@sentry/node");
 const modalObject = {
   title: "Replay Cooldown",
   custom_id: "replaymodal",
@@ -152,8 +153,8 @@ module.exports = {
           ephemeral: true,
         });
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((err) => {
+        Sentry.captureException(err);
       });
   },
 };

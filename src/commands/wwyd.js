@@ -6,6 +6,7 @@ const {
 } = require("discord.js");
 const guildModel = require("../util/Models/guildModel");
 const shuffle = require("../util/shuffle");
+const Sentry = require("@sentry/node");
 
 module.exports = {
   requireGuild: true,
@@ -83,7 +84,7 @@ module.exports = {
     interaction
       .reply({ embeds: [wwydembed], components: [row] })
       .catch((err) => {
-        return console.log(err);
+        Sentry.captureException(err);
       });
   },
 };

@@ -1,5 +1,6 @@
 const WouldYou = require("./util/wouldYou");
 const { ChalkAdvanced } = require("chalk-advanced");
+const Sentry = require("@sentry/node");
 
 // Token to UserID Function
 // Credits to Meister#9667 for helping me with this
@@ -24,11 +25,20 @@ if (botId !== "981649513427111957" || process.env.STATUS === "DEVELOPMENT") {
   );
 }
 
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+
+  // Performance Monitoring
+  tracesSampleRate: 0.5, // 1.0 means that 100% of transactions will be sent to Sentry
+  integrations: [...Sentry.autoDiscoverNodePerformanceMonitoringIntegrations()]
+})
+
+
 global.wouldYouDevs = [
   "805898988402376725", // Finn
   "347077478726238228", // Dominik
   "268843733317976066", // Sky
-  "676867934504747008", // Izzy
   "510759794911739905", // Alt
 ];
 

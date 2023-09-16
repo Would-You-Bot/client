@@ -1,10 +1,10 @@
 require("dotenv").config();
 const Topgg = require("@top-gg/sdk");
+const Sentry = require("@sentry/node");
 const {
   WebhookClient,
   ActionRowBuilder,
   ButtonBuilder,
-  hyperlink,
   hideLinkEmbed,
 } = require("discord.js");
 const express = require("express");
@@ -76,6 +76,7 @@ module.exports = class VoteLogger {
             userdata = res?.data?.data;
           })
           .catch((err) => {
+            Sentry.captureException(err);
             userdata = this.c?.users?.cache?.get(vote.user) ?? null;
           });
 
@@ -124,7 +125,7 @@ module.exports = class VoteLogger {
               .replace("everyone", "")}`,
             avatarURL: userdata.avatarURL,
           })
-          .catch((err) => console.log(err));
+          .catch((err) => Sentry.captureException(err));
       }),
     );
 

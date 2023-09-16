@@ -2,6 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 const mom = require("moment-timezone");
 const { ChalkAdvanced } = require("chalk-advanced");
 const CronJob = require("cron").CronJob;
+const Sentry = require("@sentry/node");
 
 module.exports = class DailyMessage {
   constructor(client) {
@@ -51,7 +52,7 @@ module.exports = class DailyMessage {
         const channel = await this.client.channels
           .fetch(db.dailyChannel)
           .catch((err) => {
-            console.log(err);
+            Sentry.captureException(err);
           });
 
         if (!channel?.id) return; // Always directly return before do to many actions
@@ -94,7 +95,7 @@ module.exports = class DailyMessage {
                 db.dailyThread,
               )
               .catch((err) => {
-                console.log(err);
+                Sentry.captureException(err);
               });
           }
 
@@ -127,7 +128,7 @@ module.exports = class DailyMessage {
             db.dailyThread,
           )
           .catch((err) => {
-            console.log(err);
+            Sentry.captureException(err);
           });
       }, i * 2500); // We do a little timeout here to work against discord ratelimit with 50reqs/second
     }

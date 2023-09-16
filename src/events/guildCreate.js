@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { WebhookClient, EmbedBuilder } = require("discord.js");
+const Sentry = require("@sentry/node");
 
 module.exports = async (client, guild) => {
   if (!guild?.name) return;
@@ -61,6 +62,6 @@ module.exports = async (client, guild) => {
         avatarURL: guild.iconURL({ format: "webp", dynamic: true, size: 1024 }),
         allowedMentions: { parse: [] },
       })
-      .catch((err) => console.log(err));
+      .catch((err) => Sentry.captureException(err));
   }
 };

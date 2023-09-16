@@ -1,5 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-
+const Sentry = require("@sentry/node");
 const { version } = require("../../package.json");
 
 module.exports = {
@@ -26,7 +26,7 @@ module.exports = {
       return (Math.round(m) / 100) * Math.sign(num);
     }
 
-    console.log("Would You Cache Stats: \n");
+    console.log("Would You Stats: \n");
     console.log(`Guilds: ${client.guilds.cache.size}`);
     console.log(`Users: ${client.users.cache.size}`);
     console.log(
@@ -107,12 +107,11 @@ module.exports = {
           interaction.user.tag + " Shard #" + interaction?.guild?.shardId ?? 0,
         iconURL: client.user.avatarURL(),
       })
-      .setTimestamp();
 
     interaction
       .reply({ embeds: [infoEmbed], ephemeral: false })
       .catch((err) => {
-        return;
+        Sentry.captureException(err);
       });
   },
 };

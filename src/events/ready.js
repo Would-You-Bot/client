@@ -4,12 +4,9 @@ const { Routes } = require("discord-api-types/v10");
 const { readdirSync } = require("fs");
 const { ChalkAdvanced } = require("chalk-advanced");
 const { AutoPoster } = require("topgg-autoposter");
+const Sentry = require("@sentry/node");
 
 module.exports = async (client) => {
-  client.user.setPresence({
-    activities: [{ name: "Booting up..." }],
-    status: "idle",
-  });
 
   if (client.cluster.id === 0) {
     const commandFiles = readdirSync("./src/commands/").filter((file) =>
@@ -32,7 +29,7 @@ module.exports = async (client) => {
       try {
         if (process.env.STATUS === "PRODUCTION") {
           if (process.env.TOPGG_TOKEN) {
-            const ap = AutoPoster(`${process.env.TOPGG_TOKEN}`, client);
+            AutoPoster(`${process.env.TOPGG_TOKEN}`, client);
           }
           // If the bot is in production mode it will load slash commands for all guilds
           await rest.put(Routes.applicationCommands(client.user.id), {
@@ -70,7 +67,7 @@ module.exports = async (client) => {
           );
         }
       } catch (err) {
-        if (err) console.error(err);
+        Sentry.captureException(err);
       }
     }, 2500);
   }
