@@ -53,7 +53,6 @@ module.exports = {
         wouldyourather = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
-    uwu("wouldyourather")
     const Random = Math.floor(Math.random() * wouldyourather.length);
 
     let ratherembed = new EmbedBuilder()
