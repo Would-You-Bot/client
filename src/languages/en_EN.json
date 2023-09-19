@@ -296,5 +296,19 @@
     "No": "No",
     "Vote": "Vote: ",
     "VotingResults": "Voting Results"
+  },
+  "HigherLower": {
+    "description": "Do you think that **{keyword}** has higher or lower searches than **{history}**?",
+    "initial": {
+      "title": "Initializing",
+      "description": "Please wait a moment. I'm creating a game..."
+    }, 
+    "game": {
+      "title": "You Lost!",
+      "description": "You reached a score of **{score}**!"
+    },
+    "error": {
+      "user": "This game does not belong to you it belongs to {user}. Create your own game using </higherlower:1153718305903890554>!"
+    }
   }
 }

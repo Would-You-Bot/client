@@ -1,5 +1,3 @@
-const Sentry = require("@sentry/node");
-
 module.exports = async (client, interaction) => {
   const restrict = [
     "dailyChannel",
@@ -24,10 +22,6 @@ module.exports = async (client, interaction) => {
     "dailyMsg",
     "dailyThread",
     "votemodal",
-    "paginateFirst",
-    "paginatePrev",
-    "paginateNext",
-    "paginateLast",
   ];
   if (!interaction.guild) {
     if (interaction.isChatInputCommand()) {
@@ -44,7 +38,7 @@ module.exports = async (client, interaction) => {
       try {
         command.execute(interaction, client, null);
       } catch (err) {
-        Sentry.captureException(err);
+        if (err) console.error(err);
         return interaction.reply({
           content: "An error occurred while trying to execute that command.",
           ephemeral: true,
@@ -60,7 +54,7 @@ module.exports = async (client, interaction) => {
       try {
         command.execute(interaction, client, guildDb);
       } catch (err) {
-        Sentry.captureException(err);
+        if (err) console.error(err);
         interaction.reply({
           content: "An error occurred while trying to execute that command.",
           ephemeral: true,
@@ -72,18 +66,24 @@ module.exports = async (client, interaction) => {
         button = client.buttons.get("voting");
       if (interaction.customId.startsWith("result_"))
         button = client.buttons.get("result");
+      if (interaction.customId.startsWith("higher_"))
+        button = client.buttons.get("higher");
+      if (interaction.customId.startsWith("lower_"))
+        button = client.buttons.get("lower");
       if (!button)
         return interaction
           .reply({
             content: "Please use the command again.",
             ephemeral: true,
           })
-          .catch((err) => {Sentry.captureException(err);});
+          .catch(() => {});
 
       if (
         restrict.includes(interaction.customId) ||
         interaction.customId.startsWith("voting_") ||
-        interaction.customId.startsWith("result_")
+        interaction.customId.startsWith("result_") ||
+        interaction.customId.startsWith("higher_") ||
+        interaction.customId.startsWith("lower_")
       )
         return button.execute(interaction, client, guildDb);
       if (
@@ -97,7 +97,7 @@ module.exports = async (client, interaction) => {
               client.used.get(interaction.user.id) / 1000,
             )}:R>!`,
           })
-          .catch((err) => {Sentry.captureException(err);});
+          .catch(() => {});
       } else if (
         guildDb.replayType === "Channels" &&
         client.used.has(`${interaction.user.id}-${interaction.channel.id}`) &&
@@ -114,7 +114,7 @@ module.exports = async (client, interaction) => {
                 Date.now() / 1000,
             )}:R> you can use buttons again!`,
           })
-          .catch((err) => {Sentry.captureException(err);});
+          .catch(() => {});
       }
 
       try {
@@ -156,7 +156,7 @@ module.exports = async (client, interaction) => {
 
         return button.execute(interaction, client, guildDb);
       } catch (err) {
-        Sentry.captureException(err);
+        if (err) console.error(err);
         return interaction.reply({
           content: "An error occurred while trying to execute that command.",
           ephemeral: true,
