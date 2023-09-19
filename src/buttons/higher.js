@@ -21,15 +21,17 @@ const {
 
       if (interaction.message.interaction.user.id !== interaction.user.id)
       return interaction.reply({
-        content: `${client.translation.get(
+        content: client.translation.get(
           guildDb?.language,
           "HigherLower.error.user",
           {
             user: interaction.message.interaction.user.username,
           },
-        )}`,
+        ),
         ephemeral: true,
       });
+
+      await interaction.deferUpdate();
 
       const gameId = interaction.customId.split("_")[1];
       const game = await HL.findOne({ id: gameId });
@@ -47,14 +49,10 @@ const {
         const gameData = JSON.parse(gameDataRaw).data;
   
         if (game.items.history.length == gameData.length)
-          return interaction.reply({
-            content: "No more data avalible",
+          return interaction.followUp({
+            content: "There is no more data available!",
             ephemeral: true,
           });
-  
-        interaction.deferReply({ ephemeral: true }).then(() => {
-          interaction.deleteReply();
-        });
   
         let comperator = Math.floor(Math.random() * gameData.length);
         const regenerateComperator = () => {
@@ -114,7 +112,7 @@ const {
               .setStyle(ButtonStyle.Danger),
           );
   
-          interaction.message.edit({
+          interaction.editReply({
             embeds: [gameEmbed],
             files: [
               new AttachmentBuilder()
@@ -147,7 +145,7 @@ const {
         gameImage.setGame(game);
   
         gameImage.build(game.score).then((image) => {
-          return interaction.message.edit({
+          return interaction.editReply({
             embeds: [loseEmbed],
             files: [
               new AttachmentBuilder()
