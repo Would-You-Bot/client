@@ -120,9 +120,9 @@ module.exports = class Voting {
 
     const options = ["op_one", "op_two"];
 
-    options.forEach((option) => {
+    for (const option of options) { 
       vote.votes[option] = vote.votes[option].filter((v) => v !== userId);
-    });
+    };
 
     vote.votes[options[option]].push(userId);
 
@@ -206,14 +206,15 @@ module.exports = class Voting {
 
     setTimeout(async () => {
       const votes = await voteSchema.find();
-      votes.forEach((vote) => {
-        if (olderthen(new Date(vote.createdAt), 30))
+        for (const vote of votes) {
+          if (olderthen(new Date(vote.createdAt), 30))
           return voteSchema.deleteOne({ id: vote.id }).catch((err) => {
             Sentry.captureException(err);
             return;
           });
         this._cache.set(vote.id, vote);
-      });
+        }
+
 
       console.log(
         `${ChalkAdvanced.white("Would You?")} ${ChalkAdvanced.gray(

@@ -41,12 +41,13 @@ module.exports = class Paginator {
         .setStyle("Secondary"),
     );
 
-    this.pages.forEach((e, i = 0) => {
+    for (let i = 0; i < this.pages.length; i++) {
+      const e = this.pages[i];
       e.data.footer = {
         text: `Would You | Page ${i + 1} / ${this.pages.length}`,
         iconURL: this.client.user.avatarURL(),
       };
-    });
+    }
     const message = await interaction.reply({
       embeds: [this.pages[0]],
       components: [buttons],
