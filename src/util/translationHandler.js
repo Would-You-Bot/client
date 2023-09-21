@@ -101,7 +101,9 @@ module.exports = class TranslationHandler {
         if (!d) continue;
 
         this.initLanguage(l, d);
-      } catch (err) {Sentry.captureException(err);}
+      } catch (err) {
+        Sentry.captureException(err);
+      }
     }
   }
 

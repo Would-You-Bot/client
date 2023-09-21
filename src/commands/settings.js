@@ -173,7 +173,9 @@ module.exports = {
               components: [dailyButtons, dailyButtons2, dailyButtons3],
               ephemeral: true,
             })
-            .catch((err) => {Sentry.captureException(err);});
+            .catch((err) => {
+              Sentry.captureException(err);
+            });
           break;
 
         case "general":
@@ -265,7 +267,9 @@ module.exports = {
                   : [generalButtons],
               ephemeral: true,
             })
-            .catch((err) => {Sentry.captureException(err);});
+            .catch((err) => {
+              Sentry.captureException(err);
+            });
           break;
 
         case "welcomes":
@@ -387,7 +391,9 @@ module.exports = {
           embeds: [errorEmbed],
           ephemeral: true,
         })
-        .catch((err) => {Sentry.captureException(err);});
+        .catch((err) => {
+          Sentry.captureException(err);
+        });
     }
   },
 };

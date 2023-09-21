@@ -106,7 +106,7 @@ module.exports = {
         text:
           interaction.user.tag + " Shard #" + interaction?.guild?.shardId ?? 0,
         iconURL: client.user.avatarURL(),
-      })
+      });
 
     interaction
       .reply({ embeds: [infoEmbed], ephemeral: false })

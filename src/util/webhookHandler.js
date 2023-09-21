@@ -55,7 +55,9 @@ module.exports = class WebhookHandler {
    */
   createWebhook = async (channel = null, channelId, name, avatar, reason) => {
     if (!channel)
-      channel = await this.c.channels.fetch(channelId).catch((err) => {Sentry.captureException(err);});
+      channel = await this.c.channels.fetch(channelId).catch((err) => {
+        Sentry.captureException(err);
+      });
 
     if (!channel) return null;
 
@@ -133,7 +135,9 @@ module.exports = class WebhookHandler {
             if (web?.owner?.id === this.c?.user?.id) {
               web
                 .delete("Deleting old webhook, to create a new one")
-                .catch((err) => {Sentry.captureException(err);});
+                .catch((err) => {
+                  Sentry.captureException(err);
+                });
             }
           }, 1000 * i);
         });

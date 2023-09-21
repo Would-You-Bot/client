@@ -731,7 +731,9 @@ module.exports = {
           embeds: [errorembed],
           ephemeral: true,
         })
-        .catch((err) => {Sentry.captureException(err);});
+        .catch((err) => {
+          Sentry.captureException(err);
+        });
     }
   },
 };

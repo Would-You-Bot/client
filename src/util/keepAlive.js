@@ -6,7 +6,6 @@ module.exports = class KeepAlive {
     this.client = client;
   }
 
-
   /**
    * Start the keep alive system (listener to the process)
    */
