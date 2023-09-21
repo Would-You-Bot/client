@@ -6,7 +6,7 @@ const {
   ButtonStyle,
   AttachmentBuilder,
 } = require("discord.js");
-const fs = require("fs");
+const {readFileSync} = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 
@@ -49,7 +49,7 @@ module.exports = {
       });
 
     interaction.reply({ embeds: [initembed] }).then((async) => {
-      const gameDataRaw = fs.readFileSync(
+      const gameDataRaw = readFileSync(
         path.join(__dirname, "..", "data", "hl-en_EN.json"),
       );
       const gameData = JSON.parse(gameDataRaw).data;
@@ -96,6 +96,8 @@ module.exports = {
               keyword: game.items.current.keyword,
               history:
                 game.items.history[game.items.history.length - 1].keyword,
+              source: game.items.current.link,
+              source2: game.items.history[game.items.history.length - 1].link,
             },
           )}`,
         )

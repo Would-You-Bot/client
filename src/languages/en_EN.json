@@ -298,7 +298,7 @@
     "VotingResults": "Voting Results"
   },
   "HigherLower": {
-    "description": "Do you think that **{keyword}** has higher or lower searches than **{history}**?",
+    "description": "Do you think that **{keyword}** has higher or lower searches than **{history}**?\n\n Image source: **[Image 1]({source})** | **[Image 2]({source2})**",
     "initial": {
       "title": "Initializing",
       "description": "Please wait a moment. I'm creating a game..."

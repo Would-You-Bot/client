@@ -298,7 +298,7 @@
     "VotingResults": "Resultados de la votación"
   },
   "HigherLower": {
-    "description": "¿Crees que **{keyword}** tiene mayor o menor cantidad de búsquedas que **{history}**?",
+    "description": "¿Crees que **{keyword}** tiene mayor o menor cantidad de búsquedas que **{history}**?\n\n Fuente de la imagen:: **[Imagen  1]({source})** | **[Imagen 2]({source2})**",
     "initial": {
       "title": "Iniciando",
       "description": "Por favor espere un momento. Estoy creando una partida..."

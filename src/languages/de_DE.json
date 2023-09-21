@@ -298,7 +298,7 @@
     "VotingResults": "Abstimmungsergebnis"
   },
   "HigherLower": {
-    "description": "Denkst du, dass **{keyword}** mehr oder weniger Suchanfragen hat als **{history}**?",
+    "description": "Denkst du, dass **{keyword}** mehr oder weniger Suchanfragen hat als **{history}**?\n\n Bild quelle: **[Bild 1]({source})** | **[Bild 2]({source2})**",
     "initial": {
       "title": "Initialisierung",
       "description": "Bitte warte einen Moment. Ich erstelle ein Spiel..."
