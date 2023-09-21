@@ -60,6 +60,8 @@ module.exports = async (client, message) => {
           embeds: [embed],
           components: [supportbutton],
         })
-        .catch((err) => {Sentry.captureException(err);});
+        .catch((err) => {
+          Sentry.captureException(err);
+        });
   }
 };

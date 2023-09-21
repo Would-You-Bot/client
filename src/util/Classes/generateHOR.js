@@ -69,14 +69,10 @@ class HOR {
     // Background
     const [image1, image2] = await Promise.all([
       Canvas.loadImage(images[0]).catch((e) =>
-        Canvas.loadImage(
-          "https://cdn.wouldyoubot.gg/higherlower/error.png",
-        ),
+        Canvas.loadImage("https://cdn.wouldyoubot.gg/higherlower/error.png"),
       ),
       Canvas.loadImage(images[1]).catch((e) =>
-        Canvas.loadImage(
-          "https://cdn.wouldyoubot.gg/higherlower//error.png",
-        ),
+        Canvas.loadImage("https://cdn.wouldyoubot.gg/higherlower//error.png"),
       ),
     ]);
 

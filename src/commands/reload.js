@@ -1,8 +1,6 @@
 const { readdirSync } = require("fs");
 const Sentry = require("@sentry/node");
-const {
-  SlashCommandBuilder,
-} = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 const cat = readdirSync(`./src/commands/`).filter((d) => d.endsWith(".js"));
 module.exports = {
   data: new SlashCommandBuilder()

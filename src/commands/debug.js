@@ -332,7 +332,9 @@ module.exports = {
           .reply({
             embeds: [debugEmbed],
           })
-          .catch((err) => {Sentry.captureException(err);});
+          .catch((err) => {
+            Sentry.captureException(err);
+          });
       }
     }
   },

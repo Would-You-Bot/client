@@ -7,7 +7,6 @@ const { AutoPoster } = require("topgg-autoposter");
 const Sentry = require("@sentry/node");
 
 module.exports = async (client) => {
-
   if (client.cluster.id === 0) {
     const commandFiles = readdirSync("./src/commands/").filter((file) =>
       file.endsWith(".js"),

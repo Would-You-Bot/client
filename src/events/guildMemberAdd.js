@@ -10,7 +10,9 @@ module.exports = async (client, member) => {
   if (guildDb && guildDb?.welcome) {
     const channel = await member.guild.channels
       .fetch(guildDb.welcomeChannel)
-      .catch((err) => {Sentry.captureException(err);});
+      .catch((err) => {
+        Sentry.captureException(err);
+      });
 
     if (!channel?.id) return;
 
