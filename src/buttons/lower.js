@@ -5,7 +5,7 @@ const {
   ButtonStyle,
   AttachmentBuilder,
 } = require("discord.js");
-const {readFileSync} = require("fs");
+const { readFileSync } = require("fs");
 const path = require("path");
 
 const HL = require("../util/Models/higherlowerModel");
@@ -84,17 +84,12 @@ module.exports = {
       const gameEmbed = new EmbedBuilder()
 
         .setDescription(
-          client.translation.get(
-            guildDb?.language,
-            "HigherLower.description",
-            {
-              keyword: game.items.current.keyword,
-              history:
-                game.items.history[game.items.history.length - 1].keyword,
-              source: game.items.current.link,
-              source2: game.items.history[game.items.history.length - 1].link,
-            },
-          ),
+          client.translation.get(guildDb?.language, "HigherLower.description", {
+            keyword: game.items.current.keyword,
+            history: game.items.history[game.items.history.length - 1].keyword,
+            source: game.items.current.link,
+            source2: game.items.history[game.items.history.length - 1].link,
+          }),
         )
         .setColor("Green")
         .setImage("attachment://game.png")
