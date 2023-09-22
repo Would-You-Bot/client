@@ -6,7 +6,7 @@ const {
   ButtonStyle,
   AttachmentBuilder,
 } = require("discord.js");
-const {readFileSync} = require("fs");
+const { readFileSync } = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 
