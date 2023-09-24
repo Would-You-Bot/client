@@ -128,7 +128,7 @@ module.exports = class WebhookHandler {
 
       if (webhooks && webhooks.size > 0) {
         let i = 0;
-          for (const web of webhooks) {
+        for (const web of webhooks) {
           i++;
           setInterval(() => {
             if (web?.owner?.id === this.c?.user?.id) {
@@ -139,7 +139,7 @@ module.exports = class WebhookHandler {
                 });
             }
           }, 1000 * i);
-        };
+        }
       }
 
       const webhook = await this.createWebhook(

@@ -24,7 +24,7 @@ module.exports = class EventHandler {
           this.c.on(eventName, event.bind(null, this.c));
         }
       }
-      });
+    });
   }
 
   /**

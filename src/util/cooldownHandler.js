@@ -16,13 +16,16 @@ module.exports = class VoteLogger {
    * @private
    */
   startSweeper() {
-    this.cooldownSweeperInterval = setInterval(() => {
-      for (const [key, value] of this.c.used.entries()) {
-        if (value < Date.now()) {
-          this.c.used.delete(key);
+    this.cooldownSweeperInterval = setInterval(
+      () => {
+        for (const [key, value] of this.c.used.entries()) {
+          if (value < Date.now()) {
+            this.c.used.delete(key);
+          }
         }
-      }
-    }, 15 * 60 * 1000);
+      },
+      15 * 60 * 1000,
+    );
   }
 
   /**
