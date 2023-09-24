@@ -228,7 +228,7 @@ module.exports = class WebhookHandler {
 
       const webhookClient = new WebhookClient({
         id: webhook.id,
-        token: webhook.token,
+        token: cryptr.decrypt(webhook.token),
       });
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
