@@ -71,7 +71,6 @@ module.exports = class WebhookHandler {
     const webhook = await channel
       .createWebhook({
         name: name ?? "Would You",
-        avatar: avatar ?? this.c.user.displayAvatarURL(),
         reason: reason ?? "Would You Webhook",
       })
       .catch((err) => {
@@ -147,10 +146,8 @@ module.exports = class WebhookHandler {
         channel,
         channelId,
         "Would You",
-        this.c.user.displayAvatarURL(),
         "Webhook token unavailable, creating new webhook",
       );
-
       if (!webhook?.id || !webhook.token)
         return this.webhookFallBack(channel, channelId, message, false);
 
@@ -216,19 +213,16 @@ module.exports = class WebhookHandler {
         channel,
         channelId,
         "Would You",
-        this.c.user.displayAvatarURL(),
         "Webhook token unavailable, creating new webhook",
       );
 
       if (webhook?.webhookId) webhook.id = webhook.webhookId;
       if (webhook?.webhookToken) webhook.token = webhook.webhookToken;
-
       if (!webhook?.id || !webhook?.token)
         return this.webhookFallBack(channel, channelId, message, false);
-
       const webhookClient = new WebhookClient({
         id: webhook.id,
-        token: webhook.token,
+        token: cryptr.decrypt(webhook.token),
       });
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
