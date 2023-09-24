@@ -91,7 +91,7 @@ module.exports = {
       interaction.guildId,
       interaction.channelId,
       time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
-      0,
+      "wouldyourather",
     );
 
     await interaction

@@ -17,14 +17,14 @@ module.exports = class Voting {
     this._cache = new Map();
   }
 
-  async saveVoting({ guildId, type = 0, until, channelId, op_one, op_two }) {
+  async saveVoting({ guildId, type, until, channelId, op_one, op_two }) {
     const id = uuidv4();
 
     const vote = new voteSchema({
       id,
       guild: guildId,
       channel: channelId,
-      type: type,
+      type,
       until: until,
       votes: {
         op_one,
@@ -42,7 +42,7 @@ module.exports = class Voting {
     guildId = null,
     channelId = null,
     until = 0,
-    type = 0,
+    type,
     op_one,
     op_tow,
   ) {
@@ -61,23 +61,23 @@ module.exports = class Voting {
 
     const row = new ActionRowBuilder();
     switch (type) {
-      case 0:
+      case "wouldyourather":
         row.addComponents([
           new ButtonBuilder()
             .setCustomId(`result_${voteId}`)
             .setLabel("Results")
             .setStyle(ButtonStyle.Secondary),
           new ButtonBuilder()
-            .setCustomId(`voting_${voteId}_0`)
+            .setCustomId(`voting_${voteId}_${type}_0`)
             .setEmoji("1️⃣")
             .setStyle(ButtonStyle.Primary),
           new ButtonBuilder()
-            .setCustomId(`voting_${voteId}_1`)
+            .setCustomId(`voting_${voteId}_${type}_1`)
             .setEmoji("2️⃣")
             .setStyle(ButtonStyle.Primary),
         ]);
         break;
-      case 1:
+      case "neverhaveiever":
         row.addComponents([
           new ButtonBuilder()
             .setCustomId(`result_${voteId}`)
@@ -85,11 +85,11 @@ module.exports = class Voting {
             .setDisabled(false)
             .setStyle(ButtonStyle.Secondary),
           new ButtonBuilder()
-            .setCustomId(`voting_${voteId}_0`)
+            .setCustomId(`voting_${voteId}_${type}_0`)
             .setLabel("✅")
             .setStyle(ButtonStyle.Primary),
           new ButtonBuilder()
-            .setCustomId(`voting_${voteId}_1`)
+            .setCustomId(`voting_${voteId}_${type}_1`)
             .setLabel("❌")
             .setStyle(ButtonStyle.Primary),
         ]);

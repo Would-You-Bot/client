@@ -95,7 +95,7 @@ module.exports = {
       interaction.guildId,
       interaction.channelId,
       time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
-      1,
+      "neverhaveiever",
     );
 
     return interaction

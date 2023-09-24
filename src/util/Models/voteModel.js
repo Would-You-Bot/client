@@ -5,7 +5,7 @@ const voteModel = new Schema(
     id: { type: String, required: true },
     guild: { type: String, required: false },
     channel: { type: String, required: true },
-    type: { type: Number, default: 0 }, // 0 = wouldyourather, 1 = neverhaveiever
+    type: { type: String, }, // 0 = wouldyourather, 1 = neverhaveiever
     votes: {
       op_one: { type: Array, default: [] },
       op_two: { type: Array, default: [] },
