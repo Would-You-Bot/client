@@ -30,14 +30,14 @@ const userModel = new Schema(
     },
     whatwouldyoudo: {
       yes: { type: Number, default: 0 },
-      no: { type: Number, default: 0},
+      no: { type: Number, default: 0 },
       used: {
         command: { type: Number, default: 0 },
         replay: { type: Number, default: 0 },
       },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = model("userModel", userModel);
