@@ -10,7 +10,7 @@ module.exports = {
 
     interaction.reply({
       content: `You've successfully voted for ${
-       customId[2] === "wouldyourather"
+        customId[2] === "wouldyourather"
           ? customId[3] == 0 || customId[2] == 0
             ? "number one"
             : "number two"
