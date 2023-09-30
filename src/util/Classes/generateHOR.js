@@ -170,10 +170,10 @@ class HOR {
     ctx.font = "50px Poppins-Bold";
     ctx.textAlign = "center";
     ctx.fillText(
-      `"${this.game.items.current.keyword}`.slice(0, 17),
+      `"${this.game.items.current.keyword}"`.slice(0, 17),
       1068,
       258,
-    ) + '"';
+    );
 
     // Stats
     ctx.beginPath();
