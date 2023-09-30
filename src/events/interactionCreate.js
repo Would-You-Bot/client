@@ -67,7 +67,7 @@ module.exports = async (client, interaction) => {
       } else {
         // Get the field path based on the command name
         const fieldPath = statsMap[interaction.commandName];
-        console.log(fieldPath);
+
         if (fieldPath) {
           // Increment the specified field using $inc
           await userModel.updateOne(
@@ -102,7 +102,7 @@ module.exports = async (client, interaction) => {
           const action = customId[3] == 0 ? "yes" : "no";
           const commandName = customId[2];
           const fieldName = `${commandName}.${action}`;
-          console.log(fieldName);
+
           if (!user) {
             // If the user doesn't exist, create a new one with the userID
 

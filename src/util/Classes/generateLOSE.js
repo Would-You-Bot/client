@@ -1,5 +1,6 @@
 const Canvas = require("@napi-rs/canvas");
 const path = require("path");
+const userModel = require("../Models/userModel");
 
 // Import font
 Canvas.GlobalFonts.registerFromPath(
@@ -45,6 +46,14 @@ class LOSE {
    */
 
   async build(score) {
+
+    const user = await userModel.findOne({ userID: this.game.creator });
+
+    if (score > user.higherlower.highscore) {
+      user.higherlower.highscore = score;
+      await user.save();
+    }
+
     // Create canvas
     const canvasObject = Canvas.createCanvas(1424, 512);
     const ctx = canvasObject.getContext("2d");

@@ -23,6 +23,7 @@ const userModel = new Schema(
     higherlower: {
       yes: { type: Number, default: 0 },
       no: { type: Number, default: 0 },
+      highscore: { type: Number, default: 0 },
       used: {
         command: { type: Number, default: 0 },
         replay: { type: Number, default: 0 },
