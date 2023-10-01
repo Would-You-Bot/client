@@ -295,7 +295,8 @@
     "Yes": "Yes",
     "No": "No",
     "Vote": "Vote: ",
-    "VotingResults": "Voting Results"
+    "VotingResults": "Voting Results",
+    "VotingResultsError": "Unable to fetch results."
   },
   "HigherLower": {
     "description": "Do you think that **{keyword}** has higher or lower searches than **{history}**?\n\n Image source: **[Image 1]({source})** | **[Image 2]({source2})**",

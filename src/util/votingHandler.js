@@ -102,7 +102,12 @@ module.exports = class Voting {
     };
   }
 
-  getVoting(id) {
+  async getVoting(id) {
+    if (!this._cache.get(id))
+      return await voteSchema.findOne({
+        id: id
+      });
+
     return this._cache.get(id);
   }
 
@@ -115,7 +120,7 @@ module.exports = class Voting {
   }
 
   async addVote(id, userId, option = 1) {
-    const vote = this.getVoting(id);
+    const vote = await this.getVoting(id);
     if (!vote) return false;
 
     const options = ["op_one", "op_two"];
@@ -133,7 +138,7 @@ module.exports = class Voting {
   }
 
   async getVotingResults(id) {
-    const vote = this.getVoting(id);
+    const vote = await this.getVoting(id);
     if (!vote) return false;
 
     let g;

@@ -13,6 +13,11 @@ module.exports = {
     const customId = interaction.customId.split("_");
 
     const votingResults = await client.voting.getVotingResults(customId[1]);
+    if (!votingResults) return await interaction.reply({
+        content: "Unable to fetch results.",
+        ephemeral: true,
+      })
+    
 
     const resultEmbed = new EmbedBuilder()
       .setImage(votingResults.chart)
