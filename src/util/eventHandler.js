@@ -1,4 +1,5 @@
-const { readdir } = require("fs");
+const { readdir, readdirSync, statSync } = require("fs");
+const path = require("path");
 
 module.exports = class EventHandler {
   constructor(c) {
@@ -7,28 +8,36 @@ module.exports = class EventHandler {
   }
 
   /**
-   * Load the buttons
+   * Load the events
    */
   load() {
-    readdir("./src/events/", (err, files) => {
-      if (err) return console.error(err);
+    this.loadFromPath(path.join(__dirname, "../events/"));
+  }
 
-      for (const file of files) {
-        console.log(`Loading event ${file}`);
-        const event = require(`../events/${file}`);
+  loadFromPath(dir) {
+    const files = readdirSync(dir);
+
+    for (const file of files) {
+      const filePath = path.join(dir, file);
+      const stat = statSync(filePath);
+      
+      if (stat.isDirectory()) {
+        loadFromPath(path.join(dir, filePath));
+      } else {
         let eventName = file.split(".")[0];
-
-        if (this.once.includes(eventName)) {
+        const event = require(`${filePath}`);
+        
+        if(this.once.includes(eventName)) {
           this.c.once(eventName, event.bind(null, this.c));
         } else {
           this.c.on(eventName, event.bind(null, this.c));
         }
       }
-    });
+    }
   }
 
   /**
-   * Reload the buttons
+   * Reload the events
    */
   reload() {
     this.c.removeEventListener();
