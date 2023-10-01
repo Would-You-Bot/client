@@ -46,7 +46,6 @@ class LOSE {
    */
 
   async build(score) {
-
     const user = await userModel.findOne({ userID: this.game.creator });
 
     if (score > user.higherlower.highscore) {

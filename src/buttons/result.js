@@ -14,7 +14,11 @@ module.exports = {
 
     const votingResults = await client.voting.getVotingResults(customId[1]);
 
-    const resultEmbed = new EmbedBuilder().setImage(votingResults.chart).setColor(votingResults.option_1 < votingResults.option_2 ? "#0091ff" : "#f00404");
+    const resultEmbed = new EmbedBuilder()
+      .setImage(votingResults.chart)
+      .setColor(
+        votingResults.option_1 < votingResults.option_2 ? "#0091ff" : "#f00404",
+      );
 
     interaction.reply({
       embeds: [resultEmbed],
