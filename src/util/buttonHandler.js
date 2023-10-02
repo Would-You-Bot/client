@@ -1,4 +1,4 @@
-const { readdirSync } = require("fs");
+const { readdirSync, statSync } = require("fs");
 const path = require("path");
 const { Collection } = require("discord.js");
 const { ChalkAdvanced } = require("chalk-advanced");
@@ -13,16 +13,27 @@ module.exports = class ButtonHandler {
    * Load the buttons
    */
   load() {
-    for (const file of readdirSync(
-      path.join(__dirname, "..", "buttons"),
-    ).filter((file) => file.endsWith(".js"))) {
-      const button = require(`../buttons/${file}`);
-      this.c.buttons.set(button.data.name, button);
+    this.loadFromPath(path.join(__dirname, "../buttons/"));
+  }
+
+  loadFromPath(dir) {
+    const files = readdirSync(dir);
+
+    for (const file of files) {
+      const filePath = path.join(dir, file);
+      const stat = statSync(filePath);
+      if (stat.isDirectory()) {
+        loadFromPath(path.join(dir, filePath));
+      } else {
+        const button = require(`${filePath}`);
+        this.c.buttons.set(button.data.name, button);
+      }
     }
+
     console.log(
       `${ChalkAdvanced.white("Would You?")} ${ChalkAdvanced.gray(
-        ">",
-      )} ${ChalkAdvanced.green("Successfully loaded buttons")}`,
+        ">"
+      )} ${ChalkAdvanced.green("Successfully loaded buttons")}`
     );
   }
 
