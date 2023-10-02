@@ -25,6 +25,7 @@ module.exports = class EventHandler {
         loadFromPath(path.join(dir, filePath));
       } else {
         let eventName = file.split(".")[0];
+        console.log(`Loading event ${file}`);
         const event = require(`${filePath}`);
         
         if(this.once.includes(eventName)) {
