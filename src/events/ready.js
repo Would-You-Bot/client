@@ -7,10 +7,12 @@ const { AutoPoster } = require("topgg-autoposter");
 const Sentry = require("@sentry/node");
 const path = require("path");
 
+const commands = [];
+
 module.exports = async (client) => {
   if (client.cluster.id === 0) {
     loadCommandsFromPath(path.join(__dirname, "../commands/"), client).then(
-      (commands) => {
+      () => {
         const rest = new REST({
           version: "10",
         }).setToken(process.env.DISCORD_TOKEN);
@@ -75,21 +77,18 @@ module.exports = async (client) => {
   setInterval(() => setStatus(), 60 * 60 * 1000); // Do this not so often because everytime you set the presence the bot won't receive any events for some seconds
 };
 
-const loadCommandsFromPath = (dir, client) => {
-  const commands = [];
+const loadCommandsFromPath = async (dir, client) => {
   const files = readdirSync(dir);
   for (const file of files) {
     const filePath = path.join(dir, file);
     const stat = statSync(filePath);
 
     if (stat.isDirectory()) {
-      loadCommandsFromPath(path.join(dir, filePath));
+      await loadCommandsFromPath(filePath, client);
     } else {
       const cmd = require(`${filePath}`);
       commands.push(cmd.data.toJSON());
       client.commands.set(cmd.data.name, cmd);
     }
   }
-
-  return commands;
 };
