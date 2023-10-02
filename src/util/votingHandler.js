@@ -105,7 +105,7 @@ module.exports = class Voting {
   async getVoting(id) {
     if (!this._cache.get(id))
       return await voteSchema.findOne({
-        id: id
+        id: id,
       });
 
     return this._cache.get(id);
