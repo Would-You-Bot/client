@@ -1,9 +1,4 @@
-const {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ChannelType,
-  ChannelSelectMenuBuilder,
-} = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 module.exports = {
   data: {
     name: "result",

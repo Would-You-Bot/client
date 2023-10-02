@@ -1,4 +1,4 @@
-const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
+const { ButtonBuilder, ActionRowBuilder } = require("discord.js");
 module.exports = {
   data: {
     name: "paginatePrev",
