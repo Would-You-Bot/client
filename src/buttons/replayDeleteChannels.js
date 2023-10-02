@@ -1,6 +1,5 @@
 const {
   ActionRowBuilder,
-  ChannelType,
   StringSelectMenuBuilder,
 } = require("discord.js");
 module.exports = {
