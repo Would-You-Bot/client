@@ -2,11 +2,12 @@
   "name": "would-you",
   "version": "1.1.1",
   "description": "Would you rather die or use this bot. You got the choice",
-  "main": "src/cluster.js",
+  "main": "dist/cluster.js",
   "scripts": {
-    "start": "node src/cluster.js",
-    "test": "nodemon src/cluster.js",
-    "format": "prettier --write  \"src/**/*.js\""
+    "start": "node dist/cluster.js",
+    "test": "pnpm run build && node dist/cluster.js",
+    "build": "tsc",
+    "format": "prettier --write  \"src/**/*.ts\""
   },
   "repository": {
     "type": "git",
@@ -47,7 +48,11 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.18",
+    "@types/uuid": "^9.0.4",
     "nodemon": "3.0.1",
-    "prettier": "^3.0.2"
+    "prettier": "^3.0.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
   }
 }
