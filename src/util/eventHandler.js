@@ -1,4 +1,4 @@
-const { readdir, readdirSync, statSync } = require("fs");
+const fs = require("fs");
 const path = require("path");
 
 module.exports = class EventHandler {
@@ -15,24 +15,20 @@ module.exports = class EventHandler {
   }
 
   loadFromPath(dir) {
-    const files = readdirSync(dir);
+    const files = fs.readdirSync(dir);
 
     for (const file of files) {
       const filePath = path.join(dir, file);
-      const stat = statSync(filePath);
-      
+      const stat = fs.statSync(filePath);
+
       if (stat.isDirectory()) {
-        loadFromPath(path.join(dir, filePath));
-      } else {
-        let eventName = file.split(".")[0];
-        console.log(`Loading event ${file}`);
-        const event = require(`${filePath}`);
-        
-        if(this.once.includes(eventName)) {
-          this.c.once(eventName, event.bind(null, this.c));
-        } else {
-          this.c.on(eventName, event.bind(null, this.c));
-        }
+        this.loadFromPath(filePath);
+      } else if (file.endsWith(".js")) {
+        const event = require(filePath);
+        const eventName = file.split(".js")[0];
+        this.once.includes(eventName)
+          ? this.c.once(eventName, event.bind(null, this.c))
+          : this.c.on(eventName, event.bind(null, this.c));
       }
     }
   }
