@@ -175,7 +175,7 @@ export const handleInteractionCreate = async (client: WouldYou, interaction: any
         interaction.customId.startsWith("higher_") ||
         interaction.customId.startsWith("lower_")
       )
-        return button.execute(interaction, client, guildDb);
+        return await button.execute(interaction, client, guildDb);
       if (
         guildDb.replayType === "Guild" &&
         client.used.has(interaction.user.id)
@@ -244,7 +244,7 @@ export const handleInteractionCreate = async (client: WouldYou, interaction: any
           }
         }
 
-        return button.execute(interaction, client, guildDb);
+        return await button.execute(interaction, client, guildDb);
       } catch (err) {
         if (err) console.error(err);
         return interaction.reply({
@@ -254,7 +254,7 @@ export const handleInteractionCreate = async (client: WouldYou, interaction: any
       }
     } else {
       const button = client.buttons.get(interaction.customId);
-      if (button) return button.execute(interaction, client, guildDb);
+      if (button) return await button.execute(interaction, client, guildDb);
     }
   }
 };

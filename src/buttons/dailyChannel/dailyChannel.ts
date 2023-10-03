@@ -1,15 +1,15 @@
-const {
+import {
   ActionRowBuilder,
   ChannelType,
   ChannelSelectMenuBuilder,
-} = require("discord.js");
-module.exports = {
-  data: {
-    name: "dailyChannel",
-    description: "Daily Channel",
-  },
-  async execute(interaction, client, guildDb) {
-    const inter = new ActionRowBuilder().addComponents(
+  MessageActionRowComponentBuilder,
+} from "discord.js";
+import { Button } from "../../models";
+
+const button: Button = {
+  name: "dailyChannel",
+  execute: async(interaction, client, guildDb) => {
+    const inter = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ChannelSelectMenuBuilder()
         .setCustomId("selectMenuChannel")
         .setPlaceholder("Select a channel")
@@ -17,14 +17,17 @@ module.exports = {
     );
 
     interaction.update({
-      content: null,
       embeds: [],
       content: client.translation.get(
         guildDb?.language,
         "Settings.dailyChannel",
       ),
       components: [inter],
-      ephemeral: true,
+      options: {
+        ephemeral: true
+      }
     });
   },
 };
+
+export default button;

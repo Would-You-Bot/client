@@ -1,4 +1,5 @@
-const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
+import { ButtonBuilder, ActionRowBuilder, EmbedBuilder, ButtonStyle } from "discord.js";
+import { Button } from "../../models";
 
 const modalObject = {
   title: "Daily Post Time",
@@ -18,16 +19,13 @@ const modalObject = {
   ],
 };
 
-function isFormat(str) {
+function isFormat(str: string) {
   return /^(?:[01]\d|2[0-4]):(?:00|30)$/.test(str);
 }
 
-module.exports = {
-  data: {
-    name: "dailyInterval",
-    description: "Daily post time customization",
-  },
-  async execute(interaction, client, guildDb) {
+const button: Button = {
+  name: "dailyInterval",
+  execute: async(interaction, client, guildDb) => {
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
@@ -118,7 +116,7 @@ module.exports = {
                   "Settings.button.dailyMsg",
                 ),
               )
-              .setStyle(guildDb.dailyMsg ? "Success" : "Secondary"),
+              .setStyle(guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary),
             new ButtonBuilder()
               .setCustomId("dailyChannel")
               .setLabel(
@@ -127,7 +125,7 @@ module.exports = {
                   "Settings.button.dailyChannel",
                 ),
               )
-              .setStyle(guildDb.dailyChannel ? "Success" : "Secondary"),
+              .setStyle(guildDb.dailyChannel ? ButtonStyle.Success : ButtonStyle.Secondary),
             new ButtonBuilder()
               .setCustomId("dailyType")
               .setLabel(
@@ -136,7 +134,7 @@ module.exports = {
                   "Settings.button.dailyType",
                 ),
               )
-              .setStyle("Primary")
+              .setStyle(ButtonStyle.Primary)
               .setEmoji("📝"),
           ),
           dailyButtons2 = new ActionRowBuilder().addComponents(
@@ -148,7 +146,7 @@ module.exports = {
                   "Settings.button.dailyTimezone",
                 ),
               )
-              .setStyle("Primary")
+              .setStyle(ButtonStyle.Primary)
               .setEmoji("🌍"),
             new ButtonBuilder()
               .setCustomId("dailyRole")
@@ -158,7 +156,7 @@ module.exports = {
                   "Settings.button.dailyRole",
                 ),
               )
-              .setStyle(guildDb.dailyRole ? "Success" : "Secondary"),
+              .setStyle(guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary),
             new ButtonBuilder()
               .setCustomId("dailyInterval")
               .setLabel(
@@ -167,7 +165,7 @@ module.exports = {
                   "Settings.button.dailyInterval",
                 ),
               )
-              .setStyle("Primary")
+              .setStyle(ButtonStyle.Primary)
               .setEmoji("⏰"),
           ),
           dailyButtons3 = new ActionRowBuilder().addComponents(
@@ -179,14 +177,14 @@ module.exports = {
                   "Settings.button.dailyThread",
                 ),
               )
-              .setStyle(guildDb.dailyThread ? "Success" : "Secondary"),
+              .setStyle(guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary),
           );
 
-        await client.database.updateGuild(interaction.guild.id, {
+        await client.database.updateGuild(interaction.guild?.id || "", {
           dailyInterval: value,
         });
 
-        return modalInteraction.update({
+        return (modalInteraction as any).update({
           content: null,
           embeds: [dailyMsgs],
           components: [dailyButtons, dailyButtons2, dailyButtons3],
@@ -195,3 +193,5 @@ module.exports = {
       });
   },
 };
+
+export default button;

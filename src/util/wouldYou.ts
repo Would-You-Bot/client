@@ -10,7 +10,6 @@ import "dotenv/config";
 import TranslationHandler from "./translationHandler";
 import DatabaseHandler from "./databaseHandler";
 import KeepAlive from "./keepAlive";
-import ButtonHandler from "./buttonHandler";
 import WebhookHandler from "./webhookHandler";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
@@ -25,7 +24,7 @@ import { handleInteractionCreate } from "../events/interactionCreate";
 import { handleMessageCreate } from "../events/messageCreate";
 import { handleShardReconnecting } from "../events/shardReconnecting";
 import { handleShardResume } from "../events/shardResume";
-import { ChatInputCommand } from "../models";
+import { Button, ChatInputCommand } from "../models";
 import { fileToCollection } from "./Functions/fileToCollection";
 import path from "path";
 // User filter to filter all users out of the cache expect the bot
@@ -33,7 +32,7 @@ import path from "path";
 
 export default class WouldYou extends Client {
   public commands: Collection<string, ChatInputCommand>;
-  public buttons: Collection<string, any>;
+  public buttons: Collection<string, Button>;
   readonly paginate: Collection<any, any>;
   readonly cluster: ClusterClient<Client>;
   readonly cooldownHandler: CooldownHandler;
@@ -42,7 +41,6 @@ export default class WouldYou extends Client {
   readonly webhookHandler: WebhookHandler;
   readonly keepAlive: KeepAlive;
   readonly voteLogger: VoteLogger;
-  readonly buttonHandler: ButtonHandler;
   readonly dailyMessage: DailyMessage;
   readonly voting: Voting;
   public used: any;
@@ -78,8 +76,10 @@ export default class WouldYou extends Client {
     });
     
     // It's creating a new collection for the commands.
-    const commandPath = path.join(__dirname, "..", "commands");
+    const commandPath = path.join(__dirname, "..", "commands"),
+    buttonPath = path.join(__dirname, "..", "buttons");
     this.commands = fileToCollection<ChatInputCommand>(commandPath);
+    this.buttons = fileToCollection<Button>(buttonPath);
 
 
     // Allows for paginating
