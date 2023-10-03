@@ -1,13 +1,14 @@
-const {
+import {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   SlashCommandBuilder,
-} = require("discord.js");
-const Sentry = require("@sentry/node");
-const guildModel = require("../util/Models/guildModel");
+  MessageActionRowComponentBuilder,
+} from "discord.js";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
 
-module.exports = {
+const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("support")
     .setDescription("Link to our support server")
@@ -23,7 +24,7 @@ module.exports = {
    * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
-  async execute(interaction, client, guildDb) {
+  execute: async (interaction, client, guildDb) => {
     const supportembed = new EmbedBuilder()
       .setColor("#F00505")
       .setTitle(
@@ -34,11 +35,11 @@ module.exports = {
       )
       .setFooter({
         text: client.translation.get(guildDb?.language, "Support.embed.footer"),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp();
 
-    const supportbutton = new ActionRowBuilder().addComponents(
+    const supportbutton = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setLabel("Support Server")
         .setStyle(5)
@@ -46,7 +47,7 @@ module.exports = {
         .setURL("https://discord.gg/vMyXAxEznS"),
     );
 
-    return interaction
+    interaction
       .reply({
         embeds: [supportembed],
         components: [supportbutton],
@@ -54,5 +55,8 @@ module.exports = {
       .catch((err) => {
         Sentry.captureException(err);
       });
+      return;
   },
 };
+
+export default command;

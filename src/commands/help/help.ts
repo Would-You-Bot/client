@@ -1,13 +1,14 @@
-const {
+import {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   SlashCommandBuilder,
-} = require("discord.js");
-const guildModel = require("../util/Models/guildModel");
-const Sentry = require("@sentry/node");
+  MessageActionRowComponentBuilder,
+} from "discord.js";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
 
-module.exports = {
+const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("help")
@@ -23,15 +24,15 @@ module.exports = {
    * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
-  async execute(interaction, client, guildDb) {
+  execute: async(interaction, client, guildDb) => {
     const languageMappings = {
       de_DE: "de",
       en_EN: "en",
       es_ES: "es",
       fr_FR: "fr",
-    };
+    } as any;
 
-    const commands = await client.application.commands.fetch({
+    const commands = await client.application?.commands.fetch({
       withLocalizations: true,
     });
     const type = languageMappings[guildDb?.language] || "en";
@@ -39,7 +40,7 @@ module.exports = {
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(guildDb?.language, "Help.embed.footer"),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp()
       .setTitle(client.translation.get(guildDb?.language, "Help.embed.title"))
@@ -56,11 +57,11 @@ module.exports = {
       })
       .setDescription(
         client.translation.get(guildDb?.language, "Help.embed.description") +
-          `\n\n${commands
-            .filter((e) => e.name !== "reload")
-            .sort((a, b) => a.name.localeCompare(b.name))
+          `\n\n${(commands as any)
+            .filter((e: any) => e.name !== "reload")
+            .sort((a: any, b: any) => a.name.localeCompare(b.name))
             .map(
-              (n) =>
+              (n: any) =>
                 `</${n.name}:${n.id}> - ${
                   type === "de"
                     ? n.descriptionLocalizations.de
@@ -74,7 +75,7 @@ module.exports = {
             .join("\n")}`,
       );
 
-    const button = new ActionRowBuilder().addComponents(
+    const button = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setLabel(
           client.translation.get(guildDb?.language, "Help.button.title"),
@@ -100,3 +101,5 @@ module.exports = {
       });
   },
 };
+
+export default command;

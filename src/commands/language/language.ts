@@ -1,12 +1,13 @@
-const {
+import {
   EmbedBuilder,
   SlashCommandBuilder,
   PermissionFlagsBits,
-} = require("discord.js");
-const Sentry = require("@sentry/node");
-const guildModel = require("../util/Models/guildModel");
+  PermissionsBitField,
+} from "discord.js";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
 
-module.exports = {
+const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("language")
@@ -35,13 +36,13 @@ module.exports = {
    * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
-  async execute(interaction, client, guildDb) {
+  execute: async (interaction, client, guildDb) => {
     let languageembed;
-    if (interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)) {
+    if ((interaction.member?.permissions as Readonly<PermissionsBitField>).has(PermissionFlagsBits.ManageGuild)) {
       switch (interaction.options.getString("language")) {
         case "english": {
           await client.database.updateGuild(
-            interaction.guildId,
+            interaction.guildId || "",
             {
               language: "en_EN",
             },
@@ -53,13 +54,13 @@ module.exports = {
             .setDescription("English has been selected as the new language!")
             .setFooter({
               text: "Would You",
-              iconURL: client.user.avatarURL(),
+              iconURL: client.user?.avatarURL() || undefined,
             });
           break;
         }
         case "german": {
           await client.database.updateGuild(
-            interaction.guildId,
+            interaction.guildId || "",
             {
               language: "de_DE",
             },
@@ -71,13 +72,13 @@ module.exports = {
             .setDescription("Deutsch wurde als neue Sprache ausgewählt!")
             .setFooter({
               text: "Would You",
-              iconURL: client.user.avatarURL(),
+              iconURL: client.user?.avatarURL() || undefined,
             });
           break;
         }
         case "spanish": {
           await client.database.updateGuild(
-            interaction.guildId,
+            interaction.guildId || "",
             {
               language: "es_ES",
             },
@@ -89,13 +90,13 @@ module.exports = {
             .setDescription("¡Has seleccionado el español como nuevo idioma!")
             .setFooter({
               text: "Would You",
-              iconURL: client.user.avatarURL(),
+              iconURL: client.user?.avatarURL() || undefined,
             });
           break;
         }
         case "french": {
           await client.database.updateGuild(
-            interaction.guildId,
+            interaction.guildId || "",
             {
               language: "fr_FR",
             },
@@ -107,20 +108,21 @@ module.exports = {
             .setDescription("Français a été sélectionné comme nouvelle langue!")
             .setFooter({
               text: "Would You",
-              iconURL: client.user.avatarURL(),
+              iconURL: client.user?.avatarURL() || undefined,
             });
           break;
         }
       }
 
-      return interaction
+      interaction
         .reply({
-          embeds: [languageembed],
+          embeds: [languageembed as EmbedBuilder],
           ephemeral: true,
         })
         .catch((err) => {
           Sentry.captureException(err);
         });
+        return;
     } else {
       const errorembed = new EmbedBuilder()
         .setColor("#F00505")
@@ -129,7 +131,7 @@ module.exports = {
           client.translation.get(guildDb?.language, "Language.embed.error"),
         );
 
-      return interaction
+       interaction
         .reply({
           embeds: [errorembed],
           ephemeral: true,
@@ -137,6 +139,9 @@ module.exports = {
         .catch((err) => {
           Sentry.captureException(err);
         });
+        return;
     }
   },
 };
+
+export default command;

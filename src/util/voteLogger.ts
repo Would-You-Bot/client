@@ -12,7 +12,7 @@ const webhook = new Topgg.Webhook(process.env.TOPGG_WEBHOOK);
 export default class VoteLogger {
   private c: WouldYou;
   private api: Topgg.Api;
-  private votes: Map<string, any>;
+  public votes: Map<string, any>;
   constructor(c: WouldYou) {
     this.c = c;
     this.api = new Topgg.Api(process.env.TOPGG_TOKEN as string);

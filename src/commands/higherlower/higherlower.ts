@@ -1,19 +1,20 @@
-const {
+import {
   EmbedBuilder,
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   AttachmentBuilder,
-} = require("discord.js");
-const { readFileSync } = require("fs");
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+  MessageActionRowComponentBuilder,
+} from "discord.js";
+import { readFileSync } from "fs";
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
+import HOR from "../../util/Classes/generateHOR";
+import { ChatInputCommand } from "../../models";
+import { HigherlowerModel } from "../../util/Models/higherlowerModel";
 
-const HL = require("../util/Models/higherlowerModel");
-const HOR = require("../util/Classes/generateHOR.js");
-
-module.exports = {
+const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("higherlower")
@@ -31,7 +32,7 @@ module.exports = {
    * @param {guildModel} guildDb
    */
 
-  async execute(interaction, client, guildDb) {
+  execute: async(interaction, client, guildDb) => {
     const initembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setTitle(
@@ -45,13 +46,13 @@ module.exports = {
       )
       .setFooter({
         text: `Requested by ${interaction.user.username}`,
-        iconURL: interaction.user.avatarURL(),
+        iconURL: interaction.user.avatarURL() || "",
       });
 
     interaction.reply({ embeds: [initembed] }).then((async) => {
       const gameDataRaw = readFileSync(
         path.join(__dirname, "..", "data", "hl-en_EN.json"),
-      );
+      ) as any;
       const gameData = JSON.parse(gameDataRaw).data;
 
       const random = Math.floor(Math.random() * gameData.length);
@@ -63,11 +64,11 @@ module.exports = {
       };
       if (comperator == random) regenerateComperator();
 
-      const game = new HL({
+      const game = new HigherlowerModel({
         creator: interaction.user.id,
         created: new Date(),
         id: uuidv4(),
-        guild: interaction.guild.id,
+        guild: interaction.guild?.id,
         items: {
           current: gameData[random],
           history: [gameData[comperator]],
@@ -104,13 +105,13 @@ module.exports = {
         .setColor("White")
         .setImage("attachment://game.png")
         .setFooter({
-          iconURL: interaction.user.avatarURL({ dynamic: true }),
+          iconURL: interaction.user.avatarURL() || "",
           text: `${interaction.user.tag} | Game ID: ${game.id}`,
         })
         .setTimestamp();
 
       gameImage.build(game.score).then(async (image) => {
-        const guessRow = new ActionRowBuilder().addComponents(
+        const guessRow = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
           new ButtonBuilder()
             .setCustomId(`higher_${game.id}`)
             .setLabel("Higher")
@@ -124,7 +125,7 @@ module.exports = {
         interaction.editReply({
           embeds: [gameEmbed],
           files: [
-            new AttachmentBuilder()
+            new AttachmentBuilder(image)
               .setFile(image)
               .setName("game.png")
               .setSpoiler(false),
@@ -135,3 +136,5 @@ module.exports = {
     });
   },
 };
+
+export default command;

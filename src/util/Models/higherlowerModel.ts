@@ -24,4 +24,4 @@ const higherlowerModelSchema = new Schema(
   { timestamps: true },
 );
 
-export const higherlowerModel = model<IHigherLowerModel>("higherlowerModel", higherlowerModelSchema);
+export const HigherlowerModel = model<IHigherLowerModel>("higherlowerModel", higherlowerModelSchema);

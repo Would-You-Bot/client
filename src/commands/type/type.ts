@@ -1,12 +1,13 @@
-const {
+import {
   EmbedBuilder,
   SlashCommandBuilder,
   PermissionFlagsBits,
-} = require("discord.js");
-const Sentry = require("@sentry/node");
-const guildModel = require("../util/Models/guildModel");
+  PermissionsBitField,
+} from "discord.js";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
 
-module.exports = {
+const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("type")
@@ -41,17 +42,17 @@ module.exports = {
    * @param {guildModel} guildDb
    */
 
-  async execute(interaction, client, guildDb) {
+  execute: async(interaction, client, guildDb) => {
     let typeEmbed;
 
     if (
-      interaction.member.permissions.has(PermissionFlagsBits.ManageGuild) ||
+      (interaction.member?.permissions as Readonly<PermissionsBitField>).has(PermissionFlagsBits.ManageGuild) ||
       global.checkDebug(guildDb, interaction?.user?.id)
     ) {
       switch (interaction.options.getSubcommand()) {
         case "regular":
           await client.database.updateGuild(
-            interaction.guildId,
+            interaction.guildId || "",
             {
               customTypes: "regular",
             },
@@ -68,7 +69,7 @@ module.exports = {
           break;
         case "mixed":
           await client.database.updateGuild(
-            interaction.guildId,
+            interaction.guildId || "",
             {
               customTypes: "mixed",
             },
@@ -88,7 +89,7 @@ module.exports = {
           break;
         case "custom":
           await client.database.updateGuild(
-            interaction.guildId,
+            interaction.guildId || "",
             {
               customTypes: "custom",
             },
@@ -108,14 +109,15 @@ module.exports = {
           break;
       }
 
-      return interaction
+     interaction
         .reply({
-          embeds: [typeEmbed],
+          embeds: [typeEmbed as EmbedBuilder],
           ephemeral: true,
         })
         .catch((err) => {
           Sentry.captureException(err);
         });
+        return;
     } else {
       const errorembed = new EmbedBuilder()
         .setColor("#F00505")
@@ -124,7 +126,7 @@ module.exports = {
           client.translation.get(guildDb?.language, "Settings.embed.error"),
         );
 
-      return interaction
+      interaction
         .reply({
           embeds: [errorembed],
           ephemeral: true,
@@ -132,6 +134,9 @@ module.exports = {
         .catch((err) => {
           Sentry.captureException(err);
         });
+        return;
     }
   },
 };
+
+export default command;

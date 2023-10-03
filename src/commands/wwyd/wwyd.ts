@@ -1,14 +1,16 @@
-const {
+import {
   EmbedBuilder,
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-} = require("discord.js");
-const guildModel = require("../util/Models/guildModel");
-const shuffle = require("../util/shuffle");
-const Sentry = require("@sentry/node");
+  MessageActionRowComponentBuilder,
+} from "discord.js";
+import shuffle from "../../util/shuffle";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
+import path from "path";
 
-module.exports = {
+const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("wwyd")
@@ -25,11 +27,15 @@ module.exports = {
    * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
-  async execute(interaction, client, guildDb) {
-    const { WhatYouDo } = require(`../data/wwyd-${guildDb.language}.json`);
+  execute: async(interaction, client, guildDb) => {
+
+    var WhatYouDo = [] as any[];
+    await import(path.join(__dirname, "..", "..", "data", `wwyd-${guildDb.language}.json`)).then((value: any) => {
+      WhatYouDo = value.WhatYouDo
+    });
 
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wwyd",
+      (c: any) => c.type !== "nsfw" && c.type === "wwyd",
     );
 
     let whatwouldyoudo = [];
@@ -43,11 +49,11 @@ module.exports = {
       case "mixed":
         whatwouldyoudo = shuffle([
           ...WhatYouDo,
-          ...dbquestions.map((c) => c.msg),
+          ...dbquestions.map((c: any) => c.msg),
         ]);
         break;
       case "custom":
-        whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
+        whatwouldyoudo = shuffle(dbquestions.map((c: any) => c.msg));
         break;
     }
 
@@ -57,11 +63,11 @@ module.exports = {
       .setColor("#0598F6")
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL(),
+        iconURL: interaction.user.avatarURL() || "",
       })
       .setDescription(whatwouldyoudo[Random]);
 
-    const row = new ActionRowBuilder();
+    const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
       row.addComponents([
         new ButtonBuilder()
@@ -88,3 +94,5 @@ module.exports = {
       });
   },
 };
+
+export default command;

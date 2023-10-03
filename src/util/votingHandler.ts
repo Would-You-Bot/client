@@ -47,8 +47,8 @@ export default class Voting {
     channelId: any = null,
     until = 0,
     type: any,
-    op_one: any,
-    op_tow: any,
+    op_one?: any,
+    op_tow?: any,
   ) {
     let g;
     if (guildId !== null && typeof guildId === "string")

@@ -1,8 +1,9 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const Sentry = require("@sentry/node");
-const { version } = require("../../package.json");
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
+const { version } = require("../../../package.json");
 
-module.exports = {
+const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("info")
     .setDescription("Shows information about the bot.")
@@ -17,11 +18,11 @@ module.exports = {
    * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
-  async execute(interaction, client, guildDb) {
+  execute: async (interaction, client, guildDb) => {
     const unixstamp =
-      Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime / 1000);
+      Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime || 0 / 1000);
 
-    function round(num) {
+    function round(num: number) {
       const m = Number((Math.abs(num) * 100).toPrecision(15));
       return (Math.round(m) / 100) * Math.sign(num);
     }
@@ -101,11 +102,11 @@ module.exports = {
           inline: true,
         },
       )
-      .setThumbnail(client.user.displayAvatarURL())
+      .setThumbnail(client.user?.displayAvatarURL() || null)
       .setFooter({
         text:
           interaction.user.tag + " Shard #" + interaction?.guild?.shardId ?? 0,
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       });
 
     interaction
@@ -115,3 +116,5 @@ module.exports = {
       });
   },
 };
+
+export default command;

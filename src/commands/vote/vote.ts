@@ -1,8 +1,8 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const guildModel = require("../util/Models/guildModel");
-const Sentry = require("@sentry/node");
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
 
-module.exports = {
+const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("vote")
@@ -19,7 +19,7 @@ module.exports = {
    * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
-  async execute(interaction, client, guildDb) {
+  execute: async (interaction, client, guildDb) => {
     const votemebed = new EmbedBuilder()
       .setColor("#5865f4")
       .setTitle(client.translation.get(guildDb?.language, "Vote.embed.title"))
@@ -41,18 +41,21 @@ module.exports = {
           inline: true,
         },
       )
-      .setThumbnail(client.user.displayAvatarURL())
+      .setThumbnail(client.user?.displayAvatarURL() || "")
       .setFooter({
         text: client.translation.get(guildDb?.language, "Vote.embed.footer"),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       });
 
-    return interaction
+    interaction
       .reply({
         embeds: [votemebed],
       })
       .catch((err) => {
         Sentry.captureException(err);
       });
+      return;
   },
 };
+
+export default command;

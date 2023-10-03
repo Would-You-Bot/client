@@ -3,7 +3,6 @@ import WouldYou from "../util/wouldYou";
 
 export const handleInteractionCreate = async (client: WouldYou, interaction: any) => {
   const user = await UserModel.findOne({ userID: interaction.user.id });
-
   const restrict = [
     "dailyChannel",
     "deleteDailyRole",
@@ -41,7 +40,8 @@ export const handleInteractionCreate = async (client: WouldYou, interaction: any
         });
 
       try {
-        command.execute(interaction, client, null);
+        await command.execute(interaction, client, null);
+        return;
       } catch (err) {
         if (err) console.error(err);
         return interaction.reply({
@@ -62,6 +62,7 @@ export const handleInteractionCreate = async (client: WouldYou, interaction: any
       } as any;
 
       if (!user) {
+        console.log("yeah")
         await UserModel.create({
           userID: interaction.user.id,
           [statsMap[interaction.commandName]]: 1,
@@ -83,7 +84,8 @@ export const handleInteractionCreate = async (client: WouldYou, interaction: any
       const command = client.commands.get(interaction.commandName);
       if (!command) return;
       try {
-        command.execute(interaction, client, guildDb);
+        await command.execute(interaction, client, guildDb);
+        return;
       } catch (err) {
         if (err) console.error(err);
         interaction.reply({

@@ -206,7 +206,7 @@ export default class WebhookHandler {
    * @param {object} message the message to send
    * @return {Promise<object>}
    */
-  sendWebhook = async (channel: any = null, channelId: string, message: any, thread: boolean) => {
+  sendWebhook = async (channel: any = null, channelId: string, message: any, thread?: boolean) => {
     if (!channelId && channel?.id) channelId = channel.id;
 
     if (!channelId) return;

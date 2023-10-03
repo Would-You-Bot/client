@@ -25,11 +25,14 @@ import { handleInteractionCreate } from "../events/interactionCreate";
 import { handleMessageCreate } from "../events/messageCreate";
 import { handleShardReconnecting } from "../events/shardReconnecting";
 import { handleShardResume } from "../events/shardResume";
+import { ChatInputCommand } from "../models";
+import { fileToCollection } from "./Functions/fileToCollection";
+import path from "path";
 // User filter to filter all users out of the cache expect the bot
 //const userFilter = (u) => u?.id !== client?.user?.id;
 
 export default class WouldYou extends Client {
-  readonly commands: Collection<any, any>;
+  public commands: Collection<string, ChatInputCommand>;
   public buttons: Collection<string, any>;
   readonly paginate: Collection<any, any>;
   readonly cluster: ClusterClient<Client>;
@@ -75,7 +78,9 @@ export default class WouldYou extends Client {
     });
     
     // It's creating a new collection for the commands.
-    this.commands = new Collection();
+    const commandPath = path.join(__dirname, "..", "commands");
+    this.commands = fileToCollection<ChatInputCommand>(commandPath);
+
 
     // Allows for paginating
     this.paginate = new Collection();
@@ -98,17 +103,19 @@ export default class WouldYou extends Client {
     });
     this.database.startSweeper(this);
 
-    /*
+    
     // The translations handler
     this.translation = new TranslationHandler();
 
     // Webhook Manager
     this.webhookHandler = new WebhookHandler(this);
 
+    
     // Keep Alive system after the necessary things that are allowed to crash are loaded
     this.keepAlive = new KeepAlive(this);
-    //this.keepAlive.start();
-
+    this.keepAlive.start();
+    /*
+    //ToDo: Inspect why its crashing the whole process
     //Vote Logger
     this.voteLogger = new VoteLogger(this);
     if (this?.cluster?.id === 0) {
@@ -132,11 +139,11 @@ export default class WouldYou extends Client {
     this.on("messageCreate", (message) => handleMessageCreate(this, message));
 
     // Daily Message
-    //this.dailyMessage = new DailyMessage(this);
-    //this.dailyMessage.start();
+    this.dailyMessage = new DailyMessage(this);
+    this.dailyMessage.start();
 
-    //this.voting = new Voting(this);
-    //this.voting.start();
+    this.voting = new Voting(this);
+    this.voting.start();
   }
 
   /**

@@ -1,23 +1,24 @@
-const {
+import {
   EmbedBuilder,
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-} = require("discord.js");
-const guildModel = require("../util/Models/guildModel");
-const Sentry = require("@sentry/node");
-const shuffle = require("../util/shuffle");
+} from "discord.js";
+import shuffle from "../../util/shuffle";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
+import path from "path";
 
-module.exports = {
+const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
-    .setName("neverhaveiever")
-    .setDescription("Get a never have I ever message.")
+    .setName("wouldyourather")
+    .setDescription("Get a would you rather question.")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Bekomme eine nie habe ich jemals Nachricht.",
-      "es-ES": "Consigue un mensaje Nunca he tenido",
-      fr: "Afficher une question que je n'ai jamais posée",
+      de: "Erhalte eine Würdest du eher Frage.",
+      "es-ES": "Obtiene une pregunta ¿Qué prefieres?",
+      fr: "Obtenez une question préférez-vous.",
     }),
 
   /**
@@ -26,51 +27,43 @@ module.exports = {
    * @param {guildModel} guildDb
    */
 
-  async execute(interaction, client, guildDb) {
-    const { Funny, Basic, Young, Food, RuleBreak } = await require(
-      `../data/nhie-${guildDb.language}.json`,
-    );
+  execute: async(interaction, client, guildDb) => {
+    var General = [] as any[];
+    await import(path.join(__dirname, "..", "..", "data", `rather-${guildDb.language}.json`)).then((value: any) => {
+      General = value.General
+    });
+
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "neverhaveiever",
+      (c: any) => c.type !== "nsfw" && c.type === "wouldyourather",
     );
 
-    let nererhaveIever = [];
+    let wouldyourather = [];
 
     if (!dbquestions.length) guildDb.customTypes = "regular";
 
     switch (guildDb.customTypes) {
       case "regular":
-        nererhaveIever = shuffle([
-          ...Funny,
-          ...Basic,
-          ...Young,
-          ...Food,
-          ...RuleBreak,
-        ]);
+        wouldyourather = shuffle([...General]);
         break;
       case "mixed":
-        nererhaveIever = shuffle([
-          ...Funny,
-          ...Basic,
-          ...Young,
-          ...Food,
-          ...RuleBreak,
-          ...dbquestions.map((c) => c.msg),
+        wouldyourather = shuffle([
+          ...General,
+          ...dbquestions.map((c: any) => c.msg),
         ]);
         break;
       case "custom":
-        nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
+        wouldyourather = shuffle(dbquestions.map((c: any) => c.msg));
         break;
     }
-    const Random = Math.floor(Math.random() * nererhaveIever.length);
+    const Random = Math.floor(Math.random() * wouldyourather.length);
 
     let ratherembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL(),
+        text: `Requested by ${interaction.user.username} | Type: General | ID: ${Random}`,
+        iconURL: interaction.user.avatarURL() || undefined,
       })
-      .setDescription(nererhaveIever[Random]);
+      .setDescription(wouldyourather[Random] || "Unknown");
 
     const mainRow = new ActionRowBuilder();
     if (Math.round(Math.random() * 15) < 3) {
@@ -89,7 +82,8 @@ module.exports = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
-        .setCustomId(`neverhaveiever`),
+        .setCustomId(`wouldyourather`)
+        .setDisabled(!guildDb.replay),
     ]);
 
     const time = 60_000;
@@ -99,13 +93,19 @@ module.exports = {
       interaction.guildId,
       interaction.channelId,
       time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
-      "neverhaveiever",
+      "wouldyourather",
     );
 
-    interaction
-      .reply({ embeds: [ratherembed], components: [row, mainRow] })
+    await interaction
+      .reply({
+        embeds: [ratherembed],
+        components: [row as any, mainRow],
+        fetchReply: true,
+      })
       .catch((err) => {
         Sentry.captureException(err);
       });
   },
 };
+
+export default command;

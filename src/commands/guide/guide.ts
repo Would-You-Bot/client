@@ -1,8 +1,8 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const guildModel = require("../util/Models/guildModel");
-const Sentry = require("@sentry/node");
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
 
-module.exports = {
+const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("guide")
@@ -20,12 +20,13 @@ module.exports = {
    * @param {guildModel} guildDb
    */
 
-  async execute(interaction, client, guildDb) {
+  execute: async(interaction, client, guildDb) => {
+    console.log("in")
     const guideembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(guildDb?.language, "Guide.embed.footer"),
-        iconURL: client.user.avatarURL(),
+        iconURL: client.user?.avatarURL() || undefined,
       })
       .setTimestamp()
       .setTitle(client.translation.get(guildDb?.language, "Guide.embed.title"))
@@ -69,3 +70,5 @@ module.exports = {
       });
   },
 };
+
+export default command;

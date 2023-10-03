@@ -1,14 +1,17 @@
-const {
+import {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   SlashCommandBuilder,
   PermissionFlagsBits,
-} = require("discord.js");
-const Sentry = require("@sentry/node");
-const guildModel = require("../util/Models/guildModel");
+  PermissionsBitField,
+  ButtonStyle,
+  MessageActionRowComponentBuilder,
+} from "discord.js";
+import Sentry from "@sentry/node";
+import { ChatInputCommand } from "../../models";
 
-module.exports = {
+const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("settings")
     .setDescription("Change settings for Daily Messages and Welcomes")
@@ -36,8 +39,8 @@ module.exports = {
    * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
-  async execute(interaction, client, guildDb) {
-    if (interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)) {
+  execute: async(interaction, client, guildDb) => {
+    if ((interaction.member?.permissions as Readonly<PermissionsBitField>).has(PermissionFlagsBits.ManageGuild)) {
       switch (interaction.options.getString("choose")) {
         case "dailyMsgs":
           const dailyMsgs = new EmbedBuilder()
@@ -94,7 +97,7 @@ module.exports = {
                 }`,
             )
             .setColor("#0598F6");
-          const dailyButtons = new ActionRowBuilder().addComponents(
+          const dailyButtons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setCustomId("dailyMsg")
                 .setLabel(
@@ -103,7 +106,7 @@ module.exports = {
                     "Settings.button.dailyMsg",
                   ),
                 )
-                .setStyle(guildDb.dailyMsg ? "Success" : "Secondary"),
+                .setStyle(guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary),
               new ButtonBuilder()
                 .setCustomId("dailyChannel")
                 .setLabel(
@@ -112,7 +115,7 @@ module.exports = {
                     "Settings.button.dailyChannel",
                   ),
                 )
-                .setStyle(guildDb.dailyChannel ? "Success" : "Secondary"),
+                .setStyle(guildDb.dailyChannel ? ButtonStyle.Success : ButtonStyle.Secondary),
               new ButtonBuilder()
                 .setCustomId("dailyType")
                 .setLabel(
@@ -121,10 +124,10 @@ module.exports = {
                     "Settings.button.dailyType",
                   ),
                 )
-                .setStyle("Primary")
+                .setStyle(ButtonStyle.Primary)
                 .setEmoji("📝"),
             ),
-            dailyButtons2 = new ActionRowBuilder().addComponents(
+            dailyButtons2 = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setCustomId("dailyTimezone")
                 .setLabel(
@@ -133,7 +136,7 @@ module.exports = {
                     "Settings.button.dailyTimezone",
                   ),
                 )
-                .setStyle("Primary")
+                .setStyle(ButtonStyle.Primary)
                 .setEmoji("🌍"),
               new ButtonBuilder()
                 .setCustomId("dailyRole")
@@ -143,7 +146,7 @@ module.exports = {
                     "Settings.button.dailyRole",
                   ),
                 )
-                .setStyle(guildDb.dailyRole ? "Success" : "Secondary"),
+                .setStyle(guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary),
               new ButtonBuilder()
                 .setCustomId("dailyInterval")
                 .setLabel(
@@ -152,10 +155,10 @@ module.exports = {
                     "Settings.button.dailyInterval",
                   ),
                 )
-                .setStyle("Primary")
+                .setStyle(ButtonStyle.Primary)
                 .setEmoji("⏰"),
             ),
-            dailyButtons3 = new ActionRowBuilder().addComponents(
+            dailyButtons3 = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setCustomId("dailyThread")
                 .setLabel(
@@ -164,7 +167,7 @@ module.exports = {
                     "Settings.button.dailyThread",
                   ),
                 )
-                .setStyle(guildDb.dailyThread ? "Success" : "Secondary"),
+                .setStyle(guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary),
             );
 
           interaction
@@ -198,7 +201,7 @@ module.exports = {
                     )}: ${
                       guildDb.replayChannels.length > 0
                         ? `\n${guildDb.replayChannels
-                            .map((c) => `<#${c.id}>: ${c.cooldown}`)
+                            .map((c: any) => `<#${c.id}>: ${c.cooldown}`)
                             .join("\n")}`
                         : client.translation.get(
                             guildDb?.language,
@@ -217,10 +220,10 @@ module.exports = {
                 guildDb?.language,
                 "Settings.embed.footer",
               ),
-              iconURL: client.user.avatarURL(),
+              iconURL: client.user?.avatarURL() || undefined,
             });
 
-          const generalButtons = new ActionRowBuilder().addComponents(
+          const generalButtons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId(
                 guildDb.replayType === "Channels"
@@ -233,7 +236,7 @@ module.exports = {
                   "Settings.button.replayCooldown",
                 ),
               )
-              .setStyle(guildDb.replayCooldown ? "Success" : "Secondary"),
+              .setStyle(guildDb.replayCooldown ? ButtonStyle.Success: ButtonStyle.Secondary),
             new ButtonBuilder()
               .setCustomId("replayType")
               .setLabel(
@@ -242,11 +245,11 @@ module.exports = {
                   "Settings.button.replayType",
                 ),
               )
-              .setStyle("Primary")
+              .setStyle(ButtonStyle.Primary)
               .setEmoji("📝"),
           );
 
-          const chanDelete = new ActionRowBuilder().addComponents(
+          const chanDelete = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId("replayDeleteChannels")
               .setLabel(
@@ -255,7 +258,7 @@ module.exports = {
                   "Settings.button.replayDeleteChannels",
                 ),
               )
-              .setStyle("Danger"),
+              .setStyle(ButtonStyle.Danger),
           );
 
           interaction
@@ -317,10 +320,10 @@ module.exports = {
                 guildDb?.language,
                 "Settings.embed.footer",
               ),
-              iconURL: client.user.avatarURL(),
+              iconURL: client.user?.avatarURL() || undefined,
             });
 
-          const welcomeButtons = new ActionRowBuilder().addComponents(
+          const welcomeButtons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setCustomId("welcome")
                 .setLabel(
@@ -329,7 +332,7 @@ module.exports = {
                     "Settings.button.welcome",
                   ),
                 )
-                .setStyle(guildDb.welcome ? "Success" : "Secondary"),
+                .setStyle(guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary),
               new ButtonBuilder()
                 .setCustomId("welcomeChannel")
                 .setLabel(
@@ -338,9 +341,9 @@ module.exports = {
                     "Settings.button.welcomeChannel",
                   ),
                 )
-                .setStyle(guildDb.welcomeChannel ? "Success" : "Secondary"),
+                .setStyle(guildDb.welcomeChannel ? ButtonStyle.Success : ButtonStyle.Secondary),
             ),
-            welcomeButtons2 = new ActionRowBuilder().addComponents(
+            welcomeButtons2 = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setCustomId("welcomePing")
                 .setLabel(
@@ -349,7 +352,7 @@ module.exports = {
                     "Settings.button.welcomePing",
                   ),
                 )
-                .setStyle(guildDb.welcomePing ? "Success" : "Secondary"),
+                .setStyle(guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary),
               new ButtonBuilder()
                 .setCustomId("welcomeType")
                 .setLabel(
@@ -358,7 +361,7 @@ module.exports = {
                     "Settings.button.dailyType",
                   ),
                 )
-                .setStyle("Primary")
+                .setStyle(ButtonStyle.Primary)
                 .setEmoji("📝"),
               new ButtonBuilder()
                 .setCustomId("welcomeTest")
@@ -368,7 +371,7 @@ module.exports = {
                     "Settings.button.welcomeTest",
                   ),
                 )
-                .setStyle("Primary")
+                .setStyle(ButtonStyle.Primary)
                 .setEmoji("▶"),
             );
 
@@ -397,3 +400,5 @@ module.exports = {
     }
   },
 };
+
+export default command;

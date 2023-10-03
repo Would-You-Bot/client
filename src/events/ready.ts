@@ -1,25 +1,18 @@
 import "dotenv/config";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v10";
-import { readdirSync } from "fs";
 import { white, gray, green, red } from "chalk-advanced";
 import { AutoPoster } from "topgg-autoposter";
 import Sentry from "@sentry/node";
 import WouldYou from "../util/wouldYou";
+import path from "path";
+import { fileToCollection } from "../util/Functions/fileToCollection";
+import { ChatInputCommand } from "../models";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 
 export const handleReady =  async (client: WouldYou) => {
   if (client.cluster.id === 0) {
-    const commandFiles = readdirSync("./src/commands/").filter((file) =>
-      file.endsWith(".js"),
-    );
-
-    const commands = [] as any[];
-
-    for (const file of commandFiles) {
-      //const command = require(`../commands/${file}`);
-      //commands.push(command.data.toJSON());
-      //client.commands.set(command.data.name, command);
-    }
+      var globalCommands = Array.from(client.commands.filter(x => x.requireGuild === true).values()).map(x => x.data.toJSON()) as RESTPostAPIApplicationCommandsJSONBody[];
 
     const rest = new REST({
       version: "10",
@@ -34,7 +27,7 @@ export const handleReady =  async (client: WouldYou) => {
           // If the bot is in production mode it will load slash commands for all guilds
           if(client.user?.id){
             await rest.put(Routes.applicationCommands(client.user.id), {
-              body: commands,
+              body: globalCommands,
             });
           }
           console.log(
@@ -58,7 +51,7 @@ export const handleReady =  async (client: WouldYou) => {
                   process.env.TEST_GUILD_ID,
                 ),
                 {
-                  body: commands,
+                  body: globalCommands,
                 },
               );
             }
