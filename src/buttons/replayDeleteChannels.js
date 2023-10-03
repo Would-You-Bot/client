@@ -1,7 +1,4 @@
-const {
-  ActionRowBuilder,
-  StringSelectMenuBuilder,
-} = require("discord.js");
+const { ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
 module.exports = {
   data: {
     name: "replayDeleteChannels",
