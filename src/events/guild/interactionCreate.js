@@ -1,4 +1,4 @@
-const userModel = require("../util/Models/userModel");
+const userModel = require("../../util/Models/userModel");
 module.exports = async (client, interaction) => {
   const user = await userModel.findOne({ userID: interaction.user.id });
 
