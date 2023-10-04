@@ -1,4 +1,5 @@
 import { Event } from "../../models/event";
+import { IGuildModel } from "../../util/Models/guildModel";
 import { UserModel } from "../../util/Models/userModel";
 import WouldYou from "../../util/wouldYou";
 
@@ -43,7 +44,7 @@ const event: Event = {
           });
 
         try {
-          await command.execute(interaction, client, null);
+          await command.execute(interaction, client, {} as IGuildModel);
           return;
         } catch (err) {
           if (err) console.error(err);
@@ -58,6 +59,7 @@ const event: Event = {
         interaction.guild.id,
         true,
       );
+      if(!guildDb) return;
       // const { inter } = require(`../languages/${guildDb.language || "en_EN"}.json`);
       if (interaction.isChatInputCommand()) {
         const statsMap = {
@@ -68,7 +70,6 @@ const event: Event = {
         } as any;
 
         if (!user) {
-          console.log("yeah");
           await UserModel.create({
             userID: interaction.user.id,
             [statsMap[interaction.commandName]]: 1,

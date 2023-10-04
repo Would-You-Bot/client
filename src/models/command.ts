@@ -6,6 +6,7 @@ import {
   SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
 import WouldYou from "../util/wouldYou";
+import { IGuildModel } from "../util/Models/guildModel";
 
 export interface Command {
   data:
@@ -17,7 +18,7 @@ export interface Command {
   execute(
     interaction: CommandInteraction,
     client: WouldYou,
-    guildDb: any,
+    guildDb: IGuildModel,
   ): Promise<void>;
 }
 
@@ -29,6 +30,6 @@ export interface ChatInputCommand extends Command {
   execute(
     interaction: ChatInputCommandInteraction,
     client: WouldYou,
-    guildDb: any,
+    guildDb: IGuildModel,
   ): Promise<void>;
 }

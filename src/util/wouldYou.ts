@@ -31,6 +31,7 @@ export default class WouldYou extends Client {
   public commands: Collection<string, ChatInputCommand>;
   public buttons: Collection<string, Button>;
   public events: Collection<string, Event>;
+  public used: Map<any, any>;
   readonly paginate: Collection<any, any>;
   readonly cluster: ClusterClient<Client>;
   readonly cooldownHandler: CooldownHandler;
@@ -41,7 +42,6 @@ export default class WouldYou extends Client {
   readonly voteLogger: VoteLogger;
   readonly dailyMessage: DailyMessage;
   readonly voting: Voting;
-  public used: any;
 
   constructor() {
     super({

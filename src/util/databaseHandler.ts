@@ -84,7 +84,7 @@ export default class DatabaseHandler {
    * @param {boolean} force if it should force fetch the guild
    * @returns {this.guildModel}
    */
-  async getGuild(guildId: string, createIfNotFound = true, force = false) {
+  async getGuild(guildId: string, createIfNotFound = true, force = false): Promise<IGuildModel | null> {
     if (force) return this.fetchGuild(guildId, createIfNotFound);
 
     if (this.cache.has(guildId)) {
@@ -128,8 +128,6 @@ export default class DatabaseHandler {
     let oldData = await this.getGuild(guildId.toString(), createIfNotFound);
 
     if (oldData) {
-      if (oldData?._doc) oldData = oldData?._doc;
-
       data = { ...oldData, ...data };
 
       this.cache.set(guildId.toString(), data);

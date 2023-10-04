@@ -1,10 +1,12 @@
-export default class CooldownHandler {
-  private c: any;
-  private cooldownSweeperInterval: any = null;
+import WouldYou from "./wouldYou";
 
-  constructor(c: any) {
-    this.c = c;
-    this.c.used = new Map();
+export default class CooldownHandler {
+  private client: WouldYou;
+  private cooldownSweeperInterval: NodeJS.Timeout;
+
+  constructor(client: WouldYou) {
+    this.client = client;
+    this.client.used = new Map();
   }
 
   /**
@@ -14,9 +16,9 @@ export default class CooldownHandler {
   startSweeper() {
     this.cooldownSweeperInterval = setInterval(
       () => {
-        for (const [key, value] of this.c.used.entries()) {
+        for (const [key, value] of this.client.used.entries()) {
           if (value < Date.now()) {
-            this.c.used.delete(key);
+            this.client.used.delete(key);
           }
         }
       },
