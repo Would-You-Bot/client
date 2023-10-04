@@ -1,4 +1,4 @@
-const userModel = require("../../util/Models/userModel");
+const userModel = require("../util/Models/userModel");
 module.exports = async (client, interaction) => {
   const user = await userModel.findOne({ userID: interaction.user.id });
 
@@ -26,7 +26,6 @@ module.exports = async (client, interaction) => {
     "dailyThread",
     "votemodal",
   ];
-  
   if (!interaction.guild) {
     if (interaction.isChatInputCommand()) {
       const command = client.commands.get(interaction.commandName);
@@ -74,7 +73,7 @@ module.exports = async (client, interaction) => {
           await userModel.updateOne(
             { userID: interaction.user.id }, // Specify the query to find the user
             { $inc: { [fieldPath]: 1 } }, // Use computed fieldPath
-            { upsert: true }
+            { upsert: true },
           );
         }
       }
@@ -110,14 +109,14 @@ module.exports = async (client, interaction) => {
             await userModel.create(
               { userID: interaction.user.id }, // Specify the query to find the user
               { $inc: { [fieldName]: 1 } }, // Use computed fieldPath
-              { upsert: true }
+              { upsert: true },
             );
           } else {
             // Increment the specified field using $inc
             await userModel.updateOne(
               { userID: interaction.user.id },
               { $inc: { [fieldName]: 1 } },
-              { upsert: true }
+              { upsert: true },
             );
           }
         }
@@ -144,7 +143,7 @@ module.exports = async (client, interaction) => {
           await userModel.updateOne(
             { userID: interaction.user.id }, // Specify the query to find the user
             { $inc: { [fieldPath]: 1 } }, // Use computed fieldPath
-            { upsert: true }
+            { upsert: true },
           );
         }
       }
@@ -181,7 +180,7 @@ module.exports = async (client, interaction) => {
           .reply({
             ephemeral: true,
             content: `You can use this button again <t:${Math.floor(
-              client.used.get(interaction.user.id) / 1000
+              client.used.get(interaction.user.id) / 1000,
             )}:R>!`,
           })
           .catch(() => {});
@@ -195,10 +194,10 @@ module.exports = async (client, interaction) => {
             ephemeral: true,
             content: `<t:${Math.floor(
               guildDb.replayChannels.find(
-                (x) => x.id === interaction.channel.id
+                (x) => x.id === interaction.channel.id,
               ).cooldown /
                 1000 +
-                Date.now() / 1000
+                Date.now() / 1000,
             )}:R> you can use buttons again!`,
           })
           .catch(() => {});
@@ -217,26 +216,26 @@ module.exports = async (client, interaction) => {
               `${interaction.user.id}-${interaction.channel.id}`,
               Date.now() +
                 guildDb.replayChannels.find(
-                  (x) => x.id === interaction.channel.id
-                ).cooldown
+                  (x) => x.id === interaction.channel.id,
+                ).cooldown,
             );
             setTimeout(
               () =>
                 client.used.delete(
-                  `${interaction.user.id}-${interaction.channel.id}`
+                  `${interaction.user.id}-${interaction.channel.id}`,
                 ),
               guildDb.replayChannels.find(
-                (x) => x.id === interaction.channel.id
-              ).cooldown
+                (x) => x.id === interaction.channel.id,
+              ).cooldown,
             );
           } else {
             client.used.set(
               interaction.user.id,
-              Date.now() + guildDb.replayCooldown
+              Date.now() + guildDb.replayCooldown,
             );
             setTimeout(
               () => client.used.delete(interaction.user.id),
-              guildDb.replayCooldown
+              guildDb.replayCooldown,
             );
           }
         }
