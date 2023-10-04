@@ -1,7 +1,7 @@
 import path from "path";
 
 function getPath(file: string) {
-  return path.join(__dirname, "..", "..", file);
+  return path.join(__dirname, "..", "..", "data", file);
 }
 
 export async function getWouldYouRather(language: string): Promise<any[]> {

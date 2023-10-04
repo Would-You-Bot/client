@@ -39,7 +39,7 @@ const button: Button = {
       .then(async (modalInteraction) => {
         const value = modalInteraction.components[0].components[0].value;
 
-        if (guildDb.replayCooldown === value)
+        if (guildDb.replayCooldown.toString() === value)
           return modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
