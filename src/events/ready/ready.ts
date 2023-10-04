@@ -4,10 +4,13 @@ import { Routes } from "discord-api-types/v10";
 import { white, gray, green, red } from "chalk-advanced";
 import { AutoPoster } from "topgg-autoposter";
 import Sentry from "@sentry/node";
-import WouldYou from "../util/wouldYou";
+import WouldYou from "../../util/wouldYou";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
+import { Event } from "../../models/event";
 
-export const handleReady = async (client: WouldYou) => {
+const event: Event = {
+  event: "ready",
+  execute: async (client: WouldYou) => {
   if (client.cluster.id === 0) {
     var globalCommands = Array.from(
       client.commands.filter((x) => x.requireGuild === true).values(),
@@ -74,4 +77,7 @@ export const handleReady = async (client: WouldYou) => {
 
   setTimeout(() => setStatus(), 35 * 1000);
   setInterval(() => setStatus(), 60 * 60 * 1000); // Do this not so often because everytime you set the presence the bot won't receive any events for some seconds
+}
 };
+
+export default event;

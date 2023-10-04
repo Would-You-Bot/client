@@ -1,9 +1,12 @@
 import { EmbedBuilder, PermissionFlagsBits } from "discord.js";
 import "dotenv/config";
 import Sentry from "@sentry/node";
-import WouldYou from "../util/wouldYou";
+import WouldYou from "../../util/wouldYou";
+import { Event } from "../../models/event";
 
-export const handleGuildMemberAdd = async (client: WouldYou, member: any) => {
+const event: Event = {
+  event: "guildMemberAdd",
+  execute: async (client: WouldYou, member: any) => {
   // Always do simple if checks before the main code. This is a little but not so little performance boost :)
   if (member?.user?.bot) return;
 
@@ -162,4 +165,7 @@ export const handleGuildMemberAdd = async (client: WouldYou, member: any) => {
         Sentry.captureException(err);
       });
   }
+}
 };
+
+export default event;

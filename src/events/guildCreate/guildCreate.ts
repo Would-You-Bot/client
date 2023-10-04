@@ -1,9 +1,12 @@
 import "dotenv/config";
 import { WebhookClient, EmbedBuilder } from "discord.js";
 import Sentry from "@sentry/node";
-import WouldYou from "../util/wouldYou";
+import WouldYou from "../../util/wouldYou";
+import { Event } from "../../models/event";
 
-export const handleGuildCreate = async (client: WouldYou, guild: any) => {
+const event: Event = {
+  event: "guildCreate",
+  execute: async (client: WouldYou, guild: any) => {
   if (!guild?.name) return;
 
   // Create and save the settings in the cache so that we don't need to do that at a command run
@@ -68,5 +71,8 @@ export const handleGuildCreate = async (client: WouldYou, guild: any) => {
         allowedMentions: { parse: [] },
       })
       .catch((err) => Sentry.captureException(err));
-  }
+  
+    }  }
 };
+
+export default event;

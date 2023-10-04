@@ -1,9 +1,12 @@
 import { WebhookClient, EmbedBuilder } from "discord.js";
 import Sentry from "@sentry/node";
 import "dotenv/config";
-import WouldYou from "../util/wouldYou";
+import WouldYou from "../../util/wouldYou";
+import { Event } from "../../models/event";
 
-export const handleGuildDelete = async (client: WouldYou, guild: any) => {
+const event: Event = {
+  event: "guildDelete",
+  execute: async (client: WouldYou, guild: any) => {
   if (!guild?.name) return;
 
   // Only delete the guild settings from the cache we don't want a data lose but also don't need not used data in the cache :)
@@ -69,4 +72,7 @@ export const handleGuildDelete = async (client: WouldYou, guild: any) => {
       })
       .catch((err) => Sentry.captureException(err));
   }
+}
 };
+
+export default event;

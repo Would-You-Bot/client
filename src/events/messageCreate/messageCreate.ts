@@ -5,10 +5,13 @@ import {
   PermissionFlagsBits,
 } from "discord.js";
 import Sentry from "@sentry/node";
-import WouldYou from "../util/wouldYou";
+import WouldYou from "../../util/wouldYou";
+import { Event } from "../../models/event";
 const Cooldown = new Set();
 
-export const handleMessageCreate = async (client: WouldYou, message: any) => {
+const event: Event = {
+  event: "messageCreate",
+  execute: async (client: WouldYou, message: any) => {
   // Always check the permissions before doing any actions to avoid a ratelimit IP ban =)
   if (
     message?.channel
@@ -65,4 +68,7 @@ export const handleMessageCreate = async (client: WouldYou, message: any) => {
           Sentry.captureException(err);
         });
   }
+}
 };
+
+export default event;

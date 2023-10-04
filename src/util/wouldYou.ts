@@ -20,24 +20,17 @@ import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
 import VoteLogger from "./voteLogger";
 import Voting from "./votingHandler";
-import { handleGuildCreate } from "../events/guildCreate";
-import { handleReady } from "../events/ready";
-import { handleShardReady } from "../events/shardReady";
-import { handleGuildDelete } from "../events/guildDelete";
-import { handleGuildMemberAdd } from "../events/guildMemberAdd";
-import { handleInteractionCreate } from "../events/interactionCreate";
-import { handleMessageCreate } from "../events/messageCreate";
-import { handleShardReconnecting } from "../events/shardReconnecting";
-import { handleShardResume } from "../events/shardResume";
 import { Button, ChatInputCommand } from "../models";
 import { fileToCollection } from "./Functions/fileToCollection";
 import path from "path";
+import { Event } from "../models/event";
 // User filter to filter all users out of the cache expect the bot
 //const userFilter = (u) => u?.id !== client?.user?.id;
 
 export default class WouldYou extends Client {
   public commands: Collection<string, ChatInputCommand>;
   public buttons: Collection<string, Button>;
+  public events: Collection<string, Event>;
   readonly paginate: Collection<any, any>;
   readonly cluster: ClusterClient<Client>;
   readonly cooldownHandler: CooldownHandler;
@@ -80,12 +73,6 @@ export default class WouldYou extends Client {
       shardCount: getInfo().TOTAL_SHARDS,
     });
 
-    // It's creating a new collection for the commands.
-    const commandPath = path.join(__dirname, "..", "commands"),
-      buttonPath = path.join(__dirname, "..", "buttons");
-    this.commands = fileToCollection<ChatInputCommand>(commandPath);
-    this.buttons = fileToCollection<Button>(buttonPath);
-
     // Allows for paginating
     this.paginate = new Collection();
 
@@ -116,6 +103,7 @@ export default class WouldYou extends Client {
     // Keep Alive system after the necessary things that are allowed to crash are loaded
     this.keepAlive = new KeepAlive(this);
     this.keepAlive.start();
+
     /*
     //ToDo: Inspect why its crashing the whole process
     //Vote Logger
@@ -123,26 +111,7 @@ export default class WouldYou extends Client {
     if (this?.cluster?.id === 0) {
       //this.voteLogger.startAPI();
     }
-
-    // Button Loader
-    this.buttonHandler = new ButtonHandler(this);
-    this.buttonHandler.load();
     */
-
-    // Events Loader
-    this.on("guildCreate", (guild) => handleGuildCreate(this, guild));
-    this.on("ready", (client) => handleReady(client as WouldYou));
-    this.on("shardReady", (shardId) => handleShardReady(this, shardId));
-    this.on("shardReconnecting", (shardId) =>
-      handleShardReconnecting(this, shardId),
-    );
-    this.on("shardResume", (shardId) => handleShardResume(this, shardId));
-    this.on("guildDelete", (guild) => handleGuildDelete(this, guild));
-    this.on("guildMemberAdd", (member) => handleGuildMemberAdd(this, member));
-    this.on("interactionCreate", (interaction) =>
-      handleInteractionCreate(this, interaction),
-    );
-    this.on("messageCreate", (message) => handleMessageCreate(this, message));
 
     // Daily Message
     this.dailyMessage = new DailyMessage(this);
@@ -152,10 +121,25 @@ export default class WouldYou extends Client {
     this.voting.start();
   }
 
+  async initialize(){
+    const commandPath = path.join(__dirname, "..", "commands"),
+    buttonPath = path.join(__dirname, "..", "buttons"),
+    eventPath = path.join(__dirname, "..", "events");
+
+    this.commands = await fileToCollection<ChatInputCommand>(commandPath);
+    this.buttons = await fileToCollection<Button>(buttonPath);
+    this.events = await fileToCollection<Event>(eventPath);
+
+    this.events.forEach((value, key) => {
+      this.on(key, (payload: any) => value.execute(this, payload));
+    })
+  }
+
   /**
    * Login the bot client
    */
-  loginBot() {
+  async loginBot() {
+    await this.initialize();
     return this.login(process.env.DISCORD_TOKEN);
   }
 }

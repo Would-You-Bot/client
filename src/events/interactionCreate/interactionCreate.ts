@@ -1,7 +1,10 @@
-import { UserModel } from "../util/Models/userModel";
-import WouldYou from "../util/wouldYou";
+import { Event } from "../../models/event";
+import { UserModel } from "../../util/Models/userModel";
+import WouldYou from "../../util/wouldYou";
 
-export const handleInteractionCreate = async (
+const event: Event = {
+  event: "interactionCreate",
+  execute: async (
   client: WouldYou,
   interaction: any,
 ) => {
@@ -262,4 +265,7 @@ export const handleInteractionCreate = async (
       if (button) return await button.execute(interaction, client, guildDb);
     }
   }
+}
 };
+
+export default event;
