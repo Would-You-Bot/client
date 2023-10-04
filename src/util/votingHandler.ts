@@ -123,7 +123,7 @@ export default class Voting {
     this._cache.delete(id);
   }
 
-  async addVote(id: string, userId: string, option = 1) {
+  async addVote(id: string, userId: string, option: any = 1) {
     const vote = await this.getVoting(id);
     if (!vote) return false;
 
