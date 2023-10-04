@@ -106,7 +106,11 @@ export default class WouldYou extends Client {
 
     //Vote Logger
     this.voteLogger = new VoteLogger(this);
-    if (this?.cluster?.id === 0 && process.env.TOPGG_TOKEN && process.env.TOPGG_WEBHOOK) {
+    if (
+      this?.cluster?.id === 0 &&
+      process.env.TOPGG_TOKEN &&
+      process.env.TOPGG_WEBHOOK
+    ) {
       this.voteLogger.startAPI();
     }
 
@@ -118,18 +122,20 @@ export default class WouldYou extends Client {
     this.voting.start();
   }
 
-  async initialize(){
-    function getPath(folder: string): string{
+  async initialize() {
+    function getPath(folder: string): string {
       return path.join(__dirname, "..", folder);
     }
 
-    this.commands = await fileToCollection<ChatInputCommand>(getPath("commands"));
+    this.commands = await fileToCollection<ChatInputCommand>(
+      getPath("commands"),
+    );
     this.buttons = await fileToCollection<Button>(getPath("buttons"));
     this.events = await fileToCollection<Event>(getPath("events"));
 
     this.events.forEach((value, key) => {
       this.on(key, (payload: any) => value.execute(this, payload));
-    })
+    });
   }
 
   /**

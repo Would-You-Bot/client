@@ -25,7 +25,9 @@ const button: Button = {
       });
       return;
     }
-    var { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(guildDb.language);
+    var { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
+      guildDb.language,
+    );
 
     const dbquestions = guildDb.customMessages.filter(
       (c: any) => c.type !== "nsfw" && c.type === "neverhaveiever",

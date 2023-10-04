@@ -20,7 +20,7 @@ export default class VoteLogger {
   public votes: Map<string, any>;
   constructor(c: WouldYou) {
     this.c = c;
-    if(!process.env.TOPGG_TOKEN) return;
+    if (!process.env.TOPGG_TOKEN) return;
     this.api = new Topgg.Api(process.env.TOPGG_TOKEN as string);
     this.votes = new Map();
 

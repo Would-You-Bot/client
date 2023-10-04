@@ -3,7 +3,7 @@ import Sentry from "@sentry/node";
 import { Model } from "mongoose";
 import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
 import WouldYou from "./wouldYou";
-import Cryptr from "cryptr"
+import Cryptr from "cryptr";
 
 const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string);
 

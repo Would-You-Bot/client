@@ -3,9 +3,9 @@ import { readdirSync } from "fs";
 import path from "path";
 import { Command, Event, Interaction } from "../../models";
 
-export async function fileToCollection<Type extends Command | Interaction | Event>(
-  dirPath: string,
-): Promise<Collection<string, Type>> {
+export async function fileToCollection<
+  Type extends Command | Interaction | Event,
+>(dirPath: string): Promise<Collection<string, Type>> {
   const collection: Collection<string, Type> = new Collection();
   try {
     const dirents = readdirSync(dirPath, { withFileTypes: true });
@@ -23,10 +23,9 @@ export async function fileToCollection<Type extends Command | Interaction | Even
                 collection.set(
                   (resp.default as Command).data != undefined
                     ? (resp.default as Command).data.name
-                    : Boolean((resp.default as Event).event)?
-                    (resp.default as Event).event
-                    :
-                    (resp.default as Interaction).name,
+                    : Boolean((resp.default as Event).event)
+                    ? (resp.default as Event).event
+                    : (resp.default as Interaction).name,
                   resp.default,
                 );
               },
@@ -42,12 +41,11 @@ export async function fileToCollection<Type extends Command | Interaction | Even
           (resp: { default: Type }) => {
             collection.set(
               (resp.default as Command).data != undefined
-              ? (resp.default as Command).data.name
-              : Boolean((resp.default as Event).event)?
-              (resp.default as Event).event
-              :
-              (resp.default as Interaction).name,
-            resp.default,
+                ? (resp.default as Command).data.name
+                : Boolean((resp.default as Event).event)
+                ? (resp.default as Event).event
+                : (resp.default as Interaction).name,
+              resp.default,
             );
           },
         );

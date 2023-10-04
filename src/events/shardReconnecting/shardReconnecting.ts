@@ -5,12 +5,12 @@ import { Event } from "../../models/event";
 const event: Event = {
   event: "shardReconnecting",
   execute: async (client: WouldYou, id: number) => {
-  console.log(
-    `${white("Would You?")} ${gray(">")} ${green(
-      `Shard ${id} reconnecting...`,
-    )}`,
-  );
-    }
+    console.log(
+      `${white("Would You?")} ${gray(">")} ${green(
+        `Shard ${id} reconnecting...`,
+      )}`,
+    );
+  },
 };
 
 export default event;
