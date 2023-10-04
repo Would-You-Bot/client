@@ -129,7 +129,7 @@ const command: ChatInputCommand = {
 
           const option = interaction?.options
             ?.getString("options")
-            ?.toLowerCase();
+            ?.toLowerCase() || "";
           message = interaction.options.getString("message");
 
           let newID = makeID(6);

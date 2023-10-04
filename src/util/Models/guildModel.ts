@@ -16,9 +16,17 @@ export interface IGuildModel {
   replay: boolean;
   replayCooldown: number;
   replayType: string;
-  replayChannels: any;
+  replayChannels: Array<{
+    id: string;
+    cooldown: string;
+    name: string;
+  }>;
   botJoined: number;
-  customMessages: any;
+  customMessages: Array<{
+    id: string;
+    msg: string;
+    type: string;
+  }>;
   customTypes: string;
   debugMode: boolean;
 }
@@ -89,8 +97,9 @@ const guildProfileSchema = new Schema(
     },
     replayChannels: [
       {
-        type: Object,
-        default: {},
+        id: { type: String, required: true },
+        cooldown: { type: String, required: true },
+        name: { type: String, required: true },
       },
     ],
     botJoined: {
@@ -98,8 +107,9 @@ const guildProfileSchema = new Schema(
     },
     customMessages: [
       {
-        type: Object,
-        default: {},
+        id: { type: String, required: true },
+        msg: { type: String, required: true },
+        type: { type: String, required: true },
       },
     ],
     customTypes: {

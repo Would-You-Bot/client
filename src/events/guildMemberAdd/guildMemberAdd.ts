@@ -34,7 +34,7 @@ const event: Event = {
       var General = await getWouldYouRather(guildDb.language);
       var WhatYouDo = await getWwyd(guildDb.language);
 
-      let randomDaily = [];
+      let randomDaily;
       if (guildDb.customTypes === "regular") {
         let array = [];
         array.push(...General, ...WhatYouDo);
@@ -81,7 +81,7 @@ const event: Event = {
         }
 
         randomDaily = guildDb.customMessages.filter(
-          (c: any) => c.type !== "nsfw",
+          (c) => c.type !== "nsfw",
         )[
           Math.floor(
             Math.random() *

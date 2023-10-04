@@ -9,7 +9,7 @@ const button: Button = {
     var General = await getWouldYouRather(guildDb.language);
     var WhatYouDo = await getWwyd(guildDb.language);
 
-    let randomDaily = [];
+    let randomDaily;
     if (guildDb.customTypes === "regular") {
       let array = [];
       array.push(...General, ...WhatYouDo);

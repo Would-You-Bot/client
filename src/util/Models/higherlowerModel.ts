@@ -5,19 +5,48 @@ export interface IHigherLowerModel {
   created: Date;
   id: string;
   guild: string;
-  items: any;
+  items: {
+    current: {
+      id: string;
+      keyword: string;
+      value: number;
+      author: string;
+      link: string;
+    };
+    history: Array<{
+      id: string;
+      keyword: string;
+      value: number;
+      author: string;
+      link: string;
+    }>;
+  };
   score: number;
 }
 
-const higherlowerModelSchema = new Schema(
+const higherlowerModelSchema = new Schema<IHigherLowerModel>(
   {
     creator: { type: String, required: true },
     created: { type: Date, required: true },
     id: { type: String, required: true },
     guild: { type: String, required: true },
     items: {
-      current: { type: Object, required: true },
-      history: { type: Array, required: true },
+      current: {
+        id: { type: String, required: true },
+        keyword: { type: String, required: true },
+        value: { type: Number, required: true },
+        author: { type: String, required: true },
+        link: { type: String, required: true },
+      },
+      history: [
+        {
+          id: { type: String, required: true },
+          keyword: { type: String, required: true },
+          value: { type: Number, required: true },
+          author: { type: String, required: true },
+          link: { type: String, required: true },
+        },
+      ],
     },
     score: { type: Number, required: true },
   },

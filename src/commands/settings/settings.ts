@@ -12,6 +12,7 @@ import Sentry from "@sentry/node";
 import { ChatInputCommand } from "../../models";
 
 const command: ChatInputCommand = {
+  requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("settings")
     .setDescription("Change settings for Daily Messages and Welcomes")
