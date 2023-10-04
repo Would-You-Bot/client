@@ -104,14 +104,11 @@ export default class WouldYou extends Client {
     this.keepAlive = new KeepAlive(this);
     this.keepAlive.start();
 
-    /*
-    //ToDo: Inspect why its crashing the whole process
     //Vote Logger
     this.voteLogger = new VoteLogger(this);
-    if (this?.cluster?.id === 0) {
-      //this.voteLogger.startAPI();
+    if (this?.cluster?.id === 0 && process.env.TOPGG_TOKEN && process.env.TOPGG_WEBHOOK) {
+      this.voteLogger.startAPI();
     }
-    */
 
     // Daily Message
     this.dailyMessage = new DailyMessage(this);
