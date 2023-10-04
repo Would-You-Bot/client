@@ -1,4 +1,4 @@
-import { EmbedBuilder, PermissionFlagsBits } from "discord.js";
+import { EmbedBuilder, GuildMember, GuildTextBasedChannel, PermissionFlagsBits } from "discord.js";
 import "dotenv/config";
 import Sentry from "@sentry/node";
 import WouldYou from "../../util/wouldYou";
@@ -7,7 +7,7 @@ import { getWouldYouRather, getWwyd } from "../../util/Functions/jsonImport";
 
 const event: Event = {
   event: "guildMemberAdd",
-  execute: async (client: WouldYou, member: any) => {
+  execute: async (client: WouldYou, member: GuildMember) => {
     // Always do simple if checks before the main code. This is a little but not so little performance boost :)
     if (member?.user?.bot) return;
 
@@ -15,15 +15,15 @@ const event: Event = {
     if (guildDb && guildDb?.welcome) {
       const channel = await member.guild.channels
         .fetch(guildDb.welcomeChannel)
-        .catch((err: any) => {
+        .catch((err: Error) => {
           Sentry.captureException(err);
-        });
+        }) as GuildTextBasedChannel;
 
       if (!channel?.id) return;
 
-      if (
+      if (member.guild.members.me &&
         !channel
-          ?.permissionsFor(client?.user?.id)
+          ?.permissionsFor(member.guild.members.me)
           ?.has([
             PermissionFlagsBits.ViewChannel,
             PermissionFlagsBits.SendMessages,
@@ -64,7 +64,7 @@ const event: Event = {
           guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
             .length === 0
         ) {
-          return client.webhookHandler
+          client.webhookHandler
             .sendWebhook(
               channel,
               guildDb.dailyChannel,
@@ -77,6 +77,7 @@ const event: Event = {
             .catch((err) => {
               Sentry.captureException(err);
             });
+            return;
         }
 
         randomDaily = guildDb.customMessages.filter(
@@ -119,7 +120,7 @@ const event: Event = {
           guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
             .length === 0
         ) {
-          return client.webhookHandler
+           client.webhookHandler
             .sendWebhook(
               channel,
               guildDb.dailyChannel,
@@ -132,6 +133,7 @@ const event: Event = {
             .catch((err) => {
               Sentry.captureException(err);
             });
+            return;
         }
 
         randomDaily = guildDb.customMessages.filter(
@@ -145,7 +147,7 @@ const event: Event = {
         ].msg;
       }
 
-      let mention = null;
+      let mention = undefined;
       if (guildDb.welcomePing) {
         mention = `<@${member.user.id}>`;
       }
@@ -161,11 +163,12 @@ const event: Event = {
         .setThumbnail(member.user.avatarURL())
         .setDescription(randomDaily);
 
-      return channel
+      channel
         .send({ content: mention, embeds: [welcomeEmbed] })
         .catch((err: any) => {
           Sentry.captureException(err);
         });
+      return;
     }
   },
 };
