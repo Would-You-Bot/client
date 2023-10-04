@@ -49,11 +49,13 @@ const command: ChatInputCommand = {
         iconURL: interaction.user.avatarURL() || "",
       });
 
-    interaction.reply({ embeds: [initembed] }).then((async) => {
-      const gameDataRaw = readFileSync(
-        path.join(__dirname, "..", "data", "hl-en_EN.json"),
-      ) as any;
-      const gameData = JSON.parse(gameDataRaw).data;
+    interaction.reply({ embeds: [initembed] }).then(async() => {
+      var gameDataRaw = {} as any;
+      await import(path.join(__dirname, "..", "..", "data", "hl-en_EN.json")).then((value: any) => {
+        gameDataRaw = value
+      });
+
+      const gameData = gameDataRaw.data;
 
       const random = Math.floor(Math.random() * gameData.length);
       let comperator = Math.floor(Math.random() * gameData.length);

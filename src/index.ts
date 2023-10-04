@@ -25,13 +25,15 @@ if (botId !== "981649513427111957" || process.env.STATUS === "DEVELOPMENT") {
   );
 }
 
-//  Sentry.init({
- //   dsn: process.env.SENTRY_DSN,
- // 
- //   // Performance Monitoring
- //   tracesSampleRate: 0.5, // 1.0 means that 100% of transactions will be sent to Sentry
- //   integrations: [...Sentry.autoDiscoverNodePerformanceMonitoringIntegrations()],
- // });
+var dsnKey = process.env.SENTRY_DSN;
+if(dsnKey){
+  Sentry.init({
+    dsn: dsnKey, 
+    // Performance Monitoring
+    tracesSampleRate: 0.5, // 1.0 means that 100% of transactions will be sent to Sentry
+    integrations: [...Sentry.autoDiscoverNodePerformanceMonitoringIntegrations()],
+  });
+}
 
 global.wouldYouDevs = [
   "805898988402376725", // Finn

@@ -48,7 +48,7 @@ const button: Button = {
         gameDataRaw = value
       });
 
-      const gameData = JSON.parse(gameDataRaw).data;
+      const gameData = gameDataRaw.data;
 
       if (game.items.history.length == gameData.length){
         interaction.followUp({
