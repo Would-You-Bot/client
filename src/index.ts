@@ -1,10 +1,10 @@
 import WouldYou from "./util/wouldYou";
-import {white, gray, green} from "chalk-advanced";
+import { white, gray, green } from "chalk-advanced";
 import Sentry from "@sentry/node";
 
 // Token to UserID Function
 // Credits to Meister#9667 for helping me with this
-const retriveUserIdbyToken = (token : string) => {
+const retriveUserIdbyToken = (token: string) => {
   const parseuser = token.split(".")[0];
   const buff = Buffer.from(parseuser, "base64");
   const userid = buff.toString("utf-8");
@@ -26,12 +26,14 @@ if (botId !== "981649513427111957" || process.env.STATUS === "DEVELOPMENT") {
 }
 
 var dsnKey = process.env.SENTRY_DSN;
-if(dsnKey){
+if (dsnKey) {
   Sentry.init({
-    dsn: dsnKey, 
+    dsn: dsnKey,
     // Performance Monitoring
     tracesSampleRate: 0.5, // 1.0 means that 100% of transactions will be sent to Sentry
-    integrations: [...Sentry.autoDiscoverNodePerformanceMonitoringIntegrations()],
+    integrations: [
+      ...Sentry.autoDiscoverNodePerformanceMonitoringIntegrations(),
+    ],
   });
 }
 
@@ -49,8 +51,8 @@ global.checkDebug = (d, i) => {
 const client = new WouldYou();
 client.loginBot().then(() => {
   console.log(
-    `${white("Would You?")} ${gray(
-      ">",
-    )} ${green("Bot should be started now...")}`,
+    `${white("Would You?")} ${gray(">")} ${green(
+      "Bot should be started now...",
+    )}`,
   );
 });

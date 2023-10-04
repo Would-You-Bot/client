@@ -1,8 +1,4 @@
-import {
-  PermissionFlagsBits,
-  WebhookClient,
-  EmbedBuilder,
-} from "discord.js";
+import { PermissionFlagsBits, WebhookClient, EmbedBuilder } from "discord.js";
 import Sentry from "@sentry/node";
 import { Model } from "mongoose";
 import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
@@ -59,7 +55,13 @@ export default class WebhookHandler {
    * @return {Promise<object>}
    * @private
    */
-  createWebhook = async (channel: any = null, channelId: string, name: string, avatar: string, reason: string) => {
+  createWebhook = async (
+    channel: any = null,
+    channelId: string,
+    name: string,
+    avatar: string,
+    reason: string,
+  ) => {
     if (!channel)
       channel = await this.c.channels.fetch(channelId).catch((err) => {
         Sentry.captureException(err);
@@ -115,7 +117,12 @@ export default class WebhookHandler {
     } else return null;
   };
 
-  webhookFallBack = async (channel: any = null, channelId: string, message: any, err: any = false): Promise<void> => {
+  webhookFallBack = async (
+    channel: any = null,
+    channelId: string,
+    message: any,
+    err: any = false,
+  ): Promise<void> => {
     if (!channel)
       channel = await this.c.channels.fetch(channelId).catch((err) => {
         Sentry.captureException(err);
@@ -206,7 +213,12 @@ export default class WebhookHandler {
    * @param {object} message the message to send
    * @return {Promise<object>}
    */
-  sendWebhook = async (channel: any = null, channelId: string, message: any, thread?: boolean) => {
+  sendWebhook = async (
+    channel: any = null,
+    channelId: string,
+    message: any,
+    thread?: boolean,
+  ) => {
     if (!channelId && channel?.id) channelId = channel.id;
 
     if (!channelId) return;
@@ -245,11 +257,11 @@ export default class WebhookHandler {
       });
       if (!thread) return;
       this.c.rest.post(
-        "/channels/" +
+        ("/channels/" +
           channelId +
           "/messages/" +
           (fallbackThread as any).id +
-          "/threads" as any,
+          "/threads") as any,
         {
           body: {
             name: `${[
@@ -274,7 +286,11 @@ export default class WebhookHandler {
       });
       if (!thread) return;
       this.c.rest.post(
-        "/channels/" + channelId + "/messages/" + (webhookThread as any).id + "/threads" as any,
+        ("/channels/" +
+          channelId +
+          "/messages/" +
+          (webhookThread as any).id +
+          "/threads") as any,
         {
           body: {
             name: `${[
@@ -288,4 +304,4 @@ export default class WebhookHandler {
       );
     }
   };
-};
+}

@@ -42,4 +42,4 @@ export default class KeepAlive {
       Sentry.captureException(err);
     });
   }
-};
+}

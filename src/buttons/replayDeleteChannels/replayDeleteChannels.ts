@@ -2,13 +2,13 @@ import {
   ActionRowBuilder,
   MessageActionRowComponentBuilder,
   StringSelectMenuBuilder,
-}from "discord.js";
+} from "discord.js";
 import { Button } from "../../models";
 
 const button: Button = {
   name: "replayDeleteChannels",
-  execute: async(interaction, client, guildDb) => {
-    if (guildDb.replayChannels.length <= 0){
+  execute: async (interaction, client, guildDb) => {
+    if (guildDb.replayChannels.length <= 0) {
       interaction.reply({
         content: client.translation.get(
           guildDb?.language,
@@ -18,19 +18,20 @@ const button: Button = {
       });
       return;
     }
-    const inter = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      new StringSelectMenuBuilder()
-        .setCustomId("replayDelete")
-        .setPlaceholder("Select a channel to remove cooldown from")
-        .addOptions(
-          guildDb.replayChannels.map((channel: any) => {
-            return {
-              label: channel.name,
-              value: channel.id,
-            };
-          }),
-        ),
-    );
+    const inter =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new StringSelectMenuBuilder()
+          .setCustomId("replayDelete")
+          .setPlaceholder("Select a channel to remove cooldown from")
+          .addOptions(
+            guildDb.replayChannels.map((channel: any) => {
+              return {
+                label: channel.name,
+                value: channel.id,
+              };
+            }),
+          ),
+      );
 
     interaction.update({
       embeds: [],
@@ -40,8 +41,8 @@ const button: Button = {
       ),
       components: [inter],
       options: {
-        ephemeral: true
-      }
+        ephemeral: true,
+      },
     });
   },
 };

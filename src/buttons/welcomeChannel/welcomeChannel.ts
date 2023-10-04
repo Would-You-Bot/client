@@ -8,13 +8,14 @@ import { Button } from "../../models";
 
 const button: Button = {
   name: "welcomeChannel",
-  execute: async(interaction, client, guildDb) => {
-    const inter = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      new ChannelSelectMenuBuilder()
-        .setCustomId("seletcMenuWelcome")
-        .setPlaceholder("Select a channel")
-        .addChannelTypes(ChannelType.GuildText),
-    );
+  execute: async (interaction, client, guildDb) => {
+    const inter =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ChannelSelectMenuBuilder()
+          .setCustomId("seletcMenuWelcome")
+          .setPlaceholder("Select a channel")
+          .addChannelTypes(ChannelType.GuildText),
+      );
 
     interaction.update({
       embeds: [],
@@ -24,8 +25,8 @@ const button: Button = {
       ),
       components: [inter],
       options: {
-        ephemeral: true
-      }
+        ephemeral: true,
+      },
     });
   },
 };

@@ -8,8 +8,8 @@ import { Button } from "../../models";
 
 const button: Button = {
   name: "replayChannels",
-  execute: async(interaction, client, guildDb) => {
-    if (guildDb.replayChannels.length >= 15){
+  execute: async (interaction, client, guildDb) => {
+    if (guildDb.replayChannels.length >= 15) {
       interaction.reply({
         content: client.translation.get(
           guildDb?.language,
@@ -20,12 +20,13 @@ const button: Button = {
       return;
     }
 
-    const inter = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      new ChannelSelectMenuBuilder()
-        .setCustomId("selectMenuReplay")
-        .setPlaceholder("Select a channel")
-        .addChannelTypes(ChannelType.GuildText),
-    );
+    const inter =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ChannelSelectMenuBuilder()
+          .setCustomId("selectMenuReplay")
+          .setPlaceholder("Select a channel")
+          .addChannelTypes(ChannelType.GuildText),
+      );
 
     interaction.update({
       embeds: [],
@@ -35,8 +36,8 @@ const button: Button = {
       ),
       components: [inter],
       options: {
-        ephemeral: true
-      }
+        ephemeral: true,
+      },
     });
   },
 };

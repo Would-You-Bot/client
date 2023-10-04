@@ -1,16 +1,17 @@
 import "dotenv/config";
-import { ClusterManager, ReClusterManager, HeartbeatManager } from "discord-hybrid-sharding";
+import {
+  ClusterManager,
+  ReClusterManager,
+  HeartbeatManager,
+} from "discord-hybrid-sharding";
 import { white, gray, green } from "chalk-advanced";
 
-const manager = new ClusterManager(
-  `${__dirname}/index.js`,
-  {
-    totalShards: "auto",
-    shardsPerClusters: 10,
-    mode: "process",
-    token: process.env.TOKEN,
-  },
-);
+const manager = new ClusterManager(`${__dirname}/index.js`, {
+  totalShards: "auto",
+  shardsPerClusters: 10,
+  mode: "process",
+  token: process.env.TOKEN,
+});
 
 manager.extend(
   new ReClusterManager(),
@@ -22,9 +23,9 @@ manager.extend(
 
 manager.on("clusterCreate", (cluster) => {
   console.log(
-    `${white("Would You?")} ${gray(
-      ">",
-    )} ${green("Successfully created cluster #" + cluster.id)}`,
+    `${white("Would You?")} ${gray(">")} ${green(
+      "Successfully created cluster #" + cluster.id,
+    )}`,
   );
 });
 

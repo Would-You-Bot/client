@@ -41,12 +41,15 @@ export const handleGuildMemberAdd = async (client: WouldYou, member: any) => {
       randomDaily = array[Math.floor(Math.random() * array.length)];
     } else if (guildDb.customTypes === "mixed") {
       let array = [];
-      if (guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length != 0) {
+      if (
+        guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length != 0
+      ) {
         array.push(
           guildDb.customMessages.filter((c: any) => c.type !== "nsfw")[
             Math.floor(
               Math.random() *
-                guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length,
+                guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
+                  .length,
             )
           ].msg,
         );
@@ -57,7 +60,8 @@ export const handleGuildMemberAdd = async (client: WouldYou, member: any) => {
       randomDaily = array[Math.floor(Math.random() * array.length)];
     } else if (guildDb.customTypes === "custom") {
       if (
-        guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length === 0
+        guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length ===
+        0
       ) {
         return client.webhookHandler
           .sendWebhook(
@@ -74,7 +78,9 @@ export const handleGuildMemberAdd = async (client: WouldYou, member: any) => {
           });
       }
 
-      randomDaily = guildDb.customMessages.filter((c: any) => c.type !== "nsfw")[
+      randomDaily = guildDb.customMessages.filter(
+        (c: any) => c.type !== "nsfw",
+      )[
         Math.floor(
           Math.random() *
             guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length,
@@ -88,12 +94,15 @@ export const handleGuildMemberAdd = async (client: WouldYou, member: any) => {
       randomDaily = array[Math.floor(Math.random() * array.length)];
     } else if (guildDb.customTypes === "mixed") {
       let array = [];
-      if (guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length != 0) {
+      if (
+        guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length != 0
+      ) {
         array.push(
           guildDb.customMessages.filter((c: any) => c.type !== "nsfw")[
             Math.floor(
               Math.random() *
-                guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length,
+                guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
+                  .length,
             )
           ].msg,
         );
@@ -104,7 +113,8 @@ export const handleGuildMemberAdd = async (client: WouldYou, member: any) => {
       randomDaily = array[Math.floor(Math.random() * array.length)];
     } else if (guildDb.customTypes === "custom") {
       if (
-        guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length === 0
+        guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length ===
+        0
       ) {
         return client.webhookHandler
           .sendWebhook(
@@ -121,7 +131,9 @@ export const handleGuildMemberAdd = async (client: WouldYou, member: any) => {
           });
       }
 
-      randomDaily = guildDb.customMessages.filter((c: any) => c.type !== "nsfw")[
+      randomDaily = guildDb.customMessages.filter(
+        (c: any) => c.type !== "nsfw",
+      )[
         Math.floor(
           Math.random() *
             guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length,

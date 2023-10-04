@@ -39,13 +39,14 @@ const command: ChatInputCommand = {
       })
       .setTimestamp();
 
-    const supportbutton = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      new ButtonBuilder()
-        .setLabel("Support Server")
-        .setStyle(5)
-        .setEmoji("💻")
-        .setURL("https://discord.gg/vMyXAxEznS"),
-    );
+    const supportbutton =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setLabel("Support Server")
+          .setStyle(5)
+          .setEmoji("💻")
+          .setURL("https://discord.gg/vMyXAxEznS"),
+      );
 
     interaction
       .reply({
@@ -55,7 +56,7 @@ const command: ChatInputCommand = {
       .catch((err) => {
         Sentry.captureException(err);
       });
-      return;
+    return;
   },
 };
 

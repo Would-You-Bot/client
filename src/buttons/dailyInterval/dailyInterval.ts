@@ -1,4 +1,9 @@
-import { ButtonBuilder, ActionRowBuilder, EmbedBuilder, ButtonStyle } from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  ButtonStyle,
+} from "discord.js";
 import { Button } from "../../models";
 
 const modalObject = {
@@ -25,7 +30,7 @@ function isFormat(str: string) {
 
 const button: Button = {
   name: "dailyInterval",
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
@@ -116,7 +121,9 @@ const button: Button = {
                   "Settings.button.dailyMsg",
                 ),
               )
-              .setStyle(guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary),
+              .setStyle(
+                guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
+              ),
             new ButtonBuilder()
               .setCustomId("dailyChannel")
               .setLabel(
@@ -125,7 +132,11 @@ const button: Button = {
                   "Settings.button.dailyChannel",
                 ),
               )
-              .setStyle(guildDb.dailyChannel ? ButtonStyle.Success : ButtonStyle.Secondary),
+              .setStyle(
+                guildDb.dailyChannel
+                  ? ButtonStyle.Success
+                  : ButtonStyle.Secondary,
+              ),
             new ButtonBuilder()
               .setCustomId("dailyType")
               .setLabel(
@@ -156,7 +167,9 @@ const button: Button = {
                   "Settings.button.dailyRole",
                 ),
               )
-              .setStyle(guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary),
+              .setStyle(
+                guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary,
+              ),
             new ButtonBuilder()
               .setCustomId("dailyInterval")
               .setLabel(
@@ -177,7 +190,11 @@ const button: Button = {
                   "Settings.button.dailyThread",
                 ),
               )
-              .setStyle(guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary),
+              .setStyle(
+                guildDb.dailyThread
+                  ? ButtonStyle.Success
+                  : ButtonStyle.Secondary,
+              ),
           );
 
         await client.database.updateGuild(interaction.guild?.id || "", {

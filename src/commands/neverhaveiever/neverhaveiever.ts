@@ -34,8 +34,10 @@ const command: ChatInputCommand = {
     var Young = null as any;
     var Food = null as any;
     var RuleBreak = null as any;
-    
-    await import(path.join(__dirname, "..", "..", "data", `nhie-${guildDb.language}.json`)).then((value: any) => {
+
+    await import(
+      path.join(__dirname, "..", "..", "data", `nhie-${guildDb.language}.json`)
+    ).then((value: any) => {
       Funny = value.Funny;
       Basic = value.Basic;
       Young = value.Young;

@@ -1,9 +1,14 @@
-import { ButtonBuilder, ActionRowBuilder, EmbedBuilder, ButtonStyle } from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  ButtonStyle,
+} from "discord.js";
 import { Button } from "../../models";
 
 const button: Button = {
   name: "selectMenuWelcomeType",
-  execute: async(interaction: any, client, guildDb) => {
+  execute: async (interaction: any, client, guildDb) => {
     const newType = interaction.values[0];
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
@@ -60,7 +65,9 @@ const button: Button = {
               "Settings.button.welcome",
             ),
           )
-          .setStyle(guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary),
+          .setStyle(
+            guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary,
+          ),
         new ButtonBuilder()
           .setCustomId("welcomeChannel")
           .setLabel(
@@ -69,7 +76,11 @@ const button: Button = {
               "Settings.button.welcomeChannel",
             ),
           )
-          .setStyle(guildDb.welcomeChannel ? ButtonStyle.Success : ButtonStyle.Secondary),
+          .setStyle(
+            guildDb.welcomeChannel
+              ? ButtonStyle.Success
+              : ButtonStyle.Secondary,
+          ),
       ),
       welcomeButtons2 = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
@@ -80,7 +91,9 @@ const button: Button = {
               "Settings.button.welcomePing",
             ),
           )
-          .setStyle(guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary),
+          .setStyle(
+            guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary,
+          ),
         new ButtonBuilder()
           .setCustomId("welcomeType")
           .setLabel(

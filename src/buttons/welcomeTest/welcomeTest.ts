@@ -5,15 +5,24 @@ import path from "path";
 
 const button: Button = {
   name: "welcomeTest",
-  execute: async(interaction, client, guildDb) => {
-
+  execute: async (interaction, client, guildDb) => {
     var General = [] as any[];
-    await import(path.join(__dirname, "..", "..", "data", `rather-${guildDb.language}.json`)).then((value: any) => {
-      General = value.General
+    await import(
+      path.join(
+        __dirname,
+        "..",
+        "..",
+        "data",
+        `rather-${guildDb.language}.json`,
+      )
+    ).then((value: any) => {
+      General = value.General;
     });
     var WhatYouDo = [] as any[];
-    await import(path.join(__dirname, "..", "..", "data", `wwyd-${guildDb.language}.json`)).then((value: any) => {
-      WhatYouDo = value.WhatYouDo
+    await import(
+      path.join(__dirname, "..", "..", "data", `wwyd-${guildDb.language}.json`)
+    ).then((value: any) => {
+      WhatYouDo = value.WhatYouDo;
     });
 
     let randomDaily = [];
@@ -23,12 +32,15 @@ const button: Button = {
       randomDaily = array[Math.floor(Math.random() * array.length)];
     } else if (guildDb.customTypes === "mixed") {
       let array = [];
-      if (guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length != 0) {
+      if (
+        guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length != 0
+      ) {
         array.push(
           guildDb.customMessages.filter((c: any) => c.type !== "nsfw")[
             Math.floor(
               Math.random() *
-                guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length,
+                guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
+                  .length,
             )
           ].msg,
         );
@@ -39,7 +51,8 @@ const button: Button = {
       randomDaily = array[Math.floor(Math.random() * array.length)];
     } else if (guildDb.customTypes === "custom") {
       if (
-        guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length === 0
+        guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length ===
+        0
       ) {
         client.webhookHandler
           .sendWebhook(
@@ -54,10 +67,12 @@ const button: Button = {
           .catch((err) => {
             Sentry.captureException(err);
           });
-          return;
+        return;
       }
 
-      randomDaily = guildDb.customMessages.filter((c: any) => c.type !== "nsfw")[
+      randomDaily = guildDb.customMessages.filter(
+        (c: any) => c.type !== "nsfw",
+      )[
         Math.floor(
           Math.random() *
             guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length,
@@ -72,9 +87,10 @@ const button: Button = {
 
     let welcomeEmbed = new EmbedBuilder()
       .setTitle(
-        `${client.translation.get(guildDb?.language, "Welcome.embed.title")} ${
-          interaction.member?.user.username
-        }!`,
+        `${client.translation.get(
+          guildDb?.language,
+          "Welcome.embed.title",
+        )} ${interaction.member?.user.username}!`,
       )
       .setColor("#0598F6")
       .setThumbnail((interaction.member?.user as any).avatarURL())

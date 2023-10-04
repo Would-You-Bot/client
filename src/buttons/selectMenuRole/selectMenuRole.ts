@@ -1,9 +1,14 @@
-import { ButtonBuilder, ActionRowBuilder, EmbedBuilder, ButtonStyle } from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  ButtonStyle,
+} from "discord.js";
 import { Button } from "../../models";
 
 const button: Button = {
   name: "selectMenuRole",
-  execute: async(interaction: any, client, guildDb) => {
+  execute: async (interaction: any, client, guildDb) => {
     const newRole = interaction.values[0];
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
@@ -49,7 +54,9 @@ const button: Button = {
               "Settings.button.dailyMsg",
             ),
           )
-          .setStyle(guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary),
+          .setStyle(
+            guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
+          ),
         new ButtonBuilder()
           .setCustomId("dailyChannel")
           .setLabel(
@@ -58,7 +65,9 @@ const button: Button = {
               "Settings.button.dailyChannel",
             ),
           )
-          .setStyle(guildDb.dailyChannel ? ButtonStyle.Success : ButtonStyle.Secondary),
+          .setStyle(
+            guildDb.dailyChannel ? ButtonStyle.Success : ButtonStyle.Secondary,
+          ),
         new ButtonBuilder()
           .setCustomId("dailyType")
           .setLabel(

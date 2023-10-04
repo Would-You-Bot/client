@@ -9,7 +9,9 @@ export const handleGuildDelete = async (client: WouldYou, guild: any) => {
   // Only delete the guild settings from the cache we don't want a data lose but also don't need not used data in the cache :)
   await client.database.deleteGuild(guild?.id, true);
 
-  const webhookPrivate = new WebhookClient({ url: process.env.LOG_PRIVATE as string });
+  const webhookPrivate = new WebhookClient({
+    url: process.env.LOG_PRIVATE as string,
+  });
 
   let features;
   if (
@@ -50,7 +52,9 @@ export const handleGuildDelete = async (client: WouldYou, guild: any) => {
   });
 
   if (!global?.devBot) {
-    const webhookClient = new WebhookClient({ url: process.env.LOG_GUILDS as string });
+    const webhookClient = new WebhookClient({
+      url: process.env.LOG_GUILDS as string,
+    });
 
     await webhookClient
       .send({

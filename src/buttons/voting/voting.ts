@@ -2,7 +2,7 @@ import { Button } from "../../models";
 
 const button: Button = {
   name: "voting",
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     const customId = interaction.customId.split("_") as any;
 
     client.voting.addVote(customId[1], interaction.user.id, customId[3]);

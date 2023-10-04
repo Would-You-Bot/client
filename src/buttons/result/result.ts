@@ -3,11 +3,11 @@ import { Button } from "../../models";
 
 const button: Button = {
   name: "result",
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     const customId = interaction.customId.split("_");
 
     const votingResults = await client.voting.getVotingResults(customId[1]);
-    if (!votingResults){
+    if (!votingResults) {
       await interaction.reply({
         content: "Unable to fetch results.",
         ephemeral: true,

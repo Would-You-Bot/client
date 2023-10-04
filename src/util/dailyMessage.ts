@@ -39,9 +39,7 @@ export default class DailyMessage {
     );
 
     console.log(
-      `${white("Daily Message")} ${gray(
-        ">",
-      )} ${green(
+      `${white("Daily Message")} ${gray(">")} ${green(
         "Running daily message check for " + guilds.length + " guilds",
       )}`,
     );
@@ -71,12 +69,15 @@ export default class DailyMessage {
           randomDaily = array[Math.floor(Math.random() * array.length)];
         } else if (db.customTypes === "mixed") {
           let array = [];
-          if (db.customMessages.filter((c: any) => c.type !== "nsfw").length != 0) {
+          if (
+            db.customMessages.filter((c: any) => c.type !== "nsfw").length != 0
+          ) {
             array.push(
               db.customMessages.filter((c: any) => c.type !== "nsfw")[
                 Math.floor(
                   Math.random() *
-                    db.customMessages.filter((c: any) => c.type !== "nsfw").length,
+                    db.customMessages.filter((c: any) => c.type !== "nsfw")
+                      .length,
                 )
               ].msg,
             );
@@ -86,7 +87,9 @@ export default class DailyMessage {
           array.push(...General, ...WhatYouDo);
           randomDaily = array[Math.floor(Math.random() * array.length)];
         } else if (db.customTypes === "custom") {
-          if (db.customMessages.filter((c: any) => c.type !== "nsfw").length === 0) {
+          if (
+            db.customMessages.filter((c: any) => c.type !== "nsfw").length === 0
+          ) {
             return this.client.webhookHandler
               .sendWebhook(
                 channel,
@@ -136,4 +139,4 @@ export default class DailyMessage {
       }, i * 2500); // We do a little timeout here to work against discord ratelimit with 50reqs/second
     }
   }
-};
+}

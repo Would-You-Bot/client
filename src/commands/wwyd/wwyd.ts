@@ -27,11 +27,12 @@ const command: ChatInputCommand = {
    * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
-  execute: async(interaction, client, guildDb) => {
-
+  execute: async (interaction, client, guildDb) => {
     var WhatYouDo = [] as any[];
-    await import(path.join(__dirname, "..", "..", "data", `wwyd-${guildDb.language}.json`)).then((value: any) => {
-      WhatYouDo = value.WhatYouDo
+    await import(
+      path.join(__dirname, "..", "..", "data", `wwyd-${guildDb.language}.json`)
+    ).then((value: any) => {
+      WhatYouDo = value.WhatYouDo;
     });
 
     const dbquestions = guildDb.customMessages.filter(

@@ -1,26 +1,26 @@
 import { Schema, model } from "mongoose";
 
-export interface IGuildModel{
-  guildID: string,
-  language: string,
-  welcome: boolean,
-  welcomeChannel: string,
-  welcomePing: boolean,
-  welcomeType: string,
-  dailyMsg: boolean,
-  dailyChannel: string,
-  dailyRole: string,
-  dailyTimezone: string,
-  dailyInterval: string,
-  dailyThread: boolean,
-  replay: boolean,
-  replayCooldown: number,
-  replayType: string,
-  replayChannels: any,
-  botJoined: number,
-  customMessages: any,
-  customTypes: string,
-  debugMode: boolean
+export interface IGuildModel {
+  guildID: string;
+  language: string;
+  welcome: boolean;
+  welcomeChannel: string;
+  welcomePing: boolean;
+  welcomeType: string;
+  dailyMsg: boolean;
+  dailyChannel: string;
+  dailyRole: string;
+  dailyTimezone: string;
+  dailyInterval: string;
+  dailyThread: boolean;
+  replay: boolean;
+  replayCooldown: number;
+  replayType: string;
+  replayChannels: any;
+  botJoined: number;
+  customMessages: any;
+  customTypes: string;
+  debugMode: boolean;
 }
 
 const guildProfileSchema = new Schema(
@@ -114,4 +114,7 @@ const guildProfileSchema = new Schema(
   { timestamps: true },
 );
 
-export const GuildModel = model<IGuildModel>("guildProfile", guildProfileSchema);
+export const GuildModel = model<IGuildModel>(
+  "guildProfile",
+  guildProfileSchema,
+);

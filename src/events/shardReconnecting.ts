@@ -3,8 +3,8 @@ import WouldYou from "../util/wouldYou";
 
 export const handleShardReconnecting = async (client: WouldYou, id: number) => {
   console.log(
-    `${white("Would You?")} ${gray(
-      ">",
-    )} ${green(`Shard ${id} reconnecting...`)}`,
+    `${white("Would You?")} ${gray(">")} ${green(
+      `Shard ${id} reconnecting...`,
+    )}`,
   );
 };

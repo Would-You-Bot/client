@@ -42,11 +42,13 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
 
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     let typeEmbed;
 
     if (
-      (interaction.member?.permissions as Readonly<PermissionsBitField>).has(PermissionFlagsBits.ManageGuild) ||
+      (interaction.member?.permissions as Readonly<PermissionsBitField>).has(
+        PermissionFlagsBits.ManageGuild,
+      ) ||
       global.checkDebug(guildDb, interaction?.user?.id)
     ) {
       switch (interaction.options.getSubcommand()) {
@@ -109,7 +111,7 @@ const command: ChatInputCommand = {
           break;
       }
 
-     interaction
+      interaction
         .reply({
           embeds: [typeEmbed as EmbedBuilder],
           ephemeral: true,
@@ -117,7 +119,7 @@ const command: ChatInputCommand = {
         .catch((err) => {
           Sentry.captureException(err);
         });
-        return;
+      return;
     } else {
       const errorembed = new EmbedBuilder()
         .setColor("#F00505")
@@ -134,7 +136,7 @@ const command: ChatInputCommand = {
         .catch((err) => {
           Sentry.captureException(err);
         });
-        return;
+      return;
     }
   },
 };

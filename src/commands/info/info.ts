@@ -20,7 +20,8 @@ const command: ChatInputCommand = {
    */
   execute: async (interaction, client, guildDb) => {
     const unixstamp =
-      Math.floor((Date.now() / 1000) | 0) - Math.floor(client.uptime || 0 / 1000);
+      Math.floor((Date.now() / 1000) | 0) -
+      Math.floor(client.uptime || 0 / 1000);
 
     function round(num: number) {
       const m = Number((Math.abs(num) * 100).toPrecision(15));

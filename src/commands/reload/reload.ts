@@ -26,7 +26,7 @@ const command: ChatInputCommand = {
    * @param {WouldYou} client
    */
 
-  execute: async(interaction, client) => {
+  execute: async (interaction, client) => {
     // Using deferReply here gives the bot more time to reload the command and reply to the interaction
     await interaction.deferReply({ ephemeral: true });
 
@@ -35,7 +35,7 @@ const command: ChatInputCommand = {
       "347077478726238228",
       "834549048764661810",
     ];
-    if (!users.find((e) => e === interaction.user.id)){
+    if (!users.find((e) => e === interaction.user.id)) {
       interaction.editReply({
         content:
           "Only Would You develpers have access to this command! | Nur Would You Entwickler haben Zugriff auf diesen Befehl!",
@@ -43,7 +43,7 @@ const command: ChatInputCommand = {
       return;
     }
     const cmd = interaction.options.getString("options") as any;
-    if (!cat.find((e) => e.replace(".js", "") === cmd.toLowerCase())){
+    if (!cat.find((e) => e.replace(".js", "") === cmd.toLowerCase())) {
       interaction.editReply({
         content: "You must provide a valid command to reload it!",
       });

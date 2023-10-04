@@ -20,8 +20,8 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
 
-  execute: async(interaction, client, guildDb) => {
-    console.log("in")
+  execute: async (interaction, client, guildDb) => {
+    console.log("in");
     const guideembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({

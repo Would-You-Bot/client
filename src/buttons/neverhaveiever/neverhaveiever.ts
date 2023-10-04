@@ -4,7 +4,7 @@ import {
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
-}from "discord.js";
+} from "discord.js";
 import Sentry from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { Button } from "../../models";
@@ -12,12 +12,12 @@ import path from "path";
 
 const button: Button = {
   name: "neverhaveiever",
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     if (
-      !((interaction.channel as any)
+      !(interaction.channel as any)
         .permissionsFor(interaction.user.id)
-        .has(PermissionFlagsBits.SendMessages))
-    ){
+        .has(PermissionFlagsBits.SendMessages)
+    ) {
       interaction.reply({
         content:
           "You don't have permission to use this button in this channel!",
@@ -30,8 +30,10 @@ const button: Button = {
     var Young = null as any;
     var Food = null as any;
     var RuleBreak = null as any;
-    
-    await import(path.join(__dirname, "..", "..", "data", `nhie-${guildDb.language}.json`)).then((value: any) => {
+
+    await import(
+      path.join(__dirname, "..", "..", "data", `nhie-${guildDb.language}.json`)
+    ).then((value: any) => {
       Funny = value.Funny;
       Basic = value.Basic;
       Young = value.Young;

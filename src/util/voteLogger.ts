@@ -1,10 +1,15 @@
 import "dotenv/config";
 import * as Topgg from "@top-gg/sdk";
 import Sentry from "@sentry/node";
-import { WebhookClient, ActionRowBuilder, ButtonBuilder, hideLinkEmbed } from "discord.js";
+import {
+  WebhookClient,
+  ActionRowBuilder,
+  ButtonBuilder,
+  hideLinkEmbed,
+} from "discord.js";
 import express from "express";
 import axios from "axios";
-import {white, gray, green} from "chalk-advanced";
+import { white, gray, green } from "chalk-advanced";
 import WouldYou from "./wouldYou";
 const app = express();
 const webhook = new Topgg.Webhook(process.env.TOPGG_WEBHOOK);
@@ -20,9 +25,9 @@ export default class VoteLogger {
 
     this.getVotes().then(() => {
       console.log(
-        `${white("Would You?")} ${gray(
-          ">",
-        )} ${green("Successfully updated votes")}`,
+        `${white("Would You?")} ${gray(">")} ${green(
+          "Successfully updated votes",
+        )}`,
       );
     });
 
@@ -30,9 +35,9 @@ export default class VoteLogger {
       () => {
         this.getVotes().then(() => {
           console.log(
-            `${white("Would You?")} ${gray(
-              ">",
-            )} ${green("Successfully updated votes")}`,
+            `${white("Would You?")} ${gray(">")} ${green(
+              "Successfully updated votes",
+            )}`,
           );
         });
       },
@@ -106,9 +111,9 @@ export default class VoteLogger {
         });
 
         console.log(
-          `${white("Would You?")} ${gray(
-            ">",
-          )} ${green(`${userdata.tag} voted for me!`)}`,
+          `${white("Would You?")} ${gray(">")} ${green(
+            `${userdata.tag} voted for me!`,
+          )}`,
         );
 
         webhookClient
@@ -130,4 +135,4 @@ export default class VoteLogger {
 
     app.listen(5643);
   }
-};
+}

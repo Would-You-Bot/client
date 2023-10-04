@@ -1,6 +1,11 @@
 // Main Bot Librarys
-import { Client, GatewayIntentBits, Collection, LimitedCollection} from "discord.js";
-import { getInfo, ClusterClient} from "discord-hybrid-sharding";
+import {
+  Client,
+  GatewayIntentBits,
+  Collection,
+  LimitedCollection,
+} from "discord.js";
+import { getInfo, ClusterClient } from "discord-hybrid-sharding";
 
 // Utils and Config
 import { gray, white, green } from "chalk-advanced";
@@ -44,7 +49,7 @@ export default class WouldYou extends Client {
   readonly dailyMessage: DailyMessage;
   readonly voting: Voting;
   public used: any;
-  
+
   constructor() {
     super({
       intents: [
@@ -74,13 +79,12 @@ export default class WouldYou extends Client {
       shards: getInfo().SHARD_LIST,
       shardCount: getInfo().TOTAL_SHARDS,
     });
-    
+
     // It's creating a new collection for the commands.
     const commandPath = path.join(__dirname, "..", "commands"),
-    buttonPath = path.join(__dirname, "..", "buttons");
+      buttonPath = path.join(__dirname, "..", "buttons");
     this.commands = fileToCollection<ChatInputCommand>(commandPath);
     this.buttons = fileToCollection<Button>(buttonPath);
-
 
     // Allows for paginating
     this.paginate = new Collection();
@@ -91,26 +95,24 @@ export default class WouldYou extends Client {
 
     // Init the cluster client
     this.cluster = new ClusterClient(this);
- 
+
     // The database handler
     this.database = new DatabaseHandler(process.env.MONGO_URI as string);
     this.database.connectToDatabase().then(() => {
       console.log(
-        `${white("Would You?")} ${gray(
-          ">",
-        )} ${green("Successfully connected to the database")}`,
+        `${white("Would You?")} ${gray(">")} ${green(
+          "Successfully connected to the database",
+        )}`,
       );
     });
     this.database.startSweeper(this);
 
-    
     // The translations handler
     this.translation = new TranslationHandler();
 
     // Webhook Manager
     this.webhookHandler = new WebhookHandler(this);
 
-    
     // Keep Alive system after the necessary things that are allowed to crash are loaded
     this.keepAlive = new KeepAlive(this);
     this.keepAlive.start();
@@ -131,11 +133,15 @@ export default class WouldYou extends Client {
     this.on("guildCreate", (guild) => handleGuildCreate(this, guild));
     this.on("ready", (client) => handleReady(client as WouldYou));
     this.on("shardReady", (shardId) => handleShardReady(this, shardId));
-    this.on("shardReconnecting", (shardId) => handleShardReconnecting(this, shardId));
+    this.on("shardReconnecting", (shardId) =>
+      handleShardReconnecting(this, shardId),
+    );
     this.on("shardResume", (shardId) => handleShardResume(this, shardId));
     this.on("guildDelete", (guild) => handleGuildDelete(this, guild));
     this.on("guildMemberAdd", (member) => handleGuildMemberAdd(this, member));
-    this.on("interactionCreate", (interaction) => handleInteractionCreate(this, interaction));
+    this.on("interactionCreate", (interaction) =>
+      handleInteractionCreate(this, interaction),
+    );
     this.on("messageCreate", (message) => handleMessageCreate(this, message));
 
     // Daily Message
@@ -152,4 +158,4 @@ export default class WouldYou extends Client {
   loginBot() {
     return this.login(process.env.DISCORD_TOKEN);
   }
-};
+}

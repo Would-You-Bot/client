@@ -1,4 +1,9 @@
-import { ButtonBuilder, ActionRowBuilder, EmbedBuilder, ButtonStyle }from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  ButtonStyle,
+} from "discord.js";
 import { Button } from "../../models";
 const modalObject = {
   title: "Replay Cooldown",
@@ -24,7 +29,7 @@ function isNumericRegex(str: string) {
 
 const button: Button = {
   name: "replayCooldown",
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
@@ -88,7 +93,11 @@ const button: Button = {
                 "Settings.button.replayCooldown",
               ),
             )
-            .setStyle(guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary),
+            .setStyle(
+              guildDb.replayCooldown
+                ? ButtonStyle.Success
+                : ButtonStyle.Secondary,
+            ),
           new ButtonBuilder()
             .setCustomId("replayType")
             .setLabel(

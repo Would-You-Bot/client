@@ -3,8 +3,6 @@ import { white, gray, green } from "chalk-advanced";
 
 export const handleShardResume = async (client: WouldYou, id: number) => {
   console.log(
-    `${white("Would You?")} ${gray(
-      ">",
-    )} ${green(`Shard ${id} resumed`)}`,
+    `${white("Would You?")} ${gray(">")} ${green(`Shard ${id} resumed`)}`,
   );
 };

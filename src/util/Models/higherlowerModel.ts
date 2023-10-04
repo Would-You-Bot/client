@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
 
-export interface IHigherLowerModel{
-  creator: string,
-  created: Date,
-  id: string,
-  guild: string,
-  items: any,
-  score: number
+export interface IHigherLowerModel {
+  creator: string;
+  created: Date;
+  id: string;
+  guild: string;
+  items: any;
+  score: number;
 }
 
 const higherlowerModelSchema = new Schema(
@@ -24,4 +24,7 @@ const higherlowerModelSchema = new Schema(
   { timestamps: true },
 );
 
-export const HigherlowerModel = model<IHigherLowerModel>("higherlowerModel", higherlowerModelSchema);
+export const HigherlowerModel = model<IHigherLowerModel>(
+  "higherlowerModel",
+  higherlowerModelSchema,
+);

@@ -15,8 +15,8 @@ import { Button } from "../../models";
 
 const button: Button = {
   name: "higher",
-  execute: async(interaction, client, guildDb) => {
-    if (interaction.message.interaction?.user.id !== interaction.user.id){
+  execute: async (interaction, client, guildDb) => {
+    if (interaction.message.interaction?.user.id !== interaction.user.id) {
       interaction.reply({
         content: client.translation.get(
           guildDb?.language,
@@ -38,19 +38,21 @@ const button: Button = {
     if (
       game &&
       game?.items.current.value >
-      game?.items.history[game.items.history.length - 1].value
+        game?.items.history[game.items.history.length - 1].value
     ) {
       game.score += 1;
       game.items.history.push(game.items.current);
 
       var gameDataRaw = {} as any;
-      await import(path.join(__dirname, "..", "..", "data", "hl-en_EN.json")).then((value: any) => {
-        gameDataRaw = value
+      await import(
+        path.join(__dirname, "..", "..", "data", "hl-en_EN.json")
+      ).then((value: any) => {
+        gameDataRaw = value;
       });
 
       const gameData = gameDataRaw.data;
 
-      if (game.items.history.length == gameData.length){
+      if (game.items.history.length == gameData.length) {
         interaction.followUp({
           content: "There is no more data available!",
           ephemeral: true,
@@ -105,16 +107,17 @@ const button: Button = {
         .setTimestamp();
 
       gameImage.build(game.score).then((image) => {
-        const guessRow = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-          new ButtonBuilder()
-            .setCustomId(`higher_${game?.id}`)
-            .setLabel("Higher")
-            .setStyle(ButtonStyle.Success),
-          new ButtonBuilder()
-            .setCustomId(`lower_${game?.id}`)
-            .setLabel("Lower")
-            .setStyle(ButtonStyle.Danger),
-        );
+        const guessRow =
+          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+            new ButtonBuilder()
+              .setCustomId(`higher_${game?.id}`)
+              .setLabel("Higher")
+              .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+              .setCustomId(`lower_${game?.id}`)
+              .setLabel("Lower")
+              .setStyle(ButtonStyle.Danger),
+          );
 
         interaction.editReply({
           embeds: [gameEmbed],

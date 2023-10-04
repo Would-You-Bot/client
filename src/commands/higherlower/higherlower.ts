@@ -32,7 +32,7 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
 
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     const initembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setTitle(
@@ -49,10 +49,12 @@ const command: ChatInputCommand = {
         iconURL: interaction.user.avatarURL() || "",
       });
 
-    interaction.reply({ embeds: [initembed] }).then(async() => {
+    interaction.reply({ embeds: [initembed] }).then(async () => {
       var gameDataRaw = {} as any;
-      await import(path.join(__dirname, "..", "..", "data", "hl-en_EN.json")).then((value: any) => {
-        gameDataRaw = value
+      await import(
+        path.join(__dirname, "..", "..", "data", "hl-en_EN.json")
+      ).then((value: any) => {
+        gameDataRaw = value;
       });
 
       const gameData = gameDataRaw.data;
@@ -113,16 +115,17 @@ const command: ChatInputCommand = {
         .setTimestamp();
 
       gameImage.build(game.score).then(async (image) => {
-        const guessRow = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-          new ButtonBuilder()
-            .setCustomId(`higher_${game.id}`)
-            .setLabel("Higher")
-            .setStyle(ButtonStyle.Success),
-          new ButtonBuilder()
-            .setCustomId(`lower_${game.id}`)
-            .setLabel("Lower")
-            .setStyle(ButtonStyle.Danger),
-        );
+        const guessRow =
+          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+            new ButtonBuilder()
+              .setCustomId(`higher_${game.id}`)
+              .setLabel("Higher")
+              .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+              .setCustomId(`lower_${game.id}`)
+              .setLabel("Lower")
+              .setStyle(ButtonStyle.Danger),
+          );
 
         interaction.editReply({
           embeds: [gameEmbed],

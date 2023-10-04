@@ -54,7 +54,7 @@ const command: ChatInputCommand = {
       .catch((err) => {
         Sentry.captureException(err);
       });
-      return;
+    return;
   },
 };
 

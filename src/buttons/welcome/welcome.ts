@@ -1,9 +1,15 @@
-import { ButtonBuilder, ActionRowBuilder, EmbedBuilder, MessageActionRowComponentBuilder, ButtonStyle } from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  MessageActionRowComponentBuilder,
+  ButtonStyle,
+} from "discord.js";
 import { Button } from "../../models";
 
 const button: Button = {
   name: "welcome",
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     const check = guildDb.welcome;
 
     const welcomes = new EmbedBuilder()
@@ -48,57 +54,65 @@ const button: Button = {
         iconURL: client.user?.avatarURL() || undefined,
       });
 
-    const welcomeButtons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId("welcome")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.welcome",
+    const welcomeButtons =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setCustomId("welcome")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.welcome",
+              ),
+            )
+            .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success),
+          new ButtonBuilder()
+            .setCustomId("welcomeChannel")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.welcomeChannel",
+              ),
+            )
+            .setStyle(
+              guildDb.welcomeChannel
+                ? ButtonStyle.Success
+                : ButtonStyle.Secondary,
             ),
-          )
-          .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success),
-        new ButtonBuilder()
-          .setCustomId("welcomeChannel")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.welcomeChannel",
+        ),
+      welcomeButtons2 =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setCustomId("welcomePing")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.welcomePing",
+              ),
+            )
+            .setStyle(
+              guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
-          )
-          .setStyle(guildDb.welcomeChannel ? ButtonStyle.Success : ButtonStyle.Secondary),
-      ),
-      welcomeButtons2 = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId("welcomePing")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.welcomePing",
-            ),
-          )
-          .setStyle(guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary),
-        new ButtonBuilder()
-          .setCustomId("welcomeType")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyType",
-            ),
-          )
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji("📝"),
-        new ButtonBuilder()
-          .setCustomId("welcomeTest")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.welcomeTest",
-            ),
-          )
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji("▶"),
-      );
+          new ButtonBuilder()
+            .setCustomId("welcomeType")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyType",
+              ),
+            )
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji("📝"),
+          new ButtonBuilder()
+            .setCustomId("welcomeTest")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.welcomeTest",
+              ),
+            )
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji("▶"),
+        );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       welcome: !check,
@@ -109,8 +123,8 @@ const button: Button = {
       embeds: [welcomes],
       components: [welcomeButtons, welcomeButtons2],
       options: {
-        ephemeral: true
-      }
+        ephemeral: true,
+      },
     });
     return;
   },

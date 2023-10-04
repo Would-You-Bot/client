@@ -1,9 +1,15 @@
-import { ButtonBuilder, ActionRowBuilder, EmbedBuilder, MessageActionRowComponentBuilder, ButtonStyle } from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  MessageActionRowComponentBuilder,
+  ButtonStyle,
+} from "discord.js";
 import { Button } from "../../models";
 
 const button: Button = {
   name: "selectMenuChannel",
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     const newChannel = (interaction as any).values[0];
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
@@ -40,67 +46,73 @@ const button: Button = {
       )
       .setColor("#0598F6");
 
-    const dailyButtons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId("dailyMsg")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyMsg",
+    const dailyButtons =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setCustomId("dailyMsg")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyMsg",
+              ),
+            )
+            .setStyle(
+              guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
-          )
-          .setStyle(guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary),
-        new ButtonBuilder()
-          .setCustomId("dailyChannel")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyChannel",
+          new ButtonBuilder()
+            .setCustomId("dailyChannel")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyChannel",
+              ),
+            )
+            .setStyle(ButtonStyle.Success),
+          new ButtonBuilder()
+            .setCustomId("dailyType")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyType",
+              ),
+            )
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji("📝"),
+        ),
+      dailyButtons2 =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setCustomId("dailyTimezone")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyTimezone",
+              ),
+            )
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji("🌍"),
+          new ButtonBuilder()
+            .setCustomId("dailyRole")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyRole",
+              ),
+            )
+            .setStyle(
+              guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
-          )
-          .setStyle(ButtonStyle.Success),
-        new ButtonBuilder()
-          .setCustomId("dailyType")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyType",
-            ),
-          )
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji("📝"),
-      ),
-      dailyButtons2 = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId("dailyTimezone")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyTimezone",
-            ),
-          )
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji("🌍"),
-        new ButtonBuilder()
-          .setCustomId("dailyRole")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyRole",
-            ),
-          )
-          .setStyle(guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary),
-        new ButtonBuilder()
-          .setCustomId("dailyInterval")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyInterval",
-            ),
-          )
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji("⏰"),
-      );
+          new ButtonBuilder()
+            .setCustomId("dailyInterval")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyInterval",
+              ),
+            )
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji("⏰"),
+        );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       dailyChannel: newChannel,
@@ -111,8 +123,8 @@ const button: Button = {
       embeds: [dailyMsgs],
       components: [dailyButtons, dailyButtons2],
       options: {
-        ephemeral: true
-      }
+        ephemeral: true,
+      },
     });
     return;
   },

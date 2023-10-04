@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
 
-export interface IVoteModel{
-  id: string,
-  guild: string,
-  channel: string,
-  type: string,
-  votes: any,
-  until: any
+export interface IVoteModel {
+  id: string;
+  guild: string;
+  channel: string;
+  type: string;
+  votes: any;
+  until: any;
 }
 const voteModelSchema = new Schema(
   {

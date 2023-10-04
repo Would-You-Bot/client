@@ -31,4 +31,4 @@ export default class CooldownHandler {
   stopSweeper() {
     return clearInterval(this.cooldownSweeperInterval);
   }
-};
+}

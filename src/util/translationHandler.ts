@@ -147,9 +147,12 @@ export default class TranslationHandler {
     if (!c) return path;
 
     if (data) {
-      return c.replace(/{(\w+)}/g, (match: any, key: any) => data[key] ?? match);
+      return c.replace(
+        /{(\w+)}/g,
+        (match: any, key: any) => data[key] ?? match,
+      );
     }
 
     return c;
   }
-};
+}

@@ -9,7 +9,9 @@ export const handleGuildCreate = async (client: WouldYou, guild: any) => {
   // Create and save the settings in the cache so that we don't need to do that at a command run
   await client.database.getGuild(guild?.id, true);
 
-  const webhookPrivate = new WebhookClient({ url: process.env.LOG_PRIVATE as string });
+  const webhookPrivate = new WebhookClient({
+    url: process.env.LOG_PRIVATE as string,
+  });
 
   let features;
   if (
@@ -50,7 +52,9 @@ export const handleGuildCreate = async (client: WouldYou, guild: any) => {
   });
 
   if (!global?.devBot) {
-    const webhookClient = new WebhookClient({ url: process.env.LOG_GUILDS as string });
+    const webhookClient = new WebhookClient({
+      url: process.env.LOG_GUILDS as string,
+    });
 
     await webhookClient
       .send({

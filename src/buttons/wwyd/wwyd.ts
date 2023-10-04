@@ -4,7 +4,7 @@ import {
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
-}from "discord.js";
+} from "discord.js";
 import Sentry from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { Button } from "../../models";
@@ -12,7 +12,7 @@ import path from "path";
 
 const button: Button = {
   name: "wwyd",
-  execute: async(interaction: any, client, guildDb) => {
+  execute: async (interaction: any, client, guildDb) => {
     if (
       !interaction.channel
         .permissionsFor(interaction.user.id)
@@ -24,10 +24,12 @@ const button: Button = {
         ephemeral: true,
       });
 
-      var WhatYouDo = [] as any[];
-      await import(path.join(__dirname, "..", "..", "data", `wwyd-${guildDb.language}.json`)).then((value: any) => {
-        WhatYouDo = value.WhatYouDo
-      });
+    var WhatYouDo = [] as any[];
+    await import(
+      path.join(__dirname, "..", "..", "data", `wwyd-${guildDb.language}.json`)
+    ).then((value: any) => {
+      WhatYouDo = value.WhatYouDo;
+    });
     const dbquestions = guildDb.customMessages.filter(
       (c: any) => c.type !== "nsfw" && c.type === "wwyd",
     );
@@ -89,7 +91,7 @@ const button: Button = {
       .catch((err: any) => {
         Sentry.captureException(err);
       });
-      return;
+    return;
   },
 };
 

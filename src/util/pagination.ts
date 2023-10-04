@@ -7,8 +7,16 @@ export default class Paginator {
   private user: any;
   private page: number;
   private timeout: number;
-  
-  constructor({ user, client, timeout }:  {user: any, client: WouldYou, timeout: any}) {
+
+  constructor({
+    user,
+    client,
+    timeout,
+  }: {
+    user: any;
+    client: WouldYou;
+    timeout: any;
+  }) {
     this.pages = [];
     this.client = client;
     this.user = user;
@@ -29,25 +37,30 @@ export default class Paginator {
     if (!this.pages.length) return;
 
     var pFirst = new ButtonBuilder()
-    .setDisabled(true)
-    .setCustomId("paginateFirst")
-    .setLabel("⏪")
-    .setStyle(ButtonStyle.Secondary);
+      .setDisabled(true)
+      .setCustomId("paginateFirst")
+      .setLabel("⏪")
+      .setStyle(ButtonStyle.Secondary);
     var pPrev = new ButtonBuilder()
-    .setDisabled(true)
-    .setCustomId("paginatePrev")
-    .setLabel("◀️")
-    .setStyle(ButtonStyle.Secondary);
+      .setDisabled(true)
+      .setCustomId("paginatePrev")
+      .setLabel("◀️")
+      .setStyle(ButtonStyle.Secondary);
     var pNext = new ButtonBuilder()
-    .setCustomId("paginateNext")
-    .setLabel("▶️")
-    .setStyle(ButtonStyle.Secondary);
+      .setCustomId("paginateNext")
+      .setLabel("▶️")
+      .setStyle(ButtonStyle.Secondary);
     var pLast = new ButtonBuilder()
-    .setCustomId("paginateLast")
-    .setLabel("⏩")
-    .setStyle(ButtonStyle.Secondary);
+      .setCustomId("paginateLast")
+      .setLabel("⏩")
+      .setStyle(ButtonStyle.Secondary);
 
-    const buttons = new ActionRowBuilder().addComponents(pFirst, pPrev, pNext, pLast);
+    const buttons = new ActionRowBuilder().addComponents(
+      pFirst,
+      pPrev,
+      pNext,
+      pLast,
+    );
 
     for (let i = 0; i < this.pages.length; i++) {
       const e = this.pages[i];
@@ -75,4 +88,4 @@ export default class Paginator {
     }, this.timeout);
     this.client.paginate.get(this.user).timeout = time;
   }
-};
+}

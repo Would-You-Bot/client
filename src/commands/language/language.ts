@@ -38,7 +38,11 @@ const command: ChatInputCommand = {
    */
   execute: async (interaction, client, guildDb) => {
     let languageembed;
-    if ((interaction.member?.permissions as Readonly<PermissionsBitField>).has(PermissionFlagsBits.ManageGuild)) {
+    if (
+      (interaction.member?.permissions as Readonly<PermissionsBitField>).has(
+        PermissionFlagsBits.ManageGuild,
+      )
+    ) {
       switch (interaction.options.getString("language")) {
         case "english": {
           await client.database.updateGuild(
@@ -122,7 +126,7 @@ const command: ChatInputCommand = {
         .catch((err) => {
           Sentry.captureException(err);
         });
-        return;
+      return;
     } else {
       const errorembed = new EmbedBuilder()
         .setColor("#F00505")
@@ -131,7 +135,7 @@ const command: ChatInputCommand = {
           client.translation.get(guildDb?.language, "Language.embed.error"),
         );
 
-       interaction
+      interaction
         .reply({
           embeds: [errorembed],
           ephemeral: true,
@@ -139,7 +143,7 @@ const command: ChatInputCommand = {
         .catch((err) => {
           Sentry.captureException(err);
         });
-        return;
+      return;
     }
   },
 };

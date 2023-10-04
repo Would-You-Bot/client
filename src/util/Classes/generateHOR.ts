@@ -190,4 +190,3 @@ export default class HOR {
     return canvasObject.encode("png");
   }
 }
-

@@ -1,9 +1,14 @@
-import { ButtonBuilder, ActionRowBuilder, EmbedBuilder, ButtonStyle } from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  ButtonStyle,
+} from "discord.js";
 import { Button } from "../../models";
 
 const button: Button = {
   name: "replayType",
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     const newType = guildDb.replayType === "Channels" ? "Guild" : "Channels";
     const generalMsg = new EmbedBuilder()
       .setTitle(
@@ -59,7 +64,9 @@ const button: Button = {
             "Settings.button.replayCooldown",
           ),
         )
-        .setStyle(guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary),
+        .setStyle(
+          guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary,
+        ),
       new ButtonBuilder()
         .setCustomId("replayType")
         .setLabel(
@@ -94,10 +101,10 @@ const button: Button = {
       components:
         newType === "Channels"
           ? [generalButtons, chanDelete]
-          : [generalButtons] as any,
+          : ([generalButtons] as any),
       options: {
-        ephemeral: true
-      }
+        ephemeral: true,
+      },
     });
     return;
   },

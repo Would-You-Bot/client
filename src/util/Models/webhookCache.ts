@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
 
-export interface IWebhookCache{
-  channelId: string,
-  webhookId: string,
-  webhookToken: string
+export interface IWebhookCache {
+  channelId: string;
+  webhookId: string;
+  webhookToken: string;
 }
 
 const webhookCacheSchema = new Schema({
@@ -21,4 +21,7 @@ const webhookCacheSchema = new Schema({
   },
 });
 
-export const WebhookCache = model<IWebhookCache>("webhookCache", webhookCacheSchema);
+export const WebhookCache = model<IWebhookCache>(
+  "webhookCache",
+  webhookCacheSchema,
+);

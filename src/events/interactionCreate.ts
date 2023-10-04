@@ -1,7 +1,10 @@
 import { UserModel } from "../util/Models/userModel";
 import WouldYou from "../util/wouldYou";
 
-export const handleInteractionCreate = async (client: WouldYou, interaction: any) => {
+export const handleInteractionCreate = async (
+  client: WouldYou,
+  interaction: any,
+) => {
   const user = await UserModel.findOne({ userID: interaction.user.id });
   const restrict = [
     "dailyChannel",
@@ -62,7 +65,7 @@ export const handleInteractionCreate = async (client: WouldYou, interaction: any
       } as any;
 
       if (!user) {
-        console.log("yeah")
+        console.log("yeah");
         await UserModel.create({
           userID: interaction.user.id,
           [statsMap[interaction.commandName]]: 1,
@@ -214,7 +217,9 @@ export const handleInteractionCreate = async (client: WouldYou, interaction: any
         ) {
           if (
             guildDb.replayType === "Channels" &&
-            guildDb.replayChannels.find((x: any) => x.id === interaction.channel.id)
+            guildDb.replayChannels.find(
+              (x: any) => x.id === interaction.channel.id,
+            )
           ) {
             client.used.set(
               `${interaction.user.id}-${interaction.channel.id}`,

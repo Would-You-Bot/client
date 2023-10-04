@@ -21,7 +21,21 @@ export default class Voting {
     this._cache = new Map();
   }
 
-  async saveVoting({ guildId, type, until, channelId, op_one, op_two }: {guildId: string, type: any, until: any, channelId: string, op_one: any, op_two: any}) {
+  async saveVoting({
+    guildId,
+    type,
+    until,
+    channelId,
+    op_one,
+    op_two,
+  }: {
+    guildId: string;
+    type: any;
+    until: any;
+    channelId: string;
+    op_one: any;
+    op_two: any;
+  }) {
     const id = uuidv4();
 
     const vote = new VoteModel({
@@ -225,10 +239,10 @@ export default class Voting {
       }
 
       console.log(
-        `${white("Would You?")} ${gray(
-          ">",
-        )} ${green("Successfully loaded votes from database")}`,
+        `${white("Would You?")} ${gray(">")} ${green(
+          "Successfully loaded votes from database",
+        )}`,
       );
     }, 500);
   }
-};
+}

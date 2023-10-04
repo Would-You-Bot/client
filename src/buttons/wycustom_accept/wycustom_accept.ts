@@ -1,9 +1,14 @@
-import { ButtonBuilder, ActionRowBuilder, EmbedBuilder, MessageActionRowComponentBuilder } from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+  MessageActionRowComponentBuilder,
+} from "discord.js";
 import { Button } from "../../models";
 
 const button: Button = {
   name: "wycustom_accept",
-  execute: async(interaction, client, guildDb) => {
+  execute: async (interaction, client, guildDb) => {
     const typeEmbed = new EmbedBuilder()
       .setTitle(
         client.translation.get(
@@ -17,18 +22,19 @@ const button: Button = {
         iconURL: client.user?.avatarURL() || undefined,
       });
 
-    const button = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      new ButtonBuilder()
-        .setLabel("Accept")
-        .setStyle(4)
-        .setDisabled(true)
-        .setCustomId("accept"),
-      new ButtonBuilder()
-        .setLabel("Decline")
-        .setStyle(2)
-        .setDisabled(true)
-        .setCustomId("decline"),
-    );
+    const button =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setLabel("Accept")
+          .setStyle(4)
+          .setDisabled(true)
+          .setCustomId("accept"),
+        new ButtonBuilder()
+          .setLabel("Decline")
+          .setStyle(2)
+          .setDisabled(true)
+          .setCustomId("decline"),
+      );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       customMessages: [],

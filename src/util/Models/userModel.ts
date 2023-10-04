@@ -1,40 +1,40 @@
 import { Schema, model } from "mongoose";
 
-export interface IUserModel{
-  userID: string,
+export interface IUserModel {
+  userID: string;
   wouldyourather: {
-    yes: number,
-    no: number,
+    yes: number;
+    no: number;
     used: {
-      command: number,
-      replay: number
-    }
-  },
+      command: number;
+      replay: number;
+    };
+  };
   neverhaveiever: {
-    yes: number,
-    no: number,
+    yes: number;
+    no: number;
     used: {
-      command: number,
-      replay: number
-    }
-  },
+      command: number;
+      replay: number;
+    };
+  };
   higherlower: {
-    yes: number,
-    no: number,
-    highscore: number,
+    yes: number;
+    no: number;
+    highscore: number;
     used: {
-      command: number,
-      replay: number
-    }
-  },
+      command: number;
+      replay: number;
+    };
+  };
   whatwouldyoudo: {
-    yes: number,
-    no: number,
+    yes: number;
+    no: number;
     used: {
-      command: number,
-      replay: number
-    }
-  },
+      command: number;
+      replay: number;
+    };
+  };
 }
 
 const userModelSchema = new Schema(

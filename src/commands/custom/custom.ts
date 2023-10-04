@@ -24,7 +24,7 @@ function makeID(length: number) {
   return result;
 }
 
-const command : ChatInputCommand = {
+const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("custom")
@@ -108,7 +108,9 @@ const command : ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     let typeEmbed, message: any;
     if (
-      (interaction?.member?.permissions as Readonly<PermissionsBitField>).has(PermissionFlagsBits.ManageGuild) ||
+      (interaction?.member?.permissions as Readonly<PermissionsBitField>).has(
+        PermissionFlagsBits.ManageGuild,
+      ) ||
       global.checkDebug(guildDb, interaction?.user?.id)
     ) {
       switch (interaction.options.getSubcommand()) {
@@ -122,10 +124,12 @@ const command : ChatInputCommand = {
                   "wyCustom.error.maximum",
                 ),
               });
-              return;
+            return;
           }
 
-          const option = interaction?.options?.getString("options")?.toLowerCase();
+          const option = interaction?.options
+            ?.getString("options")
+            ?.toLowerCase();
           message = interaction.options.getString("message");
 
           let newID = makeID(6);
@@ -184,7 +188,11 @@ const command : ChatInputCommand = {
               iconURL: client.user?.avatarURL() || undefined,
             });
 
-          if (!guildDb.customMessages.find((c: any) => c.id.toString() === message)){
+          if (
+            !guildDb.customMessages.find(
+              (c: any) => c.id.toString() === message,
+            )
+          ) {
             interaction.reply({
               ephemeral: true,
               content: "There is no custom WouldYou message with that ID!",
@@ -204,7 +212,7 @@ const command : ChatInputCommand = {
           );
           break;
         case "removeall":
-          if (guildDb.customMessages.length === 0){
+          if (guildDb.customMessages.length === 0) {
             interaction.reply({
               content: client.translation.get(
                 guildDb?.language,
@@ -228,16 +236,17 @@ const command : ChatInputCommand = {
               iconURL: client.user?.avatarURL() || undefined,
             });
 
-          const button = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-            new ButtonBuilder()
-              .setLabel("Accept")
-              .setStyle(4)
-              .setCustomId("wycustom_accept"),
-            new ButtonBuilder()
-              .setLabel("Decline")
-              .setStyle(2)
-              .setCustomId("wycustom_decline"),
-          );
+          const button =
+            new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+              new ButtonBuilder()
+                .setLabel("Accept")
+                .setStyle(4)
+                .setCustomId("wycustom_accept"),
+              new ButtonBuilder()
+                .setLabel("Decline")
+                .setStyle(2)
+                .setCustomId("wycustom_decline"),
+            );
 
           interaction.reply({
             embeds: [typeEmbed],
@@ -246,7 +255,7 @@ const command : ChatInputCommand = {
           });
           break;
         case "view":
-          if (guildDb.customMessages.length === 0){
+          if (guildDb.customMessages.length === 0) {
             interaction.reply({
               ephemeral: true,
               content: client.translation.get(
@@ -257,14 +266,13 @@ const command : ChatInputCommand = {
             return;
           }
 
-          if (client.paginate.get(interaction.user.id)){
+          if (client.paginate.get(interaction.user.id)) {
             interaction.reply({
               content: `${client.translation.get(
                 guildDb?.language,
                 "wyCustom.error.paginate",
-              )} [Link](https://canary.discord.com/channels/${
-                interaction.guild?.id
-              }/${client.paginate.get(interaction.user.id).channel}/${
+              )} [Link](https://canary.discord.com/channels/${interaction.guild
+                ?.id}/${client.paginate.get(interaction.user.id).channel}/${
                 client.paginate.get(interaction.user.id).message
               })`,
               ephemeral: true,
@@ -280,7 +288,7 @@ const command : ChatInputCommand = {
 
           if (
             guildDb.customMessages.filter(
-              (c: any) => c.type === "neverhaveiever"
+              (c: any) => c.type === "neverhaveiever",
             ).length > 0
           ) {
             let data: any;
@@ -326,10 +334,10 @@ const command : ChatInputCommand = {
 
           if (
             guildDb.customMessages.filter(
-              (c: any) => c.type === "wouldyourather"
+              (c: any) => c.type === "wouldyourather",
             ).length > 0
           ) {
-            let data : any;
+            let data: any;
             data = guildDb.customMessages
               .filter((c: any) => c.type === "wouldyourather")
               .map(
@@ -370,7 +378,10 @@ const command : ChatInputCommand = {
             );
           }
 
-          if (guildDb.customMessages.filter((c: any) => c.type === "wwyd").length > 0) {
+          if (
+            guildDb.customMessages.filter((c: any) => c.type === "wwyd")
+              .length > 0
+          ) {
             let data: any;
             data = guildDb.customMessages
               .filter((c: any) => c.type === "wwyd")
@@ -416,7 +427,7 @@ const command : ChatInputCommand = {
         case "import":
           const attachemnt = interaction.options.get("attachment");
 
-          if (!attachemnt){
+          if (!attachemnt) {
             interaction.reply({
               ephemeral: true,
               content: client.translation.get(
@@ -426,7 +437,7 @@ const command : ChatInputCommand = {
             });
             return;
           }
-          if (!attachemnt.attachment?.name.includes(".json")){
+          if (!attachemnt.attachment?.name.includes(".json")) {
             interaction.reply({
               ephemeral: true,
               content: client.translation.get(
@@ -447,10 +458,10 @@ const command : ChatInputCommand = {
               },
             })
             .then(async (response) => {
-              if (response.data.length === 0){
+              if (response.data.length === 0) {
                 interaction.editReply({
                   options: {
-                    ephemeral: true
+                    ephemeral: true,
                   },
                   content: client.translation.get(
                     guildDb?.language,
@@ -463,10 +474,10 @@ const command : ChatInputCommand = {
                 !response.data.wouldyourather &&
                 !response.data.neverhaveiever &&
                 !response.data.wwyd
-              ){
+              ) {
                 interaction.editReply({
                   options: {
-                    ephemeral: true
+                    ephemeral: true,
                   },
                   content: client.translation.get(
                     guildDb?.language,
@@ -476,29 +487,29 @@ const command : ChatInputCommand = {
                 return;
               }
               if (
-                !(response.data.wouldyourather.length === 0)&&
+                !(response.data.wouldyourather.length === 0) &&
                 !(response.data.neverhaveiever === 0) &&
                 !response.data.wwyd
-              ){
+              ) {
                 interaction.editReply({
                   options: {
-                    ephemeral: true
+                    ephemeral: true,
                   },
                   content: client.translation.get(
                     guildDb?.language,
                     "wyCustom.error.import.att5",
                   ),
                 });
-                return; 
+                return;
               }
               if (
                 response.data.wouldyourather &&
                 response.data.wouldyourather.length > 30 &&
                 !client.voteLogger.votes.has(interaction.user.id)
-              ){
+              ) {
                 interaction.editReply({
                   options: {
-                    ephemeral: true
+                    ephemeral: true,
                   },
                   content: client.translation.get(
                     guildDb?.language,
@@ -511,10 +522,10 @@ const command : ChatInputCommand = {
                 response.data.neverhaveiever &&
                 response.data.neverhaveiever.length > 30 &&
                 !client.voteLogger.votes.has(interaction.user.id)
-              ){
+              ) {
                 interaction.editReply({
                   options: {
-                    ephemeral: true
+                    ephemeral: true,
                   },
                   content: client.translation.get(
                     guildDb?.language,
@@ -528,10 +539,10 @@ const command : ChatInputCommand = {
                 response.data.wwyd &&
                 response.data.wwyd.length > 30 &&
                 !client.voteLogger.votes.has(interaction.user.id)
-              ){
+              ) {
                 interaction.editReply({
                   options: {
-                    ephemeral: true
+                    ephemeral: true,
                   },
                   content: client.translation.get(
                     guildDb?.language,
@@ -554,10 +565,10 @@ const command : ChatInputCommand = {
               if (
                 wouldyourather > 30 &&
                 !client.voteLogger.votes.has(interaction.user.id)
-              ){
+              ) {
                 interaction.editReply({
                   options: {
-                    ephemeral: true
+                    ephemeral: true,
                   },
                   content: client.translation.get(
                     guildDb?.language,
@@ -570,10 +581,10 @@ const command : ChatInputCommand = {
               if (
                 neverhaveiever > 30 &&
                 !client.voteLogger.votes.has(interaction.user.id)
-              ){
+              ) {
                 interaction.editReply({
                   options: {
-                    ephemeral: true
+                    ephemeral: true,
                   },
                   content: client.translation.get(
                     guildDb?.language,
@@ -585,10 +596,10 @@ const command : ChatInputCommand = {
               if (
                 wwyd > 30 &&
                 !client.voteLogger.votes.has(interaction.user.id)
-              ){
+              ) {
                 interaction.editReply({
                   options: {
-                    ephemeral: true
+                    ephemeral: true,
                   },
                   content: client.translation.get(
                     guildDb?.language,
@@ -602,10 +613,10 @@ const command : ChatInputCommand = {
                 if (
                   response.data.wouldyourather.length + wouldyourather > 30 &&
                   !client.voteLogger.votes.has(interaction.user.id)
-                ){
+                ) {
                   interaction.editReply({
                     options: {
-                      ephemeral: true
+                      ephemeral: true,
                     },
                     content: client.translation.get(
                       guildDb?.language,
@@ -628,10 +639,10 @@ const command : ChatInputCommand = {
                 if (
                   response.data.neverhaveiever.length + neverhaveiever > 30 &&
                   !client.voteLogger.votes.has(interaction.user.id)
-                ){
+                ) {
                   interaction.editReply({
                     options: {
-                      ephemeral: true
+                      ephemeral: true,
                     },
                     content: client.translation.get(
                       guildDb?.language,
@@ -655,10 +666,10 @@ const command : ChatInputCommand = {
                 if (
                   response.data.wwyd.length + wwyd > 30 &&
                   !client.voteLogger.votes.has(interaction.user.id)
-                ){
+                ) {
                   interaction.editReply({
                     options: {
-                      ephemeral: true
+                      ephemeral: true,
                     },
                     content: client.translation.get(
                       guildDb?.language,
@@ -688,7 +699,7 @@ const command : ChatInputCommand = {
 
               interaction.editReply({
                 options: {
-                  ephemeral: true
+                  ephemeral: true,
                 },
                 content: client.translation.get(
                   guildDb?.language,
@@ -709,7 +720,7 @@ const command : ChatInputCommand = {
             });
           break;
         case "export":
-          if (guildDb.customMessages.length === 0){
+          if (guildDb.customMessages.length === 0) {
             interaction.reply({
               ephemeral: true,
               content: client.translation.get(
@@ -728,7 +739,9 @@ const command : ChatInputCommand = {
           let neverhaveiever = guildDb.customMessages.filter(
             (c: any) => c.type === "neverhaveiever",
           );
-          let wwyd = guildDb.customMessages.filter((c: any) => c.type === "wwyd");
+          let wwyd = guildDb.customMessages.filter(
+            (c: any) => c.type === "wwyd",
+          );
 
           let text = "{\n";
           let arrays = [];
@@ -809,7 +822,7 @@ const command : ChatInputCommand = {
         .catch((err) => {
           Sentry.captureException(err);
         });
-        return;
+      return;
     }
   },
 };

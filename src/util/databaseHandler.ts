@@ -47,9 +47,9 @@ export default class DatabaseHandler {
       })
       .then(() =>
         console.log(
-          `${white("Database")} ${gray(
-            ">",
-          )} ${green("Successfully loaded database")}`,
+          `${white("Database")} ${gray(">")} ${green(
+            "Successfully loaded database",
+          )}`,
         ),
       );
   }
@@ -107,7 +107,8 @@ export default class DatabaseHandler {
    * @returns {Promise<deleteMany|boolean>}
    */
   async deleteGuild(guildId: number | string, onlyCache = false) {
-    if (this.cache.has(guildId.toString())) this.cache.delete(guildId.toString());
+    if (this.cache.has(guildId.toString()))
+      this.cache.delete(guildId.toString());
 
     return !onlyCache ? this.guildModel.deleteMany({ guildID: guildId }) : true;
   }
@@ -119,7 +120,11 @@ export default class DatabaseHandler {
    * @param {boolean} createIfNotFound create a database entry if not found
    * @returns {Promise<this.guildModel|null>}
    */
-  async updateGuild(guildId: number | string, data = {}, createIfNotFound = false) {
+  async updateGuild(
+    guildId: number | string,
+    data = {},
+    createIfNotFound = false,
+  ) {
     let oldData = await this.getGuild(guildId.toString(), createIfNotFound);
 
     if (oldData) {
@@ -146,4 +151,4 @@ export default class DatabaseHandler {
   async getAll() {
     return this.guildModel.find();
   }
-};
+}

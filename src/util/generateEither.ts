@@ -102,7 +102,11 @@ export default class Either {
     const translation = await Canvas.loadImage(imageFile);
     ctx.drawImage(translation, 0, 0, 600, 300);
 
-    function calcFontSize(textLength: number, fontSize: number, maxLength: number) {
+    function calcFontSize(
+      textLength: number,
+      fontSize: number,
+      maxLength: number,
+    ) {
       let size = fontSize;
       while (textLength > maxLength) {
         size--;
