@@ -119,13 +119,13 @@ export default class WouldYou extends Client {
   }
 
   async initialize(){
-    const commandPath = path.join(__dirname, "..", "commands"),
-    buttonPath = path.join(__dirname, "..", "buttons"),
-    eventPath = path.join(__dirname, "..", "events");
+    function getPath(folder: string): string{
+      return path.join(__dirname, "..", folder);
+    }
 
-    this.commands = await fileToCollection<ChatInputCommand>(commandPath);
-    this.buttons = await fileToCollection<Button>(buttonPath);
-    this.events = await fileToCollection<Event>(eventPath);
+    this.commands = await fileToCollection<ChatInputCommand>(getPath("commands"));
+    this.buttons = await fileToCollection<Button>(getPath("buttons"));
+    this.events = await fileToCollection<Event>(getPath("events"));
 
     this.events.forEach((value, key) => {
       this.on(key, (payload: any) => value.execute(this, payload));

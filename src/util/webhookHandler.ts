@@ -3,9 +3,9 @@ import Sentry from "@sentry/node";
 import { Model } from "mongoose";
 import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
 import WouldYou from "./wouldYou";
-const Cryptr = require("cryptr");
+import Cryptr from "cryptr"
 
-const cryptr = new Cryptr(process.env.ENCRYPTION_KEY);
+const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string);
 
 export default class WebhookHandler {
   private webhooks: Map<string, { id: string; token: string }>;
