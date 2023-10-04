@@ -3,6 +3,7 @@ import "dotenv/config";
 import Sentry from "@sentry/node";
 import WouldYou from "../../util/wouldYou";
 import { Event } from "../../models/event";
+import { getWouldYouRather, getWwyd } from "../../util/Functions/jsonImport";
 
 const event: Event = {
   event: "guildMemberAdd",
@@ -30,12 +31,8 @@ const event: Event = {
         ])
     )
       return;
-    const { General } = await require(
-      `../data/rather-${guildDb.language}.json`,
-    );
-    const { WhatYouDo } = await require(
-      `../data/wwyd-${guildDb.language}.json`,
-    );
+      var General = await getWouldYouRather(guildDb.language);
+      var WhatYouDo = await getWwyd(guildDb.language);
 
     let randomDaily = [];
     if (guildDb.customTypes === "regular") {

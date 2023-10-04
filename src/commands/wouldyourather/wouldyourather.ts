@@ -7,7 +7,7 @@ import {
 import shuffle from "../../util/shuffle";
 import Sentry from "@sentry/node";
 import { ChatInputCommand } from "../../models";
-import path from "path";
+import { getWouldYouRather } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -28,18 +28,7 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    var General = [] as any[];
-    await import(
-      path.join(
-        __dirname,
-        "..",
-        "..",
-        "data",
-        `rather-${guildDb.language}.json`,
-      )
-    ).then((value: any) => {
-      General = value.General;
-    });
+    var General = await getWouldYouRather(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
       (c: any) => c.type !== "nsfw" && c.type === "wouldyourather",

@@ -6,11 +6,11 @@ import {
   AttachmentBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import path from "path";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
 import LOSE from "../../util/Classes/generateLOSE";
 import HOR from "../../util/Classes/generateHOR";
 import { Button } from "../../models";
+import { getHigherLower } from "../../util/Functions/jsonImport";
 
 const button: Button = {
   name: "lower",
@@ -42,14 +42,7 @@ const button: Button = {
       game.score += 1;
       game.items.history.push(game.items.current);
 
-      var gameDataRaw = {} as any;
-      await import(
-        path.join(__dirname, "..", "..", "data", "hl-en_EN.json")
-      ).then((value: any) => {
-        gameDataRaw = value;
-      });
-
-      const gameData = gameDataRaw.data;
+      const gameData = await getHigherLower();
 
       if (game.items.history.length == gameData.length) {
         interaction.followUp({

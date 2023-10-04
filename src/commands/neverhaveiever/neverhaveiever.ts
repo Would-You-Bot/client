@@ -8,7 +8,7 @@ import {
 import Sentry from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { ChatInputCommand } from "../../models";
-import path from "path";
+import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -29,21 +29,8 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    var Funny = null as any;
-    var Basic = null as any;
-    var Young = null as any;
-    var Food = null as any;
-    var RuleBreak = null as any;
 
-    await import(
-      path.join(__dirname, "..", "..", "data", `nhie-${guildDb.language}.json`)
-    ).then((value: any) => {
-      Funny = value.Funny;
-      Basic = value.Basic;
-      Young = value.Young;
-      Food = value.Food;
-      RuleBreak = value.RuleBreak;
-    });
+    var { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
       (c: any) => c.type !== "nsfw" && c.type === "neverhaveiever",

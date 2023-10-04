@@ -7,12 +7,11 @@ import {
   AttachmentBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { readFileSync } from "fs";
-import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import HOR from "../../util/Classes/generateHOR";
 import { ChatInputCommand } from "../../models";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
+import { getHigherLower } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -50,14 +49,7 @@ const command: ChatInputCommand = {
       });
 
     interaction.reply({ embeds: [initembed] }).then(async () => {
-      var gameDataRaw = {} as any;
-      await import(
-        path.join(__dirname, "..", "..", "data", "hl-en_EN.json")
-      ).then((value: any) => {
-        gameDataRaw = value;
-      });
-
-      const gameData = gameDataRaw.data;
+      var gameData = await getHigherLower();
 
       const random = Math.floor(Math.random() * gameData.length);
       let comperator = Math.floor(Math.random() * gameData.length);

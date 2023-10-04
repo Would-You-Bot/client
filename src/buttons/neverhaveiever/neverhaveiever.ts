@@ -8,7 +8,7 @@ import {
 import Sentry from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { Button } from "../../models";
-import path from "path";
+import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
 
 const button: Button = {
   name: "neverhaveiever",
@@ -25,21 +25,7 @@ const button: Button = {
       });
       return;
     }
-    var Funny = null as any;
-    var Basic = null as any;
-    var Young = null as any;
-    var Food = null as any;
-    var RuleBreak = null as any;
-
-    await import(
-      path.join(__dirname, "..", "..", "data", `nhie-${guildDb.language}.json`)
-    ).then((value: any) => {
-      Funny = value.Funny;
-      Basic = value.Basic;
-      Young = value.Young;
-      Food = value.Food;
-      RuleBreak = value.RuleBreak;
-    });
+    var { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
       (c: any) => c.type !== "nsfw" && c.type === "neverhaveiever",

@@ -1,29 +1,13 @@
 import { EmbedBuilder } from "discord.js";
 import Sentry from "@sentry/node";
 import { Button } from "../../models";
-import path from "path";
+import { getWouldYouRather, getWwyd } from "../../util/Functions/jsonImport";
 
 const button: Button = {
   name: "welcomeTest",
   execute: async (interaction, client, guildDb) => {
-    var General = [] as any[];
-    await import(
-      path.join(
-        __dirname,
-        "..",
-        "..",
-        "data",
-        `rather-${guildDb.language}.json`,
-      )
-    ).then((value: any) => {
-      General = value.General;
-    });
-    var WhatYouDo = [] as any[];
-    await import(
-      path.join(__dirname, "..", "..", "data", `wwyd-${guildDb.language}.json`)
-    ).then((value: any) => {
-      WhatYouDo = value.WhatYouDo;
-    });
+    var General = await getWouldYouRather(guildDb.language);
+    var WhatYouDo = await getWwyd(guildDb.language);
 
     let randomDaily = [];
     if (guildDb.customTypes === "regular") {

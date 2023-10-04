@@ -4,7 +4,7 @@ import { white, gray, green } from "chalk-advanced";
 import { CronJob } from "cron";
 import Sentry from "@sentry/node";
 import WouldYou from "./wouldYou";
-
+import { getWouldYouRather, getWwyd } from "./Functions/jsonImport";
 export default class DailyMessage {
   private client: WouldYou;
 
@@ -58,8 +58,8 @@ export default class DailyMessage {
 
         if (!channel?.id) return; // Always directly return before do to many actions
 
-        const { General } = await require(`../data/rather-${db.language}.json`);
-        const { WhatYouDo } = await require(`../data/wwyd-${db.language}.json`);
+        var General = await getWouldYouRather(db.language);
+        var WhatYouDo = await getWwyd(db.language);
 
         let randomDaily = [];
         let dailyId;

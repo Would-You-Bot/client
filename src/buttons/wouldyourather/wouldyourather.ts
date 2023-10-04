@@ -8,7 +8,7 @@ import {
 import Sentry from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { Button } from "../../models";
-import path from "path";
+import { getWouldYouRather } from "../../util/Functions/jsonImport";
 
 const button: Button = {
   name: "wouldyourather",
@@ -24,18 +24,7 @@ const button: Button = {
         ephemeral: true,
       });
 
-    var General = [] as any[];
-    await import(
-      path.join(
-        __dirname,
-        "..",
-        "..",
-        "data",
-        `rather-${guildDb.language}.json`,
-      )
-    ).then((value: any) => {
-      General = value.General;
-    });
+    var General = await getWouldYouRather(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
       (c: any) => c.type !== "nsfw" && c.type === "wouldyourather",
