@@ -32,7 +32,7 @@ export default class WouldYou extends Client {
   public buttons: Collection<string, Button>;
   public events: Collection<string, Event>;
   public used: Map<any, any>;
-  readonly paginate: Collection<any, any>;
+  readonly paginate: Collection<string, any>;
   readonly cluster: ClusterClient<Client>;
   readonly cooldownHandler: CooldownHandler;
   readonly database: DatabaseHandler;

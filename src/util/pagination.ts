@@ -1,9 +1,9 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, MessageActionRowComponentBuilder } from "discord.js";
 import WouldYou from "./wouldYou";
 
 export default class Paginator {
-  private pages: any[];
-  private client: any;
+  private pages: EmbedBuilder[];
+  private client: WouldYou;
   private user: any;
   private page: number;
   private timeout: number;
@@ -15,7 +15,7 @@ export default class Paginator {
   }: {
     user: any;
     client: WouldYou;
-    timeout: any;
+    timeout: number;
   }) {
     this.pages = [];
     this.client = client;
@@ -24,7 +24,7 @@ export default class Paginator {
     this.timeout = timeout;
   }
 
-  add(page: any) {
+  add(page: EmbedBuilder) {
     if (page.length) {
       this.pages.push(page);
       return this;
@@ -55,7 +55,7 @@ export default class Paginator {
       .setLabel("⏩")
       .setStyle(ButtonStyle.Secondary);
 
-    const buttons = new ActionRowBuilder().addComponents(
+    const buttons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       pFirst,
       pPrev,
       pNext,
@@ -66,7 +66,7 @@ export default class Paginator {
       const e = this.pages[i];
       e.data.footer = {
         text: `Would You | Page ${i + 1} / ${this.pages.length}`,
-        iconURL: this.client.user.avatarURL(),
+        icon_url: this.client.user?.avatarURL() || undefined,
       };
     }
     const message = await interaction.reply({

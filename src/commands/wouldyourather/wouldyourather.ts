@@ -88,9 +88,9 @@ const command: ChatInputCommand = {
     const three_minutes = 3 * 60 * 1e3;
 
     const { row, id } = await client.voting.generateVoting(
-      interaction.guildId,
+      interaction.guildId as string,
       interaction.channelId,
-      time < three_minutes ? 0 : ~~((Date.now() + time) / 1000),
+      time < three_minutes ? new Date(0) : new Date(~~((Date.now() + time) / 1000)),
       "wouldyourather",
     );
 

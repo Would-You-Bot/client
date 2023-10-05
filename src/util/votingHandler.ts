@@ -30,11 +30,11 @@ export default class Voting {
     op_two,
   }: {
     guildId: string;
-    type: any;
-    until: any;
+    type: string;
+    until: Date;
     channelId: string;
-    op_one: any;
-    op_two: any;
+    op_one: string[];
+    op_two: string[];
   }) {
     const id = uuidv4();
 
@@ -57,12 +57,12 @@ export default class Voting {
   }
 
   async generateVoting(
-    guildId: any = null,
-    channelId: any = null,
-    until = 0,
-    type: any,
-    op_one?: any,
-    op_tow?: any,
+    guildId: string,
+    channelId: string,
+    until = new Date(0),
+    type: string,
+    op_one?: string[],
+    op_tow?: string[],
   ) {
     let g;
     if (guildId !== null && typeof guildId === "string")

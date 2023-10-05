@@ -1,4 +1,4 @@
-const shuffle = (array: any) => {
+const shuffle = <T>(array: T[]): T[] =>{
   let currentIndex = array.length,
     randomIndex;
 

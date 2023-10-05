@@ -199,7 +199,7 @@ export default class WebhookHandler {
             ),
         );
 
-        return channel.send(message).catch((err: any) => {
+        return channel.send(message).catch((err: Error) => {
           Sentry.captureException(err);
         });
       }

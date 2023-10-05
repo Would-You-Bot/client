@@ -6,6 +6,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   hideLinkEmbed,
+  MessageActionRowComponentBuilder,
 } from "discord.js";
 import express from "express";
 import axios from "axios";
@@ -17,7 +18,7 @@ const webhook = new Topgg.Webhook(process.env.TOPGG_WEBHOOK);
 export default class VoteLogger {
   private c: WouldYou;
   private api: Topgg.Api;
-  public votes: Map<string, any>;
+  public votes: Map<string, Topgg.ShortUser>;
   constructor(c: WouldYou) {
     this.c = c;
     if (!process.env.TOPGG_TOKEN) return;
@@ -97,7 +98,7 @@ export default class VoteLogger {
           "<a:patyoufast:1009964759216574586>",
         ];
 
-        const button = new ActionRowBuilder().addComponents([
+        const button = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents([
           new ButtonBuilder()
             .setLabel("Vote!")
             .setStyle(5)
@@ -122,7 +123,7 @@ export default class VoteLogger {
             content: `${emojisRandom} Voted for me on ${hideLinkEmbed(
               "https://top.gg/bot/981649513427111957/vote",
             )}`,
-            components: [button as any],
+            components: [button],
             username: `${userdata.tag
               .replace("Discord", "")
               .replace("discord", "")
