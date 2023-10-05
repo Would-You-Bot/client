@@ -9,6 +9,7 @@ import Sentry from "@sentry/node";
 import { ChatInputCommand } from "../../models";
 
 const command: ChatInputCommand = {
+  requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("support")
     .setDescription("Link to our support server")

@@ -21,7 +21,6 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    console.log("in");
     const guideembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({

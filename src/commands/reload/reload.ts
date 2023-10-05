@@ -5,6 +5,7 @@ import { ChatInputCommand } from "../../models";
 const cat = readdirSync(`./src/commands/`).filter((d) => d.endsWith(".js"));
 
 const command: ChatInputCommand = {
+  requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("reload")
     .setDescription("Reloads slash commands.")

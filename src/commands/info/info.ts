@@ -4,6 +4,7 @@ import { ChatInputCommand } from "../../models";
 const { version } = require("../../../package.json");
 
 const command: ChatInputCommand = {
+  requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("info")
     .setDescription("Shows information about the bot.")
