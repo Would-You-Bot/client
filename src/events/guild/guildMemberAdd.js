@@ -27,10 +27,10 @@ module.exports = async (client, member) => {
     )
       return;
     const { General } = await require(
-      `../data/rather-${guildDb.language}.json`,
+      `../../data/rather-${guildDb.language}.json`,
     );
     const { WhatYouDo } = await require(
-      `../data/wwyd-${guildDb.language}.json`,
+      `../../data/wwyd-${guildDb.language}.json`,
     );
 
     let randomDaily = [];
