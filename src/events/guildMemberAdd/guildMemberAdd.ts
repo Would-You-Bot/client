@@ -5,7 +5,7 @@ import {
   PermissionFlagsBits,
 } from "discord.js";
 import "dotenv/config";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import WouldYou from "../../util/wouldYou";
 import { Event } from "../../models/event";
 import { getWouldYouRather, getWwyd } from "../../util/Functions/jsonImport";

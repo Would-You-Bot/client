@@ -1,6 +1,6 @@
 import { Model, connect, set } from "mongoose";
 import { white, gray, green } from "chalk-advanced";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import { GuildModel, IGuildModel } from "./Models/guildModel";
 import WouldYou from "./wouldYou";
 

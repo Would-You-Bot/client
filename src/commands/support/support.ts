@@ -5,7 +5,7 @@ import {
   SlashCommandBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../models";
 
 const command: ChatInputCommand = {

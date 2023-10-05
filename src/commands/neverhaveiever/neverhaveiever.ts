@@ -5,7 +5,7 @@ import {
   ButtonBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { ChatInputCommand } from "../../models";
 import { getNeverHaveIEver } from "../../util/Functions/jsonImport";

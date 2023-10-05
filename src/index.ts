@@ -1,7 +1,10 @@
 import WouldYou from "./util/wouldYou";
 import { white, gray, green } from "chalk-advanced";
-import { init, autoDiscoverNodePerformanceMonitoringIntegrations } from "@sentry/node";
-import "dotenv/config"
+import {
+  init,
+  autoDiscoverNodePerformanceMonitoringIntegrations,
+} from "@sentry/node";
+import "dotenv/config";
 // Token to UserID Function
 // Credits to Meister#9667 for helping me with this
 const retriveUserIdbyToken = (token: string) => {
@@ -32,9 +35,7 @@ if (dsnKey) {
     dsn: dsnKey,
     // Performance Monitoring
     tracesSampleRate: 0.5, // 1.0 means that 100% of transactions will be sent to Sentry
-    integrations: [
-      ...autoDiscoverNodePerformanceMonitoringIntegrations(),
-    ],
+    integrations: [...autoDiscoverNodePerformanceMonitoringIntegrations()],
   });
 }
 

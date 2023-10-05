@@ -7,7 +7,7 @@ import {
   PermissionsBitField,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import axios from "axios";
 import Paginator from "../../util/pagination";
 import "dotenv/config";

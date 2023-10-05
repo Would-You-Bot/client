@@ -1,4 +1,4 @@
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 
 export default class TranslationHandler {
   readonly availableLanguages: string[];

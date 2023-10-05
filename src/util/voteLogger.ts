@@ -1,6 +1,6 @@
 import "dotenv/config";
 import * as Topgg from "@top-gg/sdk";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import {
   WebhookClient,
   ActionRowBuilder,

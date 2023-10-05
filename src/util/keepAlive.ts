@@ -1,5 +1,5 @@
 import "dotenv/config";
-import {captureException, captureMessage} from "@sentry/node"
+import { captureException, captureMessage } from "@sentry/node";
 import WouldYou from "./wouldYou";
 
 export default class KeepAlive {

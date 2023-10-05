@@ -2,7 +2,7 @@ import { EmbedBuilder } from "discord.js";
 import * as mom from "moment-timezone";
 import { white, gray, green } from "chalk-advanced";
 import { CronJob } from "cron";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import WouldYou from "./wouldYou";
 import { getWouldYouRather, getWwyd } from "./Functions/jsonImport";
 export default class DailyMessage {

@@ -1,5 +1,5 @@
 import { readdirSync } from "fs";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import { SlashCommandBuilder } from "discord.js";
 import { ChatInputCommand } from "../../models";
 const cat = readdirSync(`./src/commands/`).filter((d) => d.endsWith(".js"));

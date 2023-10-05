@@ -1,5 +1,5 @@
 import { PermissionFlagsBits, WebhookClient, EmbedBuilder } from "discord.js";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import { Model } from "mongoose";
 import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
 import WouldYou from "./wouldYou";

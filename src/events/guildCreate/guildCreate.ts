@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { WebhookClient, EmbedBuilder, Guild } from "discord.js";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import WouldYou from "../../util/wouldYou";
 import { Event } from "../../models/event";
 

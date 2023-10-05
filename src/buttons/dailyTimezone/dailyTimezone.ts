@@ -4,7 +4,7 @@ import {
   EmbedBuilder,
   ButtonStyle,
 } from "discord.js";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import { Button } from "../../models";
 
 const modalObject = {

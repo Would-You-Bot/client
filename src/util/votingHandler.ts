@@ -7,7 +7,7 @@ import {
 import { white, gray, green } from "chalk-advanced";
 import QuickChart from "quickchart-js";
 import { v4 as uuidv4 } from "uuid";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import WouldYou from "./wouldYou";
 import { VoteModel } from "./Models/voteModel";
 

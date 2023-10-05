@@ -1,5 +1,5 @@
 import { EmbedBuilder, User } from "discord.js";
-import {captureException} from "@sentry/node"
+import { captureException } from "@sentry/node";
 import { Button } from "../../models";
 import { getWouldYouRather, getWwyd } from "../../util/Functions/jsonImport";
 
