@@ -141,6 +141,7 @@ const button: Button = {
         );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
+      ...guildDb,
       dailyMsg: check ? false : true,
     });
 

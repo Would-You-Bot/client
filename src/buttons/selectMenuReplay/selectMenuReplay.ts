@@ -168,6 +168,7 @@ const button: Button = {
           name: (channel as any)?.name.slice(0, 25),
         });
         await client.database.updateGuild(interaction.guild?.id || "", {
+          ...guildDb,
           replayChannels: guildDb.replayChannels,
         });
         (modalInteraction as any).update({

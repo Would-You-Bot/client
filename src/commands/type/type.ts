@@ -56,6 +56,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               customTypes: "regular",
             },
             true,
@@ -73,6 +74,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               customTypes: "mixed",
             },
             true,
@@ -93,6 +95,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               customTypes: "custom",
             },
             true,

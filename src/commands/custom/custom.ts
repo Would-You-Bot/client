@@ -106,7 +106,8 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    let typeEmbed, message: any;
+    var typeEmbed = new EmbedBuilder();
+    var message: string | null;
     if (
       (interaction?.member?.permissions as Readonly<PermissionsBitField>).has(
         PermissionFlagsBits.ManageGuild,
@@ -160,13 +161,14 @@ const command: ChatInputCommand = {
 
           guildDb.customMessages.push({
             id: newID,
-            msg: message,
+            msg: message || "",
             type: option,
           });
 
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               customMessages: guildDb.customMessages,
             },
             true,
@@ -206,6 +208,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               customMessages: filtered,
             },
             true,
@@ -692,6 +695,7 @@ const command: ChatInputCommand = {
               await client.database.updateGuild(
                 interaction.guildId || "",
                 {
+                  ...guildDb,
                   customMessages: guildDb.customMessages,
                 },
                 true,
@@ -734,13 +738,13 @@ const command: ChatInputCommand = {
           await interaction.deferReply();
 
           let wouldyourather = guildDb.customMessages.filter(
-            (c: any) => c.type === "wouldyourather",
+            (c) => c.type === "wouldyourather",
           );
           let neverhaveiever = guildDb.customMessages.filter(
-            (c: any) => c.type === "neverhaveiever",
+            (c) => c.type === "neverhaveiever",
           );
           let wwyd = guildDb.customMessages.filter(
-            (c: any) => c.type === "wwyd",
+            (c) => c.type === "wwyd",
           );
 
           let text = "{\n";
@@ -800,7 +804,7 @@ const command: ChatInputCommand = {
 
       interaction
         .reply({
-          embeds: [typeEmbed as EmbedBuilder],
+          embeds: [typeEmbed],
           ephemeral: true,
         })
         .catch((err) => {

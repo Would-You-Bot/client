@@ -165,7 +165,7 @@ const event: Event = {
 
       channel
         .send({ content: mention, embeds: [welcomeEmbed] })
-        .catch((err: any) => {
+        .catch((err: Error) => {
           Sentry.captureException(err);
         });
       return;

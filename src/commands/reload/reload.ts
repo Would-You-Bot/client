@@ -42,7 +42,7 @@ const command: ChatInputCommand = {
       });
       return;
     }
-    const cmd = interaction.options.getString("options") as any;
+    const cmd = interaction.options.getString("options") as string;
     if (!cat.find((e) => e.replace(".js", "") === cmd.toLowerCase())) {
       interaction.editReply({
         content: "You must provide a valid command to reload it!",

@@ -100,6 +100,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               debugMode: false,
             },
             true,
@@ -117,6 +118,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               debugMode: true,
             },
             true,

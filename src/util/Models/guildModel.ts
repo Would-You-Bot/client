@@ -9,7 +9,7 @@ export interface IGuildModel {
   welcomeType: string;
   dailyMsg: boolean;
   dailyChannel: string;
-  dailyRole: string;
+  dailyRole: string | null;
   dailyTimezone: string;
   dailyInterval: string;
   dailyThread: boolean;

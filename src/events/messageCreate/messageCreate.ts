@@ -3,6 +3,9 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   PermissionFlagsBits,
+  Message,
+  GuildTextBasedChannel,
+  MessageActionRowComponentBuilder,
 } from "discord.js";
 import Sentry from "@sentry/node";
 import WouldYou from "../../util/wouldYou";
@@ -11,11 +14,11 @@ const Cooldown = new Set();
 
 const event: Event = {
   event: "messageCreate",
-  execute: async (client: WouldYou, message: any) => {
+  execute: async (client: WouldYou, message: Message<boolean>) => {
     // Always check the permissions before doing any actions to avoid a ratelimit IP ban =)
-    if (
-      message?.channel
-        ?.permissionsFor(client?.user?.id)
+    if (message.guild?.members.me &&
+      (message?.channel as GuildTextBasedChannel)
+        ?.permissionsFor(message.guild.members.me)
         ?.has([
           PermissionFlagsBits.ViewChannel,
           PermissionFlagsBits.SendMessages,
@@ -35,7 +38,7 @@ const event: Event = {
         )
         .setColor("#0598F6");
 
-      const supportbutton = new ActionRowBuilder().addComponents(
+      const supportbutton = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setLabel("Invite")
           .setStyle(5)
@@ -59,14 +62,15 @@ const event: Event = {
         message.content &&
         new RegExp(`^(<@!?${client?.user?.id}>)`).test(message.content)
       )
-        return message.channel
+        message.channel
           .send({
             embeds: [embed],
             components: [supportbutton],
           })
-          .catch((err: any) => {
+          .catch((err: Error) => {
             Sentry.captureException(err);
           });
+        return;
     }
   },
 };

@@ -14,8 +14,7 @@ const button: Button = {
   name: "wouldyourather",
   execute: async (interaction: any, client, guildDb) => {
     if (
-      !interaction.channel
-        .permissionsFor(interaction.user.id)
+      !interaction.channel?.permissionsFor(interaction.user.id)
         .has(PermissionFlagsBits.SendMessages)
     )
       return interaction.reply({

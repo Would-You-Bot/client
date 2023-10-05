@@ -111,7 +111,8 @@ const button: Button = {
         );
 
         await client.database.updateGuild(interaction.guild?.id || "", {
-          replayCooldown: value,
+          ...guildDb,
+          replayCooldown: Number(value),
         });
 
         (modalInteraction as any).update({

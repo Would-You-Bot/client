@@ -1,12 +1,12 @@
 import "dotenv/config";
-import { WebhookClient, EmbedBuilder } from "discord.js";
+import { WebhookClient, EmbedBuilder, Guild } from "discord.js";
 import Sentry from "@sentry/node";
 import WouldYou from "../../util/wouldYou";
 import { Event } from "../../models/event";
 
 const event: Event = {
   event: "guildCreate",
-  execute: async (client: WouldYou, guild: any) => {
+  execute: async (client: WouldYou, guild: Guild) => {
     if (!guild?.name) return;
 
     // Create and save the settings in the cache so that we don't need to do that at a command run
@@ -36,8 +36,7 @@ const event: Event = {
           .setColor(`#0598F4`)
           .setThumbnail(
             guild.iconURL({
-              format: "png",
-              dynamic: true,
+              extension: "png"              
             }),
           )
           .setDescription(
@@ -68,10 +67,9 @@ const event: Event = {
             .replace("Everyone", "")
             .replace("everyone", "")}`,
           avatarURL: guild.iconURL({
-            format: "webp",
-            dynamic: true,
+            extension: "webp",
             size: 1024,
-          }),
+          }) || undefined,
           allowedMentions: { parse: [] },
         })
         .catch((err) => Sentry.captureException(err));

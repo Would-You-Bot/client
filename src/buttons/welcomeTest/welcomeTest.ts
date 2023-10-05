@@ -1,4 +1,4 @@
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, User } from "discord.js";
 import Sentry from "@sentry/node";
 import { Button } from "../../models";
 import { getWouldYouRather, getWwyd } from "../../util/Functions/jsonImport";
@@ -77,7 +77,7 @@ const button: Button = {
         )} ${interaction.member?.user.username}!`,
       )
       .setColor("#0598F6")
-      .setThumbnail((interaction.member?.user as any).avatarURL())
+      .setThumbnail((interaction.member?.user as User).avatarURL())
       .setDescription(randomDaily);
 
     interaction.reply({

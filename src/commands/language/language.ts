@@ -48,6 +48,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               language: "en_EN",
             },
             true,
@@ -66,6 +67,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               language: "de_DE",
             },
             true,
@@ -84,6 +86,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               language: "es_ES",
             },
             true,
@@ -102,6 +105,7 @@ const command: ChatInputCommand = {
           await client.database.updateGuild(
             interaction.guildId || "",
             {
+              ...guildDb,
               language: "fr_FR",
             },
             true,

@@ -1,4 +1,4 @@
-import { WebhookClient, EmbedBuilder } from "discord.js";
+import { WebhookClient, EmbedBuilder, Guild } from "discord.js";
 import Sentry from "@sentry/node";
 import "dotenv/config";
 import WouldYou from "../../util/wouldYou";
@@ -6,7 +6,7 @@ import { Event } from "../../models/event";
 
 const event: Event = {
   event: "guildDelete",
-  execute: async (client: WouldYou, guild: any) => {
+  execute: async (client: WouldYou, guild: Guild) => {
     if (!guild?.name) return;
 
     // Only delete the guild settings from the cache we don't want a data lose but also don't need not used data in the cache :)
@@ -36,8 +36,7 @@ const event: Event = {
           .setColor(`#f00704`)
           .setThumbnail(
             guild.iconURL({
-              format: "png",
-              dynamic: true,
+              extension: "png",
             }),
           )
           .setDescription(
@@ -68,10 +67,9 @@ const event: Event = {
             .replace("Everyone", "")
             .replace("everyone", "")}`,
           avatarURL: guild.iconURL({
-            format: "webp",
-            dynamic: true,
+            extension: "webp",
             size: 1024,
-          }),
+          }) || undefined,
           allowedMentions: { parse: [] },
         })
         .catch((err) => Sentry.captureException(err));

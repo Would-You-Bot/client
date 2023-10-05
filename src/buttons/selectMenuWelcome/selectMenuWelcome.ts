@@ -108,6 +108,7 @@ const button: Button = {
       );
 
     await client.database.updateGuild(interaction.guild.id, {
+      ...guildDb,
       welcomeChannel: newChannel,
     });
 

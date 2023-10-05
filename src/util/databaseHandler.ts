@@ -5,7 +5,7 @@ import { GuildModel, IGuildModel } from "./Models/guildModel";
 import WouldYou from "./wouldYou";
 
 export default class DatabaseHandler {
-  private cache: Map<string, any>;
+  private cache: Map<string, IGuildModel>;
   private guildModel: Model<IGuildModel>;
   private connectionString: string;
   /**
@@ -89,14 +89,14 @@ export default class DatabaseHandler {
     if (force) return this.fetchGuild(guildId, createIfNotFound);
 
     if (this.cache.has(guildId)) {
-      return this.cache.get(guildId);
+      return this.cache.get(guildId) || null;
     }
 
     const fetched = await this.fetchGuild(guildId, createIfNotFound);
     if (fetched) {
       this.cache.set(guildId, fetched?.toObject() ?? fetched);
 
-      return this.cache.get(guildId);
+      return this.cache.get(guildId) || null;
     }
     return null;
   }
@@ -123,7 +123,7 @@ export default class DatabaseHandler {
    */
   async updateGuild(
     guildId: number | string,
-    data = {},
+    data: IGuildModel,
     createIfNotFound = false,
   ) {
     let oldData = await this.getGuild(guildId.toString(), createIfNotFound);
