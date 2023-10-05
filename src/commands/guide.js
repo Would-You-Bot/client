@@ -1,5 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const guildModel = require("../../util/Models/guildModel");
+const guildModel = require("../util/Models/guildModel");
 const Sentry = require("@sentry/node");
 
 module.exports = {
