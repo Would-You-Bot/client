@@ -1,32 +1,93 @@
+### Issue Description
 
-## Issue Description
+## Bug Report:
 
-## Subject of the issue
-Describe your issue here.
+# Description: 
+Report a problem or error in the software.
+# Expected Behavior: 
+Describe what should happen.
+# Actual Behavior: 
+Explain what is happening instead.
+# Steps to Reproduce:
+Provide steps to reproduce the issue.
+# Screenshots: 
+Attach screenshots if applicable.
+# Related Issues/PRs: 
+List any related issues or pull requests.
 
-**Description**:
-Please provide a clear and concise description of the issue.
+## Feature Request:
 
-**Expected Behavior**:
-What should happen?
+# Description: 
+Propose a new feature or enhancement to the software.
+# Expected Behavior: 
+Describe how the new feature should work.
+# Rationale: 
+Explain why this feature would be beneficial.
+# Related Issues/PRs: 
+Link to related issues or pull requests.
 
-**Actual Behavior**:
-What is happening instead?
+## Documentation Issue:
 
-## Steps to Reproduce
+# Description: 
+Report an issue with the documentation.
+# Type: 
+Specify if it's a documentation error, missing documentation, or unclear documentation.
+# Page/Section: 
+Mention the affected documentation page or section.
+# Suggested Improvement: 
+Provide suggestions for improvement.
 
-1. Step 1
-2. Step 2
-3. ...
+## Question / Support Request:
 
-## Additional Information
+# Description: 
+Ask a question or request help with using the software.
+# Context: 
+Provide context or details about the problem you're facing.
+# Expected Answer: 
+Describe what you're expecting in response.
+# Additional Information: 
+Include any relevant information.
 
-**Screenshots**:
-If applicable, add screenshots to help explain the issue.
+## Enhancement Request:
 
-**Related Issues/PRs**:
-List any related issues or PRs here.
+# Description: 
+Propose an improvement that is not a new feature.
+# Expected Behavior: 
+Describe how the enhancement should work.
+# Rationale: 
+Explain why this enhancement would be beneficial.
+# Related Issues/PRs: 
+Link to related issues or pull requests.
 
-## Proposed Solution
+## Security Issue:
 
-If you have any ideas on how to solve this issue, please describe them here.
+# Description: 
+Report a security vulnerability or concern.
+# Severity: 
+Indicate the severity level (e.g., low, medium, high).
+# Steps to Reproduce (if applicable): 
+Provide steps to reproduce the security issue.
+# Mitigation/Proposed Solution: 
+Suggest a solution or mitigation strategy.
+
+## Usability / UX Issue:
+
+# Description: 
+Highlight usability or user experience problems.
+# Specific Issue: 
+Explain the specific issue(s) related to usability or UX.
+# Proposed Improvements: 
+Suggest improvements for better usability.
+
+## Performance Issue:
+
+# Description: 
+Report performance-related problems.
+# Expected Performance: 
+Describe the expected performance.
+# Actual Performance: 
+Explain the current performance issue.
+# Environment: 
+Specify the hardware/software environment.
+# Proposed Solution: 
+Suggest a solution.
