@@ -3,6 +3,7 @@ import {
   ActionRowBuilder,
   EmbedBuilder,
   ButtonStyle,
+  MessageActionRowComponentBuilder,
 } from "discord.js";
 import { Button } from "../../models";
 
@@ -38,6 +39,7 @@ const button: Button = {
         time: 60000,
       })
       .then(async (modalInteraction) => {
+        console.log("got submitted")
         const value = modalInteraction.components[0].components[0].value;
 
         if (guildDb.dailyInterval === value)
@@ -112,7 +114,7 @@ const button: Button = {
           )
           .setColor("#0598F6");
 
-        const dailyButtons = new ActionRowBuilder().addComponents(
+        const dailyButtons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId("dailyMsg")
               .setLabel(
@@ -148,7 +150,7 @@ const button: Button = {
               .setStyle(ButtonStyle.Primary)
               .setEmoji("📝"),
           ),
-          dailyButtons2 = new ActionRowBuilder().addComponents(
+          dailyButtons2 = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId("dailyTimezone")
               .setLabel(
@@ -181,7 +183,7 @@ const button: Button = {
               .setStyle(ButtonStyle.Primary)
               .setEmoji("⏰"),
           ),
-          dailyButtons3 = new ActionRowBuilder().addComponents(
+          dailyButtons3 = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId("dailyThread")
               .setLabel(

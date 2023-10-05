@@ -53,8 +53,8 @@ const button: Button = {
 
     clearTimeout(paginate.timeout);
     const time = setTimeout(() => {
-      if (client.paginate.get(interaction.user))
-        client.paginate.delete(interaction.user);
+      if (client.paginate.get(interaction.user.id))
+        client.paginate.delete(interaction.user.id);
     }, paginate.time);
     paginate.timeout = time;
 
