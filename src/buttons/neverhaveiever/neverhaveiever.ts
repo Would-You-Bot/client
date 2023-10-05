@@ -97,7 +97,9 @@ const button: Button = {
     const { row, id } = await client.voting.generateVoting(
       interaction.guildId as string,
       interaction.channelId,
-      time < three_minutes ? new Date(0) : new Date(~~((Date.now() + time) / 1000)),
+      time < three_minutes
+        ? new Date(0)
+        : new Date(~~((Date.now() + time) / 1000)),
       "neverhaveiever",
     );
 

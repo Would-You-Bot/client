@@ -37,7 +37,7 @@ const event: Event = {
         const command = client.commands.get(interaction.commandName);
         if (!command) return;
 
-        if (command?.requireGuild){
+        if (command?.requireGuild) {
           interaction.reply({
             content:
               "This command is only usable on a Discord Server!\nYou want to test Would You? Join the support server!\nhttps://discord.gg/vMyXAxEznS",
@@ -63,7 +63,7 @@ const event: Event = {
         interaction.guild.id,
         true,
       );
-      if(!guildDb) return;
+      if (!guildDb) return;
       // const { inter } = require(`../languages/${guildDb.language || "en_EN"}.json`);
       if (interaction.isChatInputCommand()) {
         const statsMap = {
@@ -171,14 +171,14 @@ const event: Event = {
           button = client.buttons.get("higher");
         if (interaction.customId.startsWith("lower_"))
           button = client.buttons.get("lower");
-        if (!button){
+        if (!button) {
           interaction
             .reply({
               content: "Please use the command again.",
               ephemeral: true,
             })
             .catch(() => {});
-            return;
+          return;
         }
 
         if (
@@ -187,7 +187,7 @@ const event: Event = {
           interaction.customId.startsWith("result_") ||
           interaction.customId.startsWith("higher_") ||
           interaction.customId.startsWith("lower_")
-        ){
+        ) {
           await button.execute(interaction, client, guildDb);
           return;
         }
@@ -203,25 +203,27 @@ const event: Event = {
               )}:R>!`,
             })
             .catch(() => {});
-            return 
+          return;
         } else if (
           guildDb.replayType === "Channels" &&
-          client.used.has(`${interaction.user.id}-${interaction.channel?.id}`) &&
-          guildDb.replayChannels.find(
-            (x) => x.id === interaction.channel?.id,
-          )
+          client.used.has(
+            `${interaction.user.id}-${interaction.channel?.id}`,
+          ) &&
+          guildDb.replayChannels.find((x) => x.id === interaction.channel?.id)
         ) {
-          var cooldown = Number(guildDb.replayChannels.find(x => x.id === interaction.channel?.id)?.cooldown)
+          var cooldown = Number(
+            guildDb.replayChannels.find((x) => x.id === interaction.channel?.id)
+              ?.cooldown,
+          );
           interaction
             .reply({
               ephemeral: true,
-              content: `<t:${Math.floor(cooldown /
-                  1000 +
-                  Date.now() / 1000,
+              content: `<t:${Math.floor(
+                cooldown / 1000 + Date.now() / 1000,
               )}:R> you can use buttons again!`,
             })
             .catch(() => {});
-            return;
+          return;
         }
 
         try {
@@ -238,18 +240,22 @@ const event: Event = {
               client.used.set(
                 `${interaction.user.id}-${interaction.channel?.id}`,
                 Date.now() +
-                  (Number(guildDb.replayChannels.find(
-                    (x) => x.id === interaction.channel?.id,
-                  )?.cooldown) || 0),
+                  (Number(
+                    guildDb.replayChannels.find(
+                      (x) => x.id === interaction.channel?.id,
+                    )?.cooldown,
+                  ) || 0),
               );
               setTimeout(
                 () =>
                   client.used.delete(
                     `${interaction.user.id}-${interaction.channel?.id}`,
                   ),
-                Number(guildDb.replayChannels.find(
-                  (x) => x.id === interaction.channel?.id,
-                )?.cooldown),
+                Number(
+                  guildDb.replayChannels.find(
+                    (x) => x.id === interaction.channel?.id,
+                  )?.cooldown,
+                ),
               );
             } else {
               client.used.set(
@@ -275,7 +281,8 @@ const event: Event = {
         }
       } else {
         const button = client.buttons.get((interaction as any).customId);
-        if (button) return await button.execute(interaction as any, client, guildDb);
+        if (button)
+          return await button.execute(interaction as any, client, guildDb);
       }
     }
   },

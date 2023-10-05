@@ -1,4 +1,9 @@
-import { EmbedBuilder, GuildMember, GuildTextBasedChannel, PermissionFlagsBits } from "discord.js";
+import {
+  EmbedBuilder,
+  GuildMember,
+  GuildTextBasedChannel,
+  PermissionFlagsBits,
+} from "discord.js";
 import "dotenv/config";
 import Sentry from "@sentry/node";
 import WouldYou from "../../util/wouldYou";
@@ -13,15 +18,16 @@ const event: Event = {
 
     const guildDb = await client.database.getGuild(member.guild.id, false);
     if (guildDb && guildDb?.welcome) {
-      const channel = await member.guild.channels
+      const channel = (await member.guild.channels
         .fetch(guildDb.welcomeChannel)
         .catch((err: Error) => {
           Sentry.captureException(err);
-        }) as GuildTextBasedChannel;
+        })) as GuildTextBasedChannel;
 
       if (!channel?.id) return;
 
-      if (member.guild.members.me &&
+      if (
+        member.guild.members.me &&
         !channel
           ?.permissionsFor(member.guild.members.me)
           ?.has([
@@ -42,8 +48,7 @@ const event: Event = {
       } else if (guildDb.customTypes === "mixed") {
         let array = [];
         if (
-          guildDb.customMessages.filter((c) => c.type !== "nsfw").length !=
-          0
+          guildDb.customMessages.filter((c) => c.type !== "nsfw").length != 0
         ) {
           array.push(
             guildDb.customMessages.filter((c) => c.type !== "nsfw")[
@@ -61,8 +66,7 @@ const event: Event = {
         randomDaily = array[Math.floor(Math.random() * array.length)];
       } else if (guildDb.customTypes === "custom") {
         if (
-          guildDb.customMessages.filter((c) => c.type !== "nsfw")
-            .length === 0
+          guildDb.customMessages.filter((c) => c.type !== "nsfw").length === 0
         ) {
           client.webhookHandler
             .sendWebhook(
@@ -77,16 +81,13 @@ const event: Event = {
             .catch((err) => {
               Sentry.captureException(err);
             });
-            return;
+          return;
         }
 
-        randomDaily = guildDb.customMessages.filter(
-          (c) => c.type !== "nsfw",
-        )[
+        randomDaily = guildDb.customMessages.filter((c) => c.type !== "nsfw")[
           Math.floor(
             Math.random() *
-              guildDb.customMessages.filter((c) => c.type !== "nsfw")
-                .length,
+              guildDb.customMessages.filter((c) => c.type !== "nsfw").length,
           )
         ].msg;
       }
@@ -98,8 +99,7 @@ const event: Event = {
       } else if (guildDb.customTypes === "mixed") {
         let array = [];
         if (
-          guildDb.customMessages.filter((c) => c.type !== "nsfw").length !=
-          0
+          guildDb.customMessages.filter((c) => c.type !== "nsfw").length != 0
         ) {
           array.push(
             guildDb.customMessages.filter((c) => c.type !== "nsfw")[
@@ -117,10 +117,9 @@ const event: Event = {
         randomDaily = array[Math.floor(Math.random() * array.length)];
       } else if (guildDb.customTypes === "custom") {
         if (
-          guildDb.customMessages.filter((c) => c.type !== "nsfw")
-            .length === 0
+          guildDb.customMessages.filter((c) => c.type !== "nsfw").length === 0
         ) {
-           client.webhookHandler
+          client.webhookHandler
             .sendWebhook(
               channel,
               guildDb.dailyChannel,
@@ -133,16 +132,13 @@ const event: Event = {
             .catch((err) => {
               Sentry.captureException(err);
             });
-            return;
+          return;
         }
 
-        randomDaily = guildDb.customMessages.filter(
-          (c) => c.type !== "nsfw",
-        )[
+        randomDaily = guildDb.customMessages.filter((c) => c.type !== "nsfw")[
           Math.floor(
             Math.random() *
-              guildDb.customMessages.filter((c) => c.type !== "nsfw")
-                .length,
+              guildDb.customMessages.filter((c) => c.type !== "nsfw").length,
           )
         ].msg;
       }

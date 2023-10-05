@@ -128,9 +128,8 @@ const command: ChatInputCommand = {
             return;
           }
 
-          const option = interaction?.options
-            ?.getString("options")
-            ?.toLowerCase() || "";
+          const option =
+            interaction?.options?.getString("options")?.toLowerCase() || "";
           message = interaction.options.getString("message");
 
           let newID = makeID(6);
@@ -191,9 +190,7 @@ const command: ChatInputCommand = {
             });
 
           if (
-            !guildDb.customMessages.find(
-              (c) => c.id.toString() === message,
-            )
+            !guildDb.customMessages.find((c) => c.id.toString() === message)
           ) {
             interaction.reply({
               ephemeral: true,
@@ -290,9 +287,8 @@ const command: ChatInputCommand = {
           });
 
           if (
-            guildDb.customMessages.filter(
-              (c) => c.type === "neverhaveiever",
-            ).length > 0
+            guildDb.customMessages.filter((c) => c.type === "neverhaveiever")
+              .length > 0
           ) {
             let data: any;
             data = guildDb.customMessages
@@ -336,9 +332,8 @@ const command: ChatInputCommand = {
           }
 
           if (
-            guildDb.customMessages.filter(
-              (c) => c.type === "wouldyourather",
-            ).length > 0
+            guildDb.customMessages.filter((c) => c.type === "wouldyourather")
+              .length > 0
           ) {
             let data: any;
             data = guildDb.customMessages
@@ -382,8 +377,7 @@ const command: ChatInputCommand = {
           }
 
           if (
-            guildDb.customMessages.filter((c) => c.type === "wwyd")
-              .length > 0
+            guildDb.customMessages.filter((c) => c.type === "wwyd").length > 0
           ) {
             let data: any;
             data = guildDb.customMessages
@@ -743,9 +737,7 @@ const command: ChatInputCommand = {
           let neverhaveiever = guildDb.customMessages.filter(
             (c) => c.type === "neverhaveiever",
           );
-          let wwyd = guildDb.customMessages.filter(
-            (c) => c.type === "wwyd",
-          );
+          let wwyd = guildDb.customMessages.filter((c) => c.type === "wwyd");
 
           let text = "{\n";
           let arrays = [];

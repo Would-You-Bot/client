@@ -1,4 +1,9 @@
-import { ButtonBuilder, ActionRowBuilder, ButtonStyle, MessageActionRowComponentBuilder } from "discord.js";
+import {
+  ButtonBuilder,
+  ActionRowBuilder,
+  ButtonStyle,
+  MessageActionRowComponentBuilder,
+} from "discord.js";
 import { white, gray, green } from "chalk-advanced";
 import QuickChart from "quickchart-js";
 import { v4 as uuidv4 } from "uuid";

@@ -36,7 +36,7 @@ const event: Event = {
           .setColor(`#0598F4`)
           .setThumbnail(
             guild.iconURL({
-              extension: "png"              
+              extension: "png",
             }),
           )
           .setDescription(
@@ -66,10 +66,11 @@ const event: Event = {
             .replace("discord", "")
             .replace("Everyone", "")
             .replace("everyone", "")}`,
-          avatarURL: guild.iconURL({
-            extension: "webp",
-            size: 1024,
-          }) || undefined,
+          avatarURL:
+            guild.iconURL({
+              extension: "webp",
+              size: 1024,
+            }) || undefined,
           allowedMentions: { parse: [] },
         })
         .catch((err) => Sentry.captureException(err));

@@ -85,7 +85,11 @@ export default class DatabaseHandler {
    * @param {boolean} force if it should force fetch the guild
    * @returns {this.guildModel}
    */
-  async getGuild(guildId: string, createIfNotFound = true, force = false): Promise<IGuildModel | null> {
+  async getGuild(
+    guildId: string,
+    createIfNotFound = true,
+    force = false,
+  ): Promise<IGuildModel | null> {
     if (force) return this.fetchGuild(guildId, createIfNotFound);
 
     if (this.cache.has(guildId)) {

@@ -98,13 +98,16 @@ export default class VoteLogger {
           "<a:patyoufast:1009964759216574586>",
         ];
 
-        const button = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents([
-          new ButtonBuilder()
-            .setLabel("Vote!")
-            .setStyle(5)
-            .setEmoji("💻")
-            .setURL("https://top.gg/bot/981649513427111957/vote"),
-        ]);
+        const button =
+          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+            [
+              new ButtonBuilder()
+                .setLabel("Vote!")
+                .setStyle(5)
+                .setEmoji("💻")
+                .setURL("https://top.gg/bot/981649513427111957/vote"),
+            ],
+          );
 
         const emojisRandom = emojis[Math.floor(Math.random() * emojis.length)];
 

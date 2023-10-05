@@ -10,18 +10,20 @@ import { Button } from "../../models";
 const button: Button = {
   name: "dailyRole",
   execute: async (interaction, client, guildDb) => {
-    var inter = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      new RoleSelectMenuBuilder()
-        .setCustomId("selectMenuRole")
-        .setPlaceholder("Select a role"),
-    );
+    var inter =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new RoleSelectMenuBuilder()
+          .setCustomId("selectMenuRole")
+          .setPlaceholder("Select a role"),
+      );
 
-    var inter2 = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      new ButtonBuilder()
-        .setCustomId("deleteDailyRole")
-        .setLabel("Delete Daily Role")
-        .setStyle(ButtonStyle.Danger),
-    );
+    var inter2 =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId("deleteDailyRole")
+          .setLabel("Delete Daily Role")
+          .setStyle(ButtonStyle.Danger),
+      );
 
     interaction.update({
       embeds: [],

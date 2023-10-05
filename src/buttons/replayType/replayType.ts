@@ -52,45 +52,49 @@ const button: Button = {
         iconURL: client.user?.avatarURL() || undefined,
       });
 
-    const generalButtons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      new ButtonBuilder()
-        .setCustomId(
-          guildDb.replayType === "Channels"
-            ? "replayCooldown"
-            : "replayChannels",
-        )
-        .setLabel(
-          client.translation.get(
-            guildDb?.language,
-            "Settings.button.replayCooldown",
+    const generalButtons =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId(
+            guildDb.replayType === "Channels"
+              ? "replayCooldown"
+              : "replayChannels",
+          )
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.replayCooldown",
+            ),
+          )
+          .setStyle(
+            guildDb.replayCooldown
+              ? ButtonStyle.Success
+              : ButtonStyle.Secondary,
           ),
-        )
-        .setStyle(
-          guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary,
-        ),
-      new ButtonBuilder()
-        .setCustomId("replayType")
-        .setLabel(
-          client.translation.get(
-            guildDb?.language,
-            "Settings.button.replayType",
-          ),
-        )
-        .setStyle(ButtonStyle.Primary)
-        .setEmoji("📝"),
-    );
+        new ButtonBuilder()
+          .setCustomId("replayType")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.replayType",
+            ),
+          )
+          .setStyle(ButtonStyle.Primary)
+          .setEmoji("📝"),
+      );
 
-    const chanDelete = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      new ButtonBuilder()
-        .setCustomId("replayDeleteChannels")
-        .setLabel(
-          client.translation.get(
-            guildDb?.language,
-            "Settings.button.replayDeleteChannels",
-          ),
-        )
-        .setStyle(ButtonStyle.Danger),
-    );
+    const chanDelete =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId("replayDeleteChannels")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.replayDeleteChannels",
+            ),
+          )
+          .setStyle(ButtonStyle.Danger),
+      );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,

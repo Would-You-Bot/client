@@ -69,15 +69,12 @@ export default class DailyMessage {
           randomDaily = array[Math.floor(Math.random() * array.length)];
         } else if (db.customTypes === "mixed") {
           let array = [];
-          if (
-            db.customMessages.filter((c) => c.type !== "nsfw").length != 0
-          ) {
+          if (db.customMessages.filter((c) => c.type !== "nsfw").length != 0) {
             array.push(
               db.customMessages.filter((c) => c.type !== "nsfw")[
                 Math.floor(
                   Math.random() *
-                    db.customMessages.filter((c) => c.type !== "nsfw")
-                      .length,
+                    db.customMessages.filter((c) => c.type !== "nsfw").length,
                 )
               ].msg,
             );
@@ -87,9 +84,7 @@ export default class DailyMessage {
           array.push(...General, ...WhatYouDo);
           randomDaily = array[Math.floor(Math.random() * array.length)];
         } else if (db.customTypes === "custom") {
-          if (
-            db.customMessages.filter((c) => c.type !== "nsfw").length === 0
-          ) {
+          if (db.customMessages.filter((c) => c.type !== "nsfw").length === 0) {
             return this.client.webhookHandler
               .sendWebhook(
                 channel,

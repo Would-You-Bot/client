@@ -16,7 +16,8 @@ const event: Event = {
   event: "messageCreate",
   execute: async (client: WouldYou, message: Message<boolean>) => {
     // Always check the permissions before doing any actions to avoid a ratelimit IP ban =)
-    if (message.guild?.members.me &&
+    if (
+      message.guild?.members.me &&
       (message?.channel as GuildTextBasedChannel)
         ?.permissionsFor(message.guild.members.me)
         ?.has([
@@ -38,20 +39,21 @@ const event: Event = {
         )
         .setColor("#0598F6");
 
-      const supportbutton = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        new ButtonBuilder()
-          .setLabel("Invite")
-          .setStyle(5)
-          .setEmoji("📋")
-          .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
-          ),
-        new ButtonBuilder()
-          .setLabel("Support")
-          .setStyle(5)
-          .setEmoji("❤️")
-          .setURL("https://discord.gg/vMyXAxEznS"),
-      );
+      const supportbutton =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setLabel("Invite")
+            .setStyle(5)
+            .setEmoji("📋")
+            .setURL(
+              "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            ),
+          new ButtonBuilder()
+            .setLabel("Support")
+            .setStyle(5)
+            .setEmoji("❤️")
+            .setURL("https://discord.gg/vMyXAxEznS"),
+        );
 
       Cooldown.add(message?.channel?.id);
       setTimeout(() => {
@@ -70,7 +72,7 @@ const event: Event = {
           .catch((err: Error) => {
             Sentry.captureException(err);
           });
-        return;
+      return;
     }
   },
 };

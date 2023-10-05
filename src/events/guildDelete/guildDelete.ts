@@ -66,10 +66,11 @@ const event: Event = {
             .replace("discord", "")
             .replace("Everyone", "")
             .replace("everyone", "")}`,
-          avatarURL: guild.iconURL({
-            extension: "webp",
-            size: 1024,
-          }) || undefined,
+          avatarURL:
+            guild.iconURL({
+              extension: "webp",
+              size: 1024,
+            }) || undefined,
           allowedMentions: { parse: [] },
         })
         .catch((err) => Sentry.captureException(err));

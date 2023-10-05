@@ -1,4 +1,10 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, MessageActionRowComponentBuilder } from "discord.js";
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  EmbedBuilder,
+  MessageActionRowComponentBuilder,
+} from "discord.js";
 import WouldYou from "./wouldYou";
 
 export default class Paginator {
@@ -55,12 +61,13 @@ export default class Paginator {
       .setLabel("⏩")
       .setStyle(ButtonStyle.Secondary);
 
-    const buttons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-      pFirst,
-      pPrev,
-      pNext,
-      pLast,
-    );
+    const buttons =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        pFirst,
+        pPrev,
+        pNext,
+        pLast,
+      );
 
     for (let i = 0; i < this.pages.length; i++) {
       const e = this.pages[i];
