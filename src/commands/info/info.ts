@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { ChatInputCommand } from "../../models";
 const { version } = require("../../../package.json");
 
@@ -114,7 +114,7 @@ const command: ChatInputCommand = {
     interaction
       .reply({ embeds: [infoEmbed], ephemeral: false })
       .catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
       });
   },
 };

@@ -1,4 +1,4 @@
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 
 export default class TranslationHandler {
   readonly availableLanguages: string[];
@@ -104,7 +104,7 @@ export default class TranslationHandler {
 
         this.initLanguage(l, d);
       } catch (err) {
-        Sentry.captureException(err);
+        captureException(err);
       }
     }
   }
@@ -136,7 +136,7 @@ export default class TranslationHandler {
             c = c[i];
           }
         } catch (err) {
-          Sentry.captureException(err);
+          captureException(err);
           break;
         }
       }

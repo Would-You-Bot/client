@@ -5,7 +5,7 @@ import {
   ButtonBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import shuffle from "../../util/shuffle";
 import { ChatInputCommand } from "../../models";
 import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
@@ -110,7 +110,7 @@ const command: ChatInputCommand = {
     interaction
       .reply({ embeds: [ratherembed], components: [row, mainRow] })
       .catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
       });
   },
 };

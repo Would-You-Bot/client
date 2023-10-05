@@ -7,7 +7,7 @@ import {
   GuildTextBasedChannel,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import WouldYou from "../../util/wouldYou";
 import { Event } from "../../models/event";
 const Cooldown = new Set();
@@ -70,7 +70,7 @@ const event: Event = {
             components: [supportbutton],
           })
           .catch((err: Error) => {
-            Sentry.captureException(err);
+            captureException(err);
           });
       return;
     }

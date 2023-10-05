@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { ChatInputCommand } from "../../models";
 
 const command: ChatInputCommand = {
@@ -65,7 +65,7 @@ const command: ChatInputCommand = {
         embeds: [guideembed],
       })
       .catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
       });
   },
 };

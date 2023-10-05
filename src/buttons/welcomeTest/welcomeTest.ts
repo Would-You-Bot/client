@@ -1,5 +1,5 @@
 import { EmbedBuilder, User } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { Button } from "../../models";
 import { getWouldYouRather, getWwyd } from "../../util/Functions/jsonImport";
 
@@ -45,7 +45,7 @@ const button: Button = {
             guildDb.dailyThread,
           )
           .catch((err) => {
-            Sentry.captureException(err);
+            captureException(err);
           });
         return;
       }

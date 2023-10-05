@@ -188,7 +188,7 @@ const event: Event = {
           interaction.customId.startsWith("higher_") ||
           interaction.customId.startsWith("lower_")
         ) {
-          await button.execute(interaction, client, guildDb);
+          button.execute(interaction, client, guildDb);
           return;
         }
         if (
@@ -269,7 +269,7 @@ const event: Event = {
             }
           }
 
-          await button.execute(interaction, client, guildDb);
+          button.execute(interaction, client, guildDb);
           return;
         } catch (err) {
           if (err) console.error(err);

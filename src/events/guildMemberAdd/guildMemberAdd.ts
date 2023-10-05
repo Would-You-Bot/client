@@ -5,7 +5,7 @@ import {
   PermissionFlagsBits,
 } from "discord.js";
 import "dotenv/config";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import WouldYou from "../../util/wouldYou";
 import { Event } from "../../models/event";
 import { getWouldYouRather, getWwyd } from "../../util/Functions/jsonImport";
@@ -21,7 +21,7 @@ const event: Event = {
       const channel = (await member.guild.channels
         .fetch(guildDb.welcomeChannel)
         .catch((err: Error) => {
-          Sentry.captureException(err);
+          captureException(err);
         })) as GuildTextBasedChannel;
 
       if (!channel?.id) return;
@@ -79,7 +79,7 @@ const event: Event = {
               guildDb.dailyThread,
             )
             .catch((err) => {
-              Sentry.captureException(err);
+              captureException(err);
             });
           return;
         }
@@ -130,7 +130,7 @@ const event: Event = {
               guildDb.dailyThread,
             )
             .catch((err) => {
-              Sentry.captureException(err);
+              captureException(err);
             });
           return;
         }
@@ -162,7 +162,7 @@ const event: Event = {
       channel
         .send({ content: mention, embeds: [welcomeEmbed] })
         .catch((err: Error) => {
-          Sentry.captureException(err);
+          captureException(err);
         });
       return;
     }

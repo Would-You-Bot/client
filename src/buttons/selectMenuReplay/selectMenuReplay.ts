@@ -5,7 +5,7 @@ import {
   MessageActionRowComponentBuilder,
   ButtonStyle,
 } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { Button } from "../../models";
 
 const modalObject = {
@@ -180,7 +180,7 @@ const button: Button = {
         return;
       })
       .catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
       });
   },
 };

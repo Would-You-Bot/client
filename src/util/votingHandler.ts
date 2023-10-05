@@ -7,7 +7,7 @@ import {
 import { white, gray, green } from "chalk-advanced";
 import QuickChart from "quickchart-js";
 import { v4 as uuidv4 } from "uuid";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import WouldYou from "./wouldYou";
 import { VoteModel } from "./Models/voteModel";
 
@@ -237,7 +237,7 @@ export default class Voting {
       for (const vote of votes) {
         if (olderthen(new Date((vote as any).createdAt), 30))
           return VoteModel.deleteOne({ id: vote.id }).catch((err) => {
-            Sentry.captureException(err);
+            captureException(err);
             return;
           });
         this._cache.set(vote.id, vote);

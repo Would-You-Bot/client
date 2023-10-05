@@ -4,7 +4,7 @@ import {
   PermissionFlagsBits,
   PermissionsBitField,
 } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { ChatInputCommand } from "../../models";
 
 const command: ChatInputCommand = {
@@ -61,7 +61,7 @@ const command: ChatInputCommand = {
           ephemeral: true,
         })
         .catch((err) => {
-          Sentry.captureException(err);
+          captureException(err);
         });
       return;
     }
@@ -345,7 +345,7 @@ const command: ChatInputCommand = {
             embeds: [debugEmbed],
           })
           .catch((err) => {
-            Sentry.captureException(err);
+            captureException(err);
           });
         return;
       }

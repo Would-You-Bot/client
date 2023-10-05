@@ -1,5 +1,5 @@
 import { readdirSync } from "fs";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { SlashCommandBuilder } from "discord.js";
 import { ChatInputCommand } from "../../models";
 const cat = readdirSync(`./src/commands/`).filter((d) => d.endsWith(".js"));
@@ -61,7 +61,7 @@ const command: ChatInputCommand = {
       });
       return;
     } catch (err: any) {
-      Sentry.captureException(err);
+      captureException(err);
       interaction.editReply({
         content: `Errored reloading command: \`${cmd}\`!\nError: ${err.message}`,
       });

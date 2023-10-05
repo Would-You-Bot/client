@@ -3,7 +3,7 @@ import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v10";
 import { white, gray, green, red } from "chalk-advanced";
 import { AutoPoster } from "topgg-autoposter";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import WouldYou from "../../util/wouldYou";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 import { Event } from "../../models/event";
@@ -62,7 +62,7 @@ const event: Event = {
             );
           }
         } catch (err) {
-          Sentry.captureException(err);
+          captureException(err);
         }
       }, 2500);
     }

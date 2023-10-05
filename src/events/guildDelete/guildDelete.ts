@@ -1,5 +1,5 @@
 import { WebhookClient, EmbedBuilder, Guild } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import "dotenv/config";
 import WouldYou from "../../util/wouldYou";
 import { Event } from "../../models/event";
@@ -73,7 +73,7 @@ const event: Event = {
             }) || undefined,
           allowedMentions: { parse: [] },
         })
-        .catch((err) => Sentry.captureException(err));
+        .catch((err) => captureException(err));
     }
   },
 };

@@ -1,6 +1,6 @@
 import "dotenv/config";
 import * as Topgg from "@top-gg/sdk";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import {
   WebhookClient,
   ActionRowBuilder,
@@ -82,7 +82,7 @@ export default class VoteLogger {
             userdata = res?.data?.data;
           })
           .catch((err) => {
-            Sentry.captureException(err);
+            captureException(err);
             userdata = this.c?.users?.cache?.get(vote.user) ?? null;
           });
 
@@ -134,7 +134,7 @@ export default class VoteLogger {
               .replace("everyone", "")}`,
             avatarURL: userdata.avatarURL,
           })
-          .catch((err) => Sentry.captureException(err));
+          .catch((err) => captureException(err));
       }),
     );
 

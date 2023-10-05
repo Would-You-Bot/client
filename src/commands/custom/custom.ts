@@ -7,7 +7,7 @@ import {
   PermissionsBitField,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import axios from "axios";
 import Paginator from "../../util/pagination";
 import "dotenv/config";
@@ -707,7 +707,7 @@ const command: ChatInputCommand = {
               return;
             })
             .catch((err) => {
-              Sentry.captureException(err);
+              captureException(err);
               interaction.editReply(
                 `${client.translation.get(
                   guildDb?.language,
@@ -800,7 +800,7 @@ const command: ChatInputCommand = {
           ephemeral: true,
         })
         .catch((err) => {
-          Sentry.captureException(err);
+          captureException(err);
         });
       return;
     } else {
@@ -816,7 +816,7 @@ const command: ChatInputCommand = {
           ephemeral: true,
         })
         .catch((err) => {
-          Sentry.captureException(err);
+          captureException(err);
         });
       return;
     }

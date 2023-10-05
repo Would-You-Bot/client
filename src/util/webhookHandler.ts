@@ -1,5 +1,5 @@
 import { PermissionFlagsBits, WebhookClient, EmbedBuilder } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { Model } from "mongoose";
 import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
 import WouldYou from "./wouldYou";
@@ -64,7 +64,7 @@ export default class WebhookHandler {
   ) => {
     if (!channel)
       channel = await this.c.channels.fetch(channelId).catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
       });
 
     if (!channel) return null;
@@ -83,7 +83,7 @@ export default class WebhookHandler {
         reason: reason ?? "Would You Webhook",
       })
       .catch((err: any) => {
-        return Sentry.captureException(err);
+        return captureException(err);
       });
 
     if (webhook?.id) {
@@ -125,7 +125,7 @@ export default class WebhookHandler {
   ): Promise<void> => {
     if (!channel)
       channel = await this.c.channels.fetch(channelId).catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
       });
 
     if (!channel) return;
@@ -149,7 +149,7 @@ export default class WebhookHandler {
               web
                 .delete("Deleting old webhook, to create a new one")
                 .catch((err: any) => {
-                  Sentry.captureException(err);
+                  captureException(err);
                 });
             }
           }, 1000 * i);
@@ -200,7 +200,7 @@ export default class WebhookHandler {
         );
 
         return channel.send(message).catch((err: Error) => {
-          Sentry.captureException(err);
+          captureException(err);
         });
       }
     }
@@ -252,7 +252,7 @@ export default class WebhookHandler {
         return this.webhookFallBack(channel, channelId, message, false);
 
       const fallbackThread = await webhookClient.send(message).catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);
       });
       if (!thread) return;
@@ -281,7 +281,7 @@ export default class WebhookHandler {
       if (!webhook) return this.webhookFallBack(channel, channelId, message);
 
       const webhookThread = await webhook.send(message).catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
         return this.webhookFallBack(channel, channelId, message, err);
       });
       if (!thread) return;

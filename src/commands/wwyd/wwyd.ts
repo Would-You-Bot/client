@@ -6,7 +6,7 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import shuffle from "../../util/shuffle";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { ChatInputCommand } from "../../models";
 import { getWwyd } from "../../util/Functions/jsonImport";
 
@@ -86,7 +86,7 @@ const command: ChatInputCommand = {
     interaction
       .reply({ embeds: [wwydembed], components: [row] })
       .catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
       });
   },
 };

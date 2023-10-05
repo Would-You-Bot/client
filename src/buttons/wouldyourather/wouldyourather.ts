@@ -5,7 +5,7 @@ import {
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import shuffle from "../../util/shuffle";
 import { Button } from "../../models";
 import { getWouldYouRather } from "../../util/Functions/jsonImport";
@@ -107,7 +107,7 @@ const button: Button = {
         components: [row, mainRow],
       })
       .catch((err: Error) => {
-        Sentry.captureException(err);
+        captureException(err);
       });
     return;
   },

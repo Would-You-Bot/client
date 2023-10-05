@@ -2,7 +2,7 @@ import { EmbedBuilder } from "discord.js";
 import * as mom from "moment-timezone";
 import { white, gray, green } from "chalk-advanced";
 import { CronJob } from "cron";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import WouldYou from "./wouldYou";
 import { getWouldYouRather, getWwyd } from "./Functions/jsonImport";
 export default class DailyMessage {
@@ -53,7 +53,7 @@ export default class DailyMessage {
         const channel = await this.client.channels
           .fetch(db.dailyChannel)
           .catch((err) => {
-            Sentry.captureException(err);
+            captureException(err);
           });
 
         if (!channel?.id) return; // Always directly return before do to many actions
@@ -96,7 +96,7 @@ export default class DailyMessage {
                 db.dailyThread,
               )
               .catch((err) => {
-                Sentry.captureException(err);
+                captureException(err);
               });
           }
 
@@ -129,7 +129,7 @@ export default class DailyMessage {
             db.dailyThread,
           )
           .catch((err) => {
-            Sentry.captureException(err);
+            captureException(err);
           });
       }, i * 2500); // We do a little timeout here to work against discord ratelimit with 50reqs/second
     }

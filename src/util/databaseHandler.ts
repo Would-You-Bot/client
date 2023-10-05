@@ -1,6 +1,6 @@
 import { Model, connect, set } from "mongoose";
 import { white, gray, green } from "chalk-advanced";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { GuildModel, IGuildModel } from "./Models/guildModel";
 import WouldYou from "./wouldYou";
 
@@ -44,7 +44,7 @@ export default class DatabaseHandler {
     set("strictQuery", true);
     await connect(this.connectionString)
       .catch((err) => {
-        Sentry.captureException(err);
+        captureException(err);
       })
       .then(() =>
         console.log(

@@ -4,7 +4,7 @@ import {
   EmbedBuilder,
   ButtonStyle,
 } from "discord.js";
-import Sentry from "@sentry/node";
+import {captureException} from "@sentry/node"
 import { Button } from "../../models";
 
 const modalObject = {
@@ -34,7 +34,7 @@ function isValid(tz: string) {
     Intl.DateTimeFormat(undefined, { timeZone: tz });
     return true;
   } catch (err) {
-    Sentry.captureException(err);
+    captureException(err);
     return false;
   }
 }
