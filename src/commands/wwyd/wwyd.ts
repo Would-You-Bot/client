@@ -31,7 +31,7 @@ const command: ChatInputCommand = {
     var WhatYouDo = await getWwyd(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
-      (c: any) => c.type !== "nsfw" && c.type === "wwyd",
+      (c) => c.type !== "nsfw" && c.type === "wwyd",
     );
 
     let whatwouldyoudo = [];
@@ -45,11 +45,11 @@ const command: ChatInputCommand = {
       case "mixed":
         whatwouldyoudo = shuffle([
           ...WhatYouDo,
-          ...dbquestions.map((c: any) => c.msg),
+          ...dbquestions.map((c) => c.msg),
         ]);
         break;
       case "custom":
-        whatwouldyoudo = shuffle(dbquestions.map((c: any) => c.msg));
+        whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
 

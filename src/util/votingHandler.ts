@@ -1,4 +1,4 @@
-import { ButtonBuilder, ActionRowBuilder, ButtonStyle } from "discord.js";
+import { ButtonBuilder, ActionRowBuilder, ButtonStyle, MessageActionRowComponentBuilder } from "discord.js";
 import { white, gray, green } from "chalk-advanced";
 import QuickChart from "quickchart-js";
 import { v4 as uuidv4 } from "uuid";
@@ -77,7 +77,7 @@ export default class Voting {
       op_two: op_tow ? op_tow : [],
     });
 
-    const row = new ActionRowBuilder();
+    const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     switch (type) {
       case "wouldyourather":
         row.addComponents([

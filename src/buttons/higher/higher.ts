@@ -57,13 +57,13 @@ const button: Button = {
         comperator = Math.floor(Math.random() * gameData.length);
         if (
           game?.items.current.id == gameData[comperator].id ||
-          game?.items.history.find((i: any) => i.id == gameData[comperator].id)
+          game?.items.history.find((i) => i.id == gameData[comperator].id)
         )
           regenerateComperator();
       };
       if (
         game.items.current.id == gameData[comperator].id ||
-        game.items.history.find((i: any) => i.id == gameData[comperator].id)
+        game.items.history.find((i) => i.id == gameData[comperator].id)
       )
         regenerateComperator();
 

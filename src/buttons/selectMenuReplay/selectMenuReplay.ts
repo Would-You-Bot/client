@@ -34,7 +34,7 @@ const button: Button = {
   execute: async (interaction, client, guildDb) => {
     if (
       guildDb.replayChannels.find(
-        (c: any) => c.id === (interaction as any).values[0],
+        (c) => c.id === (interaction as any).values[0],
       )
     ) {
       interaction.reply({

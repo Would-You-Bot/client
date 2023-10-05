@@ -25,7 +25,7 @@ const modalObject = {
   ],
 };
 
-function isValid(tz: any) {
+function isValid(tz: string) {
   if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
     return false;
   }
@@ -39,7 +39,7 @@ function isValid(tz: any) {
   }
 }
 
-function dateType(tz: any) {
+function dateType(tz: string) {
   if (!tz.includes("/")) return false;
   let text = tz.split("/");
 

@@ -190,7 +190,7 @@ const command: ChatInputCommand = {
 
           if (
             !guildDb.customMessages.find(
-              (c: any) => c.id.toString() === message,
+              (c) => c.id.toString() === message,
             )
           ) {
             interaction.reply({
@@ -200,7 +200,7 @@ const command: ChatInputCommand = {
             return;
           }
           let filtered = guildDb.customMessages.filter(
-            (c: any) => c.id.toString() != message,
+            (c) => c.id.toString() != message,
           );
 
           await client.database.updateGuild(
@@ -288,14 +288,14 @@ const command: ChatInputCommand = {
 
           if (
             guildDb.customMessages.filter(
-              (c: any) => c.type === "neverhaveiever",
+              (c) => c.type === "neverhaveiever",
             ).length > 0
           ) {
             let data: any;
             data = guildDb.customMessages
-              .filter((c: any) => c.type === "neverhaveiever")
+              .filter((c) => c.type === "neverhaveiever")
               .map(
-                (s: any, i: any) =>
+                (s, i) =>
                   `${client.translation.get(
                     guildDb?.language,
                     "wyCustom.success.embedAdd.descID",
@@ -334,14 +334,14 @@ const command: ChatInputCommand = {
 
           if (
             guildDb.customMessages.filter(
-              (c: any) => c.type === "wouldyourather",
+              (c) => c.type === "wouldyourather",
             ).length > 0
           ) {
             let data: any;
             data = guildDb.customMessages
-              .filter((c: any) => c.type === "wouldyourather")
+              .filter((c) => c.type === "wouldyourather")
               .map(
-                (s: any, i: any) =>
+                (s, i) =>
                   `${client.translation.get(
                     guildDb?.language,
                     "wyCustom.success.embedAdd.descID",
@@ -379,14 +379,14 @@ const command: ChatInputCommand = {
           }
 
           if (
-            guildDb.customMessages.filter((c: any) => c.type === "wwyd")
+            guildDb.customMessages.filter((c) => c.type === "wwyd")
               .length > 0
           ) {
             let data: any;
             data = guildDb.customMessages
-              .filter((c: any) => c.type === "wwyd")
+              .filter((c) => c.type === "wwyd")
               .map(
-                (s: any, i: any) =>
+                (s, i) =>
                   `${client.translation.get(
                     guildDb?.language,
                     "wyCustom.success.embedAdd.descID",
@@ -553,13 +553,13 @@ const command: ChatInputCommand = {
               }
 
               let wouldyourather = guildDb.customMessages.filter(
-                (c: any) => c.type === "wouldyourather",
+                (c) => c.type === "wouldyourather",
               ).length;
               let neverhaveiever = guildDb.customMessages.filter(
-                (c: any) => c.type === "neverhaveiever",
+                (c) => c.type === "neverhaveiever",
               ).length;
               let wwyd = guildDb.customMessages.filter(
-                (c: any) => c.type === "wwyd",
+                (c) => c.type === "wwyd",
               ).length;
 
               if (
@@ -748,7 +748,7 @@ const command: ChatInputCommand = {
 
           if (wouldyourather.length > 0) {
             let arrayText = `"wouldyourather": [`;
-            wouldyourather.map((a: any, i: any) => {
+            wouldyourather.map((a, i) => {
               i = i++ + 1;
               arrayText += `\n"${a.msg}"${
                 wouldyourather.length !== i ? "," : ""
@@ -760,7 +760,7 @@ const command: ChatInputCommand = {
 
           if (neverhaveiever.length > 0) {
             let arrayText = `"neverhaveiever": [`;
-            neverhaveiever.map((a: any, i: any) => {
+            neverhaveiever.map((a, i) => {
               i = i++ + 1;
               arrayText += `\n"${a.msg}"${
                 neverhaveiever.length !== i ? "," : ""
@@ -772,7 +772,7 @@ const command: ChatInputCommand = {
 
           if (wwyd.length > 0) {
             let arrayText = `"wwyd": [`;
-            wwyd.map((a: any, i: any) => {
+            wwyd.map((a, i) => {
               i = i++ + 1;
               arrayText += `\n"${a.msg}"${wwyd.length !== i ? "," : ""}`;
             });
@@ -800,7 +800,7 @@ const command: ChatInputCommand = {
 
       interaction
         .reply({
-          embeds: [typeEmbed as any],
+          embeds: [typeEmbed as EmbedBuilder],
           ephemeral: true,
         })
         .catch((err) => {

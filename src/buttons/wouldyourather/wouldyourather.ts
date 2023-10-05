@@ -27,7 +27,7 @@ const button: Button = {
     var General = await getWouldYouRather(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
-      (c: any) => c.type !== "nsfw" && c.type === "wouldyourather",
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather",
     );
 
     let wouldyourather = [];
@@ -41,11 +41,11 @@ const button: Button = {
       case "mixed":
         wouldyourather = shuffle([
           ...General,
-          ...dbquestions.map((c: any) => c.msg),
+          ...dbquestions.map((c) => c.msg),
         ]);
         break;
       case "custom":
-        wouldyourather = shuffle(dbquestions.map((c: any) => c.msg));
+        wouldyourather = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
 
@@ -104,7 +104,7 @@ const button: Button = {
         embeds: [ratherembed],
         components: [row, mainRow],
       })
-      .catch((err: any) => {
+      .catch((err: Error) => {
         Sentry.captureException(err);
       });
     return;

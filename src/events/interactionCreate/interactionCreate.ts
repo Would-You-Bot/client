@@ -208,7 +208,7 @@ const event: Event = {
           guildDb.replayType === "Channels" &&
           client.used.has(`${interaction.user.id}-${interaction.channel?.id}`) &&
           guildDb.replayChannels.find(
-            (x: any) => x.id === interaction.channel?.id,
+            (x) => x.id === interaction.channel?.id,
           )
         ) {
           var cooldown = Number(guildDb.replayChannels.find(x => x.id === interaction.channel?.id)?.cooldown)
@@ -232,14 +232,14 @@ const event: Event = {
             if (
               guildDb.replayType === "Channels" &&
               guildDb.replayChannels.find(
-                (x: any) => x.id === interaction.channel?.id,
+                (x) => x.id === interaction.channel?.id,
               )
             ) {
               client.used.set(
                 `${interaction.user.id}-${interaction.channel?.id}`,
                 Date.now() +
                   (Number(guildDb.replayChannels.find(
-                    (x: any) => x.id === interaction.channel?.id,
+                    (x) => x.id === interaction.channel?.id,
                   )?.cooldown) || 0),
               );
               setTimeout(
@@ -248,7 +248,7 @@ const event: Event = {
                     `${interaction.user.id}-${interaction.channel?.id}`,
                   ),
                 Number(guildDb.replayChannels.find(
-                  (x: any) => x.id === interaction.channel?.id,
+                  (x) => x.id === interaction.channel?.id,
                 )?.cooldown),
               );
             } else {

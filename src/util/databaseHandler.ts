@@ -2,6 +2,7 @@ import { Model, connect, set } from "mongoose";
 import { white, gray, green } from "chalk-advanced";
 import Sentry from "@sentry/node";
 import { GuildModel, IGuildModel } from "./Models/guildModel";
+import WouldYou from "./wouldYou";
 
 export default class DatabaseHandler {
   private cache: Map<string, any>;
@@ -21,7 +22,7 @@ export default class DatabaseHandler {
    * This is the cache sweeper to keep the cache clean!
    * @param client the client object
    */
-  startSweeper(client: any) {
+  startSweeper(client: WouldYou) {
     setInterval(
       () => {
         const guilds = this.cache.values();

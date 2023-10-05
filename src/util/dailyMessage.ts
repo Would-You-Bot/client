@@ -70,13 +70,13 @@ export default class DailyMessage {
         } else if (db.customTypes === "mixed") {
           let array = [];
           if (
-            db.customMessages.filter((c: any) => c.type !== "nsfw").length != 0
+            db.customMessages.filter((c) => c.type !== "nsfw").length != 0
           ) {
             array.push(
-              db.customMessages.filter((c: any) => c.type !== "nsfw")[
+              db.customMessages.filter((c) => c.type !== "nsfw")[
                 Math.floor(
                   Math.random() *
-                    db.customMessages.filter((c: any) => c.type !== "nsfw")
+                    db.customMessages.filter((c) => c.type !== "nsfw")
                       .length,
                 )
               ].msg,
@@ -88,7 +88,7 @@ export default class DailyMessage {
           randomDaily = array[Math.floor(Math.random() * array.length)];
         } else if (db.customTypes === "custom") {
           if (
-            db.customMessages.filter((c: any) => c.type !== "nsfw").length === 0
+            db.customMessages.filter((c) => c.type !== "nsfw").length === 0
           ) {
             return this.client.webhookHandler
               .sendWebhook(
@@ -105,10 +105,10 @@ export default class DailyMessage {
               });
           }
 
-          randomDaily = db.customMessages.filter((c: any) => c.type !== "nsfw")[
+          randomDaily = db.customMessages.filter((c) => c.type !== "nsfw")[
             Math.floor(
               Math.random() *
-                db.customMessages.filter((c: any) => c.type !== "nsfw").length,
+                db.customMessages.filter((c) => c.type !== "nsfw").length,
             )
           ].msg;
         }

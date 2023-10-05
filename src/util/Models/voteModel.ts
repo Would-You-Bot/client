@@ -5,8 +5,11 @@ export interface IVoteModel {
   guild: string;
   channel: string;
   type: string;
-  votes: any;
-  until: any;
+  votes: {
+    op_one: string[];
+    op_two: string[];
+  };
+  until: Date;
 }
 const voteModelSchema = new Schema(
   {
@@ -15,8 +18,8 @@ const voteModelSchema = new Schema(
     channel: { type: String, required: true },
     type: { type: String }, // 0 = wouldyourather, 1 = neverhaveiever
     votes: {
-      op_one: { type: Array, default: [] },
-      op_two: { type: Array, default: [] },
+      op_one: { type: [String], default: [] },
+      op_two: { type: [String], default: [] },
     },
 
     until: { type: Date, required: false },

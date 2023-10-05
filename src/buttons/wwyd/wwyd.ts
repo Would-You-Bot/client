@@ -26,7 +26,7 @@ const button: Button = {
 
     var WhatYouDo = await getWwyd(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
-      (c: any) => c.type !== "nsfw" && c.type === "wwyd",
+      (c) => c.type !== "nsfw" && c.type === "wwyd",
     );
 
     let whatwouldyoudo = [];
@@ -40,11 +40,11 @@ const button: Button = {
       case "mixed":
         whatwouldyoudo = shuffle([
           ...WhatYouDo,
-          ...dbquestions.map((c: any) => c.msg),
+          ...dbquestions.map((c) => c.msg),
         ]);
         break;
       case "custom":
-        whatwouldyoudo = shuffle(dbquestions.map((c: any) => c.msg));
+        whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
 
@@ -83,7 +83,7 @@ const button: Button = {
         embeds: [wwydembed],
         components: [row],
       })
-      .catch((err: any) => {
+      .catch((err: Error) => {
         Sentry.captureException(err);
       });
     return;

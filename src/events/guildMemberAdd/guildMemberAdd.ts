@@ -42,14 +42,14 @@ const event: Event = {
       } else if (guildDb.customTypes === "mixed") {
         let array = [];
         if (
-          guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length !=
+          guildDb.customMessages.filter((c) => c.type !== "nsfw").length !=
           0
         ) {
           array.push(
-            guildDb.customMessages.filter((c: any) => c.type !== "nsfw")[
+            guildDb.customMessages.filter((c) => c.type !== "nsfw")[
               Math.floor(
                 Math.random() *
-                  guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
+                  guildDb.customMessages.filter((c) => c.type !== "nsfw")
                     .length,
               )
             ].msg,
@@ -61,7 +61,7 @@ const event: Event = {
         randomDaily = array[Math.floor(Math.random() * array.length)];
       } else if (guildDb.customTypes === "custom") {
         if (
-          guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
+          guildDb.customMessages.filter((c) => c.type !== "nsfw")
             .length === 0
         ) {
           client.webhookHandler
@@ -85,7 +85,7 @@ const event: Event = {
         )[
           Math.floor(
             Math.random() *
-              guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
+              guildDb.customMessages.filter((c) => c.type !== "nsfw")
                 .length,
           )
         ].msg;
@@ -98,14 +98,14 @@ const event: Event = {
       } else if (guildDb.customTypes === "mixed") {
         let array = [];
         if (
-          guildDb.customMessages.filter((c: any) => c.type !== "nsfw").length !=
+          guildDb.customMessages.filter((c) => c.type !== "nsfw").length !=
           0
         ) {
           array.push(
-            guildDb.customMessages.filter((c: any) => c.type !== "nsfw")[
+            guildDb.customMessages.filter((c) => c.type !== "nsfw")[
               Math.floor(
                 Math.random() *
-                  guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
+                  guildDb.customMessages.filter((c) => c.type !== "nsfw")
                     .length,
               )
             ].msg,
@@ -117,7 +117,7 @@ const event: Event = {
         randomDaily = array[Math.floor(Math.random() * array.length)];
       } else if (guildDb.customTypes === "custom") {
         if (
-          guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
+          guildDb.customMessages.filter((c) => c.type !== "nsfw")
             .length === 0
         ) {
            client.webhookHandler
@@ -137,11 +137,11 @@ const event: Event = {
         }
 
         randomDaily = guildDb.customMessages.filter(
-          (c: any) => c.type !== "nsfw",
+          (c) => c.type !== "nsfw",
         )[
           Math.floor(
             Math.random() *
-              guildDb.customMessages.filter((c: any) => c.type !== "nsfw")
+              guildDb.customMessages.filter((c) => c.type !== "nsfw")
                 .length,
           )
         ].msg;

@@ -3,6 +3,7 @@ import {
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
+  MessageActionRowComponentBuilder,
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import Sentry from "@sentry/node";
@@ -31,7 +32,7 @@ const command: ChatInputCommand = {
     var General = await getWouldYouRather(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
-      (c: any) => c.type !== "nsfw" && c.type === "wouldyourather",
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather",
     );
 
     let wouldyourather = [];
@@ -45,11 +46,11 @@ const command: ChatInputCommand = {
       case "mixed":
         wouldyourather = shuffle([
           ...General,
-          ...dbquestions.map((c: any) => c.msg),
+          ...dbquestions.map((c) => c.msg),
         ]);
         break;
       case "custom":
-        wouldyourather = shuffle(dbquestions.map((c: any) => c.msg));
+        wouldyourather = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
     const Random = Math.floor(Math.random() * wouldyourather.length);
@@ -62,7 +63,7 @@ const command: ChatInputCommand = {
       })
       .setDescription(wouldyourather[Random] || "Unknown");
 
-    const mainRow = new ActionRowBuilder();
+    const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
       mainRow.addComponents([
         new ButtonBuilder()
@@ -96,7 +97,7 @@ const command: ChatInputCommand = {
     await interaction
       .reply({
         embeds: [ratherembed],
-        components: [row as any, mainRow],
+        components: [row, mainRow],
         fetchReply: true,
       })
       .catch((err) => {

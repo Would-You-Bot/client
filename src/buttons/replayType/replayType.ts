@@ -3,6 +3,7 @@ import {
   ActionRowBuilder,
   EmbedBuilder,
   ButtonStyle,
+  MessageActionRowComponentBuilder,
 } from "discord.js";
 import { Button } from "../../models";
 
@@ -33,7 +34,7 @@ const button: Button = {
               )}: ${
                 guildDb.replayChannels.length > 0
                   ? `\n${guildDb.replayChannels
-                      .map((c: any) => `<#${c.id}>: ${c.cooldown}`)
+                      .map((c) => `<#${c.id}>: ${c.cooldown}`)
                       .join("\n")}`
                   : client.translation.get(
                       guildDb?.language,
@@ -51,7 +52,7 @@ const button: Button = {
         iconURL: client.user?.avatarURL() || undefined,
       });
 
-    const generalButtons = new ActionRowBuilder().addComponents(
+    const generalButtons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId(
           guildDb.replayType === "Channels"
@@ -79,7 +80,7 @@ const button: Button = {
         .setEmoji("📝"),
     );
 
-    const chanDelete = new ActionRowBuilder().addComponents(
+    const chanDelete = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("replayDeleteChannels")
         .setLabel(
@@ -101,7 +102,7 @@ const button: Button = {
       components:
         newType === "Channels"
           ? [generalButtons, chanDelete]
-          : ([generalButtons] as any),
+          : [generalButtons],
       options: {
         ephemeral: true,
       },

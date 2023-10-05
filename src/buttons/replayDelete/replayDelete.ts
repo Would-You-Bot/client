@@ -12,7 +12,7 @@ const button: Button = {
   execute: async (interaction, client, guildDb) => {
     const arr =
       guildDb.replayChannels.filter(
-        (c: any) => c.id !== (interaction as any).values[0],
+        (c) => c.id !== (interaction as any).values[0],
       ).length > 0
         ? guildDb.replayChannels
         : "None";
@@ -35,8 +35,8 @@ const button: Button = {
           arr === "None"
             ? arr
             : `\n${arr
-                .filter((c: any) => c.id !== (interaction as any).values[0])
-                .map((c: any) => `<#${c.id}>: ${c.cooldown}`)
+                .filter((c) => c.id !== (interaction as any).values[0])
+                .map((c) => `<#${c.id}>: ${c.cooldown}`)
                 .join("\n")}`
         }`,
       )
@@ -90,7 +90,7 @@ const button: Button = {
       );
 
     guildDb.replayChannels = guildDb.replayChannels.filter(
-      (c: any) => c.id !== (interaction as any).values[0],
+      (c) => c.id !== (interaction as any).values[0],
     );
     await client.database.updateGuild(interaction.guild?.id || "", {
       replayChannels: guildDb.replayChannels,

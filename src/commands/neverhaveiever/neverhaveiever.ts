@@ -34,7 +34,7 @@ const command: ChatInputCommand = {
     );
 
     const dbquestions = guildDb.customMessages.filter(
-      (c: any) => c.type !== "nsfw" && c.type === "neverhaveiever",
+      (c) => c.type !== "nsfw" && c.type === "neverhaveiever",
     );
 
     let nererhaveIever = [];
@@ -58,11 +58,11 @@ const command: ChatInputCommand = {
           ...Young,
           ...Food,
           ...RuleBreak,
-          ...dbquestions.map((c: any) => c.msg),
+          ...dbquestions.map((c) => c.msg),
         ]);
         break;
       case "custom":
-        nererhaveIever = shuffle(dbquestions.map((c: any) => c.msg));
+        nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
     const Random = Math.floor(Math.random() * nererhaveIever.length);
@@ -106,7 +106,7 @@ const command: ChatInputCommand = {
     );
 
     interaction
-      .reply({ embeds: [ratherembed], components: [row as any, mainRow] })
+      .reply({ embeds: [ratherembed], components: [row, mainRow] })
       .catch((err) => {
         Sentry.captureException(err);
       });

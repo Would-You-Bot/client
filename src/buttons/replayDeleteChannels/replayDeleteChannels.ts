@@ -24,7 +24,7 @@ const button: Button = {
           .setCustomId("replayDelete")
           .setPlaceholder("Select a channel to remove cooldown from")
           .addOptions(
-            guildDb.replayChannels.map((channel: any) => {
+            guildDb.replayChannels.map((channel) => {
               return {
                 label: channel.name,
                 value: channel.id,
