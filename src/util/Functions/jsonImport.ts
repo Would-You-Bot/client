@@ -15,7 +15,7 @@ export async function getWouldYouRather(language: string): Promise<any[]> {
 export async function getWwyd(language: string): Promise<any[]> {
   var result = [] as any[];
   await import(getPath(`wwyd-${language}.json`)).then((value: any) => {
-    result = value.General;
+    result = value.WhatYouDo;
   });
   return result;
 }
@@ -37,7 +37,7 @@ interface NeverHaveIEverResult {
 }
 
 export async function getNeverHaveIEver(
-  language: string,
+  language: string
 ): Promise<NeverHaveIEverResult> {
   var result = {} as NeverHaveIEverResult;
 
