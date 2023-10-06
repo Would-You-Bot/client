@@ -157,7 +157,7 @@ const event: Event = {
         )
         .setColor("#0598F6")
         .setThumbnail(member.user.avatarURL())
-        .setDescription(randomDaily);
+        .setDescription(randomDaily as string);
 
       channel
         .send({ content: mention, embeds: [welcomeEmbed] })

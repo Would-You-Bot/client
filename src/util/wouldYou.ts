@@ -134,7 +134,7 @@ export default class WouldYou extends Client {
     this.events = await fileToCollection<Event>(getPath("events"));
 
     this.events.forEach((value, key) => {
-      this.on(key, (payload: any) => value.execute(this, payload));
+      this.on(key, (payload) => value.execute(this, payload));
     });
   }
 

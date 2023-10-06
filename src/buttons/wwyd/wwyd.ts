@@ -29,7 +29,7 @@ const button: Button = {
       (c) => c.type !== "nsfw" && c.type === "wwyd",
     );
 
-    let whatwouldyoudo = [];
+    let whatwouldyoudo = [] as string[];
 
     if (!dbquestions.length) guildDb.customTypes = "regular";
 

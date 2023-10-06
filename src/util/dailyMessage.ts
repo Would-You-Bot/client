@@ -61,7 +61,7 @@ export default class DailyMessage {
         var General = await getWouldYouRather(db.language);
         var WhatYouDo = await getWwyd(db.language);
 
-        let randomDaily;
+        let randomDaily: any;
         let dailyId;
         if (db.customTypes === "regular") {
           let array = [];
@@ -117,7 +117,7 @@ export default class DailyMessage {
               c.toUpperCase(),
             )} | ID: ${dailyId}`,
           })
-          .setDescription(randomDaily);
+          .setDescription(randomDaily as string);
         await this.client.webhookHandler
           .sendWebhook(
             channel,

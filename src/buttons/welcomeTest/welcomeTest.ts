@@ -72,7 +72,7 @@ const button: Button = {
       )
       .setColor("#0598F6")
       .setThumbnail((interaction.member?.user as User).avatarURL())
-      .setDescription(randomDaily);
+      .setDescription(randomDaily as string);
 
     interaction.reply({
       content: `${client.translation.get(

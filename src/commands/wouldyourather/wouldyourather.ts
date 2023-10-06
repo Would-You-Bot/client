@@ -35,7 +35,7 @@ const command: ChatInputCommand = {
       (c) => c.type !== "nsfw" && c.type === "wouldyourather",
     );
 
-    let wouldyourather = [];
+    let wouldyourather = [] as string[];
 
     if (!dbquestions.length) guildDb.customTypes = "regular";
 
