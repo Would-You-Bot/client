@@ -26,44 +26,59 @@ module.exports = async (client, member) => {
         ])
     )
       return;
-      const { General } = await require(`../data/rather-${guildDb.language}.json`);
-      const { WhatYouDo } = await require(`../data/wwyd-${guildDb.language}.json`);
+    const { General } = await require(
+      `../data/rather-${guildDb.language}.json`,
+    );
+    const { WhatYouDo } = await require(
+      `../data/wwyd-${guildDb.language}.json`,
+    );
 
-      let randomMessage = [];
-      if (guildDb.welcomeType === "regular") {
-        let array = [];
-        array.push(...General, ...WhatYouDo);
-        randomMessage = array[Math.floor(Math.random() * array.length)];
-      } else if (guildDb.welcomeType === "mixed") {
-        let array = [];
-        if (guildDb.customMessages.filter((c) => c.type !== "nsfw").length != 0) {
-          array.push(
-            guildDb.customMessages.filter((c) => c.type !== "nsfw")[
-              Math.floor(
-                Math.random() *
+    let randomMessage = [];
+    if (guildDb.welcomeType === "regular") {
+      let array = [];
+      array.push(...General, ...WhatYouDo);
+      randomMessage = array[Math.floor(Math.random() * array.length)];
+    } else if (guildDb.welcomeType === "mixed") {
+      let array = [];
+      if (guildDb.customMessages.filter((c) => c.type !== "nsfw").length != 0) {
+        array.push(
+          guildDb.customMessages.filter((c) => c.type !== "nsfw")[
+            Math.floor(
+              Math.random() *
                 guildDb.customMessages.filter((c) => c.type !== "nsfw").length,
-              )
-            ].msg,
-          );
-        } else {
-          randomMessage = [...General, ...WhatYouDo];
-        }
-        array.push(...General, ...WhatYouDo);
-        randomMessage = array[Math.floor(Math.random() * array.length)];
-      } else if (guildDb.welcomeType === "custom") {
-        if (guildDb.customMessages.filter((c) => c.type !== "nsfw").length === 0) {
-        }
-
-        randomMessage = guildDb.customMessages.filter((c) => c.type !== "nsfw")[
-          Math.floor(
-            Math.random() *
-            guildDb.customMessages.filter((c) => c.type !== "nsfw").length,
-          )
-        ].msg;
+            )
+          ].msg,
+        );
+      } else {
+        randomMessage = [...General, ...WhatYouDo];
+      }
+      array.push(...General, ...WhatYouDo);
+      randomMessage = array[Math.floor(Math.random() * array.length)];
+    } else if (guildDb.welcomeType === "custom") {
+      if (
+        guildDb.customMessages.filter((c) => c.type !== "nsfw").length === 0
+      ) {
       }
 
+      randomMessage = guildDb.customMessages.filter((c) => c.type !== "nsfw")[
+        Math.floor(
+          Math.random() *
+            guildDb.customMessages.filter((c) => c.type !== "nsfw").length,
+        )
+      ].msg;
+    }
+
     return channel
-      .send({ content: `${client.translation.get(guildDb?.language, "Welcome.embed.title")} ${guildDb.welcomePing ? `<@${member.user.id}>` : `${member.user.username}`}! ${randomMessage}` })
+      .send({
+        content: `${client.translation.get(
+          guildDb?.language,
+          "Welcome.embed.title",
+        )} ${
+          guildDb.welcomePing
+            ? `<@${member.user.id}>`
+            : `${member.user.username}`
+        }! ${randomMessage}`,
+      })
       .catch((err) => {
         Sentry.captureException(err);
       });
