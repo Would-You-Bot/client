@@ -93,8 +93,11 @@ const command: ChatInputCommand = {
               keyword: game.items.current.keyword,
               history:
                 game.items.history[game.items.history.length - 1].keyword,
-              source: game.items.current.link,
-              source2: game.items.history[game.items.history.length - 1].link,
+              source:
+                game.items.current.link || "https://wouldyoubot.gg/nolink",
+              source2:
+                game.items.history[game.items.history.length - 1].link ||
+                "https://wouldyoubot.gg/nolink",
             },
           )}`,
         )
