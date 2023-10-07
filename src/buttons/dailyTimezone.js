@@ -118,7 +118,7 @@ module.exports = {
             )}: ${guildDb.dailyInterval}\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.dailyType",
-            )}: ${guildDb.customTypes}` +
+            )}: ${guildDb.customTypes}\n` +
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.dailyThread",
