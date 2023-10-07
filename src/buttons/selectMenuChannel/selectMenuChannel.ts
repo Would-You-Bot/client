@@ -42,7 +42,15 @@ const button: Button = {
         )}: ${guildDb.dailyInterval}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyType",
-        )}: ${guildDb.customTypes}`,
+        )}: ${guildDb.customTypes}\n` +
+          `${client.translation.get(
+            guildDb?.language,
+            "Settings.embed.dailyThread",
+          )}: ${
+            guildDb.dailyThread
+              ? `<:check:1077962440815411241>`
+              : `<:x:1077962443013238814>`
+          }`,
       )
       .setColor("#0598F6");
 
@@ -112,6 +120,20 @@ const button: Button = {
             )
             .setStyle(ButtonStyle.Primary)
             .setEmoji("⏰"),
+        ),
+      dailyButtons3 =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setCustomId("dailyThread")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyThread",
+              ),
+            )
+            .setStyle(
+              guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary,
+            ),
         );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
@@ -122,7 +144,7 @@ const button: Button = {
     interaction.update({
       content: null,
       embeds: [dailyMsgs],
-      components: [dailyButtons, dailyButtons2],
+      components: [dailyButtons, dailyButtons2, dailyButtons3],
       options: {
         ephemeral: true,
       },

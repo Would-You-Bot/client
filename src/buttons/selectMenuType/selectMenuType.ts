@@ -46,7 +46,15 @@ const button: Button = {
         )}: ${guildDb.dailyInterval}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyType",
-        )}: ${newType}`,
+        )}: ${newType}\n` +
+          `${client.translation.get(
+            guildDb?.language,
+            "Settings.embed.dailyThread",
+          )}: ${
+            guildDb.dailyThread
+              ? `<:check:1077962440815411241>`
+              : `<:x_:1077962443013238814>`
+          }`,
       )
       .setColor("#0598F6");
 
@@ -83,39 +91,54 @@ const button: Button = {
             .setStyle(ButtonStyle.Primary)
             .setEmoji("📝"),
         ),
-      dailyButtons2 = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setCustomId("dailyTimezone")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyTimezone",
+      dailyButtons2 =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setCustomId("dailyTimezone")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyTimezone",
+              ),
+            )
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji("🌍"),
+          new ButtonBuilder()
+            .setCustomId("dailyRole")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyRole",
+              ),
+            )
+            .setStyle(
+              guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
-          )
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji("🌍"),
-        new ButtonBuilder()
-          .setCustomId("dailyRole")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyRole",
+          new ButtonBuilder()
+            .setCustomId("dailyInterval")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyInterval",
+              ),
+            )
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji("⏰"),
+        ),
+      dailyButtons3 =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setCustomId("dailyThread")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.dailyThread",
+              ),
+            )
+            .setStyle(
+              guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
-          )
-          .setStyle(
-            guildDb.dailyRole ? ButtonStyle.Success : ButtonStyle.Secondary,
-          ),
-        new ButtonBuilder()
-          .setCustomId("dailyInterval")
-          .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              "Settings.button.dailyInterval",
-            ),
-          )
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji("⏰"),
-      );
+        );
 
     await client.database.updateGuild(interaction.guild.id, {
       ...guildDb,
@@ -125,7 +148,7 @@ const button: Button = {
     interaction.update({
       content: null,
       embeds: [dailyMsgs],
-      components: [dailyButtons, dailyButtons2],
+      components: [dailyButtons, dailyButtons2, dailyButtons3],
       ephemeral: true,
     });
     return;
