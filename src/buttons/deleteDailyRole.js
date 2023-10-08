@@ -37,14 +37,14 @@ module.exports = {
           guildDb?.language,
           "Settings.embed.dailyType",
         )}: ${guildDb.customTypes}\n` +
-        `${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.dailyThread",
-        )}: ${
-          guildDb.dailyThread
-            ? `<:check:1077962440815411241>`
-            : `<:x_:1077962443013238814>`
-        }`,
+          `${client.translation.get(
+            guildDb?.language,
+            "Settings.embed.dailyThread",
+          )}: ${
+            guildDb.dailyThread
+              ? `<:check:1077962440815411241>`
+              : `<:x_:1077962443013238814>`
+          }`,
       )
       .setColor("#0598F6");
 
