@@ -5,9 +5,10 @@
   "main": "src/cluster.js",
   "scripts": {
     "start": "node src/cluster.js",
-    "test": "nodemon src/cluster.js",
+    "dev": "nodemon src/cluster.js",
     "format": "prettier --write  \"src/**/*.js\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": ""
   },
   "repository": {
     "type": "git",
