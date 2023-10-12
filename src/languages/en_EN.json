@@ -299,7 +299,7 @@
     "VotingResultsError": "Unable to fetch results."
   },
   "HigherLower": {
-    "description": "Do you think that **{keyword}** has higher or lower searches than **{history}**?\n\n Image source: **[Image 1]({source})** | **[Image 2]({source2})**",
+    "description": "Do you think that **[{keyword}]({source})** has higher or lower searches than **[{history}]({source2})**?",
     "initial": {
       "title": "Initializing",
       "description": "Please wait a moment. I'm creating a game..."

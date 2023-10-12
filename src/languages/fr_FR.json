@@ -298,7 +298,7 @@
       "VotingResults": "Résultats du vote"
     },
     "HigherLower": {
-      "description": "Pensez-vous que **{keyword}** possède plus ou moins de recherches internet que **{history}** ?\n\n Source de l'image: **[Image 1]({source})** | **[Image 2]({source2})**",
+      "description": "Pensez-vous que **[{keyword}]({source})** possède plus ou moins de recherches internet que **[{history}]({source2})** ?",
       "initial": {
         "title": "Initialisation ",
         "description": "Veuillez patienter un instant, je crée une partie..."
