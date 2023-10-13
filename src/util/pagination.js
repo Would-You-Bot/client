@@ -48,11 +48,13 @@ module.exports = class Paginator {
         iconURL: this.client.user.avatarURL(),
       };
     }
+
     const message = await interaction.reply({
       embeds: [this.pages[0]],
       components: [buttons],
       ephemeral: true,
     });
+
     this.client.paginate.set(this.user, {
       pages: this.pages,
       page: this.page,
@@ -61,6 +63,7 @@ module.exports = class Paginator {
       timeout: null,
       time: this.timeout,
     });
+
     const time = setTimeout(() => {
       if (this.client.paginate.get(this.user))
         this.client.paginate.delete(this.user);

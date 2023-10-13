@@ -248,18 +248,11 @@ module.exports = {
               ),
             });
 
-          if (client.paginate.get(interaction.user.id))
-            return interaction.reply({
-              content: `${client.translation.get(
-                guildDb?.language,
-                "wyCustom.error.paginate",
-              )} [Link](https://canary.discord.com/channels/${
-                interaction.guild.id
-              }/${client.paginate.get(interaction.user.id).channel}/${
-                client.paginate.get(interaction.user.id).message
-              })`,
-              ephemeral: true,
-            });
+          let paginate = client.paginate.get(interaction.user.id)
+          if (paginate) {
+            clearTimeout(paginate.timeout);
+            client.paginate.delete(interaction.user.id);
+          }
 
           const page = new Paginator({
             user: interaction.user.id,

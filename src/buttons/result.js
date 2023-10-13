@@ -1,4 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
+const Paginator = require("../util/pagination");
+
 module.exports = {
   data: {
     name: "result",
@@ -14,15 +16,64 @@ module.exports = {
         ephemeral: true,
       });
 
-    const resultEmbed = new EmbedBuilder()
-      .setImage(votingResults.chart)
-      .setColor(
-        votingResults.option_1 < votingResults.option_2 ? "#0091ff" : "#f00404",
-      );
+    let paginate = client.paginate.get(interaction.user.id)
+    if (paginate) {
+      clearTimeout(paginate.timeout);
+      client.paginate.delete(interaction.user.id);
+    }
 
-    interaction.reply({
-      embeds: [resultEmbed],
-      ephemeral: true,
+    const page = new Paginator({
+      user: interaction.user.id,
+      timeout: 180000,
+      client,
     });
+
+    page.add(
+      new EmbedBuilder()
+        .setImage(votingResults.chart)
+        .setColor(votingResults.option_1 < votingResults.option_2 ? "#0091ff" : "#f00404"),
+    );
+
+    let data;
+    data = votingResults.votes.op_one
+      .map((s, i = 1) => `${i++}. <@${s}> (${s})`,);
+    data = Array.from(
+      {
+        length: Math.ceil(data.length / 10),
+      },
+      (a, r) => data.slice(r * 10, r * 10 + 10),
+    );
+
+    Math.ceil(data.length / 10);
+    data = data.map((e) =>
+      page.add(
+        new EmbedBuilder()
+          .setTitle(`Voted "Yes"`)
+          .setDescription(e.slice(0, 10).join("\n").toString())
+          .setColor("#F00605"),
+      ),
+    );
+
+    let data2;
+    data2 = votingResults.votes.op_two
+      .map((s, i = 1) => `${i++}. <@${s}> (${s})`,);
+    data2 = Array.from(
+      {
+        length: Math.ceil(data2.length / 10),
+      },
+      (a, r) => data2.slice(r * 10, r * 10 + 10),
+    );
+
+    Math.ceil(data2.length / 10);
+    data2 = data2.map((e) =>
+      page.add(
+        new EmbedBuilder()
+          .setTitle(`Voted "No"`)
+          .setDescription(e.slice(0, 10).join("\n").toString())
+          .setColor("#F00605"),
+      ),
+    );
+
+    return await page.start(interaction);
   },
 };

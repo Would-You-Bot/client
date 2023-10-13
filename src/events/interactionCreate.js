@@ -25,6 +25,10 @@ module.exports = async (client, interaction) => {
     "dailyMsg",
     "dailyThread",
     "votemodal",
+    "paginateFirst",
+    "paginateLast",
+    "paginateNext",
+    "paginatePrev",
   ];
   if (!interaction.guild) {
     if (interaction.isChatInputCommand()) {

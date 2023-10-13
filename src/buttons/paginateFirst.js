@@ -44,7 +44,8 @@ module.exports = {
 
     clearTimeout(paginate.timeout);
     const time = setTimeout(() => {
-      if (client.paginate.get(this.user)) client.paginate.delete(this.user);
+      if (client.paginate.get(this.user))
+        client.paginate.delete(this.user);
     }, paginate.time);
     paginate.timeout = time;
 
