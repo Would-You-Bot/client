@@ -248,7 +248,7 @@ module.exports = {
               ),
             });
 
-          let paginate = client.paginate.get(interaction.user.id)
+          let paginate = client.paginate.get(interaction.user.id);
           if (paginate) {
             clearTimeout(paginate.timeout);
             client.paginate.delete(interaction.user.id);

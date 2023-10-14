@@ -16,7 +16,7 @@ module.exports = {
         ephemeral: true,
       });
 
-    let paginate = client.paginate.get(interaction.user.id)
+    let paginate = client.paginate.get(interaction.user.id);
     if (paginate) {
       clearTimeout(paginate.timeout);
       client.paginate.delete(interaction.user.id);
@@ -31,12 +31,17 @@ module.exports = {
     page.add(
       new EmbedBuilder()
         .setImage(votingResults.chart)
-        .setColor(votingResults.option_1 < votingResults.option_2 ? "#0091ff" : "#f00404"),
+        .setColor(
+          votingResults.option_1 < votingResults.option_2
+            ? "#0091ff"
+            : "#f00404",
+        ),
     );
 
     let data;
-    data = votingResults.votes.op_one
-      .map((s, i = 1) => `${i++}. <@${s}> (${s})`,);
+    data = votingResults.votes.op_one.map(
+      (s, i = 1) => `${i++}. <@${s}> (${s})`,
+    );
     data = Array.from(
       {
         length: Math.ceil(data.length / 10),
@@ -55,8 +60,9 @@ module.exports = {
     );
 
     let data2;
-    data2 = votingResults.votes.op_two
-      .map((s, i = 1) => `${i++}. <@${s}> (${s})`,);
+    data2 = votingResults.votes.op_two.map(
+      (s, i = 1) => `${i++}. <@${s}> (${s})`,
+    );
     data2 = Array.from(
       {
         length: Math.ceil(data2.length / 10),
