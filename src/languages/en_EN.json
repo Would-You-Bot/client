@@ -36,8 +36,12 @@
       "footer": "Would You"
     }
   },
+  "Privacy": {
+    "success": "Successfully turned your vote privacy **{choice}**."
+  },
   "wyCustom": {
     "error": {
+      "noPages": "Unable to proceed. There are zero pages to go to.",
       "issue": "Unable to fetch that message. Redo the command to view custom messages.",
       "paginate": "You already are viewing custom messages:",
       "maximum": "You've reached the maximum amount of custom messages. You can gain more by voting for the bot!",

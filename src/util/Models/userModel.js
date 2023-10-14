@@ -3,7 +3,8 @@ const { Schema, model } = require("mongoose");
 const userModel = new Schema(
   {
     userID: { type: String, required: true, unique: true },
-
+    votePrivacy: { type: Boolean, default: false },
+    
     wouldyourather: {
       yes: { type: Number, default: 0 },
       no: { type: Number, default: 0 },

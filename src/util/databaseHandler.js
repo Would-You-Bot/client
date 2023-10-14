@@ -9,7 +9,9 @@ module.exports = class DatabaseHandler {
    */
   constructor(connectionString) {
     this.cache = new Map();
+    this.userCache = new Map();
     this.guildModel = require("./Models/guildModel");
+    this.userModel = require("./Models/userModel");
     this.connectionString = connectionString;
   }
 
@@ -135,6 +137,91 @@ module.exports = class DatabaseHandler {
     }
     return null;
   }
+
+
+  /**
+    * Fetch a user from the database (Not suggested use .get()!)
+    * @param {number|string} userId the user id
+    * @param {boolean} createIfNotFound create a database entry if not found
+    * @returns {this.userModel}
+    * @private
+    */
+  async fetchUser(userId, createIfNotFound = false) {
+    const fetched = await this.userModel.findOne({ userID: userId });
+
+    if (fetched) return fetched;
+    if (!fetched && createIfNotFound) {
+      await this.userModel.create({
+        userID: userId,
+      });
+
+      return this.userModel.findOne({ userID: userId });
+    }
+    return null;
+  }
+
+  /**
+   * Get a user database from the cache
+   * @param {string} userId the server id
+   * @param {boolean} createIfNotFound create a database entry if not found
+   * @param {boolean} force if it should force fetch the user
+   * @returns {this.guildModel}
+   */
+  async getUser(userId, createIfNotFound = true, force = false) {
+    if (force) return this.fetchUser(userId, createIfNotFound);
+
+    if (this.userCache.has(userId)) {
+      return this.userCache.get(userId);
+    }
+
+    const fetched = await this.fetchUser(userId, createIfNotFound);
+    if (fetched) {
+      this.userCache.set(userId, fetched?.toObject() ?? fetched);
+
+      return this.userCache.get(userId);
+    }
+    return null;
+  }
+
+  /**
+   * Delete a guild from the db and the cache
+   * @param {number|string} guildId the server id
+   * @param {boolean} onlyCache if you want to only delete the cache
+   * @returns {Promise<deleteMany|boolean>}
+   */
+  async deleteUser(userId, onlyCache = false) {
+    if (this.userCache.has(userId)) this.userCache.delete(userId);
+
+    return !onlyCache ? this.userModel.deleteMany({ userID: userId }) : true;
+  }
+
+  /**
+   * Update the settings from a guild
+   * @param {number|string} guildId the server id
+   * @param {object | this.guildModel} data the updated or new data
+   * @param {boolean} createIfNotFound create a database entry if not found
+   * @returns {Promise<this.guildModel|null>}
+   */
+  async updateUser(userId, data = {}, createIfNotFound = false) {
+    let oldData = await this.getUser(userId, createIfNotFound);
+
+    if (oldData) {
+      if (oldData?._doc) oldData = oldData?._doc;
+
+      data = { ...oldData, ...data };
+
+      this.userCache.set(userId, data);
+
+      return this.userModel.updateOne(
+        {
+          userID: userId,
+        },
+        data,
+      );
+    }
+    return null;
+  }
+
 
   /**
    * Fetch all available settings
