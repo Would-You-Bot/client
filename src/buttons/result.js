@@ -16,7 +16,7 @@ module.exports = {
         ephemeral: true,
       });
 
-    let paginate = client.paginate.get(interaction.user.id)
+    let paginate = client.paginate.get(interaction.user.id);
     if (paginate) {
       clearTimeout(paginate.timeout);
       client.paginate.delete(interaction.user.id);
@@ -31,7 +31,11 @@ module.exports = {
     page.add(
       new EmbedBuilder()
         .setImage(votingResults.chart)
-        .setColor(votingResults.option_1 < votingResults.option_2 ? "#0091ff" : "#f00404"),
+        .setColor(
+          votingResults.option_1 < votingResults.option_2
+            ? "#0091ff"
+            : "#f00404",
+        ),
     );
 
     let data;
