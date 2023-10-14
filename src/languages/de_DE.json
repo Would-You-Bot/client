@@ -36,10 +36,14 @@
       "footer": "Would You"
     }
   },
+  "Privacy": {
+    "success": "Du hast erfolgreich deine vote Privatsphäre zu **{choice}** geändert."
+  },
   "wyCustom": {
     "error": {
-      "paginate": "Du kannst nichmehr weiter gehen :(",
+      "noPages": "Kann nicht fortfahren. Es gibt keine Seiten, zu denen du gehen kannst.",
       "issue": "Diese Nachricht kann nicht abgerufen werden. Wiederhole den Befehl, um benutzerdefinierte Nachrichten anzuzeigen.",
+      "paginate": "Du kannst nichmehr weiter gehen :(",
       "maximum": "Du hast die maximale Anzahl an benutzerdefinierten Nachrichten erreicht. Du kannst mehr hinzufügen wenn du für den bot votest!",
       "empty": "Es gibt keine benutzerdefinierten nachrichten in diesem server!",
       "import": {
@@ -295,14 +299,15 @@
     "Yes": "Ja",
     "No": "Nein",
     "Vote": "Vote: ",
-    "VotingResults": "Abstimmungsergebnis"
+    "VotingResults": "Abstimmungsergebnis",
+    "VotingResultsError": "Ergebnisse konnten nicht abgerufen werden."
   },
   "HigherLower": {
     "description": "Denkst du, dass **[{keyword}]({source})** mehr oder weniger Suchanfragen hat als **[{history}]({source2})**?",
     "initial": {
       "title": "Initialisierung",
       "description": "Bitte warte einen Moment. Ich erstelle ein Spiel..."
-    }, 
+    },
     "game": {
       "title": "Du hast verloren!",
       "description": "Du hast eine Punktzahl von **{score}** erreicht!"

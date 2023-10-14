@@ -36,10 +36,14 @@
       "footer": "Would You"
     }
   },
+  "Privacy": {
+    "success": "Has cambiado con éxito tu privacidad de voto **{choice}**."
+  },
   "wyCustom": {
     "error": {
-      "paginate": "No puedes continuar para ese lado.",
+      "noPages": "No se puede continuar. Hay cero páginas a las que ir.",
       "issue": "No se ha podido recuperar ese mensaje. Rehaz el comando para ver los mensajes personalizados",
+      "paginate": "No puedes continuar para ese lado.",
       "maximum": "Has alcanzado la cantidad máxima de mensajes personalizados. ¡Puedes ganar más votando por el bot!",
       "empty": "¡Actualmente no hay mensajes personalizados para ver!",
       "import": {
@@ -295,14 +299,15 @@
     "Yes": "Sí",
     "No": "No",
     "Vote": "Votar: ",
-    "VotingResults": "Resultados de la votación"
+    "VotingResults": "Resultados de la votación",
+    "VotingResultsError": "No se puede crear resultados."
   },
   "HigherLower": {
     "description": "¿Crees que **[{keyword}]({source})** tiene mayor o menor cantidad de búsquedas que **[{history}]({source2})**?",
     "initial": {
       "title": "Iniciando",
       "description": "Por favor espere un momento. Estoy creando una partida..."
-    }, 
+    },
     "game": {
       "title": "¡Has perdido!",
       "description": "¡Has alcanzado una puntuación de **{score}**!"
