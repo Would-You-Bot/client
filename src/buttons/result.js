@@ -60,7 +60,7 @@ module.exports = {
         new EmbedBuilder()
           .setTitle(`Voted "Yes"`)
           .setDescription(e.slice(0, 10).join("\n").toString())
-          .setColor("#F00605"),
+          .setColor("#0598F6"),
       ),
     );
 
