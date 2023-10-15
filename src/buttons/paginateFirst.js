@@ -15,13 +15,14 @@ module.exports = {
         ephemeral: true,
       });
 
-    if (paginate.pages.length === 1) return interaction.reply({
-      content: client.translation.get(
-        guildDb?.language,
-        "wyCustom.error.noPages",
-      ),
-      ephemeral: true,
-    });
+    if (paginate.pages.length === 1)
+      return interaction.reply({
+        content: client.translation.get(
+          guildDb?.language,
+          "wyCustom.error.noPages",
+        ),
+        ephemeral: true,
+      });
 
     const buttons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
