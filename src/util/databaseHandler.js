@@ -138,14 +138,13 @@ module.exports = class DatabaseHandler {
     return null;
   }
 
-
   /**
-    * Fetch a user from the database (Not suggested use .get()!)
-    * @param {number|string} userId the user id
-    * @param {boolean} createIfNotFound create a database entry if not found
-    * @returns {this.userModel}
-    * @private
-    */
+   * Fetch a user from the database (Not suggested use .get()!)
+   * @param {number|string} userId the user id
+   * @param {boolean} createIfNotFound create a database entry if not found
+   * @returns {this.userModel}
+   * @private
+   */
   async fetchUser(userId, createIfNotFound = false) {
     const fetched = await this.userModel.findOne({ userID: userId });
 
@@ -221,7 +220,6 @@ module.exports = class DatabaseHandler {
     }
     return null;
   }
-
 
   /**
    * Fetch all available settings

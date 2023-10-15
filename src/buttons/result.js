@@ -43,10 +43,9 @@ module.exports = {
       votingResults.votes.op_one.map(async (u) => {
         const user = await client.database.getUser(u, true);
         return user.votePrivacy ? null : u;
-      })
+      }),
     ).then((filteredIds) => filteredIds.filter((id) => id !== null));
-    data = data
-      .map((s, i = 1) => `${i++}. <@${s}> (${s})`);
+    data = data.map((s, i = 1) => `${i++}. <@${s}> (${s})`);
     data = Array.from(
       {
         length: Math.ceil(data.length / 10),
@@ -69,10 +68,9 @@ module.exports = {
       votingResults.votes.op_two.map(async (u) => {
         const user = await client.database.getUser(u, true);
         return user.votePrivacy ? null : u;
-      })
+      }),
     ).then((filteredIds) => filteredIds.filter((id) => id !== null));
-    data2 = data2
-      .map((s, i = 1) => `${i++}. <@${s}> (${s})`,);
+    data2 = data2.map((s, i = 1) => `${i++}. <@${s}> (${s})`);
     data2 = Array.from(
       {
         length: Math.ceil(data2.length / 10),
