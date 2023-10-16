@@ -76,7 +76,7 @@ const userModelSchema = new Schema(
       },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const UserModel = model<IUserModel>("userModel", userModelSchema);

@@ -16,10 +16,10 @@ const command: ChatInputCommand = {
       option
         .setName("votes")
         .setDescription(
-          "Select if you want your name to be mentioned in results of votes."
+          "Select if you want your name to be mentioned in results of votes.",
         )
         .setRequired(true)
-        .addChoices({ name: "On", value: "On" }, { name: "Off", value: "Off" })
+        .addChoices({ name: "On", value: "On" }, { name: "Off", value: "Off" }),
     ),
 
   /**

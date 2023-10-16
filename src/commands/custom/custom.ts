@@ -560,7 +560,7 @@ const command: ChatInputCommand = {
               let wwyd = guildDb.customMessages.filter(
                 (c) => c.type === "wwyd",
               ).length;
-                /*
+              /*
               if (
                 wouldyourather > 30 &&
                 !client.voteLogger.votes.has(interaction.user.id)

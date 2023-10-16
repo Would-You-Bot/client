@@ -34,8 +34,8 @@ const button: Button = {
         .setColor(
           votingResults.option_1 < votingResults.option_2
             ? "#0091ff"
-            : "#f00404"
-        )
+            : "#f00404",
+        ),
     );
 
     let data: any;
@@ -43,14 +43,14 @@ const button: Button = {
       votingResults.votes.op_one.map(async (u: any) => {
         const user = await client.database.getUser(u, true);
         return user?.votePrivacy ? null : u;
-      })
+      }),
     ).then((filteredIds) => filteredIds.filter((id) => id !== null));
     data = data.map((s: any, i = 1) => `${i++}. <@${s}> (${s})`);
     data = Array.from(
       {
         length: Math.ceil(data.length / 10),
       },
-      (a, r) => data.slice(r * 10, r * 10 + 10)
+      (a, r) => data.slice(r * 10, r * 10 + 10),
     );
 
     Math.ceil(data.length / 10);
@@ -59,8 +59,8 @@ const button: Button = {
         new EmbedBuilder()
           .setTitle(`Voted "Yes"`)
           .setDescription(e.slice(0, 10).join("\n").toString())
-          .setColor("#0598F6")
-      )
+          .setColor("#0598F6"),
+      ),
     );
 
     let data2: any;
@@ -68,14 +68,14 @@ const button: Button = {
       votingResults.votes.op_two.map(async (u: any) => {
         const user = await client.database.getUser(u, true);
         return user?.votePrivacy ? null : u;
-      })
+      }),
     ).then((filteredIds) => filteredIds.filter((id) => id !== null));
     data2 = data2.map((s: any, i = 1) => `${i++}. <@${s}> (${s})`);
     data2 = Array.from(
       {
         length: Math.ceil(data2.length / 10),
       },
-      (a, r) => data2.slice(r * 10, r * 10 + 10)
+      (a, r) => data2.slice(r * 10, r * 10 + 10),
     );
 
     Math.ceil(data2.length / 10);
@@ -84,8 +84,8 @@ const button: Button = {
         new EmbedBuilder()
           .setTitle(`Voted "No"`)
           .setDescription(e.slice(0, 10).join("\n").toString())
-          .setColor("#F00605")
-      )
+          .setColor("#F00605"),
+      ),
     );
 
     return await page.start(interaction);

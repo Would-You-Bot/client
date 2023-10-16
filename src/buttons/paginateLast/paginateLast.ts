@@ -25,7 +25,7 @@ const button: Button = {
       interaction.reply({
         content: client.translation.get(
           guildDb?.language,
-          "wyCustom.error.noPages"
+          "wyCustom.error.noPages",
         ),
         ephemeral: true,
       });

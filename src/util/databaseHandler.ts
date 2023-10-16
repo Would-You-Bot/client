@@ -37,7 +37,7 @@ export default class DatabaseHandler {
           }
         }
       },
-      60 * 60 * 1000
+      60 * 60 * 1000,
     );
   }
 
@@ -54,9 +54,9 @@ export default class DatabaseHandler {
       .then(() =>
         console.log(
           `${white("Database")} ${gray(">")} ${green(
-            "Successfully loaded database"
-          )}`
-        )
+            "Successfully loaded database",
+          )}`,
+        ),
       );
   }
 
@@ -93,7 +93,7 @@ export default class DatabaseHandler {
   async getGuild(
     guildId: string,
     createIfNotFound = true,
-    force = false
+    force = false,
   ): Promise<IGuildModel | null> {
     if (force) return this.fetchGuild(guildId, createIfNotFound);
 
@@ -133,7 +133,7 @@ export default class DatabaseHandler {
   async updateGuild(
     guildId: number | string,
     data: object | IGuildModel,
-    createIfNotFound = false
+    createIfNotFound = false,
   ) {
     let oldData = await this.getGuild(guildId.toString(), createIfNotFound);
 
@@ -146,7 +146,7 @@ export default class DatabaseHandler {
         {
           guildID: guildId,
         },
-        data
+        data,
       );
     }
     return null;
@@ -183,7 +183,7 @@ export default class DatabaseHandler {
   async getUser(
     userId: string,
     createIfNotFound = true,
-    force = false
+    force = false,
   ): Promise<IUserModel | null> {
     if (force) return this.fetchUser(userId, createIfNotFound);
 
@@ -224,7 +224,7 @@ export default class DatabaseHandler {
   async updateUser(
     userId: number | string,
     data: object | IUserModel,
-    createIfNotFound = false
+    createIfNotFound = false,
   ) {
     let oldData = await this.getUser(userId.toString(), createIfNotFound);
 
@@ -232,12 +232,12 @@ export default class DatabaseHandler {
       data = { ...oldData, ...data };
 
       this.userCache.set(userId.toString(), data as IUserModel);
-      console.log(data)
+      console.log(data);
       return this.userModel.updateOne(
         {
           userID: userId,
         },
-        data as IUserModel
+        data as IUserModel,
       );
     }
     return null;
