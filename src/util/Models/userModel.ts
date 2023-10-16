@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 
 export interface IUserModel {
   userID: string;
+  votePrivacy: boolean;
   wouldyourather: {
     yes: number;
     no: number;
@@ -40,7 +41,7 @@ export interface IUserModel {
 const userModelSchema = new Schema(
   {
     userID: { type: String, required: true, unique: true },
-
+    votePrivacy: { type: Boolean, default: false },
     wouldyourather: {
       yes: { type: Number, default: 0 },
       no: { type: Number, default: 0 },
@@ -75,7 +76,7 @@ const userModelSchema = new Schema(
       },
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export const UserModel = model<IUserModel>("userModel", userModelSchema);

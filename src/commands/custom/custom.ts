@@ -499,6 +499,7 @@ const command: ChatInputCommand = {
                 });
                 return;
               }
+              /*
               if (
                 response.data.wouldyourather &&
                 response.data.wouldyourather.length > 30 &&
@@ -548,6 +549,7 @@ const command: ChatInputCommand = {
                 });
                 return;
               }
+              */
 
               let wouldyourather = guildDb.customMessages.filter(
                 (c) => c.type === "wouldyourather",
@@ -558,7 +560,7 @@ const command: ChatInputCommand = {
               let wwyd = guildDb.customMessages.filter(
                 (c) => c.type === "wwyd",
               ).length;
-
+                /*
               if (
                 wouldyourather > 30 &&
                 !client.voteLogger.votes.has(interaction.user.id)
@@ -605,8 +607,10 @@ const command: ChatInputCommand = {
                 });
                 return;
               }
+              */
 
               if (response.data.wouldyourather) {
+                /*
                 if (
                   response.data.wouldyourather.length + wouldyourather > 30 &&
                   !client.voteLogger.votes.has(interaction.user.id)
@@ -622,6 +626,7 @@ const command: ChatInputCommand = {
                   });
                   return;
                 }
+                */
                 response.data.wouldyourather.map((d: any) => {
                   let newID = makeID(6);
                   guildDb.customMessages.push({
@@ -633,6 +638,7 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.neverhaveiever) {
+                /*
                 if (
                   response.data.neverhaveiever.length + neverhaveiever > 30 &&
                   !client.voteLogger.votes.has(interaction.user.id)
@@ -648,7 +654,7 @@ const command: ChatInputCommand = {
                   });
                   return;
                 }
-
+                */
                 response.data.neverhaveiever.map((d: any) => {
                   let newID = makeID(6);
                   guildDb.customMessages.push({
@@ -660,6 +666,7 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.wwyd) {
+                /*
                 if (
                   response.data.wwyd.length + wwyd > 30 &&
                   !client.voteLogger.votes.has(interaction.user.id)
@@ -675,7 +682,7 @@ const command: ChatInputCommand = {
                   });
                   return;
                 }
-
+                */
                 response.data.wwyd.map((d: any) => {
                   let newID = makeID(6);
                   guildDb.customMessages.push({

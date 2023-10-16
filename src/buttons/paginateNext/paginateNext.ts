@@ -21,6 +21,17 @@ const button: Button = {
       return;
     }
 
+    if (paginate.pages.length === 1) {
+      interaction.reply({
+        content: client.translation.get(
+          guildDb?.language,
+          "wyCustom.error.noPages"
+        ),
+        ephemeral: true,
+      });
+      return;
+    }
+
     if (paginate.page + 1 === paginate.pages.length - 1) {
       const buttons =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(

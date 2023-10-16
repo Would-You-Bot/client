@@ -212,6 +212,7 @@ export default class Voting {
     });
 
     return {
+      votes: vote.votes,
       all_votes,
       option_1,
       option_2,
