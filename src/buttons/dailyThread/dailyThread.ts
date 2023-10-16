@@ -13,46 +13,46 @@ const button: Button = {
     const check = guildDb.dailyThread;
     const dailyThreads = new EmbedBuilder()
       .setTitle(
-        client.translation.get(guildDb?.language, "Settings.embed.dailyTitle"),
+        client.translation.get(guildDb?.language, "Settings.embed.dailyTitle")
       )
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Settings.embed.dailyMsg",
+          "Settings.embed.dailyMsg"
         )}: ${
           guildDb.dailyMsg
             ? `<:check:1077962440815411241>`
             : `<:x_:1077962443013238814>`
         }\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.dailyChannel",
+          "Settings.embed.dailyChannel"
         )}: ${
           guildDb.dailyChannel
             ? `<#${guildDb.dailyChannel}>`
             : `<:x_:1077962443013238814>`
         }\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.dailyRole",
+          "Settings.embed.dailyRole"
         )}: ${
           guildDb.dailyRole
             ? `<@&${guildDb.dailyRole}>`
             : `<:x_:1077962443013238814>`
         }\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.dailyTimezone",
+          "Settings.embed.dailyTimezone"
         )}: ${guildDb.dailyTimezone}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.dailyInterval",
+          "Settings.embed.dailyInterval"
         )}: ${guildDb.dailyInterval}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.dailyType",
+          "Settings.embed.dailyType"
         )}: ${guildDb.customTypes}\n` +
           `${client.translation.get(
             guildDb?.language,
-            "Settings.embed.dailyThread",
+            "Settings.embed.dailyThread"
           )}: ${
             check ? `<:x_:1077962443013238814>` : `<:check:1077962440815411241>`
-          }`,
+          }`
       )
       .setColor("#0598F6");
 
