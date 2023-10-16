@@ -1,0 +1,18 @@
+version: "3.3"
+
+services:
+  website:
+    container_name: "bot"
+    image: dominikdoesdev/wy-bot
+    environment: 
+      - TEST_GUILD_ID=
+      - STATUS=DEVELOPMENT
+      - BOTSTATUS=Would You?
+      - TOKEN=
+      - ENCRYPTION_KEY=
+      - TOPGG_TOKEN=
+      - TOPGG_WEBHOOK=
+      - SENTRY_DSN=
+      - MONGO_URI=
+      - LOG_PRIVATE=
+      - LOG_GUILDS=
