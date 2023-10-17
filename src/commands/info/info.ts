@@ -70,7 +70,7 @@ const command: ChatInputCommand = {
       .addFields(
         {
           name: "Developers 🐧",
-          value: "```@dominikdev\n@forgetfulskybro\n@finndev```",
+          value: "```@dominikdev\n@forgetfulskybro\n@finndev\n@podskio```",
           inline: false,
         },
         {
