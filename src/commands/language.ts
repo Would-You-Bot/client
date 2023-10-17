@@ -5,7 +5,7 @@ import {
   PermissionsBitField,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../models";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -27,8 +27,8 @@ const command: ChatInputCommand = {
           { name: "🇩🇪 Deutsch", value: "german" },
           { name: "🇺🇸 English", value: "english" },
           { name: "🇪🇸 Español", value: "spanish" },
-          { name: "🇫🇷 Français", value: "french" },
-        ),
+          { name: "🇫🇷 Français", value: "french" }
+        )
     ),
 
   /**
@@ -40,7 +40,7 @@ const command: ChatInputCommand = {
     let languageembed;
     if (
       (interaction.member?.permissions as Readonly<PermissionsBitField>).has(
-        PermissionFlagsBits.ManageGuild,
+        PermissionFlagsBits.ManageGuild
       )
     ) {
       switch (interaction.options.getString("language")) {
@@ -51,7 +51,7 @@ const command: ChatInputCommand = {
               ...guildDb,
               language: "en_EN",
             },
-            true,
+            true
           );
 
           languageembed = new EmbedBuilder()
@@ -70,7 +70,7 @@ const command: ChatInputCommand = {
               ...guildDb,
               language: "de_DE",
             },
-            true,
+            true
           );
 
           languageembed = new EmbedBuilder()
@@ -89,7 +89,7 @@ const command: ChatInputCommand = {
               ...guildDb,
               language: "es_ES",
             },
-            true,
+            true
           );
 
           languageembed = new EmbedBuilder()
@@ -108,7 +108,7 @@ const command: ChatInputCommand = {
               ...guildDb,
               language: "fr_FR",
             },
-            true,
+            true
           );
 
           languageembed = new EmbedBuilder()
@@ -136,7 +136,7 @@ const command: ChatInputCommand = {
         .setColor("#F00505")
         .setTitle("Error!")
         .setDescription(
-          client.translation.get(guildDb?.language, "Language.embed.error"),
+          client.translation.get(guildDb?.language, "Language.embed.error")
         );
 
       interaction

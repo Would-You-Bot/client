@@ -5,10 +5,10 @@ import {
   ButtonBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
+import shuffle from "../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
-import { getWwyd } from "../../util/Functions/jsonImport";
+import { ChatInputCommand } from "../models";
+import { getWwyd } from "../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -31,7 +31,7 @@ const command: ChatInputCommand = {
     var WhatYouDo = await getWwyd(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wwyd",
+      (c) => c.type !== "nsfw" && c.type === "wwyd"
     );
 
     let whatwouldyoudo = [] as string[];
@@ -71,7 +71,7 @@ const command: ChatInputCommand = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
           ),
       ]);
     }

@@ -6,7 +6,7 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../models";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -47,11 +47,11 @@ const command: ChatInputCommand = {
       .addFields({
         name: client.translation.get(
           guildDb?.language,
-          "Help.embed.Fields.privacyname",
+          "Help.embed.Fields.privacyname"
         ),
         value: client.translation.get(
           guildDb?.language,
-          "Help.embed.Fields.privacy",
+          "Help.embed.Fields.privacy"
         ),
         inline: false,
       })
@@ -70,16 +70,16 @@ const command: ChatInputCommand = {
                     : type === "fr"
                     ? n.descriptionLocalizations.fr
                     : n.description
-                }`,
+                }`
             )
-            .join("\n")}`,
+            .join("\n")}`
       );
 
     const button =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setLabel(
-            client.translation.get(guildDb?.language, "Help.button.title"),
+            client.translation.get(guildDb?.language, "Help.button.title")
           )
           .setStyle(5)
           .setEmoji("💫")
@@ -89,8 +89,8 @@ const command: ChatInputCommand = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
-          ),
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
+          )
       );
     await interaction
       .reply({

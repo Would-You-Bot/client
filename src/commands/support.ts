@@ -6,7 +6,7 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../models";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -29,10 +29,10 @@ const command: ChatInputCommand = {
     const supportembed = new EmbedBuilder()
       .setColor("#F00505")
       .setTitle(
-        client.translation.get(guildDb?.language, "Support.embed.title"),
+        client.translation.get(guildDb?.language, "Support.embed.title")
       )
       .setDescription(
-        client.translation.get(guildDb?.language, "Support.embed.description"),
+        client.translation.get(guildDb?.language, "Support.embed.description")
       )
       .setFooter({
         text: client.translation.get(guildDb?.language, "Support.embed.footer"),
@@ -46,7 +46,7 @@ const command: ChatInputCommand = {
           .setLabel("Support Server")
           .setStyle(5)
           .setEmoji("💻")
-          .setURL("https://discord.gg/vMyXAxEznS"),
+          .setURL("https://discord.gg/vMyXAxEznS")
       );
 
     interaction

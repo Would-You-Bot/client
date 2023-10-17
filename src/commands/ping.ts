@@ -6,7 +6,7 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../models";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -39,7 +39,7 @@ const command: ChatInputCommand = {
         {
           name: client.translation.get(guildDb?.language, "Ping.embed.client"),
           value: `> **${Math.abs(
-            Date.now() - interaction.createdTimestamp,
+            Date.now() - interaction.createdTimestamp
           )}**ms`,
           inline: false,
         },
@@ -47,17 +47,17 @@ const command: ChatInputCommand = {
           name: client.translation.get(guildDb?.language, "Ping.embed.api"),
           value: `> **${Math.round(client.ws.ping)}**ms`,
           inline: false,
-        },
+        }
       );
     const button =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setLabel(
-            client.translation.get(guildDb?.language, "Ping.button.title"),
+            client.translation.get(guildDb?.language, "Ping.button.title")
           )
           .setStyle(5)
           .setEmoji("💻")
-          .setURL("https://discordstatus.com/"),
+          .setURL("https://discordstatus.com/")
       );
     await interaction
       .reply({
