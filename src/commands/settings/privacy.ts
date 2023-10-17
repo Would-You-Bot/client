@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { ChatInputCommand } from "../models";
+import { ChatInputCommand } from "../../models";
 
 const command: ChatInputCommand = {
   requireGuild: true,

@@ -232,7 +232,6 @@ export default class DatabaseHandler {
       data = { ...oldData, ...data };
 
       this.userCache.set(userId.toString(), data as IUserModel);
-      console.log(data);
       return this.userModel.updateOne(
         {
           userID: userId,

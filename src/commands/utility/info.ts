@@ -1,6 +1,6 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../models";
+import { ChatInputCommand } from "../../models";
 const { version } = require("../../../package.json");
 
 const command: ChatInputCommand = {

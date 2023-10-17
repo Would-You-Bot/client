@@ -5,21 +5,21 @@ import {
   ButtonBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import shuffle from "../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../models";
-import { getWouldYouRather } from "../util/Functions/jsonImport";
+import shuffle from "../../util/shuffle";
+import { ChatInputCommand } from "../../models";
+import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
-    .setName("wouldyourather")
-    .setDescription("Get a would you rather question.")
+    .setName("neverhaveiever")
+    .setDescription("Get a never have I ever message.")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Erhalte eine Würdest du eher Frage.",
-      "es-ES": "Obtiene une pregunta ¿Qué prefieres?",
-      fr: "Obtenez une question préférez-vous.",
+      de: "Bekomme eine nie habe ich jemals Nachricht.",
+      "es-ES": "Consigue un mensaje Nunca he tenido",
+      fr: "Afficher une question que je n'ai jamais posée",
     }),
 
   /**
@@ -29,39 +29,51 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    var General = await getWouldYouRather(guildDb.language);
-
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wouldyourather"
+    var { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
+      guildDb.language
     );
 
-    let wouldyourather = [] as string[];
+    const dbquestions = guildDb.customMessages.filter(
+      (c) => c.type !== "nsfw" && c.type === "neverhaveiever"
+    );
+
+    let nererhaveIever = [] as string[];
 
     if (!dbquestions.length) guildDb.customTypes = "regular";
 
     switch (guildDb.customTypes) {
       case "regular":
-        wouldyourather = shuffle([...General]);
+        nererhaveIever = shuffle([
+          ...Funny,
+          ...Basic,
+          ...Young,
+          ...Food,
+          ...RuleBreak,
+        ]);
         break;
       case "mixed":
-        wouldyourather = shuffle([
-          ...General,
+        nererhaveIever = shuffle([
+          ...Funny,
+          ...Basic,
+          ...Young,
+          ...Food,
+          ...RuleBreak,
           ...dbquestions.map((c) => c.msg),
         ]);
         break;
       case "custom":
-        wouldyourather = shuffle(dbquestions.map((c) => c.msg));
+        nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
-    const Random = Math.floor(Math.random() * wouldyourather.length);
+    const Random = Math.floor(Math.random() * nererhaveIever.length);
 
     let ratherembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: General | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL() || undefined,
+        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
+        iconURL: interaction.user.avatarURL() || "",
       })
-      .setDescription(wouldyourather[Random] || "Unknown");
+      .setDescription(nererhaveIever[Random]);
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
@@ -80,8 +92,7 @@ const command: ChatInputCommand = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
-        .setCustomId(`wouldyourather`)
-        .setDisabled(!guildDb.replay),
+        .setCustomId(`neverhaveiever`),
     ]);
 
     const time = 60_000;
@@ -93,15 +104,11 @@ const command: ChatInputCommand = {
       time < three_minutes
         ? new Date(0)
         : new Date(~~((Date.now() + time) / 1000)),
-      "wouldyourather"
+      "neverhaveiever"
     );
 
-    await interaction
-      .reply({
-        embeds: [ratherembed],
-        components: [row, mainRow],
-        fetchReply: true,
-      })
+    interaction
+      .reply({ embeds: [ratherembed], components: [row, mainRow] })
       .catch((err) => {
         captureException(err);
       });

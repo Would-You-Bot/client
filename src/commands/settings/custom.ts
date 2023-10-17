@@ -9,9 +9,9 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import axios from "axios";
-import Paginator from "../util/pagination";
+import Paginator from "../../util/pagination";
 import "dotenv/config";
-import { ChatInputCommand } from "../models";
+import { ChatInputCommand } from "../../models";
 
 function makeID(length: number) {
   let result = "";

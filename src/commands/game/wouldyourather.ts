@@ -5,21 +5,21 @@ import {
   ButtonBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
+import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import shuffle from "../util/shuffle";
-import { ChatInputCommand } from "../models";
-import { getNeverHaveIEver } from "../util/Functions/jsonImport";
+import { ChatInputCommand } from "../../models";
+import { getWouldYouRather } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
-    .setName("neverhaveiever")
-    .setDescription("Get a never have I ever message.")
+    .setName("wouldyourather")
+    .setDescription("Get a would you rather question.")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Bekomme eine nie habe ich jemals Nachricht.",
-      "es-ES": "Consigue un mensaje Nunca he tenido",
-      fr: "Afficher une question que je n'ai jamais posée",
+      de: "Erhalte eine Würdest du eher Frage.",
+      "es-ES": "Obtiene une pregunta ¿Qué prefieres?",
+      fr: "Obtenez une question préférez-vous.",
     }),
 
   /**
@@ -29,51 +29,39 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    var { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
-      guildDb.language
-    );
+    var General = await getWouldYouRather(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "neverhaveiever"
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather"
     );
 
-    let nererhaveIever = [] as string[];
+    let wouldyourather = [] as string[];
 
     if (!dbquestions.length) guildDb.customTypes = "regular";
 
     switch (guildDb.customTypes) {
       case "regular":
-        nererhaveIever = shuffle([
-          ...Funny,
-          ...Basic,
-          ...Young,
-          ...Food,
-          ...RuleBreak,
-        ]);
+        wouldyourather = shuffle([...General]);
         break;
       case "mixed":
-        nererhaveIever = shuffle([
-          ...Funny,
-          ...Basic,
-          ...Young,
-          ...Food,
-          ...RuleBreak,
+        wouldyourather = shuffle([
+          ...General,
           ...dbquestions.map((c) => c.msg),
         ]);
         break;
       case "custom":
-        nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
+        wouldyourather = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
-    const Random = Math.floor(Math.random() * nererhaveIever.length);
+    const Random = Math.floor(Math.random() * wouldyourather.length);
 
     let ratherembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL() || "",
+        text: `Requested by ${interaction.user.username} | Type: General | ID: ${Random}`,
+        iconURL: interaction.user.avatarURL() || undefined,
       })
-      .setDescription(nererhaveIever[Random]);
+      .setDescription(wouldyourather[Random] || "Unknown");
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
@@ -92,7 +80,8 @@ const command: ChatInputCommand = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
-        .setCustomId(`neverhaveiever`),
+        .setCustomId(`wouldyourather`)
+        .setDisabled(!guildDb.replay),
     ]);
 
     const time = 60_000;
@@ -104,11 +93,15 @@ const command: ChatInputCommand = {
       time < three_minutes
         ? new Date(0)
         : new Date(~~((Date.now() + time) / 1000)),
-      "neverhaveiever"
+      "wouldyourather"
     );
 
-    interaction
-      .reply({ embeds: [ratherembed], components: [row, mainRow] })
+    await interaction
+      .reply({
+        embeds: [ratherembed],
+        components: [row, mainRow],
+        fetchReply: true,
+      })
       .catch((err) => {
         captureException(err);
       });

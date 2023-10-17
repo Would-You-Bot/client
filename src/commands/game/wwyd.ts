@@ -5,10 +5,10 @@ import {
   ButtonBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import shuffle from "../util/shuffle";
+import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../models";
-import { getWwyd } from "../util/Functions/jsonImport";
+import { ChatInputCommand } from "../../models";
+import { getWwyd } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
