@@ -8,8 +8,8 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import WouldYou from "../../util/wouldYou";
-import { Event } from "../../models/event";
+import WouldYou from "../util/wouldYou";
+import { Event } from "../models/event";
 const Cooldown = new Set();
 
 const event: Event = {
@@ -35,7 +35,7 @@ const event: Event = {
             "https://cdn.discordapp.com/emojis/953349395955470406.gif?size=40&quality=lossless",
         })
         .setDescription(
-          `My purpose is to help users have better engagement in your servers to bring up more activity! You can use </help:982400982921138226> to see all of my commands.`,
+          `My purpose is to help users have better engagement in your servers to bring up more activity! You can use </help:982400982921138226> to see all of my commands.`
         )
         .setColor("#0598F6");
 
@@ -46,13 +46,13 @@ const event: Event = {
             .setStyle(5)
             .setEmoji("📋")
             .setURL(
-              "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+              "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
             ),
           new ButtonBuilder()
             .setLabel("Support")
             .setStyle(5)
             .setEmoji("❤️")
-            .setURL("https://discord.gg/vMyXAxEznS"),
+            .setURL("https://discord.gg/vMyXAxEznS")
         );
 
       Cooldown.add(message?.channel?.id);

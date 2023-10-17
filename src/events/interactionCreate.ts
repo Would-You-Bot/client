@@ -1,8 +1,8 @@
-import { ButtonInteraction, CacheType, Interaction } from "discord.js";
-import { Event } from "../../models/event";
-import { IGuildModel } from "../../util/Models/guildModel";
-import { UserModel } from "../../util/Models/userModel";
-import WouldYou from "../../util/wouldYou";
+import { CacheType, Interaction } from "discord.js";
+import { Event } from "../models";
+import { IGuildModel } from "../util/Models/guildModel";
+import { UserModel } from "../util/Models/userModel";
+import WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "interactionCreate",
@@ -65,7 +65,7 @@ const event: Event = {
     } else {
       const guildDb = await client.database.getGuild(
         interaction.guild.id,
-        true,
+        true
       );
       if (!guildDb) return;
       // const { inter } = require(`../languages/${guildDb.language || "en_EN"}.json`);
@@ -91,7 +91,7 @@ const event: Event = {
             await UserModel.updateOne(
               { userID: interaction.user.id }, // Specify the query to find the user
               { $inc: { [fieldPath]: 1 } }, // Use computed fieldPath
-              { upsert: true },
+              { upsert: true }
             );
           }
         }
@@ -128,14 +128,14 @@ const event: Event = {
               await UserModel.create(
                 { userID: interaction.user.id }, // Specify the query to find the user
                 { $inc: { [fieldName]: 1 } }, // Use computed fieldPath
-                { upsert: true },
+                { upsert: true }
               );
             } else {
               // Increment the specified field using $inc
               await UserModel.updateOne(
                 { userID: interaction.user.id },
                 { $inc: { [fieldName]: 1 } },
-                { upsert: true },
+                { upsert: true }
               );
             }
           }
@@ -162,7 +162,7 @@ const event: Event = {
             await UserModel.updateOne(
               { userID: interaction.user.id }, // Specify the query to find the user
               { $inc: { [fieldPath]: 1 } }, // Use computed fieldPath
-              { upsert: true },
+              { upsert: true }
             );
           }
         }
@@ -203,7 +203,7 @@ const event: Event = {
             .reply({
               ephemeral: true,
               content: `You can use this button again <t:${Math.floor(
-                client.used.get(interaction.user.id) / 1000,
+                client.used.get(interaction.user.id) / 1000
               )}:R>!`,
             })
             .catch(() => {});
@@ -211,19 +211,19 @@ const event: Event = {
         } else if (
           guildDb.replayType === "Channels" &&
           client.used.has(
-            `${interaction.user.id}-${interaction.channel?.id}`,
+            `${interaction.user.id}-${interaction.channel?.id}`
           ) &&
           guildDb.replayChannels.find((x) => x.id === interaction.channel?.id)
         ) {
           var cooldown = Number(
             guildDb.replayChannels.find((x) => x.id === interaction.channel?.id)
-              ?.cooldown,
+              ?.cooldown
           );
           interaction
             .reply({
               ephemeral: true,
               content: `<t:${Math.floor(
-                cooldown / 1000 + Date.now() / 1000,
+                cooldown / 1000 + Date.now() / 1000
               )}:R> you can use buttons again!`,
             })
             .catch(() => {});
@@ -238,7 +238,7 @@ const event: Event = {
             if (
               guildDb.replayType === "Channels" &&
               guildDb.replayChannels.find(
-                (x) => x.id === interaction.channel?.id,
+                (x) => x.id === interaction.channel?.id
               )
             ) {
               client.used.set(
@@ -246,29 +246,29 @@ const event: Event = {
                 Date.now() +
                   (Number(
                     guildDb.replayChannels.find(
-                      (x) => x.id === interaction.channel?.id,
-                    )?.cooldown,
-                  ) || 0),
+                      (x) => x.id === interaction.channel?.id
+                    )?.cooldown
+                  ) || 0)
               );
               setTimeout(
                 () =>
                   client.used.delete(
-                    `${interaction.user.id}-${interaction.channel?.id}`,
+                    `${interaction.user.id}-${interaction.channel?.id}`
                   ),
                 Number(
                   guildDb.replayChannels.find(
-                    (x) => x.id === interaction.channel?.id,
-                  )?.cooldown,
-                ),
+                    (x) => x.id === interaction.channel?.id
+                  )?.cooldown
+                )
               );
             } else {
               client.used.set(
                 interaction.user.id,
-                Date.now() + guildDb.replayCooldown,
+                Date.now() + guildDb.replayCooldown
               );
               setTimeout(
                 () => client.used.delete(interaction.user.id),
-                guildDb.replayCooldown,
+                guildDb.replayCooldown
               );
             }
           }

@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { WebhookClient, EmbedBuilder, Guild } from "discord.js";
 import { captureException } from "@sentry/node";
-import WouldYou from "../../util/wouldYou";
-import { Event } from "../../models/event";
+import WouldYou from "../util/wouldYou";
+import { Event } from "../models";
 
 const event: Event = {
   event: "guildCreate",
@@ -37,14 +37,14 @@ const event: Event = {
           .setThumbnail(
             guild.iconURL({
               extension: "png",
-            }),
+            })
           )
           .setDescription(
             `**Name**: ${
               guild.name
             }\n**Users**: ${guild.memberCount.toLocaleString()}${
               features ? `\n**Features**: ${features}` : ``
-            }`,
+            }`
           )
           .setFooter({
             text: global?.devBot ? "Dev Bot" : "Main Bot",

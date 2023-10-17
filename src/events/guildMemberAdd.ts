@@ -1,14 +1,13 @@
 import {
-  EmbedBuilder,
   GuildMember,
   GuildTextBasedChannel,
   PermissionFlagsBits,
 } from "discord.js";
 import "dotenv/config";
 import { captureException } from "@sentry/node";
-import WouldYou from "../../util/wouldYou";
-import { Event } from "../../models/event";
-import { getWouldYouRather, getWwyd } from "../../util/Functions/jsonImport";
+import WouldYou from "../util/wouldYou";
+import { Event } from "../models";
+import { getWouldYouRather, getWwyd } from "../util/Functions/jsonImport";
 
 const event: Event = {
   event: "guildMemberAdd",
@@ -54,10 +53,9 @@ const event: Event = {
             guildDb.customMessages.filter((c) => c.type !== "nsfw")[
               Math.floor(
                 Math.random() *
-                  guildDb.customMessages.filter((c) => c.type !== "nsfw")
-                    .length,
+                  guildDb.customMessages.filter((c) => c.type !== "nsfw").length
               )
-            ].msg,
+            ].msg
           );
         } else {
           randomMessage = [...General, ...WhatYouDo];
@@ -68,7 +66,7 @@ const event: Event = {
         randomMessage = guildDb.customMessages.filter((c) => c.type !== "nsfw")[
           Math.floor(
             Math.random() *
-              guildDb.customMessages.filter((c) => c.type !== "nsfw").length,
+              guildDb.customMessages.filter((c) => c.type !== "nsfw").length
           )
         ].msg;
       }
@@ -77,7 +75,7 @@ const event: Event = {
         .send({
           content: `${client.translation.get(
             guildDb?.language,
-            "Welcome.embed.title",
+            "Welcome.embed.title"
           )} ${
             guildDb.welcomePing
               ? `<@${member.user.id}>`

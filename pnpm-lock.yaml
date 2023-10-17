@@ -68,8 +68,8 @@ devDependencies:
     specifier: ^4.17.18
     version: 4.17.18
   '@types/uuid':
-    specifier: ^9.0.4
-    version: 9.0.4
+    specifier: ^9.0.5
+    version: 9.0.5
   copyfiles:
     specifier: ^2.4.1
     version: 2.4.1
@@ -405,8 +405,8 @@ packages:
       '@types/node': 20.6.1
     dev: true
 
-  /@types/uuid@9.0.4:
-    resolution: {integrity: sha512-zAuJWQflfx6dYJM62vna+Sn5aeSWhh3OB+wfUEACNcqUSc0AGc5JKl+ycL1vrH7frGTXhJchYjE1Hak8L819dA==}
+  /@types/uuid@9.0.5:
+    resolution: {integrity: sha512-xfHdwa1FMJ082prjSJpoEI57GZITiQz10r3vEJCHa2khEFQjKy91aWKz6+zybzssCvXUwE1LQWgWVwZ4nYUvHQ==}
     dev: true
 
   /@types/webidl-conversions@7.0.0:
