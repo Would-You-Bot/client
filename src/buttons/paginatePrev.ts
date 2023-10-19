@@ -9,12 +9,14 @@ import { Button } from "../models";
 const button: Button = {
   name: "paginatePrev",
   execute: async (interaction, client, guildDb) => {
-    const paginate = client.paginate.get(`${interaction.user.id}-${interaction.message.reference?.messageId}`);
+    const paginate = client.paginate.get(
+      `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+    );
     if (!paginate) {
       interaction.reply({
         content: client.translation.get(
           guildDb?.language,
-          "wyCustom.error.issue"
+          "wyCustom.error.issue",
         ),
         ephemeral: true,
       });
@@ -25,7 +27,7 @@ const button: Button = {
       interaction.reply({
         content: client.translation.get(
           guildDb?.language,
-          "wyCustom.error.noPages"
+          "wyCustom.error.noPages",
         ),
         ephemeral: true,
       });
@@ -52,13 +54,19 @@ const button: Button = {
           new ButtonBuilder()
             .setCustomId("paginateLast")
             .setLabel("⏩")
-            .setStyle(ButtonStyle.Secondary)
+            .setStyle(ButtonStyle.Secondary),
         );
 
       clearTimeout(paginate.timeout);
       const time = setTimeout(() => {
-        if (client.paginate.get(`${interaction.user.id}-${interaction.message.reference?.messageId}`))
-          client.paginate.delete(`${interaction.user.id}-${interaction.message.reference?.messageId}`);
+        if (
+          client.paginate.get(
+            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+          )
+        )
+          client.paginate.delete(
+            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+          );
       }, paginate.time);
       paginate.timeout = time;
 
@@ -88,13 +96,19 @@ const button: Button = {
           new ButtonBuilder()
             .setCustomId("paginateLast")
             .setLabel("⏩")
-            .setStyle(ButtonStyle.Secondary)
+            .setStyle(ButtonStyle.Secondary),
         );
 
       clearTimeout(paginate.timeout);
       const time = setTimeout(() => {
-        if (client.paginate.get(`${interaction.user.id}-${interaction.message.reference?.messageId}`))
-          client.paginate.delete(`${interaction.user.id}-${interaction.message.reference?.messageId}`);
+        if (
+          client.paginate.get(
+            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+          )
+        )
+          client.paginate.delete(
+            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+          );
       }, paginate.time);
       paginate.timeout = time;
 

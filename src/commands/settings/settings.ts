@@ -31,8 +31,8 @@ const command: ChatInputCommand = {
         .addChoices(
           { name: "General Settings", value: "general" },
           { name: "Daily Messages", value: "dailyMsgs" },
-          { name: "Welcomes", value: "welcomes" }
-        )
+          { name: "Welcomes", value: "welcomes" },
+        ),
     ),
 
   /**
@@ -43,7 +43,7 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     if (
       (interaction.member?.permissions as Readonly<PermissionsBitField>).has(
-        PermissionFlagsBits.ManageGuild
+        PermissionFlagsBits.ManageGuild,
       )
     ) {
       switch (interaction.options.getString("choose")) {
@@ -52,13 +52,13 @@ const command: ChatInputCommand = {
             .setTitle(
               client.translation.get(
                 guildDb?.language,
-                "Settings.embed.dailyTitle"
-              )
+                "Settings.embed.dailyTitle",
+              ),
             )
             .setDescription(
               `${client.translation.get(
                 guildDb?.language,
-                "Settings.embed.dailyMsg"
+                "Settings.embed.dailyMsg",
               )}: ${
                 guildDb.dailyMsg
                   ? `<:check:1077962440815411241>`
@@ -66,7 +66,7 @@ const command: ChatInputCommand = {
               }\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.dailyChannel"
+                  "Settings.embed.dailyChannel",
                 )}: ${
                   guildDb.dailyChannel
                     ? `<#${guildDb.dailyChannel}>`
@@ -74,7 +74,7 @@ const command: ChatInputCommand = {
                 }\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.dailyRole"
+                  "Settings.embed.dailyRole",
                 )}: ${
                   guildDb.dailyRole
                     ? `<@&${guildDb.dailyRole}>`
@@ -82,24 +82,24 @@ const command: ChatInputCommand = {
                 }\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.dailyTimezone"
+                  "Settings.embed.dailyTimezone",
                 )}: ${guildDb.dailyTimezone}\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.dailyInterval"
+                  "Settings.embed.dailyInterval",
                 )}: ${guildDb.dailyInterval}\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.dailyType"
+                  "Settings.embed.dailyType",
                 )}: ${guildDb?.customTypes}\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.dailyThread"
+                  "Settings.embed.dailyThread",
                 )}: ${
                   guildDb.dailyThread
                     ? `<:check:1077962440815411241>`
                     : `<:x_:1077962443013238814>`
-                }`
+                }`,
             )
             .setColor("#0598F6");
           const dailyButtons =
@@ -109,37 +109,37 @@ const command: ChatInputCommand = {
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.dailyMsg"
-                    )
+                      "Settings.button.dailyMsg",
+                    ),
                   )
                   .setStyle(
                     guildDb.dailyMsg
                       ? ButtonStyle.Success
-                      : ButtonStyle.Secondary
+                      : ButtonStyle.Secondary,
                   ),
                 new ButtonBuilder()
                   .setCustomId("dailyChannel")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.dailyChannel"
-                    )
+                      "Settings.button.dailyChannel",
+                    ),
                   )
                   .setStyle(
                     guildDb.dailyChannel
                       ? ButtonStyle.Success
-                      : ButtonStyle.Secondary
+                      : ButtonStyle.Secondary,
                   ),
                 new ButtonBuilder()
                   .setCustomId("dailyType")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.dailyType"
-                    )
+                      "Settings.button.dailyType",
+                    ),
                   )
                   .setStyle(ButtonStyle.Primary)
-                  .setEmoji("📝")
+                  .setEmoji("📝"),
               ),
             dailyButtons2 =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -148,8 +148,8 @@ const command: ChatInputCommand = {
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.dailyTimezone"
-                    )
+                      "Settings.button.dailyTimezone",
+                    ),
                   )
                   .setStyle(ButtonStyle.Primary)
                   .setEmoji("🌍"),
@@ -158,24 +158,24 @@ const command: ChatInputCommand = {
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.dailyRole"
-                    )
+                      "Settings.button.dailyRole",
+                    ),
                   )
                   .setStyle(
                     guildDb.dailyRole
                       ? ButtonStyle.Success
-                      : ButtonStyle.Secondary
+                      : ButtonStyle.Secondary,
                   ),
                 new ButtonBuilder()
                   .setCustomId("dailyInterval")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.dailyInterval"
-                    )
+                      "Settings.button.dailyInterval",
+                    ),
                   )
                   .setStyle(ButtonStyle.Primary)
-                  .setEmoji("⏰")
+                  .setEmoji("⏰"),
               ),
             dailyButtons3 =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -184,14 +184,14 @@ const command: ChatInputCommand = {
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.dailyThread"
-                    )
+                      "Settings.button.dailyThread",
+                    ),
                   )
                   .setStyle(
                     guildDb.dailyThread
                       ? ButtonStyle.Success
-                      : ButtonStyle.Secondary
-                  )
+                      : ButtonStyle.Secondary,
+                  ),
               );
 
           interaction
@@ -210,18 +210,18 @@ const command: ChatInputCommand = {
             .setTitle(
               client.translation.get(
                 guildDb?.language,
-                "Settings.embed.generalTitle"
-              )
+                "Settings.embed.generalTitle",
+              ),
             )
             .setDescription(
               `${client.translation.get(
                 guildDb?.language,
-                "Settings.embed.replayType"
+                "Settings.embed.replayType",
               )}: ${guildDb.replayType}\n${
                 guildDb.replayType === "Channels"
                   ? `${client.translation.get(
                       guildDb?.language,
-                      "Settings.embed.replayChannels"
+                      "Settings.embed.replayChannels",
                     )}: ${
                       guildDb.replayChannels.length > 0
                         ? `\n${guildDb.replayChannels
@@ -229,20 +229,20 @@ const command: ChatInputCommand = {
                             .join("\n")}`
                         : client.translation.get(
                             guildDb?.language,
-                            `Settings.embed.replayChannelsNone`
+                            `Settings.embed.replayChannelsNone`,
                           )
                     }`
                   : `${client.translation.get(
                       guildDb?.language,
-                      "Settings.embed.replayCooldown"
+                      "Settings.embed.replayCooldown",
                     )}: ${guildDb.replayCooldown}`
-              }`
+              }`,
             )
             .setColor("#0598F6")
             .setFooter({
               text: client.translation.get(
                 guildDb?.language,
-                "Settings.embed.footer"
+                "Settings.embed.footer",
               ),
               iconURL: client.user?.avatarURL() || undefined,
             });
@@ -253,29 +253,29 @@ const command: ChatInputCommand = {
                 .setCustomId(
                   guildDb.replayType === "Channels"
                     ? "replayChannels"
-                    : "replayCooldown"
+                    : "replayCooldown",
                 )
                 .setLabel(
                   client.translation.get(
                     guildDb?.language,
-                    "Settings.button.replayCooldown"
-                  )
+                    "Settings.button.replayCooldown",
+                  ),
                 )
                 .setStyle(
                   guildDb.replayCooldown
                     ? ButtonStyle.Success
-                    : ButtonStyle.Secondary
+                    : ButtonStyle.Secondary,
                 ),
               new ButtonBuilder()
                 .setCustomId("replayType")
                 .setLabel(
                   client.translation.get(
                     guildDb?.language,
-                    "Settings.button.replayType"
-                  )
+                    "Settings.button.replayType",
+                  ),
                 )
                 .setStyle(ButtonStyle.Primary)
-                .setEmoji("📝")
+                .setEmoji("📝"),
             );
 
           const chanDelete =
@@ -285,10 +285,10 @@ const command: ChatInputCommand = {
                 .setLabel(
                   client.translation.get(
                     guildDb?.language,
-                    "Settings.button.replayDeleteChannels"
-                  )
+                    "Settings.button.replayDeleteChannels",
+                  ),
                 )
-                .setStyle(ButtonStyle.Danger)
+                .setStyle(ButtonStyle.Danger),
             );
 
           interaction
@@ -310,13 +310,13 @@ const command: ChatInputCommand = {
             .setTitle(
               client.translation.get(
                 guildDb?.language,
-                "Settings.embed.welcomeTitle"
-              )
+                "Settings.embed.welcomeTitle",
+              ),
             )
             .setDescription(
               `${client.translation.get(
                 guildDb?.language,
-                "Settings.embed.welcome"
+                "Settings.embed.welcome",
               )}: ${
                 guildDb.welcome
                   ? `<:check:1077962440815411241>`
@@ -324,7 +324,7 @@ const command: ChatInputCommand = {
               }\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.welcomePing"
+                  "Settings.embed.welcomePing",
                 )}: ${
                   guildDb.welcomePing
                     ? `<:check:1077962440815411241>`
@@ -332,7 +332,7 @@ const command: ChatInputCommand = {
                 }\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.welcomeChannel"
+                  "Settings.embed.welcomeChannel",
                 )}: ${
                   guildDb.welcomeChannel
                     ? `<#${guildDb.welcomeChannel}>`
@@ -340,15 +340,15 @@ const command: ChatInputCommand = {
                 }\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.dailyType"
+                  "Settings.embed.dailyType",
                 )}: ${guildDb.welcomeType}
-                `
+                `,
             )
             .setColor("#0598F6")
             .setFooter({
               text: client.translation.get(
                 guildDb?.language,
-                "Settings.embed.footer"
+                "Settings.embed.footer",
               ),
               iconURL: client.user?.avatarURL() || undefined,
             });
@@ -360,27 +360,27 @@ const command: ChatInputCommand = {
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.welcome"
-                    )
+                      "Settings.button.welcome",
+                    ),
                   )
                   .setStyle(
                     guildDb.welcome
                       ? ButtonStyle.Success
-                      : ButtonStyle.Secondary
+                      : ButtonStyle.Secondary,
                   ),
                 new ButtonBuilder()
                   .setCustomId("welcomeChannel")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.welcomeChannel"
-                    )
+                      "Settings.button.welcomeChannel",
+                    ),
                   )
                   .setStyle(
                     guildDb.welcomeChannel
                       ? ButtonStyle.Success
-                      : ButtonStyle.Secondary
-                  )
+                      : ButtonStyle.Secondary,
+                  ),
               ),
             welcomeButtons2 =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -389,21 +389,21 @@ const command: ChatInputCommand = {
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.welcomePing"
-                    )
+                      "Settings.button.welcomePing",
+                    ),
                   )
                   .setStyle(
                     guildDb.welcomePing
                       ? ButtonStyle.Success
-                      : ButtonStyle.Secondary
+                      : ButtonStyle.Secondary,
                   ),
                 new ButtonBuilder()
                   .setCustomId("welcomeType")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.dailyType"
-                    )
+                      "Settings.button.dailyType",
+                    ),
                   )
                   .setStyle(ButtonStyle.Primary)
                   .setEmoji("📝"),
@@ -412,11 +412,11 @@ const command: ChatInputCommand = {
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
-                      "Settings.button.welcomeTest"
-                    )
+                      "Settings.button.welcomeTest",
+                    ),
                   )
                   .setStyle(ButtonStyle.Primary)
-                  .setEmoji("▶")
+                  .setEmoji("▶"),
               );
 
           interaction.reply({
@@ -431,7 +431,7 @@ const command: ChatInputCommand = {
         .setColor("#F00505")
         .setTitle("Error!")
         .setDescription(
-          client.translation.get(guildDb?.language, "Settings.embed.error")
+          client.translation.get(guildDb?.language, "Settings.embed.error"),
         );
       await interaction
         .reply({

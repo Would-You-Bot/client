@@ -13,8 +13,8 @@ const button: Button = {
       .setTitle(
         client.translation.get(
           guildDb?.language,
-          "wyCustom.success.embedRemoveAll.accept"
-        )
+          "wyCustom.success.embedRemoveAll.accept",
+        ),
       )
       .setColor("#0598F4")
       .setFooter({
@@ -33,7 +33,7 @@ const button: Button = {
           .setLabel("Decline")
           .setStyle(2)
           .setDisabled(true)
-          .setCustomId("decline")
+          .setCustomId("decline"),
       );
 
     await client.database.updateGuild(interaction.guild?.id || "", {

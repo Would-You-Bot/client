@@ -13,21 +13,24 @@ const button: Button = {
     const newType = guildDb.replayType === "Channels" ? "Guild" : "Channels";
     const generalMsg = new EmbedBuilder()
       .setTitle(
-        client.translation.get(guildDb?.language, "Settings.embed.generalTitle")
+        client.translation.get(
+          guildDb?.language,
+          "Settings.embed.generalTitle",
+        ),
       )
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Settings.embed.replayType"
+          "Settings.embed.replayType",
         )}: ${newType}\n${
           guildDb.replayType === "Channels"
             ? `${client.translation.get(
                 guildDb?.language,
-                "Settings.embed.replayCooldown"
+                "Settings.embed.replayCooldown",
               )}: ${guildDb.replayCooldown}`
             : `${client.translation.get(
                 guildDb?.language,
-                "Settings.embed.replayChannels"
+                "Settings.embed.replayChannels",
               )}: ${
                 guildDb.replayChannels.length > 0
                   ? `\n${guildDb.replayChannels
@@ -35,16 +38,16 @@ const button: Button = {
                       .join("\n")}`
                   : client.translation.get(
                       guildDb?.language,
-                      `Settings.embed.replayChannelsNone`
+                      `Settings.embed.replayChannelsNone`,
                     )
               }`
-        }`
+        }`,
       )
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(
           guildDb?.language,
-          "Settings.embed.footer"
+          "Settings.embed.footer",
         ),
         iconURL: client.user?.avatarURL() || undefined,
       });
@@ -55,27 +58,29 @@ const button: Button = {
           .setCustomId(
             guildDb.replayType === "Channels"
               ? "replayCooldown"
-              : "replayChannels"
+              : "replayChannels",
           )
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.replayCooldown"
-            )
+              "Settings.button.replayCooldown",
+            ),
           )
           .setStyle(
-            guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary
+            guildDb.replayCooldown
+              ? ButtonStyle.Success
+              : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("replayType")
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.replayType"
-            )
+              "Settings.button.replayType",
+            ),
           )
           .setStyle(ButtonStyle.Primary)
-          .setEmoji("📝")
+          .setEmoji("📝"),
       );
 
     const chanDelete =
@@ -85,10 +90,10 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.replayDeleteChannels"
-            )
+              "Settings.button.replayDeleteChannels",
+            ),
           )
-          .setStyle(ButtonStyle.Danger)
+          .setStyle(ButtonStyle.Danger),
       );
 
     await client.database.updateGuild(interaction.guild?.id || "", {

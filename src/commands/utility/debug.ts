@@ -22,20 +22,20 @@ const command: ChatInputCommand = {
       subcommand
         .setName("mode")
         .setDescription(
-          "Set the bot to debug mode. This allows our developers to use commands without permissions."
-        )
+          "Set the bot to debug mode. This allows our developers to use commands without permissions.",
+        ),
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("webhook")
-        .setDescription("Debug if the daily webhook work.")
+        .setDescription("Debug if the daily webhook work."),
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("channel")
         .setDescription(
-          "Debug the current channel to view some permissons information's."
-        )
+          "Debug the current channel to view some permissons information's.",
+        ),
     ),
 
   /**
@@ -46,14 +46,14 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     if (
       !(interaction.member?.permissions as Readonly<PermissionsBitField>).has(
-        PermissionFlagsBits.ManageGuild
+        PermissionFlagsBits.ManageGuild,
       )
     ) {
       const errorembed = new EmbedBuilder()
         .setColor("#F00505")
         .setTitle("Error!")
         .setDescription(
-          client.translation.get(guildDb?.language, "Debug.permissions")
+          client.translation.get(guildDb?.language, "Debug.permissions"),
         );
       interaction
         .reply({
@@ -76,7 +76,7 @@ const command: ChatInputCommand = {
             ephemeral: true,
             content: client.translation.get(
               guildDb?.language,
-              "Debug.channelNotSet"
+              "Debug.channelNotSet",
             ),
           });
           return;
@@ -85,7 +85,7 @@ const command: ChatInputCommand = {
         await client.webhookHandler.sendWebhook(null, guildDb?.dailyChannel, {
           content: client.translation.get(
             guildDb?.language,
-            "Debug.testMessage"
+            "Debug.testMessage",
           ),
         });
 
@@ -103,14 +103,14 @@ const command: ChatInputCommand = {
               ...guildDb,
               debugMode: false,
             },
-            true
+            true,
           );
 
           interaction.reply({
             ephemeral: true,
             content: client.translation.get(
               guildDb?.language,
-              "Debug.disabled"
+              "Debug.disabled",
             ),
           });
           return;
@@ -121,7 +121,7 @@ const command: ChatInputCommand = {
               ...guildDb,
               debugMode: true,
             },
-            true
+            true,
           );
 
           interaction.reply({
@@ -136,12 +136,12 @@ const command: ChatInputCommand = {
           .setColor("#0598F6")
           .setTimestamp()
           .setTitle(
-            client.translation.get(guildDb?.language, "Debug.embed.title")
+            client.translation.get(guildDb?.language, "Debug.embed.title"),
           )
           .setDescription(
             `**${client.translation.get(
               guildDb?.language,
-              "Debug.embed.settings"
+              "Debug.embed.settings",
             )}:**\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -151,17 +151,17 @@ const command: ChatInputCommand = {
                     interaction?.channel?.id == guildDb?.dailyChannel
                       ? client.translation.get(
                           guildDb?.language,
-                          "Debug.embed.is"
+                          "Debug.embed.is",
                         )
                       : client.translation.get(
                           guildDb?.language,
-                          "Debug.embed.isnot"
+                          "Debug.embed.isnot",
                         ),
-                }
+                },
               )}\n` +
               `**${client.translation.get(
                 guildDb?.language,
-                "Debug.embed.channel"
+                "Debug.embed.channel",
               )}:**\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -172,13 +172,13 @@ const command: ChatInputCommand = {
                     .has([PermissionFlagsBits.ManageWebhooks])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
+                },
               )}\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -189,13 +189,13 @@ const command: ChatInputCommand = {
                     .has([PermissionFlagsBits.EmbedLinks])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
+                },
               )}\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -206,13 +206,13 @@ const command: ChatInputCommand = {
                     .has([PermissionFlagsBits.SendMessages])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
+                },
               )}\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -223,13 +223,13 @@ const command: ChatInputCommand = {
                     .has([PermissionFlagsBits.ViewChannel])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
+                },
               )}\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -240,18 +240,18 @@ const command: ChatInputCommand = {
                     .has([PermissionFlagsBits.ReadMessageHistory])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
+                },
               )}\n` +
               "\n" +
               `**${client.translation.get(
                 guildDb?.language,
-                "Debug.embed.global"
+                "Debug.embed.global",
               )}:**\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -262,13 +262,13 @@ const command: ChatInputCommand = {
                   ])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
+                },
               )}\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -279,13 +279,13 @@ const command: ChatInputCommand = {
                   ])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
+                },
               )}\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -296,13 +296,13 @@ const command: ChatInputCommand = {
                   ])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
+                },
               )}\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -313,13 +313,13 @@ const command: ChatInputCommand = {
                   ])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
+                },
               )}\n` +
               `${client.translation.get(
                 guildDb?.language,
@@ -330,14 +330,14 @@ const command: ChatInputCommand = {
                   ])
                     ? client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.can"
+                        "Debug.embed.can",
                       )
                     : client.translation.get(
                         guildDb?.language,
-                        "Debug.embed.cannot"
+                        "Debug.embed.cannot",
                       ),
-                }
-              )}\n`
+                },
+              )}\n`,
           );
 
         interaction

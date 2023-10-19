@@ -8,7 +8,8 @@
     "dev": "pnpm run build && node dist/cluster.js",
     "build": "tsc && pnpm run copy-files",
     "copy-files": "copyfiles -u 1 src/**/*.ttf src/**/*.png src/**/*.psd dist/",
-    "format": "prettier --write  \"src/**/*.ts\""
+    "format": "prettier --write  \"src/**/*.ts\"",
+    "docker:build": "docker build -t dominikdoesdev/wy-bot ."
   },
   "repository": {
     "type": "git",

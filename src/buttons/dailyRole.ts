@@ -14,7 +14,7 @@ const button: Button = {
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new RoleSelectMenuBuilder()
           .setCustomId("selectMenuRole")
-          .setPlaceholder("Select a role")
+          .setPlaceholder("Select a role"),
       );
 
     var inter2 =
@@ -22,7 +22,7 @@ const button: Button = {
         new ButtonBuilder()
           .setCustomId("deleteDailyRole")
           .setLabel("Delete Daily Role")
-          .setStyle(ButtonStyle.Danger)
+          .setStyle(ButtonStyle.Danger),
       );
 
     interaction.update({

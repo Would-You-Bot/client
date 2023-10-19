@@ -21,19 +21,19 @@ const command: ChatInputCommand = {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("regular")
-        .setDescription("This changes it to use only default messages.")
+        .setDescription("This changes it to use only default messages."),
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("mixed")
         .setDescription(
-          "This changes it to use both custom & default messages."
-        )
+          "This changes it to use both custom & default messages.",
+        ),
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("custom")
-        .setDescription("This changes it to use only custom messages.")
+        .setDescription("This changes it to use only custom messages."),
     ),
 
   /**
@@ -47,7 +47,7 @@ const command: ChatInputCommand = {
 
     if (
       (interaction.member?.permissions as Readonly<PermissionsBitField>).has(
-        PermissionFlagsBits.ManageGuild
+        PermissionFlagsBits.ManageGuild,
       ) ||
       global.checkDebug(guildDb, interaction?.user?.id)
     ) {
@@ -59,15 +59,15 @@ const command: ChatInputCommand = {
               ...guildDb,
               customTypes: "regular",
             },
-            true
+            true,
           );
 
           typeEmbed = new EmbedBuilder()
             .setTitle(
-              client.translation.get(guildDb?.language, "wyType.embed.title")
+              client.translation.get(guildDb?.language, "wyType.embed.title"),
             )
             .setDescription(
-              client.translation.get(guildDb?.language, "wyType.embed.descDef")
+              client.translation.get(guildDb?.language, "wyType.embed.descDef"),
             );
           break;
         case "mixed":
@@ -77,15 +77,18 @@ const command: ChatInputCommand = {
               ...guildDb,
               customTypes: "mixed",
             },
-            true
+            true,
           );
 
           typeEmbed = new EmbedBuilder()
             .setTitle(
-              client.translation.get(guildDb?.language, "wyType.embed.title")
+              client.translation.get(guildDb?.language, "wyType.embed.title"),
             )
             .setDescription(
-              client.translation.get(guildDb?.language, "wyType.embed.descBoth")
+              client.translation.get(
+                guildDb?.language,
+                "wyType.embed.descBoth",
+              ),
             );
           break;
         case "custom":
@@ -95,15 +98,18 @@ const command: ChatInputCommand = {
               ...guildDb,
               customTypes: "custom",
             },
-            true
+            true,
           );
 
           typeEmbed = new EmbedBuilder()
             .setTitle(
-              client.translation.get(guildDb?.language, "wyType.embed.title")
+              client.translation.get(guildDb?.language, "wyType.embed.title"),
             )
             .setDescription(
-              client.translation.get(guildDb?.language, "wyType.embed.descCust")
+              client.translation.get(
+                guildDb?.language,
+                "wyType.embed.descCust",
+              ),
             );
           break;
       }
@@ -122,7 +128,7 @@ const command: ChatInputCommand = {
         .setColor("#F00505")
         .setTitle("Error!")
         .setDescription(
-          client.translation.get(guildDb?.language, "Settings.embed.error")
+          client.translation.get(guildDb?.language, "Settings.embed.error"),
         );
 
       interaction

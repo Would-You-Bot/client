@@ -16,10 +16,14 @@ const button: Button = {
       return;
     }
 
-    let paginate = client.paginate.get(`${interaction.user.id}-${interaction.message.reference?.messageId}`);
+    let paginate = client.paginate.get(
+      `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+    );
     if (paginate) {
       clearTimeout(paginate.timeout);
-      client.paginate.delete(`${interaction.user.id}-${interaction.message.reference?.messageId}`);
+      client.paginate.delete(
+        `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+      );
     }
 
     const page = new Paginator({
@@ -34,8 +38,8 @@ const button: Button = {
         .setColor(
           votingResults.option_1 < votingResults.option_2
             ? "#0091ff"
-            : "#f00404"
-        )
+            : "#f00404",
+        ),
     );
 
     let data: any;
@@ -43,14 +47,17 @@ const button: Button = {
       votingResults.votes.op_one.map(async (u: any) => {
         const user = await client.database.getUser(u, true);
         return user?.votePrivacy ? "Anonymous" : u;
-      })
+      }),
     );
-    data = data.map((s: string, i = 1) => `${i++}. ${s === "Anonymous" ? s : `<@${s}> (${s})`}`);
+    data = data.map(
+      (s: string, i = 1) =>
+        `${i++}. ${s === "Anonymous" ? s : `<@${s}> (${s})`}`,
+    );
     data = Array.from(
       {
         length: Math.ceil(data.length / 10),
       },
-      (a, r) => data.slice(r * 10, r * 10 + 10)
+      (a, r) => data.slice(r * 10, r * 10 + 10),
     );
 
     Math.ceil(data.length / 10);
@@ -59,8 +66,8 @@ const button: Button = {
         new EmbedBuilder()
           .setTitle(`Voted for Option 1`)
           .setDescription(e.slice(0, 10).join("\n").toString())
-          .setColor("#0598F6")
-      )
+          .setColor("#0598F6"),
+      ),
     );
 
     let data2: any;
@@ -68,14 +75,17 @@ const button: Button = {
       votingResults.votes.op_two.map(async (u: any) => {
         const user = await client.database.getUser(u, true);
         return user?.votePrivacy ? "Anonymous" : u;
-      })
+      }),
     );
-    data2 = data2.map((s: string, i = 1) => `${i++}. ${s === "Anonymous" ? s : `<@${s}> (${s})`}`);
+    data2 = data2.map(
+      (s: string, i = 1) =>
+        `${i++}. ${s === "Anonymous" ? s : `<@${s}> (${s})`}`,
+    );
     data2 = Array.from(
       {
         length: Math.ceil(data2.length / 10),
       },
-      (a, r) => data2.slice(r * 10, r * 10 + 10)
+      (a, r) => data2.slice(r * 10, r * 10 + 10),
     );
 
     Math.ceil(data2.length / 10);
@@ -84,8 +94,8 @@ const button: Button = {
         new EmbedBuilder()
           .setTitle(`Voted for Option 2`)
           .setDescription(e.slice(0, 10).join("\n").toString())
-          .setColor("#F00605")
-      )
+          .setColor("#F00605"),
+      ),
     );
 
     return await page.start(interaction, null);

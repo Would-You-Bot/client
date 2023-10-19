@@ -14,14 +14,14 @@ const button: Button = {
         new ChannelSelectMenuBuilder()
           .setCustomId("seletcMenuWelcome")
           .setPlaceholder("Select a channel")
-          .addChannelTypes(ChannelType.GuildText)
+          .addChannelTypes(ChannelType.GuildText),
       );
 
     interaction.update({
       embeds: [],
       content: client.translation.get(
         guildDb?.language,
-        "Settings.dailyChannel"
+        "Settings.dailyChannel",
       ),
       components: [inter],
       options: {

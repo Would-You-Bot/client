@@ -12,7 +12,7 @@ const button: Button = {
       interaction.reply({
         content: client.translation.get(
           guildDb?.language,
-          "Settings.replayChannelNone"
+          "Settings.replayChannelNone",
         ),
         ephemeral: true,
       });
@@ -29,15 +29,15 @@ const button: Button = {
                 label: channel.name,
                 value: channel.id,
               };
-            })
-          )
+            }),
+          ),
       );
 
     interaction.update({
       embeds: [],
       content: client.translation.get(
         guildDb?.language,
-        "Settings.replayChannel"
+        "Settings.replayChannel",
       ),
       components: [inter],
       options: {

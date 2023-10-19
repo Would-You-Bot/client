@@ -81,18 +81,29 @@ export default class Paginator {
       components: [buttons],
       ephemeral: true,
     });
-    this.client.paginate.set(`${this.user}-${type ? type : interaction.message.id}`, {
-      pages: this.pages,
-      page: this.page,
-      message: message.id,
-      channel: interaction.channel.id,
-      timeout: null,
-      time: this.timeout,
-    });
+    this.client.paginate.set(
+      `${this.user}-${type ? type : interaction.message.id}`,
+      {
+        pages: this.pages,
+        page: this.page,
+        message: message.id,
+        channel: interaction.channel.id,
+        timeout: null,
+        time: this.timeout,
+      },
+    );
     const time = setTimeout(() => {
-      if (this.client.paginate.get(`${this.user}-${type ? type : interaction.message.id}`))
-        this.client.paginate.delete(`${this.user}-${type ? type : interaction.message.id}`);
+      if (
+        this.client.paginate.get(
+          `${this.user}-${type ? type : interaction.message.id}`,
+        )
+      )
+        this.client.paginate.delete(
+          `${this.user}-${type ? type : interaction.message.id}`,
+        );
     }, this.timeout);
-    this.client.paginate.get(`${this.user}-${type ? type : interaction.message.id}`).timeout = time;
+    this.client.paginate.get(
+      `${this.user}-${type ? type : interaction.message.id}`,
+    ).timeout = time;
   }
 }

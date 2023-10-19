@@ -28,7 +28,7 @@ const command: ChatInputCommand = {
           name: "Top.gg",
           value: `> [ ${client.translation.get(
             guildDb?.language,
-            "Vote.embed.value"
+            "Vote.embed.value",
           )}  ](https://top.gg/bot/981649513427111957/vote)`,
           inline: true,
         },
@@ -36,10 +36,10 @@ const command: ChatInputCommand = {
           name: "Voidbots",
           value: `> [ ${client.translation.get(
             guildDb?.language,
-            "Vote.embed.value"
+            "Vote.embed.value",
           )}  ](https://voidbots.net/bot/981649513427111957)`,
           inline: true,
-        }
+        },
       )
       .setThumbnail(client.user?.displayAvatarURL() || "")
       .setFooter({

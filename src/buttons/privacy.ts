@@ -17,18 +17,18 @@ const button: Button = {
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Privacy.desc"
+          "Privacy.desc",
         )}\n\n${client.translation.get(guildDb?.language, "Privacy.status")} ${
           db?.votePrivacy
             ? client.translation.get(guildDb?.language, "Privacy.off")
             : client.translation.get(guildDb?.language, "Privacy.on")
-        }`
+        }`,
       )
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(
           guildDb?.language,
-          "Settings.embed.footer"
+          "Settings.embed.footer",
         ),
         iconURL: client.user?.avatarURL() || undefined,
       });
@@ -40,9 +40,9 @@ const button: Button = {
           .setLabel(
             db?.votePrivacy
               ? client.translation.get(guildDb?.language, "Privacy.turnOn")
-              : client.translation.get(guildDb?.language, "Privacy.turnOff")
+              : client.translation.get(guildDb?.language, "Privacy.turnOff"),
           )
-          .setStyle(db?.votePrivacy ? ButtonStyle.Success : ButtonStyle.Danger)
+          .setStyle(db?.votePrivacy ? ButtonStyle.Success : ButtonStyle.Danger),
       );
 
     await interaction.update({

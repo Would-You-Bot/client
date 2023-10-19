@@ -7,8 +7,8 @@ const event: Event = {
   execute: async (client: WouldYou, id: number) => {
     console.log(
       `${white("Would You?")} ${gray(">")} ${green(
-        `Shard ${id} reconnecting...`
-      )}`
+        `Shard ${id} reconnecting...`,
+      )}`,
     );
   },
 };

@@ -27,7 +27,7 @@ const button: Button = {
     var General = await getWouldYouRather(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wouldyourather"
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather",
     );
 
     let wouldyourather = [] as string[];
@@ -64,7 +64,7 @@ const button: Button = {
         ephemeral: true,
         content: client.translation.get(
           guildDb?.language,
-          "Rather.replays.disabled"
+          "Rather.replays.disabled",
         ),
       });
 
@@ -76,7 +76,7 @@ const button: Button = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
           ),
       ]);
     }
@@ -98,7 +98,7 @@ const button: Button = {
       time < three_minutes
         ? new Date(0)
         : new Date(~~((Date.now() + time) / 1000)),
-      "wouldyourather"
+      "wouldyourather",
     );
 
     interaction

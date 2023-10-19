@@ -43,7 +43,7 @@
     "turnOff": "Désactiver",
     "on": "Activé",
     "off": "Désactivé",
-    "desc": "En activant la confidentialité, ton nom d'utilisateur ne sera plus affiché dans les résultats de vote ! Tes votes seront complètement anonymes si cette option est activée."
+    "desc": "En activant l'anonymat, ton nom d'utilisateur ne sera plus affiché dans les résultats de vote ! Tes votes seront complètement anonymes si cette option est activée."
   },
   "wyCustom": {
     "error": {

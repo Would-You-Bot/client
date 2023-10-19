@@ -35,32 +35,32 @@ const command: ChatInputCommand = {
     console.log(
       `Guild Members: ${client.guilds.cache.reduce(
         (acc, guild) => acc + guild.members.cache.size,
-        0
-      )}`
+        0,
+      )}`,
     );
     console.log(`Channels: ${client.channels.cache.size}`);
     console.log(
       `Roles: ${client.guilds.cache.reduce(
         (acc, guild) => acc + guild.roles.cache.size,
-        0
-      )}`
+        0,
+      )}`,
     );
     console.log(
       `VoiceStates: ${client.guilds.cache.reduce(
         (acc, guild) => acc + guild.voiceStates.cache.size,
-        0
-      )}`
+        0,
+      )}`,
     );
     console.log(
       `Presences: ${client.guilds.cache.reduce(
         (acc, guild) => acc + guild.presences.cache.size,
-        0
-      )}`
+        0,
+      )}`,
     );
     console.log(
       `RAM Usage: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
-        0
-      )}/${(process.memoryUsage().rss / 1024 / 1024).toFixed(0)}MB`
+        0,
+      )}/${(process.memoryUsage().rss / 1024 / 1024).toFixed(0)}MB`,
     );
     console.log("\n");
 
@@ -70,7 +70,8 @@ const command: ChatInputCommand = {
       .addFields(
         {
           name: "Developers 🐧",
-          value: "```@dominikdev\n@forgetfulskybro\n@finndev\n@podskio\n@gersti```",
+          value:
+            "```@dominikdev\n@forgetfulskybro\n@finndev\n@podskio\n@gersti```",
           inline: false,
         },
         {
@@ -88,7 +89,7 @@ const command: ChatInputCommand = {
         {
           name: "Memory 🎇",
           value: `\`\`\`${round(
-            process.memoryUsage().heapUsed / 1000000000
+            process.memoryUsage().heapUsed / 1000000000,
           )}GB\n\`\`\``,
           inline: true,
         },
@@ -102,7 +103,7 @@ const command: ChatInputCommand = {
           name: "Bot Version 🧾",
           value: `\`\`\`v${version}\`\`\``,
           inline: true,
-        }
+        },
       )
       .setThumbnail(client.user?.displayAvatarURL() || null)
       .setFooter({

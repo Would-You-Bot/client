@@ -53,9 +53,10 @@ const event: Event = {
             guildDb.customMessages.filter((c) => c.type !== "nsfw")[
               Math.floor(
                 Math.random() *
-                  guildDb.customMessages.filter((c) => c.type !== "nsfw").length
+                  guildDb.customMessages.filter((c) => c.type !== "nsfw")
+                    .length,
               )
-            ].msg
+            ].msg,
           );
         } else {
           randomMessage = [...General, ...WhatYouDo];
@@ -66,7 +67,7 @@ const event: Event = {
         randomMessage = guildDb.customMessages.filter((c) => c.type !== "nsfw")[
           Math.floor(
             Math.random() *
-              guildDb.customMessages.filter((c) => c.type !== "nsfw").length
+              guildDb.customMessages.filter((c) => c.type !== "nsfw").length,
           )
         ].msg;
       }
@@ -75,7 +76,7 @@ const event: Event = {
         .send({
           content: `${client.translation.get(
             guildDb?.language,
-            "Welcome.embed.title"
+            "Welcome.embed.title",
           )} ${
             guildDb.welcomePing
               ? `<@${member.user.id}>`

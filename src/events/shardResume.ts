@@ -6,7 +6,7 @@ const event: Event = {
   event: "shardResume",
   execute: async (client: WouldYou, id: number) => {
     console.log(
-      `${white("Would You?")} ${gray(">")} ${green(`Shard ${id} resumed`)}`
+      `${white("Would You?")} ${gray(">")} ${green(`Shard ${id} resumed`)}`,
     );
   },
 };

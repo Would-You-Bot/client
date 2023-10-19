@@ -37,14 +37,14 @@ const event: Event = {
           .setThumbnail(
             guild.iconURL({
               extension: "png",
-            })
+            }),
           )
           .setDescription(
             `**Name**: ${
               guild.name
             }\n**Users**: ${guild.memberCount.toLocaleString()}${
               features ? `\n**Features**: ${features}` : ``
-            }`
+            }`,
           )
           .setFooter({
             text: global?.devBot ? "Dev Bot" : "Main Bot",

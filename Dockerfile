@@ -2,7 +2,7 @@ FROM node:18
 WORKDIR /
 
 COPY package.json pnpm-lock.yaml* ./
-RUN npm i -g pnpm && pnpm i
+RUN npm i -g pnpm tsc && pnpm i
 
 COPY . .
 

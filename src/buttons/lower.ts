@@ -22,7 +22,7 @@ const button: Button = {
           "HigherLower.error.user",
           {
             user: interaction.message.interaction?.user.username,
-          }
+          },
         ),
         ephemeral: true,
       });
@@ -90,7 +90,7 @@ const button: Button = {
             source2:
               game.items.history[game.items.history.length - 1].link ||
               "https://wouldyoubot.gg/nolink",
-          })
+          }),
         )
         .setColor("Green")
         .setImage("attachment://game.png")
@@ -110,7 +110,7 @@ const button: Button = {
             new ButtonBuilder()
               .setCustomId(`lower_${game.id}`)
               .setLabel("Lower")
-              .setStyle(ButtonStyle.Danger)
+              .setStyle(ButtonStyle.Danger),
           );
 
         interaction.editReply({
@@ -127,7 +127,7 @@ const button: Button = {
     } else {
       const loseEmbed = new EmbedBuilder()
         .setTitle(
-          client.translation.get(guildDb?.language, "HigherLower.game.title")
+          client.translation.get(guildDb?.language, "HigherLower.game.title"),
         )
         .setDescription(
           `${client.translation.get(
@@ -135,8 +135,8 @@ const button: Button = {
             "HigherLower.game.description",
             {
               score: game?.score,
-            }
-          )}`
+            },
+          )}`,
         )
         .setColor("Red")
         .setImage("attachment://game.png")

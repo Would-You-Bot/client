@@ -36,18 +36,18 @@ const command: ChatInputCommand = {
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Privacy.desc"
+          "Privacy.desc",
         )}\n\n${client.translation.get(guildDb?.language, "Privacy.status")} ${
           db?.votePrivacy
             ? client.translation.get(guildDb?.language, "Privacy.on")
             : client.translation.get(guildDb?.language, "Privacy.off")
-        }`
+        }`,
       )
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(
           guildDb?.language,
-          "Settings.embed.footer"
+          "Settings.embed.footer",
         ),
         iconURL: client.user?.avatarURL() || undefined,
       });
@@ -59,10 +59,10 @@ const command: ChatInputCommand = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              db?.votePrivacy ? "Privacy.turnOff" : "Privacy.turnOn"
-            )
+              db?.votePrivacy ? "Privacy.turnOff" : "Privacy.turnOn",
+            ),
           )
-          .setStyle(db?.votePrivacy ? ButtonStyle.Danger : ButtonStyle.Success)
+          .setStyle(db?.votePrivacy ? ButtonStyle.Danger : ButtonStyle.Success),
       );
 
     await interaction.reply({

@@ -44,7 +44,7 @@ const button: Button = {
             ephemeral: true,
             content: client.translation.get(
               guildDb?.language,
-              "Settings.replaySame"
+              "Settings.replaySame",
             ),
           });
 
@@ -53,7 +53,7 @@ const button: Button = {
             ephemeral: true,
             content: client.translation.get(
               guildDb?.language,
-              "Settings.cooldownInvalid"
+              "Settings.cooldownInvalid",
             ),
           });
 
@@ -61,25 +61,25 @@ const button: Button = {
           .setTitle(
             client.translation.get(
               guildDb?.language,
-              "Settings.embed.generalTitle"
-            )
+              "Settings.embed.generalTitle",
+            ),
           )
           .setDescription(
             `${client.translation.get(
               guildDb?.language,
-              "Settings.embed.replayType"
+              "Settings.embed.replayType",
             )}: ${guildDb.replayType}\n${client.translation.get(
               guildDb?.language,
-              "Settings.embed.replayCooldown"
+              "Settings.embed.replayCooldown",
             )}: ${
               guildDb.replayCooldown ? `${value}` : `<:x_:1077962443013238814>`
-            }\n`
+            }\n`,
           )
           .setColor("#0598F6")
           .setFooter({
             text: client.translation.get(
               guildDb?.language,
-              "Settings.embed.footer"
+              "Settings.embed.footer",
             ),
             iconURL: client.user?.avatarURL() || undefined,
           });
@@ -90,24 +90,24 @@ const button: Button = {
             .setLabel(
               client.translation.get(
                 guildDb?.language,
-                "Settings.button.replayCooldown"
-              )
+                "Settings.button.replayCooldown",
+              ),
             )
             .setStyle(
               guildDb.replayCooldown
                 ? ButtonStyle.Success
-                : ButtonStyle.Secondary
+                : ButtonStyle.Secondary,
             ),
           new ButtonBuilder()
             .setCustomId("replayType")
             .setLabel(
               client.translation.get(
                 guildDb?.language,
-                "Settings.button.replayType"
-              )
+                "Settings.button.replayType",
+              ),
             )
             .setStyle(ButtonStyle.Primary)
-            .setEmoji("📝")
+            .setEmoji("📝"),
         );
 
         await client.database.updateGuild(interaction.guild?.id || "", {

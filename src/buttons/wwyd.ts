@@ -26,7 +26,7 @@ const button: Button = {
 
     var WhatYouDo = await getWwyd(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wwyd"
+      (c) => c.type !== "nsfw" && c.type === "wwyd",
     );
 
     let whatwouldyoudo = [] as string[];
@@ -66,7 +66,7 @@ const button: Button = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
           ),
       ]);
     }

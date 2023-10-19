@@ -13,7 +13,7 @@ const event: Event = {
   execute: async (client: WouldYou) => {
     if (client.cluster.id === 0) {
       var globalCommands = Array.from(
-        client.commands.filter((x) => x.requireGuild === true).values()
+        client.commands.filter((x) => x.requireGuild === true).values(),
       ).map((x) => x.data.toJSON()) as RESTPostAPIApplicationCommandsJSONBody[];
 
       const rest = new REST({
@@ -34,31 +34,31 @@ const event: Event = {
             }
             console.log(
               `${white("Would You?")} ${gray(">")} ${green(
-                "Successfully registered commands globally"
-              )}`
+                "Successfully registered commands globally",
+              )}`,
             );
           } else {
             if (!process.env.TEST_GUILD_ID)
               return console.log(
                 red(
-                  "Looks like your bot is not in production mode and you don't have a guild id set in .env"
-                )
+                  "Looks like your bot is not in production mode and you don't have a guild id set in .env",
+                ),
               );
             if (client.user?.id) {
               await rest.put(
                 Routes.applicationGuildCommands(
                   client.user.id,
-                  process.env.TEST_GUILD_ID
+                  process.env.TEST_GUILD_ID,
                 ),
                 {
                   body: globalCommands,
-                }
+                },
               );
             }
             console.log(
               `${white("Would You?")} ${gray(">")} ${green(
-                "Successfully registered commands locally"
-              )}`
+                "Successfully registered commands locally",
+              )}`,
             );
           }
         } catch (err) {

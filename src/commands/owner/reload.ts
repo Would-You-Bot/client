@@ -19,7 +19,7 @@ const command: ChatInputCommand = {
       option
         .setName("options")
         .setDescription("Choose which command you want to reload.")
-        .setRequired(true)
+        .setRequired(true),
     ),
 
   /**

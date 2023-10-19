@@ -30,7 +30,7 @@ const button: Button = {
               value: "custom",
               description: "This changes it to use only custom messages.",
             },
-          ])
+          ]),
       );
 
     interaction.update({
