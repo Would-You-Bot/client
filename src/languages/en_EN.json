@@ -43,7 +43,7 @@
     "turnOff": "Turn Off",
     "on": "On",
     "off": "Off",
-    "desc": "Enabling privacy will remove your username from being displayed on Would You Rather results! Your votes will be completely anonymous if this is enabled."
+    "desc": "Enabling privacy will remove your username from being displayed on vote results! Your votes will be completely anonymous if this is enabled."
   },
   "wyCustom": {
     "error": {

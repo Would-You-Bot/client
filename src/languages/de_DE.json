@@ -37,7 +37,13 @@
     }
   },
   "Privacy": {
-    "success": "Du hast erfolgreich deine vote Privatsphäre zu **{choice}** geändert."
+    "settings": "Datenschutzeinstellungen",
+    "status": "**Status**:",
+    "turnOn": "Anschalten",
+    "turnOff": "Ausschalten",
+    "on": "Ein",
+    "off": "Aus",
+    "desc": "Wenn du die Privatsphäre aktivierst, wird dein Benutzername nicht mehr in den Wahl-Ergebnissen angezeigt! Wenn du diese Option aktivierst, sind deine Stimmen völlig anonym."
   },
   "wyCustom": {
     "error": {

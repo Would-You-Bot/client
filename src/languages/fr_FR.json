@@ -37,12 +37,18 @@
     }
   },
   "Privacy": {
-    "success": "Vous avez réussi à activer la confidentialité de votre vote **{choice}**."
+    "settings": "Paramètres de confidentialité",
+    "status": "**Statut** :",
+    "turnOn": "Activer",
+    "turnOff": "Désactiver",
+    "on": "Activé",
+    "off": "Désactivé",
+    "desc": "En activant la confidentialité, ton nom d'utilisateur ne sera plus affiché dans les résultats de vote ! Tes votes seront complètement anonymes si cette option est activée."
   },
   "wyCustom": {
     "error": {
       "noPages": "Impossible de continuer. Il n’y a aucune page à consulter.",
-      "issue": "Impossible de récupérer ce message. Refais la commande pour afficher les messages personnalisés.",
+      "issue": "Impossible de récupérer ce message. Refais le bouton pour voir la pagination.",
       "paginate": "Vous ne pouvez pas continuer ainsi.",
       "maximum": "Vous avez atteint le nombre maximum de messages personnalisés. Vous pouvez en gagner plus en votant pour le bot !",
       "empty": "Il n'y a actuellement aucun message personnalisé à afficher !",
