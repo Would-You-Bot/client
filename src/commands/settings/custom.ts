@@ -266,18 +266,10 @@ const command: ChatInputCommand = {
             return;
           }
 
-          if (client.paginate.get(interaction.user.id)) {
-            interaction.reply({
-              content: `${client.translation.get(
-                guildDb?.language,
-                "wyCustom.error.paginate"
-              )} [Link](https://canary.discord.com/channels/${interaction.guild
-                ?.id}/${client.paginate.get(interaction.user.id).channel}/${
-                client.paginate.get(interaction.user.id).message
-              })`,
-              ephemeral: true,
-            });
-            return;
+          let paginate = client.paginate.get(`${interaction.user.id}-custom`);
+          if (paginate) {
+            clearTimeout(paginate.timeout);
+            client.paginate.delete(`${interaction.user.id}-custom`);
           }
 
           const page = new Paginator({
@@ -419,7 +411,7 @@ const command: ChatInputCommand = {
               )
             );
           }
-          page.start(interaction);
+          page.start(interaction, "custom");
           return;
         case "import":
           const attachemnt = interaction.options.get("attachment");

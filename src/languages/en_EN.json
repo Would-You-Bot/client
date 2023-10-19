@@ -37,12 +37,18 @@
     }
   },
   "Privacy": {
-    "success": "Successfully turned your vote privacy **{choice}**."
+    "settings": "Privacy Settings",
+    "status": "**Status**:",
+    "turnOn": "Turn On",
+    "turnOff": "Turn Off",
+    "on": "On",
+    "off": "Off",
+    "desc": "Enabling privacy will remove your username from being displayed on Would You Rather results! Your votes will be completely anonymous if this is enabled."
   },
   "wyCustom": {
     "error": {
       "noPages": "Unable to proceed. There are zero pages to go to.",
-      "issue": "Unable to fetch that message. Redo the command to view custom messages.",
+      "issue": "Unable to fetch that message. Redo the button to view the pagination.",
       "paginate": "You already are viewing custom messages:",
       "maximum": "You've reached the maximum amount of custom messages. You can gain more by voting for the bot!",
       "empty": "There currently is no custom Would You messages to view!",

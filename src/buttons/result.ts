@@ -16,10 +16,10 @@ const button: Button = {
       return;
     }
 
-    let paginate = client.paginate.get(interaction.user.id);
+    let paginate = client.paginate.get(`${interaction.user.id}-${interaction.message.reference?.messageId}`);
     if (paginate) {
       clearTimeout(paginate.timeout);
-      client.paginate.delete(interaction.user.id);
+      client.paginate.delete(`${interaction.user.id}-${interaction.message.reference?.messageId}`);
     }
 
     const page = new Paginator({
@@ -42,10 +42,10 @@ const button: Button = {
     data = await Promise.all(
       votingResults.votes.op_one.map(async (u: any) => {
         const user = await client.database.getUser(u, true);
-        return user?.votePrivacy ? null : u;
+        return user?.votePrivacy ? "Anonymous" : u;
       })
-    ).then((filteredIds) => filteredIds.filter((id) => id !== null));
-    data = data.map((s: any, i = 1) => `${i++}. <@${s}> (${s})`);
+    );
+    data = data.map((s: string, i = 1) => `${i++}. ${s === "Anonymous" ? s : `<@${s}> (${s})`}`);
     data = Array.from(
       {
         length: Math.ceil(data.length / 10),
@@ -57,7 +57,7 @@ const button: Button = {
     data = data.map((e: any) =>
       page.add(
         new EmbedBuilder()
-          .setTitle(`Voted "Yes"`)
+          .setTitle(`Voted for Option 1`)
           .setDescription(e.slice(0, 10).join("\n").toString())
           .setColor("#0598F6")
       )
@@ -67,10 +67,10 @@ const button: Button = {
     data2 = await Promise.all(
       votingResults.votes.op_two.map(async (u: any) => {
         const user = await client.database.getUser(u, true);
-        return user?.votePrivacy ? null : u;
+        return user?.votePrivacy ? "Anonymous" : u;
       })
-    ).then((filteredIds) => filteredIds.filter((id) => id !== null));
-    data2 = data2.map((s: any, i = 1) => `${i++}. <@${s}> (${s})`);
+    );
+    data2 = data2.map((s: string, i = 1) => `${i++}. ${s === "Anonymous" ? s : `<@${s}> (${s})`}`);
     data2 = Array.from(
       {
         length: Math.ceil(data2.length / 10),
@@ -82,13 +82,13 @@ const button: Button = {
     data2 = data2.map((e: any) =>
       page.add(
         new EmbedBuilder()
-          .setTitle(`Voted "No"`)
+          .setTitle(`Voted for Option 2`)
           .setDescription(e.slice(0, 10).join("\n").toString())
           .setColor("#F00605")
       )
     );
 
-    return await page.start(interaction);
+    return await page.start(interaction, null);
   },
 };
 

@@ -39,7 +39,7 @@ export default class Paginator {
     return this;
   }
 
-  async start(interaction: any) {
+  async start(interaction: any, type: string | null) {
     if (!this.pages.length) return;
 
     var pFirst = new ButtonBuilder()
@@ -81,7 +81,7 @@ export default class Paginator {
       components: [buttons],
       ephemeral: true,
     });
-    this.client.paginate.set(this.user, {
+    this.client.paginate.set(`${this.user}-${type ? type : interaction.message.id}`, {
       pages: this.pages,
       page: this.page,
       message: message.id,
@@ -90,9 +90,9 @@ export default class Paginator {
       time: this.timeout,
     });
     const time = setTimeout(() => {
-      if (this.client.paginate.get(this.user))
-        this.client.paginate.delete(this.user);
+      if (this.client.paginate.get(`${this.user}-${type ? type : interaction.message.id}`))
+        this.client.paginate.delete(`${this.user}-${type ? type : interaction.message.id}`);
     }, this.timeout);
-    this.client.paginate.get(this.user).timeout = time;
+    this.client.paginate.get(`${this.user}-${type ? type : interaction.message.id}`).timeout = time;
   }
 }

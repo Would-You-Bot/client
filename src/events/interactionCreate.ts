@@ -35,6 +35,7 @@ const event: Event = {
       "paginateLast",
       "paginateNext",
       "paginatePrev",
+      "privacy",
     ];
     if (!interaction.guild) {
       if (interaction.isChatInputCommand()) {

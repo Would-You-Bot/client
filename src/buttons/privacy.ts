@@ -1,33 +1,14 @@
+import { Button } from "../models";
 import {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  SlashCommandBuilder,
-  PermissionFlagsBits,
-  PermissionsBitField,
-  ButtonStyle,
   MessageActionRowComponentBuilder,
+  ButtonStyle,
 } from "discord.js";
-import { ChatInputCommand } from "../../models";
 
-const command: ChatInputCommand = {
-  requireGuild: true,
-  data: new SlashCommandBuilder()
-    .setName("privacy")
-    .setDescription("Privacy settings")
-    .setDMPermission(false)
-    .setDescriptionLocalizations({
-      de: "Lorem ipsum",
-      "es-ES": "Lorem ipsum",
-      fr: "Lorem ipsum",
-    }),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {IGuildModel} guildDb
-   */
-
+const button: Button = {
+  name: "privacy",
   execute: async (interaction, client, guildDb) => {
     const db = await client.database.getUser(interaction.user.id);
 
@@ -39,8 +20,8 @@ const command: ChatInputCommand = {
           "Privacy.desc"
         )}\n\n${client.translation.get(guildDb?.language, "Privacy.status")} ${
           db?.votePrivacy
-            ? client.translation.get(guildDb?.language, "Privacy.on")
-            : client.translation.get(guildDb?.language, "Privacy.off")
+            ? client.translation.get(guildDb?.language, "Privacy.off")
+            : client.translation.get(guildDb?.language, "Privacy.on")
         }`
       )
       .setColor("#0598F6")
@@ -57,20 +38,22 @@ const command: ChatInputCommand = {
         new ButtonBuilder()
           .setCustomId("privacy")
           .setLabel(
-            client.translation.get(
-              guildDb?.language,
-              db?.votePrivacy ? "Privacy.turnOff" : "Privacy.turnOn"
-            )
+            db?.votePrivacy
+              ? client.translation.get(guildDb?.language, "Privacy.turnOn")
+              : client.translation.get(guildDb?.language, "Privacy.turnOff")
           )
-          .setStyle(db?.votePrivacy ? ButtonStyle.Danger : ButtonStyle.Success)
+          .setStyle(db?.votePrivacy ? ButtonStyle.Success : ButtonStyle.Danger)
       );
 
-    await interaction.reply({
+    await interaction.update({
       embeds: [setting],
       components: [button],
-      ephemeral: true,
+    });
+
+    await client.database.updateUser(interaction.user.id, {
+      votePrivacy: db?.votePrivacy ? false : true,
     });
   },
 };
 
-export default command;
+export default button;

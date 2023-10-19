@@ -9,7 +9,7 @@ import { Button } from "../models";
 const button: Button = {
   name: "paginateLast",
   execute: async (interaction, client, guildDb) => {
-    const paginate = client.paginate.get(interaction.user.id);
+    const paginate = client.paginate.get(`${interaction.user.id}-${interaction.message.reference?.messageId}`);
     if (!paginate) {
       interaction.reply({
         content: client.translation.get(
@@ -64,8 +64,8 @@ const button: Button = {
 
     clearTimeout(paginate.timeout);
     const time = setTimeout(() => {
-      if (client.paginate.get(interaction.user.id))
-        client.paginate.delete(interaction.user.id);
+      if (client.paginate.get(`${interaction.user.id}-${interaction.message.reference?.messageId}`))
+        client.paginate.delete(`${interaction.user.id}-${interaction.message.reference?.messageId}`);
     }, paginate.time);
     paginate.timeout = time;
 
