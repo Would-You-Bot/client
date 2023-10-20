@@ -53,8 +53,19 @@ export default class WouldYou extends Client {
       ],
       makeCache: (manager) => {
         switch (manager.name) {
-          case "ReactionUserManager":
-            return new LimitedCollection({ maxSize: 0 });
+            case "ThreadMemberManager":
+            case "ApplicationCommandManager":
+            case "BaseGuildEmojiManager":
+            case "GuildEmojiManager":
+            case "GuildInviteManager":
+            case "GuildStickerManager":
+            case "StageInstanceManager":
+            case "PresenceManager":
+            case "MessageManager":
+            case "GuildBanManager":
+            case "ThreadManager":
+            case "ReactionUserManager":
+              return new LimitedCollection({ maxSize: 0 });
           case "GuildMemberManager":
             return new LimitedCollection({
               maxSize: 20000,
