@@ -1,8 +1,10 @@
-FROM node:18
+FROM node:18-alpine
 WORKDIR /
 
-COPY package.json pnpm-lock.yaml* ./
-RUN npm i -g pnpm tsc && pnpm i
+COPY package*.json pnpm-lock.yaml* ./
+RUN npm i -g pnpm
+
+RUN pnpm install
 
 COPY . .
 
