@@ -5,6 +5,7 @@ services:
     container_name: "bot"
     image: dominikdoesdev/wy-bot
     environment: 
+      - TZ=Europe/Berlin
       - TEST_GUILD_ID=
       - STATUS=DEVELOPMENT
       - BOTSTATUS=Would You?
