@@ -60,7 +60,7 @@ export default class WebhookHandler {
     channelId: string,
     name: string,
     avatar: string,
-    reason: string,
+    reason: string
   ) => {
     if (!channel)
       channel = await this.c.channels.fetch(channelId).catch((err) => {
@@ -121,7 +121,7 @@ export default class WebhookHandler {
     channel: any = null,
     channelId: string,
     message: any,
-    err: any = false,
+    err: any = false
   ): Promise<void> => {
     if (!channel)
       channel = await this.c.channels.fetch(channelId).catch((err) => {
@@ -161,7 +161,7 @@ export default class WebhookHandler {
         channelId,
         "Would You",
         this.c.user?.displayAvatarURL() as string,
-        "Webhook token unavailable, creating new webhook",
+        "Webhook token unavailable, creating new webhook"
       );
 
       if (!webhook?.id || !webhook.token)
@@ -169,7 +169,7 @@ export default class WebhookHandler {
 
       const webhookClient = new WebhookClient({
         id: webhook.id,
-        token: webhook.token,
+        token: cryptr.decrypt(webhook.token),
       });
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
@@ -186,18 +186,18 @@ export default class WebhookHandler {
         const guildSettings = await this.c.database.getGuild(channel.guild.id);
 
         message.embeds = message?.embeds ?? [];
-
-        message.embeds.unshift(
+        message.content = null;
+        message.embeds = [
           new EmbedBuilder()
             .setColor("#FE0001")
             .setDescription(
               "🛑 " +
                 this.c.translation.get(
                   guildSettings?.language ?? "en_EN",
-                  "webhookManager.noWebhook",
-                ),
+                  "webhookManager.noWebhook"
+                )
             ),
-        );
+        ];
 
         return channel.send(message).catch((err: Error) => {
           captureException(err);
@@ -217,7 +217,7 @@ export default class WebhookHandler {
     channel: any = null,
     channelId: string,
     message: any,
-    thread?: boolean,
+    thread?: boolean
   ) => {
     if (!channelId && channel?.id) channelId = channel.id;
 
@@ -235,7 +235,7 @@ export default class WebhookHandler {
         channelId,
         "Would You",
         this.c.user?.displayAvatarURL() as string,
-        "Webhook token unavailable, creating new webhook",
+        "Webhook token unavailable, creating new webhook"
       );
 
       if (webhook?.id) webhook.id = webhook.id;
@@ -271,7 +271,7 @@ export default class WebhookHandler {
             ].join("/")} - Daily Message`,
             auto_archive_duration: "1440",
           },
-        },
+        }
       );
     } else {
       const webhook = new WebhookClient({
@@ -300,7 +300,7 @@ export default class WebhookHandler {
             ].join("/")} - Daily Message`,
             auto_archive_duration: "1440",
           },
-        },
+        }
       );
     }
   };
