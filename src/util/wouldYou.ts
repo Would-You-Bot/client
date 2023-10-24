@@ -65,6 +65,8 @@ export default class WouldYou extends Client {
           case "GuildBanManager":
           case "ThreadManager":
           case "ReactionUserManager":
+          case "VoiceStateManager":
+          case "AutoModerationRuleManager":
             return new LimitedCollection({ maxSize: 0 });
           case "GuildMemberManager":
             return new LimitedCollection({
