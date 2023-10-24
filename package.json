@@ -28,6 +28,12 @@
     "url": "https://github.com/Would-You-Bot/client/issues"
   },
   "homepage": "https://wouldyoubot.gg",
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false
+  },
   "dependencies": {
     "@discordjs/rest": "^2.0.0",
     "@napi-rs/canvas": "^0.1.44",
