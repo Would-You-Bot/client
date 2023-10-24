@@ -55,7 +55,7 @@ const command: ChatInputCommand = {
           {
             role: "user",
             content:
-              "Generate a would you rather questions that is 100% safe for work and pg-13 with the following theme: " +
+              "Generate a would you rather question that is 100% safe for work and pg-13 with the following theme: " +
               interaction.options.getString("prompt") +
               "make sure anything that is slightly not safe for work gets filtered out and replaced by a nice and pg 3 topic",
           },
