@@ -174,23 +174,24 @@ export default class Voting {
     const option_1 = Number(vote.votes.op_one?.length);
     const option_2 = Number(vote.votes.op_two?.length);
 
-    const numbers = { op_one: 1, op_two: 2 } as any;
-    const phrases = { op_one: "Yes", op_two: "No" } as any;
+    const numbers = { op_one: "Have", op_two: "Have not" } as any;
+    const phrases = { op_one: "Option 1", op_two: "Option 2" } as any;
     const chartData = Object.keys(vote.votes).map((e) =>
       Number(all_votes > 0 ? vote.votes[e].length : 1),
     );
+
     const chartLabels = Object.keys(vote.votes).map((e) =>
-      vote.type == 0 ? "Question #" + numbers[e] : phrases[e],
+      vote.type == 'neverhaveiever' ? numbers[e] : phrases[e],
     );
 
     chart.setConfig({
       type: "outlabeledPie",
       data: {
-        labels: chartLabels.reverse(),
+        labels: chartLabels,
         datasets: [
           {
             backgroundColor: ["#0091ff", "#f00404"],
-            data: chartData.reverse(),
+            data: chartData,
           },
         ],
       },

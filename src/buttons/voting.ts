@@ -11,11 +11,11 @@ const button: Button = {
       content: `You've successfully voted for ${
         customId[2] === "wouldyourather"
           ? customId[3] == 0 || customId[2] == 0
-            ? "number one"
-            : "number two"
+            ? "Option 1"
+            : "Option 2"
           : customId[3] == 0 || customId[2] == 0
-          ? "yes"
-          : "no"
+          ? "\"have done this\""
+          : "\"have not done this\""
       }.`,
       ephemeral: true,
     });
