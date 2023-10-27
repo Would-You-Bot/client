@@ -117,7 +117,7 @@ const command: ChatInputCommand = {
       switch (interaction.options.getSubcommand()) {
         case "add":
           if (!client.voteLogger.votes.has(interaction.user.id)) {
-            if (guildDb.customMessages.length >= 30)
+            if (guildDb.customMessages.length >= 500) {
               interaction.reply({
                 ephemeral: true,
                 content: client.translation.get(
@@ -125,7 +125,6 @@ const command: ChatInputCommand = {
                   "wyCustom.error.maximum",
                 ),
               });
-            return;
           }
 
           const option =
@@ -164,14 +163,18 @@ const command: ChatInputCommand = {
             type: option,
           });
 
-          await client.database.updateGuild(
-            interaction.guildId || "",
-            {
-              ...guildDb,
-              customMessages: guildDb.customMessages,
-            },
-            true,
-          );
+          await client.database
+            .updateGuild(
+              interaction.guildId || "",
+              {
+                ...guildDb,
+                customMessages: guildDb.customMessages,
+              },
+              true,
+            )
+            .catch((err) => {
+              console.log(err);
+            });
           break;
         case "remove":
           message = interaction.options.getString("message");
@@ -817,7 +820,6 @@ const command: ChatInputCommand = {
         .catch((err) => {
           captureException(err);
         });
-      return;
     }
   },
 };
