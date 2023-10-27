@@ -125,6 +125,8 @@ const command: ChatInputCommand = {
                   "wyCustom.error.maximum",
                 ),
               });
+              return;
+            }
           }
 
           const option =
