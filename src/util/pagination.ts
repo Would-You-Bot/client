@@ -42,24 +42,38 @@ export default class Paginator {
   async start(interaction: any, type: string | null) {
     if (!this.pages.length) return;
 
-    var pFirst = new ButtonBuilder()
+    let pFirst = new ButtonBuilder()
       .setDisabled(true)
       .setCustomId("paginateFirst")
       .setLabel("⏪")
       .setStyle(ButtonStyle.Secondary);
-    var pPrev = new ButtonBuilder()
+    let pPrev = new ButtonBuilder()
       .setDisabled(true)
       .setCustomId("paginatePrev")
       .setLabel("◀️")
       .setStyle(ButtonStyle.Secondary);
-    var pNext = new ButtonBuilder()
+    let pNext = new ButtonBuilder()
       .setCustomId("paginateNext")
       .setLabel("▶️")
       .setStyle(ButtonStyle.Secondary);
-    var pLast = new ButtonBuilder()
+    let pLast = new ButtonBuilder()
       .setCustomId("paginateLast")
       .setLabel("⏩")
       .setStyle(ButtonStyle.Secondary);
+    
+    if (this.pages.length === 1) {
+      pNext = new ButtonBuilder()
+        .setDisabled(true)
+        .setCustomId("paginateNext")
+        .setLabel("⏩")
+        .setStyle(ButtonStyle.Secondary);
+
+      pLast = new ButtonBuilder()
+        .setDisabled(true)
+        .setCustomId("paginateLast")
+        .setLabel("⏩")
+        .setStyle(ButtonStyle.Secondary);
+    }
 
     const buttons =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(

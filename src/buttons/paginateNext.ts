@@ -9,9 +9,12 @@ import { Button } from "../models";
 const button: Button = {
   name: "paginateNext",
   execute: async (interaction, client, guildDb) => {
-    const paginate = client.paginate.get(
+    let paginate = client.paginate.get(
       `${interaction.user.id}-${interaction.message.reference?.messageId}`,
     );
+
+    if (!paginate)
+      paginate = client.paginate.get(`${interaction.user.id}-custom`);
 
     if (!paginate) {
       interaction.reply({
