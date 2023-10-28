@@ -60,7 +60,7 @@ export default class Paginator {
       .setCustomId("paginateLast")
       .setLabel("⏩")
       .setStyle(ButtonStyle.Secondary);
-    
+
     if (this.pages.length === 1) {
       pNext = new ButtonBuilder()
         .setDisabled(true)
