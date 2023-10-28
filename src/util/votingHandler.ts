@@ -181,7 +181,7 @@ export default class Voting {
     );
 
     const chartLabels = Object.keys(vote.votes).map((e) =>
-      vote.type == 'neverhaveiever' ? numbers[e] : phrases[e],
+      vote.type == "neverhaveiever" ? numbers[e] : phrases[e],
     );
 
     chart.setConfig({
