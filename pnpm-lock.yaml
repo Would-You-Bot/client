@@ -24,8 +24,8 @@ dependencies:
     specifier: ^1.0.3
     version: 1.0.7
   cron:
-    specifier: ^3.1.3
-    version: 3.1.3
+    specifier: ^3.1.5
+    version: 3.1.5
   cryptr:
     specifier: ^6.3.0
     version: 6.3.0
@@ -638,8 +638,8 @@ packages:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: true
 
-  /cron@3.1.3:
-    resolution: {integrity: sha512-KVxeKTKYj2eNzN4ElnT6nRSbjbfhyxR92O/Jdp6SH3pc05CDJws59jBrZWEMQlxevCiE6QUTrXy+Im3vC3oD3A==}
+  /cron@3.1.5:
+    resolution: {integrity: sha512-e/ivHUhSZVvF5PUqgj7dzQ96KqAhK1/peMDr5Mmfm/vEho01/O+ySJnhTBJ2JPvFEWXpjLESIJBke0ZpZ7r7FA==}
     dependencies:
       '@types/luxon': 3.3.2
       luxon: 3.4.3
