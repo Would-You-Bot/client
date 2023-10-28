@@ -30,8 +30,8 @@ dependencies:
     specifier: ^6.3.0
     version: 6.3.0
   discord-api-types:
-    specifier: ^0.37.56
-    version: 0.37.56
+    specifier: ^0.37.61
+    version: 0.37.61
   discord-hybrid-sharding:
     specifier: ^2.1.3
     version: 2.1.3
@@ -722,8 +722,8 @@ packages:
     resolution: {integrity: sha512-X4CDiMnDbA3s3RaUXWXmgAIbY1uxab3fqe3qwzg5XutR3wjqi7M3IkgQbsIBzpqBN2YWr/Qdv7JrFRqSgb4TFg==}
     dev: false
 
-  /discord-api-types@0.37.56:
-    resolution: {integrity: sha512-Ih3wj0ZTaQxaJRqUEXHMIXfXB86bwMGC0wc2nNsyCJqeo3lC4qnxXtFIsC+IGI46+dSIinuayCAZ6sLEEM02Bw==}
+  /discord-api-types@0.37.61:
+    resolution: {integrity: sha512-o/dXNFfhBpYHpQFdT6FWzeO7pKc838QeeZ9d91CfVAtpr5XLK4B/zYxQbYgPdoMiTDvJfzcsLW5naXgmHGDNXw==}
     dev: false
 
   /discord-hybrid-sharding@2.1.3:
