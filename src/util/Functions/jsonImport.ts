@@ -23,7 +23,7 @@ export async function getWwyd(language: string): Promise<string[]> {
 export async function getTruth(language: string): Promise<string[]> {
   var result = [] as string[];
   await import(getPath(`truth-${language}.json`)).then((value) => {
-    result = value;
+    result = value.General;
   });
   return result;
 }
@@ -31,8 +31,21 @@ export async function getTruth(language: string): Promise<string[]> {
 export async function getDare(language: string): Promise<string[]> {
   var result = [] as string[];
   await import(getPath(`dare-${language}.json`)).then((value) => {
-    result = value;
+    result = value.General;
   });
+  return result;
+}
+
+export async function getRandomTod(language: string): Promise<string[]> {
+  var result = [] as string[];
+  const truth = await import(getPath(`truth-${language}.json`));
+  const dare = await import(getPath(`dare-${language}.json`));
+
+  if (Math.random() < 0.5) {
+    result = truth.General;
+  } else {
+    result = dare.General;
+  }
   return result;
 }
 

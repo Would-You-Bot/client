@@ -1,36 +1,31 @@
 import {
   EmbedBuilder,
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
+  PermissionFlagsBits,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
-import { getTruth } from "../../util/Functions/jsonImport";
+import shuffle from "../util/shuffle";
+import { Button } from "../models";
+import { getRandomTod } from "../util/Functions/jsonImport";
 
-const command: ChatInputCommand = {
-  requireGuild: true,
-  data: new SlashCommandBuilder()
-    .setName("truth")
-    .setDescription("Posts a random truth question that you need to answer")
-    .setDMPermission(false)
-    .setDescriptionLocalizations({
-      de: "Postet eine zufällige Wahrheitsfrage, die du beantworten musst",
-      "es-ES": "Publica una pregunta de verdad aleatoria que debes responder",
-      fr: "Publie une question de vérité aléatoire que vous devez répondre",
-    }),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  execute: async (interaction, client, guildDb) => {
-    let Truth = await getTruth(guildDb.language);
+const button: Button = {
+  name: "random",
+  execute: async (interaction: any, client, guildDb) => {
+    if (
+      !interaction.channel
+        ?.permissionsFor(interaction.user.id)
+        .has(PermissionFlagsBits.SendMessages)
+    )
+      return interaction.reply({
+        content:
+          "You don't have permission to use this button in this channel!",
+        ephemeral: true,
+      });
+    let random = await getRandomTod(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "truth",
+      (c) => c.type !== "nsfw" && c.type === "randomToD",
     );
 
     let truthordare = [] as string[];
@@ -39,10 +34,10 @@ const command: ChatInputCommand = {
 
     switch (guildDb.customTypes) {
       case "regular":
-        truthordare = shuffle([...Truth]);
+        truthordare = shuffle([...random]);
         break;
       case "mixed":
-        truthordare = shuffle([...Truth, ...dbquestions.map((c) => c.msg)]);
+        truthordare = shuffle([...random, ...dbquestions.map((c) => c.msg)]);
         break;
       case "custom":
         truthordare = shuffle(dbquestions.map((c) => c.msg));
@@ -51,10 +46,10 @@ const command: ChatInputCommand = {
 
     const Random = Math.floor(Math.random() * truthordare.length);
 
-    const truthembed = new EmbedBuilder()
+    const randomebed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Random Truth | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
         iconURL: interaction.user.avatarURL() || "",
       })
       .setDescription(truthordare[Random]);
@@ -83,11 +78,11 @@ const command: ChatInputCommand = {
     ]);
 
     interaction
-      .reply({ embeds: [truthembed], components: components })
-      .catch((err) => {
+      .reply({ embeds: [randomebed], components: components })
+      .catch((err: Error) => {
         captureException(err);
       });
   },
 };
 
-export default command;
+export default button;

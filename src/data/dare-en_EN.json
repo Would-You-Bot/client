@@ -1,4 +1,5 @@
-[
+{
+  "General": [
     "Take a shot of mustard or ketchup.",
     "Howl like a wolf",
     "Go to the first person you know on your instagram feed and like every photo on their profile.",
@@ -13,6 +14,9 @@
     "Type with only one hand for the next minute",
     "Text your number neighbor (phone number one less or one more than you)",
     "Eat an ice cube",
+    "Send a message to the person at the top of your DMs list",
+    "Show us your screen time report",
+    "Send a message to the person at the bottom of your DMs list",
     "Show everyone your frequently used emoji list.",
     "Let the group choose your profile picture for the next day",
     "Name as many types of car as you can",
@@ -79,11 +83,16 @@
     "Type as fast as you can for the next minute",
     "Say UWU for as long as possible",
     "Name as many countries as you can",
+    "Eat a raw piece of garlic",
+    "Do 100 squats",
+    "Read the last text message you sent out loud.",
     "Post an embarrassing photo on your Instagram story.",
+    "Put as many snacks into your mouth at once as you can",
     "Show everyone here your screen time.",
     "Imitate a behaviour of who you like.",
     "Talk in a very deep voice for the next round",
     "Prank call your crush",
+    "Show everyone the last photo you took.",
     "Sing a lullaby in VC.",
     "Text your parents \"something crazy just happened\" and share what they say",
     "Call a random person and sing happy birthday to them",
@@ -181,7 +190,7 @@
     "Send the last meme you saved to your phone",
     "Set your cell phone language to Spanish for the next 10 minutes",
     "Sharpie an embarrassing message on any part of the body covered by clothing.",
-    "Hum a song of your choice, donâ€™t stop until someone correctly guesses the song",
+    "Hum a song of your choice, donate stop until someone correctly guesses the song",
     "Talk in an accent for the next 3 rounds",
     "Change your phone wallpaper to the choice of the group for 7 days.",
     "Text your crush and tell them how cool they are",
@@ -216,4 +225,5 @@
     "Take a sniff of everyone playing.",
     "Ask a friend for their mom's phone number",
     "Make an owo emote for the group."
-]
+  ]
+}
