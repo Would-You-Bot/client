@@ -15,7 +15,7 @@ export async function getWouldYouRather(language: string): Promise<string[]> {
 export async function getWwyd(language: string): Promise<string[]> {
   var result = [] as string[];
   await import(getPath(`wwyd-${language}.json`)).then((value) => {
-    result = value.Truth;
+    result = value.WhatYouDo;
   });
   return result;
 }
