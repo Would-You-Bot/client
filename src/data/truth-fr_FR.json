@@ -1,4 +1,5 @@
-[
+{
+  "General": [
   "Si vous pouviez voyager dans le passé et rencontrer une personne, qui serait-ce ?",
   "Avez-vous des phobies ?",
   "Avez-vous un projet particulier sur lequel vous travaillez actuellement ?",
@@ -1560,3 +1561,4 @@
   "Quelle est la pire chose que vous ayez jamais faite ?",
   "Quelle célébrité est, selon vous, surestimée ?"
 ]
+}
