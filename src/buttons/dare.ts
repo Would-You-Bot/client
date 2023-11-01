@@ -47,7 +47,7 @@ const button: Button = {
     const Random = Math.floor(Math.random() * truthordare.length);
 
     const dareembed = new EmbedBuilder()
-      .setColor("#248046")
+      .setColor("#0598F6")
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: Random Dare | ID: ${Random}`,
         iconURL: interaction.user.avatarURL() || "",
