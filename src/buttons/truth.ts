@@ -49,7 +49,7 @@ const button: Button = {
     const truthembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Random Truth | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: Truth | ID: ${Random}`,
         iconURL: interaction.user.avatarURL() || "",
       })
       .setDescription(truthordare[Random]);

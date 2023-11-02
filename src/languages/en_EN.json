@@ -96,6 +96,8 @@
         "title": "Would You Custom Messages",
         "descCatNHIE": "**Category**: Never Have I Ever",
         "descCatWYR": "**Category**: Would You Rather",
+        "descCatTRUTH": "**Category**: Truth",
+        "descCatDARE": "**Category**: Dare",
         "descCatWWYD": "**Category**: What Would You Do"
       }
     }
@@ -155,7 +157,7 @@
   },
   "Vote": {
     "embed": {
-      "title": "Voting helps **Would You** gain more users! Make sure to vote every day!",
+      "title": "Voting helps **Would You** gain more popularity amongst users on discord! You can vote every 12hours and support the bot!",
       "value": "Click to vote",
       "footer": "Would You"
     }

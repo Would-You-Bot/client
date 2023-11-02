@@ -50,6 +50,8 @@ const command: ChatInputCommand = {
               { name: "Would You Rather", value: "wouldyourather" },
               { name: "Never Have I Ever", value: "neverhaveiever" },
               { name: "What Would You Do", value: "wwyd" },
+              { name: "Truth", value: "truth" },
+              { name: "Dare", value: "dare" },
             ),
         )
         .addStringOption((option) =>
@@ -374,6 +376,96 @@ const command: ChatInputCommand = {
           }
 
           if (
+            guildDb.customMessages.filter((c) => c.type === "truth")
+              .length > 0
+          ) {
+            let data: any;
+            data = guildDb.customMessages
+              .filter((c) => c.type === "truth")
+              .map(
+                (s, i) =>
+                  `${client.translation.get(
+                    guildDb?.language,
+                    "wyCustom.success.embedAdd.descID",
+                  )}: ${s.id}\n${client.translation.get(
+                    guildDb?.language,
+                    "wyCustom.success.embedAdd.descMsg",
+                  )}: ${s.msg}`,
+              );
+            data = Array.from(
+              {
+                length: Math.ceil(data.length / 5),
+              },
+              (a, r) => data.slice(r * 5, r * 5 + 5),
+            );
+
+            Math.ceil(data.length / 5);
+            data = data.map((e: any) =>
+              page.add(
+                new EmbedBuilder()
+                  .setTitle(
+                    client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.paginator.title",
+                    ),
+                  )
+                  .setDescription(
+                    `${client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.paginator.descCatTRUTH",
+                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
+                  )
+                  .setColor("#0795F6"),
+              ),
+            );
+          }
+
+          if (
+            guildDb.customMessages.filter((c) => c.type === "dare")
+              .length > 0
+          ) {
+            let data: any;
+            data = guildDb.customMessages
+              .filter((c) => c.type === "dare")
+              .map(
+                (s, i) =>
+                  `${client.translation.get(
+                    guildDb?.language,
+                    "wyCustom.success.embedAdd.descID",
+                  )}: ${s.id}\n${client.translation.get(
+                    guildDb?.language,
+                    "wyCustom.success.embedAdd.descMsg",
+                  )}: ${s.msg}`,
+              );
+            data = Array.from(
+              {
+                length: Math.ceil(data.length / 5),
+              },
+              (a, r) => data.slice(r * 5, r * 5 + 5),
+            );
+
+            Math.ceil(data.length / 5);
+            data = data.map((e: any) =>
+              page.add(
+                new EmbedBuilder()
+                  .setTitle(
+                    client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.paginator.title",
+                    ),
+                  )
+                  .setDescription(
+                    `${client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.paginator.descCatDARE",
+                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
+                  )
+                  .setColor("#0795F6"),
+              ),
+            );
+          }
+
+          if (
             guildDb.customMessages.filter((c) => c.type === "wwyd").length > 0
           ) {
             let data: any;
@@ -551,6 +643,12 @@ const command: ChatInputCommand = {
               let wouldyourather = guildDb.customMessages.filter(
                 (c) => c.type === "wouldyourather",
               ).length;
+              let truth = guildDb.customMessages.filter(
+                (c) => c.type === "truth",
+              ).length;
+              let dare = guildDb.customMessages.filter(
+                (c) => c.type === "dare",
+              ).length;
               let neverhaveiever = guildDb.customMessages.filter(
                 (c) => c.type === "neverhaveiever",
               ).length;
@@ -630,6 +728,62 @@ const command: ChatInputCommand = {
                     id: newID,
                     msg: d,
                     type: "wouldyourather",
+                  });
+                });
+              }
+
+              if (response.data.truth) {
+                /*
+                if (
+                  response.data.truth.length + truth > 30 &&
+                  !client.voteLogger.votes.has(interaction.user.id)
+                ) {
+                  interaction.editReply({
+                    options: {
+                      ephemeral: true,
+                    },
+                    content: client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.error.import.att22",
+                    ),
+                  });
+                  return;
+                }
+                */
+                response.data.truth.map((d: any) => {
+                  let newID = makeID(6);
+                  guildDb.customMessages.push({
+                    id: newID,
+                    msg: d,
+                    type: "truth",
+                  });
+                });
+              }
+
+              if (response.data.dare) {
+                /*
+                if (
+                  response.data.dare.length + dare > 30 &&
+                  !client.voteLogger.votes.has(interaction.user.id)
+                ) {
+                  interaction.editReply({
+                    options: {
+                      ephemeral: true,
+                    },
+                    content: client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.error.import.att22",
+                    ),
+                  });
+                  return;
+                }
+                */
+                response.data.dare.map((d: any) => {
+                  let newID = makeID(6);
+                  guildDb.customMessages.push({
+                    id: newID,
+                    msg: d,
+                    type: "dare",
                   });
                 });
               }
@@ -738,6 +892,12 @@ const command: ChatInputCommand = {
           let wouldyourather = guildDb.customMessages.filter(
             (c) => c.type === "wouldyourather",
           );
+          let truth = guildDb.customMessages.filter(
+            (c) => c.type === "truth",
+          );
+          let dare = guildDb.customMessages.filter(
+            (c) => c.type === "dare",
+          );
           let neverhaveiever = guildDb.customMessages.filter(
             (c) => c.type === "neverhaveiever",
           );
@@ -752,6 +912,30 @@ const command: ChatInputCommand = {
               i = i++ + 1;
               arrayText += `\n"${a.msg}"${
                 wouldyourather.length !== i ? "," : ""
+              }`;
+            });
+            arrayText += `\n]`;
+            arrays.push(arrayText);
+          }
+          
+          if (truth.length > 0) {
+            let arrayText = `"truth": [`;
+            truth.map((a, i) => {
+              i = i++ + 1;
+              arrayText += `\n"${a.msg}"${
+                truth.length !== i ? "," : ""
+              }`;
+            });
+            arrayText += `\n]`;
+            arrays.push(arrayText);
+          }
+
+          if (dare.length > 0) {
+            let arrayText = `"dare": [`;
+            dare.map((a, i) => {
+              i = i++ + 1;
+              arrayText += `\n"${a.msg}"${
+                dare.length !== i ? "," : ""
               }`;
             });
             arrayText += `\n]`;
