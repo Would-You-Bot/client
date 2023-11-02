@@ -12,6 +12,8 @@ import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../models";
 import { getWouldYouRather } from "../../util/Functions/jsonImport";
 import OpenAI from "openai";
+// @ts-ignore
+import ProfanityFilter from "profanity-filter";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_TOKEN as string,
@@ -48,21 +50,24 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
+
+   if(guildDb.monthlyGenerativeQuestions < 1) {
+      interaction.reply({content: "You have no more monthly generative questions left. You can get more next month or by purchasing premium ", ephemeral: true}).catch((err) => { captureException(err) })
+      return;
+    }
     let AI = "";
     if (interaction.options.getString("prompt")) {
-      const chatCompletion = await openai.chat.completions.create({
+      const chatCompletion = await openai.chat.completions.create({ //<3
         messages: [
           {
             role: "user",
             content:
-              "Generate a would you rather question that is 100% safe for work and pg-13 with the following theme: " +
-              interaction.options.getString("prompt") +
-              "make sure anything that is slightly not safe for work gets filtered out and replaced by a nice and pg 3 topic",
+              `Generate a would you rather question that is 100% safe for work and pg-13 with the following theme: ${ProfanityFilter.clean(interaction.options.getString("prompt"))} make sure anything that is slightly not safe for work gets filtered out and replaced by a nice and pg 3 topic`,
           },
         ],
         model: process.env.OPENAI_MODEL as string,
       });
-      AI = chatCompletion.choices[0].message.content as string;
+      AI = ProfanityFilter.clean(chatCompletion.choices[0].message.content as string);
     }
 
     let General = await getWouldYouRather(guildDb.language);

@@ -29,6 +29,7 @@ export interface IGuildModel {
   }>;
   customTypes: string;
   debugMode: boolean;
+  monthlyGenerativeQuestions: number;
 }
 
 const guildProfileSchema = new Schema(
@@ -120,11 +121,15 @@ const guildProfileSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    monthlyGenerativeQuestions: {
+      type: Number,
+      default: null,
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export const GuildModel = model<IGuildModel>(
   "guildProfile",
-  guildProfileSchema,
+  guildProfileSchema
 );

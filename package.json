@@ -46,6 +46,7 @@
     "mongoose": "^7.5.0",
     "openai": "^4.0.0",
     "profanity-check": "^0.0.3",
+    "profanity-filter": "^0.2.1",
     "quickchart-js": "^3.1.3",
     "topgg-autoposter": "^2.0.1",
     "uuid": "^9.0.0"
