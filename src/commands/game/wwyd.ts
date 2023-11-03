@@ -4,6 +4,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  bold
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
@@ -21,14 +22,13 @@ const command: ChatInputCommand = {
       "es-ES": "¿Qué harías en esta situación?",
       fr: "Que feriez-vous dans cette situation",
     }),
-
   /**
    * @param {CommandInteraction} interaction
    * @param {WouldYou} client
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    var WhatYouDo = await getWwyd(guildDb.language);
+    let WhatYouDo = await getWwyd(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
       (c) => c.type !== "nsfw" && c.type === "wwyd",
@@ -58,10 +58,10 @@ const command: ChatInputCommand = {
     const wwydembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${Random}`,
         iconURL: interaction.user.avatarURL() || "",
       })
-      .setDescription(whatwouldyoudo[Random]);
+      .setDescription(bold(whatwouldyoudo[Random]));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {

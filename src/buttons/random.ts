@@ -4,6 +4,7 @@ import {
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
+  bold
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
@@ -52,7 +53,7 @@ const button: Button = {
         text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
         iconURL: interaction.user.avatarURL() || "",
       })
-      .setDescription(truthordare[Random]);
+      .setDescription(bold(truthordare[Random]));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();

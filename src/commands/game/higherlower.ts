@@ -49,7 +49,7 @@ const command: ChatInputCommand = {
       });
 
     interaction.reply({ embeds: [initembed] }).then(async () => {
-      var gameData = await getHigherLower();
+      let gameData = await getHigherLower();
 
       const random = Math.floor(Math.random() * gameData.length);
       let comperator = Math.floor(Math.random() * gameData.length);

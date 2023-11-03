@@ -4,6 +4,7 @@ import {
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
+  bold
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
@@ -54,10 +55,10 @@ const button: Button = {
     let ratherembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: General | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: WYR | ID: ${Random}`,
         iconURL: interaction.user.avatarURL(),
       })
-      .setDescription(wouldyourather[Random]);
+      .setDescription(bold(wouldyourather[Random]));
 
     if (!guildDb.replay)
       return interaction.reply({

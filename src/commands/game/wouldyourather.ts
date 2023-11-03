@@ -4,6 +4,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  bold
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
@@ -29,7 +30,7 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    var General = await getWouldYouRather(guildDb.language);
+    let General = await getWouldYouRather(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
       (c) => c.type !== "nsfw" && c.type === "wouldyourather",
@@ -39,7 +40,7 @@ const command: ChatInputCommand = {
 
     if (!dbquestions.length) guildDb.customTypes = "regular";
 
-    switch (guildDb.customTypes) {
+         switch (guildDb.customTypes) {
       case "regular":
         wouldyourather = shuffle([...General]);
         break;
@@ -53,15 +54,17 @@ const command: ChatInputCommand = {
         wouldyourather = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
+    
     const Random = Math.floor(Math.random() * wouldyourather.length);
+
 
     let ratherembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: General | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: WYR | ID: ${Random}`,
         iconURL: interaction.user.avatarURL() || undefined,
       })
-      .setDescription(wouldyourather[Random] || "Unknown");
+      .setDescription(bold(wouldyourather[Random]));
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {

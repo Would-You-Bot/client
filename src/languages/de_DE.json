@@ -142,7 +142,7 @@
   "Help": {
     "embed": {
       "title": "Info",
-      "description": "**Would You** ist ein Discord Bot, welcher dafür gemacht ist die Serveraktivität zu erhöhen.",
+      "description": "**Would You** ist ein Discord-Bot, der die Aktivität auf dem Discord-Server erhöhen soll. Mit ihm kannst du **Wahrheit oder Pflicht**, **Würdest du lieber**, **Höher oder tiefer**, **Nie habe ich jemals** und **Was würdest du tun** spielen.",
       "footer": "Would You",
       "Fields": {
         "name": "**Meine Befehle**",

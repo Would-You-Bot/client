@@ -4,6 +4,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  bold
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
@@ -60,7 +61,7 @@ const command: ChatInputCommand = {
         text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
         iconURL: interaction.user.avatarURL() || "",
       })
-      .setDescription(truthordare[Random]);
+      .setDescription(bold(truthordare[Random]));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();

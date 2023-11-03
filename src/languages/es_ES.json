@@ -142,7 +142,7 @@
   "Help": {
     "embed": {
       "title": "Información",
-      "description": "**Would You** es un bot creado para aumentar la actividad del servidor de Discord.",
+      "description": "**Would You** es un bot de discordia creado para aumentar la actividad del servidor de discordia. Te permite jugar a **Verdad o reto**, **Preferirías**, **Más alto o más bajo**, **Nunca lo he hecho** y **Qué harías**.",
       "footer": "Would You",
       "Fields": {
         "name": "**Mis Comandos**",

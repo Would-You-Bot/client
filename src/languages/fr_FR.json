@@ -142,7 +142,7 @@
   "Help": {
     "embed": {
       "title": "Information",
-      "description": "**Would You** est un bot discord construit pour augmenter l'activité du serveur discord.",
+      "description": "**Would You** est un bot discord conçu pour augmenter l'activité du serveur discord. Il te permet de jouer à **Truth or Dare**, **Would You Rather**, **Higher or Lower**, **Never Have I Ever** et **What Would You Do**.",
       "footer": "Would You",
       "Fields": {
         "name": "**Mes commandes**",

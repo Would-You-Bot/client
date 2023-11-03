@@ -4,6 +4,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  bold
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
@@ -14,13 +15,12 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("dare")
-    .setDescription("Posts a random dare question that you need to answer")
+    .setDescription("Posts a random dare that you need to fulfill")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Postet eine zufällige Pflichtfrage, die du beantworten musst",
-      "es-ES":
-        "Publica una pregunta de atrevimiento aleatoria que debes responder",
-      fr: "Publie une question de défi aléatoire que vous devez répondre",
+      de: "Postet eine zufällige Pflicht, die du erfüllen musst",
+      "es-ES": "Publica un reto aleatorio que tienes que cumplir",
+      fr: "Publie un défi aléatoire que tu dois relever",
     }),
 
   /**
@@ -58,7 +58,7 @@ const command: ChatInputCommand = {
         text: `Requested by ${interaction.user.username} | Type: Dare | ID: ${Random}`,
         iconURL: interaction.user.avatarURL() || "",
       })
-      .setDescription(truthordare[Random]);
+      .setDescription(bold(truthordare[Random]));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();

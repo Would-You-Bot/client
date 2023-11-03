@@ -4,6 +4,7 @@ import {
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
+  bold
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
@@ -66,10 +67,10 @@ const button: Button = {
     let nhiembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${Random}`,
         iconURL: interaction.user.avatarURL() || undefined,
       })
-      .setDescription(nererhaveIever[Random]);
+      .setDescription(bold(nererhaveIever[Random]));
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
