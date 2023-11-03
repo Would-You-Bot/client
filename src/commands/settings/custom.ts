@@ -376,8 +376,7 @@ const command: ChatInputCommand = {
           }
 
           if (
-            guildDb.customMessages.filter((c) => c.type === "truth")
-              .length > 0
+            guildDb.customMessages.filter((c) => c.type === "truth").length > 0
           ) {
             let data: any;
             data = guildDb.customMessages
@@ -421,8 +420,7 @@ const command: ChatInputCommand = {
           }
 
           if (
-            guildDb.customMessages.filter((c) => c.type === "dare")
-              .length > 0
+            guildDb.customMessages.filter((c) => c.type === "dare").length > 0
           ) {
             let data: any;
             data = guildDb.customMessages
@@ -892,12 +890,8 @@ const command: ChatInputCommand = {
           let wouldyourather = guildDb.customMessages.filter(
             (c) => c.type === "wouldyourather",
           );
-          let truth = guildDb.customMessages.filter(
-            (c) => c.type === "truth",
-          );
-          let dare = guildDb.customMessages.filter(
-            (c) => c.type === "dare",
-          );
+          let truth = guildDb.customMessages.filter((c) => c.type === "truth");
+          let dare = guildDb.customMessages.filter((c) => c.type === "dare");
           let neverhaveiever = guildDb.customMessages.filter(
             (c) => c.type === "neverhaveiever",
           );
@@ -917,14 +911,12 @@ const command: ChatInputCommand = {
             arrayText += `\n]`;
             arrays.push(arrayText);
           }
-          
+
           if (truth.length > 0) {
             let arrayText = `"truth": [`;
             truth.map((a, i) => {
               i = i++ + 1;
-              arrayText += `\n"${a.msg}"${
-                truth.length !== i ? "," : ""
-              }`;
+              arrayText += `\n"${a.msg}"${truth.length !== i ? "," : ""}`;
             });
             arrayText += `\n]`;
             arrays.push(arrayText);
@@ -934,9 +926,7 @@ const command: ChatInputCommand = {
             let arrayText = `"dare": [`;
             dare.map((a, i) => {
               i = i++ + 1;
-              arrayText += `\n"${a.msg}"${
-                dare.length !== i ? "," : ""
-              }`;
+              arrayText += `\n"${a.msg}"${dare.length !== i ? "," : ""}`;
             });
             arrayText += `\n]`;
             arrays.push(arrayText);
