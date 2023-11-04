@@ -4,7 +4,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
-  bold
+  bold,
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
