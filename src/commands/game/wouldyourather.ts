@@ -4,7 +4,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
-  bold
+  bold,
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
@@ -40,7 +40,7 @@ const command: ChatInputCommand = {
 
     if (!dbquestions.length) guildDb.customTypes = "regular";
 
-         switch (guildDb.customTypes) {
+    switch (guildDb.customTypes) {
       case "regular":
         wouldyourather = shuffle([...General]);
         break;
@@ -54,9 +54,8 @@ const command: ChatInputCommand = {
         wouldyourather = shuffle(dbquestions.map((c) => c.msg));
         break;
     }
-    
-    const Random = Math.floor(Math.random() * wouldyourather.length);
 
+    const Random = Math.floor(Math.random() * wouldyourather.length);
 
     let ratherembed = new EmbedBuilder()
       .setColor("#0598F6")
