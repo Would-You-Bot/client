@@ -81,7 +81,13 @@
         "descID": "ID",
         "descMsg": "Message",
         "descCat": "Category",
-        "descCont": "Content"
+        "descCont": "Content",
+        "descAccept": "It seems you did not add \"{type}\" to the beginning of your text. Would you like me to add it automatically?",
+        "descWYR": "Would You Rather",
+        "descNHIE": "Never have I ever", 
+        "descWWYD": "What would you do",
+        "footerDisable": "This button will be disabled in 30 seconds.",
+        "success": "Successfully added \"{type}\" to the beginning of the text!"
       },
       "embedRemove": {
         "title": "Successfully removed that custom Would You message!"

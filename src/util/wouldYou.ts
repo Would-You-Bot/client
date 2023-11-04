@@ -33,6 +33,7 @@ export default class WouldYou extends Client {
   public events: Collection<string, Event>;
   public used: Map<any, any>;
   readonly paginate: Collection<string, any>;
+  readonly customAdd: Collection<string, any>;
   readonly cluster: ClusterClient<Client>;
   readonly cooldownHandler: CooldownHandler;
   readonly database: DatabaseHandler;
@@ -88,6 +89,9 @@ export default class WouldYou extends Client {
 
     // Allows for paginating
     this.paginate = new Collection();
+
+    // For accepting or declining of adding text to custom text
+    this.customAdd = new Collection();
 
     // The cooldown handler
     this.cooldownHandler = new CooldownHandler(this);

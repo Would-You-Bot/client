@@ -69,8 +69,9 @@ const event: Event = {
 
     const setStatus = () => {
       if (!client.user) return;
+      const random = ["Would You Rather", "Truth or Dare", "Would You?"];
       client.user.setPresence({
-        activities: [{ name: `${process.env.BOTSTATUS || "Would you?"}` }],
+        activities: [{ name: `${random[Math.floor(Math.random() * random.length)] || "Would You?"}` }],
         status: "dnd",
       });
     };

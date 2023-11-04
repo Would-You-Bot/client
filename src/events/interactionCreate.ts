@@ -168,6 +168,8 @@ const event: Event = {
           }
         }
 
+        if (interaction.customId.startsWith("wycustom_add"))
+          button = client.buttons.get("wycustom_add");
         if (interaction.customId.startsWith("voting_"))
           button = client.buttons.get("voting");
         if (interaction.customId.startsWith("result_"))

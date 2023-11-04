@@ -12,6 +12,11 @@ import axios from "axios";
 import Paginator from "../../util/pagination";
 import "dotenv/config";
 import { ChatInputCommand } from "../../models";
+import {
+  generateWYR,
+  generateNHIE,
+  generateWWYD,
+} from "../../util/generateText";
 
 function makeID(length: number) {
   let result = "";
@@ -110,6 +115,8 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     var typeEmbed = new EmbedBuilder();
     var message: string | null;
+    var generativeText: any;
+
     if (
       (interaction?.member?.permissions as Readonly<PermissionsBitField>).has(
         PermissionFlagsBits.ManageGuild,
@@ -118,24 +125,32 @@ const command: ChatInputCommand = {
     ) {
       switch (interaction.options.getSubcommand()) {
         case "add":
-          if (!client.voteLogger.votes.has(interaction.user.id)) {
-            if (guildDb.customMessages.length >= 500) {
-              interaction.reply({
-                ephemeral: true,
-                content: client.translation.get(
-                  guildDb?.language,
-                  "wyCustom.error.maximum",
-                ),
-              });
-              return;
-            }
-          }
+          // if (!client.voteLogger.votes.has(interaction.user.id)) {
+          //   if (guildDb.customMessages.length >= 500) {
+          //     interaction.reply({
+          //       ephemeral: true,
+          //       content: client.translation.get(
+          //         guildDb?.language,
+          //         "wyCustom.error.maximum",
+          //       ),
+          //     });
+          //     return;
+          //   }
+          // }
 
           const option =
             interaction?.options?.getString("options")?.toLowerCase() || "";
           message = interaction.options.getString("message");
 
           let newID = makeID(6);
+
+          if (option === "wouldyourather")
+            generativeText = generateWYR(client, message || "", newID);
+          else if (option === "neverhaveiever")
+            generativeText = generateNHIE(client, message || "", newID);
+          else if (option === "wwyd")
+            generativeText = generateWWYD(client, message || "", newID);
+
           typeEmbed = new EmbedBuilder()
             .setTitle(
               client.translation.get(
@@ -145,7 +160,31 @@ const command: ChatInputCommand = {
             )
             .setColor("#0598F4")
             .setDescription(
-              `**${client.translation.get(
+              `${
+                generativeText.value === false
+                  ? `${client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.embedAdd.descAccept",
+                      {
+                        type:
+                          generativeText?.type === "wouldyourather"
+                            ? client.translation.get(
+                                guildDb?.language,
+                                "wyCustom.success.embedAdd.descWYR",
+                              )
+                            : generativeText?.type === "wwyd"
+                            ? client.translation.get(
+                                guildDb?.language,
+                                "wyCustom.success.embedAdd.descWWYD",
+                              )
+                            : client.translation.get(
+                                guildDb?.language,
+                                "wyCustom.success.embedAdd.descNHIE",
+                              ),
+                      },
+                    )}\n\n`
+                  : ""
+              }**${client.translation.get(
                 guildDb?.language,
                 "wyCustom.success.embedAdd.descID",
               )}**: ${newID}\n**${client.translation.get(
@@ -157,7 +196,14 @@ const command: ChatInputCommand = {
               )}**: \`${message}\``,
             )
             .setFooter({
-              text: "Would You",
+              text: `Would You ${
+                generativeText.value === false
+                  ? `| ${client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.embedAdd.footerDisable",
+                    )}`
+                  : ""
+              }`,
               iconURL: client.user?.avatarURL() || undefined,
             });
 
@@ -179,7 +225,49 @@ const command: ChatInputCommand = {
             .catch((err) => {
               console.log(err);
             });
-          break;
+
+          const add =
+            new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+              new ButtonBuilder()
+                .setLabel("Add")
+                .setStyle(1)
+                .setCustomId(`wycustom_add-${newID}`),
+            );
+
+          const addDisable =
+            new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+              new ButtonBuilder()
+                .setLabel("Add")
+                .setStyle(1)
+                .setDisabled(true)
+                .setCustomId(`wycustom_add-${newID}`),
+            );
+
+          interaction
+            .reply(
+              generativeText.value === false
+                ? {
+                    embeds: [typeEmbed],
+                    components: [add],
+                    ephemeral: true,
+                  }
+                : {
+                    embeds: [typeEmbed],
+                    ephemeral: true,
+                  },
+            )
+            .then((msg) =>
+              setTimeout(() => {
+                if (generativeText.value === false && client.customAdd.has(newID)) {
+                  msg.edit({ components: [addDisable] });
+                  client.customAdd.delete(newID);
+                }
+              }, 30 * 1000),
+            )
+            .catch((err) => {
+              captureException(err);
+            });
+          return;
         case "remove":
           message = interaction.options.getString("message");
 
@@ -260,7 +348,7 @@ const command: ChatInputCommand = {
             components: [button],
             ephemeral: true,
           });
-          break;
+          return;
         case "view":
           if (guildDb.customMessages.length === 0) {
             interaction.reply({
