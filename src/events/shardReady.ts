@@ -10,6 +10,27 @@ const event: Event = {
         "Shard is now ready #" + id,
       )}`,
     );
+    const random = ["Would You Rather", "Truth or Dare", "What Would You Do", "Higher or Lower", "Never Have I Ever" ];
+    const randomStatus = random[Math.floor(Math.random() * random.length)];
+
+    const setStatus = () => {
+      if (!client.user) return;
+           
+      client.user.setPresence({
+        activities: [
+          {
+            name: `${
+              randomStatus || "Would You?"
+            }`,
+          },
+        ],
+        status: "dnd",
+        shardId: id,
+      });
+    };
+
+    setTimeout(() => setStatus(), 35 * 1000);
+    setInterval(() => setStatus(), 60 * 60 * 1000);
   },
 };
 

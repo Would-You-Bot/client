@@ -66,24 +66,6 @@ const event: Event = {
         }
       }, 2500);
     }
-
-    const setStatus = () => {
-      if (!client.user) return;
-      const random = ["Would You Rather", "Truth or Dare", "What Would You Do", "Higher or Lower", "Never Have I Ever" ];
-      client.user.setPresence({
-        activities: [
-          {
-            name: `${
-              random[Math.floor(Math.random() * random.length)] || "Would You?"
-            }`,
-          },
-        ],
-        status: "dnd",
-      });
-    };
-
-    setTimeout(() => setStatus(), 35 * 1000);
-    setInterval(() => setStatus(), 60 * 60 * 1000); // Do this not so often because everytime you set the presence the bot won't receive any events for some seconds
   },
 };
 
