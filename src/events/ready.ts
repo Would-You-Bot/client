@@ -69,7 +69,7 @@ const event: Event = {
 
     const setStatus = () => {
       if (!client.user) return;
-      const random = ["Would You Rather", "Truth or Dare", "Would You?"];
+      const random = ["Would You Rather", "Truth or Dare", "What Would You Do", "Higher or Lower", "Never Have I Ever" ];
       client.user.setPresence({
         activities: [
           {
