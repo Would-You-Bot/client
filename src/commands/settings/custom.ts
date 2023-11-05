@@ -258,7 +258,10 @@ const command: ChatInputCommand = {
             )
             .then((msg) =>
               setTimeout(() => {
-                if (generativeText.value === false && client.customAdd.has(newID)) {
+                if (
+                  generativeText.value === false &&
+                  client.customAdd.has(newID)
+                ) {
                   msg.edit({ components: [addDisable] });
                   client.customAdd.delete(newID);
                 }

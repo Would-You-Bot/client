@@ -12,7 +12,7 @@ const button: Button = {
     const id = interaction.customId.split("-")[1],
       data = client.customAdd.get(id);
 
-      const typeEmbed = new EmbedBuilder()
+    const typeEmbed = new EmbedBuilder()
       .setTitle(
         client.translation.get(
           guildDb?.language,
