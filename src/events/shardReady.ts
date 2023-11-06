@@ -10,18 +10,22 @@ const event: Event = {
         "Shard is now ready #" + id,
       )}`,
     );
-    const random = ["Would You Rather", "Truth or Dare", "What Would You Do", "Higher or Lower", "Never Have I Ever" ];
+    const random = [
+      "Would You Rather",
+      "Truth or Dare",
+      "What Would You Do",
+      "Higher or Lower",
+      "Never Have I Ever",
+    ];
     const randomStatus = random[Math.floor(Math.random() * random.length)];
 
     const setStatus = () => {
       if (!client.user) return;
-           
+
       client.user.setPresence({
         activities: [
           {
-            name: `${
-              randomStatus || "Would You?"
-            }`,
+            name: `${randomStatus || "Would You?"}`,
           },
         ],
         status: "dnd",
