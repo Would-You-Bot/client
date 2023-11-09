@@ -7,7 +7,7 @@ import {
 import { white, gray, green } from "chalk-advanced";
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
-  totalShards: "auto",
+  totalShards: 4,
   shardsPerClusters: 10,
   mode: "process",
   token: process.env.TOKEN,
