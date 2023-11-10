@@ -19,6 +19,7 @@ import WebhookHandler from "./webhookHandler";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
 import VoteLogger from "./voteLogger";
+import PrometheusClient from "./promHandler";
 import Voting from "./votingHandler";
 import { Button, ChatInputCommand } from "../models";
 import { fileToCollection } from "./Functions/fileToCollection";
@@ -41,6 +42,7 @@ export default class WouldYou extends Client {
   readonly webhookHandler: WebhookHandler;
   readonly keepAlive: KeepAlive;
   readonly voteLogger: VoteLogger;
+  readonly prometheusClient: PrometheusClient;
   readonly dailyMessage: DailyMessage;
   readonly voting: Voting;
 
@@ -99,6 +101,10 @@ export default class WouldYou extends Client {
 
     // Init the cluster client
     this.cluster = new ClusterClient(this);
+
+    // Init the prometheus client
+    this.prometheusClient = new PrometheusClient(this);
+    this.prometheusClient.initialize()
 
     // The database handler
     this.database = new DatabaseHandler(process.env.MONGO_URI as string);

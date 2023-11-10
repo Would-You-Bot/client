@@ -1,16 +1,27 @@
-const express = require("express");
-const promClient = require("prom-client");
+import express from "express";
+import { Registry, Gauge } from "prom-client"
+import WouldYou from "./wouldYou";
 
-const { client } = require("./wouldYou");
+export default class prometheusClient {
+  private registry: Registry;
+  private serverGauge: Gauge;
+  private userGauge: Gauge;
+  private client: WouldYou;
+  
+  constructor(client: WouldYou) { 
+    this.client = client;
+   }
 
-class prometheusClient {
-  private registry;
-  private counter;
-  constructor() {
-    this.registry = new promClient.Registry();
-    this.counter = new promClient.Counter({
-      name: "example_counter",
-      help: "A simple example counter metric",
+  initialize() {
+    this.registry = new Registry();
+    this.serverGauge = new Gauge({
+      name: "server_count",
+      help: "The amount of servers the bot is in.",
+      registers: [this.registry],
+    });
+    this.userGauge = new Gauge({
+      name: "user_count",
+      help: "The amount of users the bot has.",
       registers: [this.registry],
     });
 
@@ -20,34 +31,19 @@ class prometheusClient {
 
     // Expose Prometheus metrics endpoint
     app.get("/metrics", async (req, res) => {
-      res.set("Content-Type", this.registry.contentType());
+      this.serverGauge.set(this.client.guilds.cache.size);
+      this.userGauge.set(this.client.guilds.cache
+        .reduce((a, b) => a + b.memberCount, 0));
       res.end(await this.registry.metrics());
+    });
+
+    app.listen(3029, () => {
+      console.log("Prometheus metrics listening on port 3029");
     });
   }
 
-  increment(counter: string) {
-    switch (this.counter) {
-      case "wouldYou":
-        this.counter = wouldYou;
-        break;
-      case "neverHaveIEver":
-        this.counter = neverHaveIEver;
-        break;
-      case "mostLikely":
-        this.counter = mostLikely;
-        break;
-      case "truthOrDare":
-        this.counter = truthOrDare;
-        break;
-      default:
-        this.counter = wouldYou;
-    }
-    this.counter.inc();
-  }
 
   getMetrics() {
     return this.registry.metrics();
   }
 }
-
-module.exports = prometheusClient;
