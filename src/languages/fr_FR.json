@@ -81,7 +81,13 @@
         "descID": "ID",
         "descMsg": "Message",
         "descCat": "Catégorie",
-        "descCont": "Contenue"
+        "descCont": "Contenue",
+        "descAccept": "Il semble que vous n'ayez pas ajouté \"{type}\" au début de votre texte. Souhaitez-vous que je l'ajoute automatiquement ?",
+        "descWYR": "Préférez-vous",
+        "descNHIE": "Jamais je n'ai",
+        "descWWYD": "Que feriez-vous",
+        "footerDisable": "Ce bouton sera désactivé dans 30 secondes.",
+        "success": "L'ajout de \"{type}\" au début du texte a été effectué avec succès !"
       },
       "embedRemove": {
         "title": "Vous avez supprimé ce message personnalisé avec succès !"
@@ -96,8 +102,8 @@
         "title": "Messages Personnalisés Préférez-vous",
         "descCatNHIE": "**Catégorie**: Je n'ai jamais",
         "descCatWYR": "**Catégorie**: Préférez-vous",
-        "descCatTRUTH": "**Catégorie**: Vérité",
-        "descCatDARE": "**Catégorie**: Ose",
+        "descCatTRUTH": "**Catégorie** : Vérité",
+        "descCatDARE": "**Catégorie** : Action",
         "descCatWWYD": "**Catégorie**: Que feriez-vous"
       }
     }
@@ -142,7 +148,7 @@
   "Help": {
     "embed": {
       "title": "Information",
-      "description": "**Would You** est un bot discord conçu pour augmenter l'activité du serveur discord. Il te permet de jouer à **Truth or Dare**, **Would You Rather**, **Higher or Lower**, **Never Have I Ever** et **What Would You Do**.",
+      "description": "**Would You** est un bot discord conçu pour augmenter l'activité du serveur discord. Il vous permet de jouer à **Action ou Vérité**, **Préférez-vous**, **Plus ou moins**, **Je n'ai jamais** et **Que feriez-vous**.",
       "footer": "Would You",
       "Fields": {
         "name": "**Mes commandes**",
@@ -157,7 +163,7 @@
   },
   "Vote": {
     "embed": {
-      "title": "Voter aide **Would You** à gagner plus d'utilisateurs ! Assurez-vous de voter tous les jours !",
+      "title": "Le vote permet à **Would You** de gagner en popularité auprès des utilisateurs sur discord ! Vous pouvez voter toutes les 12 heures et soutenir le bot !",
       "value": "Clique pour voter",
       "footer": "Would You"
     }

@@ -81,7 +81,13 @@
         "descID": "ID",
         "descMsg": "Nachricht",
         "descCat": "Kategorie",
-        "descCont": "Inhalt"
+        "descCont": "Inhalt",
+        "descAccept": "Es scheint, als hättest du \"{type}\" nicht an den Anfang deines Textes gesetzt. Möchtest du, dass ich es automatisch hinzufüge?",
+        "descWYR": "Würdest du eher",
+        "descNHIE": "Ich habe noch nie",
+        "descWWYD": "Was würdest du tun",
+        "footerDisable": "Dieser Button wird in 30 Sekunden deaktiviert.",
+        "success": "Erfolgreich \"{type}\" zum Anfang des Textes hinzugefügt!"
       },
       "embedRemove": {
         "title": "Diese Would You Nachricht wurde erfolgreich gelöscht!"
@@ -157,7 +163,7 @@
   },
   "Vote": {
     "embed": {
-      "title": "Voten hilft **Would You** mehr Server zu erreichen. Also denk daran jeden Tag zu Voten!",
+      "title": "Abstimmen hilft **Würdest du** mehr Popularität unter den Nutzern auf Discord zu gewinnen! Du kannst alle 12 Stunden abstimmen und den Bot unterstützen!",
       "value": "Klicke um zu Voten",
       "footer": "Would You"
     }

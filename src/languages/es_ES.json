@@ -43,7 +43,7 @@
     "turnOff": "Desactivar",
     "on": "Activado",
     "off": "Desactivado",
-    "desc": "En activant la confidentialité, ton nom d'utilisateur ne sera plus affiché sur les résultats des votes! Tes votes seront complètement anonymes si cette option est activée."
+    "desc": "¡Activar la privacidad removerá tu nombre de usuario de ser mostrado en los resultados! Tus votos serán completamente anónimos si esto está habilitado."
   },
   "wyCustom": {
     "error": {
@@ -81,7 +81,13 @@
         "descID": "ID",
         "descMsg": "Mensaje",
         "descCat": "Categoría",
-        "descCont": "Contenido"
+        "descCont": "Contenido",
+        "descAccept": "Parece que no has añadido \"{type}\" al comienzo de tu texto. ¿Quieres que lo añada automáticamente?",
+        "descWYR": "Prefieres",
+        "descNHIE": "Nunca he",
+        "descWWYD": "Qué harías",
+        "footerDisable": "Este botón se desactivará en 30 segundos.",
+        "success": "¡Se ha añadido con éxito \"{type}\" al comienzo del texto!"
       },
       "embedRemove": {
         "title": "¡Se eliminó con éxito ese mensaje Would You!"
@@ -97,7 +103,7 @@
         "descCatNHIE": "**Categoría**: Nunca lo he hecho nunca",
         "descCatWYR": "**Categoría**: ¿Podrías más bien",
         "descCatTRUTH": "**Categoría**: Verdad",
-        "descCatDARE": "**Categoría**: Atrévete",
+        "descCatDARE": "**Categoría**: Reto",
         "descCatWWYD": "**Categoría**: ¿Qué harías tú"
       }
     }
@@ -142,7 +148,7 @@
   "Help": {
     "embed": {
       "title": "Información",
-      "description": "**Would You** es un bot de discordia creado para aumentar la actividad del servidor de discordia. Te permite jugar a **Verdad o reto**, **Preferirías**, **Más alto o más bajo**, **Nunca lo he hecho** y **Qué harías**.",
+      "description": "**Would You** es un bot de discord construido para aumentar la actividad del servidor. Te permite jugar **Verdad o Reto**, **Preferías**, **Mayor o Menor**, **Nunca he** y **Qué Harías**.",
       "footer": "Would You",
       "Fields": {
         "name": "**Mis Comandos**",
@@ -157,7 +163,7 @@
   },
   "Vote": {
     "embed": {
-      "title": "¡Votar ayuda **Would You** a ganar más usuarios, asegúrate de votar todos los días!",
+      "title": "¡Votar ayuda a **Would You** a ganar más popularidad entre los usuarios en discord! ¡Puedes votar cada 12 horas y apoyar al bot!",
       "value": "Clica para votar",
       "footer": "Would You"
     }
