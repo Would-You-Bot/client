@@ -143,13 +143,12 @@ const command: ChatInputCommand = {
           message = interaction.options.getString("message");
 
           let newID = makeID(6);
-
           if (option === "wouldyourather")
-            generativeText = generateWYR(client, message || "", newID);
+            generativeText = generateWYR(client, message || "", newID, guildDb);
           else if (option === "neverhaveiever")
-            generativeText = generateNHIE(client, message || "", newID);
+            generativeText = generateNHIE(client, message || "", newID, guildDb);
           else if (option === "wwyd")
-            generativeText = generateWWYD(client, message || "", newID);
+            generativeText = generateWWYD(client, message || "", newID, guildDb);
 
           typeEmbed = new EmbedBuilder()
             .setTitle(
