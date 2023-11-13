@@ -105,20 +105,36 @@ const button: Button = {
           .setStyle(ButtonStyle.Primary)
           .setEmoji("📝"),
       );
+    
+      const chanDelete =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setCustomId("replayDeleteChannels")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.replayDeleteChannels",
+              ),
+            )
+            .setStyle(ButtonStyle.Danger),
+        );
 
-    await client.database.updateGuild(interaction.guild?.id || "", {
-      ...guildDb,
-      replayBy: newType,
-    });
+      await client.database.updateGuild(interaction.guild?.id || "", {
+        ...guildDb,
+        replayBy: newType,
+      });
 
-    interaction.update({
-      content: null,
-      embeds: [generalMsg],
-      components: [generalButtons],
-      options: {
-        ephemeral: true,
-      },
-    });
+      interaction.update({
+        content: null,
+        embeds: [generalMsg],
+        components:
+          guildDb.replayType === "Channels"
+            ? [generalButtons, chanDelete]
+            : [generalButtons],
+        options: {
+          ephemeral: true,
+        },
+      });
     return;
   },
 };

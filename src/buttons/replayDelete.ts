@@ -115,6 +115,7 @@ const button: Button = {
     guildDb.replayChannels = guildDb.replayChannels.filter(
       (c) => c.id !== (interaction as any).values[0],
     );
+
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
       replayChannels: guildDb.replayChannels,

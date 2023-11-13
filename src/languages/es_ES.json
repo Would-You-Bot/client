@@ -227,7 +227,6 @@
     "replayChannel": "Selecciona un canal al que quieras añadir un enfriamiento por repetición!",
     "replayChannelNone": "¡No tienes ningún canal de repetición configurado!",
     "replayCooldownMin": "El Enfriamiento proporcionado es demasiado corto, ¡asegúrate de que los Enfriamientos sean superiores a 2 segundos! (2000 milisegundos)",
-    "replayChannelAlready": "¡El canal proporcionado ya tiene un enfriamiento!",
     "replayDelete": "Selecciona un canal del que quieras eliminar el enfriamiento por repetición",
     "cooldownTooLong": "El enfriamiento proporcionado era demasiado largo. ¡Asegúrate de que el enfriamiento es inferior a 6 horas (21600000 milisegundos)!",
     "replayChannelLimit": "¡Sólo puedes añadir 15 canales al enfriamiento de la repetición!",

@@ -32,20 +32,6 @@ function isNumericRegex(str: string) {
 const button: Button = {
   name: "selectMenuReplay",
   execute: async (interaction, client, guildDb) => {
-    if (
-      guildDb.replayChannels.find(
-        (c) => c.id === (interaction as any).values[0],
-      )
-    ) {
-      interaction.reply({
-        content: client.translation.get(
-          guildDb?.language,
-          "Settings.replayChannelAlready",
-        ),
-        ephemeral: true,
-      });
-    }
-
     interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
@@ -70,7 +56,7 @@ const button: Button = {
             ephemeral: true,
             content: client.translation.get(
               guildDb?.language,
-              "Settings.cooldownMin",
+              "Settings.replayCooldownMin",
             ),
           });
           return;
@@ -85,6 +71,12 @@ const button: Button = {
             ),
           });
           return;
+        }
+
+        if (guildDb.replayChannels.find((e: any) => e.id === (interaction as any).values[0])) {
+          guildDb.replayChannels = guildDb.replayChannels.filter(
+            (c) => c.id !== (interaction as any).values[0],
+          );
         }
 
         const arr =
@@ -185,11 +177,13 @@ const button: Button = {
         const channel = client.channels.cache.get(
           (interaction as any).values[0],
         );
+
         guildDb.replayChannels.push({
           id: (interaction as any).values[0],
           cooldown: value,
           name: (channel as any)?.name.slice(0, 25),
         });
+
         await client.database.updateGuild(interaction.guild?.id || "", {
           ...guildDb,
           replayChannels: guildDb.replayChannels,

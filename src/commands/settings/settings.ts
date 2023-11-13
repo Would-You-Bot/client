@@ -238,7 +238,10 @@ const command: ChatInputCommand = {
                     )}: ${
                       guildDb.replayChannels.length > 0
                         ? `\n${guildDb.replayChannels
-                            .map((c) => `<#${c.id}>: ${c.cooldown}`)
+                            .map(
+                              (c) =>
+                                `<#${c.id}>: ${c.cooldown}`,
+                            )
                             .join("\n")}`
                         : client.translation.get(
                             guildDb?.language,

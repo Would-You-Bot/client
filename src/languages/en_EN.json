@@ -227,7 +227,6 @@
     "replayChannel": "Select a channel that you want to add a replay cooldown to!",
     "replayChannelNone": "You don't have any replay channels set!",
     "replayCooldownMin": "Provided cooldown is too short, make sure cooldowns are above 2 seconds! (2000 milliseconds)",
-    "replayChannelAlready": "The provided channel already has a cooldown!",
     "replayDelete": "Select a channel that you want to remove a replay cooldown from!",
     "cooldownTooLong": "Provided cooldown was too long. Make sure the cooldown is less than 6 hours (21600000 milliseconds)!",
     "replayChannelLimit": "You can only add 15 channels to the replay cooldown!",

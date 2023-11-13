@@ -227,7 +227,6 @@
     "replayChannel": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
     "replayChannelNone": "Du hast keine Replay-Kanäle gesetzt!",
     "replayCooldownMin": "Die Abklingzeit ist zu kurz, stelle sicher, dass die Abklingzeit über 2 Sekunden liegt! (2000 Millisekunden)",
-    "replayChannelAlready": "Der zur Verfügung gestellte Kanal hat bereits einen Cooldown!",
     "replayDelete": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
     "cooldownTooLong": "Die Abklingzeit ist zu lang, stelle sicher, dass die Abklingzeit nicht über 6 stunden liegt! (21600000 Millisekunden)!",
     "replayChannelLimit": "Du kannst dem Cooldown nur 15 Kanäle hinzufügen!",
