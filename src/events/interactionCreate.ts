@@ -214,6 +214,11 @@ const event: Event = {
             .catch(() => {});
           return;
         } else {
+          if (!user) {
+            await UserModel.create({
+              userID: interaction.user.id
+            });
+          }
           if (
             guildDb.replayType === "Guild" &&
             client.used.has(interaction.user.id)
@@ -316,6 +321,11 @@ const event: Event = {
           return;
         }
       } else {
+        if (!user) {
+          await UserModel.create({
+            userID: interaction.user.id
+          });
+        }
         const button = client.buttons.get((interaction as any).customId);
         if (button)
           return await button.execute(interaction as any, client, guildDb);

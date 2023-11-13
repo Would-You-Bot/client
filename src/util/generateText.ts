@@ -12,7 +12,7 @@ export function generateWYR(
 ): object {
   const wyrRegexes: Record<string, RegExp> = {
     en_EN: /^(?!.*(?:would you rather)).*$/i,
-    de_DE: /^(?!.*(?:würdest du eher|wurdest du eher)).*$/i,
+    de_DE: /^(?!.*(?:würdest du eher|wuerdest du eher)).*$/i,
     es_ES: /^(?!.*(?:preferirías|preferirias)).*$/i,
     fr_FR: /^(?!.*(?:préfères-tu|preferes-tu)).*$/i,
   };
@@ -51,7 +51,7 @@ export function generateWWYD(
 ): object {
   const languageRegex: Record<string, RegExp> = {
     en_EN: /^(?!.*(?:what would you do)).*$/i,
-    de_DE: /^(?!.*(?:was würdest du tun|was wurdest du tun)).*$/i,
+    de_DE: /^(?!.*(?:was würdest du tun|was wuerdest du tun)).*$/i,
     es_ES: /^(?!.*(?:qué harías|que harias)).*$/i,
     fr_FR: /^(?!.*(?:que ferais-tu)).*$/i,
   };

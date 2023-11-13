@@ -1,4 +1,4 @@
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, bold } from "discord.js";
 import * as mom from "moment-timezone";
 import { white, gray, green } from "chalk-advanced";
 import { CronJob } from "cron";
@@ -117,7 +117,7 @@ export default class DailyMessage {
               c.toUpperCase(),
             )} | ID: ${dailyId}`,
           })
-          .setDescription(randomDaily as string);
+          .setDescription(bold(randomDaily) as string);
         await this.client.webhookHandler
           .sendWebhook(
             channel,

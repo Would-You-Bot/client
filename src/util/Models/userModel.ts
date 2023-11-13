@@ -40,7 +40,7 @@ export interface IUserModel {
 
 const userModelSchema = new Schema(
   {
-    userID: { type: String, required: true, unique: true },
+    userID: { type: String, unique: true },
     votePrivacy: { type: Boolean, default: false },
     wouldyourather: {
       yes: { type: Number, default: 0 },
