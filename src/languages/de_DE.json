@@ -242,6 +242,9 @@
       "generalTitle": "Would You - Generelle Einstellungen",
       "replayCooldown": "**Replay Cooldown**",
       "replayType": "**Replay-Typ**",
+      "replayBy": "**Replay Cooldown von**",
+      "replayBy1": "• Jeder Benutzer hat einen persönliche Cooldown.",
+      "replayBy2": "• Der gesamte Server hat einen Cooldown.",
       "replayChannels": "**Replay-Kanäle**",
       "replayChannelsNone": "Keine",
       "dailyInterval": "**Veröffentlichungszeit**",
@@ -271,6 +274,7 @@
       "replayCooldown": "Replay Cooldown setzen",
       "replayDeleteChannels": "Replay-Kanäle löschen",
       "replayType": "Replay-Typ",
+      "replayBy": "Wiedergeben von",
       "welcomeChannel": "Kanal setzen",
       "welcome": "Begrüßungsnachrichten einstellen",
       "welcomePing": "Nutzer ping einstellen"

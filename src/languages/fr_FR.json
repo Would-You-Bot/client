@@ -242,6 +242,9 @@
       "generalTitle": "Would You - Paramètres généraux",
       "replayCooldown": "**Rejouer le temps de recharge**",
       "replayType": "**Type de rediffusion**",
+      "replayBy": "**Rejouer le temps de refroidissement par**",
+      "replayBy1": "• Chaque utilisateur dispose d'un temps de recharge personnel.",
+      "replayBy2": "• Tout le serveur a un seul temps de recharge.",
       "replayChannels": "**Salon de rediffusion**",
       "replayChannelsNone": "Aucun",
       "dailyInterval": "**Heure de publication**",
@@ -271,6 +274,7 @@
       "replayCooldown": "Définir le cooldown de la relecture",
       "replayDeleteChannels": "Supprimer les salons de rediffusion",
       "replayType": "Type de rediffusion",
+      "replayBy": "Rejouer par",
       "welcomeChannel": "Définir le salon",
       "welcome": "Activer/désactiver les accueils",
       "welcomePing": "Activer/désactiver le ping de l'utilisateur"

@@ -242,6 +242,9 @@
       "generalTitle": "Would You - Configuración general",
       "replayCooldown": "**Tiempo de Repetición**",
       "replayType": "**Tipo de reproducción**",
+      "replayBy": "**Reproducir Enfriamiento Por**",
+      "replayBy1": "• Cada usuario tiene un enfriamiento personal.",
+      "replayBy2": "• Todo el servidor tiene un enfriamiento.",
       "replayChannels": "**Canales de reproducción**",
       "replayChannelsNone": "Nada",
       "dailyInterval": "**Hora de publicación**",
@@ -271,6 +274,7 @@
       "replayCooldown": "Establecer tiempo de reutilización",
       "replayDeleteChannels": "Eliminar canales de repetición",
       "replayType": "Modo de repetición",
+      "replayBy": "Reproducir por",
       "welcomeChannel": "Establecer canal",
       "welcome": "Alternar Bienvenidas",
       "welcomePing": "Alternar ping de usuario"
