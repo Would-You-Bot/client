@@ -1,5 +1,5 @@
 import express from "express";
-import { Registry, Gauge } from "prom-client"
+import { Registry, Gauge } from "prom-client";
 import WouldYou from "./wouldYou";
 
 export default class prometheusClient {
@@ -7,10 +7,10 @@ export default class prometheusClient {
   private serverGauge: Gauge;
   private userGauge: Gauge;
   private client: WouldYou;
-  
-  constructor(client: WouldYou) { 
+
+  constructor(client: WouldYou) {
     this.client = client;
-   }
+  }
 
   initialize() {
     this.registry = new Registry();
@@ -32,8 +32,9 @@ export default class prometheusClient {
     // Expose Prometheus metrics endpoint
     app.get("/metrics", async (req, res) => {
       this.serverGauge.set(this.client.guilds.cache.size);
-      this.userGauge.set(this.client.guilds.cache
-        .reduce((a, b) => a + b.memberCount, 0));
+      this.userGauge.set(
+        this.client.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
+      );
       res.end(await this.registry.metrics());
     });
 
@@ -41,7 +42,6 @@ export default class prometheusClient {
       console.log("Prometheus metrics listening on port 3029");
     });
   }
-
 
   getMetrics() {
     return this.registry.metrics();

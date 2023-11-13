@@ -11,17 +11,17 @@ export function generateWYR(
   guilddb: GuildDB,
 ): object {
   const wyrRegexes: Record<string, RegExp> = {
-    "en_EN": /^(?!.*(?:would you rather)).*$/i,
-    "de_DE": /^(?!.*(?:würdest du eher|wurdest du eher)).*$/i,
-    "es_ES": /^(?!.*(?:preferirías|preferirias)).*$/i,
-    "fr_FR": /^(?!.*(?:préfères-tu|preferes-tu)).*$/i,
+    en_EN: /^(?!.*(?:would you rather)).*$/i,
+    de_DE: /^(?!.*(?:würdest du eher|wurdest du eher)).*$/i,
+    es_ES: /^(?!.*(?:preferirías|preferirias)).*$/i,
+    fr_FR: /^(?!.*(?:préfères-tu|preferes-tu)).*$/i,
   };
 
   const wyrMap: Record<string, string> = {
-    "en_EN": "Would you rather",
-    "de_DE": "Würdest du eher",
-    "es_ES": "Preferirías",
-    "fr_FR": "Préfères-tu",
+    en_EN: "Would you rather",
+    de_DE: "Würdest du eher",
+    es_ES: "Preferirías",
+    fr_FR: "Préfères-tu",
   };
 
   const guildLanguage = guilddb.language as string;
@@ -43,7 +43,6 @@ export function generateWYR(
   }
 }
 
-
 export function generateWWYD(
   client: WouldYou,
   text: string,
@@ -51,17 +50,17 @@ export function generateWWYD(
   guilddb: GuildDB,
 ): object {
   const languageRegex: Record<string, RegExp> = {
-    "en_EN": /^(?!.*(?:what would you do)).*$/i,
-    "de_DE": /^(?!.*(?:was würdest du tun|was wurdest du tun)).*$/i,
-    "es_ES": /^(?!.*(?:qué harías|que harias)).*$/i,
-    "fr_FR": /^(?!.*(?:que ferais-tu)).*$/i,
+    en_EN: /^(?!.*(?:what would you do)).*$/i,
+    de_DE: /^(?!.*(?:was würdest du tun|was wurdest du tun)).*$/i,
+    es_ES: /^(?!.*(?:qué harías|que harias)).*$/i,
+    fr_FR: /^(?!.*(?:que ferais-tu)).*$/i,
   };
 
   const languageMap: Record<string, string> = {
-    "en_EN": "What would you do",
-    "de_DE": "Was würdest du tun",
-    "es_ES": "Qué harías",
-    "fr_FR": "Que ferais-tu",
+    en_EN: "What would you do",
+    de_DE: "Was würdest du tun",
+    es_ES: "Qué harías",
+    fr_FR: "Que ferais-tu",
   };
 
   const guildLanguage = guilddb.language as string;
@@ -78,7 +77,6 @@ export function generateWWYD(
   }
 }
 
-
 export function generateNHIE(
   client: WouldYou,
   text: string,
@@ -86,17 +84,17 @@ export function generateNHIE(
   guilddb: GuildDB,
 ): object {
   const nhieRegexes: Record<string, RegExp> = {
-    "en_EN": /^(?!.*(?:never have i ever)).*$/i,
-    "de_DE": /^(?!.*(?:niemals habe ich)).*$/i,
-    "es_ES": /^(?!.*(?:nunca he)).*$/i,
-    "fr_FR": /^(?!.*(?:jamais je)).*$/i,
+    en_EN: /^(?!.*(?:never have i ever)).*$/i,
+    de_DE: /^(?!.*(?:niemals habe ich)).*$/i,
+    es_ES: /^(?!.*(?:nunca he)).*$/i,
+    fr_FR: /^(?!.*(?:jamais je)).*$/i,
   };
 
   const nhieMap: Record<string, string> = {
-    "en_EN": "Never have I ever",
-    "de_DE": "Niemals habe ich",
-    "es_ES": "Nunca he",
-    "fr_FR": "Jamais je",
+    en_EN: "Never have I ever",
+    de_DE: "Niemals habe ich",
+    es_ES: "Nunca he",
+    fr_FR: "Jamais je",
   };
 
   const guildLanguage = guilddb.language as string;
@@ -117,4 +115,3 @@ export function generateNHIE(
     return { value: true, type: "neverhaveiever", text: text };
   }
 }
-
