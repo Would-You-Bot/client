@@ -15,6 +15,7 @@ export interface IGuildModel {
   dailyThread: boolean;
   replay: boolean;
   replayCooldown: number;
+  replayBy: string;
   replayType: string;
   replayChannels: Array<{
     id: string;
@@ -90,6 +91,10 @@ const guildProfileSchema = new Schema(
     replayCooldown: {
       type: Number,
       default: 30000,
+    },
+    replayBy: {
+      type: String,
+      default: "Guild",
     },
     replayType: {
       type: String,

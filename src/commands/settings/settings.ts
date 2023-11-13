@@ -216,6 +216,19 @@ const command: ChatInputCommand = {
             .setDescription(
               `${client.translation.get(
                 guildDb?.language,
+                "Settings.embed.replayBy",
+              )}: ${guildDb.replayBy}\n${
+                guildDb.replayBy === "Guild"
+                  ? client.translation.get(
+                      guildDb?.language,
+                      "Settings.embed.replayBy2",
+                    )
+                  : client.translation.get(
+                      guildDb?.language,
+                      "Settings.embed.replayBy1",
+                    )
+              }\n\n${client.translation.get(
+                guildDb?.language,
                 "Settings.embed.replayType",
               )}: ${guildDb.replayType}\n${
                 guildDb.replayType === "Channels"
@@ -272,6 +285,16 @@ const command: ChatInputCommand = {
                   client.translation.get(
                     guildDb?.language,
                     "Settings.button.replayType",
+                  ),
+                )
+                .setStyle(ButtonStyle.Primary)
+                .setEmoji("📝"),
+              new ButtonBuilder()
+                .setCustomId("replayBy")
+                .setLabel(
+                  client.translation.get(
+                    guildDb?.language,
+                    "Settings.button.replayBy",
                   ),
                 )
                 .setStyle(ButtonStyle.Primary)

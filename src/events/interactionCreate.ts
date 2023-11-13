@@ -15,6 +15,7 @@ const event: Event = {
       "welcomeTest",
       "selectMenuWelcomeType",
       "replayType",
+      "replayBy",
       "replayDelete",
       "replayDeleteChannels",
       "replayChannels",
@@ -198,39 +199,56 @@ const event: Event = {
           button.execute(interaction, client, guildDb);
           return;
         }
+
         if (
-          guildDb.replayType === "Guild" &&
-          client.used.has(interaction.user.id)
+          guildDb.replayBy === "Guild" &&
+          client.used.has(interaction.guild.id)
         ) {
           interaction
             .reply({
               ephemeral: true,
               content: `You can use this button again <t:${Math.floor(
-                client.used.get(interaction.user.id) / 1000,
+                client.used.get(interaction.guild.id) / 1000,
               )}:R>!`,
             })
             .catch(() => {});
           return;
-        } else if (
-          guildDb.replayType === "Channels" &&
-          client.used.has(
-            `${interaction.user.id}-${interaction.channel?.id}`,
-          ) &&
-          guildDb.replayChannels.find((x) => x.id === interaction.channel?.id)
-        ) {
-          var cooldown = Number(
+        } else {
+          if (
+            guildDb.replayType === "Guild" &&
+            client.used.has(interaction.user.id)
+          ) {
+            interaction
+              .reply({
+                ephemeral: true,
+                content: `You can use this button again <t:${Math.floor(
+                  client.used.get(interaction.user.id) / 1000,
+                )}:R>!`,
+              })
+              .catch(() => {});
+            return;
+          } else if (
+            guildDb.replayType === "Channels" &&
+            client.used.has(
+              `${interaction.user.id}-${interaction.channel?.id}`,
+            ) &&
             guildDb.replayChannels.find((x) => x.id === interaction.channel?.id)
-              ?.cooldown,
-          );
-          interaction
-            .reply({
-              ephemeral: true,
-              content: `<t:${Math.floor(
-                cooldown / 1000 + Date.now() / 1000,
-              )}:R> you can use buttons again!`,
-            })
-            .catch(() => {});
-          return;
+          ) {
+            var cooldown = Number(
+              guildDb.replayChannels.find(
+                (x) => x.id === interaction.channel?.id,
+              )?.cooldown,
+            );
+            interaction
+              .reply({
+                ephemeral: true,
+                content: `<t:${Math.floor(
+                  cooldown / 1000 + Date.now() / 1000,
+                )}:R> you can use buttons again!`,
+              })
+              .catch(() => {});
+            return;
+          }
         }
 
         try {
@@ -238,39 +256,50 @@ const event: Event = {
             !interaction.customId.startsWith("voting_") &&
             !interaction.customId.startsWith("result_")
           ) {
-            if (
-              guildDb.replayType === "Channels" &&
-              guildDb.replayChannels.find(
-                (x) => x.id === interaction.channel?.id,
-              )
-            ) {
-              client.used.set(
-                `${interaction.user.id}-${interaction.channel?.id}`,
-                Date.now() +
-                  (Number(
+            if (guildDb.replayBy === "User") {
+              if (
+                guildDb.replayType === "Channels" &&
+                guildDb.replayChannels.find(
+                  (x) => x.id === interaction.channel?.id,
+                )
+              ) {
+                client.used.set(
+                  `${interaction.user.id}-${interaction.channel?.id}`,
+                  Date.now() +
+                    (Number(
+                      guildDb.replayChannels.find(
+                        (x) => x.id === interaction.channel?.id,
+                      )?.cooldown,
+                    ) || 0),
+                );
+                setTimeout(
+                  () =>
+                    client.used.delete(
+                      `${interaction.user.id}-${interaction.channel?.id}`,
+                    ),
+                  Number(
                     guildDb.replayChannels.find(
                       (x) => x.id === interaction.channel?.id,
                     )?.cooldown,
-                  ) || 0),
-              );
-              setTimeout(
-                () =>
-                  client.used.delete(
-                    `${interaction.user.id}-${interaction.channel?.id}`,
                   ),
-                Number(
-                  guildDb.replayChannels.find(
-                    (x) => x.id === interaction.channel?.id,
-                  )?.cooldown,
-                ),
-              );
+                );
+              } else {
+                client.used.set(
+                  interaction.user.id,
+                  Date.now() + guildDb.replayCooldown,
+                );
+                setTimeout(
+                  () => client.used.delete(interaction.user.id),
+                  guildDb.replayCooldown,
+                );
+              }
             } else {
               client.used.set(
-                interaction.user.id,
+                interaction.guild.id,
                 Date.now() + guildDb.replayCooldown,
               );
               setTimeout(
-                () => client.used.delete(interaction.user.id),
+                () => client.used.delete(interaction?.guild!.id),
                 guildDb.replayCooldown,
               );
             }

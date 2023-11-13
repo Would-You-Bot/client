@@ -242,6 +242,9 @@
       "generalTitle": "Would You - General Settings",
       "replayCooldown": "**Replay Cooldown**",
       "replayType": "**Replay Type**",
+      "replayBy": "**Replay Cooldown By**",
+      "replayBy1": "• Each user has a personal cooldown.",
+      "replayBy2": "• The whole server has one cooldown.",
       "replayChannels": "**Replay Channels**",
       "replayChannelsNone": "None",
       "dailyInterval": "**Post Time**",
@@ -271,6 +274,7 @@
       "replayCooldown": "Set Replay Cooldown",
       "replayDeleteChannels": "Delete Replay Channels",
       "replayType": "Replay Type",
+      "replayBy": "Replay By",
       "welcomeChannel": "Set Channel",
       "welcome": "Toggle Welcomes",
       "welcomePing": "Toggle User Ping"
