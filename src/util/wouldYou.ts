@@ -104,7 +104,7 @@ export default class WouldYou extends Client {
 
     // Init the prometheus client
     this.prometheusClient = new PrometheusClient(this);
-    this.prometheusClient.initialize()
+    this.prometheusClient.initialize();
 
     // The database handler
     this.database = new DatabaseHandler(process.env.MONGO_URI as string);
