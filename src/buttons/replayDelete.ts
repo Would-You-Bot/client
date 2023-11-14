@@ -87,7 +87,7 @@ const button: Button = {
           )
           .setStyle(ButtonStyle.Primary)
           .setEmoji("📝"),
-          new ButtonBuilder()
+        new ButtonBuilder()
           .setCustomId("replayBy")
           .setLabel(
             client.translation.get(
