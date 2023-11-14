@@ -216,7 +216,7 @@ const event: Event = {
         } else {
           if (!user) {
             await UserModel.create({
-              userID: interaction.user.id
+              userID: interaction.user.id,
             });
           }
           if (
@@ -323,7 +323,7 @@ const event: Event = {
       } else {
         if (!user) {
           await UserModel.create({
-            userID: interaction.user.id
+            userID: interaction.user.id,
           });
         }
         const button = client.buttons.get((interaction as any).customId);

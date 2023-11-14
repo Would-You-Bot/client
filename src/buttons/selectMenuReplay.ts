@@ -73,7 +73,11 @@ const button: Button = {
           return;
         }
 
-        if (guildDb.replayChannels.find((e: any) => e.id === (interaction as any).values[0])) {
+        if (
+          guildDb.replayChannels.find(
+            (e: any) => e.id === (interaction as any).values[0],
+          )
+        ) {
           guildDb.replayChannels = guildDb.replayChannels.filter(
             (c) => c.id !== (interaction as any).values[0],
           );
