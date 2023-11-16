@@ -52,11 +52,21 @@ export default class DailyMessage {
       setTimeout(async () => {
         const channel = await this.client.channels
           .fetch(db.dailyChannel)
-          .catch((err) => {
+          .catch(async (err) => {
+            await this.client.database.updateGuild(db?.guildID || "", {
+              db,
+              dailyMsg: false,
+            });
             captureException(err);
           });
 
-        if (!channel?.id) return; // Always directly return before do to many actions
+        if (!channel?.id) {
+          await this.client.database.updateGuild(db?.guildID || "", {
+            db,
+            dailyMsg: false,
+          });
+          return;
+        }; // Always directly return before do to many actions
 
         var General = await getWouldYouRather(db.language);
         var WhatYouDo = await getWwyd(db.language);

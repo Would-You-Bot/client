@@ -32,7 +32,7 @@ function isFormat(str: string) {
 const button: Button = {
   name: "dailyInterval",
   execute: async (interaction, client, guildDb) => {
-    interaction.showModal(modalObject);
+    interaction.showModal(modalObject).catch(() => {});
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,

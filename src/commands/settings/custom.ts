@@ -609,9 +609,9 @@ const command: ChatInputCommand = {
           page.start(interaction, "custom");
           return;
         case "import":
-          const attachemnt = interaction.options.get("attachment");
+          const attachment = interaction.options.get("attachment");
 
-          if (!attachemnt) {
+          if (!attachment) {
             interaction.reply({
               ephemeral: true,
               content: client.translation.get(
@@ -621,7 +621,7 @@ const command: ChatInputCommand = {
             });
             return;
           }
-          if (!attachemnt.attachment?.name.includes(".json")) {
+          if (!attachment.attachment?.name.includes(".json")) {
             interaction.reply({
               ephemeral: true,
               content: client.translation.get(
@@ -636,7 +636,7 @@ const command: ChatInputCommand = {
           await interaction.deferReply({ ephemeral: true });
 
           axios
-            .get(attachemnt.attachment.url, {
+            .get(attachment.attachment.url, {
               headers: {
                 "Content-Type": "application/json",
               },
@@ -1071,16 +1071,6 @@ const command: ChatInputCommand = {
           });
           return;
       }
-
-      interaction
-        .reply({
-          embeds: [typeEmbed],
-          ephemeral: true,
-        })
-        .catch((err) => {
-          captureException(err);
-        });
-      return;
     } else {
       const errorembed = new EmbedBuilder()
         .setColor("#F00505")

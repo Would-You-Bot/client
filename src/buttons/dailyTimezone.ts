@@ -34,7 +34,7 @@ function isValid(tz: string) {
     Intl.DateTimeFormat(undefined, { timeZone: tz });
     return true;
   } catch (err) {
-    captureException(err);
+    //captureException(err);
     return false;
   }
 }
