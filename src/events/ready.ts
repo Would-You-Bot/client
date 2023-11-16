@@ -22,7 +22,7 @@ const event: Event = {
 
       setTimeout(async () => {
         try {
-          if (process.env.STATUS === "PRODUCTION") {
+          if (process.env.PRODUCTION === "true") {
             if (process.env.TOPGG_TOKEN) {
               AutoPoster(`${process.env.TOPGG_TOKEN}`, client);
             }

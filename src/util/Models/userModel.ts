@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 export interface IUserModel {
-  userID: string;
+  userID: { type: string; required: true };
   votePrivacy: boolean;
   wouldyourather: {
     yes: number;
