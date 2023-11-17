@@ -118,13 +118,15 @@ const button: Button = {
       }, paginate.time);
       paginate.timeout = time;
 
-      await interaction.update({
-        embeds: [paginate.pages[++paginate.page]],
-        components: [buttons],
-        options: {
-          ephemeral: true,
-        },
-      }).catch(() => { });
+      await interaction
+        .update({
+          embeds: [paginate.pages[++paginate.page]],
+          components: [buttons],
+          options: {
+            ephemeral: true,
+          },
+        })
+        .catch(() => {});
       return;
     }
   },
