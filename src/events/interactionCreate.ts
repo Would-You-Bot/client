@@ -52,7 +52,7 @@ const event: Event = {
 
       await command.execute(interaction, client, guildDb).catch((err) => {
         interaction.reply({
-          content: err,
+          content: "An error occurred while trying to execute that command.",
           ephemeral: true,
         });
         return;

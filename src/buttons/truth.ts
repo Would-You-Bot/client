@@ -17,7 +17,10 @@ const button: Button = {
     if (
       !interaction.channel
         ?.permissionsFor(interaction.user.id)
-        .has(PermissionFlagsBits.SendMessages)
+        .has(
+          PermissionFlagsBits.SendMessages ||
+            PermissionFlagsBits.SendMessagesInThreads,
+        )
     )
       return interaction.reply({
         content:
