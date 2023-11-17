@@ -14,16 +14,32 @@ import { getWwyd } from "../util/Functions/jsonImport";
 const button: Button = {
   name: "wwyd",
   execute: async (interaction: any, client, guildDb) => {
-    if (
-      !interaction.channel
-        .permissionsFor(interaction.user.id)
-        .has(PermissionFlagsBits.SendMessages)
-    )
-      return interaction.reply({
-        content:
-          "You don't have permission to use this button in this channel!",
-        ephemeral: true,
-      });
+    if (interaction.channel.isThread()) {
+      if (
+        !interaction.channel
+          ?.permissionsFor(interaction.user.id)
+          .has(PermissionFlagsBits.SendMessagesInThreads)
+      ) {
+        return interaction.reply({
+          content:
+            "You don't have permission to use this button in this channel!",
+          ephemeral: true,
+        });
+      }
+    } else {
+      console.log("not thread");
+      if (
+        !interaction.channel
+          ?.permissionsFor(interaction.user.id)
+          .has(PermissionFlagsBits.SendMessages)
+      ) {
+        return interaction.reply({
+          content:
+            "You don't have permission to use this button in this channel!",
+          ephemeral: true,
+        });
+      }
+    }
 
     var WhatYouDo = await getWwyd(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(

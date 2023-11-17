@@ -14,19 +14,32 @@ import { getRandomTod } from "../util/Functions/jsonImport";
 const button: Button = {
   name: "random",
   execute: async (interaction: any, client, guildDb) => {
-    if (
-      !interaction.channel
-        ?.permissionsFor(interaction.user.id)
-        .has(
-          PermissionFlagsBits.SendMessages ||
-            PermissionFlagsBits.SendMessagesInThreads,
-        )
-    )
-      return interaction.reply({
-        content:
-          "You don't have permission to use this button in this channel!",
-        ephemeral: true,
-      });
+    if (interaction.channel.isThread()) {
+      if (
+        !interaction.channel
+          ?.permissionsFor(interaction.user.id)
+          .has(PermissionFlagsBits.SendMessagesInThreads)
+      ) {
+        return interaction.reply({
+          content:
+            "You don't have permission to use this button in this channel!",
+          ephemeral: true,
+        });
+      }
+    } else {
+      console.log("not thread");
+      if (
+        !interaction.channel
+          ?.permissionsFor(interaction.user.id)
+          .has(PermissionFlagsBits.SendMessages)
+      ) {
+        return interaction.reply({
+          content:
+            "You don't have permission to use this button in this channel!",
+          ephemeral: true,
+        });
+      }
+    }
     let random = await getRandomTod(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
       (c) => (c.type !== "nsfw" && c.type === "truth") || c.type === "dare",

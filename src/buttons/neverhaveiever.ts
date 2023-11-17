@@ -13,19 +13,34 @@ import { getNeverHaveIEver } from "../util/Functions/jsonImport";
 
 const button: Button = {
   name: "neverhaveiever",
-  execute: async (interaction, client, guildDb) => {
-    if (
-      !(interaction.channel as any)
-        .permissionsFor(interaction.user.id)
-        .has(PermissionFlagsBits.SendMessages)
-    ) {
-      interaction.reply({
-        content:
-          "You don't have permission to use this button in this channel!",
-        ephemeral: true,
-      });
-      return;
+  execute: async (interaction: any, client, guildDb) => {
+    if (interaction.channel.isThread()) {
+      if (
+        !interaction.channel
+          ?.permissionsFor(interaction.user.id)
+          .has(PermissionFlagsBits.SendMessagesInThreads)
+      ) {
+        return interaction.reply({
+          content:
+            "You don't have permission to use this button in this channel!",
+          ephemeral: true,
+        });
+      }
+    } else {
+      console.log("not thread");
+      if (
+        !interaction.channel
+          ?.permissionsFor(interaction.user.id)
+          .has(PermissionFlagsBits.SendMessages)
+      ) {
+        return interaction.reply({
+          content:
+            "You don't have permission to use this button in this channel!",
+          ephemeral: true,
+        });
+      }
     }
+
     var { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
       guildDb.language,
     );
@@ -109,7 +124,7 @@ const button: Button = {
         embeds: [nhiembed],
         components: [row, mainRow],
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         captureException(err);
       });
     return;
