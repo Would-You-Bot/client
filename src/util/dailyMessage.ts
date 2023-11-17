@@ -66,7 +66,7 @@ export default class DailyMessage {
             dailyMsg: false,
           });
           return;
-        }; // Always directly return before do to many actions
+        } // Always directly return before do to many actions
 
         var General = await getWouldYouRather(db.language);
         var WhatYouDo = await getWwyd(db.language);
