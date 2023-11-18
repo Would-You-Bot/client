@@ -33,18 +33,23 @@ const event: Event = {
       );
 
       if (!guildDb || !command) return;
-
+      console.log(interaction.commandName);
       const statsMap = {
         wouldyourather: "wouldyourather.used.command",
         neverhaveiever: "neverhaveiever.used.command",
         higherlower: "higherlower.used.command",
         wwyd: "whatwouldyoudo.used.command",
+        truth: "truth.used.command",
+        dare: "dare.used.command",
+        random: "random.used.command",
       } as any;
       // Get the field path based on the command name
       const fieldPath = statsMap[interaction.commandName];
       if (fieldPath) {
+        console.log(fieldPath + " line 49");
         // Increment the specified field using $inc
-        UserModel.updateOne(
+
+        await UserModel.updateOne(
           { userID: interaction.user.id }, // Specify the query to find the user
           { $inc: { [fieldPath]: 1 } }, // Use computed fieldPath
         );
@@ -89,6 +94,9 @@ const event: Event = {
         neverhaveiever: "neverhaveiever.used.replay",
         higherlower: "higherlower.used.replay",
         wwyd: "whatwouldyoudo.used.replay",
+        truth: "truth.used.replay",
+        dare: "dare.used.replay",
+        random: "random.used.replay",
       } as any;
 
       // Get the field path based on the command name

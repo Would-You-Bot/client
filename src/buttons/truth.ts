@@ -27,7 +27,6 @@ const button: Button = {
         });
       }
     } else {
-      console.log("not thread");
       if (
         !interaction.channel
           ?.permissionsFor(interaction.user.id)

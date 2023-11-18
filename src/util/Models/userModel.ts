@@ -20,8 +20,6 @@ export interface IUserModel {
     };
   };
   higherlower: {
-    yes: number;
-    no: number;
     highscore: number;
     used: {
       command: number;
@@ -31,6 +29,24 @@ export interface IUserModel {
   whatwouldyoudo: {
     yes: number;
     no: number;
+    used: {
+      command: number;
+      replay: number;
+    };
+  };
+  truth: {
+    used: {
+      command: number;
+      replay: number;
+    };
+  };
+  dare: {
+    used: {
+      command: number;
+      replay: number;
+    };
+  };
+  random: {
     used: {
       command: number;
       replay: number;
@@ -59,8 +75,6 @@ const userModelSchema = new Schema(
       },
     },
     higherlower: {
-      yes: { type: Number, default: 0 },
-      no: { type: Number, default: 0 },
       highscore: { type: Number, default: 0 },
       used: {
         command: { type: Number, default: 0 },
@@ -68,8 +82,24 @@ const userModelSchema = new Schema(
       },
     },
     whatwouldyoudo: {
-      yes: { type: Number, default: 0 },
-      no: { type: Number, default: 0 },
+      used: {
+        command: { type: Number, default: 0 },
+        replay: { type: Number, default: 0 },
+      },
+    },
+    truth: {
+      used: {
+        command: { type: Number, default: 0 },
+        replay: { type: Number, default: 0 },
+      },
+    },
+    dare: {
+      used: {
+        command: { type: Number, default: 0 },
+        replay: { type: Number, default: 0 },
+      },
+    },
+    random: {
       used: {
         command: { type: Number, default: 0 },
         replay: { type: Number, default: 0 },
