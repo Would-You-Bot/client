@@ -60,7 +60,7 @@ const event: Event = {
 
       await webhookClient
         .send({
-          content: `<:BadCheck:1025490660968628436> Left ${guild.name}. I'm now in ${client.guilds.cache.size} guilds.`,
+          content: `<:BadCheck:1025490660968628436> Left ${guild.name} ${features}. I'm now in ${client.guilds.cache.size} guilds.`,
           username: `${guild.name
             .replace("Discord", "")
             .replace("discord", "")
