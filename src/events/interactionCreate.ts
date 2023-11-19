@@ -33,7 +33,6 @@ const event: Event = {
       );
 
       if (!guildDb || !command) return;
-      console.log(interaction.commandName);
       const statsMap = {
         wouldyourather: "wouldyourather.used.command",
         neverhaveiever: "neverhaveiever.used.command",
@@ -46,7 +45,6 @@ const event: Event = {
       // Get the field path based on the command name
       const fieldPath = statsMap[interaction.commandName];
       if (fieldPath) {
-        console.log(fieldPath + " line 49");
         // Increment the specified field using $inc
 
         await UserModel.updateOne(
