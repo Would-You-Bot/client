@@ -16,14 +16,14 @@ const event: Event = {
       url: process.env.LOG_PRIVATE as string,
     });
 
-    let features;
+    let features = "";
     if (
       (guild.features && guild.features.includes("VERIFIED")) ||
       guild.features.includes("PARTNERED")
     ) {
       features = guild.features.includes("VERIFIED")
-        ? `<:verified_green:1072265950134550548>`
-        : `<:partner:1072265822577360982>`;
+        ? "<:verified_green:1072265950134550548>"
+        : "<:partner:1072265822577360982>";
     }
 
     await webhookPrivate.send({
