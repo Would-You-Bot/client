@@ -44,7 +44,7 @@
     "cron": "^3.1.6",
     "cryptr": "^6.3.0",
     "discord-api-types": "^0.37.63",
-    "discord-hybrid-sharding": "^2.1.3",
+    "discord-hybrid-sharding": "^2.1.4",
     "discord.js": "^14.14.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
