@@ -54,6 +54,7 @@ const event: Event = {
       }
 
       await command.execute(interaction, client, guildDb).catch((err) => {
+        captureException(err);
         interaction.reply({
           content: "An error occurred while trying to execute that command.",
           ephemeral: true,
@@ -287,6 +288,16 @@ const event: Event = {
         });
         return;
       }
+    } else {
+      const guildDb = await client.database.getGuild(
+        interaction.guild?.id as string,
+        true,
+      );
+      if (!guildDb) return;
+
+      const button = client.buttons.get((interaction as any).customId);
+      if (button)
+        return await button.execute(interaction as any, client, guildDb);
     }
   },
 };
