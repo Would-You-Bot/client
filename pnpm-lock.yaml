@@ -33,8 +33,8 @@ dependencies:
     specifier: ^0.37.63
     version: 0.37.63
   discord-hybrid-sharding:
-    specifier: ^2.1.3
-    version: 2.1.3
+    specifier: ^2.1.4
+    version: 2.1.4
   discord.js:
     specifier: ^14.14.1
     version: 14.14.1
@@ -736,8 +736,8 @@ packages:
     resolution: {integrity: sha512-WbEDWj/1JGCIC1oCMIC4z9XbYY8PrWpV5eqFFQymJhJlHMqgIjqoYbU812X5oj5cwbRrEh6Va4LNLumB2Nt6IQ==}
     dev: false
 
-  /discord-hybrid-sharding@2.1.3:
-    resolution: {integrity: sha512-yPBjhvPpV1k+iOGUgohVhtQFpIHuspbq/wFa+VoGDqyujjjsZImDq2TXsBclnThDfMrsSIE47uf2aLMhm8QqBA==}
+  /discord-hybrid-sharding@2.1.4:
+    resolution: {integrity: sha512-GI6RtF9kEpDEHitqNnxImBf2iArkpfWN7xPQLjxelTDql2sklKRs6lNz1vbE+bkvUmxnqZM9j2uzBBeWRppbIA==}
     dependencies:
       node-fetch: 2.7.0
     transitivePeerDependencies:
