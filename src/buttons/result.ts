@@ -30,6 +30,7 @@ const button: Button = {
       user: interaction.user.id,
       timeout: 180000,
       client,
+      image: null,
     });
 
     page.add(

@@ -40,6 +40,7 @@
     "@sentry/node": "^7.80.1",
     "@top-gg/sdk": "^3.1.5",
     "axios": "^1.6.2",
+    "canvabase": "^1.1.1",
     "chalk-advanced": "^1.0.3",
     "cron": "^3.1.6",
     "cryptr": "^6.3.0",
