@@ -13,21 +13,25 @@ export default class Paginator {
   private user: any;
   private page: number;
   private timeout: number;
+  private image: string | null;
 
   constructor({
     user,
     client,
     timeout,
+    image,
   }: {
     user: any;
     client: WouldYou;
     timeout: number;
+    image: string | null;
   }) {
     this.pages = [];
     this.client = client;
     this.user = user;
     this.page = 0;
     this.timeout = timeout;
+    this.image = image;
   }
 
   add(page: EmbedBuilder) {
