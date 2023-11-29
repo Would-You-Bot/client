@@ -60,8 +60,7 @@ const command: ChatInputCommand = {
           "higherlower.highscore": { $gt: 1 },
         });
 
-        
-            break;
+        break;
     }
   },
 };
