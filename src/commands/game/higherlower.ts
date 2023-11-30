@@ -45,7 +45,7 @@ const command: ChatInputCommand = {
       )
       .setFooter({
         text: `Requested by ${interaction.user.username}`,
-        iconURL: interaction.user.avatarURL() || "",
+        iconURL: interaction.user.avatarURL() || undefined,
       });
 
     interaction.reply({ embeds: [initembed] }).then(async () => {
@@ -104,7 +104,7 @@ const command: ChatInputCommand = {
         .setColor("White")
         .setImage("attachment://game.png")
         .setFooter({
-          iconURL: interaction.user.avatarURL() || "",
+          iconURL: interaction.user.avatarURL() || undefined,
           text: `${interaction.user.tag} | Game ID: ${game.id}`,
         })
         .setTimestamp();

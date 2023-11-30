@@ -55,8 +55,10 @@ const command: ChatInputCommand = {
     const dareembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Dare | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL() || "",
+        text: `Requested by ${
+          interaction.user.username || "Anonymous"
+        } | Type: Dare | ID: ${Random}`,
+        iconURL: interaction.user.avatarURL() || undefined,
       })
       .setDescription(bold(truthordare[Random]));
 
