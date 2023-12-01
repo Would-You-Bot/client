@@ -383,7 +383,6 @@ const command: ChatInputCommand = {
             user: interaction.user.id,
             timeout: 180000,
             client,
-            image: null,
           });
 
           if (
@@ -427,6 +426,7 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
+                null,
               ),
             );
           }
@@ -472,6 +472,7 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
+                null,
               ),
             );
           }
@@ -516,6 +517,7 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
+                null,
               ),
             );
           }
@@ -560,6 +562,7 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
+                null,
               ),
             );
           }
@@ -604,6 +607,7 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
+                null,
               ),
             );
           }

@@ -30,7 +30,6 @@ const button: Button = {
       user: interaction.user.id,
       timeout: 180000,
       client,
-      image: null,
     });
 
     page.add(
@@ -41,6 +40,7 @@ const button: Button = {
             ? "#0091ff"
             : "#f00404",
         ),
+      null,
     );
 
     let data: any;
@@ -68,6 +68,7 @@ const button: Button = {
           .setTitle(`Voted for Option 1`)
           .setDescription(e.slice(0, 10).join("\n").toString())
           .setColor("#0598F6"),
+        null,
       ),
     );
 
@@ -96,6 +97,7 @@ const button: Button = {
           .setTitle(`Voted for Option 2`)
           .setDescription(e.slice(0, 10).join("\n").toString())
           .setColor("#F00605"),
+        null,
       ),
     );
 

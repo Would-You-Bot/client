@@ -1,4 +1,8 @@
-import { CacheType, Interaction } from "discord.js";
+import {
+  CacheType,
+  Interaction,
+  InteractionDeferUpdateOptions,
+} from "discord.js";
 import { Event } from "../models";
 import { UserModel } from "../util/Models/userModel";
 import WouldYou from "../util/wouldYou";
@@ -186,6 +190,7 @@ const event: Event = {
           .catch((err) => {
             captureException(err);
           });
+        return;
       } else {
         if (
           guildDb.replayType === "Guild" &&
@@ -201,6 +206,7 @@ const event: Event = {
             .catch((err) => {
               captureException(err);
             });
+          return;
         } else if (
           guildDb.replayType === "Channels" &&
           client.used.has(
@@ -222,6 +228,7 @@ const event: Event = {
             .catch((err) => {
               captureException(err);
             });
+          return;
         }
       }
 
@@ -262,6 +269,7 @@ const event: Event = {
                 interaction.user.id,
                 Date.now() + guildDb.replayCooldown,
               );
+
               setTimeout(
                 () => client.used.delete(interaction.user.id),
                 guildDb.replayCooldown,
@@ -272,6 +280,7 @@ const event: Event = {
               interaction.guild?.id,
               Date.now() + guildDb.replayCooldown,
             );
+
             setTimeout(
               () => client.used.delete(interaction?.guild!.id),
               guildDb.replayCooldown,

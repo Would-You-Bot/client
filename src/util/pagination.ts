@@ -13,32 +13,33 @@ export default class Paginator {
   private user: any;
   private page: number;
   private timeout: number;
-  private image: string | null;
+  private images: any[];
 
   constructor({
     user,
     client,
     timeout,
-    image,
   }: {
     user: any;
     client: WouldYou;
     timeout: number;
-    image: string | null;
   }) {
     this.pages = [];
     this.client = client;
     this.user = user;
     this.page = 0;
     this.timeout = timeout;
-    this.image = image;
+    this.images = [];
   }
 
-  add(page: EmbedBuilder) {
+  add(page: EmbedBuilder, image: any | null) {
     if (page.length) {
+      this.images.push(image);
       this.pages.push(page);
       return this;
     }
+
+    this.images.push(image);
     this.pages.push(page);
     return this;
   }
@@ -95,6 +96,7 @@ export default class Paginator {
       };
     }
     const message = await interaction.reply({
+      files: this.images.length > 0 ? [this.images[0]] : null,
       embeds: [this.pages[0]],
       components: [buttons],
       ephemeral: true,
@@ -102,6 +104,7 @@ export default class Paginator {
     this.client.paginate.set(
       `${this.user}-${type ? type : interaction.message.id}`,
       {
+        images: this.images,
         pages: this.pages,
         page: this.page,
         message: message.id,

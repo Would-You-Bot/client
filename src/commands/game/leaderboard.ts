@@ -1,16 +1,13 @@
+const { Leaderboard, write } = require("canvabase");
 import {
   EmbedBuilder,
   SlashCommandBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  MessageActionRowComponentBuilder,
-  bold,
+  AttachmentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../models";
 import Paginator from "../../util/pagination";
 import { UserModel } from "../../util/Models/userModel";
-import Canvas from "canvabase";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -49,19 +46,102 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     switch (interaction.options.getString("game")) {
       case "higherlower":
-        const page = new Paginator({
-          user: interaction.user.id,
-          timeout: 180000,
-          client,
-          image: null,
-        });
+        try {
+          const page = new Paginator({
+            user: interaction.user.id,
+            timeout: 180000,
+            client,
+          });
 
-        const users = await UserModel.find({
-          "higherlower.highscore": { $gt: 1 },
-        });
+          let data2: any;
+          data2 = await UserModel.find({
+            "higherlower.highscore": { $gt: 1 },
+          }).sort({ "higherlower.highscore": -1 });
 
-        
-            break;
+          (async function loop(z) {
+            let users: {
+              top: number;
+              tag: string;
+              score: number;
+              avatar: string;
+            }[] = [];
+            for (var i = 0; i < 10; i++) {
+              z++;
+
+              let data = data2[z];
+              let user = await client.users.fetch(data.userID);
+
+              users.push({
+                top: z,
+                avatar:
+                  user.avatarURL() ||
+                  "https://cdn.discordapp.com/embed/avatars/0.png",
+                tag: user.username,
+                score: data.higherlower.highscore,
+              });
+
+              if (i === 9) {
+                const leaderboard = new Leaderboard()
+                  .setOpacity(0.7)
+                  .setScoreMessage("Highest Score:")
+                  .setColors({
+                    box: "#212121",
+                    username: "#ffffff",
+                    score: "#ffffff",
+                    firstRank: "#FFD700",
+                    secondRank: "#C0C0C0",
+                    thirdRank: "#CD7F32",
+                  })
+                  .addUserData(users);
+
+                let imga;
+                leaderboard.build().then((img: any) => {
+                  //write("./src/data/Images/leaderboard.png", img);
+                  imga = new AttachmentBuilder(img, { name: "leaderboard.png"});
+                });
+
+                page.add(
+                  new EmbedBuilder()
+                    .setTitle(`Leaderboard`)
+                    .setImage("attachment://leaderboard.png")
+                    .setColor("#F00605"),
+                  imga,
+                );
+              }
+
+              if (z === 19) {
+                return page.start(interaction, null);
+              }
+            }
+            setTimeout(function () {
+              users = [];
+              loop(z);
+            }, 500);
+          })(0);
+        } catch (e) {
+          console.log(e);
+        }
+        // data2 = data2.map((e: any) =>
+        //   page.add(
+        //     new EmbedBuilder()
+        //       .setTitle(`Voted for Option 2`)
+        //       .setDescription(e.slice(0, 10).join("\n").toString())
+        //       .setColor("#F00605"),
+        //     null,
+        //   ),
+        // );
+
+        // leaderboard.build().then((img: any) => {
+        //   write("./src/data/Images/leaderboard.png", img);
+        // });
+
+        // const a = new AttachmentBuilder("./src/data/Images/leaderboard.png");
+        // const e = new EmbedBuilder()
+        //   .setColor("#0598F6")
+        //   .setImage("attachment://leaderboard.png");
+        // interaction.reply({ embeds: [e], files: [a] });
+
+        break;
     }
   },
 };
