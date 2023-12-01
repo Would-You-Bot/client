@@ -72,7 +72,7 @@ const command: ChatInputCommand = {
       .setColor("#0598F6")
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL() || "",
+        iconURL: interaction.user.avatarURL() || undefined,
       })
       .setDescription(bold(nererhaveIever[Random]));
 
