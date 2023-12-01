@@ -24,7 +24,7 @@ const command: ChatInputCommand = {
       option
         .setName("game")
         .setDescription("Which game do you want leaderboards from?")
-        .addChoices({ name: "Higher & Ligher", value: "higherlower" })
+        .addChoices({ name: "Higher or Lower", value: "higherlower" })
         .setRequired(true),
     )
     .addStringOption((option) =>
@@ -53,8 +53,7 @@ const command: ChatInputCommand = {
             client,
           });
 
-          let data2: any;
-          data2 = await UserModel.find({
+          let data2 = await UserModel.find({
             "higherlower.highscore": { $gt: 1 },
           }).sort({ "higherlower.highscore": -1 });
 
@@ -65,16 +64,17 @@ const command: ChatInputCommand = {
               score: number;
               avatar: string;
             }[] = [];
-            for (var i = 0; i < 10; i++) {
+            for (let i = 0; i < 10; i++) {
               z++;
 
-              let data = data2[z];
+              let data: any = data2[z];
+              console.log(data);
               let user = await client.users.fetch(data.userID);
 
               users.push({
                 top: z,
                 avatar:
-                  user.avatarURL() ||
+                  user.displayAvatarURL() ||
                   "https://cdn.discordapp.com/embed/avatars/0.png",
                 tag: user.username,
                 score: data.higherlower.highscore,
@@ -94,20 +94,19 @@ const command: ChatInputCommand = {
                   })
                   .addUserData(users);
 
-                let imga;
-                leaderboard.build().then((img: any) => {
+                const imageBuffer = leaderboard.build()
+                console.log(imageBuffer)
                   //write("./src/data/Images/leaderboard.png", img);
-                  imga = new AttachmentBuilder(img, {
+                  const image = new AttachmentBuilder(imageBuffer, {
                     name: "leaderboard.png",
                   });
-                });
 
                 page.add(
                   new EmbedBuilder()
                     .setTitle(`Leaderboard`)
                     .setImage("attachment://leaderboard.png")
                     .setColor("#F00605"),
-                  imga,
+                  image,
                 );
               }
 
