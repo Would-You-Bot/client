@@ -97,7 +97,9 @@ const command: ChatInputCommand = {
                 let imga;
                 leaderboard.build().then((img: any) => {
                   //write("./src/data/Images/leaderboard.png", img);
-                  imga = new AttachmentBuilder(img, { name: "leaderboard.png"});
+                  imga = new AttachmentBuilder(img, {
+                    name: "leaderboard.png",
+                  });
                 });
 
                 page.add(
