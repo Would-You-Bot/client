@@ -94,12 +94,12 @@ const command: ChatInputCommand = {
                   })
                   .addUserData(users);
 
-                const imageBuffer = leaderboard.build()
-                console.log(imageBuffer)
-                  //write("./src/data/Images/leaderboard.png", img);
-                  const image = new AttachmentBuilder(imageBuffer, {
-                    name: "leaderboard.png",
-                  });
+                const imageBuffer = leaderboard.build();
+                console.log(imageBuffer);
+                //write("./src/data/Images/leaderboard.png", img);
+                const image = new AttachmentBuilder(imageBuffer, {
+                  name: "leaderboard.png",
+                });
 
                 page.add(
                   new EmbedBuilder()
