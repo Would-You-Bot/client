@@ -95,7 +95,7 @@ const button: Button = {
         .setColor("Green")
         .setImage("attachment://game.png")
         .setFooter({
-          iconURL: interaction.user.avatarURL() || undefined,
+          iconURL: interaction.user.displayAvatarURL() || undefined,
           text: `${interaction.user.tag} | Game ID: ${game.id}`,
         })
         .setTimestamp();
@@ -141,7 +141,7 @@ const button: Button = {
         .setColor("Red")
         .setImage("attachment://game.png")
         .setFooter({
-          iconURL: interaction.user.avatarURL() || undefined,
+          iconURL: interaction.user.displayAvatarURL() || undefined,
           text: `${interaction.user.tag} | Game ID: ${game?.id}`,
         })
         .setTimestamp();

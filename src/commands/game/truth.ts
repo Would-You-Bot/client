@@ -56,7 +56,7 @@ const command: ChatInputCommand = {
       .setColor("#0598F6")
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: Truth | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL() || undefined,
+        iconURL: interaction.user.displayAvatarURL() || undefined,
       })
       .setDescription(bold(truthordare[Random]));
 
