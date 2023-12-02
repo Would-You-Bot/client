@@ -7,7 +7,7 @@ import {
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../models";
 import Paginator from "../../util/pagination";
-import { UserModel } from "../../util/Models/userModel";
+import { IUserModel, UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -49,8 +49,8 @@ const command: ChatInputCommand = {
         try {
           const page = new Paginator({
             user: interaction.user.id,
-            timeout: 180000,
             client,
+            timeout: 180000,
           });
 
           let data2 = await UserModel.find({
@@ -62,13 +62,13 @@ const command: ChatInputCommand = {
               top: number;
               tag: string;
               score: number;
+              id: string;
               avatar: string;
             }[] = [];
             for (let i = 0; i < 10; i++) {
               z++;
 
               let data: any = data2[z];
-              console.log(data);
               let user = await client.users.fetch(data.userID);
 
               users.push({
@@ -77,13 +77,50 @@ const command: ChatInputCommand = {
                   user.displayAvatarURL() ||
                   "https://cdn.discordapp.com/embed/avatars/0.png",
                 tag: user.username,
+                id: user.id,
                 score: data.higherlower.highscore,
               });
 
-              if (i === 9) {
+              if (z === 9) {
+                if (!users.find((a: any) => a.id === interaction.user.id)) {
+                  let interactData = data2.find(
+                    (e: any) => e.userID === interaction.user.id,
+                  );
+                  users.push({
+                    top: data2.findIndex(
+                      (e) =>
+                        e.higherlower.highscore ===
+                        interactData?.higherlower.highscore,
+                    ),
+                    avatar: interaction.user.displayAvatarURL(),
+                    tag: interaction.user.username,
+                    id: interaction.user.id,
+                    score: interactData?.higherlower.highscore as number,
+                  });
+                } else {
+                  z++;
+
+                  let data: any = data2[z];
+                  let user = await client.users.fetch(data.userID);
+
+                  users.push({
+                    top: z,
+                    avatar:
+                      user.displayAvatarURL() ||
+                      "https://cdn.discordapp.com/embed/avatars/0.png",
+                    tag: user.username,
+                    id: user.id,
+                    score: data.higherlower.highscore,
+                  });
+                }
+
                 const leaderboard = new Leaderboard()
                   .setOpacity(0.7)
                   .setScoreMessage("Highest Score:")
+                  .addBachground(
+                    "image",
+                    "https://i.imgur.com/h3b4KZI_d.webp?maxwidth=760&fidelity=grand",
+                  )
                   .setColors({
                     box: "#212121",
                     username: "#ffffff",
@@ -94,12 +131,11 @@ const command: ChatInputCommand = {
                   })
                   .addUserData(users);
 
-                const imageBuffer = leaderboard.build()
-                console.log(imageBuffer)
-                  //write("./src/data/Images/leaderboard.png", img);
-                  const image = new AttachmentBuilder(imageBuffer, {
-                    name: "leaderboard.png",
-                  });
+                const imageBuffer = await leaderboard.build();
+
+                const image = new AttachmentBuilder(imageBuffer, {
+                  name: "leaderboard.png",
+                });
 
                 page.add(
                   new EmbedBuilder()
@@ -108,11 +144,13 @@ const command: ChatInputCommand = {
                     .setColor("#F00605"),
                   image,
                 );
-              }
 
-              if (z === 19) {
                 return page.start(interaction, null);
               }
+
+              // if (z === 9) {
+              //   return page.start(interaction, null);
+              // }
             }
             setTimeout(function () {
               users = [];
