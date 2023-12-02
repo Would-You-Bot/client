@@ -58,7 +58,7 @@ const command: ChatInputCommand = {
         text: `Requested by ${
           interaction.user.username || "Anonymous"
         } | Type: Dare | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL() || undefined,
+        iconURL: interaction.user.displayAvatarURL() || undefined,
       })
       .setDescription(bold(truthordare[Random]));
 

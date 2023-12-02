@@ -82,7 +82,7 @@ const button: Button = {
       .setColor("#0598F6")
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL() || undefined,
+        iconURL: interaction.user.displayAvatarURL() || undefined,
       })
       .setDescription(bold(nererhaveIever[Random]));
 
