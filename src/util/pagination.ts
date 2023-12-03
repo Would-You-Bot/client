@@ -88,45 +88,45 @@ export default class Paginator {
         pLast,
       );
 
-      for (let i = 0; i < this.pages.length; i++) {
-        const e = this.pages[i];
-        e.data.footer = {
-          text: `Would You | Page ${i + 1} / ${this.pages.length}`,
-          icon_url: this.client.user?.avatarURL() || undefined,
-        };
-      }
+    for (let i = 0; i < this.pages.length; i++) {
+      const e = this.pages[i];
+      e.data.footer = {
+        text: `Would You | Page ${i + 1} / ${this.pages.length}`,
+        icon_url: this.client.user?.avatarURL() || undefined,
+      };
+    }
 
-      const message = await interaction.reply({
-        files: this.images.length > 0 ? [this.images[0]] : null,
-        embeds: [this.pages[0]],
-        components: [buttons],
-        ephemeral: true,
-      });
+    const message = await interaction.reply({
+      files: this.images.length > 0 ? [this.images[0]] : null,
+      embeds: [this.pages[0]],
+      components: [buttons],
+      ephemeral: true,
+    });
 
-      this.client.paginate.set(
-        `${this.user}-${type ? type : interaction.message.id}`,
-        {
-          images: this.images,
-          pages: this.pages,
-          page: this.page,
-          message: message.id,
-          channel: interaction.channel.id,
-          timeout: null,
-          time: this.timeout,
-        },
-      );
-      const time = setTimeout(() => {
-        if (
-          this.client.paginate.get(
-            `${this.user}-${type ? type : interaction.message.id}`,
-          )
+    this.client.paginate.set(
+      `${this.user}-${type ? type : interaction.message.id}`,
+      {
+        images: this.images,
+        pages: this.pages,
+        page: this.page,
+        message: message.id,
+        channel: interaction.channel.id,
+        timeout: null,
+        time: this.timeout,
+      },
+    );
+    const time = setTimeout(() => {
+      if (
+        this.client.paginate.get(
+          `${this.user}-${type ? type : interaction.message.id}`,
         )
-          this.client.paginate.delete(
-            `${this.user}-${type ? type : interaction.message.id}`,
-          );
-      }, this.timeout);
-      this.client.paginate.get(
-        `${this.user}-${type ? type : interaction.message.id}`,
-      ).timeout = time;
+      )
+        this.client.paginate.delete(
+          `${this.user}-${type ? type : interaction.message.id}`,
+        );
+    }, this.timeout);
+    this.client.paginate.get(
+      `${this.user}-${type ? type : interaction.message.id}`,
+    ).timeout = time;
   }
 }
