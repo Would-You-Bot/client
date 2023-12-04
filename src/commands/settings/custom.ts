@@ -170,7 +170,7 @@ const command: ChatInputCommand = {
             .setColor("#0598F4")
             .setDescription(
               `${
-                generativeText?.value === false
+                !generativeText.value
                   ? `${client.translation.get(
                       guildDb?.language,
                       "wyCustom.success.embedAdd.descAccept",
