@@ -170,7 +170,7 @@ const command: ChatInputCommand = {
             .setColor("#0598F4")
             .setDescription(
               `${
-                generativeText.value === false
+                generativeText?.value === false
                   ? `${client.translation.get(
                       guildDb?.language,
                       "wyCustom.success.embedAdd.descAccept",
@@ -206,7 +206,7 @@ const command: ChatInputCommand = {
             )
             .setFooter({
               text: `Would You ${
-                generativeText.value === false
+                !generativeText.value
                   ? `| ${client.translation.get(
                       guildDb?.language,
                       "wyCustom.success.embedAdd.footerDisable",
@@ -254,7 +254,7 @@ const command: ChatInputCommand = {
 
           interaction
             .reply(
-              generativeText.value === false
+              !generativeText.value
                 ? {
                     embeds: [typeEmbed],
                     components: [add],
@@ -267,10 +267,7 @@ const command: ChatInputCommand = {
             )
             .then((msg) =>
               setTimeout(() => {
-                if (
-                  generativeText.value === false &&
-                  client.customAdd.has(newID)
-                ) {
+                if (!generativeText.value && client.customAdd.has(newID)) {
                   msg.edit({ components: [addDisable] });
                   client.customAdd.delete(newID);
                 }
