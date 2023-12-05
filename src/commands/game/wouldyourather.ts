@@ -1,15 +1,15 @@
 import {
-  EmbedBuilder,
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
-  bold,
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../models";
 import { getWouldYouRather } from "../../util/Functions/jsonImport";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -57,13 +57,7 @@ const command: ChatInputCommand = {
 
     const Random = Math.floor(Math.random() * wouldyourather.length);
 
-    let ratherembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: WYR | ID: ${Random}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(wouldyourather[Random]));
+    const ratherembed = new DefaultGameEmbed(interaction, Random, wouldyourather, "wyr")
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
