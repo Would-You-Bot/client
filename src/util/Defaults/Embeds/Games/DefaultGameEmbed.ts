@@ -1,6 +1,6 @@
 import { bold, EmbedBuilder, CommandInteraction } from "discord.js";
 
-export class DefaultGameEmbed extends EmbedBuilder  {
+export class DefaultGameEmbed extends EmbedBuilder {
   constructor(
     interaction: CommandInteraction,
     Random: number,
@@ -14,15 +14,16 @@ export class DefaultGameEmbed extends EmbedBuilder  {
       ["nhie", "NHIE"],
       ["wwyd", "WWYD"],
       ["truth", "TRUTH"],
-      ["dare", "DARE"]
+      ["dare", "DARE"],
     ]);
 
     this.setColor("#0598F6");
     this.setFooter({
-      text: `Requested by ${interaction.user.username} | Type: ${TypeMap.get(type)} | ID: ${Random}`,
+      text: `Requested by ${interaction.user.username} | Type: ${TypeMap.get(
+        type,
+      )} | ID: ${Random}`,
       iconURL: interaction.user.displayAvatarURL() || undefined,
     });
     this.setDescription(bold(question[Random]));
-
   }
 }

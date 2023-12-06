@@ -10,7 +10,6 @@ import { ChatInputCommand } from "../../models";
 import { getWouldYouRather } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
-
 const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
@@ -57,7 +56,12 @@ const command: ChatInputCommand = {
 
     const Random = Math.floor(Math.random() * wouldyourather.length);
 
-    const ratherembed = new DefaultGameEmbed(interaction, Random, wouldyourather, "wyr")
+    const ratherembed = new DefaultGameEmbed(
+      interaction,
+      Random,
+      wouldyourather,
+      "wyr",
+    );
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
