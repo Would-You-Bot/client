@@ -159,7 +159,6 @@ const command: ChatInputCommand = {
               newID,
               guildDb,
             );
-
           typeEmbed = new EmbedBuilder()
             .setTitle(
               client.translation.get(
@@ -213,7 +212,7 @@ const command: ChatInputCommand = {
                     )}`
                   : ""
               }`,
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
 
           guildDb.customMessages.push({
@@ -231,9 +230,6 @@ const command: ChatInputCommand = {
               },
               true,
             )
-            .catch((err) => {
-              console.log(err);
-            });
 
           const add =
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -279,7 +275,6 @@ const command: ChatInputCommand = {
           return;
         case "remove":
           message = interaction.options.getString("message");
-
           typeEmbed = new EmbedBuilder()
             .setTitle(
               client.translation.get(
@@ -290,20 +285,15 @@ const command: ChatInputCommand = {
             .setColor("#0598F4")
             .setFooter({
               text: "Would You",
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
-
-          if (
-            !guildDb.customMessages.find((c) => c.id.toString() === message)
-          ) {
-            interaction.reply({
-              ephemeral: true,
-              content: "There is no custom WouldYou message with that ID!",
-            });
-            return;
-          }
+            if (!guildDb.customMessages.find((c) => c.id === message)) {
+              interaction.reply({ content: "Custom message with ID: " + message  + " doesn't exist.", ephemeral: true })
+              return;
+            }
+            interaction.reply({ content: "Sucessfully deleted question with id: " + message, ephemeral: true })
           let filtered = guildDb.customMessages.filter(
-            (c) => c.id.toString() != message,
+            (c) => c.id != message,
           );
 
           await client.database.updateGuild(
@@ -337,7 +327,7 @@ const command: ChatInputCommand = {
             .setColor("#0598F4")
             .setFooter({
               text: "Would You",
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
 
           const button =

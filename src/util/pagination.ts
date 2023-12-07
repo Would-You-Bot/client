@@ -92,7 +92,7 @@ export default class Paginator {
       const e = this.pages[i];
       e.data.footer = {
         text: `Would You | Page ${i + 1} / ${this.pages.length}`,
-        icon_url: this.client.user?.avatarURL() || undefined,
+        icon_url: this.client?.user?.displayAvatarURL() || undefined,
       };
     }
 

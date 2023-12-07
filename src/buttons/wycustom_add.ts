@@ -54,7 +54,7 @@ const button: Button = {
       )
       .setFooter({
         text: `Would You`,
-        iconURL: client.user?.avatarURL() || undefined,
+        iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
     const button =

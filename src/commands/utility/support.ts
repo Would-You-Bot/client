@@ -36,7 +36,7 @@ const command: ChatInputCommand = {
       )
       .setFooter({
         text: client.translation.get(guildDb?.language, "Support.embed.footer"),
-        iconURL: client.user?.avatarURL() || undefined,
+        iconURL: client?.user?.displayAvatarURL() || undefined,
       })
       .setTimestamp();
 

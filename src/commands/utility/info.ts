@@ -73,7 +73,7 @@ const command: ChatInputCommand = {
       .setFooter({
         text:
           interaction.user.tag + " Shard #" + interaction?.guild?.shardId ?? 0,
-        iconURL: client.user?.avatarURL() || undefined,
+        iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
     interaction

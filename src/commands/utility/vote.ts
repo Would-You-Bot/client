@@ -34,7 +34,7 @@ const command: ChatInputCommand = {
       .setThumbnail(client.user?.displayAvatarURL() || "")
       .setFooter({
         text: client.translation.get(guildDb?.language, "Vote.embed.footer"),
-        iconURL: client.user?.avatarURL() || undefined,
+        iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
     interaction
