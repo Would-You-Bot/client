@@ -221,15 +221,14 @@ const command: ChatInputCommand = {
             type: option,
           });
 
-          await client.database
-            .updateGuild(
-              interaction.guildId || "",
-              {
-                ...guildDb,
-                customMessages: guildDb.customMessages,
-              },
-              true,
-            )
+          await client.database.updateGuild(
+            interaction.guildId || "",
+            {
+              ...guildDb,
+              customMessages: guildDb.customMessages,
+            },
+            true,
+          );
 
           const add =
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -287,14 +286,18 @@ const command: ChatInputCommand = {
               text: "Would You",
               iconURL: client?.user?.displayAvatarURL() || undefined,
             });
-            if (!guildDb.customMessages.find((c) => c.id === message)) {
-              interaction.reply({ content: "Custom message with ID: " + message  + " doesn't exist.", ephemeral: true })
-              return;
-            }
-            interaction.reply({ content: "Sucessfully deleted question with id: " + message, ephemeral: true })
-          let filtered = guildDb.customMessages.filter(
-            (c) => c.id != message,
-          );
+          if (!guildDb.customMessages.find((c) => c.id === message)) {
+            interaction.reply({
+              content: "Custom message with ID: " + message + " doesn't exist.",
+              ephemeral: true,
+            });
+            return;
+          }
+          interaction.reply({
+            content: "Sucessfully deleted question with id: " + message,
+            ephemeral: true,
+          });
+          let filtered = guildDb.customMessages.filter((c) => c.id != message);
 
           await client.database.updateGuild(
             interaction.guildId || "",
