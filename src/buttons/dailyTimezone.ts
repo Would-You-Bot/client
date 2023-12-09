@@ -50,7 +50,6 @@ function dateType(tz: string) {
 const button: Button = {
   name: "dailyTimezone",
   execute: async (interaction, client, guildDb) => {
-    await interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,

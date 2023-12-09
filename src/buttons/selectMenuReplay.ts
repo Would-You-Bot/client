@@ -32,7 +32,6 @@ function isNumericRegex(str: string) {
 const button: Button = {
   name: "selectMenuReplay",
   execute: async (interaction, client, guildDb) => {
-    interaction.showModal(modalObject);
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
