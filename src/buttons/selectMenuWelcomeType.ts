@@ -21,26 +21,16 @@ const button: Button = {
         `${client.translation.get(
           guildDb?.language,
           "Settings.embed.welcome",
-        )}: ${
-          guildDb.welcome
-            ? `<:check:1077962440815411241>`
-            : `<:x_:1077962443013238814>`
-        }\n` +
+        )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.welcomePing",
-          )}: ${
-            guildDb.welcomePing
-              ? `<:check:1077962440815411241>`
-              : `<:x_:1077962443013238814>`
-          }\n` +
+          )}: ${guildDb.welcomePing ? ":white_check_mark:" : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.welcomeChannel",
           )}: ${
-            guildDb.welcomeChannel
-              ? `<#${guildDb.welcomeChannel}>`
-              : `<:x_:1077962443013238814>`
+            guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"
           }\n` +
           `${client.translation.get(
             guildDb?.language,

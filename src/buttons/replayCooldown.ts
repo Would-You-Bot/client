@@ -7,7 +7,7 @@ import {
 import { Button } from "../models";
 const modalObject = {
   title: "Replay Cooldown",
-  custom_id: "replaymodal",
+  custom_id: "replayCooldown",
   components: [
     {
       type: 1,
@@ -30,10 +30,13 @@ function isNumericRegex(str: string) {
 const button: Button = {
   name: "replayCooldown",
   execute: async (interaction, client, guildDb) => {
+
+    await interaction.showModal(modalObject);
+
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
-        time: 60000,
+        time: 6000000,
       })
       .then(async (modalInteraction) => {
         const value = modalInteraction.components[0].components[0].value;
@@ -83,9 +86,7 @@ const button: Button = {
             )}: ${guildDb.replayType}\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.replayCooldown",
-            )}: ${
-              guildDb.replayCooldown ? `${value}` : `<:x_:1077962443013238814>`
-            }\n`,
+            )}: ${guildDb.replayCooldown ? `${Math.min(Number(value), 86400000)}` : ":x:"}\n`,
           )
           .setColor("#0598F6")
           .setFooter({
@@ -134,7 +135,7 @@ const button: Button = {
 
         await client.database.updateGuild(interaction.guild?.id || "", {
           ...guildDb,
-          replayCooldown: Number(value),
+          replayCooldown: Math.min(Number(value), 86400000),
         });
 
         (modalInteraction as any).update({

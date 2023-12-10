@@ -12,6 +12,7 @@ import HOR from "../../util/Classes/generateHOR";
 import { ChatInputCommand } from "../../models";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
 import { getHigherLower } from "../../util/Functions/jsonImport";
+import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -32,23 +33,14 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    const initembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setTitle(
-        client.translation.get(guildDb?.language, "HigherLower.initial.title"),
-      )
-      .setDescription(
-        client.translation.get(
-          guildDb?.language,
-          "HigherLower.initial.description",
-        ),
-      )
-      .setFooter({
-        text: `Requested by ${interaction.user.username}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      });
 
-    interaction.reply({ embeds: [initembed] }).then(async () => {
+    await interaction.deferReply();
+
+    const initembed = new HigherLowerEmbed(interaction, client, guildDb)
+
+    await interaction.editReply({embeds: [initembed]});
+
+
       let gameData = await getHigherLower();
 
       const random = Math.floor(Math.random() * gameData.length);
@@ -133,7 +125,6 @@ const command: ChatInputCommand = {
           components: [guessRow],
         });
       });
-    });
   },
 };
 

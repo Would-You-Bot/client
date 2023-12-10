@@ -19,22 +19,16 @@ const button: Button = {
         `${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyMsg",
-        )}: ${
-          check ? `<:x_:1077962443013238814>` : `<:check:1077962440815411241>`
-        }\n${client.translation.get(
+        )}: ${check ? ":x:" : ":white_check_mark:"}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyChannel",
         )}: ${
-          guildDb.dailyChannel
-            ? `<#${guildDb.dailyChannel}>`
-            : `<:x_:1077962443013238814>`
+          guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
         }\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyRole",
         )}: ${
-          guildDb.dailyRole
-            ? `<@&${guildDb.dailyRole}>`
-            : `<:x_:1077962443013238814>`
+          guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
         }\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyTimezone",
@@ -48,11 +42,7 @@ const button: Button = {
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyThread",
-          )}: ${
-            guildDb.dailyThread
-              ? `<:check:1077962440815411241>`
-              : `<:x_:1077962443013238814>`
-          }`,
+          )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}`,
       )
       .setColor("#0598F6");
 

@@ -24,11 +24,11 @@ const command: ChatInputCommand = {
       .setColor("#5865f4")
       .setTitle(client.translation.get(guildDb?.language, "Vote.embed.title"))
       .addFields({
-        name: "Top.gg",
+        name: "Wumpus.store",
         value: `> [ ${client.translation.get(
           guildDb?.language,
           "Vote.embed.value",
-        )}  ](https://top.gg/bot/981649513427111957/vote)`,
+        )}  ](https://wumpus.store/bot/981649513427111957/vote)`,
         inline: true,
       })
       .setThumbnail(client.user?.displayAvatarURL() || "")
