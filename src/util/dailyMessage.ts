@@ -57,7 +57,6 @@ export default class DailyMessage {
               db,
               dailyMsg: false,
             });
-            captureException(err);
           });
 
         if (!channel?.id) {
@@ -105,8 +104,11 @@ export default class DailyMessage {
                 },
                 db.dailyThread,
               )
-              .catch((err) => {
-                captureException(err);
+              .catch(async (err) => {
+                await this.client.database.updateGuild(db?.guildID || "", {
+                  db,
+                  dailyMsg: false,
+                });
               });
           }
 
@@ -138,8 +140,11 @@ export default class DailyMessage {
             },
             db.dailyThread,
           )
-          .catch((err) => {
-            captureException(err);
+          .catch(async (err) => {
+            await this.client.database.updateGuild(db?.guildID || "", {
+              db,
+              dailyMsg: false,
+            });
           });
       }, i * 2500); // We do a little timeout here to work against discord ratelimit with 50reqs/second
     }
