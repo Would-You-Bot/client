@@ -76,7 +76,7 @@ export default class LOSE {
     ctx.fillText(`Score: ${score}`, 712, 280);
     ctx.closePath();
 
-    const img =  await canvasObject.encode("png");
+    const img = await canvasObject.encode("png");
     Canvas.clearAllCache();
 
     return img;

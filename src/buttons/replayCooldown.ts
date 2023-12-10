@@ -30,7 +30,6 @@ function isNumericRegex(str: string) {
 const button: Button = {
   name: "replayCooldown",
   execute: async (interaction, client, guildDb) => {
-
     await interaction.showModal(modalObject);
 
     interaction
@@ -86,7 +85,11 @@ const button: Button = {
             )}: ${guildDb.replayType}\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.replayCooldown",
-            )}: ${guildDb.replayCooldown ? `${Math.min(Number(value), 86400000)}` : ":x:"}\n`,
+            )}: ${
+              guildDb.replayCooldown
+                ? `${Math.min(Number(value), 86400000)}`
+                : ":x:"
+            }\n`,
           )
           .setColor("#0598F6")
           .setFooter({

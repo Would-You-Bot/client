@@ -1,7 +1,4 @@
-import {
-  ButtonInteraction,
-  Interaction,
-} from "discord.js";
+import { ButtonInteraction, Interaction } from "discord.js";
 import { Event } from "../models";
 import { UserModel } from "../util/Models/userModel";
 import WouldYou from "../util/wouldYou";
@@ -64,8 +61,7 @@ const event: Event = {
         });
         return;
       });
-    }
-    else if (interaction.isButton()) {
+    } else if (interaction.isButton()) {
       const guildDb = await client.database.getGuild(
         interaction.guild?.id as string,
         true,
@@ -173,7 +169,11 @@ const event: Event = {
         interaction.customId.startsWith("higher_") ||
         interaction.customId.startsWith("lower_")
       ) {
-        return button.execute(interaction as ButtonInteraction, client, guildDb);
+        return button.execute(
+          interaction as ButtonInteraction,
+          client,
+          guildDb,
+        );
       }
 
       if (
@@ -288,7 +288,11 @@ const event: Event = {
           }
         }
 
-        return button.execute(interaction as ButtonInteraction, client, guildDb);
+        return button.execute(
+          interaction as ButtonInteraction,
+          client,
+          guildDb,
+        );
       } catch (err) {
         if (err) console.error(err);
         interaction.reply({
@@ -297,14 +301,13 @@ const event: Event = {
         });
         return;
       }
-    }
-    else if (
-      interaction.isStringSelectMenu()
-      || interaction.isUserSelectMenu()
-      || interaction.isRoleSelectMenu()
-      || interaction.isMentionableSelectMenu()
-      || interaction.isChannelSelectMenu()
-    ){
+    } else if (
+      interaction.isStringSelectMenu() ||
+      interaction.isUserSelectMenu() ||
+      interaction.isRoleSelectMenu() ||
+      interaction.isMentionableSelectMenu() ||
+      interaction.isChannelSelectMenu()
+    ) {
       const guildDb = await client.database.getGuild(
         interaction.guild?.id as string,
         true,
@@ -313,7 +316,7 @@ const event: Event = {
 
       const selectMenu = client.buttons!.get(interaction.customId);
 
-      if(!selectMenu) {
+      if (!selectMenu) {
         interaction.reply({
           content: "An error occurred while trying to execute that command.",
           ephemeral: true,

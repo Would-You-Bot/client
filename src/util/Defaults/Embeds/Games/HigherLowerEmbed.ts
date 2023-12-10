@@ -10,19 +10,18 @@ export class HigherLowerEmbed extends EmbedBuilder {
   ) {
     super();
 
-     this.setColor("#0598F6")
-      this.setTitle(
-        client.translation.get(guildDb?.language, "HigherLower.initial.title"),
-      )
-      this.setDescription(
-        client.translation.get(
-          guildDb?.language,
-          "HigherLower.initial.description",
-        ),
-      )
-      .setFooter({
-        text: "Requested by " + interaction.user.username,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      });
+    this.setColor("#0598F6");
+    this.setTitle(
+      client.translation.get(guildDb?.language, "HigherLower.initial.title"),
+    );
+    this.setDescription(
+      client.translation.get(
+        guildDb?.language,
+        "HigherLower.initial.description",
+      ),
+    ).setFooter({
+      text: "Requested by " + interaction.user.username,
+      iconURL: interaction.user.displayAvatarURL() || undefined,
+    });
   }
 }
