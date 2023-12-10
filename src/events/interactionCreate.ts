@@ -1,7 +1,6 @@
 import {
-  CacheType,
+  ButtonInteraction,
   Interaction,
-  InteractionDeferUpdateOptions,
 } from "discord.js";
 import { Event } from "../models";
 import { UserModel } from "../util/Models/userModel";
@@ -10,7 +9,7 @@ import { captureException } from "@sentry/node";
 
 const event: Event = {
   event: "interactionCreate",
-  execute: async (client: WouldYou, interaction: Interaction<CacheType>) => {
+  execute: async (client: WouldYou, interaction: Interaction) => {
     const user = await UserModel.findOne({ userID: interaction.user.id });
 
     if (!user) {
@@ -45,7 +44,7 @@ const event: Event = {
         truth: "truth.used.command",
         dare: "dare.used.command",
         random: "random.used.command",
-      } as any;
+      } as Record<string, string>;
       // Get the field path based on the command name
       const fieldPath = statsMap[interaction.commandName];
       if (fieldPath) {
@@ -65,7 +64,8 @@ const event: Event = {
         });
         return;
       });
-    } else if (interaction.isButton()) {
+    }
+    else if (interaction.isButton()) {
       const guildDb = await client.database.getGuild(
         interaction.guild?.id as string,
         true,
@@ -100,10 +100,10 @@ const event: Event = {
         truth: "truth.used.replay",
         dare: "dare.used.replay",
         random: "random.used.replay",
-      } as any;
+      } as Record<string, string>;
 
       // Get the field path based on the command name
-      const fieldPath = replyMap[(interaction as any).customId];
+      const fieldPath = replyMap[interaction.customId];
 
       if (fieldPath) {
         // Increment the specified field using $inc
@@ -173,7 +173,7 @@ const event: Event = {
         interaction.customId.startsWith("higher_") ||
         interaction.customId.startsWith("lower_")
       ) {
-        return button.execute(interaction, client, guildDb);
+        return button.execute(interaction as ButtonInteraction, client, guildDb);
       }
 
       if (
@@ -288,7 +288,7 @@ const event: Event = {
           }
         }
 
-        button.execute(interaction, client, guildDb);
+        return button.execute(interaction as ButtonInteraction, client, guildDb);
       } catch (err) {
         if (err) console.error(err);
         interaction.reply({
@@ -297,16 +297,32 @@ const event: Event = {
         });
         return;
       }
-    } else {
+    }
+    else if (
+      interaction.isStringSelectMenu()
+      || interaction.isUserSelectMenu()
+      || interaction.isRoleSelectMenu()
+      || interaction.isMentionableSelectMenu()
+      || interaction.isChannelSelectMenu()
+    ){
       const guildDb = await client.database.getGuild(
         interaction.guild?.id as string,
         true,
       );
       if (!guildDb) return;
 
-      const button = client.buttons.get((interaction as any).customId);
-      if (button)
-        return await button.execute(interaction as any, client, guildDb);
+      const selectMenu = client.buttons!.get(interaction.customId);
+
+      if(!selectMenu) {
+        interaction.reply({
+          content: "An error occurred while trying to execute that command.",
+          ephemeral: true,
+        });
+
+        return;
+      }
+
+      return selectMenu.execute(interaction as any, client, guildDb);
     }
   },
 };

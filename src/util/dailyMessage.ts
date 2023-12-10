@@ -68,8 +68,8 @@ export default class DailyMessage {
           return;
         } // Always directly return before do to many actions
 
-        var General = await getWouldYouRather(db.language);
-        var WhatYouDo = await getWwyd(db.language);
+        const General = await getWouldYouRather(db.language);
+        const WhatYouDo = await getWwyd(db.language);
 
         let randomDaily: any;
         let dailyId;
