@@ -14,8 +14,8 @@ const button: Button = {
             ? "Option 1"
             : "Option 2"
           : customId[3] == 0 || customId[2] == 0
-          ? '"have done this"'
-          : '"have not done this"'
+            ? '"have done this"'
+            : '"have not done this"'
       }.`,
       ephemeral: true,
     });
