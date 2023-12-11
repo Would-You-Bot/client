@@ -24,8 +24,8 @@ export async function fileToCollection<
                   (resp.default as Command).data != undefined
                     ? (resp.default as Command).data.name
                     : Boolean((resp.default as Event).event)
-                    ? (resp.default as Event).event
-                    : (resp.default as Interaction).name,
+                      ? (resp.default as Event).event
+                      : (resp.default as Interaction).name,
                   resp.default,
                 );
               },
@@ -43,8 +43,8 @@ export async function fileToCollection<
               (resp.default as Command).data != undefined
                 ? (resp.default as Command).data.name
                 : Boolean((resp.default as Event).event)
-                ? (resp.default as Event).event
-                : (resp.default as Interaction).name,
+                  ? (resp.default as Event).event
+                  : (resp.default as Interaction).name,
               resp.default,
             );
           },
