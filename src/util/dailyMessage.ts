@@ -17,7 +17,7 @@ export default class DailyMessage {
    */
   start() {
     new CronJob(
-      "0 */30 * * * *",
+      "0 */30 * * * *",  // Every 30 minutes, every hour, every day
       async () => {
         await this.runSchedule();
       },
@@ -32,6 +32,7 @@ export default class DailyMessage {
    * @return {Promise<void>}
    */
   async runSchedule() {
+    mom.tz.add("America/Los_Angeles|PST PDT|80 70|01010101010101010101010|1BQW0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|15e6");
     let guilds = await this.client.database.getAll();
     //guilds = guilds.filter(g => this.client.guilds.cache.has(g.guildID) && g.dailyMsg);
     guilds = guilds.filter(
