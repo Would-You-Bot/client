@@ -1,6 +1,7 @@
 import Canvas from "@napi-rs/canvas";
 import path from "path";
 import { UserModel } from "../Models/userModel";
+import WouldYou from "../wouldYou";
 
 // Import font
 Canvas.GlobalFonts.registerFromPath(
@@ -47,12 +48,58 @@ export default class LOSE {
    * @returns {Promise<Buffer>}
    */
 
-  async build(score: number) {
+  async build(score: number, client: WouldYou) {
     const user = await UserModel.findOne({ userID: this.game.creator });
+    const guild = await client.database.getGuild(this.game.guild);
 
     if (user && score > user.higherlower.highscore) {
       user.higherlower.highscore = score;
       await user.save();
+    }
+    try {
+      if (!guild?.gameScores.find((e: any) => e.userID === this.game.creator)) {
+        guild?.gameScores.push({
+          userID: this.game.creator,
+          higherlower: score,
+        });
+
+        await client.database.updateGuild(
+          this.game.guild || "",
+          {
+            ...guild,
+            gameScores: guild?.gameScores,
+          },
+          true,
+        );
+      } else if (
+        score >
+        guild?.gameScores.find((e: any) => e.userID === this.game.creator)
+          ?.higherlower!
+      ) {
+        guild.gameScores = (guild.gameScores || []).filter(
+          (gameScore: { userID: string }) =>
+            gameScore.userID !== this.game.creator,
+        );
+
+        guild.gameScores = [
+          ...(guild.gameScores || []),
+          {
+            userID: this.game.creator,
+            higherlower: score,
+          },
+        ];
+
+        await client.database.updateGuild(
+          this.game.guild || "",
+          {
+            ...guild,
+            gameScores: guild?.gameScores,
+          },
+          true,
+        );
+      }
+    } catch (e) {
+      console.log(e);
     }
 
     // Create canvas

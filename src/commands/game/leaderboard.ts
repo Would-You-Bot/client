@@ -46,143 +46,95 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     switch (interaction.options.getString("game")) {
       case "higherlower":
-        try {
-          const page = new Paginator({
-            user: interaction.user.id,
-            client,
-            timeout: 180000,
-          });
+        const page = new Paginator({
+          user: interaction.user.id,
+          client,
+          timeout: 180000,
+        });
 
-          let data2 = await UserModel.find({
-            "higherlower.highscore": { $gt: 1 },
-          }).sort({ "higherlower.highscore": -1 });
+        let data: any;
+        switch (interaction.options.getString("for")) {
+          case "global":
+            let data2 = await UserModel.find({
+              "higherlower.highscore": { $gt: 1 },
+            })
+              .sort({ "higherlower.highscore": -1 })
+              .limit(10);
 
-          (async function loop(z) {
-            let users: {
-              top: number;
-              tag: string;
-              score: number;
-              id: string;
-              avatar: string;
-            }[] = [];
-            for (let i = 0; i < 10; i++) {
-              z++;
+            data = await Promise.all(
+              data2.map(async (u: any) => {
+                const user = await client.database.getUser(u.userID, true);
+                return user?.votePrivacy
+                  ? { user: "Anonymous", score: u.higherlower.highscore }
+                  : { user: u.userID, score: u.higherlower.highscore };
+              }),
+            );
+            data = data.map(
+              (s: any, i = 1) =>
+                `${i++}. ${
+                  s.user === "Anonymous"
+                    ? `${s.user} • **${s.score}** points`
+                    : `<@${s.user}> • **${s.score}** points`
+                }`,
+            );
+            data = Array.from(
+              {
+                length: Math.ceil(data.length / 10),
+              },
+              (a, r) => data.slice(r * 10, r * 10 + 10),
+            );
 
-              let data: any = data2[z];
-              let user = await client.users.fetch(data.userID);
+            Math.ceil(data.length / 10);
+            data = data.map((e: any) =>
+              page.add(
+                new EmbedBuilder()
+                  .setTitle(`Global Leaderboard`)
+                  .setDescription(e.slice(0, 10).join("\n").toString())
+                  .setColor("#0598F6"),
+              ),
+            );
+            break;
 
-              users.push({
-                top: z,
-                avatar:
-                  user.displayAvatarURL() ||
-                  "https://cdn.discordapp.com/embed/avatars/0.png",
-                tag: user.username,
-                id: user.id,
-                score: data.higherlower.highscore,
-              });
+          case "local":
+            data = await Promise.all(
+              guildDb.gameScores.map(async (u: any) => {
+                const user = await client.database.getUser(u.userID, true);
+                return user?.votePrivacy
+                  ? { user: "Anonymous", score: u.higherlower }
+                  : { user: u.userID, score: u.higherlower };
+              }),
+            );
+            data = data.map(
+              (s: any, i = 1) =>
+                `${i++}. ${
+                  s.user === "Anonymous"
+                    ? `${s.user} • **${s.score}** points`
+                    : `<@${s.user}> • **${s.score}** points`
+                }`,
+            );
+            data = Array.from(
+              {
+                length: Math.ceil(data.length / 10),
+              },
+              (a, r) => data.slice(r * 10, r * 10 + 10),
+            );
 
-              if (z === 9) {
-                if (!users.find((a: any) => a.id === interaction.user.id)) {
-                  let interactData = data2.find(
-                    (e: any) => e.userID === interaction.user.id,
-                  );
-                  users.push({
-                    top: data2.findIndex(
-                      (e) =>
-                        e.higherlower.highscore ===
-                        interactData?.higherlower.highscore,
-                    ),
-                    avatar: interaction.user.displayAvatarURL(),
-                    tag: interaction.user.username,
-                    id: interaction.user.id,
-                    score: interactData?.higherlower.highscore as number,
-                  });
-                } else {
-                  z++;
-
-                  let data: any = data2[z];
-                  let user = await client.users.fetch(data.userID);
-
-                  users.push({
-                    top: z,
-                    avatar:
-                      user.displayAvatarURL() ||
-                      "https://cdn.discordapp.com/embed/avatars/0.png",
-                    tag: user.username,
-                    id: user.id,
-                    score: data.higherlower.highscore,
-                  });
-                }
-
-                const leaderboard = new Leaderboard()
-                  .setOpacity(0.7)
-                  .setScoreMessage("Highest Score:")
-                  .addBachground(
-                    "image",
-                    "https://i.imgur.com/h3b4KZI_d.webp?maxwidth=760&fidelity=grand",
-                  )
-                  .setColors({
-                    box: "#212121",
-                    username: "#ffffff",
-                    score: "#ffffff",
-                    firstRank: "#FFD700",
-                    secondRank: "#C0C0C0",
-                    thirdRank: "#CD7F32",
-                  })
-                  .addUserData(users);
-
-                const imageBuffer = await leaderboard.build();
-
-                const image = new AttachmentBuilder(imageBuffer, {
-                  name: "leaderboard.png",
-                });
-
-                page.add(
-                  new EmbedBuilder()
-                    .setTitle(`Leaderboard`)
-                    .setImage("attachment://leaderboard.png")
-                    .setColor("#F00605"),
-                  image,
-                );
-
-                return page.start(interaction, null);
-              }
-
-              // if (z === 9) {
-              //   return page.start(interaction, null);
-              // }
-            }
-            setTimeout(function () {
-              users = [];
-              loop(z);
-            }, 500);
-          })(0);
-        } catch (e) {
-          console.log(e);
+            Math.ceil(data.length / 10);
+            data = data.map((e: any) =>
+              page.add(
+                new EmbedBuilder()
+                  .setTitle(`Guild Leaderboard`)
+                  .setDescription(e.slice(0, 10).join("\n").toString())
+                  .setColor("#0598F6"),
+              ),
+            );
+            break;
         }
-        // data2 = data2.map((e: any) =>
-        //   page.add(
-        //     new EmbedBuilder()
-        //       .setTitle(`Voted for Option 2`)
-        //       .setDescription(e.slice(0, 10).join("\n").toString())
-        //       .setColor("#F00605"),
-        //     null,
-        //   ),
-        // );
 
-        // leaderboard.build().then((img: any) => {
-        //   write("./src/data/Images/leaderboard.png", img);
-        // });
-
-        // const a = new AttachmentBuilder("./src/data/Images/leaderboard.png");
-        // const e = new EmbedBuilder()
-        //   .setColor("#0598F6")
-        //   .setImage("attachment://leaderboard.png");
-        // interaction.reply({ embeds: [e], files: [a] });
-
+        page.start(interaction, null);
         break;
     }
-  },
+  }
 };
 
 export default command;

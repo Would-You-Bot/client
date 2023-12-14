@@ -10,7 +10,7 @@ const button: Button = {
   name: "paginateNext",
   execute: async (interaction, client, guildDb) => {
     let paginate = client.paginate.get(
-      `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+      `${interaction.user.id}-${interaction.message.interaction?.id}`,
     );
 
     if (!paginate)
@@ -65,11 +65,11 @@ const button: Button = {
       const time = setTimeout(() => {
         if (
           client.paginate.get(
-            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+            `${interaction.user.id}-${interaction.message.interaction?.id}`,
           )
         )
           client.paginate.delete(
-            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+            `${interaction.user.id}-${interaction.message.interaction?.id}`,
           );
       }, paginate.time);
       paginate.timeout = time;
@@ -109,11 +109,11 @@ const button: Button = {
       const time = setTimeout(() => {
         if (
           client.paginate.get(
-            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+            `${interaction.user.id}-${interaction.message.interaction?.id}`,
           )
         )
           client.paginate.delete(
-            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+            `${interaction.user.id}-${interaction.message.interaction?.id}`,
           );
       }, paginate.time);
       paginate.timeout = time;

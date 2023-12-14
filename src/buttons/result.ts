@@ -17,12 +17,12 @@ const button: Button = {
     }
 
     let paginate = client.paginate.get(
-      `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+      `${interaction.user.id}-${interaction.message.interaction?.id}`,
     );
     if (paginate) {
       clearTimeout(paginate.timeout);
       client.paginate.delete(
-        `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+        `${interaction.user.id}-${interaction.message.interaction?.id}`,
       );
     }
 
@@ -40,7 +40,6 @@ const button: Button = {
             ? "#0091ff"
             : "#f00404",
         ),
-      null,
     );
 
     let data: any;
@@ -68,7 +67,6 @@ const button: Button = {
           .setTitle(`Voted for Option 1`)
           .setDescription(e.slice(0, 10).join("\n").toString())
           .setColor("#0598F6"),
-        null,
       ),
     );
 
@@ -97,7 +95,6 @@ const button: Button = {
           .setTitle(`Voted for Option 2`)
           .setDescription(e.slice(0, 10).join("\n").toString())
           .setColor("#F00605"),
-        null,
       ),
     );
 

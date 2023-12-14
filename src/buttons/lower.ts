@@ -149,7 +149,7 @@ const button: Button = {
       const gameImage = new LOSE();
       gameImage.setGame(game);
 
-      gameImage.build(game?.score || 0).then((image) => {
+      gameImage.build(game?.score || 0, client).then((image) => {
         interaction.editReply({
           embeds: [loseEmbed],
           files: [
