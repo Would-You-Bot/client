@@ -30,6 +30,7 @@ export interface IGuildModel {
   }>;
   customTypes: string;
   debugMode: boolean;
+  lastUsageTimestamp: number;
 }
 
 const guildProfileSchema = new Schema(
@@ -124,6 +125,10 @@ const guildProfileSchema = new Schema(
     debugMode: {
       type: Boolean,
       default: false,
+    },
+    lastUsageTimestamp: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true },
