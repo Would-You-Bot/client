@@ -3,11 +3,18 @@ import { captureException } from "@sentry/node";
 import "dotenv/config";
 import WouldYou from "../util/wouldYou";
 import { Event } from "../models";
+import { GuildModel } from "../util/Models/guildModel";
+import { WebhookCache } from "../util/Models/webhookCache";
+
 
 const event: Event = {
   event: "guildDelete",
   execute: async (client: WouldYou, guild: Guild) => {
     if (!guild?.name) return;
+
+    const guildData = await GuildModel.findOneAndUpdate({ guildID: guild.id, dailyMsg: true }, { dailyMsg: false });
+
+    await WebhookCache.findOneAndDelete({ channelId: guildData?.dailyChannel });
 
     // Only delete the guild settings from the cache we don't want a data lose but also don't need not used data in the cache :)
     await client.database.deleteGuild(guild?.id, true);
