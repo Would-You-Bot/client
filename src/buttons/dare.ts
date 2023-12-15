@@ -5,6 +5,7 @@ import {
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
   bold,
+  ButtonInteraction,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";

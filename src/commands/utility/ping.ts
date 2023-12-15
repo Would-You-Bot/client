@@ -31,7 +31,7 @@ const command: ChatInputCommand = {
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(guildDb?.language, "Ping.embed.footer"),
-        iconURL: client.user?.avatarURL() || undefined,
+        iconURL: client?.user?.displayAvatarURL() || undefined,
       })
       .setTimestamp()
       .setTitle(client.translation.get(guildDb?.language, "Ping.embed.title"))

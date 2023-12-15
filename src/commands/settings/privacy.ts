@@ -49,7 +49,7 @@ const command: ChatInputCommand = {
           guildDb?.language,
           "Settings.embed.footer",
         ),
-        iconURL: client.user?.avatarURL() || undefined,
+        iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
     const button =

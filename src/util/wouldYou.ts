@@ -52,7 +52,6 @@ export default class WouldYou extends Client {
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildMessageReactions,
       ],
       makeCache: (manager) => {
         switch (manager.name) {

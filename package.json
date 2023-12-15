@@ -37,14 +37,14 @@
   "dependencies": {
     "@discordjs/rest": "^2.2.0",
     "@napi-rs/canvas": "^0.1.44",
-    "@sentry/node": "^7.80.1",
+    "@sentry/node": "^7.86.0",
     "@top-gg/sdk": "^3.1.5",
     "axios": "^1.6.2",
     "canvabase": "^1.1.1",
     "chalk-advanced": "^1.0.3",
     "cron": "^3.1.6",
     "cryptr": "^6.3.0",
-    "discord-api-types": "^0.37.63",
+    "discord-api-types": "^0.37.66",
     "discord-hybrid-sharding": "^2.1.4",
     "discord.js": "^14.14.1",
     "dotenv": "^16.0.3",
@@ -58,11 +58,11 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.20",
+    "@types/express": "^4.17.21",
     "@types/uuid": "^9.0.5",
     "copyfiles": "^2.4.1",
     "nodemon": "3.0.1",
-    "prettier": "^3.0.2",
+    "prettier": "^3.1.0",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"
   }

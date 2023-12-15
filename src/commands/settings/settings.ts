@@ -59,26 +59,18 @@ const command: ChatInputCommand = {
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.dailyMsg",
-              )}: ${
-                guildDb.dailyMsg
-                  ? `<:check:1077962440815411241>`
-                  : `<:x_:1077962443013238814>`
-              }\n` +
+              )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}\n` +
                 `${client.translation.get(
                   guildDb?.language,
                   "Settings.embed.dailyChannel",
                 )}: ${
-                  guildDb.dailyChannel
-                    ? `<#${guildDb.dailyChannel}>`
-                    : `<:x_:1077962443013238814>`
+                  guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
                 }\n` +
                 `${client.translation.get(
                   guildDb?.language,
                   "Settings.embed.dailyRole",
                 )}: ${
-                  guildDb.dailyRole
-                    ? `<@&${guildDb.dailyRole}>`
-                    : `<:x_:1077962443013238814>`
+                  guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
                 }\n` +
                 `${client.translation.get(
                   guildDb?.language,
@@ -95,11 +87,7 @@ const command: ChatInputCommand = {
                 `${client.translation.get(
                   guildDb?.language,
                   "Settings.embed.dailyThread",
-                )}: ${
-                  guildDb.dailyThread
-                    ? `<:check:1077962440815411241>`
-                    : `<:x_:1077962443013238814>`
-                }`,
+                )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}`,
             )
             .setColor("#0598F6");
           const dailyButtons =
@@ -257,7 +245,7 @@ const command: ChatInputCommand = {
                 guildDb?.language,
                 "Settings.embed.footer",
               ),
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
 
           const generalButtons =
@@ -340,26 +328,18 @@ const command: ChatInputCommand = {
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.welcome",
-              )}: ${
-                guildDb.welcome
-                  ? `<:check:1077962440815411241>`
-                  : `<:x_:1077962443013238814>`
-              }\n` +
+              )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n` +
                 `${client.translation.get(
                   guildDb?.language,
                   "Settings.embed.welcomePing",
-                )}: ${
-                  guildDb.welcomePing
-                    ? `<:check:1077962440815411241>`
-                    : `<:x_:1077962443013238814>`
-                }\n` +
+                )}: ${guildDb.welcomePing ? ":white_check_mark:" : ":x:"}\n` +
                 `${client.translation.get(
                   guildDb?.language,
                   "Settings.embed.welcomeChannel",
                 )}: ${
                   guildDb.welcomeChannel
                     ? `<#${guildDb.welcomeChannel}>`
-                    : `<:x_:1077962443013238814>`
+                    : ":x:"
                 }\n` +
                 `${client.translation.get(
                   guildDb?.language,
@@ -373,7 +353,7 @@ const command: ChatInputCommand = {
                 guildDb?.language,
                 "Settings.embed.footer",
               ),
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
 
           const welcomeButtons =

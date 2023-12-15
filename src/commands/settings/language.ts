@@ -59,7 +59,7 @@ const command: ChatInputCommand = {
             .setDescription("English has been selected as the new language!")
             .setFooter({
               text: "Would You",
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
           break;
         }
@@ -78,7 +78,7 @@ const command: ChatInputCommand = {
             .setDescription("Deutsch wurde als neue Sprache ausgewählt!")
             .setFooter({
               text: "Would You",
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
           break;
         }
@@ -97,7 +97,7 @@ const command: ChatInputCommand = {
             .setDescription("¡Has seleccionado el español como nuevo idioma!")
             .setFooter({
               text: "Would You",
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
           break;
         }
@@ -116,7 +116,7 @@ const command: ChatInputCommand = {
             .setDescription("Français a été sélectionné comme nouvelle langue!")
             .setFooter({
               text: "Would You",
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
           break;
         }

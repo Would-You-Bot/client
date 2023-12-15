@@ -159,7 +159,6 @@ const command: ChatInputCommand = {
               newID,
               guildDb,
             );
-
           typeEmbed = new EmbedBuilder()
             .setTitle(
               client.translation.get(
@@ -182,14 +181,14 @@ const command: ChatInputCommand = {
                                 "wyCustom.success.embedAdd.descWYR",
                               )
                             : generativeText?.type === "wwyd"
-                            ? client.translation.get(
-                                guildDb?.language,
-                                "wyCustom.success.embedAdd.descWWYD",
-                              )
-                            : client.translation.get(
-                                guildDb?.language,
-                                "wyCustom.success.embedAdd.descNHIE",
-                              ),
+                              ? client.translation.get(
+                                  guildDb?.language,
+                                  "wyCustom.success.embedAdd.descWWYD",
+                                )
+                              : client.translation.get(
+                                  guildDb?.language,
+                                  "wyCustom.success.embedAdd.descNHIE",
+                                ),
                       },
                     )}\n\n`
                   : ""
@@ -213,7 +212,7 @@ const command: ChatInputCommand = {
                     )}`
                   : ""
               }`,
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
 
           guildDb.customMessages.push({
@@ -222,18 +221,14 @@ const command: ChatInputCommand = {
             type: option,
           });
 
-          await client.database
-            .updateGuild(
-              interaction.guildId || "",
-              {
-                ...guildDb,
-                customMessages: guildDb.customMessages,
-              },
-              true,
-            )
-            .catch((err) => {
-              console.log(err);
-            });
+          await client.database.updateGuild(
+            interaction.guildId || "",
+            {
+              ...guildDb,
+              customMessages: guildDb.customMessages,
+            },
+            true,
+          );
 
           const add =
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -279,7 +274,6 @@ const command: ChatInputCommand = {
           return;
         case "remove":
           message = interaction.options.getString("message");
-
           typeEmbed = new EmbedBuilder()
             .setTitle(
               client.translation.get(
@@ -290,21 +284,20 @@ const command: ChatInputCommand = {
             .setColor("#0598F4")
             .setFooter({
               text: "Would You",
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
-
-          if (
-            !guildDb.customMessages.find((c) => c.id.toString() === message)
-          ) {
+          if (!guildDb.customMessages.find((c) => c.id === message)) {
             interaction.reply({
+              content: "Custom message with ID: " + message + " doesn't exist.",
               ephemeral: true,
-              content: "There is no custom WouldYou message with that ID!",
             });
             return;
           }
-          let filtered = guildDb.customMessages.filter(
-            (c) => c.id.toString() != message,
-          );
+          interaction.reply({
+            content: "Sucessfully deleted question with id: " + message,
+            ephemeral: true,
+          });
+          let filtered = guildDb.customMessages.filter((c) => c.id != message);
 
           await client.database.updateGuild(
             interaction.guildId || "",
@@ -337,7 +330,7 @@ const command: ChatInputCommand = {
             .setColor("#0598F4")
             .setFooter({
               text: "Would You",
-              iconURL: client.user?.avatarURL() || undefined,
+              iconURL: client?.user?.displayAvatarURL() || undefined,
             });
 
           const button =

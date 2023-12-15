@@ -147,7 +147,7 @@ export default class TranslationHandler {
     if (!c) return path;
 
     if (data) {
-      return c.replace(
+      return c?.replace(
         /{(\w+)}/g,
         (match: string, key: string) => data[key] ?? match,
       );

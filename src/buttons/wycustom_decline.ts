@@ -19,7 +19,7 @@ const button: Button = {
       .setColor("#0598F4")
       .setFooter({
         text: "Would You",
-        iconURL: client.user?.avatarURL() || undefined,
+        iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
     const button =
