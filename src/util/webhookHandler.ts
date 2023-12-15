@@ -22,7 +22,8 @@ export default class WebhookHandler {
   }
 
   updateLastUsed(token: string) {
-    this.webhookModel.findOneAndUpdate({ webhookToken: cryptr.encrypt(token) }, { lastUsageTimestamp: Date.now() });
+    this.webhookModel.findOneAndUpdate({ webhookToken: cryptr.encrypt(token) }, { lastUsageTimestamp: Date.now() }).then(() => {
+    });
   }
 
   /**
