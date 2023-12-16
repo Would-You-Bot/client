@@ -5,6 +5,7 @@ import { CronJob } from "cron";
 import { captureException } from "@sentry/node";
 import WouldYou from "./wouldYou";
 import { getWouldYouRather, getWwyd } from "./Functions/jsonImport";
+
 export default class DailyMessage {
   private client: WouldYou;
 
@@ -86,9 +87,9 @@ export default class DailyMessage {
               db.customMessages.filter((c) => c.type !== "nsfw")[
                 Math.floor(
                   Math.random() *
-                    db.customMessages.filter((c) => c.type !== "nsfw").length,
+                  db.customMessages.filter((c) => c.type !== "nsfw").length,
                 )
-              ].msg,
+                ].msg,
             );
           } else {
             randomDaily = [...General, ...WhatYouDo];
@@ -118,9 +119,9 @@ export default class DailyMessage {
           randomDaily = db.customMessages.filter((c) => c.type !== "nsfw")[
             Math.floor(
               Math.random() *
-                db.customMessages.filter((c) => c.type !== "nsfw").length,
+              db.customMessages.filter((c) => c.type !== "nsfw").length,
             )
-          ].msg;
+            ].msg;
         }
 
         dailyId = Math.floor(Math.random() * randomDaily.length);
@@ -149,6 +150,10 @@ export default class DailyMessage {
               dailyMsg: false,
             });
           });
+
+        await this.client.database.updateGuild(db?.guildID, {
+          lastUsageTimestamp: Date.now(),
+        });
       }, i * 2500); // We do a little timeout here to work against discord ratelimit with 50reqs/second
     }
   }
