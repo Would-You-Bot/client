@@ -269,14 +269,14 @@
       "dailyType": "Définir le type",
       "welcomeTest": "Envoyer le test",
       "dailyThread": "Activer/désactiver les fils",
-      "dailyMsg": "Activer/désactiver les messages quotidiens",
+      "dailyMsg": "Messages quotidiens",
       "replayCooldown": "Définir le cooldown de la relecture",
       "replayDeleteChannels": "Supprimer les salons de rediffusion",
       "replayType": "Type de rediffusion",
       "replayBy": "Rejouer par",
       "welcomeChannel": "Définir le salon",
-      "welcome": "Activer/désactiver les accueils",
-      "welcomePing": "Activer/désactiver le ping de l'utilisateur"
+      "welcome": "Accueils",
+      "welcomePing": "Ping de l'utilisateur"
     },
     "modal": {
       "dailyIntervalTitle": "Heure de publication quotidienne",

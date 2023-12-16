@@ -58,55 +58,44 @@ const command: ChatInputCommand = {
             .setDescription(
               `${client.translation.get(
                 guildDb?.language,
+                "Settings.embed.dailyChannel",
+              )}: ${
+                guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
+              }\n` +
+              `${client.translation.get(
+                guildDb?.language,
+                "Settings.embed.dailyRole",
+              )}: ${
+                guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
+              }\n` +
+              `${client.translation.get(
+                guildDb?.language,
+                "Settings.embed.dailyType",
+              )}: ${guildDb?.customTypes}\n` +
+              `${client.translation.get(
+                guildDb?.language,
+                "Settings.embed.dailyTimezone",
+              )}: ${guildDb.dailyTimezone}\n` +
+              `${client.translation.get(
+                guildDb?.language,
+                "Settings.embed.dailyInterval",
+              )}: ${guildDb.dailyInterval}\n` +
+              `${client.translation.get(
+                guildDb?.language,
+                "Settings.embed.dailyThread",
+              )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}\n` +
+              `${client.translation.get(
+                guildDb?.language,
                 "Settings.embed.dailyMsg",
-              )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}\n` +
-                `${client.translation.get(
-                  guildDb?.language,
-                  "Settings.embed.dailyChannel",
-                )}: ${
-                  guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
-                }\n` +
-                `${client.translation.get(
-                  guildDb?.language,
-                  "Settings.embed.dailyRole",
-                )}: ${
-                  guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
-                }\n` +
-                `${client.translation.get(
-                  guildDb?.language,
-                  "Settings.embed.dailyTimezone",
-                )}: ${guildDb.dailyTimezone}\n` +
-                `${client.translation.get(
-                  guildDb?.language,
-                  "Settings.embed.dailyInterval",
-                )}: ${guildDb.dailyInterval}\n` +
-                `${client.translation.get(
-                  guildDb?.language,
-                  "Settings.embed.dailyType",
-                )}: ${guildDb?.customTypes}\n` +
-                `${client.translation.get(
-                  guildDb?.language,
-                  "Settings.embed.dailyThread",
-                )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}`,
-            )
+              )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
+            )      
+            
             .setColor("#0598F6");
           const dailyButtons =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
-                  .setCustomId("dailyMsg")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyMsg",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.dailyMsg
-                      ? ButtonStyle.Success
-                      : ButtonStyle.Secondary,
-                  ),
-                new ButtonBuilder()
                   .setCustomId("dailyChannel")
+                  .setEmoji("1185712711770837102")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -115,34 +104,12 @@ const command: ChatInputCommand = {
                   )
                   .setStyle(
                     guildDb.dailyChannel
-                      ? ButtonStyle.Success
+                      ? ButtonStyle.Primary
                       : ButtonStyle.Secondary,
                   ),
                 new ButtonBuilder()
-                  .setCustomId("dailyType")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyType",
-                    ),
-                  )
-                  .setStyle(ButtonStyle.Primary)
-                  .setEmoji("📝"),
-              ),
-            dailyButtons2 =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setCustomId("dailyTimezone")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyTimezone",
-                    ),
-                  )
-                  .setStyle(ButtonStyle.Primary)
-                  .setEmoji("🌍"),
-                new ButtonBuilder()
                   .setCustomId("dailyRole")
+                  .setEmoji("1185712710634192956")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -151,24 +118,54 @@ const command: ChatInputCommand = {
                   )
                   .setStyle(
                     guildDb.dailyRole
-                      ? ButtonStyle.Success
+                      ? ButtonStyle.Primary
                       : ButtonStyle.Secondary,
                   ),
                 new ButtonBuilder()
+                  .setCustomId("dailyType")
+                  .setEmoji("1185712708704813076")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyType",
+                    ),
+                  )
+                  .setStyle(ButtonStyle.Primary),
+              ),
+            dailyButtons2 =
+              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                new ButtonBuilder()
+                  .setCustomId("dailyTimezone")
+                  .setEmoji("1185712707652047041")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyTimezone",
+                    ),
+                  )
+                  .setStyle(guildDb.dailyTimezone
+                    ? ButtonStyle.Success
+                    : ButtonStyle.Secondary,
+                ),
+                new ButtonBuilder()
                   .setCustomId("dailyInterval")
+                  .setEmoji("1185712706678960128")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
                       "Settings.button.dailyInterval",
                     ),
                   )
-                  .setStyle(ButtonStyle.Primary)
-                  .setEmoji("⏰"),
+                  .setStyle(guildDb.dailyInterval
+                    ? ButtonStyle.Success
+                    : ButtonStyle.Secondary,
+                ),
               ),
             dailyButtons3 =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
                   .setCustomId("dailyThread")
+                  .setEmoji("1185712704913154078")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -180,17 +177,28 @@ const command: ChatInputCommand = {
                       ? ButtonStyle.Success
                       : ButtonStyle.Secondary,
                   ),
+                  new ButtonBuilder()
+                  .setCustomId("dailyMsg")
+                  .setEmoji("1185712703851987094")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyMsg",
+                    ),
+                  )
+                  .setStyle(
+                    guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
+                  ),
               );
-
-          interaction
-            .reply({
-              embeds: [dailyMsgs],
-              components: [dailyButtons, dailyButtons2, dailyButtons3],
-              ephemeral: true,
-            })
-            .catch((err) => {
-              captureException(err);
-            });
+            interaction
+              .reply({
+                embeds: [dailyMsgs],
+                components: [dailyButtons, dailyButtons2, dailyButtons3],
+                ephemeral: true,
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           break;
 
         case "general":

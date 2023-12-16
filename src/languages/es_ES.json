@@ -269,14 +269,14 @@
       "dailyType": "Definir tipo",
       "welcomeTest": "Enviar Prueba",
       "dailyThread": "Hilo conductor",
-      "dailyMsg": "Alternar Mensajes Diarios",
+      "dailyMsg": "Mensajes Diarios",
       "replayCooldown": "Establecer tiempo de reutilización",
       "replayDeleteChannels": "Eliminar canales de repetición",
       "replayType": "Modo de repetición",
       "replayBy": "Reproducir por",
       "welcomeChannel": "Establecer canal",
-      "welcome": "Alternar Bienvenidas",
-      "welcomePing": "Alternar ping de usuario"
+      "welcome": "Bienvenidas",
+      "welcomePing": "Ping de usuario"
     },
     "modal": {
       "dailyIntervalTitle": "Hora de publicación diaria",
