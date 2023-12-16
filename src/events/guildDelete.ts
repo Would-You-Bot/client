@@ -6,13 +6,15 @@ import { Event } from "../models";
 import { GuildModel } from "../util/Models/guildModel";
 import { WebhookCache } from "../util/Models/webhookCache";
 
-
 const event: Event = {
   event: "guildDelete",
   execute: async (client: WouldYou, guild: Guild) => {
     if (!guild?.name) return;
 
-    const guildData = await GuildModel.findOneAndUpdate({ guildID: guild.id, dailyMsg: true }, { dailyMsg: false });
+    const guildData = await GuildModel.findOneAndUpdate(
+      { guildID: guild.id, dailyMsg: true },
+      { dailyMsg: false },
+    );
 
     await WebhookCache.findOneAndDelete({ channelId: guildData?.dailyChannel });
 
