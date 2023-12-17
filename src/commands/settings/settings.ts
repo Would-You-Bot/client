@@ -62,40 +62,40 @@ const command: ChatInputCommand = {
               )}: ${
                 guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
               }\n` +
-              `${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.dailyRole",
-              )}: ${
-                guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
-              }\n` +
-              `${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.dailyType",
-              )}: ${guildDb?.customTypes}\n` +
-              `${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.dailyTimezone",
-              )}: ${guildDb.dailyTimezone}\n` +
-              `${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.dailyInterval",
-              )}: ${guildDb.dailyInterval}\n` +
-              `${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.dailyThread",
-              )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}\n` +
-              `${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.dailyMsg",
-              )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
-            )      
-            
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.dailyRole",
+                )}: ${
+                  guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
+                }\n` +
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.dailyType",
+                )}: ${guildDb?.customTypes}\n` +
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.dailyTimezone",
+                )}: ${guildDb.dailyTimezone}\n` +
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.dailyInterval",
+                )}: ${guildDb.dailyInterval}\n` +
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.dailyThread",
+                )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}\n` +
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.dailyMsg",
+                )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
+            )
+
             .setColor("#0598F6");
           const dailyButtons =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
                   .setCustomId("dailyChannel")
-                  .setEmoji("1185712711770837102")
+                  .setEmoji("1185973667973320775")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -109,7 +109,7 @@ const command: ChatInputCommand = {
                   ),
                 new ButtonBuilder()
                   .setCustomId("dailyRole")
-                  .setEmoji("1185712710634192956")
+                  .setEmoji("1185973666811478117")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -123,7 +123,7 @@ const command: ChatInputCommand = {
                   ),
                 new ButtonBuilder()
                   .setCustomId("dailyType")
-                  .setEmoji("1185712708704813076")
+                  .setEmoji("1185973664538177557")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -136,7 +136,7 @@ const command: ChatInputCommand = {
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
                   .setCustomId("dailyTimezone")
-                  .setEmoji("1185712707652047041")
+                  .setEmoji("1185973663674150912")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -149,7 +149,7 @@ const command: ChatInputCommand = {
                 ),
                 new ButtonBuilder()
                   .setCustomId("dailyInterval")
-                  .setEmoji("1185712706678960128")
+                  .setEmoji("1185973661736374405")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -165,7 +165,7 @@ const command: ChatInputCommand = {
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
                   .setCustomId("dailyThread")
-                  .setEmoji("1185712704913154078")
+                  .setEmoji("1185973669059633304")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -179,7 +179,7 @@ const command: ChatInputCommand = {
                   ),
                   new ButtonBuilder()
                   .setCustomId("dailyMsg")
-                  .setEmoji("1185712703851987094")
+                  .setEmoji("1185973660465500180")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
