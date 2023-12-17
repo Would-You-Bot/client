@@ -22,8 +22,12 @@ export default class WebhookHandler {
   }
 
   updateLastUsed(token: string) {
-    this.webhookModel.findOneAndUpdate({ webhookToken: cryptr.encrypt(token) }, { lastUsageTimestamp: Date.now() }).then(() => {
-    });
+    this.webhookModel
+      .findOneAndUpdate(
+        { webhookToken: cryptr.encrypt(token) },
+        { lastUsageTimestamp: Date.now() },
+      )
+      .then(() => {});
   }
 
   /**
@@ -211,10 +215,10 @@ export default class WebhookHandler {
             .setColor("#FE0001")
             .setDescription(
               "🛑 " +
-              this.c.translation.get(
-                guildSettings?.language ?? "en_EN",
-                "webhookManager.noWebhook",
-              ),
+                this.c.translation.get(
+                  guildSettings?.language ?? "en_EN",
+                  "webhookManager.noWebhook",
+                ),
             ),
         ];
 

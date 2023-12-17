@@ -67,7 +67,10 @@ export default class DatabaseHandler {
    * @returns {this.guildModel}
    * @private
    */
-  async fetchGuild(guildId: number | string, createIfNotFound: boolean = false) {
+  async fetchGuild(
+    guildId: number | string,
+    createIfNotFound: boolean = false,
+  ) {
     const fetched = await this.guildModel.findOne({ guildID: guildId });
 
     if (fetched) return fetched;
