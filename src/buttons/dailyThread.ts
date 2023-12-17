@@ -10,7 +10,6 @@ import { Button } from "../models";
 const button: Button = {
   name: "dailyThread",
   execute: async (interaction, client, guildDb) => {
-    const check = guildDb.dailyThread;
     const dailyThreads = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.dailyTitle"),
@@ -43,7 +42,7 @@ const button: Button = {
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyThread",
-          )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}\n` +
+          )}: ${guildDb.dailyThread ? ":x:" : ":white_check_mark:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyMsg",
@@ -134,8 +133,8 @@ const button: Button = {
           )
           .setStyle(
             guildDb.dailyThread
-              ? ButtonStyle.Success
-              : ButtonStyle.Secondary,
+              ? ButtonStyle.Secondary
+              : ButtonStyle.Success,
           ),
           new ButtonBuilder()
           .setCustomId("dailyMsg")
@@ -153,7 +152,7 @@ const button: Button = {
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
-      dailyThread: check ? false : true,
+      dailyThread: !guildDb.dailyThread,
     });
 
     interaction.update({

@@ -19,15 +19,11 @@ const button: Button = {
         `${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyChannel",
-        )}: ${
-          guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
-        }\n` +
+        )}: <#${newChannel}>\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyRole",
-          )}: ${
-            guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
-          }\n` +
+          )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyType",

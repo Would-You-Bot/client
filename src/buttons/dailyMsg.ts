@@ -10,7 +10,6 @@ import { Button } from "../models";
 const button: Button = {
   name: "dailyMsg",
   execute: async (interaction, client, guildDb) => {
-    const check = guildDb.dailyMsg;
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.dailyTitle"),
@@ -43,7 +42,7 @@ const button: Button = {
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyMsg",
-          )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
+          )}: ${guildDb.dailyMsg ? ":x:" : ":white_check_mark:"}`,
       )
       .setColor("#0598F6");
 
@@ -143,13 +142,13 @@ const button: Button = {
             ),
           )
           .setStyle(
-            guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
+            guildDb.dailyMsg ? ButtonStyle.Secondary : ButtonStyle.Success,
           ),
       );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
-      dailyMsg: check ? false : true,
+      dailyMsg: !guildDb.dailyMsg,
     });
 
     interaction.update({
