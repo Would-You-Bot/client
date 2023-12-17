@@ -125,18 +125,18 @@ const command: ChatInputCommand = {
     ) {
       switch (interaction.options.getSubcommand()) {
         case "add":
-          // if (!client.voteLogger.votes.has(interaction.user.id)) {
-          //   if (guildDb.customMessages.length >= 500) {
-          //     interaction.reply({
-          //       ephemeral: true,
-          //       content: client.translation.get(
-          //         guildDb?.language,
-          //         "wyCustom.error.maximum",
-          //       ),
-          //     });
-          //     return;
-          //   }
-          // }
+          if (!client.voteLogger.votes.has(interaction.user.id)) {
+            if (guildDb.customMessages.length >= 500) {
+              interaction.reply({
+                ephemeral: true,
+                content: client.translation.get(
+                  guildDb?.language,
+                  "wyCustom.error.maximum",
+                ),
+              });
+              return;
+            }
+          }
 
           const option =
             interaction?.options?.getString("options")?.toLowerCase() || "";
@@ -360,10 +360,14 @@ const command: ChatInputCommand = {
             return;
           }
 
-          let paginate = client.paginate.get(`${interaction.user.id}-custom`);
+          let paginate = client.paginate.get(
+            `${interaction.user.id}-custom`,
+          );
           if (paginate) {
             clearTimeout(paginate.timeout);
-            client.paginate.delete(`${interaction.user.id}-custom`);
+            client.paginate.delete(
+              `${interaction.user.id}-custom`,
+            );
           }
 
           const page = new Paginator({

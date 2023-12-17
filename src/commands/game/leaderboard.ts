@@ -7,7 +7,7 @@ import {
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../models";
 import Paginator from "../../util/pagination";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -59,7 +59,7 @@ const command: ChatInputCommand = {
               "higherlower.highscore": { $gt: 1 },
             })
               .sort({ "higherlower.highscore": -1 })
-              .limit(10);
+              .limit(9);
 
             data = await Promise.all(
               data2.map(async (u: any) => {
@@ -77,23 +77,28 @@ const command: ChatInputCommand = {
                     : `<@${s.user}> • **${s.score}** points`
                 }`,
             );
-            data = Array.from(
-              {
-                length: Math.ceil(data.length / 10),
-              },
-              (a, r) => data.slice(r * 10, r * 10 + 10),
+
+            page.add(
+              new EmbedBuilder()
+                .setTitle(`Global Leaderboard`)
+                .setDescription(
+                  data
+                    .join("\n")
+                    .toString(),
+                )
+                .setColor("#0598F6"),
             );
 
-            Math.ceil(data.length / 10);
-            data = data.map((e: any) =>
-              page.add(
-                new EmbedBuilder()
-                  .setTitle(`Global Leaderboard`)
-                  .setDescription(e.slice(0, 10).join("\n").toString())
-                  .setColor("#0598F6"),
-              ),
-            );
-            break;
+            data = Math.round((await UserModel.find({
+              "higherlower.highscore": { $gt: 1 },
+            }).countDocuments()) / 10) - 1
+
+            for (let i = 0; i < data; i++) {
+              page.add(new EmbedBuilder()
+              .setTitle(`Global Leaderboard`)
+              .setColor("#0598F6"))
+            }
+              break;
 
           case "local":
             data = await Promise.all(
@@ -131,7 +136,7 @@ const command: ChatInputCommand = {
             break;
         }
 
-        page.start(interaction, null);
+        page.start(interaction, "leaderboard");
         break;
     }
   }

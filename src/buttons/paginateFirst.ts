@@ -14,6 +14,9 @@ const button: Button = {
     );
 
     if (!paginate)
+      paginate = client.paginate.get(`${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`);
+
+    if (!paginate)
       paginate = client.paginate.get(`${interaction.user.id}-custom`);
 
     if (!paginate) {
