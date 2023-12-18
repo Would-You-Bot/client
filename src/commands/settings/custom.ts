@@ -6,6 +6,7 @@ import {
   PermissionFlagsBits,
   PermissionsBitField,
   MessageActionRowComponentBuilder,
+  ButtonStyle,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import axios from "axios";
@@ -125,18 +126,18 @@ const command: ChatInputCommand = {
     ) {
       switch (interaction.options.getSubcommand()) {
         case "add":
-          if (!client.voteLogger.votes.has(interaction.user.id)) {
-            if (guildDb.customMessages.length >= 500) {
-              interaction.reply({
-                ephemeral: true,
-                content: client.translation.get(
-                  guildDb?.language,
-                  "wyCustom.error.maximum",
-                ),
-              });
-              return;
-            }
-          }
+          // if (!client.voteLogger.votes.has(interaction.user.id)) {
+          //   if (guildDb.customMessages.length >= 500) {
+          //     interaction.reply({
+          //       ephemeral: true,
+          //       content: client.translation.get(
+          //         guildDb?.language,
+          //         "wyCustom.error.maximum",
+          //       ),
+          //     });
+          //     return;
+          //   }
+          // }
 
           const option =
             interaction?.options?.getString("options")?.toLowerCase() || "";
@@ -221,31 +222,39 @@ const command: ChatInputCommand = {
             type: option,
           });
 
-          await client.database
-            .updateGuild(
-              interaction.guildId || "",
-              {
-                ...guildDb,
-                customMessages: guildDb.customMessages,
-              },
-              true,
-            )
+          await client.database.updateGuild(
+            interaction.guildId || "",
+            {
+              ...guildDb,
+              customMessages: guildDb.customMessages,
+            },
+            true,
+          );
 
           const add =
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setLabel("Add")
-                .setStyle(1)
+                .setStyle(ButtonStyle.Primary)
                 .setCustomId(`wycustom_add-${newID}`),
+              new ButtonBuilder()
+                .setLabel("Don't Add")
+                .setStyle(ButtonStyle.Secondary)
+                .setCustomId(`wycustom_remove-${newID}`),
             );
 
           const addDisable =
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setLabel("Add")
-                .setStyle(1)
+                .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
-                .setCustomId(`wycustom_add-${newID}`),
+                .setCustomId(`wycustom_add`),
+              new ButtonBuilder()
+                .setLabel("Don't Add")
+                .setDisabled(true)
+                .setStyle(ButtonStyle.Secondary)
+                .setCustomId(`wycustom_remove`),
             );
 
           interaction
@@ -287,14 +296,18 @@ const command: ChatInputCommand = {
               text: "Would You",
               iconURL: client?.user?.displayAvatarURL() || undefined,
             });
-            if (!guildDb.customMessages.find((c) => c.id === message)) {
-              interaction.reply({ content: "Custom message with ID: " + message  + " doesn't exist.", ephemeral: true })
-              return;
-            }
-            interaction.reply({ content: "Sucessfully deleted question with id: " + message, ephemeral: true })
-          let filtered = guildDb.customMessages.filter(
-            (c) => c.id != message,
-          );
+          if (!guildDb.customMessages.find((c) => c.id === message)) {
+            interaction.reply({
+              content: "Custom message with ID: " + message + " doesn't exist.",
+              ephemeral: true,
+            });
+            return;
+          }
+          interaction.reply({
+            content: "Sucessfully deleted question with id: " + message,
+            ephemeral: true,
+          });
+          let filtered = guildDb.customMessages.filter((c) => c.id != message);
 
           await client.database.updateGuild(
             interaction.guildId || "",
@@ -334,11 +347,11 @@ const command: ChatInputCommand = {
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setLabel("Accept")
-                .setStyle(4)
+                .setStyle(ButtonStyle.Danger)
                 .setCustomId("wycustom_accept"),
               new ButtonBuilder()
                 .setLabel("Decline")
-                .setStyle(2)
+                .setStyle(ButtonStyle.Secondary)
                 .setCustomId("wycustom_decline"),
             );
 
@@ -360,14 +373,10 @@ const command: ChatInputCommand = {
             return;
           }
 
-          let paginate = client.paginate.get(
-            `${interaction.user.id}-custom`,
-          );
+          let paginate = client.paginate.get(`${interaction.user.id}-custom`);
           if (paginate) {
             clearTimeout(paginate.timeout);
-            client.paginate.delete(
-              `${interaction.user.id}-custom`,
-            );
+            client.paginate.delete(`${interaction.user.id}-custom`);
           }
 
           const page = new Paginator({

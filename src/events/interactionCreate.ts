@@ -115,6 +115,8 @@ const event: Event = {
 
       if (interaction.customId.startsWith("wycustom_add"))
         button = client.buttons.get("wycustom_add");
+      if (interaction.customId.startsWith("wycustom_remove"))
+        button = client.buttons.get("wycustom_remove");
       if (interaction.customId.startsWith("voting_"))
         button = client.buttons.get("voting");
       if (interaction.customId.startsWith("result_"))
@@ -123,6 +125,7 @@ const event: Event = {
         button = client.buttons.get("higher");
       if (interaction.customId.startsWith("lower_"))
         button = client.buttons.get("lower");
+      
       if (!button) {
         interaction
           .reply({

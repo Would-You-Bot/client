@@ -69,6 +69,12 @@ const command: ChatInputCommand = {
                   : { user: u.userID, score: u.higherlower.highscore };
               }),
             );
+
+            if (data.length === 0) {
+              interaction.reply({ content: "There's no leaderboard in this server yet." });
+              return;
+            }
+
             data = data.map(
               (s: any, i = 1) =>
                 `${i++}. ${
@@ -102,13 +108,19 @@ const command: ChatInputCommand = {
 
           case "local":
             data = await Promise.all(
-              guildDb.gameScores.map(async (u: any) => {
+              guildDb.gameScores.sort((a: any, b: any) => b.higherlower - a.higherlower).map(async (u: any) => {
                 const user = await client.database.getUser(u.userID, true);
                 return user?.votePrivacy
                   ? { user: "Anonymous", score: u.higherlower }
                   : { user: u.userID, score: u.higherlower };
               }),
             );
+
+            if (data.length === 0) {
+              interaction.reply({ content: "There's no leaderboard in this server yet." });
+              return;
+            }
+
             data = data.map(
               (s: any, i = 1) =>
                 `${i++}. ${
