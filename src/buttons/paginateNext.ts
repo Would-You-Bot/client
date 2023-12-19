@@ -109,8 +109,14 @@ const button: Button = {
         (s: any, i) =>
           `${paginate.page * 10 + i++}. ${
             s.user === "Anonymous"
-              ? `${s.user} • **${s.score}** points`
-              : `<@${s.user}> • **${s.score}** points`
+              ? `${s.user} • **${s.score}** ${client.translation.get(
+                guildDb?.language,
+                "Leaderboard.points"
+              )}`
+              : `<@${s.user}> • **${s.score}** ${client.translation.get(
+                guildDb?.language,
+                "Leaderboard.points"
+              )}`
           }`,
       );
 

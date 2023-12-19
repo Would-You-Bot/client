@@ -71,7 +71,12 @@ const command: ChatInputCommand = {
             );
 
             if (data.length === 0) {
-              interaction.reply({ content: "There's no leaderboard in this server yet." });
+              interaction.reply({
+                content: client.translation.get(
+                  guildDb?.language,
+                  "Leaderboard.none"
+                ),
+              });
               return;
             }
 
@@ -79,14 +84,23 @@ const command: ChatInputCommand = {
               (s: any, i = 1) =>
                 `${i++}. ${
                   s.user === "Anonymous"
-                    ? `${s.user} • **${s.score}** points`
-                    : `<@${s.user}> • **${s.score}** points`
+                    ? `${s.user} • **${s.score}** ${client.translation.get(
+                      guildDb?.language,
+                      "Leaderboard.points"
+                    )}`
+                    : `<@${s.user}> • **${s.score}** ${client.translation.get(
+                      guildDb?.language,
+                      "Leaderboard.points"
+                    )}`
                 }`,
             );
 
             page.add(
               new EmbedBuilder()
-                .setTitle(`Global Leaderboard`)
+                .setTitle(client.translation.get(
+                  guildDb?.language,
+                  "Leaderboard.global"
+                ))
                 .setDescription(
                   data
                     .join("\n")
@@ -101,7 +115,10 @@ const command: ChatInputCommand = {
 
             for (let i = 0; i < data; i++) {
               page.add(new EmbedBuilder()
-              .setTitle(`Global Leaderboard`)
+              .setTitle(client.translation.get(
+                guildDb?.language,
+                "Leaderboard.global"
+              ))
               .setColor("#0598F6"))
             }
               break;
@@ -117,7 +134,12 @@ const command: ChatInputCommand = {
             );
 
             if (data.length === 0) {
-              interaction.reply({ content: "There's no leaderboard in this server yet." });
+              interaction.reply({
+                content: client.translation.get(
+                  guildDb?.language,
+                  "Leaderboard.none"
+                ),
+              });
               return;
             }
 
@@ -125,8 +147,14 @@ const command: ChatInputCommand = {
               (s: any, i = 1) =>
                 `${i++}. ${
                   s.user === "Anonymous"
-                    ? `${s.user} • **${s.score}** points`
-                    : `<@${s.user}> • **${s.score}** points`
+                    ? `${s.user} • **${s.score}** ${client.translation.get(
+                      guildDb?.language,
+                      "Leaderboard.points"
+                    )}`
+                    : `<@${s.user}> • **${s.score}** ${client.translation.get(
+                      guildDb?.language,
+                      "Leaderboard.points"
+                    )}`
                 }`,
             );
             data = Array.from(
@@ -140,7 +168,10 @@ const command: ChatInputCommand = {
             data = data.map((e: any) =>
               page.add(
                 new EmbedBuilder()
-                  .setTitle(`Guild Leaderboard`)
+                  .setTitle(client.translation.get(
+                    guildDb?.language,
+                    "Leaderboard.guild"
+                  ))
                   .setDescription(e.slice(0, 10).join("\n").toString())
                   .setColor("#0598F6"),
               ),
