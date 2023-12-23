@@ -87,9 +87,9 @@ export default class DailyMessage {
               db.customMessages.filter((c) => c.type !== "nsfw")[
                 Math.floor(
                   Math.random() *
-                    db.customMessages.filter((c) => c.type !== "nsfw").length,
+                  db.customMessages.filter((c) => c.type !== "nsfw").length,
                 )
-              ].msg,
+                ].msg,
             );
           } else {
             randomDaily = [...General, ...WhatYouDo];
@@ -119,9 +119,9 @@ export default class DailyMessage {
           randomDaily = db.customMessages.filter((c) => c.type !== "nsfw")[
             Math.floor(
               Math.random() *
-                db.customMessages.filter((c) => c.type !== "nsfw").length,
+              db.customMessages.filter((c) => c.type !== "nsfw").length,
             )
-          ].msg;
+            ].msg;
         }
 
         dailyId = Math.floor(Math.random() * randomDaily.length);
