@@ -32,10 +32,11 @@ const event: Event = {
         true,
       );
 
-      client.database.updateGuild(interaction.guildId as string, {
-        lastUsageTimestamp: Date.now(),
-      }).then(() => {
-      });
+      client.database
+        .updateGuild(interaction.guildId as string, {
+          lastUsageTimestamp: Date.now(),
+        })
+        .then(() => {});
 
       if (!guildDb || !command) return;
       const statsMap = {
