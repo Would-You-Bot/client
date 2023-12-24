@@ -69,18 +69,19 @@ export default class VoteLogger {
    */
   startAPI(): void {
     app.post("/wumpuswebhook", async (req, res) => {
-      if (req.headers["authorization"] !== process.env.WUMPUS_WEBHOOK) return res.status(401).send({ error: "Unauthorized" });
+      if (req.headers["authorization"] !== process.env.WUMPUS_WEBHOOK)
+        return res.status(401).send({ error: "Unauthorized" });
 
-      const {
-        userId,
-      } = req.body;
+      const { userId } = req.body;
 
       await this.sendVoteMessage(userId, "wumpus.store");
 
       return res.status(200).send({ success: true });
     });
 
-    app.post("/dblwebhook", webhook.listener(async (vote) => {
+    app.post(
+      "/dblwebhook",
+      webhook.listener(async (vote) => {
         await this.sendVoteMessage(vote.user, "top.gg");
       }),
     );
@@ -120,15 +121,13 @@ export default class VoteLogger {
     ];
 
     const button =
-      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        [
-          new ButtonBuilder()
-            .setLabel("Vote!")
-            .setStyle(5)
-            .setEmoji("💻")
-            .setURL(`https://${website}/bot/981649513427111957/vote`), // Change this to an object of websites if you would like to support more than wumpus and top.gg lol
-        ],
-      );
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents([
+        new ButtonBuilder()
+          .setLabel("Vote!")
+          .setStyle(5)
+          .setEmoji("💻")
+          .setURL(`https://${website}/bot/981649513427111957/vote`), // Change this to an object of websites if you would like to support more than wumpus and top.gg lol
+      ]);
 
     const emojisRandom = emojis[Math.floor(Math.random() * emojis.length)];
 
