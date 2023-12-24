@@ -14,6 +14,8 @@ import { white, gray, green } from "chalk-advanced";
 import WouldYou from "./wouldYou";
 
 const app = express();
+app.use(express.json())
+
 const webhook = new Topgg.Webhook(process.env.TOPGG_WEBHOOK);
 
 export default class VoteLogger {
