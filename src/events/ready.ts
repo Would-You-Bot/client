@@ -43,7 +43,7 @@ const event: Event = {
             const prometheusClient = new PrometheusClient(client);
             prometheusClient.initialize();
 
-                //Vote Logger
+            //Vote Logger
             const voteLogger = new VoteLogger(client);
             if (
               client?.cluster?.id === 0 &&

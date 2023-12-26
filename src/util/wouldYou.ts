@@ -97,7 +97,6 @@ export default class WouldYou extends Client {
     // Init the cluster client
     this.cluster = new ClusterClient(this);
 
-
     // The database handler
     this.database = new DatabaseHandler(process.env.MONGO_URI as string);
     this.database.connectToDatabase().then(() => {
@@ -119,16 +118,15 @@ export default class WouldYou extends Client {
     this.keepAlive = new KeepAlive(this);
     this.keepAlive.start();
 
-    if(this.cluster.id === 0) {
-    // Daily Message
-    this.dailyMessage = new DailyMessage(this);
-    this.dailyMessage.start();
+    if (this.cluster.id === 0) {
+      // Daily Message
+      this.dailyMessage = new DailyMessage(this);
+      this.dailyMessage.start();
     }
-    
+
     this.voting = new Voting(this);
     this.voting.start();
   }
-  
 
   async initialize() {
     function getPath(folder: string): string {
