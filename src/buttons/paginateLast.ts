@@ -80,15 +80,15 @@ const button: Button = {
 
     if (
       type === "leaderboard" &&
-      !paginate.countedPages.includes(paginate.page)
+      !paginate.countedPages.includes(paginate.pages.length - 1)
     ) {
-      paginate.countedPages.push(paginate.page);
+      paginate.countedPages.push(paginate.pages.length - 1);
 
       data = await UserModel.find({
         "higherlower.highscore": { $gt: 1 },
       })
         .sort({ "higherlower.highscore": -1 })
-        .skip(paginate.page * 10)
+        .skip((paginate.pages.length - 1) * 10)
         .limit(10);
 
       data = await Promise.all(
