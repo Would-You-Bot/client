@@ -10,6 +10,7 @@ export interface IGuildModel {
   dailyMsg: boolean;
   dailyChannel: string;
   dailyRole: string | null;
+  autoPin: boolean;
   dailyTimezone: string;
   dailyInterval: string;
   dailyThread: boolean;
@@ -72,6 +73,10 @@ const guildProfileSchema = new Schema(
     dailyRole: {
       type: String,
       default: null,
+    },
+    autoPin: {
+      type: Boolean,
+      default: false,
     },
     dailyTimezone: {
       type: String,

@@ -237,6 +237,7 @@ export default class WebhookHandler {
     channelId: string,
     message: any,
     thread?: boolean,
+    pin?: boolean,
   ) => {
     if (!channelId && channel?.id) channelId = channel.id;
 
@@ -274,24 +275,36 @@ export default class WebhookHandler {
         captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);
       });
-      if (!thread) return;
-      this.c.rest.post(
-        ("/channels/" +
-          channelId +
-          "/messages/" +
-          (fallbackThread as any).id +
-          "/threads") as any,
-        {
-          body: {
-            name: `${[
-              date.getFullYear(),
-              date.getMonth() + 1,
-              date.getDate(),
-            ].join("/")} - Daily Message`,
-            auto_archive_duration: "1440",
-          },
-        },
+
+      let logThreads: any = await this.c.rest.get(
+        `/channels/${channelId}/pins`,
       );
+      console.log(logThreads);
+      console.log(
+        logThreads.filter((t: any) => t.application_id === this.c.user?.id),
+      );
+      if (!thread && !pin) return;
+      if (thread) {
+        this.c.rest.post(
+          `/channels/${channelId}/messages/${fallbackThread?.id}`,
+          {
+            body: {
+              name: "Mixed - Daily Message",
+              auto_archive_duration: "1440",
+            },
+          },
+        );
+      }
+
+      if (pin) {
+        this.c.rest.delete(`/channel/${logThreads[0].channel_id}/pins/${logThreads[0].id}`)
+        
+        this.c.rest
+          .put(`/channels/${channelId}/pins/${fallbackThread?.id}`)
+          .catch((err) => {
+            console.error("Error pinning message:", err);
+          });
+      }
     } else {
       const webhook = new WebhookClient({
         id: webhookData?.id,
@@ -305,24 +318,37 @@ export default class WebhookHandler {
         return this.webhookFallBack(channel, channelId, message, err);
       });
 
-      if (!thread) return;
-      this.c.rest.post(
-        ("/channels/" +
-          channelId +
-          "/messages/" +
-          (webhookThread as any).id +
-          "/threads") as any,
-        {
-          body: {
-            name: `${[
-              date.getFullYear(),
-              date.getMonth() + 1,
-              date.getDate(),
-            ].join("/")} - Daily Message`,
-            auto_archive_duration: "1440",
-          },
-        },
+      const logThreads: any = await this.c.rest.get(
+        `/channels/${channelId}/pins`,
       );
+      console.log(logThreads);
+      console.log(
+        logThreads.filter((t: any) => t.application_id === this.c.user?.id),
+      );
+
+      if (!thread && !pin) return;
+
+      if (thread) {
+        this.c.rest.post(
+          `/channels/${channelId}/messages/${webhookThread?.id}`,
+          {
+            body: {
+              name: "Mixed - Daily Message",
+              auto_archive_duration: "1440",
+            },
+          },
+        );
+      }
+
+      if (pin) {
+        this.c.rest.delete(`/channel/${logThreads[0].channel_id}/pins/${logThreads[0].id}`)
+
+        this.c.rest
+          .put(`/channels/${channelId}/pins/${webhookThread?.id}`)
+          .catch((err) => {
+            console.error("Error pinning message:", err);
+          });
+      }
     }
   };
 }
