@@ -5,6 +5,7 @@ import { CronJob } from "cron";
 import { captureException } from "@sentry/node";
 import WouldYou from "./wouldYou";
 import { getWouldYouRather, getWwyd } from "./Functions/jsonImport";
+
 export default class DailyMessage {
   private client: WouldYou;
 
@@ -17,7 +18,7 @@ export default class DailyMessage {
    */
   start() {
     new CronJob(
-      "0 */30 * * * *",
+      "0 */30 * * * *", // Every 30 minutes, every hour, every day
       async () => {
         await this.runSchedule();
       },
@@ -32,6 +33,9 @@ export default class DailyMessage {
    * @return {Promise<void>}
    */
   async runSchedule() {
+    mom.tz.add(
+      "America/Los_Angeles|PST PDT|80 70|01010101010101010101010|1BQW0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|15e6",
+    );
     let guilds = await this.client.database.getAll();
     //guilds = guilds.filter(g => this.client.guilds.cache.has(g.guildID) && g.dailyMsg);
     guilds = guilds.filter(
@@ -57,7 +61,6 @@ export default class DailyMessage {
               db,
               dailyMsg: false,
             });
-            captureException(err);
           });
 
         if (!channel?.id) {
@@ -68,8 +71,8 @@ export default class DailyMessage {
           return;
         } // Always directly return before do to many actions
 
-        var General = await getWouldYouRather(db.language);
-        var WhatYouDo = await getWwyd(db.language);
+        const General = await getWouldYouRather(db.language);
+        const WhatYouDo = await getWwyd(db.language);
 
         let randomDaily: any;
         let dailyId;
@@ -105,8 +108,11 @@ export default class DailyMessage {
                 },
                 db.dailyThread,
               )
-              .catch((err) => {
-                captureException(err);
+              .catch(async (err) => {
+                await this.client.database.updateGuild(db?.guildID || "", {
+                  db,
+                  dailyMsg: false,
+                });
               });
           }
 
@@ -138,9 +144,16 @@ export default class DailyMessage {
             },
             db.dailyThread,
           )
-          .catch((err) => {
-            captureException(err);
+          .catch(async (err) => {
+            await this.client.database.updateGuild(db?.guildID || "", {
+              db,
+              dailyMsg: false,
+            });
           });
+
+        await this.client.database.updateGuild(db?.guildID, {
+          lastUsageTimestamp: Date.now(),
+        });
       }, i * 2500); // We do a little timeout here to work against discord ratelimit with 50reqs/second
     }
   }

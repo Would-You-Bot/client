@@ -32,14 +32,14 @@ const button: Button = {
                     "wyCustom.success.embedAdd.descWYR",
                   )
                 : data?.type === "wwyd"
-                ? client.translation.get(
-                    guildDb?.language,
-                    "wyCustom.success.embedAdd.descWWYD",
-                  )
-                : client.translation.get(
-                    guildDb?.language,
-                    "wyCustom.success.embedAdd.descNHIE",
-                  ),
+                  ? client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.embedAdd.descWWYD",
+                    )
+                  : client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.embedAdd.descNHIE",
+                    ),
           },
         )}\n\n**${client.translation.get(
           guildDb?.language,

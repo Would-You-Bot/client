@@ -4,6 +4,7 @@ export interface IWebhookCache {
   channelId: string;
   webhookId: string;
   webhookToken: string;
+  lastUsageTimestamp: number;
 }
 
 const webhookCacheSchema = new Schema({
@@ -18,6 +19,10 @@ const webhookCacheSchema = new Schema({
   webhookToken: {
     type: String,
     default: null,
+  },
+  lastUsageTimestamp: {
+    type: Number,
+    default: 0,
   },
 });
 

@@ -159,7 +159,8 @@ const command: ChatInputCommand = {
               message || "",
               newID,
               guildDb,
-            );
+            ) 
+          else generativeText = { value: true, type: option }
           typeEmbed = new EmbedBuilder()
             .setTitle(
               client.translation.get(
@@ -182,14 +183,14 @@ const command: ChatInputCommand = {
                                 "wyCustom.success.embedAdd.descWYR",
                               )
                             : generativeText?.type === "wwyd"
-                            ? client.translation.get(
-                                guildDb?.language,
-                                "wyCustom.success.embedAdd.descWWYD",
-                              )
-                            : client.translation.get(
-                                guildDb?.language,
-                                "wyCustom.success.embedAdd.descNHIE",
-                              ),
+                              ? client.translation.get(
+                                  guildDb?.language,
+                                  "wyCustom.success.embedAdd.descWWYD",
+                                )
+                              : client.translation.get(
+                                  guildDb?.language,
+                                  "wyCustom.success.embedAdd.descNHIE",
+                                ),
                       },
                     )}\n\n`
                   : ""

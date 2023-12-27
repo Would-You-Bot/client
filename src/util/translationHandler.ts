@@ -53,7 +53,7 @@ export default class TranslationHandler {
    * @return {void}
    * @private
    */
-  initLanguage(key: any, language: any) {
+  initLanguage(key: string, language: object): void {
     this.translations[key] = language;
   }
 
@@ -63,7 +63,7 @@ export default class TranslationHandler {
    * @return {boolean} if the value is a valid translation key
    * @private
    */
-  checkRegex(value: any) {
+  checkRegex(value: string): boolean {
     return /^[a-z]{2}_[A-Z]{2}(?:_rather|_wwyd|_nhie)?$/.test(value);
   }
 
@@ -73,7 +73,7 @@ export default class TranslationHandler {
    * @return {object}
    * @private
    */
-  getLanguage(language: any) {
+  getLanguage(language: string): object {
     if (!this.checkRegex(language)) return this.translations["en_EN"];
     return this.translations[language];
   }
@@ -94,7 +94,7 @@ export default class TranslationHandler {
    * Reload the translation handler
    * @return {void}
    */
-  reload() {
+  reload(): void {
     this.translations = {};
     for (const l of this.availableLanguages) {
       try {
@@ -114,14 +114,14 @@ export default class TranslationHandler {
    * @param {string} language the language key
    * @param {string} path the path to the translation
    * @param {object} data the data to replace in the translation
-   * @return {string|null} the translation
+   * @return {string} the translation
    * @example
    * const translation = getTranslation('en_EN', 'commands.ping.pong', {ping: 100});
    */
-  get(language: string, path: string, data: any = {}) {
+  get(language: string, path: string, data: Record<string, any> = {}): string {
     if (!language) language = "en_EN";
 
-    const l = this.getLanguage(language);
+    const l: Record<string, any> = this.getLanguage(language);
     const p = path.split(".");
     let c = null;
 
@@ -147,9 +147,9 @@ export default class TranslationHandler {
     if (!c) return path;
 
     if (data) {
-      return c.replace(
+      return c?.replace(
         /{(\w+)}/g,
-        (match: any, key: any) => data[key] ?? match,
+        (match: string, key: string) => data[key] ?? match,
       );
     }
 

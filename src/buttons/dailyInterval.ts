@@ -32,11 +32,12 @@ function isFormat(str: string) {
 const button: Button = {
   name: "dailyInterval",
   execute: async (interaction, client, guildDb) => {
-    interaction.showModal(modalObject).catch(() => {});
+    await interaction.showModal(modalObject);
+
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
-        time: 60000,
+        time: 6000000,
       })
       .then(async (modalInteraction) => {
         const value = modalInteraction.components[0].components[0].value;
@@ -69,27 +70,17 @@ const button: Button = {
             `${client.translation.get(
               guildDb?.language,
               "Settings.embed.dailyMsg",
-            )}: ${
-              guildDb.dailyMsg
-                ? `<:check:1077962440815411241>`
-                : `<:x_:1077962443013238814>`
-            }\n` +
+            )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}\n` +
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.dailyChannel",
               )}: ${
-                guildDb.dailyChannel
-                  ? `<#${guildDb.dailyChannel}>`
-                  : `<:x_:1077962443013238814>`
+                guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
               }\n` +
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.dailyRole",
-              )}: ${
-                guildDb.dailyRole
-                  ? `<@&${guildDb.dailyRole}>`
-                  : `<:x_:1077962443013238814>`
-              }\n` +
+              )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.dailyTimezone",
@@ -105,11 +96,7 @@ const button: Button = {
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.dailyThread",
-              )}: ${
-                guildDb.dailyThread
-                  ? `<:check:1077962440815411241>`
-                  : `<:x_:1077962443013238814>`
-              }`,
+              )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}`,
           )
           .setColor("#0598F6");
 

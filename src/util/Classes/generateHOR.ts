@@ -187,6 +187,9 @@ export default class HOR {
     ctx.fillText(`Score: ${score}`, 712, 50);
     ctx.closePath();
 
-    return canvasObject.encode("png");
+    const img = await canvasObject.encode("png");
+    Canvas.clearAllCache();
+
+    return img;
   }
 }

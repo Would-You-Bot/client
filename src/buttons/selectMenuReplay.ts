@@ -10,7 +10,7 @@ import { Button } from "../models";
 
 const modalObject = {
   title: "Replay Cooldown",
-  custom_id: "replaymodal",
+  custom_id: "selectMenuReplay",
   components: [
     {
       type: 1,
@@ -32,11 +32,12 @@ function isNumericRegex(str: string) {
 const button: Button = {
   name: "selectMenuReplay",
   execute: async (interaction, client, guildDb) => {
-    interaction.showModal(modalObject);
+    await interaction.showModal(modalObject);
+
     interaction
       .awaitModalSubmit({
         filter: (mInter) => mInter.customId === modalObject.custom_id,
-        time: 60000,
+        time: 600000,
       })
       .then(async (modalInteraction) => {
         const value = modalInteraction.components[0].components[0].value;

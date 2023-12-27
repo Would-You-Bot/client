@@ -20,9 +20,7 @@ const button: Button = {
           guildDb?.language,
           "Settings.embed.dailyMsg",
         )}: ${
-          guildDb.dailyMsg
-            ? `<:check:1077962440815411241>`
-            : `<:x_:1077962443013238814>`
+          guildDb.dailyMsg ? ":white_check_mark:" : ":x:"
         }\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyChannel",
@@ -30,9 +28,7 @@ const button: Button = {
           guildDb?.language,
           "Settings.embed.dailyRole",
         )}: ${
-          guildDb.dailyRole
-            ? `<@&${guildDb.dailyRole}>`
-            : `<:x_:1077962443013238814>`
+          guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
         }\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyTimezone",
@@ -48,7 +44,7 @@ const button: Button = {
             "Settings.embed.dailyThread",
           )}: ${
             guildDb.dailyThread
-              ? `<:check:1077962440815411241>`
+              ? ":white_check_mark:"
               : `<:x:1077962443013238814>`
           }`,
       )

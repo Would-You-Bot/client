@@ -20,6 +20,13 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
+    const userCount = await client.cluster.broadcastEval(`this.guilds.cache
+    .reduce((a, b) => a + b.memberCount, 0)`);
+
+    const serverCount = await client.cluster.broadcastEval(
+      `this.guilds.cache.size`,
+    );
+
     const unixstamp =
       Math.floor(Date.now() / 1000) - Math.floor((client.uptime || 0) / 1000);
 
@@ -40,13 +47,16 @@ const command: ChatInputCommand = {
         },
         {
           name: "Guilds 🏢",
-          value: `\`\`\`${client.guilds.cache.size}\`\`\``,
+          value: `\`\`\`${serverCount.reduce(
+            (prev, val) => prev + val,
+            0,
+          )}\`\`\``,
           inline: true,
         },
         {
           name: "Users 🐧",
-          value: `\`\`\`${client.guilds.cache
-            .reduce((a, b) => a + b.memberCount, 0)
+          value: `\`\`\`${userCount
+            .reduce((prev, val) => prev + val, 0)
             .toLocaleString()}\`\`\``,
           inline: true,
         },

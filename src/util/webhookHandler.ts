@@ -11,6 +11,7 @@ export default class WebhookHandler {
   private webhooks: Map<string, { id: string; token: string }>;
   private webhookModel: Model<IWebhookCache>;
   private c: WouldYou;
+
   constructor(client: WouldYou) {
     this.webhooks = new Map();
     this.webhookModel = WebhookCache;
@@ -20,6 +21,15 @@ export default class WebhookHandler {
     this.c = client;
   }
 
+  updateLastUsed(token: string) {
+    this.webhookModel
+      .findOneAndUpdate(
+        { webhookToken: cryptr.encrypt(token) },
+        { lastUsageTimestamp: Date.now() },
+      )
+      .then(() => {});
+  }
+
   /**
    * Get a webhook from the cache and if not in cache fetch it
    * @param {string} channelId the channel id
@@ -27,20 +37,30 @@ export default class WebhookHandler {
    * @private
    */
   getWebhook = async (channelId: string) => {
-    if (this.webhooks.has(`${channelId}`)) return this.webhooks.get(channelId);
+    if (this.webhooks.has(`${channelId}`)) {
+      const webhookData = this.webhooks.get(channelId);
+
+      this.updateLastUsed(webhookData?.token as string);
+      return webhookData;
+    }
 
     const data = await this.webhookModel.findOne({
       channelId: channelId,
     });
+
     if (data) {
+      const token = cryptr.decrypt(data.webhookToken);
+
+      this.updateLastUsed(token as string);
+
       this.webhooks.set(`${channelId}`, {
         id: data.webhookId,
-        token: cryptr.decrypt(data.webhookToken),
+        token: token,
       });
 
       return {
         id: data.webhookId,
-        token: cryptr.decrypt(data.webhookToken),
+        token: token,
       };
     } else return null;
   };
@@ -96,23 +116,25 @@ export default class WebhookHandler {
         channelId: channelId,
       });
 
+      webhook.token = cryptr.encrypt(webhook.token);
+
       if (oldData) {
         await oldData.updateOne({
           channelId: channelId,
           webhookId: webhook.id,
-          webhookToken: cryptr.encrypt(webhook.token),
+          webhookToken: webhook.token,
         });
       } else {
         await this.webhookModel.create({
           channelId: channelId,
           webhookId: webhook.id,
-          webhookToken: cryptr.encrypt(webhook.token),
+          webhookToken: webhook.token,
         });
       }
 
       return {
         id: webhook.id,
-        token: cryptr.encrypt(webhook.token),
+        token: webhook.token,
       };
     } else return null;
   };
@@ -171,6 +193,7 @@ export default class WebhookHandler {
         id: webhook.id,
         token: cryptr.decrypt(webhook.token),
       });
+
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
 
@@ -278,12 +301,14 @@ export default class WebhookHandler {
         id: webhookData?.id,
         token: webhookData?.token,
       });
+
       if (!webhook) return this.webhookFallBack(channel, channelId, message);
 
       const webhookThread = await webhook.send(message).catch((err) => {
         captureException(err);
         return this.webhookFallBack(channel, channelId, message, err);
       });
+
       if (!thread) return;
       this.c.rest.post(
         ("/channels/" +

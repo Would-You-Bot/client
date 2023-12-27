@@ -45,7 +45,7 @@ export default class DatabaseHandler {
    * Connect to the mongoose database
    * @returns {Promise<void>}
    */
-  async connectToDatabase() {
+  async connectToDatabase(): Promise<void> {
     set("strictQuery", true);
     await connect(this.connectionString)
       .catch((err) => {
@@ -67,7 +67,10 @@ export default class DatabaseHandler {
    * @returns {this.guildModel}
    * @private
    */
-  async fetchGuild(guildId: number | string, createIfNotFound = false) {
+  async fetchGuild(
+    guildId: number | string,
+    createIfNotFound: boolean = false,
+  ) {
     const fetched = await this.guildModel.findOne({ guildID: guildId });
 
     if (fetched) return fetched;
@@ -92,8 +95,8 @@ export default class DatabaseHandler {
    */
   async getGuild(
     guildId: string,
-    createIfNotFound = true,
-    force = false,
+    createIfNotFound: boolean = true,
+    force: boolean = false,
   ): Promise<IGuildModel | null> {
     if (force) return this.fetchGuild(guildId, createIfNotFound);
 
@@ -116,7 +119,7 @@ export default class DatabaseHandler {
    * @param {boolean} onlyCache if you want to only delete the cache
    * @returns {Promise<deleteMany|boolean>}
    */
-  async deleteGuild(guildId: number | string, onlyCache = false) {
+  async deleteGuild(guildId: number | string, onlyCache: boolean = false) {
     if (this.cache.has(guildId.toString()))
       this.cache.delete(guildId.toString());
 
@@ -125,15 +128,15 @@ export default class DatabaseHandler {
 
   /**
    * Update the settings from a guild
-   * @param {number|string} guildId the server id
+   * @param {string} guildId the server id
    * @param {object | this.guildModel} data the updated or new data
    * @param {boolean} createIfNotFound create a database entry if not found
    * @returns {Promise<this.guildModel|null>}
    */
   async updateGuild(
-    guildId: number | string,
+    guildId: string,
     data: object | IGuildModel,
-    createIfNotFound = false,
+    createIfNotFound: boolean = false,
   ) {
     let oldData = await this.getGuild(guildId.toString(), createIfNotFound);
 
@@ -159,7 +162,7 @@ export default class DatabaseHandler {
    * @returns {this.userModel}
    * @private
    */
-  async fetchUser(userId: number | string, createIfNotFound = false) {
+  async fetchUser(userId: number | string, createIfNotFound: boolean = false) {
     const fetched = await this.userModel.findOne({ userID: userId });
 
     if (fetched) return fetched;
@@ -183,7 +186,7 @@ export default class DatabaseHandler {
   async getUser(
     userId: string,
     createIfNotFound = true,
-    force = false,
+    force: boolean = false,
   ): Promise<IUserModel | null> {
     if (force) return this.fetchUser(userId, createIfNotFound);
 
@@ -206,7 +209,7 @@ export default class DatabaseHandler {
    * @param {boolean} onlyCache if you want to only delete the cache
    * @returns {Promise<deleteMany|boolean>}
    */
-  async deleteUser(userId: number | string, onlyCache = false) {
+  async deleteUser(userId: number | string, onlyCache: boolean = false) {
     if (this.userCache.has(userId.toString()))
       this.userCache.delete(userId.toString());
 
@@ -224,7 +227,7 @@ export default class DatabaseHandler {
   async updateUser(
     userId: number | string,
     data: object | IUserModel,
-    createIfNotFound = false,
+    createIfNotFound: boolean = false,
   ) {
     let oldData = await this.getUser(userId.toString(), createIfNotFound);
 
