@@ -1,10 +1,7 @@
-const { Leaderboard, write } = require("canvabase");
 import {
   EmbedBuilder,
   SlashCommandBuilder,
-  AttachmentBuilder,
 } from "discord.js";
-import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../models";
 import Paginator from "../../util/pagination";
 import { UserModel } from "../../util/Models/userModel";
