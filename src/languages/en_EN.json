@@ -45,6 +45,12 @@
     "off": "Off",
     "desc": "Enabling privacy will remove your username from being displayed on vote results! Your votes will be completely anonymous if this is enabled."
   },
+  "Leaderboard": {
+    "none": "No leaderboard information could be found.",
+    "guild": "Guild Leaderboard",
+    "global": "Global Leaderboard",
+    "points": "points"
+  },
   "wyCustom": {
     "error": {
       "noPages": "Unable to proceed. There are zero pages to go to.",

@@ -32,6 +32,7 @@ export function generateWYR(
     client.customAdd.set(id, {
       type: "wouldyourather",
       text: `${responsePhrase} ${text}`,
+      original: text,
     });
     return {
       value: false,
@@ -70,6 +71,7 @@ export function generateWWYD(
     client.customAdd.set(id, {
       type: "wwyd",
       text: `${responsePhrase} ${text}`,
+      original: text,
     });
     return { value: false, type: "wwyd", text: `${responsePhrase} ${text}` };
   } else {
@@ -105,6 +107,7 @@ export function generateNHIE(
     client.customAdd.set(id, {
       type: "neverhaveiever",
       text: `${responsePhrase} ${text}`,
+      original: text,
     });
     return {
       value: false,

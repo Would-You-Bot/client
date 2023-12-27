@@ -16,11 +16,11 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("random")
     .setDescription(
-      "Post a random truth or dare question that you need to answer bitwise cat was here hehe",
+      "Post a random truth or dare question that you need to answer",
     )
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Posted eine zufällig Wahrheits- oder Pflichtfrage, die du beantworten musst shay was here hehe",
+      de: "Posted eine zufällig Wahrheits- oder Pflichtfrage, die du beantworten musst",
       "es-ES":
         "Publica una pregunta de verdad o reto aleatoria que debes responder",
       fr: "Publie une question de vérité ou de défi aléatoire que vous devez répondre",

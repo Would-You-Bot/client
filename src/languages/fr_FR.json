@@ -45,6 +45,12 @@
     "off": "Désactivé",
     "desc": "En activant l'anonymat, ton nom d'utilisateur ne sera plus affiché dans les résultats de vote ! Tes votes seront complètement anonymes si cette option est activée."
   },
+  "Leaderboard": {
+    "none": "Les informations du classement ne peuvent pas être trouvées.",
+    "guild": "Classement de la guilde",
+    "global": "Classement global",
+    "points": "points"
+  },
   "wyCustom": {
     "error": {
       "noPages": "Impossible de continuer. Il n’y a aucune page à consulter.",

@@ -6,6 +6,7 @@ import {
   PermissionFlagsBits,
   PermissionsBitField,
   MessageActionRowComponentBuilder,
+  ButtonStyle,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import axios from "axios";
@@ -235,17 +236,26 @@ const command: ChatInputCommand = {
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setLabel("Add")
-                .setStyle(1)
+                .setStyle(ButtonStyle.Primary)
                 .setCustomId(`wycustom_add-${newID}`),
+              new ButtonBuilder()
+                .setLabel("Don't Add")
+                .setStyle(ButtonStyle.Secondary)
+                .setCustomId(`wycustom_remove-${newID}`),
             );
 
           const addDisable =
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setLabel("Add")
-                .setStyle(1)
+                .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
-                .setCustomId(`wycustom_add-${newID}`),
+                .setCustomId(`wycustom_add`),
+              new ButtonBuilder()
+                .setLabel("Don't Add")
+                .setDisabled(true)
+                .setStyle(ButtonStyle.Secondary)
+                .setCustomId(`wycustom_remove`),
             );
 
           interaction
@@ -338,11 +348,11 @@ const command: ChatInputCommand = {
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setLabel("Accept")
-                .setStyle(4)
+                .setStyle(ButtonStyle.Danger)
                 .setCustomId("wycustom_accept"),
               new ButtonBuilder()
                 .setLabel("Decline")
-                .setStyle(2)
+                .setStyle(ButtonStyle.Secondary)
                 .setCustomId("wycustom_decline"),
             );
 
@@ -417,7 +427,6 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
-                null,
               ),
             );
           }
@@ -463,7 +472,6 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
-                null,
               ),
             );
           }
@@ -508,7 +516,6 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
-                null,
               ),
             );
           }
@@ -553,7 +560,6 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
-                null,
               ),
             );
           }
@@ -598,7 +604,6 @@ const command: ChatInputCommand = {
                     )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
                   .setColor("#0795F6"),
-                null,
               ),
             );
           }

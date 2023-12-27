@@ -13,7 +13,6 @@ export default class Paginator {
   private user: any;
   private page: number;
   private timeout: number;
-  private images: any[];
 
   constructor({
     user,
@@ -29,17 +28,14 @@ export default class Paginator {
     this.user = user;
     this.page = 0;
     this.timeout = timeout;
-    this.images = [];
   }
 
-  add(page: EmbedBuilder, image: any | null) {
+  add(page: EmbedBuilder) {
     if (page.length) {
-      if (image) this.images.push(image);
       this.pages.push(page);
       return this;
     }
 
-    if (image) this.images.push(image);
     this.pages.push(page);
     return this;
   }
@@ -97,16 +93,17 @@ export default class Paginator {
     }
 
     const message = await interaction.reply({
-      files: this.images.length > 0 ? [this.images[0]] : null,
       embeds: [this.pages[0]],
       components: [buttons],
       ephemeral: true,
     });
 
     this.client.paginate.set(
-      `${this.user}-${type ? type : interaction.message.id}`,
+      `${this.user}-${type || message.id}${
+        type === "leaderboard" ? `-${message.id}` : ""
+      }`,
       {
-        images: this.images,
+        countedPages: [],
         pages: this.pages,
         page: this.page,
         message: message.id,
@@ -115,18 +112,25 @@ export default class Paginator {
         time: this.timeout,
       },
     );
+
     const time = setTimeout(() => {
       if (
         this.client.paginate.get(
-          `${this.user}-${type ? type : interaction.message.id}`,
+          `${this.user}-${type || message.id}${
+            type === "leaderboard" ? `-${message.id}` : ""
+          }`,
         )
       )
         this.client.paginate.delete(
-          `${this.user}-${type ? type : interaction.message.id}`,
+          `${this.user}-${type || message.id}${
+            type === "leaderboard" ? `-${message.id}` : ""
+          }`,
         );
     }, this.timeout);
     this.client.paginate.get(
-      `${this.user}-${type ? type : interaction.message.id}`,
+      `${this.user}-${type || message.id}${
+        type === "leaderboard" ? `-${message.id}` : ""
+      }`,
     ).timeout = time;
   }
 }

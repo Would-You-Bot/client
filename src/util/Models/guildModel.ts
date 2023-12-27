@@ -2,6 +2,10 @@ import { Schema, model } from "mongoose";
 
 export interface IGuildModel {
   guildID: string;
+  gameScores: Array<{
+    userID: string;
+    higherlower: number;
+  }>;
   language: string;
   welcome: boolean;
   welcomeChannel: string;
@@ -40,6 +44,12 @@ const guildProfileSchema = new Schema(
       required: true,
       unique: true,
     },
+    gameScores: [
+      {
+        userID: { type: String, required: true },
+        higherlower: { type: Number, required: false },
+      },
+    ],
     language: {
       type: String,
       default: "en_EN",

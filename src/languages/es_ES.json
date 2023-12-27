@@ -45,6 +45,12 @@
     "off": "Desactivado",
     "desc": "¡Activar la privacidad removerá tu nombre de usuario de ser mostrado en los resultados! Tus votos serán completamente anónimos si esto está habilitado."
   },
+  "Leaderboard": {
+    "none": "No se pudo encontrar información de la tabla de clasificación.",
+    "guild": "Clasificación del gremio",
+    "global": "Clasificación global",
+    "points": "puntos"
+  },
   "wyCustom": {
     "error": {
       "noPages": "No se puede continuar. Hay cero páginas a las que ir.",

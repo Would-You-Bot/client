@@ -5,16 +5,25 @@ import {
   ButtonStyle,
 } from "discord.js";
 import { Button } from "../models";
+import { UserModel } from "../util/Models/userModel";
 
 const button: Button = {
   name: "paginatePrev",
   execute: async (interaction, client, guildDb) => {
+    let type: any = null;
     let paginate = client.paginate.get(
-      `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+      `${interaction.user.id}-${interaction.message.interaction?.id}`,
     );
 
     if (!paginate)
-      paginate = client.paginate.get(`${interaction.user.id}-custom`);
+      (paginate = client.paginate.get(
+        `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+      )),
+        (type = "leaderboard");
+
+    if (!paginate)
+      (paginate = client.paginate.get(`${interaction.user.id}-custom`)),
+        (type = "custom");
 
     if (!paginate) {
       interaction.reply({
@@ -38,7 +47,82 @@ const button: Button = {
       return;
     }
 
-    if (paginate.page - 1 === 0) {
+    clearTimeout(paginate.timeout);
+    const time = setTimeout(() => {
+      if (
+        type === "custom" &&
+        client.paginate.get(`${interaction.user.id}-custom`)
+      ) {
+        client.paginate.delete(`${interaction.user.id}-custom`);
+      } else if (
+        type === "leaderboard" &&
+        client.paginate.get(
+          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+        )
+      ) {
+        client.paginate.delete(
+          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+        );
+      } else if (
+        client.paginate.get(
+          `${interaction.user.id}-${interaction.message.interaction?.id}`,
+        )
+      ) {
+        client.paginate.delete(
+          `${interaction.user.id}-${interaction.message.interaction?.id}`,
+        );
+      }
+    }, paginate.time);
+    paginate.timeout = time;
+
+    let embed = paginate.pages[--paginate.page];
+    let data;
+    if (
+      type === "leaderboard" &&
+      !paginate.countedPages.includes(paginate.page)
+    ) {
+      paginate.countedPages.push(paginate.page);
+
+      data = await UserModel.find({
+        "higherlower.highscore": { $gt: 1 },
+      })
+        .sort({ "higherlower.highscore": -1 })
+        .skip(paginate.page * 10)
+        .limit(10);
+
+      data = await Promise.all(
+        data.map(async (u: any) => {
+          const user = await client.database.getUser(u.userID, true);
+          return user?.votePrivacy
+            ? {
+                user: "Anonymous",
+                score: u.higherlower.highscore,
+              }
+            : {
+                user: u.userID,
+                score: u.higherlower.highscore,
+              };
+        }),
+      );
+      data = data.map(
+        (s: any, i) =>
+          `${paginate.page * 10 + i++}. ${
+            s.user === "Anonymous"
+              ? `${s.user} • **${s.score}** ${client.translation.get(
+                  guildDb?.language,
+                  "Leaderboard.points",
+                )}`
+              : `<@${s.user}> • **${s.score}** ${client.translation.get(
+                  guildDb?.language,
+                  "Leaderboard.points",
+                )}`
+          }`,
+      );
+
+      embed.data.description = data?.join("\n");
+    }
+
+    if (paginate.page === 0) {
       const buttons =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
           new ButtonBuilder()
@@ -61,21 +145,8 @@ const button: Button = {
             .setStyle(ButtonStyle.Secondary),
         );
 
-      clearTimeout(paginate.timeout);
-      const time = setTimeout(() => {
-        if (
-          client.paginate.get(
-            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
-          )
-        )
-          client.paginate.delete(
-            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
-          );
-      }, paginate.time);
-      paginate.timeout = time;
-
       await interaction.update({
-        embeds: [paginate.pages[--paginate.page]],
+        embeds: [embed],
         components: [buttons],
         options: {
           ephemeral: true,
@@ -103,21 +174,8 @@ const button: Button = {
             .setStyle(ButtonStyle.Secondary),
         );
 
-      clearTimeout(paginate.timeout);
-      const time = setTimeout(() => {
-        if (
-          client.paginate.get(
-            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
-          )
-        )
-          client.paginate.delete(
-            `${interaction.user.id}-${interaction.message.reference?.messageId}`,
-          );
-      }, paginate.time);
-      paginate.timeout = time;
-
       await interaction.update({
-        embeds: [paginate.pages[--paginate.page]],
+        embeds: [embed],
         components: [buttons],
         options: {
           ephemeral: true,
