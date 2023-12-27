@@ -22,8 +22,12 @@ export default class WebhookHandler {
   }
 
   updateLastUsed(token: string) {
-    this.webhookModel.findOneAndUpdate({ webhookToken: cryptr.encrypt(token) }, { lastUsageTimestamp: Date.now() }).then(() => {
-    });
+    this.webhookModel
+      .findOneAndUpdate(
+        { webhookToken: cryptr.encrypt(token) },
+        { lastUsageTimestamp: Date.now() },
+      )
+      .then(() => {});
   }
 
   /**
@@ -211,10 +215,10 @@ export default class WebhookHandler {
             .setColor("#FE0001")
             .setDescription(
               "🛑 " +
-              this.c.translation.get(
-                guildSettings?.language ?? "en_EN",
-                "webhookManager.noWebhook",
-              ),
+                this.c.translation.get(
+                  guildSettings?.language ?? "en_EN",
+                  "webhookManager.noWebhook",
+                ),
             ),
         ];
 
@@ -294,12 +298,21 @@ export default class WebhookHandler {
       }
       console.log(logThreads[0]);
       if (pin) {
-        this.c.rest.delete(`/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`).catch((err) => {
-          console.error("Error deleting message:", err);
-        })
-        
         this.c.rest
-          .put(`/channels/${channelId}/pins/${fallbackThread?.id}`)
+          .delete(
+            `/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`,
+            {
+              reason: "Automatic unpinning of daily message",
+            },
+          )
+          .catch((err) => {
+            console.error("Error deleting message:", err);
+          });
+
+        this.c.rest
+          .put(`/channels/${channelId}/pins/${fallbackThread?.id}`, {
+            reason: "Automatic pinning of daily message",
+          })
           .catch((err) => {
             console.error("Error pinning message:", err);
           });
@@ -334,14 +347,27 @@ export default class WebhookHandler {
           },
         );
       }
-      console.log(logThreads[0]);
+
       if (pin) {
-        this.c.rest.delete(`/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`).catch((err) => {
-          console.error("Error deleting message:", err);
-        })
+        this.c.rest
+          .delete(
+            `/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`,
+            {
+              body: {
+                "X-Audit-Log-Reason": "Automatic unpinning of daily message",
+              },
+            },
+          )
+          .catch((err) => {
+            console.error("Error deleting message:", err);
+          });
 
         this.c.rest
-          .put(`/channels/${channelId}/pins/${webhookThread?.id}`)
+          .put(`/channels/${channelId}/pins/${webhookThread?.id}`, {
+            body: {
+              "X-Audit-Log-Reason": "Automatic pinning of daily message",
+            },
+          })
           .catch((err) => {
             console.error("Error pinning message:", err);
           });
