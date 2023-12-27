@@ -83,7 +83,7 @@ export default class Paginator {
         pNext,
         pLast,
       );
-    
+
     for (let i = 0; i < this.pages.length; i++) {
       const e = this.pages[i];
       e.data.footer = {
@@ -98,22 +98,39 @@ export default class Paginator {
       ephemeral: true,
     });
 
-    this.client.paginate.set(`${this.user}-${type || message.id}${type === "leaderboard" ? `-${message.id}` : ""}`, {
-      countedPages: [],
-      pages: this.pages,
-      page: this.page,
-      message: message.id,
-      channel: interaction.channel.id,
-      timeout: null,
-      time: this.timeout,
-    });
+    this.client.paginate.set(
+      `${this.user}-${type || message.id}${
+        type === "leaderboard" ? `-${message.id}` : ""
+      }`,
+      {
+        countedPages: [],
+        pages: this.pages,
+        page: this.page,
+        message: message.id,
+        channel: interaction.channel.id,
+        timeout: null,
+        time: this.timeout,
+      },
+    );
 
     const time = setTimeout(() => {
-      if (this.client.paginate.get(`${this.user}-${type || message.id}${type === "leaderboard" ? `-${message.id}` : ""}`))
-        this.client.paginate.delete(`${this.user}-${type || message.id}${type === "leaderboard" ? `-${message.id}` : ""}`);
+      if (
+        this.client.paginate.get(
+          `${this.user}-${type || message.id}${
+            type === "leaderboard" ? `-${message.id}` : ""
+          }`,
+        )
+      )
+        this.client.paginate.delete(
+          `${this.user}-${type || message.id}${
+            type === "leaderboard" ? `-${message.id}` : ""
+          }`,
+        );
     }, this.timeout);
     this.client.paginate.get(
-      `${this.user}-${type || message.id}${type === "leaderboard" ? `-${message.id}` : ""}`,
+      `${this.user}-${type || message.id}${
+        type === "leaderboard" ? `-${message.id}` : ""
+      }`,
     ).timeout = time;
   }
 }
