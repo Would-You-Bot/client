@@ -56,50 +56,47 @@ export default class LOSE {
       user.higherlower.highscore = score;
       await user.save();
     }
-    try {
-      if (!guild?.gameScores.find((e: any) => e.userID === this.game.creator)) {
-        guild?.gameScores.push({
+
+    if (!guild?.gameScores.find((e: any) => e.userID === this.game.creator)) {
+      guild?.gameScores.push({
+        userID: this.game.creator,
+        higherlower: score,
+      });
+
+      await client.database.updateGuild(
+        this.game.guild || "",
+        {
+          ...guild,
+          gameScores: guild?.gameScores,
+        },
+        true,
+      );
+    } else if (
+      score >
+      guild?.gameScores.find((e: any) => e.userID === this.game.creator)
+        ?.higherlower!
+    ) {
+      guild.gameScores = (guild.gameScores || []).filter(
+        (gameScore: { userID: string }) =>
+          gameScore.userID !== this.game.creator,
+      );
+
+      guild.gameScores = [
+        ...(guild.gameScores || []),
+        {
           userID: this.game.creator,
           higherlower: score,
-        });
+        },
+      ];
 
-        await client.database.updateGuild(
-          this.game.guild || "",
-          {
-            ...guild,
-            gameScores: guild?.gameScores,
-          },
-          true,
-        );
-      } else if (
-        score >
-        guild?.gameScores.find((e: any) => e.userID === this.game.creator)
-          ?.higherlower!
-      ) {
-        guild.gameScores = (guild.gameScores || []).filter(
-          (gameScore: { userID: string }) =>
-            gameScore.userID !== this.game.creator,
-        );
-
-        guild.gameScores = [
-          ...(guild.gameScores || []),
-          {
-            userID: this.game.creator,
-            higherlower: score,
-          },
-        ];
-
-        await client.database.updateGuild(
-          this.game.guild || "",
-          {
-            ...guild,
-            gameScores: guild?.gameScores,
-          },
-          true,
-        );
-      }
-    } catch (e) {
-      console.log(e);
+      await client.database.updateGuild(
+        this.game.guild || "",
+        {
+          ...guild,
+          gameScores: guild?.gameScores,
+        },
+        true,
+      );
     }
 
     // Create canvas
