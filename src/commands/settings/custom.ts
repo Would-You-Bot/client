@@ -121,8 +121,7 @@ const command: ChatInputCommand = {
     if (
       (interaction?.member?.permissions as Readonly<PermissionsBitField>).has(
         PermissionFlagsBits.ManageGuild,
-      ) ||
-      global.checkDebug(guildDb, interaction?.user?.id)
+      )
     ) {
       switch (interaction.options.getSubcommand()) {
         case "add":

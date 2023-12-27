@@ -44,12 +44,10 @@ const command: ChatInputCommand = {
 
   execute: async (interaction, client, guildDb) => {
     let typeEmbed;
-
     if (
       (interaction.member?.permissions as Readonly<PermissionsBitField>).has(
         PermissionFlagsBits.ManageGuild,
-      ) ||
-      global.checkDebug(guildDb, interaction?.user?.id)
+      )
     ) {
       switch (interaction.options.getSubcommand()) {
         case "regular":
