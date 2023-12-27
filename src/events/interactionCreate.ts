@@ -125,7 +125,7 @@ const event: Event = {
         button = client.buttons.get("higher");
       if (interaction.customId.startsWith("lower_"))
         button = client.buttons.get("lower");
-      
+
       if (!button) {
         interaction
           .reply({
