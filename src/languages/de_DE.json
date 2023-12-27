@@ -45,6 +45,12 @@
     "off": "Aus",
     "desc": "Wenn du die Privatsphäre aktivierst, wird dein Benutzername nicht mehr in den Wahl-Ergebnissen angezeigt! Wenn du diese Option aktivierst, sind deine Stimmen völlig anonym."
   },
+  "Leaderboard": {
+    "none": "Es konnten keine Informationen zur Rangliste gefunden werden.",
+    "guild": "Server Rangliste",
+    "global": "Globale Rangliste",
+    "points": "Punkte"
+  },
   "wyCustom": {
     "error": {
       "noPages": "Kann nicht fortfahren. Es gibt keine Seiten, zu denen du gehen kannst.",

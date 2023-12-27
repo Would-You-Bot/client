@@ -1,7 +1,4 @@
-import {
-  EmbedBuilder,
-  SlashCommandBuilder,
-} from "discord.js";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { ChatInputCommand } from "../../models";
 import Paginator from "../../util/pagination";
 import { UserModel } from "../../util/Models/userModel";
@@ -10,12 +7,12 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("leaderboard")
-    .setDescription("Leaderboard statistics for games")
+    .setDescription("Displays the leaderboard for a game")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Test",
-      "es-ES": "Test",
-      fr: "Test",
+      de: "Zeigt die Rangliste für ein Spiel an",
+      "es-ES": "Muestra la lista de clasificación de un partido",
+      fr: "Consulter le classement d'un jeu",
     })
     .addStringOption((option) =>
       option
@@ -71,7 +68,7 @@ const command: ChatInputCommand = {
               interaction.reply({
                 content: client.translation.get(
                   guildDb?.language,
-                  "Leaderboard.none"
+                  "Leaderboard.none",
                 ),
               });
               return;
@@ -82,59 +79,66 @@ const command: ChatInputCommand = {
                 `${i++}. ${
                   s.user === "Anonymous"
                     ? `${s.user} • **${s.score}** ${client.translation.get(
-                      guildDb?.language,
-                      "Leaderboard.points"
-                    )}`
+                        guildDb?.language,
+                        "Leaderboard.points",
+                      )}`
                     : `<@${s.user}> • **${s.score}** ${client.translation.get(
-                      guildDb?.language,
-                      "Leaderboard.points"
-                    )}`
+                        guildDb?.language,
+                        "Leaderboard.points",
+                      )}`
                 }`,
             );
 
             page.add(
               new EmbedBuilder()
-                .setTitle(client.translation.get(
-                  guildDb?.language,
-                  "Leaderboard.global"
-                ))
-                .setDescription(
-                  data
-                    .join("\n")
-                    .toString(),
+                .setTitle(
+                  client.translation.get(
+                    guildDb?.language,
+                    "Leaderboard.global",
+                  ),
                 )
+                .setDescription(data.join("\n").toString())
                 .setColor("#0598F6"),
             );
 
-            data = Math.round((await UserModel.find({
-              "higherlower.highscore": { $gt: 1 },
-            }).countDocuments()) / 10) - 1
+            data =
+              Math.round(
+                (await UserModel.find({
+                  "higherlower.highscore": { $gt: 1 },
+                }).countDocuments()) / 10,
+              ) - 1;
 
             for (let i = 0; i < data; i++) {
-              page.add(new EmbedBuilder()
-              .setTitle(client.translation.get(
-                guildDb?.language,
-                "Leaderboard.global"
-              ))
-              .setColor("#0598F6"))
+              page.add(
+                new EmbedBuilder()
+                  .setTitle(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Leaderboard.global",
+                    ),
+                  )
+                  .setColor("#0598F6"),
+              );
             }
-              break;
+            break;
 
           case "local":
             data = await Promise.all(
-              guildDb.gameScores.sort((a: any, b: any) => b.higherlower - a.higherlower).map(async (u: any) => {
-                const user = await client.database.getUser(u.userID, true);
-                return user?.votePrivacy
-                  ? { user: "Anonymous", score: u.higherlower }
-                  : { user: u.userID, score: u.higherlower };
-              }),
+              guildDb.gameScores
+                .sort((a: any, b: any) => b.higherlower - a.higherlower)
+                .map(async (u: any) => {
+                  const user = await client.database.getUser(u.userID, true);
+                  return user?.votePrivacy
+                    ? { user: "Anonymous", score: u.higherlower }
+                    : { user: u.userID, score: u.higherlower };
+                }),
             );
 
             if (data.length === 0) {
               interaction.reply({
                 content: client.translation.get(
                   guildDb?.language,
-                  "Leaderboard.none"
+                  "Leaderboard.none",
                 ),
               });
               return;
@@ -145,13 +149,13 @@ const command: ChatInputCommand = {
                 `${i++}. ${
                   s.user === "Anonymous"
                     ? `${s.user} • **${s.score}** ${client.translation.get(
-                      guildDb?.language,
-                      "Leaderboard.points"
-                    )}`
+                        guildDb?.language,
+                        "Leaderboard.points",
+                      )}`
                     : `<@${s.user}> • **${s.score}** ${client.translation.get(
-                      guildDb?.language,
-                      "Leaderboard.points"
-                    )}`
+                        guildDb?.language,
+                        "Leaderboard.points",
+                      )}`
                 }`,
             );
             data = Array.from(
@@ -165,10 +169,12 @@ const command: ChatInputCommand = {
             data = data.map((e: any) =>
               page.add(
                 new EmbedBuilder()
-                  .setTitle(client.translation.get(
-                    guildDb?.language,
-                    "Leaderboard.guild"
-                  ))
+                  .setTitle(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Leaderboard.guild",
+                    ),
+                  )
                   .setDescription(e.slice(0, 10).join("\n").toString())
                   .setColor("#0598F6"),
               ),
@@ -179,7 +185,7 @@ const command: ChatInputCommand = {
         page.start(interaction, "leaderboard");
         break;
     }
-  }
+  },
 };
 
 export default command;
