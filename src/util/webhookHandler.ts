@@ -279,10 +279,7 @@ export default class WebhookHandler {
       let logThreads: any = await this.c.rest.get(
         `/channels/${channelId}/pins`,
       );
-      console.log(logThreads);
-      console.log(
-        logThreads.filter((t: any) => t.application_id === this.c.user?.id),
-      );
+
       if (!thread && !pin) return;
       if (thread) {
         this.c.rest.post(
@@ -295,9 +292,11 @@ export default class WebhookHandler {
           },
         );
       }
-
+      console.log(logThreads[0]);
       if (pin) {
-        this.c.rest.delete(`/channel/${logThreads[0].channel_id}/pins/${logThreads[0].id}`)
+        this.c.rest.delete(`/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`).catch((err) => {
+          console.error("Error deleting message:", err);
+        })
         
         this.c.rest
           .put(`/channels/${channelId}/pins/${fallbackThread?.id}`)
@@ -321,10 +320,6 @@ export default class WebhookHandler {
       const logThreads: any = await this.c.rest.get(
         `/channels/${channelId}/pins`,
       );
-      console.log(logThreads);
-      console.log(
-        logThreads.filter((t: any) => t.application_id === this.c.user?.id),
-      );
 
       if (!thread && !pin) return;
 
@@ -339,9 +334,11 @@ export default class WebhookHandler {
           },
         );
       }
-
+      console.log(logThreads[0]);
       if (pin) {
-        this.c.rest.delete(`/channel/${logThreads[0].channel_id}/pins/${logThreads[0].id}`)
+        this.c.rest.delete(`/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`).catch((err) => {
+          console.error("Error deleting message:", err);
+        })
 
         this.c.rest
           .put(`/channels/${channelId}/pins/${webhookThread?.id}`)
