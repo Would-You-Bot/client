@@ -7,8 +7,6 @@ import { captureException } from "@sentry/node";
 import WouldYou from "../util/wouldYou";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 import { Event } from "../models/event";
-import PrometheusClient from "../util/promHandler";
-import VoteLogger from "../util/voteLogger";
 
 const event: Event = {
   event: "ready",
@@ -39,19 +37,6 @@ const event: Event = {
                 "Successfully registered commands globally",
               )}`,
             );
-            // Init the prometheus client
-            const prometheusClient = new PrometheusClient(client);
-            prometheusClient.initialize();
-
-            //Vote Logger
-            const voteLogger = new VoteLogger(client);
-            if (
-              client?.cluster?.id === 0 &&
-              process.env.TOPGG_TOKEN &&
-              process.env.TOPGG_WEBHOOK
-            ) {
-              voteLogger.startAPI();
-            }
           } else {
             if (!process.env.TEST_GUILD_ID)
               return console.log(
