@@ -66,10 +66,10 @@ const command: ChatInputCommand = {
                   type === "de"
                     ? n.descriptionLocalizations.de
                     : type === "es"
-                      ? n.descriptionLocalizations["es-ES"]
-                      : type === "fr"
-                        ? n.descriptionLocalizations.fr
-                        : n.description
+                    ? n.descriptionLocalizations["es-ES"]
+                    : type === "fr"
+                    ? n.descriptionLocalizations.fr
+                    : n.description
                 }`,
             )
             .join("\n")}`,

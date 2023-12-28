@@ -45,7 +45,7 @@ const button: Button = {
           )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
-            "Settings.embed.dailyMsg",
+            "Settings.embed.autoPin",
           )}: ${guildDb.autoPin ? ":x:" : ":white_check_mark:"}`,
       )
       .setColor("#0598F6");

@@ -18,8 +18,6 @@ import KeepAlive from "./keepAlive";
 import WebhookHandler from "./webhookHandler";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
-import VoteLogger from "./voteLogger";
-import PrometheusClient from "./promHandler";
 import Voting from "./votingHandler";
 import { Button, ChatInputCommand } from "../models";
 import { fileToCollection } from "./Functions/fileToCollection";
@@ -41,8 +39,6 @@ export default class WouldYou extends Client {
   readonly translation: TranslationHandler;
   readonly webhookHandler: WebhookHandler;
   readonly keepAlive: KeepAlive;
-  readonly voteLogger: VoteLogger;
-  readonly prometheusClient: PrometheusClient;
   readonly dailyMessage: DailyMessage;
   readonly voting: Voting;
 
@@ -101,10 +97,6 @@ export default class WouldYou extends Client {
     // Init the cluster client
     this.cluster = new ClusterClient(this);
 
-    // Init the prometheus client
-    this.prometheusClient = new PrometheusClient(this);
-    this.prometheusClient.initialize();
-
     // The database handler
     this.database = new DatabaseHandler(process.env.MONGO_URI as string);
     this.database.connectToDatabase().then(() => {
@@ -125,16 +117,6 @@ export default class WouldYou extends Client {
     // Keep Alive system after the necessary things that are allowed to crash are loaded
     this.keepAlive = new KeepAlive(this);
     this.keepAlive.start();
-
-    //Vote Logger
-    this.voteLogger = new VoteLogger(this);
-    if (
-      this?.cluster?.id === 0 &&
-      process.env.TOPGG_TOKEN &&
-      process.env.TOPGG_WEBHOOK
-    ) {
-      this.voteLogger.startAPI();
-    }
 
     // Daily Message
     this.dailyMessage = new DailyMessage(this);

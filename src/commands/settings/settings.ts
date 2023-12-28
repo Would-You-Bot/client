@@ -143,10 +143,11 @@ const command: ChatInputCommand = {
                       "Settings.button.dailyTimezone",
                     ),
                   )
-                  .setStyle(guildDb.dailyTimezone
-                    ? ButtonStyle.Success
-                    : ButtonStyle.Secondary,
-                ),
+                  .setStyle(
+                    guildDb.dailyTimezone
+                      ? ButtonStyle.Success
+                      : ButtonStyle.Secondary,
+                  ),
                 new ButtonBuilder()
                   .setCustomId("dailyInterval")
                   .setEmoji("1185973661736374405")
@@ -156,10 +157,11 @@ const command: ChatInputCommand = {
                       "Settings.button.dailyInterval",
                     ),
                   )
-                  .setStyle(guildDb.dailyInterval
-                    ? ButtonStyle.Success
-                    : ButtonStyle.Secondary,
-                ),
+                  .setStyle(
+                    guildDb.dailyInterval
+                      ? ButtonStyle.Success
+                      : ButtonStyle.Secondary,
+                  ),
               ),
             dailyButtons3 =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -177,7 +179,7 @@ const command: ChatInputCommand = {
                       ? ButtonStyle.Success
                       : ButtonStyle.Secondary,
                   ),
-                  new ButtonBuilder()
+                new ButtonBuilder()
                   .setCustomId("dailyMsg")
                   .setEmoji("1185973660465500180")
                   .setLabel(
@@ -187,18 +189,20 @@ const command: ChatInputCommand = {
                     ),
                   )
                   .setStyle(
-                    guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
+                    guildDb.dailyMsg
+                      ? ButtonStyle.Success
+                      : ButtonStyle.Secondary,
                   ),
               );
-            interaction
-              .reply({
-                embeds: [dailyMsgs],
-                components: [dailyButtons, dailyButtons2, dailyButtons3],
-                ephemeral: true,
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+          interaction
+            .reply({
+              embeds: [dailyMsgs],
+              components: [dailyButtons, dailyButtons2, dailyButtons3],
+              ephemeral: true,
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           break;
 
         case "general":

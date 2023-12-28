@@ -353,9 +353,7 @@ export default class WebhookHandler {
           .delete(
             `/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`,
             {
-              body: {
-                "X-Audit-Log-Reason": "Automatic unpinning of daily message",
-              },
+              reason: "Automatic unpinning of daily message",
             },
           )
           .catch((err) => {
@@ -364,9 +362,7 @@ export default class WebhookHandler {
 
         this.c.rest
           .put(`/channels/${channelId}/pins/${webhookThread?.id}`, {
-            body: {
-              "X-Audit-Log-Reason": "Automatic pinning of daily message",
-            },
+            reason: "Automatic pinning of daily message",
           })
           .catch((err) => {
             console.error("Error pinning message:", err);
