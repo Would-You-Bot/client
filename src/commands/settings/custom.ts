@@ -158,8 +158,8 @@ const command: ChatInputCommand = {
               message || "",
               newID,
               guildDb,
-            ) 
-          else generativeText = { value: true, type: option }
+            );
+          else generativeText = { value: true, type: option };
           typeEmbed = new EmbedBuilder()
             .setTitle(
               client.translation.get(
