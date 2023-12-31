@@ -1,8 +1,6 @@
 import "dotenv/config";
 import {
   ClusterManager,
-  ReClusterManager,
-  HeartbeatManager,
 } from "discord-hybrid-sharding";
 import { white, gray, green } from "chalk-advanced";
 
@@ -13,13 +11,6 @@ const manager = new ClusterManager(`${__dirname}/index.js`, {
   token: process.env.TOKEN,
 });
 
-manager.extend(
-  new ReClusterManager(),
-  new HeartbeatManager({
-    interval: 10000,
-    maxMissedHeartbeats: 10,
-  }),
-);
 
 manager.on("clusterCreate", (cluster) => {
   console.log(
