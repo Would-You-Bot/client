@@ -25,6 +25,7 @@ const event: Event = {
             ephemeral: true,
           });
         }
+        return;
       }
 
       const guildDb = await client.database.getGuild(
@@ -33,7 +34,7 @@ const event: Event = {
       );
 
       client.database
-        .updateGuild(interaction.guildId as string, {
+        .updateGuild(interaction.guild.id as string, {
           lastUsageTimestamp: Date.now(),
         })
         .then(() => {});
