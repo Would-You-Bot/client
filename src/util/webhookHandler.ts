@@ -274,14 +274,13 @@ export default class WebhookHandler {
         token: cryptr.decrypt(webhook.token),
       });
       if (!webhookClient)
-        return this.webhookFallBack(channel, channelId, message, "!webhookClient");
+        return this.webhookFallBack(channel, channelId, message, false);
 
       const fallbackThread = await webhookClient.send(message).catch((err) => {
         captureException(err);
-        return this.webhookFallBack(channel, channelId, message, "fallbackThread");
+        return this.webhookFallBack(channel, channelId, message, false);
       });
       if (!thread) return;
-      console.log(process.env.DISCORD_TOKEN, process.env.TOKEN)
       this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
       this.c.rest.post(
         ("/channels/" +
@@ -310,11 +309,9 @@ export default class WebhookHandler {
 
       const webhookThread = await webhook.send(message).catch((err) => {
         captureException(err);
-        return this.webhookFallBack(channel, channelId, message, err);
       });
 
       if (!thread) return;
-      console.log(process.env.DISCORD_TOKEN, process.env.TOKEN)
       this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
       this.c.rest
         .post(
