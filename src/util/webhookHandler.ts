@@ -280,6 +280,7 @@ export default class WebhookHandler {
         return this.webhookFallBack(channel, channelId, message, false);
       });
       if (!thread) return;
+      this.c.rest.setToken(process.env.TOKEN as string)
       this.c.rest.post(
         ("/channels/" +
           channelId +
@@ -311,6 +312,7 @@ export default class WebhookHandler {
       });
 
       if (!thread) return;
+      this.c.rest.setToken(process.env.TOKEN as string)
       this.c.rest.post(
         ("/channels/" +
           channelId +
