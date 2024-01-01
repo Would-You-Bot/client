@@ -33,9 +33,6 @@ export default class DailyMessage {
    * @return {Promise<void>}
    */
   async runSchedule() {
-    mom.tz.add(
-      "America/Los_Angeles|PST PDT|80 70|01010101010101010101010|1BQW0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|15e6",
-    );
     let guilds = await this.client.database.getAll();
     //guilds = guilds.filter(g => this.client.guilds.cache.has(g.guildID) && g.dailyMsg);
     guilds = guilds.filter(
@@ -57,14 +54,15 @@ export default class DailyMessage {
         const channel = await this.client.channels
           .fetch(db.dailyChannel)
           .catch(async (err) => {
-            await this.client.database.updateGuild(db?.guildID || "", {
+            captureException(err);
+            await this.client.database.updateGuild(db?.guildID, {
               db,
               dailyMsg: false,
             });
           });
 
         if (!channel?.id) {
-          await this.client.database.updateGuild(db?.guildID || "", {
+          await this.client.database.updateGuild(db?.guildID, {
             db,
             dailyMsg: false,
           });
@@ -76,6 +74,7 @@ export default class DailyMessage {
 
         let randomDaily: any;
         let dailyId;
+
         if (db.customTypes === "regular") {
           let array = [];
           array.push(...General, ...WhatYouDo);
@@ -109,7 +108,8 @@ export default class DailyMessage {
                 db.dailyThread,
               )
               .catch(async (err) => {
-                await this.client.database.updateGuild(db?.guildID || "", {
+                captureException(err);
+                await this.client.database.updateGuild(db?.guildID, {
                   db,
                   dailyMsg: false,
                 });
@@ -145,7 +145,8 @@ export default class DailyMessage {
             db.dailyThread,
           )
           .catch(async (err) => {
-            await this.client.database.updateGuild(db?.guildID || "", {
+            captureException(err);
+            await this.client.database.updateGuild(db?.guildID, {
               db,
               dailyMsg: false,
             });

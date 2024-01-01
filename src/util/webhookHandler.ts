@@ -197,7 +197,8 @@ export default class WebhookHandler {
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
 
-      webhookClient.send(message).catch(async (err) => {
+      await webhookClient.send(message).catch(async (err) => {
+        captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);
       });
     } else {
@@ -222,7 +223,7 @@ export default class WebhookHandler {
             ),
         ];
 
-        return channel.send(message).catch((err: Error) => {
+        return await channel.send(message).catch((err: Error) => {
           captureException(err);
         });
       }
