@@ -146,11 +146,12 @@ export default class WebhookHandler {
     err: any = false,
   ): Promise<void> => {
     if (!channel)
-      channel = await this.c.channels.fetch(channelId).catch((err) => {
-        captureException(err);
+      channel = await this.c.channels.fetch(channelId).catch((er) => {
+        captureException(er);
       });
 
     if (!channel) return;
+    console.log(err)
     if (
       err &&
       (err?.code === 10015 ||
@@ -266,20 +267,21 @@ export default class WebhookHandler {
       if (webhook?.token) webhook.token = webhook.token;
 
       if (!webhook?.id || !webhook?.token)
-        return this.webhookFallBack(channel, channelId, message, false);
+        return this.webhookFallBack(channel, channelId, message, "No webhook token");
 
       const webhookClient = new WebhookClient({
         id: webhook.id,
         token: cryptr.decrypt(webhook.token),
       });
       if (!webhookClient)
-        return this.webhookFallBack(channel, channelId, message, false);
+        return this.webhookFallBack(channel, channelId, message, "!webhookClient");
 
       const fallbackThread = await webhookClient.send(message).catch((err) => {
         captureException(err);
-        return this.webhookFallBack(channel, channelId, message, false);
+        return this.webhookFallBack(channel, channelId, message, "fallbackThread");
       });
       if (!thread) return;
+      console.log(process.env.DISCORD_TOKEN, process.env.TOKEN)
       this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
       this.c.rest.post(
         ("/channels/" +
@@ -312,6 +314,7 @@ export default class WebhookHandler {
       });
 
       if (!thread) return;
+      console.log(process.env.DISCORD_TOKEN, process.env.TOKEN)
       this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
       this.c.rest
         .post(
