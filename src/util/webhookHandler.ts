@@ -151,7 +151,6 @@ export default class WebhookHandler {
       });
 
     if (!channel) return;
-    console.log(err)
     if (
       err &&
       (err?.code === 10015 ||
@@ -267,7 +266,7 @@ export default class WebhookHandler {
       if (webhook?.token) webhook.token = webhook.token;
 
       if (!webhook?.id || !webhook?.token)
-        return this.webhookFallBack(channel, channelId, message, "No webhook token");
+        return this.webhookFallBack(channel, channelId, message, false);
 
       const webhookClient = new WebhookClient({
         id: webhook.id,
