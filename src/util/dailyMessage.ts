@@ -152,7 +152,7 @@ export default class DailyMessage {
             });
           });
 
-        await this.client.database.updateGuild(db?.guildID, {
+        return await this.client.database.updateGuild(db?.guildID, {
           lastUsageTimestamp: Date.now(),
         });
       }, i * 2500); // We do a little timeout here to work against discord ratelimit with 50reqs/second

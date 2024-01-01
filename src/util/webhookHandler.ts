@@ -146,8 +146,8 @@ export default class WebhookHandler {
     err: any = false,
   ): Promise<void> => {
     if (!channel)
-      channel = await this.c.channels.fetch(channelId).catch((err) => {
-        captureException(err);
+      channel = await this.c.channels.fetch(channelId).catch((er) => {
+        captureException(er);
       });
 
     if (!channel) return;
@@ -280,7 +280,7 @@ export default class WebhookHandler {
         return this.webhookFallBack(channel, channelId, message, false);
       });
       if (!thread) return;
-      this.c.rest.setToken(process.env.TOKEN as string)
+      this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
       this.c.rest.post(
         ("/channels/" +
           channelId +
@@ -304,32 +304,36 @@ export default class WebhookHandler {
         token: webhookData?.token,
       });
 
-      if (!webhook) return this.webhookFallBack(channel, channelId, message);
+      if (!webhook) return this.webhookFallBack(channel, channelId, message, false);
 
       const webhookThread = await webhook.send(message).catch((err) => {
         captureException(err);
-        return this.webhookFallBack(channel, channelId, message, err);
+        return this.webhookFallBack(channel, channelId, message, false);
       });
 
       if (!thread) return;
-      this.c.rest.setToken(process.env.TOKEN as string)
-      this.c.rest.post(
-        ("/channels/" +
-          channelId +
-          "/messages/" +
-          (webhookThread as any).id +
-          "/threads") as any,
-        {
-          body: {
-            name: `${[
-              date.getFullYear(),
-              date.getMonth() + 1,
-              date.getDate(),
-            ].join("/")} - Daily Message`,
-            auto_archive_duration: "1440",
+      this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
+      this.c.rest
+        .post(
+          ("/channels/" +
+            channelId +
+            "/messages/" +
+            (webhookThread as any).id +
+            "/threads") as any,
+          {
+            body: {
+              name: `${[
+                date.getFullYear(),
+                date.getMonth() + 1,
+                date.getDate(),
+              ].join("/")} - Daily Message`,
+              auto_archive_duration: "1440",
+            },
           },
-        },
-      );
+        )
+        .catch((e: any) => 
+          captureException(e)
+        );
     }
   };
 }
