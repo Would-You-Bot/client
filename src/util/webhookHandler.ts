@@ -304,10 +304,11 @@ export default class WebhookHandler {
         token: webhookData?.token,
       });
 
-      if (!webhook) return this.webhookFallBack(channel, channelId, message);
+      if (!webhook) return this.webhookFallBack(channel, channelId, message, false);
 
       const webhookThread = await webhook.send(message).catch((err) => {
         captureException(err);
+        return this.webhookFallBack(channel, channelId, message, false);
       });
 
       if (!thread) return;
