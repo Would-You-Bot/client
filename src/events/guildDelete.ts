@@ -11,6 +11,7 @@ const event: Event = {
   execute: async (client: WouldYou, guild: Guild) => {
     if (!guild?.name) return;
 
+    console.log(`Left ${guild.name} (${guild.id})`)
     const guildData = await GuildModel.findOneAndUpdate(
       { guildID: guild.id, dailyMsg: true },
       { dailyMsg: false },

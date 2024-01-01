@@ -9,6 +9,8 @@ const event: Event = {
   execute: async (client: WouldYou, guild: Guild) => {
     if (!guild?.name) return;
 
+    console.log(`Joined ${guild.name} (${guild.id})`)
+
     // Create and save the settings in the cache so that we don't need to do that at a command run
     await client.database.getGuild(guild?.id, true);
 
