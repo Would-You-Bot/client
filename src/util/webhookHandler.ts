@@ -280,7 +280,7 @@ export default class WebhookHandler {
         return this.webhookFallBack(channel, channelId, message, false);
       });
       if (!thread) return;
-      this.c.rest.setToken(process.env.TOKEN as string)
+      this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
       this.c.rest.post(
         ("/channels/" +
           channelId +
@@ -312,24 +312,28 @@ export default class WebhookHandler {
       });
 
       if (!thread) return;
-      this.c.rest.setToken(process.env.TOKEN as string)
-      this.c.rest.post(
-        ("/channels/" +
-          channelId +
-          "/messages/" +
-          (webhookThread as any).id +
-          "/threads") as any,
-        {
-          body: {
-            name: `${[
-              date.getFullYear(),
-              date.getMonth() + 1,
-              date.getDate(),
-            ].join("/")} - Daily Message`,
-            auto_archive_duration: "1440",
+      this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
+      this.c.rest
+        .post(
+          ("/channels/" +
+            channelId +
+            "/messages/" +
+            (webhookThread as any).id +
+            "/threads") as any,
+          {
+            body: {
+              name: `${[
+                date.getFullYear(),
+                date.getMonth() + 1,
+                date.getDate(),
+              ].join("/")} - Daily Message`,
+              auto_archive_duration: "1440",
+            },
           },
-        },
-      );
+        )
+        .catch((e: any) => 
+          captureException(e)
+        );
     }
   };
 }
