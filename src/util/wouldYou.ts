@@ -83,7 +83,7 @@ export default class WouldYou extends Client {
       shards: getInfo().SHARD_LIST,
       shardCount: getInfo().TOTAL_SHARDS,
     });
-
+    console.log(getInfo());
     // Allows for paginating
     this.paginate = new Collection();
 

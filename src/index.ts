@@ -28,14 +28,27 @@ if (botId !== "981649513427111957" || process.env.STATUS === "DEVELOPMENT") {
   );
 }
 
-if (process.env.SENTRY_DSN) {
+var dsnKey = process.env.SENTRY_DSN as string;
+
+if (dsnKey) {
   init({
-    dsn: process.env.SENTRY_DSN,
+    dsn: dsnKey,
     // Performance Monitoring
     tracesSampleRate: 0.5, // 1.0 means that 100% of transactions will be sent to Sentry
     integrations: [...autoDiscoverNodePerformanceMonitoringIntegrations()],
   });
 }
+
+global.wouldYouDevs = [
+  "805898988402376725", // Finn
+  "347077478726238228", // Dominik
+  "268843733317976066", // Sky
+  "510759794911739905", // Alt
+];
+
+global.checkDebug = (d, i) => {
+  return d?.debugMode ?? global?.wouldYouDevs?.includes(i);
+};
 
 const client = new WouldYou();
 client.loginBot().then(() => {
