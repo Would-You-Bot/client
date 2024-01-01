@@ -7,7 +7,6 @@ import { captureException } from "@sentry/node";
 const event: Event = {
   event: "interactionCreate",
   execute: async (client: WouldYou, interaction: Interaction) => {
-    if (!interaction || !interaction.channel) return;
 
     const user = await UserModel.findOne({ userID: interaction.user.id });
 
@@ -31,12 +30,12 @@ const event: Event = {
       }
 
       const guildDb = await client.database.getGuild(
-        interaction.guild?.id as string,
+        interaction.guildId as string,
         true,
       );
 
       client.database
-        .updateGuild(interaction.guild.id as string, {
+        .updateGuild(interaction.guildId as string, {
           lastUsageTimestamp: Date.now(),
         })
         .then(() => {});
@@ -72,7 +71,7 @@ const event: Event = {
       });
     } else if (interaction.isButton()) {
       const guildDb = await client.database.getGuild(
-        interaction.guild?.id as string,
+        interaction.guildId as string,
         true,
       );
       if (!guildDb) return;
@@ -190,13 +189,13 @@ const event: Event = {
 
       if (
         guildDb.replayBy === "Guild" &&
-        client.used.has(interaction.guild?.id)
+        client.used.has(interaction.guildId)
       ) {
         interaction
           .reply({
             ephemeral: true,
             content: `You can use this button again <t:${Math.floor(
-              client.used.get(interaction.guild?.id) / 1000,
+              client.used.get(interaction.guildId) / 1000,
             )}:R>!`,
           })
           .catch((err) => {
@@ -289,7 +288,7 @@ const event: Event = {
             }
           } else {
             client.used.set(
-              interaction.guild?.id,
+              interaction.guildId,
               Date.now() + guildDb.replayCooldown,
             );
 
@@ -321,7 +320,7 @@ const event: Event = {
       interaction.isChannelSelectMenu()
     ) {
       const guildDb = await client.database.getGuild(
-        interaction.guild?.id as string,
+        interaction.guildId as string,
         true,
       );
       if (!guildDb) return;
