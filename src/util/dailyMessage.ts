@@ -33,6 +33,7 @@ export default class DailyMessage {
    * @return {Promise<void>}
    */
   async runSchedule() {
+    return;
     let guilds = await this.client.database.getAll();
     //guilds = guilds.filter(g => this.client.guilds.cache.has(g.guildID) && g.dailyMsg);
     guilds = guilds.filter(
