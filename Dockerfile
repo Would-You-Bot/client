@@ -19,6 +19,7 @@ RUN pnpm run build
 
 #Final image
 FROM base
+ENV NODE_ENV production 
 WORKDIR /usr/src/app
 COPY --from=prod_dependencies /usr/src/app/node_modules ./node_modules
 COPY --from=builder /usr/src/app/dist ./dist
