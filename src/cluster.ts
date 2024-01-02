@@ -7,7 +7,7 @@ import {
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
   shardsPerClusters: 10,
-  totalShards: 9,
+  totalShards: "auto",
   mode: "process",
   token: process.env.TOKEN,
 });

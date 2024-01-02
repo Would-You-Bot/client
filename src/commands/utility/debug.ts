@@ -82,12 +82,12 @@ const command: ChatInputCommand = {
           return;
         }
 
-        await client.webhookHandler.sendWebhook(null, guildDb?.dailyChannel, {
-          content: client.translation.get(
-            guildDb?.language,
-            "Debug.testMessage",
-          ),
-        });
+        //await client.webhookHandler.sendWebhook(null, guildDb?.dailyChannel, {
+        //  content: client.translation.get(
+        //    guildDb?.language,
+        //    "Debug.testMessage",
+        //  ),
+        //});
 
         interaction.reply({
           ephemeral: true,

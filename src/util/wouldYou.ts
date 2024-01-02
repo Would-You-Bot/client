@@ -112,7 +112,7 @@ export default class WouldYou extends Client {
     this.translation = new TranslationHandler();
 
     // Webhook Manager
-    this.webhookHandler = new WebhookHandler(this);
+    //this.webhookHandler = new WebhookHandler(this);
 
     // Keep Alive system after the necessary things that are allowed to crash are loaded
     this.keepAlive = new KeepAlive(this);
