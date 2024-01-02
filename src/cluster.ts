@@ -3,6 +3,7 @@ import { ClusterManager, ReClusterManager, HeartbeatManager } from "discord-hybr
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
   shardsPerClusters: 10,
+  totalShards: 9,
   mode: "process",
   token: process.env.TOKEN,
 });

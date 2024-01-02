@@ -1,6 +1,6 @@
 import { EmbedBuilder, bold } from "discord.js";
-import * as mom from "moment-timezone";
 import { white, gray, green } from "chalk-advanced";
+import * as mom from "moment-timezone";
 import { CronJob } from "cron";
 import { captureException } from "@sentry/node";
 import WouldYou from "./wouldYou";
@@ -19,9 +19,9 @@ export default class DailyMessage {
   start() {
     new CronJob(
       "0 */30 * * * *", // Every 30 minutes, every hour, every day
-      async () => {
-        await this.runSchedule();
-      },
+      (() => {
+        this.runSchedule();
+      }),
       null,
       true,
       "Europe/Berlin",
@@ -44,7 +44,6 @@ export default class DailyMessage {
         "Running daily message check for " + guilds.length + " guilds",
       )}`,
     );
-
     let i = 0;
     for (const db of guilds) {
       if (!db?.dailyChannel) continue;

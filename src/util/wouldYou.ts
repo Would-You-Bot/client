@@ -118,11 +118,10 @@ export default class WouldYou extends Client {
     this.keepAlive = new KeepAlive(this);
     this.keepAlive.start();
 
-    if (this.cluster.id === 0) {
-      // Daily Message
-      this.dailyMessage = new DailyMessage(this);
-      this.dailyMessage.start();
-    }
+    // Daily Message
+    this.dailyMessage = new DailyMessage(this);
+    this.dailyMessage.start();
+
 
     this.voting = new Voting(this);
     this.voting.start();
