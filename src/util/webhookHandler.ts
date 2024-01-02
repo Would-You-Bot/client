@@ -280,7 +280,7 @@ export default class WebhookHandler {
         return this.webhookFallBack(channel, channelId, message, false);
       });
       if (!thread) return;
-      this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
+      this.c.rest.setToken(process.env.DISCORD_TOKEN as string);
       this.c.rest.post(
         ("/channels/" +
           channelId +
@@ -304,7 +304,8 @@ export default class WebhookHandler {
         token: webhookData?.token,
       });
 
-      if (!webhook) return this.webhookFallBack(channel, channelId, message, false);
+      if (!webhook)
+        return this.webhookFallBack(channel, channelId, message, false);
 
       const webhookThread = await webhook.send(message).catch((err) => {
         captureException(err);
@@ -312,7 +313,7 @@ export default class WebhookHandler {
       });
 
       if (!thread) return;
-      this.c.rest.setToken(process.env.DISCORD_TOKEN as string)
+      this.c.rest.setToken(process.env.DISCORD_TOKEN as string);
       this.c.rest
         .post(
           ("/channels/" +
@@ -331,9 +332,7 @@ export default class WebhookHandler {
             },
           },
         )
-        .catch((e: any) => 
-          captureException(e)
-        );
+        .catch((e: any) => captureException(e));
     }
   };
 }

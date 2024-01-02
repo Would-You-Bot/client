@@ -19,9 +19,9 @@ export default class DailyMessage {
   start() {
     new CronJob(
       "0 */30 * * * *", // Every 30 minutes, every hour, every day
-      (() => {
+      () => {
         this.runSchedule();
-      }),
+      },
       null,
       true,
       "Europe/Berlin",
