@@ -65,6 +65,9 @@ dependencies:
   topgg-autoposter:
     specifier: ^2.0.1
     version: 2.0.1
+  tslib:
+    specifier: ^2.6.2
+    version: 2.6.2
   uuid:
     specifier: ^9.0.0
     version: 9.0.1
@@ -85,9 +88,6 @@ devDependencies:
   prettier:
     specifier: ^3.1.0
     version: 3.1.0
-  tslib:
-    specifier: ^2.6.2
-    version: 2.6.2
   typescript:
     specifier: ^5.2.2
     version: 5.2.2
@@ -1709,6 +1709,7 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
+    dev: false
 
   /type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
