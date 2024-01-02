@@ -122,7 +122,6 @@ export default class WouldYou extends Client {
     this.dailyMessage = new DailyMessage(this);
     this.dailyMessage.start();
 
-
     this.voting = new Voting(this);
     this.voting.start();
   }
