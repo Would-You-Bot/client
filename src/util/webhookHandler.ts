@@ -285,29 +285,29 @@ export default class WebhookHandler {
         if(!debugChannel) return console.log("No debug channel found")
   
         await debugChannel?.send({content: "Sending webhook message line 287 webhookhandler.ts"})
-      const fallbackThread = await webhookClient.send(message).catch((err) => {
-        captureException(err);
-        return;
-      });
-      if (!thread) return;
-      this.c.rest.setToken(process.env.DISCORD_TOKEN as string);
-      this.c.rest.post(
-        ("/channels/" +
-          channelId +
-          "/messages/" +
-          (fallbackThread as any).id +
-          "/threads") as any,
-        {
-          body: {
-            name: `${[
-              date.getFullYear(),
-              date.getMonth() + 1,
-              date.getDate(),
-            ].join("/")} - Daily Message`,
-            auto_archive_duration: "1440",
-          },
-        },
-      );
+      //const fallbackThread = await webhookClient.send(message).catch((err) => {
+      //  captureException(err);
+      //  return;
+      //});
+      // if (!thread) return;
+      // this.c.rest.setToken(process.env.DISCORD_TOKEN as string);
+      // this.c.rest.post(
+      //   ("/channels/" +
+      //     channelId +
+      //     "/messages/" +
+      //     (fallbackThread as any).id +
+      //     "/threads") as any,
+      //   {
+      //     body: {
+      //       name: `${[
+      //         date.getFullYear(),
+      //         date.getMonth() + 1,
+      //         date.getDate(),
+      //       ].join("/")} - Daily Message`,
+      //       auto_archive_duration: "1440",
+      //     },
+      //   },
+      //);
     } else {
       const webhook = new WebhookClient({
         id: webhookData?.id,
