@@ -145,7 +145,6 @@ export default class WebhookHandler {
     message: any,
     err: any = false,
   ): Promise<void> => {
-
     if (!channel)
       channel = await this.c.channels.fetch(channelId).catch((er) => {
         captureException(er);
