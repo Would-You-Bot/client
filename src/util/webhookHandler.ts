@@ -196,7 +196,12 @@ export default class WebhookHandler {
 
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
+      const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
 
+      if(!debugChannel) return console.log("No debug channel found")
+
+      await debugChannel?.send({content: "Sending webhook message line 203 webhookhandler.ts"})
+      
       await webhookClient.send(message).catch(async (err) => {
         captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);
@@ -243,6 +248,7 @@ export default class WebhookHandler {
     message: any,
     thread?: boolean,
   ) => {
+    
     if (!channelId && channel?.id) channelId = channel.id;
 
     if (!channelId) return;
@@ -274,7 +280,11 @@ export default class WebhookHandler {
       });
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
+        const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
 
+        if(!debugChannel) return console.log("No debug channel found")
+  
+        await debugChannel?.send({content: "Sending webhook message line 287 webhookhandler.ts"})
       const fallbackThread = await webhookClient.send(message).catch((err) => {
         captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);
@@ -306,7 +316,11 @@ export default class WebhookHandler {
 
       if (!webhook)
         return this.webhookFallBack(channel, channelId, message, false);
+        const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
 
+        if(!debugChannel) return console.log("No debug channel found")
+  
+        await debugChannel?.send({content: "Sending webhook message line 323 webhookhandler.ts"})
       const webhookThread = await webhook.send(message).catch((err) => {
         captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);

@@ -36,7 +36,7 @@ const button: Button = {
 
     if (
       game &&
-      game?.items.current.value >
+      game?.items.current.value >=
         game?.items.history[game.items.history.length - 1].value
     ) {
       game.score += 1;

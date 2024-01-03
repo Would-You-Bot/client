@@ -12,7 +12,7 @@
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
-        "importHelpers": true,
+        "importHelpers": false,
         "noFallthroughCasesInSwitch": true,
         "removeComments": true,
         "resolveJsonModule": true,
