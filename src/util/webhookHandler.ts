@@ -139,101 +139,101 @@ export default class WebhookHandler {
     } else return null;
   };
 
-  webhookFallBack = async (
-    channel: any = null,
-    channelId: string,
-    message: any,
-    err: any = false,
-  ): Promise<void> => {
-    if (!channel)
-      channel = await this.c.channels.fetch(channelId).catch((er) => {
-        captureException(er);
-      });
+  // webhookFallBack = async (
+  //   channel: any = null,
+  //   channelId: string,
+  //   message: any,
+  //   err: any = false,
+  // ): Promise<void> => {
+  //   if (!channel)
+  //     channel = await this.c.channels.fetch(channelId).catch((er) => {
+  //       captureException(er);
+  //     });
 
-    if (!channel) return;
-    if (
-      err &&
-      (err?.code === 10015 ||
-        (typeof err.message === "string" &&
-          err.message.includes("Unknown Webhook"))) &&
-      channel
-        ?.permissionsFor(this.c?.user?.id)
-        .has([PermissionFlagsBits.ManageWebhooks])
-    ) {
-      const webhooks = await channel.fetchWebhooks();
+  //   if (!channel) return;
+  //   if (
+  //     err &&
+  //     (err?.code === 10015 ||
+  //       (typeof err.message === "string" &&
+  //         err.message.includes("Unknown Webhook"))) &&
+  //     channel
+  //       ?.permissionsFor(this.c?.user?.id)
+  //       .has([PermissionFlagsBits.ManageWebhooks])
+  //   ) {
+  //     const webhooks = await channel.fetchWebhooks();
 
-      if (webhooks && webhooks.size > 0) {
-        let i = 0;
-        for (const web of webhooks) {
-          i++;
-          setInterval(() => {
-            if (web?.owner?.id === this.c?.user?.id) {
-              web
-                .delete("Deleting old webhook, to create a new one")
-                .catch((err: any) => {
-                  captureException(err);
-                });
-            }
-          }, 1000 * i);
-        }
-      }
+  //     if (webhooks && webhooks.size > 0) {
+  //       let i = 0;
+  //       for (const web of webhooks) {
+  //         i++;
+  //         setInterval(() => {
+  //           if (web?.owner?.id === this.c?.user?.id) {
+  //             web
+  //               .delete("Deleting old webhook, to create a new one")
+  //               .catch((err: any) => {
+  //                 captureException(err);
+  //               });
+  //           }
+  //         }, 1000 * i);
+  //       }
+  //     }
 
-      const webhook = await this.createWebhook(
-        channel,
-        channelId,
-        "Would You",
-        this.c.user?.displayAvatarURL() as string,
-        "Webhook token unavailable, creating new webhook",
-      );
+  //     const webhook = await this.createWebhook(
+  //       channel,
+  //       channelId,
+  //       "Would You",
+  //       this.c.user?.displayAvatarURL() as string,
+  //       "Webhook token unavailable, creating new webhook",
+  //     );
 
-      if (!webhook?.id || !webhook.token)
-        return this.webhookFallBack(channel, channelId, message, false);
+  //     if (!webhook?.id || !webhook.token)
+  //       return this.webhookFallBack(channel, channelId, message, false);
 
-      const webhookClient = new WebhookClient({
-        id: webhook.id,
-        token: cryptr.decrypt(webhook.token),
-      });
+  //     const webhookClient = new WebhookClient({
+  //       id: webhook.id,
+  //       token: cryptr.decrypt(webhook.token),
+  //     });
 
-      if (!webhookClient)
-        return this.webhookFallBack(channel, channelId, message, false);
-      const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
+  //     if (!webhookClient)
+  //       return this.webhookFallBack(channel, channelId, message, false);
+  //     const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
 
-      if(!debugChannel) return console.log("No debug channel found")
+  //     if(!debugChannel) return console.log("No debug channel found")
 
-      await debugChannel?.send({content: "Sending webhook message line 203 webhookhandler.ts"})
+  //     await debugChannel?.send({content: "Sending webhook message line 203 webhookhandler.ts"})
       
-      await webhookClient.send(message).catch(async (err) => {
-        captureException(err);
-        return this.webhookFallBack(channel, channelId, message, false);
-      });
-    } else {
-      if (
-        channel
-          ?.permissionsFor(this.c?.user?.id)
-          .has([PermissionFlagsBits.EmbedLinks])
-      ) {
-        const guildSettings = await this.c.database.getGuild(channel.guild.id);
+  //     await webhookClient.send(message).catch(async (err) => {
+  //       captureException(err);
+  //       return this.webhookFallBack(channel, channelId, message, false);
+  //     });
+  //   } else {
+  //     if (
+  //       channel
+  //         ?.permissionsFor(this.c?.user?.id)
+  //         .has([PermissionFlagsBits.EmbedLinks])
+  //     ) {
+  //       const guildSettings = await this.c.database.getGuild(channel.guild.id);
 
-        message.embeds = message?.embeds ?? [];
-        message.content = null;
-        message.embeds = [
-          new EmbedBuilder()
-            .setColor("#FE0001")
-            .setDescription(
-              "🛑 " +
-                this.c.translation.get(
-                  guildSettings?.language ?? "en_EN",
-                  "webhookManager.noWebhook",
-                ),
-            ),
-        ];
+  //       message.embeds = message?.embeds ?? [];
+  //       message.content = null;
+  //       message.embeds = [
+  //         new EmbedBuilder()
+  //           .setColor("#FE0001")
+  //           .setDescription(
+  //             "🛑 " +
+  //               this.c.translation.get(
+  //                 guildSettings?.language ?? "en_EN",
+  //                 "webhookManager.noWebhook",
+  //               ),
+  //           ),
+  //       ];
 
-        return await channel.send(message).catch((err: Error) => {
-          captureException(err);
-        });
-      }
-    }
-  };
+  //       return await channel.send(message).catch((err: Error) => {
+  //         captureException(err);
+  //       });
+  //     }
+  //   }
+  // };
 
   /**
    * Send a message to a channel with a webhook
@@ -272,14 +272,14 @@ export default class WebhookHandler {
       if (webhook?.token) webhook.token = webhook.token;
 
       if (!webhook?.id || !webhook?.token)
-        return this.webhookFallBack(channel, channelId, message, false);
+        return;
 
       const webhookClient = new WebhookClient({
         id: webhook.id,
         token: cryptr.decrypt(webhook.token),
       });
       if (!webhookClient)
-        return this.webhookFallBack(channel, channelId, message, false);
+        return;
         const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
 
         if(!debugChannel) return console.log("No debug channel found")
@@ -287,7 +287,7 @@ export default class WebhookHandler {
         await debugChannel?.send({content: "Sending webhook message line 287 webhookhandler.ts"})
       const fallbackThread = await webhookClient.send(message).catch((err) => {
         captureException(err);
-        return this.webhookFallBack(channel, channelId, message, false);
+        return;
       });
       if (!thread) return;
       this.c.rest.setToken(process.env.DISCORD_TOKEN as string);
@@ -315,7 +315,7 @@ export default class WebhookHandler {
       });
 
       if (!webhook)
-        return this.webhookFallBack(channel, channelId, message, false);
+        return;
         const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
 
         if(!debugChannel) return console.log("No debug channel found")
@@ -323,7 +323,7 @@ export default class WebhookHandler {
         await debugChannel?.send({content: "Sending webhook message line 323 webhookhandler.ts"})
       const webhookThread = await webhook.send(message).catch((err) => {
         captureException(err);
-        return this.webhookFallBack(channel, channelId, message, false);
+        return;
       });
 
       if (!thread) return;
