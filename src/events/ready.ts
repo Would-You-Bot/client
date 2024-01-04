@@ -45,10 +45,11 @@ const event: Event = {
                 ),
               );
             if (client.user?.id) {
+              console.log(client.user?.id);
               await rest.put(
                 Routes.applicationGuildCommands(
                   client.user.id,
-                  process.env.TEST_GUILD_ID,
+                  process.env.TEST_GUILD_ID as string,
                 ),
                 {
                   body: globalCommands,
