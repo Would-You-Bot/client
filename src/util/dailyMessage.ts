@@ -6,7 +6,6 @@ import { captureException } from "@sentry/node";
 import WouldYou from "./wouldYou";
 import { getWouldYouRather, getWwyd } from "./Functions/jsonImport";
 import { IGuildModel } from "./Models/guildModel";
-import { Error } from "mongoose";
 
 export default class DailyMessage {
   private client: WouldYou;

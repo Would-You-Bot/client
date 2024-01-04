@@ -11,7 +11,6 @@ import { Event } from "../models/event";
 const event: Event = {
   event: "ready",
   execute: async (client: WouldYou) => {
-    console.log("running ready");
     if (client.cluster.id === 0) {
       let globalCommands = Array.from(
         client.commands.filter((x) => x.requireGuild === true).values(),
@@ -22,7 +21,6 @@ const event: Event = {
       }).setToken(process.env.DISCORD_TOKEN as string);
 
       setTimeout(async () => {
-        console.log("running commands");
         try {
           if (process.env.PRODUCTION === "true") {
             if (process.env.TOPGG_TOKEN) {
@@ -40,7 +38,6 @@ const event: Event = {
               )}`,
             );
           } else {
-            console.log("development setup for commands");
             if (!process.env.TEST_GUILD_ID)
               return console.log(
                 red(
