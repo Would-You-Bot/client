@@ -252,4 +252,12 @@ export default class DatabaseHandler {
   async getAll() {
     return this.guildModel.find();
   }
+  /**
+   * @name getAllActiveDailyMessageGuilds
+   * @description Fetch all the active dailyMessage guilds.
+   * @returns {Promise<IGuildModel[]>}
+   */
+  async getAllActiveDailyMessageGuilds(): Promise<IGuildModel[]> {
+    return this.guildModel.find({ dailyMsg: true });
+  }
 }
