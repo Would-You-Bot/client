@@ -4,7 +4,7 @@ services:
     container_name: bot
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     restart: unless-stopped
     env_file:
       - .env
