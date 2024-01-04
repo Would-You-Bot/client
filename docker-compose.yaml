@@ -1,19 +1,17 @@
-version: "3.3"
-
+version: "3.9"
 services:
-  website:
-    container_name: "bot"
-    image: dominikdoesdev/wy-bot
-    environment: 
-      - TZ=Europe/Berlin
-      - TEST_GUILD_ID=
-      - STATUS=DEVELOPMENT
-      - BOTSTATUS=Would You?
-      - TOKEN=
-      - ENCRYPTION_KEY=
-      - TOPGG_TOKEN=
-      - TOPGG_WEBHOOK=
-      - SENTRY_DSN=
-      - MONGO_URI=
-      - LOG_PRIVATE=
-      - LOG_GUILDS=
+  wouldyou-bot:
+    container_name: bot
+    build:
+      context: .
+      dockerfile: dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - node
+    labels:
+      gg.wouldyou.compose-author: "Discord username 536b656c6c79 "
+networks:
+  node:
+    driver: bridge
