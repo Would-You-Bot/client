@@ -196,12 +196,6 @@ export default class WebhookHandler {
 
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
-      const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
-
-      if(!debugChannel) return console.log("No debug channel found")
-
-      await debugChannel?.send({content: "Sending webhook message line 203 webhookhandler.ts"})
-      
       await webhookClient.send(message).catch(async (err) => {
         captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);
@@ -258,7 +252,6 @@ export default class WebhookHandler {
 
     if (webhookData?.id) webhookData.id = webhookData.id;
     if (webhookData?.token) webhookData.token = webhookData.token;
-
     if (!webhookData?.id || !webhookData?.token) {
       let webhook = await this.createWebhook(
         channel,
@@ -270,7 +263,6 @@ export default class WebhookHandler {
 
       if (webhook?.id) webhook.id = webhook.id;
       if (webhook?.token) webhook.token = webhook.token;
-
       if (!webhook?.id || !webhook?.token)
         return this.webhookFallBack(channel, channelId, message, false);
 
@@ -280,11 +272,6 @@ export default class WebhookHandler {
       });
       if (!webhookClient)
         return this.webhookFallBack(channel, channelId, message, false);
-        const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
-
-        if(!debugChannel) return console.log("No debug channel found")
-  
-        await debugChannel?.send({content: "Sending webhook message line 287 webhookhandler.ts"})
       const fallbackThread = await webhookClient.send(message).catch((err) => {
         captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);
@@ -313,14 +300,9 @@ export default class WebhookHandler {
         id: webhookData?.id,
         token: webhookData?.token,
       });
-
       if (!webhook)
         return this.webhookFallBack(channel, channelId, message, false);
-        const debugChannel = await this.c.channels.fetch("1192118227497652276") as any;
 
-        if(!debugChannel) return console.log("No debug channel found")
-  
-        await debugChannel?.send({content: "Sending webhook message line 323 webhookhandler.ts"})
       const webhookThread = await webhook.send(message).catch((err) => {
         captureException(err);
         return this.webhookFallBack(channel, channelId, message, false);
