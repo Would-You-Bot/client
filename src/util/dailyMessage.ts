@@ -96,11 +96,15 @@ export default class DailyMessage {
           randomDaily = array[Math.floor(Math.random() * array.length)];
         } else if (db.customTypes === "custom") {
           if (db.customMessages.filter((c) => c.type !== "nsfw").length === 0) {
-            const debugChannel = await this.client.channels.fetch("1192118227497652276") as any;
+            const debugChannel = (await this.client.channels.fetch(
+              "1192118227497652276",
+            )) as any;
 
-            if(!debugChannel) return console.log("No debug channel found")
-      
-            await debugChannel?.send({content: "Sending webhook message line 103 dailymessage.ts"})
+            if (!debugChannel) return console.log("No debug channel found");
+
+            await debugChannel?.send({
+              content: "Sending webhook message line 103 dailymessage.ts",
+            });
             return this.client.webhookHandler
               .sendWebhook(
                 channel,
@@ -138,11 +142,15 @@ export default class DailyMessage {
             )} | ID: ${dailyId}`,
           })
           .setDescription(bold(randomDaily) as string);
-          const debugChannel = await this.client.channels.fetch("1192118227497652276") as any;
+        const debugChannel = (await this.client.channels.fetch(
+          "1192118227497652276",
+        )) as any;
 
-          if(!debugChannel) return console.log("No debug channel found")
-    
-          await debugChannel?.send({content: "Sending webhook message line 145 dailymessage.ts"})
+        if (!debugChannel) return console.log("No debug channel found");
+
+        await debugChannel?.send({
+          content: "Sending webhook message line 145 dailymessage.ts",
+        });
         await this.client.webhookHandler
           .sendWebhook(
             channel,
