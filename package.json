@@ -49,7 +49,7 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
-    "moment-timezone": "^0.5.43",
+    "moment-timezone": "^0.5.44",
     "mongoose": "^8.0.1",
     "profanity-check": "^0.0.3",
     "prom-client": "^15.0.0",
