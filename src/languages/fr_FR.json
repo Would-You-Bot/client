@@ -228,7 +228,7 @@
     "errorSame": "Le fuseau horaire fourni est le même fuseau horaire que celui déjà défini. Assurez-vous de choisir un autre fuseau horaire.",
     "errorInvalid": "Le fuseau horaire fourni est invalide, vous pouvez choisir un fuseau horaire valide sur ce [sélecteur de fuseau horaire](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "L'heure de publication indiquée est la même que celle déjà définie. Assure-toi de choisir une autre heure de publication.",
-    "intervalInvalid": "L'heure de publication indiquée n'était pas valide. Assure-toi que ton heure de publication est au format 24h et se termine soit par 00 soit par 30 !",
+    "intervalInvalid": "L'heure de publication fournie n'est pas valide. Assure-toi que ton heure d'envoi est au format 24h et que les minutes sont soit 00, soit un intervalle de 5 !",
     "dailyChannel": "Sélectionnez le channel où vous voulez que les messages quotidiens soient postés !",
     "replayChannel": "Sélectionnez un salon auquel vous souhaitez ajouter un temps de recharge !",
     "replayChannelNone": "Vous n'avez défini aucun salon de rediffusion !",
