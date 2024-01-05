@@ -228,7 +228,7 @@
     "errorSame": "La zona horaria proporcionada es la misma zona horaria que ya está definida. Asegúrese de elegir una zona horaria diferente.",
     "errorInvalid": "La zona horaria proporcionada no es válida, puedes elegir una zona horaria válida aquí: [Selector de Zona Horaria](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "La hora de publicación especificada es la misma que la ya establecida. Asegúrese de elegir una hora de publicación diferente.",
-    "intervalInvalid": "La hora de publicación especificada no es válida. Asegúrese de que la hora de publicación está en formato de 24 horas y termina en 00 o 30!",
+    "intervalInvalid": "La hora de publicación indicada no es válida. Asegúrate de que la hora de publicación está en formato de 24 horas y de que los minutos son 00 o un intervalo de 5.",
     "dailyChannel": "¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!",
     "replayChannel": "Selecciona un canal al que quieras añadir un enfriamiento por repetición!",
     "replayChannelNone": "¡No tienes ningún canal de repetición configurado!",

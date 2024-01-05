@@ -242,6 +242,7 @@ export default class WebhookHandler {
     message: any,
     thread?: boolean,
   ) => {
+    
     if (!channelId && channel?.id) channelId = channel.id;
 
     if (!channelId) return;

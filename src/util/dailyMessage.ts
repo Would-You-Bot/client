@@ -19,15 +19,16 @@ export default class DailyMessage {
    * Start the daily message Schedule
    */
   start() {
-    new CronJob(
-      "*/30 * * * *", // Every 30 minutes, every hour, every day
+    const job = new CronJob(
+      "*/5 * * * *",  // Every 5 minutes, every hour, every day
       () => {
         this.runSchedule();
       },
       null,
-      true,
+      false,
       "Europe/Berlin",
     );
+    job.start();
   }
 
   /**
@@ -63,78 +64,15 @@ export default class DailyMessage {
         this.handleError(new Error(error as string), guild);
       }
     });
-    return; // REMOVE ME
-
-    // let i = 0;
-    // for (const db of guilds) {
-    //   if (!db?.dailyChannel) continue;
-    //   if (!db.dailyMsg) continue;
-    //   i++;
-    //   setTimeout(async () => {
-    //     const channel = await this.client.channels
-    //       .fetch(db.dailyChannel)
-    //       .catch(async (err) => {
-    //         captureException(err);
-    //         await this.client.database.updateGuild(db?.guildID, {
-    //           db,
-    //           dailyMsg: false,
-    //         });
-    //       });
-
-    //     if (!channel?.id) {
-    //       await this.client.database.updateGuild(db?.guildID, {
-    //         db,
-    //         dailyMsg: false,
-    //       });
-    //       return;
-    //     } // Always directly return before do to many actions
-
-    //     let randomDaily: any;
-    //     let dailyId;
-
-    //     dailyId = Math.floor(Math.random() * randomDaily.length);
-
-    //     const embed = new EmbedBuilder()
-    //       .setColor("#0598F6")
-    //       .setFooter({
-    //         text: `Daily Message | Type: ${db.customTypes.replace(/^\w/, (c) =>
-    //           c.toUpperCase(),
-    //         )} | ID: ${dailyId}`,
-    //       })
-    //       .setDescription(bold(randomDaily) as string);
-    //     const debugChannel = (await this.client.channels.fetch(
-    //       "1192118227497652276",
-    //     )) as any;
-
-    //     if (!debugChannel) return console.log("No debug channel found");
-
-    //     await debugChannel?.send({
-    //       content: "Sending webhook message line 145 dailymessage.ts",
-    //     });
-    //     await this.client.webhookHandler
-    //       .sendWebhook(
-    //         channel,
-    //         db.dailyChannel,
-    //         {
-    //           embeds: [embed],
-    //           content: db.dailyRole ? `<@&${db.dailyRole}>` : null,
-    //         },
-    //         db.dailyThread,
-    //       )
-    //       .catch(async (err) => {
-    //         captureException(err);
-    //         await this.client.database.updateGuild(db?.guildID, {
-    //           db,
-    //           dailyMsg: false,
-    //         });
-    //       });
-
-    //     return await this.client.database.updateGuild(db?.guildID, {
-    //       lastUsageTimestamp: Date.now(),
-    //     });
-    //   }, i * 2500); // We do a little timeout here to work against discord ratelimit with 50reqs/second
-    // }
+    return;
   }
+  /**
+   * @name sendDaily
+   * @description handle the daily message and sent it to the webhookhandler.
+   * @param guild
+   * @returns Promise<void>
+   * @author Nidrux
+   */
   private async sendDaily(guild: IGuildModel): Promise<void> {
     let randomDaily = await this.getDailyMessage(guild);
     let channel = await this.getDailyMessageChannel(guild);
@@ -165,11 +103,23 @@ export default class DailyMessage {
     }
     return this.sendWebhook(channel, embed, guild);
   }
+  /**
+   * @name getDailyMessageChannel
+   * @param guild
+   * @returns
+   * @author Nidrux
+   */
   private async getDailyMessageChannel(
     guild: IGuildModel,
   ): Promise<Channel | null> {
     return await this.client.channels.fetch(guild.dailyChannel);
   }
+  /**
+   * @description Return a question and id based on the type of questions the guild wants.
+   * @param guild
+   * @returns Promise<[string, number] | null>
+   * @author Nidrux
+   */
   private async getDailyMessage(
     guild: IGuildModel,
   ): Promise<[string, number] | null> {
@@ -202,6 +152,14 @@ export default class DailyMessage {
     let id = Math.floor(Math.random() * allMessageArray.length);
     return [allMessageArray[id], id];
   }
+  /**
+   * @description Send the embed to the webhookhandler
+   * @param channel
+   * @param embed
+   * @param guild
+   * @returns Promise<void>
+   * @author Nidrux
+   */
   private async sendWebhook(
     channel: Channel,
     embed: EmbedBuilder,
@@ -223,6 +181,13 @@ export default class DailyMessage {
       return;
     }
   }
+  /**
+   * @description Every error will set the dailyMsg flag for guilds to false.
+   * @param error
+   * @param guild
+   * @returns Promise<void>
+   * @author Nidrux
+   */
   private async handleError(error: Error, guild: IGuildModel): Promise<void> {
     console.error(error);
     captureException(error);
@@ -231,6 +196,14 @@ export default class DailyMessage {
       dailyMsg: false,
     });
   }
+  /**
+   *
+   * @param question
+   * @param id
+   * @param type
+   * @returns EmbedBuilder
+   * @author Nidrux
+   */
   private buildEmbed(question: string, id: number, type: string): EmbedBuilder {
     return new EmbedBuilder()
       .setColor("#0598F6")
