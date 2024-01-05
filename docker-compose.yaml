@@ -8,6 +8,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      - TZ=Europe/Berlin
     networks:
       - node
     labels:

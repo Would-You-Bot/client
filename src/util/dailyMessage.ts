@@ -20,7 +20,7 @@ export default class DailyMessage {
    */
   start() {
     new CronJob(
-      "0 */30 * * * *", // Every 30 seconds, minutes, every hour, every day
+      "*/30 * * * *", // Every 30 minutes, every hour, every day
       () => {
         this.runSchedule();
       },
