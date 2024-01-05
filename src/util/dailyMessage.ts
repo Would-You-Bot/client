@@ -25,9 +25,10 @@ export default class DailyMessage {
         this.runSchedule();
       },
       null,
-      true,
+      false,
       "Europe/Berlin",
     );
+    job.start();
   }
 
   /**
