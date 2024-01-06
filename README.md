@@ -6,13 +6,17 @@
 
 ---
 
-Would You bot provides activities and questions to keep your server active!
+Play fun and entertaining games with Would You, featuring user polls and customization. Play Would You Rather, Truth or Dare, Never Have I Ever, Higher or Lower, and What Would You Do!
 
 ---
 
 </div>
 
 # Getting Started
+
+## Would You Usage Diagram
+
+![Would You Usage Diagram](https://i.imgur.com/BDzuzIw.png)
 
 ## Starting the Development Environment
 
