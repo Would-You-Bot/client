@@ -26,7 +26,9 @@ const modalObject = {
 };
 
 function isFormat(str: string) {
-  return /^(?:[01]\d|2[0-4]):(?:00|05|10|15|20|25|30|35|40|45|50|55)$/.test(str);
+  return /^(?:[01]\d|2[0-4]):(?:00|05|10|15|20|25|30|35|40|45|50|55)$/.test(
+    str,
+  );
 }
 
 const button: Button = {
