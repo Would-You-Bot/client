@@ -57,13 +57,13 @@ export default class DailyMessage {
       green(`Running daily message check for ${guilds.length} guilds`),
     );
     // Loop over every guild to get their message and send it to them trough a webhook.
-    guilds.forEach(async (guild) => {
+    for(const guild of guilds) async () => {
       try {
         await this.sendDaily(guild);
       } catch (error) {
         this.handleError(new Error(error as string), guild);
       }
-    });
+    };
     return;
   }
   /**
@@ -137,15 +137,15 @@ export default class DailyMessage {
         let id = Math.floor(Math.random() * allMessageArray.length);
         return [allMessageArray[id], id];
       }
-      guild.customMessages.forEach((message) =>
-        allMessageArray.push(message.msg),
-      );
+      for (const message of guild.customMessages) {
+        allMessageArray.push(message.msg)
+      }
     }
     // Populate the allMessageArray with all custom messages.
     if (guild.customTypes === "custom") {
-      guild.customMessages.forEach((message) =>
-        allMessageArray.push(message.msg),
-      );
+      for (const message of guild.customMessages) {
+        allMessageArray.push(message.msg)
+      }
     }
     // Handle the allMessageArray and send a return a random question or 0
     if (allMessageArray.length <= 0) return null;
