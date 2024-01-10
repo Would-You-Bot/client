@@ -15,18 +15,21 @@ export default class DailyMessage {
 
   /**
    * Start the daily message Schedule
+   * 
+   * NOTE: this has been turned off or rather commented out because Skeleton said we should turn it off so the bot doesn't send random daily messages while we test
    */
-  start() {
-    new CronJob(
-      "0 */30 * * * *", // Every 30 minutes, every hour, every day
-      async () => {
-        await this.runSchedule();
-      },
-      null,
-      true,
-      "Europe/Berlin",
-    );
-  }
+  // start() {
+  //   const job = new CronJob(
+  //     "*/5 * * * *", // Every 5 minutes, every hour, every day
+  //     () => {
+  //       this.runSchedule();
+  //     },
+  //     null,
+  //     false,
+  //     "Europe/Berlin",
+  //   );
+  //   job.start();
+  // }
 
   /**
    * Run the daily message schedule
