@@ -69,6 +69,7 @@ export default class WebhookHandler {
    * Create a webhook in a channel & save it to the database and cache
    * @param {object | null} channel the channel to create the webhook in
    * @param {string} channelId the channel id
+   * @param {string} guildId the guild id
    * @param {string} name the name of the webhook
    * @param {string} avatar the avatar of the webhook (url)
    * @param {string} reason the reason for creating the webhook
@@ -78,6 +79,7 @@ export default class WebhookHandler {
   createWebhook = async (
     channel: any = null,
     channelId: string,
+    guildId: string,
     name: string,
     avatar: string,
     reason: string,
@@ -181,6 +183,7 @@ export default class WebhookHandler {
       const webhook = await this.createWebhook(
         channel,
         channelId,
+        channel.guildId,
         "Would You",
         this.c.user?.displayAvatarURL() as string,
         "Webhook token unavailable, creating new webhook",
@@ -257,6 +260,7 @@ export default class WebhookHandler {
       let webhook = await this.createWebhook(
         channel,
         channelId,
+        channel.guildId,
         "Would You",
         this.c.user?.displayAvatarURL() as string,
         "Webhook token unavailable, creating new webhook",

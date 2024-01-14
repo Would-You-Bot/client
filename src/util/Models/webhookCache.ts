@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 
 export interface IWebhookCache {
   channelId: string;
+  guildId: string;
   webhookId: string;
   webhookToken: string;
   lastUsageTimestamp: number;
@@ -9,6 +10,10 @@ export interface IWebhookCache {
 
 const webhookCacheSchema = new Schema({
   channelId: {
+    type: String,
+    default: null,
+  },
+  guildId: {
     type: String,
     default: null,
   },
