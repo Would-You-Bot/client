@@ -37,55 +37,20 @@ const command: ChatInputCommand = {
     });
     const type = languageMappings[guildDb?.language] || "en";
     const helpembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: client.translation.get(guildDb?.language, "Help.embed.footer"),
-        iconURL: client?.user?.displayAvatarURL() || undefined,
-      })
-      .setTimestamp()
-      .setTitle(client.translation.get(guildDb?.language, "Help.embed.title"))
-      .addFields({
-        name: client.translation.get(
-          guildDb?.language,
-          "Help.embed.Fields.privacyname",
-        ),
-        value: client.translation.get(
-          guildDb?.language,
-          "Help.embed.Fields.privacy",
-        ),
-        inline: false,
-      })
+      .setColor("#2b2d31")
       .setDescription(
-        client.translation.get(guildDb?.language, "Help.embed.description") +
-          `\n\n${(commands as any)
-            .filter((e: any) => e.name !== "reload")
-            .sort((a: any, b: any) => a.name.localeCompare(b.name))
-            .map(
-              (n: any) =>
-                `</${n.name}:${n.id}> - ${
-                  type === "de"
-                    ? n.descriptionLocalizations.de
-                    : type === "es"
-                    ? n.descriptionLocalizations["es-ES"]
-                    : type === "fr"
-                    ? n.descriptionLocalizations.fr
-                    : n.description
-                }`,
-            )
-            .join("\n")}`,
+        "## Hello \n\n **Would You** is a bot that allows you to play the game 'Would You Rather' with your friends on Discord. \n\n ## Main Game Modes \n\n /wouldyourather \n\n ## Privacy \n\n If you dont want to show up on leaderboards or votes. You can adjust your privacy settings using /privacy. To find out what data we store visit our [Privacy Policy](https://localhost:3000)",
       );
 
     const button =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
-          .setLabel(
-            client.translation.get(guildDb?.language, "Help.button.title"),
-          )
+          .setLabel("Would You Support")
           .setStyle(5)
           .setEmoji("💫")
           .setURL("https://discord.gg/vMyXAxEznS"),
         new ButtonBuilder()
-          .setLabel("Invite")
+          .setLabel("Would You Invite")
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
@@ -94,6 +59,7 @@ const command: ChatInputCommand = {
       );
     await interaction
       .reply({
+        content: "discord.gg/vMyXAxEznS",
         embeds: [helpembed],
         components: [button],
       })

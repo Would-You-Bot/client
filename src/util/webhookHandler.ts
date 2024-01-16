@@ -1,377 +1,337 @@
-import { PermissionFlagsBits, WebhookClient, EmbedBuilder } from "discord.js";
-import { captureException } from "@sentry/node";
-import { Model } from "mongoose";
-import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
-import WouldYou from "./wouldYou";
-import Cryptr from "cryptr";
+// import {
+//   PermissionFlagsBits,
+//   WebhookClient,
+//   EmbedBuilder,
+//   Channel,
+//   APIMessage,
+// } from "discord.js";
+// import { captureException } from "@sentry/node";
+// import { Model } from "mongoose";
+// import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
+// import WouldYou from "./wouldYou";
+// import Cryptr from "cryptr";
+// import { IQueueMessage } from "../global";
 
-const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string);
+// const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string);
 
-export default class WebhookHandler {
-  private webhooks: Map<string, { id: string; token: string }>;
-  private webhookModel: Model<IWebhookCache>;
-  private c: WouldYou;
+// export default class WebhookHandler {
+//   private webhooks: Map<string, { id: string; token: string }>;
+//   private webhookModel: Model<IWebhookCache>;
+//   private client: WouldYou;
 
-  constructor(client: WouldYou) {
-    this.webhooks = new Map();
-    this.webhookModel = WebhookCache;
+//   constructor(client: WouldYou) {
+//     this.webhooks = new Map();
+//     this.webhookModel = WebhookCache;
 
-    if (!client) throw new Error("No client provided");
+//     if (!client) throw new Error("No client provided");
 
-    this.c = client;
-  }
+//     this.client = client;
+//   }
+//   async handleWebhook(
+//     channel: Channel,
+//     content: any,
+//     message: IQueueMessage,
+//     thread?: boolean,
+//     pin?: boolean,
+//   ): Promise<Error | APIMessage> {
+//     if (message.webhook.id && message.webhook.token) {
+//       const webhookClient = new WebhookClient({
+//         id: message.webhook.id,
+//         token: cryptr.decrypt(message.webhook.token),
+//       });
+//       return await this.send(webhookClient, content);
+//     } else {
+//       const newWebhook = await this.webhookFallBack(channel, channel.id)
+//       return await this.send(newWebhook, c);
 
-  updateLastUsed(token: string) {
-    this.webhookModel
-      .findOneAndUpdate(
-        { webhookToken: cryptr.encrypt(token) },
-        { lastUsageTimestamp: Date.now() },
-      )
-      .then(() => {});
-  }
+//       return new Error("Id and or token are null"); // (TODO) create webhook ?
+//     }
+//     // if (webhookData?.id) webhookData.id = webhookData.id;
+//     // if (webhookData?.token) webhookData.token = webhookData.token;
 
-  /**
-   * Get a webhook from the cache and if not in cache fetch it
-   * @param {string} channelId the channel id
-   * @return {Promise<object>}
-   * @private
-   */
-  getWebhook = async (channelId: string) => {
-    if (this.webhooks.has(`${channelId}`)) {
-      const webhookData = this.webhooks.get(channelId);
+//     // if (!webhookData?.id || !webhookData?.token) {
+//     //   let webhook = await this.createWebhook(
+//     //     channel,
+//     //     channelId,
+//     //     channel.guildId,
+//     //     "Would You",
+//     //     this.c.user?.displayAvatarURL() as string,
+//     //     "Webhook token unavailable, creating new webhook",
+//     //   );
 
-      this.updateLastUsed(webhookData?.token as string);
-      return webhookData;
-    }
+//     //   if (webhook?.id) webhook.id = webhook.id;
+//     //   if (webhook?.token) webhook.token = webhook.token;
 
-    const data = await this.webhookModel.findOne({
-      channelId: channelId,
-    });
+//     //   if (!webhook?.id || !webhook?.token)
+//     //     return this.webhookFallBack(channel, channelId, message, false);
 
-    if (data) {
-      const token = cryptr.decrypt(data.webhookToken);
+//     //   const webhookClient = new WebhookClient({
+//     //     id: webhook.id,
+//     //     token: cryptr.decrypt(webhook.token),
+//     //   });
+//     //   if (!webhookClient)
+//     //     return this.webhookFallBack(channel, channelId, message, false);
 
-      this.updateLastUsed(token as string);
+//     //   const fallbackThread = await webhookClient.send(message).catch((err) => {
+//     //     captureException(err);
+//     //     return this.webhookFallBack(channel, channelId, message, false);
+//     //   });
 
-      this.webhooks.set(`${channelId}`, {
-        id: data.webhookId,
-        token: token,
-      });
+//     //   let logThreads: any = await this.c.rest.get(
+//     //     `/channels/${channelId}/pins`,
+//     //   );
 
-      return {
-        id: data.webhookId,
-        token: token,
-      };
-    } else return null;
-  };
+//     //   if (!thread && !pin) return;
+//     //   if (thread) {
+//     //     this.c.rest.post(
+//     //       `/channels/${channelId}/messages/${fallbackThread?.id}`,
+//     //       {
+//     //         body: {
+//     //           name: "Mixed - Daily Message",
+//     //           auto_archive_duration: "1440",
+//     //         },
+//     //       },
+//     //     );
+//     //   }
+//     //   console.log(logThreads[0]);
+//     //   if (pin) {
+//     //     this.c.rest
+//     //       .delete(
+//     //         `/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`,
+//     //         {
+//     //           reason: "Automatic unpinning of daily message",
+//     //         },
+//     //       )
+//     //       .catch((err) => {
+//     //         console.error("Error deleting message:", err);
+//     //       });
 
-  /**
-   * Create a webhook in a channel & save it to the database and cache
-   * @param {object | null} channel the channel to create the webhook in
-   * @param {string} channelId the channel id
-   * @param {string} guildId the guild id
-   * @param {string} name the name of the webhook
-   * @param {string} avatar the avatar of the webhook (url)
-   * @param {string} reason the reason for creating the webhook
-   * @return {Promise<object>}
-   * @private
-   */
-  createWebhook = async (
-    channel: any = null,
-    channelId: string,
-    guildId: string,
-    name: string,
-    avatar: string,
-    reason: string,
-  ) => {
-    if (!channel)
-      channel = await this.c.channels.fetch(channelId).catch((err) => {
-        captureException(err);
-      });
+//     //     this.c.rest
+//     //       .put(`/channels/${channelId}/pins/${fallbackThread?.id}`, {
+//     //         reason: "Automatic pinning of daily message",
+//     //       })
+//     //       .catch((err) => {
+//     //         console.error("Error pinning message:", err);
+//     //       });
+//     //   }
+//     // } else {
+//     //   const webhook = new WebhookClient({
+//     //     id: webhookData?.id,
+//     //     token: webhookData?.token,
+//     //   });
 
-    if (!channel) return null;
+//     //   if (!webhook) return this.webhookFallBack(channel, channelId, message);
 
-    if (
-      !channel
-        ?.permissionsFor(this.c?.user?.id)
-        .has([PermissionFlagsBits.ManageWebhooks])
-    )
-      return null;
+//     //   const webhookThread = await webhook.send(message).catch((err) => {
+//     //     captureException(err);
+//     //     return this.webhookFallBack(channel, channelId, message, err);
+//     //   });
 
-    const webhook = await channel
-      .createWebhook({
-        name: name ?? "Would You",
-        avatar: avatar ?? this.c.user?.displayAvatarURL(),
-        reason: reason ?? "Would You Webhook",
-      })
-      .catch((err: any) => {
-        return captureException(err);
-      });
+//     //   const logThreads: any = await this.c.rest.get(
+//     //     `/channels/${channelId}/pins`,
+//     //   );
 
-    if (webhook?.id) {
-      this.webhooks.set(`${channelId}`, {
-        id: webhook.id,
-        token: webhook.token,
-      });
+//     //   if (!thread && !pin) return;
 
-      const oldData = await this.webhookModel.findOne({
-        channelId: channelId,
-      });
+//     //   if (thread) {
+//     //     this.c.rest.post(
+//     //       `/channels/${channelId}/messages/${webhookThread?.id}`,
+//     //       {
+//     //         body: {
+//     //           name: "Mixed - Daily Message",
+//     //           auto_archive_duration: "1440",
+//     //         },
+//     //       },
+//     //     );
+//     //   }
 
-      webhook.token = cryptr.encrypt(webhook.token);
+//     //   if (pin) {
+//     //     this.c.rest
+//     //       .delete(
+//     //         `/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`,
+//     //         {
+//     //           reason: "Automatic unpinning of daily message",
+//     //         },
+//     //       )
+//     //       .catch((err) => {
+//     //         console.error("Error deleting message:", err);
+//     //       });
 
-      if (oldData) {
-        await oldData.updateOne({
-          channelId: channelId,
-          webhookId: webhook.id,
-          webhookToken: webhook.token,
-        });
-      } else {
-        await this.webhookModel.create({
-          channelId: channelId,
-          webhookId: webhook.id,
-          webhookToken: webhook.token,
-        });
-      }
+//     //     this.c.rest
+//     //       .put(`/channels/${channelId}/pins/${webhookThread?.id}`, {
+//     //         reason: "Automatic pinning of daily message",
+//     //       })
+//     //       .catch((err) => {
+//     //         console.error("Error pinning message:", err);
+//     //       });
+//     //   }
+//     // }
+//   }
+//   private async send(
+//     webhook: WebhookClient | Error,
+//     content: any,
+//   ): Promise<APIMessage | Error> {
+//     if(webhook instanceof WebhookClient) {
+//       return await webhook.send(content);
+//     } else {
+//       return new Error("what")
+//     }
+//   }
 
-      return {
-        id: webhook.id,
-        token: webhook.token,
-      };
-    } else return null;
-  };
+//   private async webhookFallBack(
+//     channel: any = null,
+//     channelId: string,
+//   ):Promise<Error | WebhookClient> {
 
-  webhookFallBack = async (
-    channel: any = null,
-    channelId: string,
-    message: any,
-    err: any = false,
-  ): Promise<void> => {
-    if (!channel)
-      channel = await this.c.channels.fetch(channelId).catch((err) => {
-        captureException(err);
-      });
+//     if (!channel)
+//       channel = await this.client.channels
+//         .fetch(channelId)
+//         .catch((err) => {
+//           return new Error(err)
+//     });
 
-    if (!channel) return;
-    if (
-      err &&
-      (err?.code === 10015 ||
-        (typeof err.message === "string" &&
-          err.message.includes("Unknown Webhook"))) &&
-      channel
-        ?.permissionsFor(this.c?.user?.id)
-        .has([PermissionFlagsBits.ManageWebhooks])
-    ) {
-      const webhooks = await channel.fetchWebhooks();
+//     const webhook = await this.createWebhook(
+//       channel,
+//       channel.id,
+//       channel.guildId,
+//       "Would You",
+//       this.client.user?.displayAvatarURL() as string,
+//       "Webhook token unavailable, creating new webhook",
+//     );
 
-      if (webhooks && webhooks.size > 0) {
-        let i = 0;
-        for (const web of webhooks) {
-          i++;
-          setInterval(() => {
-            if (web?.owner?.id === this.c?.user?.id) {
-              web
-                .delete("Deleting old webhook, to create a new one")
-                .catch((err: any) => {
-                  captureException(err);
-                });
-            }
-          }, 1000 * i);
-        }
-      }
+//     if(!webhook) {
+//       return new Error("Couldn't create webhook or webhook is null");
+//     }
 
-      const webhook = await this.createWebhook(
-        channel,
-        channelId,
-        channel.guildId,
-        "Would You",
-        this.c.user?.displayAvatarURL() as string,
-        "Webhook token unavailable, creating new webhook",
-      );
+//     return webhook;
 
-      if (!webhook?.id || !webhook.token)
-        return this.webhookFallBack(channel, channelId, message, false);
+// }
 
-      const webhookClient = new WebhookClient({
-        id: webhook.id,
-        token: cryptr.decrypt(webhook.token),
-      });
+// //   updateLastUsed(token: string) {
+// //     this.webhookModel
+// //       .findOneAndUpdate(
+// //         { webhookToken: cryptr.encrypt(token) },
+// //         { lastUsageTimestamp: Date.now() },
+// //       )
+// //       .then(() => {});
+// //   }
 
-      if (!webhookClient)
-        return this.webhookFallBack(channel, channelId, message, false);
+// //   /**
+// //    * Get a webhook from the cache and if not in cache fetch it
+// //    * @param {string} channelId the channel id
+// //    * @return {Promise<object>}
+// //    * @private
+// //    */
+// //   getWebhook = async (channelId: string) => {
+// //     if (this.webhooks.has(`${channelId}`)) {
+// //       const webhookData = this.webhooks.get(channelId);
 
-      webhookClient.send(message).catch(async (err) => {
-        return this.webhookFallBack(channel, channelId, message, false);
-      });
-    } else {
-      if (
-        channel
-          ?.permissionsFor(this.c?.user?.id)
-          .has([PermissionFlagsBits.EmbedLinks])
-      ) {
-        const guildSettings = await this.c.database.getGuild(channel.guild.id);
+// //       this.updateLastUsed(webhookData?.token as string);
+// //       return webhookData;
+// //     }
 
-        message.embeds = message?.embeds ?? [];
-        message.content = null;
-        message.embeds = [
-          new EmbedBuilder()
-            .setColor("#FE0001")
-            .setDescription(
-              "🛑 " +
-                this.c.translation.get(
-                  guildSettings?.language ?? "en_EN",
-                  "webhookManager.noWebhook",
-                ),
-            ),
-        ];
+// //     const data = await this.webhookModel.findOne({
+// //       channelId: channelId,
+// //     });
 
-        return channel.send(message).catch((err: Error) => {
-          captureException(err);
-        });
-      }
-    }
-  };
+// //     if (data) {
+// //       const token = cryptr.decrypt(data.webhookToken);
 
-  /**
-   * Send a message to a channel with a webhook
-   * @param {object} channel the channel to send the message to
-   * @param {string} channelId the channel id
-   * @param {object} message the message to send
-   * @return {Promise<object>}
-   */
-  sendWebhook = async (
-    channel: any = null,
-    channelId: string,
-    message: any,
-    thread?: boolean,
-    pin?: boolean,
-  ) => {
-    if (!channelId && channel?.id) channelId = channel.id;
+// //       this.updateLastUsed(token as string);
 
-    if (!channelId) return;
+// //       this.webhooks.set(`${channelId}`, {
+// //         id: data.webhookId,
+// //         token: token,
+// //       });
 
-    const webhookData = await this.getWebhook(channelId);
-    const date = new Date();
+// //       return {
+// //         id: data.webhookId,
+// //         token: token,
+// //       };
+// //     } else return null;
+// //   };
 
-    if (webhookData?.id) webhookData.id = webhookData.id;
-    if (webhookData?.token) webhookData.token = webhookData.token;
+// //   /**
+// //    * Create a webhook in a channel & save it to the database and cache
+// //    * @param {object | null} channel the channel to create the webhook in
+// //    * @param {string} channelId the channel id
+// //    * @param {string} guildId the guild id
+// //    * @param {string} name the name of the webhook
+// //    * @param {string} avatar the avatar of the webhook (url)
+// //    * @param {string} reason the reason for creating the webhook
+// //    * @return {Promise<object>}
+// //    * @private
+// //    */
+// //   createWebhook = async (
+// //     channel: any = null,
+// //     channelId: string,
+// //     guildId: string,
+// //     name: string,
+// //     avatar: string,
+// //     reason: string,
+// //   ) => {
+// //     if (!channel)
+// //       channel = await this.c.channels.fetch(channelId).catch((err) => {
+// //         captureException(err);
+// //       });
 
-    if (!webhookData?.id || !webhookData?.token) {
-      let webhook = await this.createWebhook(
-        channel,
-        channelId,
-        channel.guildId,
-        "Would You",
-        this.c.user?.displayAvatarURL() as string,
-        "Webhook token unavailable, creating new webhook",
-      );
+// //     if (!channel) return null;
 
-      if (webhook?.id) webhook.id = webhook.id;
-      if (webhook?.token) webhook.token = webhook.token;
+// //     if (
+// //       !channel
+// //         ?.permissionsFor(this.c?.user?.id)
+// //         .has([PermissionFlagsBits.ManageWebhooks])
+// //     )
+// //       return null;
 
-      if (!webhook?.id || !webhook?.token)
-        return this.webhookFallBack(channel, channelId, message, false);
+// //     const webhook = await channel
+// //       .createWebhook({
+// //         name: name ?? "Would You",
+// //         avatar: avatar ?? this.c.user?.displayAvatarURL(),
+// //         reason: reason ?? "Would You Webhook",
+// //       })
+// //       .catch((err: any) => {
+// //         return captureException(err);
+// //       });
 
-      const webhookClient = new WebhookClient({
-        id: webhook.id,
-        token: cryptr.decrypt(webhook.token),
-      });
-      if (!webhookClient)
-        return this.webhookFallBack(channel, channelId, message, false);
+// //     if (webhook?.id) {
+// //       this.webhooks.set(`${channelId}`, {
+// //         id: webhook.id,
+// //         token: webhook.token,
+// //       });
 
-      const fallbackThread = await webhookClient.send(message).catch((err) => {
-        captureException(err);
-        return this.webhookFallBack(channel, channelId, message, false);
-      });
+// //       const oldData = await this.webhookModel.findOne({
+// //         channelId: channelId,
+// //       });
 
-      let logThreads: any = await this.c.rest.get(
-        `/channels/${channelId}/pins`,
-      );
+// //       webhook.token = cryptr.encrypt(webhook.token);
 
-      if (!thread && !pin) return;
-      if (thread) {
-        this.c.rest.post(
-          `/channels/${channelId}/messages/${fallbackThread?.id}`,
-          {
-            body: {
-              name: "Mixed - Daily Message",
-              auto_archive_duration: "1440",
-            },
-          },
-        );
-      }
-      console.log(logThreads[0]);
-      if (pin) {
-        this.c.rest
-          .delete(
-            `/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`,
-            {
-              reason: "Automatic unpinning of daily message",
-            },
-          )
-          .catch((err) => {
-            console.error("Error deleting message:", err);
-          });
+// //       if (oldData) {
+// //         await oldData.updateOne({
+// //           channelId: channelId,
+// //           webhookId: webhook.id,
+// //           webhookToken: webhook.token,
+// //         });
+// //       } else {
+// //         await this.webhookModel.create({
+// //           channelId: channelId,
+// //           webhookId: webhook.id,
+// //           webhookToken: webhook.token,
+// //         });
+// //       }
 
-        this.c.rest
-          .put(`/channels/${channelId}/pins/${fallbackThread?.id}`, {
-            reason: "Automatic pinning of daily message",
-          })
-          .catch((err) => {
-            console.error("Error pinning message:", err);
-          });
-      }
-    } else {
-      const webhook = new WebhookClient({
-        id: webhookData?.id,
-        token: webhookData?.token,
-      });
+// //       return {
+// //         id: webhook.id,
+// //         token: webhook.token,
+// //       };
+// //     } else return null;
+// //   };
 
-      if (!webhook) return this.webhookFallBack(channel, channelId, message);
-
-      const webhookThread = await webhook.send(message).catch((err) => {
-        captureException(err);
-        return this.webhookFallBack(channel, channelId, message, err);
-      });
-
-      const logThreads: any = await this.c.rest.get(
-        `/channels/${channelId}/pins`,
-      );
-
-      if (!thread && !pin) return;
-
-      if (thread) {
-        this.c.rest.post(
-          `/channels/${channelId}/messages/${webhookThread?.id}`,
-          {
-            body: {
-              name: "Mixed - Daily Message",
-              auto_archive_duration: "1440",
-            },
-          },
-        );
-      }
-
-      if (pin) {
-        this.c.rest
-          .delete(
-            `/channels/${logThreads[0].channel_id}/pins/${logThreads[0].id}`,
-            {
-              reason: "Automatic unpinning of daily message",
-            },
-          )
-          .catch((err) => {
-            console.error("Error deleting message:", err);
-          });
-
-        this.c.rest
-          .put(`/channels/${channelId}/pins/${webhookThread?.id}`, {
-            reason: "Automatic pinning of daily message",
-          })
-          .catch((err) => {
-            console.error("Error pinning message:", err);
-          });
-      }
-    }
-  };
-}
+// //   /**
+// //    * Send a message to a channel with a webhook
+// //    * @param {object} channel the channel to send the message to
+// //    * @param {string} channelId the channel id
+// //    * @param {object} message the message to send
+// //    * @return {Promise<object>}
+// //    */
+// // }

@@ -5,3 +5,15 @@ declare global {
 }
 
 export {};
+export interface IQueueMessage {
+  guildId: string;
+  message: [string, number];
+  type: string;
+  role: string | null;
+  thread: boolean;
+  webhook: {
+    id: string | null;
+    token: string | null;
+  };
+  channelId: string | null;
+}
