@@ -14,7 +14,7 @@ import { getWwyd } from "../../util/Functions/jsonImport";
 const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
-    .setName("wwyd")
+    .setName("whatwouldyoudo")
     .setDescription("What would you do in this situation")
     .setDMPermission(false)
     .setDescriptionLocalizations({
