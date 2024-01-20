@@ -12,6 +12,7 @@ export interface IQueueMessage {
   role: string | null;
   thread: boolean;
   webhook: {
+    channelId: string;
     id: string | null;
     token: string | null;
   };

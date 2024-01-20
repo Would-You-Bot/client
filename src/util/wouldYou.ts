@@ -15,16 +15,14 @@ import "dotenv/config";
 import TranslationHandler from "./translationHandler";
 import DatabaseHandler from "./databaseHandler";
 import KeepAlive from "./keepAlive";
-// import WebhookHandler from "./webhookHandler";
+import WebhookHandler from "./webhookHandler";
 import CooldownHandler from "./cooldownHandler";
-// import DailyMessage from "./dailyMessage";
+import DailyMessage from "./dailyMessage";
 import Voting from "./votingHandler";
 import { Button, ChatInputCommand } from "../models";
 import { fileToCollection } from "./Functions/fileToCollection";
 import path from "path";
 import { Event } from "../models/event";
-// User filter to filter all users out of the cache expect the bot
-//const userFilter = (u) => u?.id !== client?.user?.id;
 
 export default class WouldYou extends Client {
   public commands: Collection<string, ChatInputCommand>;
@@ -37,9 +35,9 @@ export default class WouldYou extends Client {
   readonly cooldownHandler: CooldownHandler;
   readonly database: DatabaseHandler;
   readonly translation: TranslationHandler;
-  // readonly webhookHandler: WebhookHandler;
+  readonly webhookHandler: WebhookHandler;
   readonly keepAlive: KeepAlive;
-  // readonly dailyMessage: DailyMessage;
+  readonly dailyMessage: DailyMessage;
   readonly voting: Voting;
 
   constructor() {
@@ -112,15 +110,15 @@ export default class WouldYou extends Client {
     this.translation = new TranslationHandler();
 
     // Webhook Manager
-    //this.webhookHandler = new WebhookHandler(this);
+    this.webhookHandler = new WebhookHandler(this);
 
     // Keep Alive system after the necessary things that are allowed to crash are loaded
     this.keepAlive = new KeepAlive(this);
     this.keepAlive.start();
 
     // Daily Message
-    //this.dailyMessage = new DailyMessage(this);
-    //this.dailyMessage.listen();
+    this.dailyMessage = new DailyMessage(this);
+    this.dailyMessage.listen();
 
     this.voting = new Voting(this);
     this.voting.start();

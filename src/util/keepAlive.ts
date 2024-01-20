@@ -33,7 +33,8 @@ export default class KeepAlive {
     });
 
     process.on("uncaughtException", async (err) => {
-      captureException(err);
+      console.log(err);
+      //captureException(err);
     });
     process.on("uncaughtExceptionMonitor", async (err) => {
       captureException(err);
