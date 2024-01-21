@@ -1,16 +1,8 @@
 import { Channel, EmbedBuilder, bold } from "discord.js";
 import WouldYou from "./wouldYou";
-import amqplib, { ConsumeMessage } from "amqplib";
-import { IQueueMessage } from "../global";
-
-/* TO DO
-  [x] listen to queue
-  [x] convert queue message to right type
-  [] handle null values
-  [] Decrypt webhook (this can be done on a seperate thread for some added bonus performance right?)
-  [] send to webhook (create fallback where it updates the data in the database and sends it the new)
-
-*/
+import amqplib from "amqplib";
+import { IQueueMessage, Result } from "../global";
+import QueueError from "./Error/QueueError";
 export default class DailyMessage {
   private client: WouldYou;
   constructor(client: WouldYou) {
@@ -30,20 +22,19 @@ export default class DailyMessage {
         await channel.assertQueue(QUEUE, { durable: false });
         channel.consume(QUEUE, async (message) => {
           if (message) {
-            console.log(message.content.toString());
-            setTimeout(() => {
-              console.log("I'm in the timeout");
-              this.sendDaily(
-                <IQueueMessage>JSON.parse(message.content.toString()),
-              )
-                .then(() => {
-                  channel.ack(message as amqplib.Message);
-                })
-                .catch((error: string) => {
-                  console.log(error);
+            setTimeout(async () => {
+              const result = await this.sendDaily(<IQueueMessage>JSON.parse(message.content.toString()));
+              try {
+                if(!result.success) {
                   channel.reject(message, true);
-                  throw error;
-                });
+                  throw new QueueError(`Could not acknowledge queue message`, {error: result.error, id: message.properties.messageId, context: message.properties.deliveryMode});
+                } else {
+                  console.log(result.result);
+                  channel.ack(message);
+                }
+              } catch (error) {
+                console.log(error)
+              }
             }, 1000); // (NOTE) Update this to increase wait time
           }
         });
@@ -57,12 +48,9 @@ export default class DailyMessage {
    * @returns Promise<void>
    * @author Nidrux
    */
-  private async sendDaily(message: IQueueMessage): Promise<void | Error> {
-    console.log("hitting send daily");
-    console.log("Random shit " + message.webhook);
+  private async sendDaily(message: IQueueMessage): Promise<Result<string>> {
     if (message.channelId == null) {
-      console.log("i'm stupid and not working");
-      return new Error("No channel id provided by the queue message!");
+      return {success: false, error: new Error("No channel id provided by the queue message!")}
     }
     let channel = await this.getDailyMessageChannel(message.channelId);
     let embed = this.buildEmbed(
@@ -71,16 +59,17 @@ export default class DailyMessage {
       message.type,
     );
     if (!embed) {
-      return new Error(
-        `Failed to build daily message embed for guild ${message.guildId}`,
-      );
+      return {success: false, error: new Error(`Failed to build daily message embed for guild ${message.guildId}`)}
     }
-    if (!channel) {
-      return new Error(
-        `No channel has been fetched to post a daily message to! ${message.guildId}`,
-      );
+    if (!channel.success) {
+      return {success: false, error: new Error(`No channel has been fetched to post a daily message to! ${message.guildId}`)}
     }
-    return this.sendWebhook(channel, embed, message);
+    const result = await this.sendWebhook(channel.result, embed, message);
+    if(result.success) {
+      return {success: true, result: "I have send the webhook" }
+    } else {
+      return {success: false, error: result.error}
+    }
   }
   /**
    * @name getDailyMessageChannel
@@ -90,9 +79,16 @@ export default class DailyMessage {
    */
   private async getDailyMessageChannel(
     channelId: string,
-  ): Promise<Channel | null> {
-    console.log("hitting getdailyMessageChannel");
-    return await this.client.channels.fetch(channelId);
+  ): Promise<Result<Channel>> {
+    try {
+      const channel = await this.client.channels.fetch(channelId);
+      if(channel)
+        return {success: true, result: channel}
+      else
+        return {success: false, error: new Error("fetched channel is null")}
+    } catch (error) {
+        return {success: false, error: error as Error}
+    }
   }
   /**
    * @description Send the embed to the webhookhandler
@@ -106,10 +102,10 @@ export default class DailyMessage {
     channel: Channel,
     embed: EmbedBuilder,
     message: IQueueMessage,
-  ): Promise<Error | void> {
+  ): Promise<Result<string>> {
     console.log("hitting sendwebhook");
     try {
-      await this.client.webhookHandler.handleWebhook(
+      const result = await this.client.webhookHandler.handleWebhook(
         channel,
         {
           embeds: [embed],
@@ -118,10 +114,9 @@ export default class DailyMessage {
         message,
         message.thread,
       );
-    } catch (err: unknown) {
-      return <Error>err;
-    } finally {
-      return;
+      return result;
+    } catch (err) {
+      return {success: false, error: err as Error}
     }
   }
   /**
@@ -133,7 +128,6 @@ export default class DailyMessage {
    * @author Nidrux
    */
   private buildEmbed(question: string, id: number, type: string): EmbedBuilder {
-    console.log("hitting embedBuilder");
     return new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({

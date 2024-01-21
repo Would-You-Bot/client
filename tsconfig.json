@@ -20,6 +20,7 @@
         "sourceMap": true,
         "strict": true,
         "strictPropertyInitialization": false,
+        "lib": ["ES2022.Error"]
     },
     "include": [
         "src/**/*",
