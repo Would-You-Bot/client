@@ -10,10 +10,6 @@ services:
       - .env
     environment:
       - TZ=Europe/Berlin
-    networks:
-      - node
+    network_mode: "host"
     labels:
       gg.wouldyou.compose-author: "Discord username 536b656c6c79 "
-networks:
-  node:
-    driver: bridge
