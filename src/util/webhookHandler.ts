@@ -164,8 +164,9 @@ export default class WebhookHandler {
   private async createThread(message: IQueueMessage, apiReturnValue: APIMessage): Promise<Result<any>> {
     const date = new Date();
       try {
-        await this.client.rest.setToken(process.env.DISCORD_TOKEN as string);
-        await this.client.rest.post(`/channels/${message.channelId}/messages/${apiReturnValue.id}/threads`, {
+
+        await this.client.rest.setToken(process.env.TOKEN as string);
+        await this.client.rest.post(`/channels/${message?.channelId}/messages/${apiReturnValue.id}/threads`, {
           body: {
             name: `${[
               date.getFullYear(),
