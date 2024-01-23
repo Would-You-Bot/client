@@ -3,6 +3,7 @@ import WouldYou from "./wouldYou";
 import amqplib from "amqplib";
 import { IQueueMessage, Result } from "../global";
 import QueueError from "./Error/QueueError";
+import { Scope, captureException, withScope } from "@sentry/node";
 export default class DailyMessage {
   private client: WouldYou;
   constructor(client: WouldYou) {
@@ -23,22 +24,24 @@ export default class DailyMessage {
         channel.consume(QUEUE, async (message) => {
           if (message) {
             setTimeout(async () => {
-              const result = await this.sendDaily(
-                <IQueueMessage>JSON.parse(message.content.toString()),
-              );
               try {
+                const result = await this.sendDaily(
+                  <IQueueMessage>JSON.parse(message.content.toString()),
+                );
                 if (!result.success) {
                   channel.reject(message, true);
-                  throw new QueueError(`Could not acknowledge queue message`, {
+                  const error: QueueError = new QueueError(`Could not acknowledge queue message`, {
                     error: result.error,
                     id: message.properties.messageId,
+                    guildId: (JSON.parse(message.content.toString()) as IQueueMessage).guildId,
                     context: message.properties.deliveryMode,
                   });
+                  this.captureError(error, QUEUE);
                 } else {
                   channel.ack(message);
                 }
               } catch (error) {
-                console.log(error);
+                this.captureError(error as Error, QUEUE)
               }
             }, 1000); // (NOTE) Update this to increase wait time
           }
@@ -152,5 +155,18 @@ export default class DailyMessage {
         )} | ID: ${id}`,
       })
       .setDescription(bold(question) as string);
+  }
+  /**
+   * 
+   * @param error 
+   * @param queue
+   * @author Nidrux 
+   */
+  private captureError(error: Error, queue: string): void {
+    withScope((scope) => {
+      scope.setLevel("warning");
+      scope.setTag("queue", queue)
+      captureException(error);
+    })
   }
 }
