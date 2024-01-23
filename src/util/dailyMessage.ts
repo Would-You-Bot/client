@@ -166,6 +166,7 @@ export default class DailyMessage {
     withScope((scope) => {
       scope.setLevel("warning");
       scope.setTag("queue", queue)
+      captureException(error);
     })
   }
 }
