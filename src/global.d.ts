@@ -2,13 +2,18 @@ declare global {
   var devBot: boolean;
   var wouldYouDevs: string[];
   var checkDebug: (d, i) => boolean;
-  type CanJSON = string | number | boolean | null | undefined | readonly CanJSON[] | { readonly [key: string]: CanJSON } | { toJSON(): CanJSON }
+  type CanJSON =
+    | string
+    | number
+    | boolean
+    | null
+    | undefined
+    | readonly CanJSON[]
+    | { readonly [key: string]: CanJSON }
+    | { toJSON(): CanJSON };
 }
 
 export {};
-
-
-
 
 /**
  * Everything underneath this is used by the daily message service.
@@ -28,4 +33,6 @@ export interface IQueueMessage {
   };
   channelId: string | null;
 }
-export type Result<T,E extends Error = Error> = { success: true, result: T } | { success: false, error: E }
+export type Result<T, E extends Error = Error> =
+  | { success: true; result: T }
+  | { success: false; error: E };

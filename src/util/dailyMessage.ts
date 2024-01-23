@@ -23,16 +23,22 @@ export default class DailyMessage {
         channel.consume(QUEUE, async (message) => {
           if (message) {
             setTimeout(async () => {
-              const result = await this.sendDaily(<IQueueMessage>JSON.parse(message.content.toString()));
+              const result = await this.sendDaily(
+                <IQueueMessage>JSON.parse(message.content.toString()),
+              );
               try {
-                if(!result.success) {
+                if (!result.success) {
                   channel.reject(message, true);
-                  throw new QueueError(`Could not acknowledge queue message`, {error: result.error, id: message.properties.messageId, context: message.properties.deliveryMode});
+                  throw new QueueError(`Could not acknowledge queue message`, {
+                    error: result.error,
+                    id: message.properties.messageId,
+                    context: message.properties.deliveryMode,
+                  });
                 } else {
                   channel.ack(message);
                 }
               } catch (error) {
-                console.log(error)
+                console.log(error);
               }
             }, 1000); // (NOTE) Update this to increase wait time
           }
@@ -49,7 +55,10 @@ export default class DailyMessage {
    */
   private async sendDaily(message: IQueueMessage): Promise<Result<string>> {
     if (message.channelId == null) {
-      return {success: false, error: new Error("No channel id provided by the queue message!")}
+      return {
+        success: false,
+        error: new Error("No channel id provided by the queue message!"),
+      };
     }
     let channel = await this.getDailyMessageChannel(message.channelId);
     let embed = this.buildEmbed(
@@ -58,16 +67,26 @@ export default class DailyMessage {
       message.type,
     );
     if (!embed) {
-      return {success: false, error: new Error(`Failed to build daily message embed for guild ${message.guildId}`)}
+      return {
+        success: false,
+        error: new Error(
+          `Failed to build daily message embed for guild ${message.guildId}`,
+        ),
+      };
     }
     if (!channel.success) {
-      return {success: false, error: new Error(`No channel has been fetched to post a daily message to! ${message.guildId}`)}
+      return {
+        success: false,
+        error: new Error(
+          `No channel has been fetched to post a daily message to! ${message.guildId}`,
+        ),
+      };
     }
     const result = await this.sendWebhook(channel.result, embed, message);
-    if(result.success) {
-      return {success: true, result: "I have send the webhook" }
+    if (result.success) {
+      return { success: true, result: "I have send the webhook" };
     } else {
-      return {success: false, error: result.error}
+      return { success: false, error: result.error };
     }
   }
   /**
@@ -81,12 +100,11 @@ export default class DailyMessage {
   ): Promise<Result<Channel>> {
     try {
       const channel = await this.client.channels.fetch(channelId);
-      if(channel)
-        return {success: true, result: channel}
+      if (channel) return { success: true, result: channel };
       else
-        return {success: false, error: new Error("fetched channel is null")}
+        return { success: false, error: new Error("fetched channel is null") };
     } catch (error) {
-        return {success: false, error: error as Error}
+      return { success: false, error: error as Error };
     }
   }
   /**
@@ -114,7 +132,7 @@ export default class DailyMessage {
       );
       return result;
     } catch (err) {
-      return {success: false, error: err as Error}
+      return { success: false, error: err as Error };
     }
   }
   /**
