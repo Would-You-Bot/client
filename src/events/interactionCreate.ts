@@ -169,6 +169,8 @@ const event: Event = {
         "paginateLast",
         "paginateNext",
         "paginatePrev",
+        "viewCommands",
+        "viewHelp",
         "privacy",
       ];
 
