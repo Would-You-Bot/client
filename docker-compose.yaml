@@ -10,6 +10,7 @@ services:
       - .env
     environment:
       - TZ=Europe/Berlin
+      - TAG=DOCKER
     network_mode: "host"
     labels:
       gg.wouldyou.compose-author: "Discord username 536b656c6c79 "
