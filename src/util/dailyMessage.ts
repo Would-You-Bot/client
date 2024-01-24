@@ -1,6 +1,6 @@
 import { Channel, EmbedBuilder, bold } from "discord.js";
 import WouldYou from "./wouldYou";
-import amqplib from "amqplib";
+import amqplib, { MessageProperties } from "amqplib";
 import { IQueueMessage, Result } from "../global";
 import QueueError from "./Error/QueueError";
 import { Scope, captureException, withScope } from "@sentry/node";
@@ -26,7 +26,7 @@ export default class DailyMessage {
             setTimeout(async () => {
               try {
                 const result = await this.sendDaily(
-                  <IQueueMessage>JSON.parse(message.content.toString()),
+                  <IQueueMessage>JSON.parse(message.content.toString()), message.properties
                 );
                 if (!result.success) {
                   const error: QueueError = new QueueError(`Could not acknowledge queue message`, {
@@ -59,7 +59,7 @@ export default class DailyMessage {
    * @returns Promise<void>
    * @author Nidrux
    */
-  private async sendDaily(message: IQueueMessage): Promise<Result<string>> {
+  private async sendDaily(message: IQueueMessage, properties: MessageProperties): Promise<Result<string>> {
     if (message.channelId == null) {
       return {
         success: false,
@@ -71,6 +71,7 @@ export default class DailyMessage {
       message.message[0],
       message.message[1],
       message.type,
+      properties.messageId
     );
     if (!embed) {
       return {
@@ -149,13 +150,13 @@ export default class DailyMessage {
    * @returns EmbedBuilder
    * @author Nidrux
    */
-  private buildEmbed(question: string, id: number, type: string): EmbedBuilder {
+  private buildEmbed(question: string, id: number, type: string, qid: string): EmbedBuilder {
     return new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
         text: `Daily Message | Type: ${type.replace(/^\w/, (content) =>
           content.toUpperCase(),
-        )} | ID: ${id}`,
+        )} | ID: ${id} QID: ${qid}`,
       })
       .setDescription(bold(question) as string);
   }
