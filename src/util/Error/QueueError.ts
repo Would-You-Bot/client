@@ -8,7 +8,12 @@ export default class QueueError extends Error {
   private readonly error?: Error;
   constructor(
     message: string,
-    options: { error?: Error; id?: string; guildId? : string; context?: globalThis.CanJSON } = {},
+    options: {
+      error?: Error;
+      id?: string;
+      guildId?: string;
+      context?: globalThis.CanJSON;
+    } = {},
   ) {
     const { error, id, context } = options;
     super(message, { cause: error });
@@ -19,10 +24,10 @@ export default class QueueError extends Error {
     this.error = error;
   }
   get causeError() {
-    if(this.error) {
+    if (this.error) {
       return this.error;
     } else {
-      return new Error("QueueError: no cause error provided.")
+      return new Error("QueueError: no cause error provided.");
     }
   }
 }

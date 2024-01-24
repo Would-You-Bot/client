@@ -20,7 +20,11 @@ export default class DailyMessage {
       const channel = await connection.createChannel();
       if (channel) {
         channel.prefetch(1);
-        await channel.assertQueue(QUEUE, { durable: false, deadLetterExchange: "DLX", deadLetterRoutingKey: "key" });
+        await channel.assertQueue(QUEUE, {
+          durable: false,
+          deadLetterExchange: "DLX",
+          deadLetterRoutingKey: "key",
+        });
         channel.consume(QUEUE, async (message) => {
           if (message) {
             setTimeout(async () => {
@@ -29,22 +33,27 @@ export default class DailyMessage {
                   <IQueueMessage>JSON.parse(message.content.toString()),
                 );
                 if (!result.success) {
-                  const error: QueueError = new QueueError(`Could not acknowledge queue message`, {
-                    error: result.error,
-                    id: message.properties.messageId,
-                    guildId: (JSON.parse(message.content.toString()) as IQueueMessage).guildId,
-                    context: message.properties.deliveryMode,
-                  });
+                  const error: QueueError = new QueueError(
+                    `Could not acknowledge queue message`,
+                    {
+                      error: result.error,
+                      id: message.properties.messageId,
+                      guildId: (
+                        JSON.parse(message.content.toString()) as IQueueMessage
+                      ).guildId,
+                      context: message.properties.deliveryMode,
+                    },
+                  );
                   this.captureError(error, QUEUE);
-                  this.handleReject(channel, error.causeError.message, message)
+                  this.handleReject(channel, error.causeError.message, message);
                 } else {
                   channel.ack(message);
                 }
               } catch (error) {
-                console.log("something different")
+                console.log("something different");
                 console.log(error);
-                this.handleReject(channel, (error as Error).message, message)
-                this.captureError(error as Error, QUEUE)
+                this.handleReject(channel, (error as Error).message, message);
+                this.captureError(error as Error, QUEUE);
               }
             }, 1000); // (NOTE) Update this to increase wait time
           }
@@ -160,21 +169,28 @@ export default class DailyMessage {
       .setDescription(bold(question) as string);
   }
   /**
-   * 
-   * @param error 
+   *
+   * @param error
    * @param queue
-   * @author Nidrux 
+   * @author Nidrux
    */
   private captureError(error: Error, queue: string): void {
     withScope((scope) => {
       scope.setLevel("warning");
-      scope.setTag("queue", queue)
+      scope.setTag("queue", queue);
       captureException(error);
-    })
+    });
   }
-  private handleReject(channel: amqplib.Channel, reason: string, message: amqplib.Message) {
-    const headers = {rejectionCause: reason};
-    channel.publish("DLX", "key", message.content, {headers: headers, messageId: message.properties.messageId} )
+  private handleReject(
+    channel: amqplib.Channel,
+    reason: string,
+    message: amqplib.Message,
+  ) {
+    const headers = { rejectionCause: reason };
+    channel.publish("DLX", "key", message.content, {
+      headers: headers,
+      messageId: message.properties.messageId,
+    });
     channel.ack(message);
   }
 }
