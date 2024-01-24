@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    stdin_open: true 
+    tty: true
     env_file:
       - .env
     environment:
