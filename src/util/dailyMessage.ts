@@ -30,7 +30,8 @@ export default class DailyMessage {
             setTimeout(async () => {
               try {
                 const result = await this.sendDaily(
-                  <IQueueMessage>JSON.parse(message.content.toString()), message.properties
+                  <IQueueMessage>JSON.parse(message.content.toString()),
+                  message.properties,
                 );
                 if (!result.success) {
                   const error: QueueError = new QueueError(
@@ -68,7 +69,10 @@ export default class DailyMessage {
    * @returns Promise<void>
    * @author Nidrux
    */
-  private async sendDaily(message: IQueueMessage, properties: MessageProperties): Promise<Result<string>> {
+  private async sendDaily(
+    message: IQueueMessage,
+    properties: MessageProperties,
+  ): Promise<Result<string>> {
     if (message.channelId == null) {
       return {
         success: false,
@@ -80,7 +84,7 @@ export default class DailyMessage {
       message.message[0],
       message.message[1],
       message.type,
-      properties.messageId
+      properties.messageId,
     );
     if (!embed) {
       return {
@@ -159,7 +163,12 @@ export default class DailyMessage {
    * @returns EmbedBuilder
    * @author Nidrux
    */
-  private buildEmbed(question: string, id: number, type: string, qid: string): EmbedBuilder {
+  private buildEmbed(
+    question: string,
+    id: number,
+    type: string,
+    qid: string,
+  ): EmbedBuilder {
     return new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
