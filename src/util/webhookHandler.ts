@@ -205,7 +205,6 @@ export default class WebhookHandler {
   ): Promise<Result<any>> {
     const date = new Date();
     try {
-      await this.client.rest.setToken(process.env.TOKEN as string);
       await this.client.rest.post(
         `/channels/${message?.channelId}/messages/${apiReturnValue.id}/threads`,
         {
