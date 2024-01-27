@@ -86,10 +86,18 @@ const button: Button = {
 
         const arr =
           guildDb.replayChannels.length > 0
-            ? [{ id: (interaction as any).values[0], cooldown: value }].concat(
-                guildDb.replayChannels,
-              )
-            : [{ id: (interaction as any).values[0], cooldown: value }];
+            ? [
+                {
+                  id: (interaction as any).values[0],
+                  cooldown: value,
+                },
+              ].concat(guildDb.replayChannels)
+            : [
+                {
+                  id: (interaction as any).values[0],
+                  cooldown: value,
+                },
+              ];
 
         const generalMsg = new EmbedBuilder()
           .setTitle(

@@ -7,7 +7,9 @@ import { captureException } from "@sentry/node";
 const event: Event = {
   event: "interactionCreate",
   execute: async (client: WouldYou, interaction: Interaction) => {
-    const user = await UserModel.findOne({ userID: interaction.user?.id });
+    const user = await UserModel.findOne({
+      userID: interaction.user?.id,
+    });
 
     if (!user) {
       await UserModel.create({

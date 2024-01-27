@@ -122,7 +122,10 @@ export default class DailyMessage {
       const channel = await this.client.channels.fetch(channelId);
       if (channel) return { success: true, result: channel };
       else
-        return { success: false, error: new Error("fetched channel is null") };
+        return {
+          success: false,
+          error: new Error("fetched channel is null"),
+        };
     } catch (error) {
       return { success: false, error: error as Error };
     }

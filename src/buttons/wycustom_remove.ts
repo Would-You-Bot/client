@@ -53,7 +53,10 @@ const button: Button = {
       );
 
     client.customAdd.delete(id);
-    interaction.update({ embeds: [typeEmbed], components: [button] });
+    interaction.update({
+      embeds: [typeEmbed],
+      components: [button],
+    });
     return;
   },
 };

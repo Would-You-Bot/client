@@ -91,7 +91,10 @@ export default class WebhookHandler {
   ): Promise<Result<APIMessage>> {
     const result = await webhook.send(content);
     if (result) return { success: true, result: result };
-    return { success: false, error: new Error(`Failed to send webhook`) };
+    return {
+      success: false,
+      error: new Error(`Failed to send webhook`),
+    };
   }
   private async webhookFallBack(
     channel: any,
@@ -141,7 +144,10 @@ export default class WebhookHandler {
       });
       return {
         success: true,
-        result: new WebhookClient({ id: webhook.id, token: webhook.token }),
+        result: new WebhookClient({
+          id: webhook.id,
+          token: webhook.token,
+        }),
       };
     } catch (error) {
       return { success: false, error: error as Error };

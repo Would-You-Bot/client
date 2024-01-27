@@ -8,12 +8,13 @@ import {
 import { getInfo, ClusterClient } from "discord-hybrid-sharding";
 
 // Utils and Config
-import { gray, white, green } from "chalk-advanced";
+import { gray, white, green, red } from "chalk-advanced";
 import "dotenv/config";
 
 // Classes for the bot
 import TranslationHandler from "./translationHandler";
 import DatabaseHandler from "./databaseHandler";
+import RedisHandler from "./redisHandler";
 import KeepAlive from "./keepAlive";
 import WebhookHandler from "./webhookHandler";
 import CooldownHandler from "./cooldownHandler";
@@ -36,6 +37,7 @@ export default class WouldYou extends Client {
   readonly cluster: ClusterClient<Client>;
   readonly cooldownHandler: CooldownHandler;
   readonly database: DatabaseHandler;
+  readonly redis: RedisHandler;
   readonly translation: TranslationHandler;
   readonly webhookHandler: WebhookHandler;
   readonly keepAlive: KeepAlive;
@@ -107,6 +109,18 @@ export default class WouldYou extends Client {
       );
     });
     this.database.startSweeper(this);
+
+    // The redis handler
+
+    this.redis = new RedisHandler(process.env.REDIS_TOKEN as string, process.env.REDIS_HOST as string);
+    this.redis.connectToRedis().then(() => {
+      console.log(
+        `${white("Would You?")} ${gray(">")} ${red(
+          "Successfully connected to the redis database",
+        )}`,
+      );
+    });
+
 
     // The translations handler
     this.translation = new TranslationHandler();
