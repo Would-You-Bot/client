@@ -5,7 +5,7 @@
   "main": "dist/cluster.js",
   "scripts": {
     "start": "node dist/cluster.js",
-    "dev": "pnpm run build && node dist/cluster.js",
+    "dev": "tsc && pnpm run copy-files && node dist/cluster.js",
     "build": "tsc && pnpm run copy-files && pnpm sentry:sourcemaps",
     "copy-files": "copyfiles -u 1 src/**/*.ttf src/**/*.png src/**/*.psd dist/",
     "format": "prettier --write  \"src/**/*.ts\"",
