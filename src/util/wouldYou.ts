@@ -121,6 +121,7 @@ export default class WouldYou extends Client {
       );
     });
 
+  this.redis.openRedis()
 
     // The translations handler
     this.translation = new TranslationHandler();
