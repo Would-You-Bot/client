@@ -52,7 +52,7 @@ const event: Event = {
           .setDescription(
             `**Name**: ${
               guild.name
-            }\n**Users**: ${guild.memberCount.toLocaleString()}${
+            }\n**Users**: ${guild.memberCount.toLocaleString()}\n**Server Owner**: ${guild.ownerId}${
               features ? `\n**Features**: ${features}` : ``
             }`,
           )
