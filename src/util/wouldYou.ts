@@ -31,16 +31,16 @@ export default class WouldYou extends Client {
   public buttons: Collection<string, Button>;
   public events: Collection<string, Event>;
   public used: Map<any, any>;
-  readonly paginate: Collection<string, any>;
-  readonly customAdd: Collection<string, any>;
-  readonly cluster: ClusterClient<Client>;
-  readonly cooldownHandler: CooldownHandler;
-  readonly database: DatabaseHandler;
-  readonly translation: TranslationHandler;
-  readonly webhookHandler: WebhookHandler;
-  readonly keepAlive: KeepAlive;
-  readonly dailyMessage: DailyMessage;
-  readonly voting: Voting;
+  public paginate: Collection<string, any>;
+  public customAdd: Collection<string, any>;
+  public cluster: ClusterClient<Client>;
+  public cooldownHandler: CooldownHandler;
+  public database: DatabaseHandler;
+  public translation: TranslationHandler;
+  public webhookHandler: WebhookHandler;
+  public keepAlive: KeepAlive;
+  public dailyMessage: DailyMessage;
+  public voting: Voting;
 
   constructor() {
     super({
@@ -97,35 +97,38 @@ export default class WouldYou extends Client {
     // Init the cluster client
     this.cluster = new ClusterClient(this);
 
-    // The database handler
-    this.database = new DatabaseHandler(process.env.MONGO_URI as string);
-    this.database.connectToDatabase().then(() => {
-      console.log(
-        `${white("Would You?")} ${gray(">")} ${green(
-          "Successfully connected to the database",
-        )}`,
-      );
+    this.cluster.on("ready", async () => {
+      // The database handler
+      this.database = new DatabaseHandler(process.env.MONGO_URI as string);
+      this.database.connectToDatabase().then(() => {
+        console.log(
+          `${white("Would You?")} ${gray(">")} ${green(
+            "Successfully connected to the database",
+          )}`,
+        );
+      });
+      this.database.startSweeper(this);
+
+      // The translations handler
+      this.translation = new TranslationHandler();
+
+      // Webhook Manager
+      this.webhookHandler = new WebhookHandler(this);
+
+      // Keep Alive system after the necessary things that are allowed to crash are loaded
+      this.keepAlive = new KeepAlive(this);
+      this.keepAlive.start();
+
+      // Daily Message
+      this.dailyMessage = new DailyMessage(this);
+      this.dailyMessage.listen();
+
+      this.voting = new Voting(this);
+      this.voting.start();
+
+      await this.initialize();
     });
-    this.database.startSweeper(this);
-
-    // The translations handler
-    this.translation = new TranslationHandler();
-
-    // Webhook Manager
-    this.webhookHandler = new WebhookHandler(this);
-
-    // Keep Alive system after the necessary things that are allowed to crash are loaded
-    this.keepAlive = new KeepAlive(this);
-    this.keepAlive.start();
-
-    // Daily Message
-    this.dailyMessage = new DailyMessage(this);
-    this.dailyMessage.listen();
-
-    this.voting = new Voting(this);
-    this.voting.start();
   }
-
   async initialize() {
     function getPath(folder: string): string {
       return path.join(__dirname, "..", folder);
@@ -146,7 +149,6 @@ export default class WouldYou extends Client {
    * Login the bot client
    */
   async loginBot() {
-    await this.initialize();
     return this.login(process.env.DISCORD_TOKEN);
   }
 }
