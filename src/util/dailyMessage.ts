@@ -99,6 +99,7 @@ export default class DailyMessage {
         success: false,
         error: new Error(
           `No channel has been fetched to post a daily message to! ${message.guildId}`,
+           {cause: channel.error}
         ),
       };
     }
@@ -186,7 +187,7 @@ export default class DailyMessage {
    */
   private captureError(error: Error, queue: string): void {
     withScope((scope) => {
-      scope.setLevel("warning");
+      scope.setLevel("fatal");
       scope.setTag("queue", queue);
       captureException(error);
     });
