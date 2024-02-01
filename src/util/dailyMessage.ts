@@ -187,7 +187,7 @@ export default class DailyMessage {
    */
   private captureError(error: Error, queue: string): void {
     withScope((scope) => {
-      scope.setLevel("warning");
+      scope.setLevel("fatal");
       scope.setTag("queue", queue);
       captureException(error);
     });
