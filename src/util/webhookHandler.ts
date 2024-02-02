@@ -211,8 +211,8 @@ export default class WebhookHandler {
           body: {
             name: `${[
               date.getFullYear(),
-              date.getMonth() + 1,
-              date.getDate(),
+              String(date.getMonth() + 1).padStart(2, '0'),
+              String(date.getDate()).padStart(2, '0'),
             ].join("/")} - Daily Message`,
             auto_archive_duration: "1440",
           },
