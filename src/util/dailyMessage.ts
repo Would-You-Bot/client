@@ -99,7 +99,7 @@ export default class DailyMessage {
         success: false,
         error: new Error(
           `No channel has been fetched to post a daily message to! ${message.guildId}`,
-           {cause: channel.error}
+          { cause: channel.error },
         ),
       };
     }
