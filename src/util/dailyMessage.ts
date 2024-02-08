@@ -79,6 +79,11 @@ export default class DailyMessage {
         error: new Error("No channel id provided by the queue message!"),
       };
     }
+    if (!this.client.guilds.cache.has(message.guildId)) return {
+      success: false,
+      error: new Error(`Wrong cluster: ${process.pid} - ${properties.messageId}`),
+    };;
+
     let channel = await this.getDailyMessageChannel(message.channelId);
     let embed = this.buildEmbed(
       message.message[0],
