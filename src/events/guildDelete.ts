@@ -17,7 +17,7 @@ const event: Event = {
     );
 
     serverCount = result.reduce((prev, val) => prev + val, 0);
-    
+
     const guildData = await GuildModel.findOneAndUpdate(
       { guildID: guild.id, dailyMsg: true },
       { dailyMsg: false },

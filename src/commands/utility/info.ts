@@ -20,13 +20,12 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-
     const serverCount = await client.cluster.broadcastEval(
       (c) => c.guilds.cache.size,
     );
 
-    const userCount = await client.cluster.broadcastEval(
-      (c) => c.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
+    const userCount = await client.cluster.broadcastEval((c) =>
+      c.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
     );
 
     const unixstamp =
