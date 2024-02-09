@@ -82,7 +82,9 @@ export default class DailyMessage {
     if (!this.client.guilds.cache.has(message.guildId)) {
       return {
         success: false,
-        error: new Error(`Wrong cluster: ${process.pid} - ${properties.messageId}`),
+        error: new Error(
+          `Wrong cluster: ${process.pid} - ${properties.messageId}`,
+        ),
       };
     }
 
