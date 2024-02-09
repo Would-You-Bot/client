@@ -11,7 +11,13 @@ const event: Event = {
   execute: async (client: WouldYou, guild: Guild) => {
     if (!guild?.name) return;
 
-    console.log(`Left ${guild.name} (${guild.id})`);
+    let serverCount;
+    const result = await client.cluster.broadcastEval(
+      (c) => c.guilds.cache.size,
+    );
+
+    serverCount = result.reduce((prev, val) => prev + val, 0);
+
     const guildData = await GuildModel.findOneAndUpdate(
       { guildID: guild.id, dailyMsg: true },
       { dailyMsg: false },
@@ -54,7 +60,7 @@ const event: Event = {
           .setDescription(
             `**Name**: ${
               guild.name
-            }\n**Users**: ${guild.memberCount.toLocaleString()}${
+            }\n**Users**: ${guild.memberCount.toLocaleString()}\n**Server Owner**: ${guild.ownerId}${
               features ? `\n**Features**: ${features}` : ``
             }`,
           )
@@ -72,7 +78,7 @@ const event: Event = {
 
       await webhookClient
         .send({
-          content: `<:BadCheck:1025490660968628436> Left ${guild.name} ${features}. I'm now in ${client.guilds.cache.size} guilds.`,
+          content: `<:BadCheck:1025490660968628436> Left ${guild.name} ${features}. I'm now in ${serverCount} guilds.`,
           username: `${guild.name
             .replace("Discord", "")
             .replace("discord", "")

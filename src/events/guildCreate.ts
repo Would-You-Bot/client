@@ -9,7 +9,12 @@ const event: Event = {
   execute: async (client: WouldYou, guild: Guild) => {
     if (!guild?.name) return;
 
-    console.log(`Joined ${guild.name} (${guild.id})`);
+    let serverCount;
+    const result = await client.cluster.broadcastEval(
+      (c) => c.guilds.cache.size,
+    );
+
+    serverCount = result.reduce((prev, val) => prev + val, 0);
 
     // Create and save the settings in the cache so that we don't need to do that at a command run
     await client.database.getGuild(guild?.id, true);
@@ -44,7 +49,7 @@ const event: Event = {
           .setDescription(
             `**Name**: ${
               guild.name
-            }\n**Users**: ${guild.memberCount.toLocaleString()}${
+            }\n**Users**: ${guild.memberCount.toLocaleString()}\n**Server Owner**: ${guild.ownerId}${
               features ? `\n**Features**: ${features}` : ``
             }`,
           )
@@ -62,7 +67,7 @@ const event: Event = {
 
       await webhookClient
         .send({
-          content: `<:GoodCheck:1025490645525209148> Joined ${guild.name} ${features}. I'm now in ${client.guilds.cache.size} guilds.`,
+          content: `<:GoodCheck:1025490645525209148> Joined ${guild.name} ${features}. I'm now in ${serverCount} guilds.`,
           username: `${guild.name
             .replace("Discord", "")
             .replace("discord", "")

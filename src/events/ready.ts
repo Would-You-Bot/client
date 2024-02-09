@@ -2,11 +2,12 @@ import "dotenv/config";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v10";
 import { white, gray, green, red } from "chalk-advanced";
-import { AutoPoster } from "topgg-autoposter";
 import { captureException } from "@sentry/node";
 import WouldYou from "../util/wouldYou";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 import { Event } from "../models/event";
+import axios from "axios";
+import { getInfo } from "discord-hybrid-sharding";
 
 const event: Event = {
   event: "ready",
@@ -23,9 +24,33 @@ const event: Event = {
       setTimeout(async () => {
         try {
           if (process.env.PRODUCTION === "true") {
-            if (process.env.TOPGG_TOKEN) {
-              AutoPoster(`${process.env.TOPGG_TOKEN}`, client);
-            }
+            // Post data to top.gg
+            const postStats = async () => {
+              const serverCount = await client.cluster.broadcastEval(
+                (c) => c.guilds.cache.size,
+              );
+
+              await axios({
+                method: "POST",
+                url: `https://top.gg/api/bots/981649513427111957/stats`,
+                headers: {
+                  Authorization: process.env.TOPGG_TOKEN,
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                data: {
+                  server_count: serverCount.reduce(
+                    (prev, val) => prev + val,
+                    0,
+                  ),
+                  shard_count: getInfo().TOTAL_SHARDS,
+                },
+              }).catch((err) => {
+                console.log(err);
+              });
+            };
+            postStats();
+            setInterval(postStats, 3600000);
             // If the bot is in production mode it will load slash commands for all guilds
             if (client.user?.id) {
               await rest.put(Routes.applicationCommands(client.user.id), {
