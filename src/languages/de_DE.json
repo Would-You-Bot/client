@@ -61,9 +61,8 @@
       "import": {
         "att1": "Du musst eine JSON datei anheften!",
         "att2": "Du musst eine JSON Datei anheften!",
-        "att3": "Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
-        "att4": "Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
-        "att5": "Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [hier](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att3": "Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [here](https://i.imgur.com/glkbKrL.png)",
+        "att4": "Das JSON, das du bereitgestellt hast, enthielt keine oder fehlende benutzerdefinierte Nachrichten! Beispiel: [hier](https://i.imgur.com/glkbKrL.png)",
         "att15": "Bei der Ausführung dieses Befehls ist ein Fehler aufgetreten. Bitte melde ihn dem Support-Server!",
         "att16": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die wouldyourather Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
         "att17": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die neverhaveiever Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
