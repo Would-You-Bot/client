@@ -41,7 +41,7 @@ const button: Button = {
     }
     let random = await getRandomTod(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => (c.type !== "nsfw" && c.type === "truth") || c.type === "dare",
+      (c) => c.type === "truth" || c.type === "dare",
     );
 
     let truthordare = [] as string[];

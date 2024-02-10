@@ -42,7 +42,7 @@ const button: Button = {
 
     let Truth = await getTruth(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "truth",
+      (c) => c.type === "truth",
     );
 
     let truthordare = [] as string[];
