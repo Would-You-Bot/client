@@ -808,10 +808,10 @@ const command: ChatInputCommand = {
           let arrays = [];
 
           if (wouldyourather.length > 0) {
-            let arrayText = `'wouldyourather': [`;
+            let arrayText = `"wouldyourather": [`;
             wouldyourather.map((a, i) => {
               i = i++ + 1;
-              arrayText += `\n'${a.msg}'${
+              arrayText += `\n"${a.msg}"${
                 wouldyourather.length !== i ? "," : ""
               }`;
             });
@@ -820,17 +820,17 @@ const command: ChatInputCommand = {
           }
 
           if (truth.length > 0) {
-            let arrayText = `'truth': [`;
+            let arrayText = `"truth": [`;
             truth.map((a, i) => {
               i = i++ + 1;
-              arrayText += `\n'${a.msg}'${truth.length !== i ? "," : ""}`;
+              arrayText += `\n"${a.msg}"${truth.length !== i ? "," : ""}`;
             });
             arrayText += `\n]`;
             arrays.push(arrayText);
           }
 
           if (dare.length > 0) {
-            let arrayText = `'dare': [`;
+            let arrayText = `"dare": [`;
             dare.map((a, i) => {
               i = i++ + 1;
               arrayText += `\n"${a.msg}"${dare.length !== i ? "," : ""}`;
@@ -840,10 +840,10 @@ const command: ChatInputCommand = {
           }
 
           if (neverhaveiever.length > 0) {
-            let arrayText = `'neverhaveiever': [`;
+            let arrayText = `"neverhaveiever": [`;
             neverhaveiever.map((a, i) => {
               i = i++ + 1;
-              arrayText += `\n'${a.msg}'${
+              arrayText += `\n"${a.msg}"${
                 neverhaveiever.length !== i ? "," : ""
               }`;
             });
@@ -852,10 +852,10 @@ const command: ChatInputCommand = {
           }
 
           if (wwyd.length > 0) {
-            let arrayText = `'wwyd': [`;
+            let arrayText = `"wwyd": [`;
             wwyd.map((a, i) => {
               i = i++ + 1;
-              arrayText += `\n'${a.msg}'${wwyd.length !== i ? "," : ""}`;
+              arrayText += `\n"${a.msg}"${wwyd.length !== i ? "," : ""}`;
             });
             arrayText += `\n]`;
             arrays.push(arrayText);
