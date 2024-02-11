@@ -89,7 +89,7 @@
         "descCont": "Content",
         "descAccept": "It seems you did not add \"{type}\" to the beginning of your text. Would you like me to add it automatically?",
         "descWYR": "Would You Rather",
-        "descNHIE": "Never have I ever", 
+        "descNHIE": "Never have I ever",
         "descWWYD": "What would you do",
         "footerDisable": "This button will be disabled in 30 seconds.",
         "success": "Successfully added \"{type}\" to the beginning of the text!"
@@ -207,7 +207,7 @@
       "title": "Would You | Guide",
       "description": "Guide to use the full potential of Would You",
       "name1": "How to correctly use Would You!",
-      "value1": "Create a dedicated channel for the bot or allow users to use the bot in the main chat. \n > Would You's purpose is to make chats more active so it would be very ironic to deny the usage of would you in main chats. \n > If you want to use the bot to its fullest potential, use the </welcome:1011374285350260914> command and setup a welcome channel. The channel will be used to send a would you message once a user joins.",
+      "value1": "Create a dedicated channel for the bot or allow users to use the bot in the main chat. \n > Would You's purpose is to make chats more active so it would be very ironic to deny the usage of would you in main chats. \n > If you want to use the bot to its fullest potential, use the </settings:1099463656124723304> command and setup a welcome channel. The channel will be used to send a would you message once a user joins.",
       "name2": "Why do I need that?",
       "value2": "> The intention behind this is to help new users be part of the conversation by giving the members a topic to talk about right after joining! This not only makes the server more active, but it also makes new users feel more included right after joining the server and encourages them to stay for longer!",
       "name3": "Any more tips?",
@@ -329,7 +329,7 @@
     "initial": {
       "title": "Initializing",
       "description": "Please wait a moment. I'm creating a game..."
-    }, 
+    },
     "game": {
       "title": "You Lost!",
       "description": "You reached a score of **{score}**!"
