@@ -42,9 +42,7 @@ const button: Button = {
     }
 
     let Dare = await getDare(guildDb.language);
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "dare",
-    );
+    const dbquestions = guildDb.customMessages.filter((c) => c.type === "dare");
 
     let truthordare = [] as string[];
 

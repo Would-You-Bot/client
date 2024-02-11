@@ -41,9 +41,7 @@ const button: Button = {
     }
 
     var WhatYouDo = await getWwyd(guildDb.language);
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "wwyd",
-    );
+    const dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
 
     let whatwouldyoudo = [] as string[];
 
