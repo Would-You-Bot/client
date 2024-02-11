@@ -30,9 +30,7 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     let WhatYouDo = await getWwyd(guildDb.language);
 
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "wwyd",
-    );
+    const dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
 
     let whatwouldyoudo = [] as string[];
 
