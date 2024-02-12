@@ -2,7 +2,7 @@ import "dotenv/config";
 import { ClusterManager } from "discord-hybrid-sharding";
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
-  shardsPerClusters: 10,
+  shardsPerClusters: 15,
   totalShards: "auto",
   mode: "process",
   token: process.env.TOKEN,
