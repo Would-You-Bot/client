@@ -24,9 +24,7 @@ const button: Button = {
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyRole",
-          )}: ${
-            guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
-          }\n` +
+          )}: :x:\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyType",
