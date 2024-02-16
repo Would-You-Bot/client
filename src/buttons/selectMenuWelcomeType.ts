@@ -21,19 +21,17 @@ const button: Button = {
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Settings.embed.dailyType",
-        )}: ${newType}\n${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.welcomeChannel",
-        )}: ${
-          guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"
-        }\n${client.translation.get(
+          "Settings.embed.welcome",
+        )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.welcomePing",
         )}: ${guildDb.welcomePing ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcome",
-        )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n`,
+          "Settings.embed.dailyType",
+        )}: ${newType}\n${client.translation.get(
+          guildDb?.language,
+          "Settings.embed.welcomeChannel",
+        )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}`,
       )
       .setColor("#0598F6")
       .setFooter({
@@ -88,18 +86,6 @@ const button: Button = {
       welcomeButtons2 =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
           new ButtonBuilder()
-            .setCustomId("welcomePing")
-            .setEmoji("1207801424503644260")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.welcomePing",
-              ),
-            )
-            .setStyle(
-              guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary,
-            ),
-          new ButtonBuilder()
             .setCustomId("welcome")
             .setEmoji("1185973660465500180")
             .setLabel(
@@ -111,6 +97,18 @@ const button: Button = {
             .setStyle(
               guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
+          new ButtonBuilder()
+            .setCustomId("welcomePing")
+            .setEmoji("1207801424503644260")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.welcomePing",
+              ),
+            )
+            .setStyle(
+              guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary,
+            ),
         );
 
     await client.database.updateGuild(interaction.guild.id, {
@@ -121,7 +119,7 @@ const button: Button = {
     interaction.update({
       content: null,
       embeds: [dailyMsgs],
-      components: [welcomeButtons, welcomeButtons2],
+      components: [welcomeButtons2, welcomeButtons],
       ephemeral: true,
     });
     return;

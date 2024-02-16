@@ -363,19 +363,19 @@ const command: ChatInputCommand = {
             .setDescription(
               `${client.translation.get(
                 guildDb?.language,
+                "Settings.embed.welcome",
+              )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
+                guildDb?.language,
+                "Settings.embed.welcomePing",
+              )}: ${guildDb.welcomePing ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
+                guildDb?.language,
                 "Settings.embed.dailyType",
               )}: ${guildDb.welcomeType}\n${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.welcomeChannel",
               )}: ${
                 guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"
-              }\n${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.welcomePing",
-              )}: ${guildDb.welcomePing ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.welcome",
-              )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n`,
+              }`,
             )
             .setColor("#0598F6")
             .setFooter({
@@ -432,20 +432,6 @@ const command: ChatInputCommand = {
             welcomeButtons2 =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
-                  .setCustomId("welcomePing")
-                  .setEmoji("1207801424503644260")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.welcomePing",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.welcomePing
-                      ? ButtonStyle.Success
-                      : ButtonStyle.Secondary,
-                  ),
-                new ButtonBuilder()
                   .setCustomId("welcome")
                   .setEmoji("1185973660465500180")
                   .setLabel(
@@ -459,11 +445,25 @@ const command: ChatInputCommand = {
                       ? ButtonStyle.Success
                       : ButtonStyle.Secondary,
                   ),
+                new ButtonBuilder()
+                  .setCustomId("welcomePing")
+                  .setEmoji("1207801424503644260")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.welcomePing",
+                    ),
+                  )
+                  .setStyle(
+                    guildDb.welcomePing
+                      ? ButtonStyle.Success
+                      : ButtonStyle.Secondary,
+                  ),
               );
 
           interaction.reply({
             embeds: [welcomes],
-            components: [welcomeButtons, welcomeButtons2],
+            components: [welcomeButtons2, welcomeButtons],
             ephemeral: true,
           });
           break;
