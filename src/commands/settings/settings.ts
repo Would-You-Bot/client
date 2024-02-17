@@ -32,6 +32,7 @@ const command: ChatInputCommand = {
           { name: "General Settings", value: "general" },
           { name: "Daily Messages", value: "dailyMsgs" },
           { name: "Welcomes", value: "welcomes" },
+          { name: "Premium", value: "premium" },
         ),
     ),
 
@@ -397,8 +398,7 @@ const command: ChatInputCommand = {
                       "Settings.button.dailyType",
                     ),
                   )
-                  .setStyle(ButtonStyle.Primary)
-                  .setEmoji("1185973667973320775"),
+                  .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                   .setCustomId("welcomeChannel")
                   .setEmoji("1185973667973320775")
@@ -464,6 +464,42 @@ const command: ChatInputCommand = {
           interaction.reply({
             embeds: [welcomes],
             components: [welcomeButtons2, welcomeButtons],
+            ephemeral: true,
+          });
+          break;
+        case "premium":
+          const premium = new EmbedBuilder()
+            .setTitle(`Test`)
+            .setDescription(`Test`)
+            .setColor("#0598F6")
+            .setFooter({
+              text: client.translation.get(
+                guildDb?.language,
+                "Settings.embed.footer",
+              ),
+              iconURL: client?.user?.displayAvatarURL() || undefined,
+            });
+
+          const premiumButton =
+              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                new ButtonBuilder()
+                  .setCustomId("")
+                  .setEmoji("")
+                  .setLabel("test")
+                  .setStyle(ButtonStyle.Primary),
+              ),
+            premiumButton2 =
+              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                new ButtonBuilder()
+                  .setCustomId("")
+                  .setEmoji("")
+                  .setLabel("Test")
+                  .setStyle(ButtonStyle.Primary),
+              );
+
+          interaction.reply({
+            embeds: [premium],
+            components: [premiumButton, premiumButton2],
             ephemeral: true,
           });
           break;

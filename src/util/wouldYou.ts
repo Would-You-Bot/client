@@ -14,6 +14,7 @@ import "dotenv/config";
 // Classes for the bot
 import TranslationHandler from "./translationHandler";
 import DatabaseHandler from "./databaseHandler";
+import PremiumHandler from "./premiumHandler";
 import KeepAlive from "./keepAlive";
 import WebhookHandler from "./webhookHandler";
 import CooldownHandler from "./cooldownHandler";
@@ -36,6 +37,7 @@ export default class WouldYou extends Client {
   public cluster: ClusterClient<Client>;
   public cooldownHandler: CooldownHandler;
   public database: DatabaseHandler;
+  public premium: PremiumHandler;
   public translation: TranslationHandler;
   public webhookHandler: WebhookHandler;
   public keepAlive: KeepAlive;
@@ -113,6 +115,9 @@ export default class WouldYou extends Client {
 
       // Webhook Manager
       this.webhookHandler = new WebhookHandler(this);
+
+      // Premium Handler
+      this.premium = new PremiumHandler(this);
 
       // Keep Alive system after the necessary things that are allowed to crash are loaded
       this.keepAlive = new KeepAlive(this);
