@@ -125,22 +125,33 @@ const command: ChatInputCommand = {
     ) {
       switch (interaction.options.getSubcommand()) {
         case "add":
-          // if (!client.voteLogger.votes.has(interaction.user.id)) {
-          //   if (guildDb.customMessages.length >= 500) {
-          //     interaction.reply({
-          //       ephemeral: true,
-          //       content: client.translation.get(
-          //         guildDb?.language,
-          //         "wyCustom.error.maximum",
-          //       ),
-          //     });
-          //     return;
-          //   }
-          // }
-
           const option =
             interaction?.options?.getString("options")?.toLowerCase() || "";
           message = interaction.options.getString("message");
+
+          if (
+            !(await client.premium.check(interaction.guildId)) &&
+            guildDb.customMessages.filter((e) => e.type === option).length + 1 >
+              100
+          ) {
+            const premiumButton =
+              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                new ButtonBuilder()
+                  .setLabel("Premium")
+                  .setStyle(ButtonStyle.Link)
+                  .setURL("https://wouldyoubot.gg/premium"),
+              );
+            interaction.reply({
+              content: `:x: ${client.translation.get(
+                guildDb?.language,
+                "wyCustom.error.limit",
+                { type: `'${option}'` },
+              )}`,
+              components: [premiumButton],
+              ephemeral: true,
+            });
+            return;
+          }
 
           let newID = makeID(6);
           if (option === "wouldyourather")
@@ -621,6 +632,7 @@ const command: ChatInputCommand = {
             });
             return;
           }
+
           if (!attachment.attachment?.name.includes(".json")) {
             interaction.reply({
               ephemeral: true,
@@ -654,9 +666,12 @@ const command: ChatInputCommand = {
                 });
                 return;
               }
+
               if (
                 !response.data.wouldyourather &&
                 !response.data.neverhaveiever &&
+                !response.data.truth &&
+                !response.data.dare &&
                 !response.data.wwyd
               ) {
                 interaction.editReply({
@@ -670,10 +685,13 @@ const command: ChatInputCommand = {
                 });
                 return;
               }
+
               if (
-                !(response.data.wouldyourather.length === 0) &&
-                !(response.data.neverhaveiever === 0) &&
-                !response.data.wwyd
+                response.data.wouldyourather?.length === 0 ||
+                response.data.neverhaveiever?.length === 0 ||
+                response.data.truth?.length === 0 ||
+                response.data.dare?.length === 0 ||
+                response.data.wwyd?.length === 0
               ) {
                 interaction.editReply({
                   options: {
@@ -681,145 +699,39 @@ const command: ChatInputCommand = {
                   },
                   content: client.translation.get(
                     guildDb?.language,
-                    "wyCustom.error.import.att5",
-                  ),
-                });
-                return;
-              }
-              /*
-              if (
-                response.data.wouldyourather &&
-                response.data.wouldyourather.length > 30 &&
-                !client.voteLogger.votes.has(interaction.user.id)
-              ) {
-                interaction.editReply({
-                  options: {
-                    ephemeral: true,
-                  },
-                  content: client.translation.get(
-                    guildDb?.language,
-                    "wyCustom.error.import.att16",
-                  ),
-                });
-                return;
-              }
-              if (
-                response.data.neverhaveiever &&
-                response.data.neverhaveiever.length > 30 &&
-                !client.voteLogger.votes.has(interaction.user.id)
-              ) {
-                interaction.editReply({
-                  options: {
-                    ephemeral: true,
-                  },
-                  content: client.translation.get(
-                    guildDb?.language,
-                    "wyCustom.error.import.att17",
+                    "wyCustom.error.import.att4",
                   ),
                 });
                 return;
               }
 
-              if (
-                response.data.wwyd &&
-                response.data.wwyd.length > 30 &&
-                !client.voteLogger.votes.has(interaction.user.id)
-              ) {
-                interaction.editReply({
-                  options: {
-                    ephemeral: true,
-                  },
-                  content: client.translation.get(
-                    guildDb?.language,
-                    "wyCustom.error.import.att18",
-                  ),
-                });
-                return;
+              for (var key in response.data) {
+                if (!response.data.hasOwnProperty(key)) continue;
+                if (
+                  !(await client.premium.check(interaction.guildId)) &&
+                  guildDb.customMessages.filter((e) => e.type === key).length +
+                    response.data[key].length >
+                    100
+                ) {
+                  const premiumButton =
+                    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                      new ButtonBuilder()
+                        .setLabel("Premium")
+                        .setStyle(ButtonStyle.Link)
+                        .setURL("https://wouldyoubot.gg/premium"),
+                    );
+                  return interaction.editReply({
+                    content: `:x: ${client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.error.limit",
+                      { type: `'${key}'` },
+                    )}`,
+                    components: [premiumButton],
+                  });
+                }
               }
-              */
-
-              let wouldyourather = guildDb.customMessages.filter(
-                (c) => c.type === "wouldyourather",
-              ).length;
-              let truth = guildDb.customMessages.filter(
-                (c) => c.type === "truth",
-              ).length;
-              let dare = guildDb.customMessages.filter(
-                (c) => c.type === "dare",
-              ).length;
-              let neverhaveiever = guildDb.customMessages.filter(
-                (c) => c.type === "neverhaveiever",
-              ).length;
-              let wwyd = guildDb.customMessages.filter(
-                (c) => c.type === "wwyd",
-              ).length;
-              /*
-              if (
-                wouldyourather > 30 &&
-                !client.voteLogger.votes.has(interaction.user.id)
-              ) {
-                interaction.editReply({
-                  options: {
-                    ephemeral: true,
-                  },
-                  content: client.translation.get(
-                    guildDb?.language,
-                    "wyCustom.error.import.att19",
-                  ),
-                });
-                return;
-              }
-
-              if (
-                neverhaveiever > 30 &&
-                !client.voteLogger.votes.has(interaction.user.id)
-              ) {
-                interaction.editReply({
-                  options: {
-                    ephemeral: true,
-                  },
-                  content: client.translation.get(
-                    guildDb?.language,
-                    "wyCustom.error.import.att20",
-                  ),
-                });
-                return;
-              }
-              if (
-                wwyd > 30 &&
-                !client.voteLogger.votes.has(interaction.user.id)
-              ) {
-                interaction.editReply({
-                  options: {
-                    ephemeral: true,
-                  },
-                  content: client.translation.get(
-                    guildDb?.language,
-                    "wyCustom.error.import.att21",
-                  ),
-                });
-                return;
-              }
-              */
 
               if (response.data.wouldyourather) {
-                /*
-                if (
-                  response.data.wouldyourather.length + wouldyourather > 30 &&
-                  !client.voteLogger.votes.has(interaction.user.id)
-                ) {
-                  interaction.editReply({
-                    options: {
-                      ephemeral: true,
-                    },
-                    content: client.translation.get(
-                      guildDb?.language,
-                      "wyCustom.error.import.att22",
-                    ),
-                  });
-                  return;
-                }
-                */
                 response.data.wouldyourather.map((d: any) => {
                   let newID = makeID(6);
                   guildDb.customMessages.push({
@@ -831,23 +743,6 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.truth) {
-                /*
-                if (
-                  response.data.truth.length + truth > 30 &&
-                  !client.voteLogger.votes.has(interaction.user.id)
-                ) {
-                  interaction.editReply({
-                    options: {
-                      ephemeral: true,
-                    },
-                    content: client.translation.get(
-                      guildDb?.language,
-                      "wyCustom.error.import.att22",
-                    ),
-                  });
-                  return;
-                }
-                */
                 response.data.truth.map((d: any) => {
                   let newID = makeID(6);
                   guildDb.customMessages.push({
@@ -859,23 +754,6 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.dare) {
-                /*
-                if (
-                  response.data.dare.length + dare > 30 &&
-                  !client.voteLogger.votes.has(interaction.user.id)
-                ) {
-                  interaction.editReply({
-                    options: {
-                      ephemeral: true,
-                    },
-                    content: client.translation.get(
-                      guildDb?.language,
-                      "wyCustom.error.import.att22",
-                    ),
-                  });
-                  return;
-                }
-                */
                 response.data.dare.map((d: any) => {
                   let newID = makeID(6);
                   guildDb.customMessages.push({
@@ -887,23 +765,6 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.neverhaveiever) {
-                /*
-                if (
-                  response.data.neverhaveiever.length + neverhaveiever > 30 &&
-                  !client.voteLogger.votes.has(interaction.user.id)
-                ) {
-                  interaction.editReply({
-                    options: {
-                      ephemeral: true,
-                    },
-                    content: client.translation.get(
-                      guildDb?.language,
-                      "wyCustom.error.import.att23",
-                    ),
-                  });
-                  return;
-                }
-                */
                 response.data.neverhaveiever.map((d: any) => {
                   let newID = makeID(6);
                   guildDb.customMessages.push({
@@ -915,23 +776,6 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.wwyd) {
-                /*
-                if (
-                  response.data.wwyd.length + wwyd > 30 &&
-                  !client.voteLogger.votes.has(interaction.user.id)
-                ) {
-                  interaction.editReply({
-                    options: {
-                      ephemeral: true,
-                    },
-                    content: client.translation.get(
-                      guildDb?.language,
-                      "wyCustom.error.import.att24",
-                    ),
-                  });
-                  return;
-                }
-                */
                 response.data.wwyd.map((d: any) => {
                   let newID = makeID(6);
                   guildDb.customMessages.push({

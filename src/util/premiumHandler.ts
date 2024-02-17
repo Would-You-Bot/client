@@ -10,7 +10,7 @@ export default class PremiumHandler {
     this.guildModel = GuildModel;
   }
 
-  async check(guildId: string) {
+  async check(guildId: string | null) {
     const db = await this.guildModel.findOne({ guildID: guildId });
     if (db && db.premium) return true;
     else return false;

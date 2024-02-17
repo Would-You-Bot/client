@@ -58,11 +58,12 @@
       "paginate": "You already are viewing custom messages:",
       "maximum": "You've reached the maximum amount of custom messages. You can gain more by voting for the bot!",
       "empty": "There currently is no custom Would You messages to view!",
+      "limit": "You have over 100 {type} in your custom messages. If you would like to add more, you will have to subscribe to a premium tier.",
       "import": {
         "att1": "You need to provide a valid JSON file!",
         "att2": "You need to provide a valid JSON file!",
-        "att3": "The JSON you provided didn't have any data in it! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
-        "att4": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att3": "The JSON you provided didn't have any data in it! Example: [here](https://i.imgur.com/glkbKrL.png)",
+        "att4": "The JSON you provided didn't have any or missing custom messages! Example: [here](https://i.imgur.com/glkbKrL.png)",
         "att5": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att15": "There was an error that occured while running this command, please report it to the support server!",
         "att16": "The JSON you provided had too much data for the wouldyourather category, we only accept 30 custom messages. You can gain more by voting for the bot!",
@@ -90,7 +91,7 @@
         "descCont": "Content",
         "descAccept": "It seems you did not add \"{type}\" to the beginning of your text. Would you like me to add it automatically?",
         "descWYR": "Would You Rather",
-        "descNHIE": "Never have I ever", 
+        "descNHIE": "Never have I ever",
         "descWWYD": "What would you do",
         "footerDisable": "This button will be disabled in 30 seconds.",
         "success": "Successfully added \"{type}\" to the beginning of the text!"
@@ -208,7 +209,7 @@
       "title": "Would You | Guide",
       "description": "Guide to use the full potential of Would You",
       "name1": "How to correctly use Would You!",
-      "value1": "Create a dedicated channel for the bot or allow users to use the bot in the main chat. \n > Would You's purpose is to make chats more active so it would be very ironic to deny the usage of would you in main chats. \n > If you want to use the bot to its fullest potential, use the </welcome:1011374285350260914> command and setup a welcome channel. The channel will be used to send a would you message once a user joins.",
+      "value1": "Create a dedicated channel for the bot or allow users to use the bot in the main chat. \n > Would You's purpose is to make chats more active so it would be very ironic to deny the usage of would you in main chats. \n > If you want to use the bot to its fullest potential, use the </settings:1099463656124723304> command and setup a welcome channel. The channel will be used to send a would you message once a user joins.",
       "name2": "Why do I need that?",
       "value2": "> The intention behind this is to help new users be part of the conversation by giving the members a topic to talk about right after joining! This not only makes the server more active, but it also makes new users feel more included right after joining the server and encourages them to stay for longer!",
       "name3": "Any more tips?",
@@ -228,7 +229,7 @@
     "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
     "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "The provided post time is the same post time that is already set. Make sure to choose a different post time.",
-    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or an interval of 5!",
+    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or 30!",
     "dailyChannel": "Select a channel where you want Daily Messages to be!",
     "replayChannel": "Select a channel that you want to add a replay cooldown to!",
     "replayChannelNone": "You don't have any replay channels set!",
@@ -330,7 +331,7 @@
     "initial": {
       "title": "Initializing",
       "description": "Please wait a moment. I'm creating a game..."
-    }, 
+    },
     "game": {
       "title": "You Lost!",
       "description": "You reached a score of **{score}**!"
