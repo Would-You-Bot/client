@@ -1,6 +1,4 @@
 import { Schema, model } from "mongoose";
-
-
 export interface IShardClusterStore {
     shard: number
     cluster: number
@@ -8,10 +6,11 @@ export interface IShardClusterStore {
     pid: number
 }
 
-const ShardClusterStore = new Schema({
+const shardClusterStoreSchema = new Schema({
     shard: {
         type: Number,
-        require: true
+        require: true,
+        unique: true
     },
     cluster: {
         type: Number,
@@ -26,6 +25,9 @@ const ShardClusterStore = new Schema({
         default: 0
     }
 });
+
+export const shardClusterStoreModel = model<IShardClusterStore>("shardclusterstore", shardClusterStoreSchema)
+
 
 
 
