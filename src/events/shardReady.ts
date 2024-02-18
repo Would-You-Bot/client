@@ -2,6 +2,7 @@ import { gray, white, green } from "chalk-advanced";
 import WouldYou from "../util/wouldYou";
 import { Event } from "../interfaces/event";
 import { shardClusterStoreModel } from "../util/Models/shardClusterStore";
+import { captureException } from "@sentry/node";
 
 const event: Event = {
   event: "shardReady",
@@ -13,7 +14,7 @@ const event: Event = {
     );
     shardClusterStoreModel.findOneAndUpdate({shard: id}, {shard: id, cluster: client.cluster.id, pid: process.pid}, {upsert: true, new: true, setDefaultsOnInsert: true}).then(model => {
       console.log(model);
-    }).catch(err => console.error(err));
+    }).catch(err => captureException(err));
 
     const random = [
       "Would You Rather",
