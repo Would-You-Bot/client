@@ -51,6 +51,6 @@ jobs:
             with:
               platforms: linux/arm64
               push: true
-              tags: ${{ secrets.DOCKERHUB_USERNAME }}/daily-messege-service:latest
+              tags: ${{ secrets.DOCKERHUB_USERNAME }}/client:latest
               cache-from: type=gha
               cache-to: type=gha,mode=max
