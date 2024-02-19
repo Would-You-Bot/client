@@ -13,7 +13,7 @@ const event: Event = {
       )}`,
     );
 
-    shardClusterStoreModel.findOneAndDelete({shard: id, cluster: client.cluster.id}).catch(err => captureException(err));
+    shardClusterStoreModel.findOneAndDelete({shard: id, cluster: client.cluster.id}).catch((err : string) => captureException(err));
 
   },
 };

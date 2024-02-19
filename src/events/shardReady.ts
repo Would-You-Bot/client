@@ -12,9 +12,7 @@ const event: Event = {
         "Shard is now ready #" + id,
       )}`,
     );
-    shardClusterStoreModel.findOneAndUpdate({shard: id}, {shard: id, cluster: client.cluster.id, pid: process.pid}, {upsert: true, new: true, setDefaultsOnInsert: true}).then(model => {
-      console.log(model);
-    }).catch(err => captureException(err));
+    shardClusterStoreModel.findOneAndUpdate({shard: id}, {shard: id, cluster: client.cluster.id, pid: process.pid}, {upsert: true, new: true, setDefaultsOnInsert: true}).catch((err : string) => captureException(err));
 
     const random = [
       "Would You Rather",
