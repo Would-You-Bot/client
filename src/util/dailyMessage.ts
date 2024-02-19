@@ -133,7 +133,7 @@ export default class DailyMessage {
     channelId: string,
   ): Promise<Result<Channel>> {
     try {
-      let channel = await this.client.channels.fetch(channelId, {force: true}); // rework it so we force it only when its not in cache.
+      let channel = await this.client.channels.fetch(channelId);
       if (channel) return { success: true, result: channel };
       else      
         return { success: false, error: new Error("fetched channel is null") }; 
