@@ -339,5 +339,8 @@
     "error": {
       "user": "This game does not belong to you it belongs to {user}. Create your own game using </higherlower:1153718305903890554>!"
     }
+  },
+  "Premium": {
+    "tiers": "Premium"
   }
 }

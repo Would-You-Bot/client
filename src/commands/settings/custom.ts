@@ -137,7 +137,9 @@ const command: ChatInputCommand = {
             const premiumButton =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
-                  .setLabel("Premium")
+                  .setLabel(
+                    client.translation.get(guildDb?.language, "Premium.tiers"),
+                  )
                   .setStyle(ButtonStyle.Link)
                   .setURL("https://wouldyoubot.gg/premium"),
               );
