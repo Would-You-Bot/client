@@ -4,8 +4,8 @@
   "description": "Would you rather die or use this bot. You got the choice",
   "main": "dist/cluster.js",
   "scripts": {
-    "start": "node dist/cluster.js",
-    "dev": "tsc && pnpm run copy-files && node dist/cluster.js",
+    "start": "node --enable-source-maps dist/cluster.js",
+    "dev": "tsc && pnpm run copy-files && node --enable-source-maps dist/cluster.js",
     "build": "tsc && pnpm run copy-files && pnpm sentry:sourcemaps",
     "copy-files": "copyfiles -u 1 src/**/*.ttf src/**/*.png src/**/*.psd dist/",
     "format": "prettier --write  \"src/**/*.ts\"",
