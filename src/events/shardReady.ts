@@ -1,7 +1,7 @@
 import { gray, white, green } from "chalk-advanced";
 import WouldYou from "../util/wouldYou";
 import { Event } from "../interfaces/event";
-import { shardClusterStoreModel } from "../util/Models/shardClusterStore";
+import { shardClusterStoreModel } from "../util/Models/ShardClusterStore";
 import { captureException } from "@sentry/node";
 
 const event: Event = {
