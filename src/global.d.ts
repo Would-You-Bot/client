@@ -31,7 +31,7 @@ export interface IQueueMessage {
     token: string | null;
   };
   channelId: string | null;
-  retries: number
+  retries: number;
 }
 export type Result<T, E extends Error = Error> =
   | { success: true; result: T }

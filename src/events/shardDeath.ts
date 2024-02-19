@@ -8,13 +8,12 @@ const event: Event = {
   event: "shardDeath",
   execute: async (client: WouldYou, id: number) => {
     console.log(
-      `${white("Would You?")} ${gray(">")} ${green(
-        `Shard ${id} is death.`,
-      )}`,
+      `${white("Would You?")} ${gray(">")} ${green(`Shard ${id} is death.`)}`,
     );
 
-    shardClusterStoreModel.findOneAndDelete({shard: id, cluster: client.cluster.id}).catch((err : string) => captureException(err));
-
+    shardClusterStoreModel
+      .findOneAndDelete({ shard: id, cluster: client.cluster.id })
+      .catch((err: string) => captureException(err));
   },
 };
 

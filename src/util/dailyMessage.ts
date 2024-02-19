@@ -5,8 +5,6 @@ import { IQueueMessage, Result } from "../global";
 import QueueError from "./Error/QueueError";
 import { Scope, captureException, withScope } from "@sentry/node";
 
-
-
 export default class DailyMessage {
   private client: WouldYou;
   constructor(client: WouldYou) {
@@ -16,54 +14,54 @@ export default class DailyMessage {
    * Start the daily message Schedule
    */
   async listen() {
-    console.log(this.client.cluster.count)
+    console.log(this.client.cluster.count);
     const URL = process.env.RABBITMQ_URL || "fallback";
     const connection = await amqplib.connect(URL);
-      let QUEUE = `cluster-${this.client.cluster.id}`;
-      if (connection) {
-        const channel = await connection.createChannel();
-        if (channel) {
-          channel.prefetch(1);
-          await channel.assertQueue(QUEUE, {
-            durable: false,
-            deadLetterExchange: "DLX",
-            deadLetterRoutingKey: "nVZzaJrwJ9",
-          });
-          channel.consume(QUEUE, async (message) => {
-            if (message) {
-              setTimeout(async () => {
-                try {
-                  const result = await this.sendDaily(
-                    <IQueueMessage>JSON.parse(message.content.toString()),
-                    message.properties,
+    let QUEUE = `cluster-${this.client.cluster.id}`;
+    if (connection) {
+      const channel = await connection.createChannel();
+      if (channel) {
+        channel.prefetch(1);
+        await channel.assertQueue(QUEUE, {
+          durable: false,
+          deadLetterExchange: "DLX",
+          deadLetterRoutingKey: "nVZzaJrwJ9",
+        });
+        channel.consume(QUEUE, async (message) => {
+          if (message) {
+            setTimeout(async () => {
+              try {
+                const result = await this.sendDaily(
+                  <IQueueMessage>JSON.parse(message.content.toString()),
+                  message.properties,
+                );
+                if (!result.success) {
+                  const error: QueueError = new QueueError(
+                    `Could not acknowledge queue message`,
+                    {
+                      error: result.error,
+                      id: message.properties.messageId,
+                      guildId: (
+                        JSON.parse(message.content.toString()) as IQueueMessage
+                      ).guildId,
+                      context: message.properties.deliveryMode,
+                    },
                   );
-                  if (!result.success) {
-                    const error: QueueError = new QueueError(
-                      `Could not acknowledge queue message`,
-                      {
-                        error: result.error,
-                        id: message.properties.messageId,
-                        guildId: (
-                          JSON.parse(message.content.toString()) as IQueueMessage
-                        ).guildId,
-                        context: message.properties.deliveryMode,
-                      },
-                    );
-                    this.captureError(error, QUEUE);
-                    this.handleReject(channel, error.causeError.message, message);
-                  } else {
-                    channel.ack(message);
-                  }
-                } catch (error) {
-                  console.log("something different");
-                  console.log(error);
-                  this.handleReject(channel, (error as Error).message, message);
-                  this.captureError(error as Error, QUEUE);
+                  this.captureError(error, QUEUE);
+                  this.handleReject(channel, error.causeError.message, message);
+                } else {
+                  channel.ack(message);
                 }
-              }, 1000); // (NOTE) Update this to increase wait time
-            }
-          });
-        }
+              } catch (error) {
+                console.log("something different");
+                console.log(error);
+                this.handleReject(channel, (error as Error).message, message);
+                this.captureError(error as Error, QUEUE);
+              }
+            }, 1000); // (NOTE) Update this to increase wait time
+          }
+        });
+      }
     }
   }
   /**
@@ -135,8 +133,8 @@ export default class DailyMessage {
     try {
       let channel = await this.client.channels.fetch(channelId);
       if (channel) return { success: true, result: channel };
-      else      
-        return { success: false, error: new Error("fetched channel is null") }; 
+      else
+        return { success: false, error: new Error("fetched channel is null") };
     } catch (error) {
       return { success: false, error: error as Error };
     }
