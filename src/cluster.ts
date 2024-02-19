@@ -22,9 +22,12 @@ manager.on("clusterCreate", (cluster) => {
     console.log(`[Cluster Manager] Cluster ${cluster.id} reconnecting`);
   });
   console.log(`[Cluster Manager] Cluster ${cluster.id} created`);
-  socket.connect({ host: "localhost", port: 8989 }, () => {
+
+  let host = process.env.TCP_HOST || "dailyMessage";
+  let port = parseInt(process.env.TCP_PORT ? process.env.TCP_PORT : "8989")
+  socket.connect({ host: host, port: port}, () => {
     console.log("connected")
-    socket.write(`TSeb6kZ6FEj4jdJVCs8KUS3TJqjamMHoMBAV4iu2VgWFqqAVXt#CREATE#${cluster.id}`);
+    socket.write(`${process.env.TCP_KEY}#CREATE#${cluster.id}`);
   });
   socket.on("data", (data) => {
     console.log(data);
