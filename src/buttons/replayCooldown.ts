@@ -4,7 +4,7 @@ import {
   EmbedBuilder,
   ButtonStyle,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 const modalObject = {
   title: "Replay Cooldown",
   custom_id: "replayCooldown",

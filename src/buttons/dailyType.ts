@@ -3,7 +3,7 @@ import {
   MessageActionRowComponentBuilder,
   StringSelectMenuBuilder,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const button: Button = {
   name: "dailyType",

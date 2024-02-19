@@ -5,7 +5,7 @@ import { white, gray, green, red } from "chalk-advanced";
 import { captureException } from "@sentry/node";
 import WouldYou from "../util/wouldYou";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
-import { Event } from "../models/event";
+import { Event } from "../interfaces/event";
 import axios from "axios";
 import { getInfo } from "discord-hybrid-sharding";
 
