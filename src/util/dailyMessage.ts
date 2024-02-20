@@ -159,7 +159,7 @@ export default class DailyMessage {
           embeds: [embed],
           content: message.role ? `<@&${message.role}>` : null,
           avatarURL:
-        "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96", // Make sure to update this if you ever change the link thx <3 // @SANS USE THIS TO SET AVATAR <3
+            "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96", // Make sure to update this if you ever change the link thx <3 // @SANS USE THIS TO SET AVATAR <3
           username: "Would You", // @SANS USE THIS TO SET USERNAME <3
         },
         message,
