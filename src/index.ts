@@ -1,9 +1,7 @@
 import WouldYou from "./util/wouldYou";
 import { white, gray, green } from "chalk-advanced";
-import {
-  init,
-  autoDiscoverNodePerformanceMonitoringIntegrations,
-} from "@sentry/node";
+import { init } from "@sentry/node";
+import { ProfilingIntegration } from "@sentry/profiling-node";
 import "dotenv/config";
 // Token to UserID Function
 // Credits to Meister#9667 for helping me with this
@@ -28,14 +26,15 @@ if (botId !== "981649513427111957" || process.env.STATUS === "DEVELOPMENT") {
   );
 }
 
-var dsnKey = process.env.SENTRY_DSN as string;
-
-if (dsnKey) {
+if (process.env.SENTRY_DSN) {
   init({
-    dsn: dsnKey,
+    dsn: process.env.SENTRY_DSN,
     // Performance Monitoring
-    tracesSampleRate: 0.5, // 1.0 means that 100% of transactions will be sent to Sentry
-    integrations: [...autoDiscoverNodePerformanceMonitoringIntegrations()],
+    integrations: [new ProfilingIntegration()],
+    // Performance Monitoring
+    tracesSampleRate: 0.5, //  Capture 100% of the transactions
+    // Set sampling rate for profiling - this is relative to tracesSampleRate
+    profilesSampleRate: 0.5,
   });
 }
 

@@ -11,9 +11,15 @@ dependencies:
   '@napi-rs/canvas':
     specifier: ^0.1.44
     version: 0.1.44
+  '@sentry/cli':
+    specifier: ^2.26.0
+    version: 2.26.0
   '@sentry/node':
     specifier: ^7.94.1
     version: 7.94.1
+  '@sentry/profiling-node':
+    specifier: ^1.3.5
+    version: 1.3.5(@sentry/node@7.94.1)
   '@top-gg/sdk':
     specifier: ^3.1.6
     version: 3.1.6
@@ -21,8 +27,8 @@ dependencies:
     specifier: ^0.10.3
     version: 0.10.3
   axios:
-    specifier: ^1.6.5
-    version: 1.6.5
+    specifier: ^1.6.7
+    version: 1.6.7
   canvabase:
     specifier: ^1.1.1
     version: 1.1.1
@@ -416,6 +422,92 @@ packages:
       '@sentry/utils': 7.94.1
     dev: false
 
+  /@sentry/cli-darwin@2.26.0:
+    resolution: {integrity: sha512-SJ4ts9VELoLdOx1g034Tv2nGqhjutBYNAI3WMsjBaQG3tqNPJkQJKGrOqfpL6kTdO2tqQIAYeVw60yqWuHU3FA==}
+    engines: {node: '>=10'}
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@sentry/cli-linux-arm64@2.26.0:
+    resolution: {integrity: sha512-tAsK5pWrLyU+zqoW0uwylfLB7udOV8FtU8xqcfMsYGxt44zviiuxzKeDnaUdHsZcvk03aTAyf1Dxqn0u32A0MA==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [linux, freebsd]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@sentry/cli-linux-arm@2.26.0:
+    resolution: {integrity: sha512-qNqKLf3eGowhm+4gg47jGLfova5SLgC0wvWX181U+w94oVGp4onuSjbqpy7wbSA9nsfTXllMhEFI5jA4CMmZVw==}
+    engines: {node: '>=10'}
+    cpu: [arm]
+    os: [linux, freebsd]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@sentry/cli-linux-i686@2.26.0:
+    resolution: {integrity: sha512-+dSFR9rK6o6F0gBxoU0mrHw18qVgF1t27Y0jvdItMtDuCuduBuXTffmsbBwbPFWBgWuLPG+ojB1LuoBt5qVMng==}
+    engines: {node: '>=10'}
+    cpu: [x86, ia32]
+    os: [linux, freebsd]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@sentry/cli-linux-x64@2.26.0:
+    resolution: {integrity: sha512-oY86ECWVQuk434K+enUVZnn28T8qxjJTpxN079xvz7SIWOxQ609tMva91Ywo0gExcu07AZ0pg71XFsEQ9WhZgA==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [linux, freebsd]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@sentry/cli-win32-i686@2.26.0:
+    resolution: {integrity: sha512-vLju9NFl4venKEVpuFJpxaCwa2NdG6C9mhYNqxRvZAPrXWMdMd697qBDOMepAPT7CI8EWiyXUwMli0WjGXGMeQ==}
+    engines: {node: '>=10'}
+    cpu: [x86, ia32]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@sentry/cli-win32-x64@2.26.0:
+    resolution: {integrity: sha512-r3ZaxdHGC6OyJhOxO5ADzAitpGcgT/PkqQzOzKXBOebHj5jzwY27JWjdNhpT6sJZDII13HxqwISRedVWftZgRw==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@sentry/cli@2.26.0:
+    resolution: {integrity: sha512-WRrY9nkjLLUvyo+l8KE0x0Q+0NtCd2U8HYJzh3kyJHyyfKWiSH7ZhExcsb2MoSIjlzbKjjrIJzxhklZABkidDw==}
+    engines: {node: '>= 10'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      https-proxy-agent: 5.0.1
+      node-fetch: 2.7.0
+      progress: 2.0.3
+      proxy-from-env: 1.1.0
+      which: 2.0.2
+    optionalDependencies:
+      '@sentry/cli-darwin': 2.26.0
+      '@sentry/cli-linux-arm': 2.26.0
+      '@sentry/cli-linux-arm64': 2.26.0
+      '@sentry/cli-linux-i686': 2.26.0
+      '@sentry/cli-linux-x64': 2.26.0
+      '@sentry/cli-win32-i686': 2.26.0
+      '@sentry/cli-win32-x64': 2.26.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
+
   /@sentry/core@7.94.1:
     resolution: {integrity: sha512-4sjiMnkbGpv9O98YHVZe7fHNwwdYl+zLoCOoEOadtrJ1EYYvnK/MSixN2HJF7g/0s22xd4xY958QyNIRVR+Iiw==}
     engines: {node: '>=8'}
@@ -432,6 +524,19 @@ packages:
       '@sentry/core': 7.94.1
       '@sentry/types': 7.94.1
       '@sentry/utils': 7.94.1
+    dev: false
+
+  /@sentry/profiling-node@1.3.5(@sentry/node@7.94.1):
+    resolution: {integrity: sha512-n2bfEbtLW3WuIMQGyxKJKzBNZOb1JYfMeJQ2WQn/42F++69m+u7T0S3EDGRN0Y//fbt5+r0any+4r3kChRXZkQ==}
+    engines: {node: '>=8.0.0'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@sentry/node': ^7.44.1
+    dependencies:
+      '@sentry/node': 7.94.1
+      detect-libc: 2.0.2
+      node-abi: 3.54.0
     dev: false
 
   /@sentry/types@7.94.1:
@@ -571,6 +676,15 @@ packages:
       negotiator: 0.6.3
     dev: false
 
+  /agent-base@6.0.2:
+    resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
+    engines: {node: '>= 6.0.0'}
+    dependencies:
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /amqplib@0.10.3:
     resolution: {integrity: sha512-UHmuSa7n8vVW/a5HGh2nFPqAEr8+cD4dEZ6u9GjP91nHfr1a54RyAKyra7Sb5NH7NBKOUlyQSMXIp0qAixKexw==}
     engines: {node: '>=10'}
@@ -611,8 +725,8 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: false
 
-  /axios@1.6.5:
-    resolution: {integrity: sha512-Ii012v05KEVuUoFWmMW/UQv9aRIc3ZwkWDcM+h5Il8izZCtRVpDUfwpoFf7eOtajT3QiGR4yDUx7lPqHJULgbg==}
+  /axios@1.6.7:
+    resolution: {integrity: sha512-/hDJGff6/c7u0hDkvkGxR/oy6CbCs8ziCsC7SqmhjfozqiJGc8Z11wrv9z9lYfY4K8l+H9TpjcMDX0xOZmx+RA==}
     dependencies:
       follow-redirects: 1.15.5
       form-data: 4.0.0
@@ -859,6 +973,11 @@ packages:
   /destroy@1.2.0:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
+    dev: false
+
+  /detect-libc@2.0.2:
+    resolution: {integrity: sha512-UX6sGumvvqSaXgdKGUsgZWqcUyIXZ/vZTrlRT/iobiKhGL0zL4d3osHj3uqllWJK+i+sixDS/3COVEOFbupFyw==}
+    engines: {node: '>=8'}
     dev: false
 
   /discord-api-types@0.37.61:
@@ -1119,6 +1238,16 @@ packages:
       toidentifier: 1.0.1
     dev: false
 
+  /https-proxy-agent@5.0.1:
+    resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
+    engines: {node: '>= 6'}
+    dependencies:
+      agent-base: 6.0.2
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -1181,6 +1310,10 @@ packages:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
     dev: true
 
+  /isexe@2.0.0:
+    resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+    dev: false
+
   /javascript-stringify@2.1.0:
     resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
     dev: false
@@ -1203,7 +1336,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
-    dev: true
 
   /luxon@3.4.4:
     resolution: {integrity: sha512-zobTr7akeGHnv7eBOXcRgMeCP6+uyYsczwmeRCauvpvaAltgNyTbLH/+VaEAPUeWBT+1GuNmz4wC/6jtQzbbVA==}
@@ -1364,6 +1496,13 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /node-abi@3.54.0:
+    resolution: {integrity: sha512-p7eGEiQil0YUV3ItH4/tBb781L5impVmmx2E9FRKF7d18XXzp4PGT2tdYMFY6wQqgxD0IwNZOiSJ0/K0fSi/OA==}
+    engines: {node: '>=10'}
+    dependencies:
+      semver: 7.5.4
+    dev: false
+
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
@@ -1461,6 +1600,11 @@ packages:
   /profanity-check@0.0.3:
     resolution: {integrity: sha512-WeghF2hl1eO/Y6hnfiL8NAsdLbeh2ZrWccb5N+JuUjRzBC3CAIAkCBdJXwOg9ICOCdwzhq61aGnev7eUhJcnzg==}
     engines: {node: '>=10'}
+    dev: false
+
+  /progress@2.0.3:
+    resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
+    engines: {node: '>=0.4.0'}
     dev: false
 
   /prom-client@15.1.0:
@@ -1600,7 +1744,6 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
-    dev: true
 
   /send@0.18.0:
     resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==}
@@ -1859,6 +2002,14 @@ packages:
       webidl-conversions: 3.0.1
     dev: false
 
+  /which@2.0.2:
+    resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
+    engines: {node: '>= 8'}
+    hasBin: true
+    dependencies:
+      isexe: 2.0.0
+    dev: false
+
   /wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
     engines: {node: '>=10'}
@@ -1897,7 +2048,6 @@ packages:
 
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
-    dev: true
 
   /yargs-parser@20.2.9:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}

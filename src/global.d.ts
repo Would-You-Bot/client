@@ -15,7 +15,7 @@ declare global {
 
 export {};
 
-/*
+/**
  * Everything underneath this is used by the daily message service.
  * Result<T,E> is used to elevate the possible error messages to our dailymessage listen function, this so we can get an exact error message when something goes wrong (cause)
  * DONT TOUCH UNLESS NEEDED.
@@ -31,7 +31,6 @@ export interface IQueueMessage {
     token: string | null;
   };
   channelId: string | null;
-  retries: number;
 }
 export type Result<T, E extends Error = Error> =
   | { success: true; result: T }

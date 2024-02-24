@@ -58,11 +58,13 @@
       "paginate": "You already are viewing custom messages:",
       "maximum": "You've reached the maximum amount of custom messages. You can gain more by voting for the bot!",
       "empty": "There currently is no custom Would You messages to view!",
+      "limit": "You have over 100 {type} in your custom messages. If you would like to add more, you will have to subscribe to a premium tier.",
       "import": {
         "att1": "You need to provide a valid JSON file!",
         "att2": "You need to provide a valid JSON file!",
         "att3": "The JSON you provided didn't have any data in it! Example: [here](https://i.imgur.com/glkbKrL.png)",
         "att4": "The JSON you provided didn't have any or missing custom messages! Example: [here](https://i.imgur.com/glkbKrL.png)",
+        "att5": "The JSON you provided didn't have any custom messages! Example: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att15": "There was an error that occured while running this command, please report it to the support server!",
         "att16": "The JSON you provided had too much data for the wouldyourather category, we only accept 30 custom messages. You can gain more by voting for the bot!",
         "att17": "The JSON you provided had too much data for the neverhaveiever category, we only accept 30 custom messages. You can gain more by voting for the bot!",
@@ -227,7 +229,7 @@
     "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
     "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "The provided post time is the same post time that is already set. Make sure to choose a different post time.",
-    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or an interval of 5!",
+    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or 30!",
     "dailyChannel": "Select a channel where you want Daily Messages to be!",
     "replayChannel": "Select a channel that you want to add a replay cooldown to!",
     "replayChannelNone": "You don't have any replay channels set!",
@@ -337,5 +339,8 @@
     "error": {
       "user": "This game does not belong to you it belongs to {user}. Create your own game using </higherlower:1153718305903890554>!"
     }
+  },
+  "Premium": {
+    "tiers": "Premium"
   }
 }

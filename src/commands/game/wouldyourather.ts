@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../interfaces";
+import { ChatInputCommand } from "../../models";
 import { getWouldYouRather } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
@@ -32,7 +32,7 @@ const command: ChatInputCommand = {
     let General = await getWouldYouRather(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "wouldyourather",
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather",
     );
 
     let wouldyourather = [] as string[];

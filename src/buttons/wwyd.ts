@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
-import { Button } from "../interfaces";
+import { Button } from "../models";
 import { getWwyd } from "../util/Functions/jsonImport";
 
 const button: Button = {
@@ -41,7 +41,9 @@ const button: Button = {
     }
 
     var WhatYouDo = await getWwyd(guildDb.language);
-    const dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
+    const dbquestions = guildDb.customMessages.filter(
+      (c) => c.type !== "nsfw" && c.type === "wwyd",
+    );
 
     let whatwouldyoudo = [] as string[];
 

@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../interfaces";
+import { ChatInputCommand } from "../../models";
 import { getWwyd } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
@@ -30,7 +30,9 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     let WhatYouDo = await getWwyd(guildDb.language);
 
-    const dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
+    const dbquestions = guildDb.customMessages.filter(
+      (c) => c.type !== "nsfw" && c.type === "wwyd",
+    );
 
     let whatwouldyoudo = [] as string[];
 

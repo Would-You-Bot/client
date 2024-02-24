@@ -9,7 +9,7 @@ import {
 import { HigherlowerModel } from "../util/Models/higherlowerModel";
 import LOSE from "../util/Classes/generateLOSE";
 import HOR from "../util/Classes/generateHOR";
-import { Button } from "../interfaces";
+import { Button } from "../models";
 import { getHigherLower } from "../util/Functions/jsonImport";
 
 const button: Button = {

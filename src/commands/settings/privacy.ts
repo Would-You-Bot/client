@@ -8,7 +8,7 @@ import {
   ButtonStyle,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import { ChatInputCommand } from "../../models";
 
 const command: ChatInputCommand = {
   requireGuild: true,

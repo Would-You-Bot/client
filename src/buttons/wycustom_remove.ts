@@ -5,7 +5,7 @@ import {
   MessageActionRowComponentBuilder,
   ButtonStyle,
 } from "discord.js";
-import { Button } from "../interfaces";
+import { Button } from "../models";
 
 const button: Button = {
   name: "wycustom_remove",
@@ -53,7 +53,10 @@ const button: Button = {
       );
 
     client.customAdd.delete(id);
-    interaction.update({ embeds: [typeEmbed], components: [button] });
+    interaction.update({
+      embeds: [typeEmbed],
+      components: [button],
+    });
     return;
   },
 };

@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import { ChatInputCommand } from "../../models";
 import Paginator from "../../util/pagination";
 import { UserModel } from "../../util/Models/userModel";
 
@@ -18,7 +18,10 @@ const command: ChatInputCommand = {
       option
         .setName("game")
         .setDescription("Which game do you want leaderboards from?")
-        .addChoices({ name: "Higher or Lower", value: "higherlower" })
+        .addChoices({
+          name: "Higher or Lower",
+          value: "higherlower",
+        })
         .setRequired(true),
     )
     .addStringOption((option) =>
@@ -59,8 +62,14 @@ const command: ChatInputCommand = {
               data2.map(async (u: any) => {
                 const user = await client.database.getUser(u.userID, true);
                 return user?.votePrivacy
-                  ? { user: "Anonymous", score: u.higherlower.highscore }
-                  : { user: u.userID, score: u.higherlower.highscore };
+                  ? {
+                      user: "Anonymous",
+                      score: u.higherlower.highscore,
+                    }
+                  : {
+                      user: u.userID,
+                      score: u.higherlower.highscore,
+                    };
               }),
             );
 

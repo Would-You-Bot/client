@@ -12,7 +12,7 @@ import { captureException } from "@sentry/node";
 import axios from "axios";
 import Paginator from "../../util/pagination";
 import "dotenv/config";
-import { ChatInputCommand } from "../../interfaces";
+import { ChatInputCommand } from "../../models";
 import {
   generateWYR,
   generateNHIE,
@@ -125,22 +125,35 @@ const command: ChatInputCommand = {
     ) {
       switch (interaction.options.getSubcommand()) {
         case "add":
-          // if (!client.voteLogger.votes.has(interaction.user.id)) {
-          //   if (guildDb.customMessages.length >= 500) {
-          //     interaction.reply({
-          //       ephemeral: true,
-          //       content: client.translation.get(
-          //         guildDb?.language,
-          //         "wyCustom.error.maximum",
-          //       ),
-          //     });
-          //     return;
-          //   }
-          // }
-
           const option =
             interaction?.options?.getString("options")?.toLowerCase() || "";
           message = interaction.options.getString("message");
+
+          if (
+            !(await client.premium.check(interaction.guildId)) &&
+            guildDb.customMessages.filter((e) => e.type === option).length + 1 >
+              100
+          ) {
+            const premiumButton =
+              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                new ButtonBuilder()
+                  .setLabel(
+                    client.translation.get(guildDb?.language, "Premium.tiers"),
+                  )
+                  .setStyle(ButtonStyle.Link)
+                  .setURL("https://wouldyoubot.gg/premium"),
+              );
+            interaction.reply({
+              content: `:x: ${client.translation.get(
+                guildDb?.language,
+                "wyCustom.error.limit",
+                { type: `'${option}'` },
+              )}`,
+              components: [premiumButton],
+              ephemeral: true,
+            });
+            return;
+          }
 
           let newID = makeID(6);
           if (option === "wouldyourather")
@@ -692,6 +705,32 @@ const command: ChatInputCommand = {
                   ),
                 });
                 return;
+              }
+
+              for (var key in response.data) {
+                if (!response.data.hasOwnProperty(key)) continue;
+                if (
+                  !(await client.premium.check(interaction.guildId)) &&
+                  guildDb.customMessages.filter((e) => e.type === key).length +
+                    response.data[key].length >
+                    100
+                ) {
+                  const premiumButton =
+                    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                      new ButtonBuilder()
+                        .setLabel("Premium")
+                        .setStyle(ButtonStyle.Link)
+                        .setURL("https://wouldyoubot.gg/premium"),
+                    );
+                  return interaction.editReply({
+                    content: `:x: ${client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.error.limit",
+                      { type: `'${key}'` },
+                    )}`,
+                    components: [premiumButton],
+                  });
+                }
               }
 
               if (response.data.wouldyourather) {
