@@ -49,9 +49,7 @@ export default class LOSE {
    */
 
   async build(score: number, client: WouldYou) {
-    const user = await UserModel.findOne({
-      userID: this.game.creator,
-    });
+    const user = await UserModel.findOne({ userID: this.game.creator });
     const guild = await client.database.getGuild(this.game.guild);
 
     if (user && score > user.higherlower.highscore) {

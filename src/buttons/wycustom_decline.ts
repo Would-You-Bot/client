@@ -4,7 +4,7 @@ import {
   EmbedBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const button: Button = {
   name: "wycustom_decline",
@@ -36,10 +36,7 @@ const button: Button = {
           .setCustomId("decline"),
       );
 
-    interaction.update({
-      embeds: [typeEmbed],
-      components: [button],
-    });
+    interaction.update({ embeds: [typeEmbed], components: [button] });
     return;
   },
 };

@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 import { getNeverHaveIEver } from "../util/Functions/jsonImport";
 
 const button: Button = {
@@ -45,7 +45,7 @@ const button: Button = {
     );
 
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "neverhaveiever",
+      (c) => c.type === "neverhaveiever",
     );
 
     let nererhaveIever = [] as string[];

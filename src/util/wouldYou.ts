@@ -14,16 +14,15 @@ import "dotenv/config";
 // Classes for the bot
 import TranslationHandler from "./translationHandler";
 import DatabaseHandler from "./databaseHandler";
-import PremiumHandler from "./premiumHandler";
 import KeepAlive from "./keepAlive";
 import WebhookHandler from "./webhookHandler";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
 import Voting from "./votingHandler";
-import { Button, ChatInputCommand } from "../models";
+import { Button, ChatInputCommand } from "../interfaces";
 import { fileToCollection } from "./Functions/fileToCollection";
 import path from "path";
-import { Event } from "../models/event";
+import { Event } from "../interfaces/event";
 // User filter to filter all users out of the cache expect the bot
 //const userFilter = (u) => u?.id !== client?.user?.id;
 
@@ -37,7 +36,6 @@ export default class WouldYou extends Client {
   public cluster: ClusterClient<Client>;
   public cooldownHandler: CooldownHandler;
   public database: DatabaseHandler;
-  public premium: PremiumHandler;
   public translation: TranslationHandler;
   public webhookHandler: WebhookHandler;
   public keepAlive: KeepAlive;
@@ -115,9 +113,6 @@ export default class WouldYou extends Client {
 
       // Webhook Manager
       this.webhookHandler = new WebhookHandler(this);
-
-      // Premium Handler
-      this.premium = new PremiumHandler(this);
 
       // Keep Alive system after the necessary things that are allowed to crash are loaded
       this.keepAlive = new KeepAlive(this);

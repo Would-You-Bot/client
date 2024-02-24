@@ -9,7 +9,7 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -32,7 +32,6 @@ const command: ChatInputCommand = {
           { name: "General Settings", value: "general" },
           { name: "Daily Messages", value: "dailyMsgs" },
           { name: "Welcomes", value: "welcomes" },
-          { name: "Premium", value: "premium" },
         ),
     ),
 
@@ -59,20 +58,20 @@ const command: ChatInputCommand = {
             .setDescription(
               `${client.translation.get(
                 guildDb?.language,
-                "Settings.embed.dailyChannel",
-              )}: ${
-                guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
-              }\n` +
+                "Settings.embed.dailyMsg",
+              )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}\n` +
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.dailyChannel",
+                )}: ${
+                  guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
+                }\n` +
                 `${client.translation.get(
                   guildDb?.language,
                   "Settings.embed.dailyRole",
                 )}: ${
                   guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
                 }\n` +
-                `${client.translation.get(
-                  guildDb?.language,
-                  "Settings.embed.dailyType",
-                )}: ${guildDb?.customTypes}\n` +
                 `${client.translation.get(
                   guildDb?.language,
                   "Settings.embed.dailyTimezone",
@@ -83,106 +82,18 @@ const command: ChatInputCommand = {
                 )}: ${guildDb.dailyInterval}\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.dailyThread",
-                )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}\n` +
+                  "Settings.embed.dailyType",
+                )}: ${guildDb?.customTypes}\n` +
                 `${client.translation.get(
                   guildDb?.language,
-                  "Settings.embed.dailyMsg",
-                )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
+                  "Settings.embed.dailyThread",
+                )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}`,
             )
-
             .setColor("#0598F6");
           const dailyButtons =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
-                  .setCustomId("dailyChannel")
-                  .setEmoji("1185973667973320775")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyChannel",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.dailyChannel
-                      ? ButtonStyle.Primary
-                      : ButtonStyle.Secondary,
-                  ),
-                new ButtonBuilder()
-                  .setCustomId("dailyRole")
-                  .setEmoji("1185973666811478117")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyRole",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.dailyRole
-                      ? ButtonStyle.Primary
-                      : ButtonStyle.Secondary,
-                  ),
-                new ButtonBuilder()
-                  .setCustomId("dailyType")
-                  .setEmoji("1185973664538177557")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyType",
-                    ),
-                  )
-                  .setStyle(ButtonStyle.Primary),
-              ),
-            dailyButtons2 =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setCustomId("dailyTimezone")
-                  .setEmoji("1185973663674150912")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyTimezone",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.dailyTimezone
-                      ? ButtonStyle.Success
-                      : ButtonStyle.Secondary,
-                  ),
-                new ButtonBuilder()
-                  .setCustomId("dailyInterval")
-                  .setEmoji("1185973661736374405")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyInterval",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.dailyInterval
-                      ? ButtonStyle.Success
-                      : ButtonStyle.Secondary,
-                  ),
-              ),
-            dailyButtons3 =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setCustomId("dailyThread")
-                  .setEmoji("1185973669059633304")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyThread",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.dailyThread
-                      ? ButtonStyle.Success
-                      : ButtonStyle.Secondary,
-                  ),
-                new ButtonBuilder()
                   .setCustomId("dailyMsg")
-                  .setEmoji("1185973660465500180")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -194,7 +105,83 @@ const command: ChatInputCommand = {
                       ? ButtonStyle.Success
                       : ButtonStyle.Secondary,
                   ),
+                new ButtonBuilder()
+                  .setCustomId("dailyChannel")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyChannel",
+                    ),
+                  )
+                  .setStyle(
+                    guildDb.dailyChannel
+                      ? ButtonStyle.Success
+                      : ButtonStyle.Secondary,
+                  ),
+                new ButtonBuilder()
+                  .setCustomId("dailyType")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyType",
+                    ),
+                  )
+                  .setStyle(ButtonStyle.Primary)
+                  .setEmoji("📝"),
+              ),
+            dailyButtons2 =
+              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                new ButtonBuilder()
+                  .setCustomId("dailyTimezone")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyTimezone",
+                    ),
+                  )
+                  .setStyle(ButtonStyle.Primary)
+                  .setEmoji("🌍"),
+                new ButtonBuilder()
+                  .setCustomId("dailyRole")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyRole",
+                    ),
+                  )
+                  .setStyle(
+                    guildDb.dailyRole
+                      ? ButtonStyle.Success
+                      : ButtonStyle.Secondary,
+                  ),
+                new ButtonBuilder()
+                  .setCustomId("dailyInterval")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyInterval",
+                    ),
+                  )
+                  .setStyle(ButtonStyle.Primary)
+                  .setEmoji("⏰"),
+              ),
+            dailyButtons3 =
+              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                new ButtonBuilder()
+                  .setCustomId("dailyThread")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyThread",
+                    ),
+                  )
+                  .setStyle(
+                    guildDb.dailyThread
+                      ? ButtonStyle.Success
+                      : ButtonStyle.Secondary,
+                  ),
               );
+
           interaction
             .reply({
               embeds: [dailyMsgs],
@@ -202,7 +189,7 @@ const command: ChatInputCommand = {
               ephemeral: true,
             })
             .catch((err) => {
-              console.log(err);
+              captureException(err);
             });
           break;
 
@@ -217,9 +204,6 @@ const command: ChatInputCommand = {
             .setDescription(
               `${client.translation.get(
                 guildDb?.language,
-                "Settings.embed.replayType",
-              )}: ${guildDb.replayType}\n${client.translation.get(
-                guildDb?.language,
                 "Settings.embed.replayBy",
               )}: ${guildDb.replayBy}\n${
                 guildDb.replayBy === "Guild"
@@ -231,7 +215,10 @@ const command: ChatInputCommand = {
                       guildDb?.language,
                       "Settings.embed.replayBy1",
                     )
-              }\n${
+              }\n\n${client.translation.get(
+                guildDb?.language,
+                "Settings.embed.replayType",
+              )}: ${guildDb.replayType}\n${
                 guildDb.replayType === "Channels"
                   ? `${client.translation.get(
                       guildDb?.language,
@@ -264,6 +251,23 @@ const command: ChatInputCommand = {
           const generalButtons =
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
+                .setCustomId(
+                  guildDb.replayType === "Channels"
+                    ? "replayChannels"
+                    : "replayCooldown",
+                )
+                .setLabel(
+                  client.translation.get(
+                    guildDb?.language,
+                    "Settings.button.replayCooldown",
+                  ),
+                )
+                .setStyle(
+                  guildDb.replayCooldown
+                    ? ButtonStyle.Success
+                    : ButtonStyle.Secondary,
+                ),
+              new ButtonBuilder()
                 .setCustomId("replayType")
                 .setLabel(
                   client.translation.get(
@@ -272,7 +276,7 @@ const command: ChatInputCommand = {
                   ),
                 )
                 .setStyle(ButtonStyle.Primary)
-                .setEmoji("1207774450658050069"),
+                .setEmoji("📝"),
               new ButtonBuilder()
                 .setCustomId("replayBy")
                 .setLabel(
@@ -282,70 +286,29 @@ const command: ChatInputCommand = {
                   ),
                 )
                 .setStyle(ButtonStyle.Primary)
-                .setEmoji("1207778786976989244"),
+                .setEmoji("📝"),
             );
 
-          let setDeleteButtons;
-          if (guildDb.replayType === "Channels") {
-            setDeleteButtons =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setCustomId(
-                    guildDb.replayType === "Channels"
-                      ? "replayChannels"
-                      : "replayCooldown",
-                  )
-                  .setEmoji("1185973661736374405")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.replayCooldown",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.replayCooldown
-                      ? ButtonStyle.Success
-                      : ButtonStyle.Secondary,
+          const chanDelete =
+            new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+              new ButtonBuilder()
+                .setCustomId("replayDeleteChannels")
+                .setLabel(
+                  client.translation.get(
+                    guildDb?.language,
+                    "Settings.button.replayDeleteChannels",
                   ),
-                new ButtonBuilder()
-                  .setCustomId("replayDeleteChannels")
-                  .setEmoji("1207774452230787182")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.replayDeleteChannels",
-                    ),
-                  )
-                  .setStyle(ButtonStyle.Danger),
-              );
-          } else {
-            setDeleteButtons =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setCustomId(
-                    guildDb.replayType === "Channels"
-                      ? "replayChannels"
-                      : "replayCooldown",
-                  )
-                  .setEmoji("1185973661736374405")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.replayCooldown",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.replayCooldown
-                      ? ButtonStyle.Success
-                      : ButtonStyle.Secondary,
-                  ),
-              );
-          }
+                )
+                .setStyle(ButtonStyle.Danger),
+            );
 
           interaction
             .reply({
               embeds: [generalMsg],
-              components: [generalButtons, setDeleteButtons],
+              components:
+                guildDb.replayType === "Channels"
+                  ? [generalButtons, chanDelete]
+                  : [generalButtons],
               ephemeral: true,
             })
             .catch((err) => {
@@ -365,18 +328,24 @@ const command: ChatInputCommand = {
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.welcome",
-              )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.welcomePing",
-              )}: ${guildDb.welcomePing ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.dailyType",
-              )}: ${guildDb.welcomeType}\n${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.welcomeChannel",
-              )}: ${
-                guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"
-              }`,
+              )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n` +
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.welcomePing",
+                )}: ${guildDb.welcomePing ? ":white_check_mark:" : ":x:"}\n` +
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.welcomeChannel",
+                )}: ${
+                  guildDb.welcomeChannel
+                    ? `<#${guildDb.welcomeChannel}>`
+                    : ":x:"
+                }\n` +
+                `${client.translation.get(
+                  guildDb?.language,
+                  "Settings.embed.dailyType",
+                )}: ${guildDb.welcomeType}
+                `,
             )
             .setColor("#0598F6")
             .setFooter({
@@ -390,50 +359,7 @@ const command: ChatInputCommand = {
           const welcomeButtons =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
-                  .setCustomId("welcomeType")
-                  .setEmoji("1185973664538177557")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.dailyType",
-                    ),
-                  )
-                  .setStyle(ButtonStyle.Primary),
-                new ButtonBuilder()
-                  .setCustomId("welcomeChannel")
-                  .setEmoji("1185973667973320775")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.welcomeChannel",
-                    ),
-                  )
-                  .setStyle(
-                    guildDb.welcomeChannel
-                      ? ButtonStyle.Primary
-                      : ButtonStyle.Secondary,
-                  ),
-                new ButtonBuilder()
-                  .setCustomId("welcomeTest")
-                  .setLabel(
-                    client.translation.get(
-                      guildDb?.language,
-                      "Settings.button.welcomeTest",
-                    ),
-                  )
-                  .setDisabled(guildDb.welcome ? false : true)
-                  .setStyle(
-                    guildDb.welcome
-                      ? ButtonStyle.Primary
-                      : ButtonStyle.Secondary,
-                  )
-                  .setEmoji("1207800685928910909"),
-              ),
-            welcomeButtons2 =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
                   .setCustomId("welcome")
-                  .setEmoji("1185973660465500180")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -446,8 +372,23 @@ const command: ChatInputCommand = {
                       : ButtonStyle.Secondary,
                   ),
                 new ButtonBuilder()
+                  .setCustomId("welcomeChannel")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.welcomeChannel",
+                    ),
+                  )
+                  .setStyle(
+                    guildDb.welcomeChannel
+                      ? ButtonStyle.Success
+                      : ButtonStyle.Secondary,
+                  ),
+              ),
+            welcomeButtons2 =
+              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+                new ButtonBuilder()
                   .setCustomId("welcomePing")
-                  .setEmoji("1207801424503644260")
                   .setLabel(
                     client.translation.get(
                       guildDb?.language,
@@ -459,69 +400,31 @@ const command: ChatInputCommand = {
                       ? ButtonStyle.Success
                       : ButtonStyle.Secondary,
                   ),
+                new ButtonBuilder()
+                  .setCustomId("welcomeType")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.dailyType",
+                    ),
+                  )
+                  .setStyle(ButtonStyle.Primary)
+                  .setEmoji("📝"),
+                new ButtonBuilder()
+                  .setCustomId("welcomeTest")
+                  .setLabel(
+                    client.translation.get(
+                      guildDb?.language,
+                      "Settings.button.welcomeTest",
+                    ),
+                  )
+                  .setStyle(ButtonStyle.Primary)
+                  .setEmoji("▶"),
               );
 
           interaction.reply({
             embeds: [welcomes],
-            components: [welcomeButtons2, welcomeButtons],
-            ephemeral: true,
-          });
-          break;
-        case "premium": // @Sans change these to what they really need to be.
-          const premium = new EmbedBuilder() // @Sans This is here just as an example for you
-            .setTitle(`Premium`) // @Sans if you do add text, make sure to add it to en_EN translation and put in the embeds.
-            .setDescription(
-              `Webhook Name: ${guildDb.webhookName || ":x:"}\nWebhook Avatar: ${guildDb.webhookURL || ":x:"}`,
-            )
-            .setColor("#0598F6")
-            .setFooter({
-              text: client.translation.get(
-                guildDb?.language,
-                "Settings.embed.footer",
-              ),
-              iconURL: client?.user?.displayAvatarURL() || undefined,
-            });
-
-          const premiumButton =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setCustomId("premiumName")
-                  .setEmoji("1185973667973320775")
-                  .setLabel("Set Name")
-                  .setStyle(
-                    guildDb.webhookName
-                      ? ButtonStyle.Primary
-                      : ButtonStyle.Secondary,
-                  ),
-              ),
-            premiumButton2 =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setCustomId("premiumURL")
-                  .setEmoji("1185973667973320775")
-                  .setLabel("Set Avatar")
-                  .setStyle(
-                    guildDb.webhookURL
-                      ? ButtonStyle.Primary
-                      : ButtonStyle.Secondary,
-                  ),
-              );
-
-          const premiumTiers =
-            new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-              new ButtonBuilder()
-                .setLabel(
-                  client.translation.get(guildDb?.language, "Premium.tiers"),
-                )
-                .setStyle(ButtonStyle.Link)
-                .setURL("https://wouldyoubot.gg/premium"),
-            );
-
-          interaction.reply({
-            embeds: [premium],
-            components: (await client.premium.check(interaction.guildId))
-              ? [premiumButton, premiumButton2]
-              : [premiumTiers],
+            components: [welcomeButtons, welcomeButtons2],
             ephemeral: true,
           });
           break;

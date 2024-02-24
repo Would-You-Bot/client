@@ -3,9 +3,8 @@ import {
   ActionRowBuilder,
   EmbedBuilder,
   ButtonStyle,
-  MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 const modalObject = {
   title: "Replay Cooldown",
   custom_id: "replayCooldown",
@@ -69,9 +68,6 @@ const button: Button = {
           .setDescription(
             `${client.translation.get(
               guildDb?.language,
-              "Settings.embed.replayType",
-            )}: ${guildDb.replayType}\n${client.translation.get(
-              guildDb?.language,
               "Settings.embed.replayBy",
             )}: ${guildDb.replayBy}\n${
               guildDb.replayBy === "Guild"
@@ -83,7 +79,10 @@ const button: Button = {
                     guildDb?.language,
                     "Settings.embed.replayBy1",
                   )
-            }\n${client.translation.get(
+            }\n\n${client.translation.get(
+              guildDb?.language,
+              "Settings.embed.replayType",
+            )}: ${guildDb.replayType}\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.replayCooldown",
             )}: ${
@@ -101,47 +100,41 @@ const button: Button = {
             iconURL: client?.user?.displayAvatarURL() || undefined,
           });
 
-        const generalButtons =
-          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-            new ButtonBuilder()
-              .setCustomId("replayType")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.replayType",
-                ),
-              )
-              .setStyle(ButtonStyle.Primary)
-              .setEmoji("1207774450658050069"),
-            new ButtonBuilder()
-              .setCustomId("replayBy")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.replayBy",
-                ),
-              )
-              .setStyle(ButtonStyle.Primary)
-              .setEmoji("1207778786976989244"),
-          );
-
-        const setDeleteButtons =
-          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-            new ButtonBuilder()
-              .setCustomId("replayCooldown")
-              .setEmoji("1185973661736374405")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.replayCooldown",
-                ),
-              )
-              .setStyle(
-                guildDb.replayCooldown
-                  ? ButtonStyle.Success
-                  : ButtonStyle.Secondary,
+        const generalButtons = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+            .setCustomId("replayCooldown")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.replayCooldown",
               ),
-          );
+            )
+            .setStyle(
+              guildDb.replayCooldown
+                ? ButtonStyle.Success
+                : ButtonStyle.Secondary,
+            ),
+          new ButtonBuilder()
+            .setCustomId("replayType")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.replayType",
+              ),
+            )
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji("📝"),
+          new ButtonBuilder()
+            .setCustomId("replayBy")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.replayBy",
+              ),
+            )
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji("📝"),
+        );
 
         await client.database.updateGuild(interaction.guild?.id || "", {
           ...guildDb,
@@ -151,7 +144,7 @@ const button: Button = {
         (modalInteraction as any).update({
           content: null,
           embeds: [generalMsg],
-          components: [generalButtons, setDeleteButtons],
+          components: [generalButtons],
           ephemeral: true,
         });
         return;
