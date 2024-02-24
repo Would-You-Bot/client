@@ -5,7 +5,7 @@ import {
   ButtonStyle,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const modalObject = {
   title: "Daily Post Time",

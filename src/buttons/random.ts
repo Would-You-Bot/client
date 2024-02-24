@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 import { getRandomTod } from "../util/Functions/jsonImport";
 
 const button: Button = {
@@ -41,7 +41,7 @@ const button: Button = {
     }
     let random = await getRandomTod(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => (c.type !== "nsfw" && c.type === "truth") || c.type === "dare",
+      (c) => c.type === "truth" || c.type === "dare",
     );
 
     let truthordare = [] as string[];

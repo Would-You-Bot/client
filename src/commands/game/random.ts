@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../../interfaces";
 import { getRandomTod } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
@@ -34,7 +34,7 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     let Dare = await getRandomTod(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => (c.type !== "nsfw" && c.type === "dare") || c.type === "truth",
+      (c) => c.type === "dare" || c.type === "truth",
     );
 
     let truthordare = [] as string[];

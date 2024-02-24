@@ -12,7 +12,7 @@ import { captureException } from "@sentry/node";
 import axios from "axios";
 import Paginator from "../../util/pagination";
 import "dotenv/config";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../../interfaces";
 import {
   generateWYR,
   generateNHIE,
@@ -635,6 +635,7 @@ const command: ChatInputCommand = {
             return;
           }
 
+
           if (!attachment.attachment?.name.includes(".json")) {
             interaction.reply({
               ephemeral: true,
@@ -669,9 +670,12 @@ const command: ChatInputCommand = {
                 return;
               }
 
+
               if (
                 !response.data.wouldyourather &&
                 !response.data.neverhaveiever &&
+                !response.data.truth &&
+                !response.data.dare &&
                 !response.data.truth &&
                 !response.data.dare &&
                 !response.data.wwyd
@@ -688,7 +692,13 @@ const command: ChatInputCommand = {
                 return;
               }
 
+
               if (
+                response.data.wouldyourather?.length === 0 ||
+                response.data.neverhaveiever?.length === 0 ||
+                response.data.truth?.length === 0 ||
+                response.data.dare?.length === 0 ||
+                response.data.wwyd?.length === 0
                 response.data.wouldyourather?.length === 0 ||
                 response.data.neverhaveiever?.length === 0 ||
                 response.data.truth?.length === 0 ||
@@ -701,6 +711,7 @@ const command: ChatInputCommand = {
                   },
                   content: client.translation.get(
                     guildDb?.language,
+                    "wyCustom.error.import.att4",
                     "wyCustom.error.import.att4",
                   ),
                 });

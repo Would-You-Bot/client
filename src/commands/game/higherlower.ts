@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { v4 as uuidv4 } from "uuid";
 import HOR from "../../util/Classes/generateHOR";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../../interfaces";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
 import { getHigherLower } from "../../util/Functions/jsonImport";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";

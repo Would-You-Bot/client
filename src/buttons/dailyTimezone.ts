@@ -6,7 +6,7 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const modalObject = {
   title: "Daily Message Timezone",

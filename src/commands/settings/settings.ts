@@ -9,7 +9,7 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
