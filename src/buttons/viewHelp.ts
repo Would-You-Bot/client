@@ -5,7 +5,7 @@ import {
   ButtonBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const button: Button = {
   name: "viewHelp",

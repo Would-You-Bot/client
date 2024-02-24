@@ -334,7 +334,6 @@
       "title": "Initializing",
       "description": "Please wait a moment. I'm creating a game..."
     },
-    },
     "game": {
       "title": "You Lost!",
       "description": "You reached a score of **{score}**!"

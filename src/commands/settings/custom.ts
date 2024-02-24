@@ -635,7 +635,6 @@ const command: ChatInputCommand = {
             return;
           }
 
-
           if (!attachment.attachment?.name.includes(".json")) {
             interaction.reply({
               ephemeral: true,
@@ -670,7 +669,6 @@ const command: ChatInputCommand = {
                 return;
               }
 
-
               if (
                 !response.data.wouldyourather &&
                 !response.data.neverhaveiever &&
@@ -692,13 +690,12 @@ const command: ChatInputCommand = {
                 return;
               }
 
-
               if (
                 response.data.wouldyourather?.length === 0 ||
                 response.data.neverhaveiever?.length === 0 ||
                 response.data.truth?.length === 0 ||
                 response.data.dare?.length === 0 ||
-                response.data.wwyd?.length === 0
+                response.data.wwyd?.length === 0 ||
                 response.data.wouldyourather?.length === 0 ||
                 response.data.neverhaveiever?.length === 0 ||
                 response.data.truth?.length === 0 ||
@@ -711,7 +708,6 @@ const command: ChatInputCommand = {
                   },
                   content: client.translation.get(
                     guildDb?.language,
-                    "wyCustom.error.import.att4",
                     "wyCustom.error.import.att4",
                   ),
                 });
