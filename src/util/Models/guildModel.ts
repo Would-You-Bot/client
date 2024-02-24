@@ -157,7 +157,7 @@ const guildProfileSchema = new Schema(
     }
   },
   { timestamps: true },
-);
+); 
 
 export const GuildModel = model<IGuildModel>(
   "guildProfile",
