@@ -4,7 +4,7 @@ import {
   EmbedBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const button: Button = {
   name: "wycustom_accept",
@@ -41,10 +41,7 @@ const button: Button = {
       customMessages: [],
     });
 
-    interaction.update({
-      embeds: [typeEmbed],
-      components: [button],
-    });
+    interaction.update({ embeds: [typeEmbed], components: [button] });
     return;
   },
 };

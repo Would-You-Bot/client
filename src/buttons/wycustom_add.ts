@@ -4,7 +4,7 @@ import {
   EmbedBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const button: Button = {
   name: "wycustom_add",
@@ -83,10 +83,7 @@ const button: Button = {
     );
 
     client.customAdd.delete(id);
-    interaction.update({
-      embeds: [typeEmbed],
-      components: [button],
-    });
+    interaction.update({ embeds: [typeEmbed], components: [button] });
     return;
   },
 };

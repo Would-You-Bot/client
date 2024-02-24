@@ -1,5 +1,5 @@
 import { ButtonInteraction, Interaction } from "discord.js";
-import { Event } from "../models";
+import { Event } from "../interfaces";
 import { UserModel } from "../util/Models/userModel";
 import WouldYou from "../util/wouldYou";
 import { captureException } from "@sentry/node";
@@ -7,9 +7,7 @@ import { captureException } from "@sentry/node";
 const event: Event = {
   event: "interactionCreate",
   execute: async (client: WouldYou, interaction: Interaction) => {
-    const user = await UserModel.findOne({
-      userID: interaction.user?.id,
-    });
+    const user = await UserModel.findOne({ userID: interaction.user?.id });
 
     if (!user) {
       await UserModel.create({
@@ -171,8 +169,6 @@ const event: Event = {
         "paginateLast",
         "paginateNext",
         "paginatePrev",
-        "viewCommands",
-        "viewHelp",
         "privacy",
       ];
 

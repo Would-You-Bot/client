@@ -4,6 +4,7 @@ import amqplib, { MessageProperties } from "amqplib";
 import { IQueueMessage, Result } from "../global";
 import QueueError from "./Error/QueueError";
 import { Scope, captureException, withScope } from "@sentry/node";
+
 export default class DailyMessage {
   private client: WouldYou;
   constructor(client: WouldYou) {
@@ -13,9 +14,10 @@ export default class DailyMessage {
    * Start the daily message Schedule
    */
   async listen() {
-    const QUEUE = process.env.QUEUE || "fallback";
+    console.log(this.client.cluster.count);
     const URL = process.env.RABBITMQ_URL || "fallback";
     const connection = await amqplib.connect(URL);
+    let QUEUE = `cluster-${this.client.cluster.id}`;
     if (connection) {
       const channel = await connection.createChannel();
       if (channel) {
@@ -23,7 +25,7 @@ export default class DailyMessage {
         await channel.assertQueue(QUEUE, {
           durable: false,
           deadLetterExchange: "DLX",
-          deadLetterRoutingKey: "key",
+          deadLetterRoutingKey: "nVZzaJrwJ9",
         });
         channel.consume(QUEUE, async (message) => {
           if (message) {
@@ -129,7 +131,7 @@ export default class DailyMessage {
     channelId: string,
   ): Promise<Result<Channel>> {
     try {
-      const channel = await this.client.channels.fetch(channelId);
+      let channel = await this.client.channels.fetch(channelId);
       if (channel) return { success: true, result: channel };
       else
         return { success: false, error: new Error("fetched channel is null") };
@@ -156,6 +158,9 @@ export default class DailyMessage {
         {
           embeds: [embed],
           content: message.role ? `<@&${message.role}>` : null,
+          avatarURL:
+            "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96", // Make sure to update this if you ever change the link thx <3 // @SANS USE THIS TO SET AVATAR <3
+          username: "Would You", // @SANS USE THIS TO SET USERNAME <3
         },
         message,
         message.thread,
@@ -206,7 +211,7 @@ export default class DailyMessage {
     reason: string,
     message: amqplib.Message,
   ) {
-    const headers = { rejectionCause: reason };
+    const headers = { rejectionCause: reason, cluster: this.client.cluster.id };
     channel.publish("DLX", "key", message.content, {
       headers: headers,
       messageId: message.properties.messageId,

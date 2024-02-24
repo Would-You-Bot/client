@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 import { getDare } from "../util/Functions/jsonImport";
 
 const button: Button = {
@@ -42,9 +42,7 @@ const button: Button = {
     }
 
     let Dare = await getDare(guildDb.language);
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "dare",
-    );
+    const dbquestions = guildDb.customMessages.filter((c) => c.type === "dare");
 
     let truthordare = [] as string[];
 

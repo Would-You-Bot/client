@@ -4,13 +4,12 @@
   "description": "Would you rather die or use this bot. You got the choice",
   "main": "dist/cluster.js",
   "scripts": {
-    "start": "node --enable-source-maps dist/cluster.js",
-    "dev": "tsc && pnpm run copy-files && node --enable-source-maps dist/cluster.js",
-    "build": "tsc && pnpm run copy-files && pnpm sentry:sourcemaps",
+    "start": "node dist/cluster.js",
+    "dev": "pnpm run build && node dist/cluster.js",
+    "build": "tsc && pnpm run copy-files",
     "copy-files": "copyfiles -u 1 src/**/*.ttf src/**/*.png src/**/*.psd dist/",
     "format": "prettier --write  \"src/**/*.ts\"",
-    "docker:build": "docker build -t dominikdoesdev/wy-bot .",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org would-you --project would-you ./dist && sentry-cli sourcemaps upload --org would-you --project would-you ./dist"
+    "docker:build": "docker build -t dominikdoesdev/wy-bot ."
   },
   "repository": {
     "type": "git",
@@ -23,21 +22,25 @@
     "discord",
     "javascript"
   ],
-  "author": "Dominik, ForGetFulSkyBro",
+  "author": "Mezo, ForGetFulSkyBro",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Would-You-Bot/client/issues"
   },
   "homepage": "https://wouldyoubot.gg",
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false
+  },
   "dependencies": {
     "@discordjs/rest": "^2.2.0",
     "@napi-rs/canvas": "^0.1.44",
-    "@sentry/cli": "^2.26.0",
     "@sentry/node": "^7.94.1",
-    "@sentry/profiling-node": "^1.3.5",
     "@top-gg/sdk": "^3.1.6",
     "amqplib": "^0.10.3",
-    "axios": "^1.6.7",
+    "axios": "^1.6.5",
     "canvabase": "^1.1.1",
     "chalk-advanced": "^1.0.7",
     "cron": "^3.1.6",

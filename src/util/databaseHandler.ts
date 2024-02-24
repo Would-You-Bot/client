@@ -71,9 +71,7 @@ export default class DatabaseHandler {
     guildId: number | string,
     createIfNotFound: boolean = false,
   ) {
-    const fetched = await this.guildModel.findOne({
-      guildID: guildId,
-    });
+    const fetched = await this.guildModel.findOne({ guildID: guildId });
 
     if (fetched) return fetched;
     if (!fetched && createIfNotFound) {
@@ -165,9 +163,7 @@ export default class DatabaseHandler {
    * @private
    */
   async fetchUser(userId: number | string, createIfNotFound: boolean = false) {
-    const fetched = await this.userModel.findOne({
-      userID: userId,
-    });
+    const fetched = await this.userModel.findOne({ userID: userId });
 
     if (fetched) return fetched;
     if (!fetched && createIfNotFound) {

@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 import { getTruth } from "../util/Functions/jsonImport";
 
 const button: Button = {
@@ -42,7 +42,7 @@ const button: Button = {
 
     let Truth = await getTruth(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "truth",
+      (c) => c.type === "truth",
     );
 
     let truthordare = [] as string[];

@@ -107,5 +107,3 @@ dist
 
 # System files
 .DS_Store
-# Sentry Config File
-.sentryclirc
