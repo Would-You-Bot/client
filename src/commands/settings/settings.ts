@@ -468,10 +468,9 @@ const command: ChatInputCommand = {
           });
           break;
         case "premium":
-          try {
           const prem = await client.premium.check(interaction.guildId);
-          const premium = new EmbedBuilder() 
-            .setTitle(`Premium`) 
+          const premium = new EmbedBuilder()
+            .setTitle(`Premium`)
             .setDescription(
               `${client.translation.get(guildDb?.language, "Premium.tier", { type: prem.type })}`,
             )
@@ -499,9 +498,6 @@ const command: ChatInputCommand = {
             components: [premiumTiers],
             ephemeral: true,
           });
-          } catch (e: any) {
-            console.log(e)
-          }
           break;
       }
     } else {

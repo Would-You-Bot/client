@@ -1,6 +1,6 @@
 import { GuildModel, IGuildModel } from "./Models/guildModel";
 import WouldYou from "./wouldYou";
-import { Model, Number } from "mongoose";
+import { Model } from "mongoose";
 
 export default class PremiumHandler {
   private guildModel: Model<IGuildModel>;
