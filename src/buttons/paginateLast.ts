@@ -4,7 +4,7 @@ import {
   ButtonStyle,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../interfaces";
+import { Button } from "../models";
 import { UserModel } from "../util/Models/userModel";
 
 const button: Button = {

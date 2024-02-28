@@ -12,7 +12,7 @@ import { captureException } from "@sentry/node";
 import axios from "axios";
 import Paginator from "../../util/pagination";
 import "dotenv/config";
-import { ChatInputCommand } from "../../interfaces";
+import { ChatInputCommand } from "../../models";
 import {
   generateWYR,
   generateNHIE,
@@ -674,8 +674,6 @@ const command: ChatInputCommand = {
                 !response.data.neverhaveiever &&
                 !response.data.truth &&
                 !response.data.dare &&
-                !response.data.truth &&
-                !response.data.dare &&
                 !response.data.wwyd
               ) {
                 interaction.editReply({
@@ -695,12 +693,7 @@ const command: ChatInputCommand = {
                 response.data.neverhaveiever?.length === 0 ||
                 response.data.truth?.length === 0 ||
                 response.data.dare?.length === 0 ||
-                response.data.wwyd?.length === 0 ||
-                response.data.wouldyourather?.length === 0 ||
-                response.data.neverhaveiever?.length === 0 ||
-                response.data.truth?.length === 0 ||
-                response.data.dare?.length === 0 ||
-                response.data.wwyd?.length === 0
+                response.data.wwyd?.length === 0 
               ) {
                 interaction.editReply({
                   options: {

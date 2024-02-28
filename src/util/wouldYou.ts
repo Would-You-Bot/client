@@ -20,10 +20,10 @@ import WebhookHandler from "./webhookHandler";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
 import Voting from "./votingHandler";
-import { Button, ChatInputCommand } from "../interfaces";
+import { Button, ChatInputCommand } from "../models";
 import { fileToCollection } from "./Functions/fileToCollection";
 import path from "path";
-import { Event } from "../interfaces/event";
+import { Event } from "../models/event";
 // User filter to filter all users out of the cache expect the bot
 //const userFilter = (u) => u?.id !== client?.user?.id;
 
