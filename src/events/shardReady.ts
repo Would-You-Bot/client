@@ -1,6 +1,6 @@
 import { gray, white, green } from "chalk-advanced";
 import WouldYou from "../util/wouldYou";
-import { Event } from "../models/event";
+import { Event } from "../interfaces/event";
 
 const event: Event = {
   event: "shardReady",

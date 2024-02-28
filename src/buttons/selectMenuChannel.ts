@@ -5,7 +5,7 @@ import {
   MessageActionRowComponentBuilder,
   ButtonStyle,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const button: Button = {
   name: "selectMenuChannel",
@@ -23,9 +23,7 @@ const button: Button = {
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyRole",
-          )}: ${
-            guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
-          }\n` +
+          )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyType",
@@ -75,9 +73,7 @@ const button: Button = {
               ),
             )
             .setStyle(
-              guildDb.dailyRole
-                ? ButtonStyle.Primary
-                : ButtonStyle.Secondary,
+              guildDb.dailyRole ? ButtonStyle.Primary : ButtonStyle.Secondary,
             ),
           new ButtonBuilder()
             .setCustomId("dailyType")
@@ -133,9 +129,7 @@ const button: Button = {
               ),
             )
             .setStyle(
-              guildDb.dailyThread
-                ? ButtonStyle.Success
-                : ButtonStyle.Secondary,
+              guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
           new ButtonBuilder()
             .setCustomId("dailyMsg")
@@ -147,9 +141,7 @@ const button: Button = {
               ),
             )
             .setStyle(
-              guildDb.dailyMsg
-                ? ButtonStyle.Success
-                : ButtonStyle.Secondary,
+              guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
         );
 

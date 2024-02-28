@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 import { getWwyd } from "../util/Functions/jsonImport";
 
 const button: Button = {

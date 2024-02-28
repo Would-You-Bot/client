@@ -341,6 +341,9 @@
     }
   },
   "Premium": {
-    "tiers": "Premium"
+    "tier": "Tier: {type}",
+    "tier1": "Premium",
+    "tier2": "Premium + AI",
+    "tier3": "Partner"
   }
 }

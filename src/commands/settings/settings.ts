@@ -9,7 +9,7 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -467,11 +467,13 @@ const command: ChatInputCommand = {
             ephemeral: true,
           });
           break;
-        case "premium": // @Sans change these to what they really need to be.
-          const premium = new EmbedBuilder() // @Sans This is here just as an example for you
-            .setTitle(`Premium`) // @Sans if you do add text, make sure to add it to en_EN translation and put in the embeds.
+        case "premium":
+          try {
+          const prem = await client.premium.check(interaction.guildId);
+          const premium = new EmbedBuilder() 
+            .setTitle(`Premium`) 
             .setDescription(
-              `Webhook Name: ${guildDb.webhookName || ":x:"}\nWebhook Avatar: ${guildDb.webhookURL || ":x:"}`,
+              `${client.translation.get(guildDb?.language, "Premium.tier", { type: prem.type })}`,
             )
             .setColor("#0598F6")
             .setFooter({
@@ -482,36 +484,11 @@ const command: ChatInputCommand = {
               iconURL: client?.user?.displayAvatarURL() || undefined,
             });
 
-          const premiumButton =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setCustomId("premiumName")
-                  .setEmoji("1185973667973320775")
-                  .setLabel("Set Name")
-                  .setStyle(
-                    guildDb.webhookName
-                      ? ButtonStyle.Primary
-                      : ButtonStyle.Secondary,
-                  ),
-              ),
-            premiumButton2 =
-              new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setCustomId("premiumURL")
-                  .setEmoji("1185973667973320775")
-                  .setLabel("Set Avatar")
-                  .setStyle(
-                    guildDb.webhookURL
-                      ? ButtonStyle.Primary
-                      : ButtonStyle.Secondary,
-                  ),
-              );
-
           const premiumTiers =
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
                 .setLabel(
-                  client.translation.get(guildDb?.language, "Premium.tiers"),
+                  client.translation.get(guildDb?.language, "Premium.tier1"),
                 )
                 .setStyle(ButtonStyle.Link)
                 .setURL("https://wouldyoubot.gg/premium"),
@@ -519,11 +496,12 @@ const command: ChatInputCommand = {
 
           interaction.reply({
             embeds: [premium],
-            components: (await client.premium.check(interaction.guildId))
-              ? [premiumButton, premiumButton2]
-              : [premiumTiers],
+            components: [premiumTiers],
             ephemeral: true,
           });
+          } catch (e: any) {
+            console.log(e)
+          }
           break;
       }
     } else {

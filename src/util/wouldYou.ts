@@ -20,10 +20,10 @@ import WebhookHandler from "./webhookHandler";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
 import Voting from "./votingHandler";
-import { Button, ChatInputCommand } from "../models";
+import { Button, ChatInputCommand } from "../interfaces";
 import { fileToCollection } from "./Functions/fileToCollection";
 import path from "path";
-import { Event } from "../models/event";
+import { Event } from "../interfaces/event";
 // User filter to filter all users out of the cache expect the bot
 //const userFilter = (u) => u?.id !== client?.user?.id;
 
@@ -43,6 +43,7 @@ export default class WouldYou extends Client {
   public keepAlive: KeepAlive;
   public dailyMessage: DailyMessage;
   public voting: Voting;
+  translate: any;
 
   constructor() {
     super({

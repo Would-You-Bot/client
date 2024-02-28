@@ -5,7 +5,7 @@ import {
   ButtonStyle,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const button: Button = {
   name: "deleteDailyRole",
@@ -18,9 +18,7 @@ const button: Button = {
         `${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyChannel",
-        )}: ${
-          guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"
-        }\n` +
+        )}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyRole",
@@ -73,9 +71,7 @@ const button: Button = {
                 "Settings.button.dailyRole",
               ),
             )
-            .setStyle(
-              ButtonStyle.Secondary
-            ),
+            .setStyle(ButtonStyle.Secondary),
           new ButtonBuilder()
             .setCustomId("dailyType")
             .setEmoji("1185973664538177557")
@@ -130,9 +126,7 @@ const button: Button = {
               ),
             )
             .setStyle(
-              guildDb.dailyThread
-                ? ButtonStyle.Success
-                : ButtonStyle.Secondary,
+              guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
           new ButtonBuilder()
             .setCustomId("dailyMsg")
@@ -144,9 +138,7 @@ const button: Button = {
               ),
             )
             .setStyle(
-              guildDb.dailyMsg
-                ? ButtonStyle.Success
-                : ButtonStyle.Secondary,
+              guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
         );
 

@@ -12,7 +12,7 @@ import { captureException } from "@sentry/node";
 import axios from "axios";
 import Paginator from "../../util/pagination";
 import "dotenv/config";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../../interfaces";
 import {
   generateWYR,
   generateNHIE,
@@ -126,11 +126,12 @@ const command: ChatInputCommand = {
       switch (interaction.options.getSubcommand()) {
         case "add":
           const option =
-            interaction?.options?.getString("options")?.toLowerCase() || "";
+              interaction?.options?.getString("options")?.toLowerCase() || "",
+            premium = await client.premium.check(interaction.guildId);
           message = interaction.options.getString("message");
 
           if (
-            !(await client.premium.check(interaction.guildId)) &&
+            !premium.result &&
             guildDb.customMessages.filter((e) => e.type === option).length + 1 >
               100
           ) {
@@ -693,7 +694,7 @@ const command: ChatInputCommand = {
                 response.data.neverhaveiever?.length === 0 ||
                 response.data.truth?.length === 0 ||
                 response.data.dare?.length === 0 ||
-                response.data.wwyd?.length === 0 
+                response.data.wwyd?.length === 0
               ) {
                 interaction.editReply({
                   options: {

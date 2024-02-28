@@ -5,7 +5,7 @@ import {
   ButtonStyle,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../models";
+import { Button } from "../interfaces";
 
 const modalObject = {
   title: "Daily Post Time",
@@ -78,9 +78,7 @@ const button: Button = {
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.dailyRole",
-              )}: ${
-                guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"
-              }\n` +
+              )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.dailyType",

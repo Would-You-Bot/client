@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../models";
+import { ChatInputCommand } from "../../interfaces";
 import { getWwyd } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {

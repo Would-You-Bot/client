@@ -35,9 +35,7 @@ export interface IGuildModel {
   customTypes: string;
   debugMode: boolean;
   lastUsageTimestamp: number;
-  premium: boolean;
-  webhookName: string;
-  webhookURL: string;
+  premium: number;
 }
 
 const guildProfileSchema = new Schema(
@@ -144,17 +142,9 @@ const guildProfileSchema = new Schema(
       default: 0,
     },
     premium: {
-      type: Boolean,
-      default: false,
+      type: Number,
+      default: 0,
     },
-    webhookName: {
-      type: String,
-      default: false,
-    },
-    webhookURL: {
-      type: String,
-      default: false,
-    }
   },
   { timestamps: true },
 ); 
