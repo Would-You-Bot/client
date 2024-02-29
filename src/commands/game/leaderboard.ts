@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import { ChatInputCommand } from "../../models";
 import Paginator from "../../util/pagination";
 import { UserModel } from "../../util/Models/userModel";
 

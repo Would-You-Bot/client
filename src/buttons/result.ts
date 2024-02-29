@@ -1,5 +1,5 @@
 import { EmbedBuilder } from "discord.js";
-import { Button } from "../interfaces";
+import { Button } from "../models";
 import Paginator from "../util/pagination";
 
 const button: Button = {

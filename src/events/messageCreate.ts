@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import WouldYou from "../util/wouldYou";
-import { Event } from "../interfaces/event";
+import { Event } from "../models/event";
 const Cooldown = new Set();
 
 const event: Event = {

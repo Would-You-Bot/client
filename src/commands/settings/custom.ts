@@ -12,7 +12,7 @@ import { captureException } from "@sentry/node";
 import axios from "axios";
 import Paginator from "../../util/pagination";
 import "dotenv/config";
-import { ChatInputCommand } from "../../interfaces";
+import { ChatInputCommand } from "../../models";
 import {
   generateWYR,
   generateNHIE,

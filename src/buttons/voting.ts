@@ -1,4 +1,4 @@
-import { Button } from "../interfaces";
+import { Button } from "../models";
 
 const button: Button = {
   name: "voting",

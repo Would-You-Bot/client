@@ -6,7 +6,7 @@ import {
 import "dotenv/config";
 import { captureException } from "@sentry/node";
 import WouldYou from "../util/wouldYou";
-import { Event } from "../interfaces";
+import { Event } from "../models";
 import { getWouldYouRather, getWwyd } from "../util/Functions/jsonImport";
 
 const event: Event = {

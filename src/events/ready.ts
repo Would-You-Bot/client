@@ -5,7 +5,7 @@ import { white, gray, green, red } from "chalk-advanced";
 import { captureException } from "@sentry/node";
 import WouldYou from "../util/wouldYou";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
-import { Event } from "../interfaces/event";
+import { Event } from "../models/event";
 import axios from "axios";
 import { getInfo } from "discord-hybrid-sharding";
 
@@ -49,7 +49,6 @@ const event: Event = {
                 console.log(err);
               });
             };
-            postStats();
             setInterval(postStats, 3600000);
             // If the bot is in production mode it will load slash commands for all guilds
             if (client.user?.id) {
