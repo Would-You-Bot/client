@@ -53,8 +53,6 @@ export default class DailyMessage {
                   channel.ack(message);
                 }
               } catch (error) {
-                console.log("something different");
-                console.log(error);
                 this.handleReject(channel, (error as Error).message, message);
                 this.captureError(error as Error, QUEUE);
               }
