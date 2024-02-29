@@ -16,7 +16,6 @@ export default class DailyMessage {
    * Start the daily message Schedule
    */
   async listen() {
-    console.log(this.client.cluster.count)
     const URL = process.env.RABBITMQ_URL || "fallback";
     const connection = await amqplib.connect(URL);
       let QUEUE = `cluster-${this.client.cluster.id}`;
