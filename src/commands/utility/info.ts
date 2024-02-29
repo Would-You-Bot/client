@@ -78,7 +78,7 @@ const command: ChatInputCommand = {
       .setThumbnail(client.user?.displayAvatarURL() || null)
       .setFooter({
         text:
-          interaction.user.tag + " Shard #" + interaction?.guild?.shardId ?? 0 + " Cluster # " + client.cluster.id,
+          interaction.user.tag + " Shard #" + interaction?.guild?.shardId + " Cluster # " + client.cluster.id,
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
