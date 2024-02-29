@@ -43,7 +43,7 @@ const command: ChatInputCommand = {
         {
           name: "Developers 🐧",
           value:
-            "```@dominikdev\n@forgetfulskybro\n@finndev\n@podskio\n@gersti```",
+            "```@dominikdev\n@forgetfulskybro\n@536b656c6c79\n@sans._.\n@gersti```",
           inline: false,
         },
         {
@@ -78,7 +78,7 @@ const command: ChatInputCommand = {
       .setThumbnail(client.user?.displayAvatarURL() || null)
       .setFooter({
         text:
-          interaction.user.tag + " Shard #" + interaction?.guild?.shardId ?? 0,
+          interaction.user.tag + " Shard #" + interaction?.guild?.shardId ?? 0 + " Cluster # " + client.cluster.id,
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
