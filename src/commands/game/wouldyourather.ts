@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../interfaces";
+import { ChatInputCommand } from "../../models";
 import { getWouldYouRather } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 

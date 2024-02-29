@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../util/shuffle";
-import { Button } from "../interfaces";
+import { Button } from "../models";
 import { getDare } from "../util/Functions/jsonImport";
 
 const button: Button = {

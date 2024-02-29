@@ -1,5 +1,5 @@
 import { ButtonInteraction, Interaction } from "discord.js";
-import { Event } from "../interfaces";
+import { Event } from "../models";
 import { UserModel } from "../util/Models/userModel";
 import WouldYou from "../util/wouldYou";
 import { captureException } from "@sentry/node";

@@ -5,7 +5,7 @@ import {
   MessageActionRowComponentBuilder,
   ButtonStyle,
 } from "discord.js";
-import { Button } from "../interfaces";
+import { Button } from "../models";
 
 const button: Button = {
   name: "wycustom_remove",
