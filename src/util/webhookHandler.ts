@@ -186,6 +186,7 @@ export default class WebhookHandler {
         webhookId: webhook.id,
         webhookToken: cryptr.encrypt(webhook.token),
         lastUsageTimestamp: Date.now(),
+        guildId: guildId
       });
       if (doc) {
         return { success: true, result: doc };

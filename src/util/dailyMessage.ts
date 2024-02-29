@@ -87,7 +87,7 @@ export default class DailyMessage {
       return {
         success: false,
         error: new Error(
-          `Wrong cluster: ${process.pid} - ${properties.messageId}`,
+          `Guild ID not in cache: PID:${process.pid} - ${properties.messageId}`,
         ),
       };
     }
