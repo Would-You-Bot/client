@@ -1,7 +1,7 @@
 import { Collection } from "discord.js";
 import { readdirSync } from "fs";
 import path from "path";
-import { Command, Event, Interaction } from "../../interfaces";
+import { Command, Event, Interaction } from "../../models";
 
 export async function fileToCollection<
   Type extends Command | Interaction | Event,

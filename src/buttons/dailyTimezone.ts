@@ -5,7 +5,7 @@ import {
   ButtonStyle,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { Button } from "../interfaces";
+import { Button } from "../models";
 
 const modalObject = {
   title: "Daily Message Timezone",

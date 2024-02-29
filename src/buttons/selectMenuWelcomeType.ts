@@ -4,7 +4,7 @@ import {
   EmbedBuilder,
   ButtonStyle,
 } from "discord.js";
-import { Button } from "../interfaces";
+import { Button } from "../models";
 
 const button: Button = {
   name: "selectMenuWelcomeType",

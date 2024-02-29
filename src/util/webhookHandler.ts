@@ -185,7 +185,8 @@ export default class WebhookHandler {
         channelId: channelId,
         webhookId: webhook.id,
         webhookToken: cryptr.encrypt(webhook.token),
-        lastUsageTimestamp: Date.now()
+        guildId: guildId,
+        lastUsageTimestamp: Date.now(),
       });
       if (doc) {
         return { success: true, result: doc };
@@ -202,7 +203,7 @@ export default class WebhookHandler {
   private async createThread(
     message: IQueueMessage,
     apiReturnValue: APIMessage,
-  ): Promise<Result<any>> {
+  ): Promise<Result<string>> {
     const date = new Date();
     try {
       await this.client.rest.post(

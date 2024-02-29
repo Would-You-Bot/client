@@ -25,6 +25,7 @@ export default class DailyMessage {
         await channel.assertQueue(QUEUE, {
           durable: false,
           deadLetterExchange: "DLX",
+
           deadLetterRoutingKey: "nVZzaJrwJ9",
         });
         channel.consume(QUEUE, async (message) => {
@@ -129,7 +130,7 @@ export default class DailyMessage {
     channelId: string,
   ): Promise<Result<Channel>> {
     try {
-      let channel = await this.client.channels.fetch(channelId);
+      const channel = await this.client.channels.fetch(channelId);
       if (channel) return { success: true, result: channel };
       else
         return { success: false, error: new Error("fetched channel is null") };
@@ -209,7 +210,7 @@ export default class DailyMessage {
     reason: string,
     message: amqplib.Message,
   ) {
-    const headers = { rejectionCause: reason, cluster: this.client.cluster.id };
+    const headers = { rejectionCause: reason };
     channel.publish("DLX", "key", message.content, {
       headers: headers,
       messageId: message.properties.messageId,
