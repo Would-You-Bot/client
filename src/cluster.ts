@@ -3,8 +3,8 @@ import { ClusterManager } from "discord-hybrid-sharding";
 import net from "node:net";
 
 const manager = new ClusterManager(`${__dirname}/index.js`, {
-  shardsPerClusters: 3,
-  totalShards: 12,
+  shardsPerClusters: 11,
+  totalShards: "auto",
   mode: "process",
   token: process.env.TOKEN,
 });
