@@ -1,4 +1,4 @@
-import { Event } from "../models/event";
+import { Event } from "../interfaces/event";
 import WouldYou from "../util/wouldYou";
 import { white, gray, green } from "chalk-advanced";
 
