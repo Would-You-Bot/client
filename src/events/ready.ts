@@ -49,7 +49,6 @@ const event: Event = {
                 console.log(err);
               });
             };
-            postStats();
             setInterval(postStats, 3600000);
             // If the bot is in production mode it will load slash commands for all guilds
             if (client.user?.id) {
