@@ -13,9 +13,11 @@ const event: Event = {
         userID: interaction.user?.id,
       });
     }
-    
+
     if (interaction.isChatInputCommand()) {
-      console.log(`[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) COMMAND ${interaction.commandName}`)
+      console.log(
+        `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) COMMAND ${interaction.commandName}`,
+      );
       const command = client.commands.get(interaction.commandName);
       if (!interaction.guild) {
         if (command?.requireGuild) {
@@ -69,7 +71,9 @@ const event: Event = {
         return;
       });
     } else if (interaction.isButton()) {
-      console.log(`[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) CLICKED ${interaction.customId}`)
+      console.log(
+        `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) CLICKED ${interaction.customId}`,
+      );
       const guildDb = await client.database.getGuild(
         interaction.guildId as string,
         true,
@@ -319,7 +323,9 @@ const event: Event = {
       interaction.isMentionableSelectMenu() ||
       interaction.isChannelSelectMenu()
     ) {
-      console.log(`[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) MENU ${interaction.customId}`)
+      console.log(
+        `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) MENU ${interaction.customId}`,
+      );
       const guildDb = await client.database.getGuild(
         interaction.guildId as string,
         true,
