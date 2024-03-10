@@ -11,7 +11,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("language")
-    .setDescription("Change the language for the current guild")
+    .setDescription("Changes the language for your server")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Ändere die Sprache für den aktuellen Server",
@@ -28,6 +28,7 @@ const command: ChatInputCommand = {
           { name: "🇺🇸 English", value: "english" },
           { name: "🇪🇸 Español", value: "spanish" },
           { name: "🇫🇷 Français", value: "french" },
+         // { name: "🇮🇹 Italiano", value: "italian" },
         ),
     ),
 

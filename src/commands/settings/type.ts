@@ -11,29 +11,29 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("type")
-    .setDescription("Changes the type of messages that will be used.")
+    .setDescription("Changes the kind of questions you get")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Ändert den Typ der Nachrichten, die verwendet werden.",
-      "es-ES": "Cambia el tipo de mensajes que se utilizarán.",
-      fr: "Modifie le type de messages qui seront utilisés.",
+      de: "Ändert den Typ der Nachrichten, die verwendet werden",
+      "es-ES": "Cambia el tipo de mensajes que se utilizarán",
+      fr: "Modifie le type de messages qui seront utilisés",
     })
     .addSubcommand((subcommand) =>
       subcommand
         .setName("regular")
-        .setDescription("This changes it to use only default messages."),
+        .setDescription("This changes it to use only default messages"),
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("mixed")
         .setDescription(
-          "This changes it to use both custom & default messages.",
+          "This changes it to use both custom & default messages",
         ),
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("custom")
-        .setDescription("This changes it to use only custom messages."),
+        .setDescription("This changes it to use only custom messages"),
     ),
 
   /**

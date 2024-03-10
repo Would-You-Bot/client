@@ -15,10 +15,10 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("neverhaveiever")
-    .setDescription("Get a never have I ever message.")
+    .setDescription("Gives you a 'Never Have I Ever' question")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Bekomme eine nie habe ich jemals Nachricht.",
+      de: "Bekomme eine nie habe ich jemals Nachricht",
       "es-ES": "Consigue un mensaje Nunca he tenido",
       fr: "Afficher une question que je n'ai jamais posée",
     }),

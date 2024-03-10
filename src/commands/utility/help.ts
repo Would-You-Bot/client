@@ -12,12 +12,12 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("help")
-    .setDescription("Get help with the Would You Discord bot")
+    .setDescription("Shows a list of all the 'Would You' commands")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Eine Liste aller Befehle",
-      "es-ES": "Una lista de todos los comandos",
-      fr: "Une liste de chaque commande",
+      de: "Zeigt eine Liste aller Befehle an",
+      "es-ES": "Muestra una lista de cada comando",
+      fr: "Affiche une liste de toutes les commandes",
     }),
   /**
    * @param {CommandInteraction} interaction

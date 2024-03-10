@@ -18,7 +18,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("higherlower")
-    .setDescription("Starts the higher or lower game")
+    .setDescription("Starts a game of 'Higher or Lower'")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Starte das Higher or Lower spiel",

@@ -6,7 +6,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("guide")
-    .setDescription("guide to use the bot and increase activity")
+    .setDescription("Shows you how to use the bot")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Anleitung, um den Bot zu verwenden und die Aktivität zu erhöhen",

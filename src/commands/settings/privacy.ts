@@ -14,12 +14,12 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("privacy")
-    .setDescription("Privacy settings")
+    .setDescription("Changes your privacy settings")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Lorem ipsum",
-      "es-ES": "Lorem ipsum",
-      fr: "Lorem ipsum",
+      de: "Ändert deine Datenschutzeinstellungen",
+      "es-ES": "Cambia tu configuración de privacidad",
+      fr: "Modifie vos paramètres de confidentialité",
     }),
 
   /**

@@ -14,12 +14,12 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("wouldyourather")
-    .setDescription("Get a would you rather question.")
+    .setDescription("Gives you a 'Would You Rather' question")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Erhalte eine Würdest du eher Frage.",
+      de: "Erhalte eine Würdest du eher Frage",
       "es-ES": "Obtiene une pregunta ¿Qué prefieres?",
-      fr: "Obtenez une question préférez-vous.",
+      fr: "Obtenez une question préférez-vous",
     }),
 
   /**

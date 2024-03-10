@@ -16,7 +16,7 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("random")
     .setDescription(
-      "Post a random truth or dare question that you need to answer",
+      "Gives you a random truth or dare question to answer",
     )
     .setDMPermission(false)
     .setDescriptionLocalizations({

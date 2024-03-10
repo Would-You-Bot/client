@@ -15,7 +15,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("settings")
-    .setDescription("Change settings for Daily Messages and Welcomes")
+    .setDescription("Lets you change different bot settings")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Ändere Einstellungen für täglichen Nachrichten und Willkommensnachrichten.",

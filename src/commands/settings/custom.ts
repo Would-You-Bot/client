@@ -34,11 +34,11 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("custom")
-    .setDescription("Adds custom WouldYou messages.")
+    .setDescription("Lets you manage your own questions")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Fügt eigene WouldYou Fragen hinzu.",
-      "es-ES": "Añade mensajes Would You personalizados.",
+      de: "Fügt eigene WouldYou Fragen hinzu",
+      "es-ES": "Añade mensajes Would You personalizados",
       fr: "Ajoute des messages personnalisés au bot",
     })
     .addSubcommand((subcommand) =>

@@ -15,10 +15,10 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("dare")
-    .setDescription("Posts a random dare that you need to fulfill")
+    .setDescription("Gives you a random dare to answer")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Postet eine zufällige Pflicht, die du erfüllen musst",
+      de: "Gibt dir eine zufällige pflicht Aufgabe, die du beantworten musst",
       "es-ES": "Publica un reto aleatorio que tienes que cumplir",
       fr: "Publie un défi aléatoire que tu dois relever",
     }),

@@ -15,7 +15,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("whatwouldyoudo")
-    .setDescription("What would you do in this situation")
+    .setDescription("Gives you a 'What Would You Do' question")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Was würdest du in dieser Situation tun",

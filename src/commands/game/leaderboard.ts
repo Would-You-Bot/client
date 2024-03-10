@@ -7,7 +7,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("leaderboard")
-    .setDescription("Displays the leaderboard for a game")
+    .setDescription("Shows the top scores for a game")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Zeigt die Rangliste für ein Spiel an",
