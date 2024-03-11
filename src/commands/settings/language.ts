@@ -28,7 +28,7 @@ const command: ChatInputCommand = {
           { name: "🇺🇸 English", value: "english" },
           { name: "🇪🇸 Español", value: "spanish" },
           { name: "🇫🇷 Français", value: "french" },
-         // { name: "🇮🇹 Italiano", value: "italian" },
+          // { name: "🇮🇹 Italiano", value: "italian" },
         ),
     ),
 
