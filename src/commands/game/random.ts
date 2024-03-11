@@ -15,9 +15,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("random")
-    .setDescription(
-      "Gives you a random truth or dare question to answer",
-    )
+    .setDescription("Gives you a random truth or dare question to answer")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Posted eine zufällig Wahrheits- oder Pflichtfrage, die du beantworten musst",
