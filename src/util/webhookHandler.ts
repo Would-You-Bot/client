@@ -1,17 +1,26 @@
+import Cryptr from "cryptr";
 import {
-  PermissionFlagsBits,
-  WebhookClient,
-  Channel,
   APIMessage,
+  NewsChannel,
+  PermissionFlagsBits,
+  StageChannel,
+  TextChannel,
+  VoiceChannel,
+  WebhookClient,
+  WebhookMessageCreateOptions,
 } from "discord.js";
-import { captureException } from "@sentry/node";
 import { Document, Model } from "mongoose";
+import { IQueueMessage, Result } from "../global";
 import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
 import WouldYou from "./wouldYou";
-import Cryptr from "cryptr";
-import { IQueueMessage, Result } from "../global";
 
 const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string);
+
+export type WebHookCompatibleChannel =
+  | NewsChannel
+  | StageChannel
+  | TextChannel
+  | VoiceChannel;
 
 export default class WebhookHandler {
   private webhookModel: Model<IWebhookCache>;
@@ -25,9 +34,10 @@ export default class WebhookHandler {
     this.client = client;
   }
   async handleWebhook(
-    channel: Channel,
-    content: any,
+    channel: WebHookCompatibleChannel,
+    content: WebhookMessageCreateOptions,
     message: IQueueMessage,
+    overwriteProfile: boolean,
     thread?: boolean,
     pin?: boolean,
   ): Promise<Result<any>> {
@@ -37,7 +47,11 @@ export default class WebhookHandler {
         token: cryptr.decrypt(message.webhook.token),
       });
       try {
-        const result = await this.send(webhookClient, content);
+        const result = await this.send(
+          webhookClient,
+          content,
+          overwriteProfile,
+        );
         if (result.success) {
           if (message.thread) {
             const thread = await this.createThread(message, result.result);
@@ -51,7 +65,11 @@ export default class WebhookHandler {
       } catch (error) {
         const newWebhook = await this.webhookFallBack(channel, message);
         if (newWebhook.success) {
-          const result = await this.send(newWebhook.result, content);
+          const result = await this.send(
+            newWebhook.result,
+            content,
+            overwriteProfile,
+          );
           if (result.success) {
             if (message.thread) {
               const thread = await this.createThread(message, result.result);
@@ -69,7 +87,11 @@ export default class WebhookHandler {
     } else {
       const newWebhook = await this.webhookFallBack(channel, message);
       if (newWebhook.success) {
-        const result = await this.send(newWebhook.result, content);
+        const result = await this.send(
+          newWebhook.result,
+          content,
+          overwriteProfile,
+        );
         if (result.success) {
           if (message.thread) {
             const thread = await this.createThread(message, result.result);
@@ -87,8 +109,23 @@ export default class WebhookHandler {
   }
   private async send(
     webhook: WebhookClient,
-    content: any,
+    content: WebhookMessageCreateOptions,
+    /**
+     * If true, it will overwrite the webhook to the bot's name and avatar.
+     */
+    overwriteProfile: boolean,
   ): Promise<Result<APIMessage>> {
+    if (overwriteProfile) {
+      // Edit these if bot name/avatar ever changes
+
+      await webhook.edit({
+        name: "Would You",
+        avatar:
+          "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96",
+        reason: "Custom WebHook name and avatar are a premium feature!",
+      });
+    }
+
     const result = await webhook.send(content);
     if (result) return { success: true, result: result };
     return {
@@ -97,14 +134,14 @@ export default class WebhookHandler {
     };
   }
   private async webhookFallBack(
-    channel: any,
+    channel: WebHookCompatibleChannel,
     message: IQueueMessage,
   ): Promise<Result<WebhookClient>> {
     const webhook = await this.createWebhook(
       channel,
+      "Webhook token unavailable, creating new webhook",
       "Would You",
       this.client.user?.avatarURL({ extension: "png" }) as string,
-      "Webhook token unavailable, creating new webhook",
     );
     if (webhook.success) {
       const result = await this.updateCache(
@@ -122,14 +159,20 @@ export default class WebhookHandler {
     }
   }
   private async createWebhook(
-    channel: any,
-    name: string,
-    avatar: string,
+    channel: WebHookCompatibleChannel,
     reason: string,
+    fallbackName?: string,
+    fallbackAvatarURL?: string,
   ): Promise<Result<WebhookClient>> {
+    if (!channel.guild.members.me)
+      return {
+        success: false,
+        error: new Error("I don't exist in the guild!"),
+      };
+
     if (
       !channel
-        .permissionsFor(this.client.user)
+        .permissionsFor(channel.guild.members.me)
         ?.has([PermissionFlagsBits.ManageWebhooks])
     )
       return {
@@ -137,18 +180,26 @@ export default class WebhookHandler {
         error: new Error("No permissions to create a webhook"),
       };
     try {
+      // Edit these if bot name/avatar ever changes
+
       const webhook = await channel.createWebhook({
-        name: name ?? "Would You",
-        avatar: avatar ?? this.client.user?.displayAvatarURL(),
+        name: this.client.user?.username || fallbackName || "Would You",
+        avatar:
+          this.client.user?.displayAvatarURL() ||
+          fallbackAvatarURL ||
+          "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96",
         reason: reason ?? "Creating a webhook for the daily message system",
       });
-      return {
-        success: true,
-        result: new WebhookClient({
-          id: webhook.id,
-          token: webhook.token,
-        }),
-      };
+
+      if (webhook.token)
+        return {
+          success: true,
+          result: new WebhookClient({
+            id: webhook.id,
+            token: webhook.token,
+          }),
+        };
+      else throw new Error("Webhook token is null");
     } catch (error) {
       return { success: false, error: error as Error };
     }

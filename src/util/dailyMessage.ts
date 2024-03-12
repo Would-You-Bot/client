@@ -1,9 +1,10 @@
-import { Channel, EmbedBuilder, bold } from "discord.js";
+import { Channel, ChannelType, EmbedBuilder, bold } from "discord.js";
 import WouldYou from "./wouldYou";
 import amqplib, { MessageProperties } from "amqplib";
 import { IQueueMessage, Result } from "../global";
 import QueueError from "./Error/QueueError";
 import { Scope, captureException, withScope } from "@sentry/node";
+import { WebHookCompatibleChannel } from "./webhookHandler";
 
 export default class DailyMessage {
   private client: WouldYou;
@@ -115,6 +116,7 @@ export default class DailyMessage {
     }
     const result = await this.sendWebhook(channel.result, embed, message);
     if (result.success) {
+      // console.log("Sent webhook, first try");
       return { success: true, result: "I have send the webhook" };
     } else {
       return { success: false, error: result.error };
@@ -128,44 +130,59 @@ export default class DailyMessage {
    */
   private async getDailyMessageChannel(
     channelId: string,
-  ): Promise<Result<Channel>> {
+  ): Promise<Result<WebHookCompatibleChannel>> {
     try {
-      const channel = await this.client.channels.fetch(channelId);
-      if (channel) return { success: true, result: channel };
-      else
+      let channel = await this.client.channels.fetch(channelId);
+
+      if (!channel)
         return { success: false, error: new Error("fetched channel is null") };
+
+      // Ideally this should be checked for type compatibility
+      // but it should work anyway
+      channel = channel as WebHookCompatibleChannel;
+
+      return { success: true, result: channel };
     } catch (error) {
       return { success: false, error: error as Error };
     }
   }
   /**
    * @description Send the embed to the webhookhandler
-   * @param channel
+   * @param WebHookCompatibleChannel
    * @param embed
    * @param guild
    * @returns Promise<void>
    * @author Nidrux
    */
   private async sendWebhook(
-    channel: Channel,
+    channel: WebHookCompatibleChannel,
     embed: EmbedBuilder,
     message: IQueueMessage,
   ): Promise<Result<string>> {
+    const premium: boolean = (await this.client.premium.check(channel.guildId))
+      .result;
+
     try {
       const result = await this.client.webhookHandler.handleWebhook(
         channel,
         {
           embeds: [embed],
-          content: message.role ? `<@&${message.role}>` : null,
-          avatarURL:
-            "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96", // Make sure to update this if you ever change the link thx <3 // @SANS USE THIS TO SET AVATAR <3
-          username: "Would You", // @SANS USE THIS TO SET USERNAME <3
+          content: message.role ? `<@&${message.role}>` : undefined,
+          // avatarURL:
+          //   // Change fallback url in case bot pfp changes
+          //   this.client.user?.displayAvatarURL({ forceStatic: false }) ||
+          //   "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96",
+          // // Change fallback username in case bot username changes (in like 12 thousand years xD)
+          // username: this.client.user?.username || "Would You", // Not sure if <User>#username is appropiate, might be better to use <User>#displayName
         },
         message,
+        !premium,
         message.thread,
       );
       return result;
     } catch (err) {
+      console.log("error handling webhook");
+      console.error(err);
       return { success: false, error: err as Error };
     }
   }
