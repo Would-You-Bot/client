@@ -16,7 +16,7 @@ export default class DailyMessage {
   async listen() {
     console.log(this.client.cluster.count);
     const URL = process.env.RABBITMQ_URL || "fallback";
-    const connection = await amqplib.connect(URL);
+    const connection = await amqplib.connect(URL, { clientProperties: { connection_name: `client-cluster-${this.client.cluster.id}` } });
     let QUEUE = `cluster-${this.client.cluster.id}`;
     if (connection) {
       const channel = await connection.createChannel();
@@ -25,7 +25,6 @@ export default class DailyMessage {
         await channel.assertQueue(QUEUE, {
           durable: false,
           deadLetterExchange: "DLX",
-
           deadLetterRoutingKey: "nVZzaJrwJ9",
         });
         channel.consume(QUEUE, async (message) => {
@@ -74,6 +73,7 @@ export default class DailyMessage {
     message: IQueueMessage,
     properties: MessageProperties,
   ): Promise<Result<string>> {
+    console.log(message)
     if (message.channelId == null) {
       return {
         success: false,
@@ -210,7 +210,7 @@ export default class DailyMessage {
     reason: string,
     message: amqplib.Message,
   ) {
-    const headers = { rejectionCause: reason };
+    const headers = { rejectionCause: reason, cluster: this.client.cluster.id};
     channel.publish("DLX", "key", message.content, {
       headers: headers,
       messageId: message.properties.messageId,
