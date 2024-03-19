@@ -10,14 +10,24 @@ import { UserModel } from "../util/Models/userModel";
 const button: Button = {
   name: "paginateNext",
   execute: async (interaction, client, guildDb) => {
+    console.log(
+      client.paginate,
+      `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+    );
     let type: any = null;
     let paginate = client.paginate.get(
-      `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+      `${interaction.user.id}-${interaction.message.interaction?.id}`,
     );
 
     if (!paginate)
       (paginate = client.paginate.get(
-        `${interaction.user.id}-leaderboard-${interaction.message.reference?.messageId}`,
+        `${interaction.user.id}-reference-${interaction.message.reference?.messageId}`,
+      )),
+        (type = "reference");
+
+    if (!paginate)
+      (paginate = client.paginate.get(
+        `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
       )),
         (type = "leaderboard");
 
@@ -50,26 +60,35 @@ const button: Button = {
     clearTimeout(paginate.timeout);
     const time = setTimeout(() => {
       if (
+        type === "leaderboard" &&
+        client.paginate.get(
+          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+        )
+      ) {
+        client.paginate.delete(
+          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+        );
+      } else if (
+        type === "reference" &&
+        client.paginate.get(
+          `${interaction.user.id}-reference-${interaction.message.reference?.messageId}`,
+        )
+      ) {
+        client.paginate.delete(
+          `${interaction.user.id}-reference-${interaction.message.reference?.messageId}`,
+        );
+      } else if (
         type === "custom" &&
         client.paginate.get(`${interaction.user.id}-custom`)
       ) {
         client.paginate.delete(`${interaction.user.id}-custom`);
       } else if (
-        type === "leaderboard" &&
         client.paginate.get(
-          `${interaction.user.id}-leaderboard-${interaction.message.reference?.messageId}`,
+          `${interaction.user.id}-${interaction.message.interaction?.id}`,
         )
       ) {
         client.paginate.delete(
-          `${interaction.user.id}-leaderboard-${interaction.message.reference?.messageId}`,
-        );
-      } else if (
-        client.paginate.get(
-          `${interaction.user.id}-${interaction.message.reference?.messageId}`,
-        )
-      ) {
-        client.paginate.delete(
-          `${interaction.user.id}-${interaction.message.reference?.messageId}`,
+          `${interaction.user.id}-${interaction.message.interaction?.id}`,
         );
       }
     }, paginate.time);

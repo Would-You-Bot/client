@@ -97,16 +97,18 @@ export default class Paginator {
       ephemeral: true,
     });
 
+    console.log(
+      message.id,
+      message.interaction?.message?.id,
+    );
     this.client.paginate.set(
-      `${this.user}-${type || message.interaction.message.id}${
-        type === "leaderboard" ? `-${message.interaction.message.id}` : ""
-      }`,
+      `${this.user}-${type || message.id}${type === "leaderboard" ? `-${message.id}` : ""}${type === "reference" ? `-${message.interaction?.message?.id}` : ""}`,
       {
         countedPages: [],
         pages: this.pages,
         page: this.page,
-        message: message.interaction.message.id,
-        channel: interaction.channel.id,
+        message: message.id,
+        channel: interaction.channelId,
         timeout: null,
         time: this.timeout,
       },
@@ -115,21 +117,21 @@ export default class Paginator {
     const time = setTimeout(() => {
       if (
         this.client.paginate.get(
-          `${this.user}-${type || message.interaction.message.id}${
-            type === "leaderboard" ? `-${message.interaction.message.id}` : ""
-          }`,
+          `${this.user}-${type || message.id}${
+            type === "leaderboard" ? `-${message.id}` : ""
+          }${type === "reference" ? `-${interaction.message.reference?.messageId}` : ""}`,
         )
       )
         this.client.paginate.delete(
-          `${this.user}-${type || message.interaction.message.id}${
-            type === "leaderboard" ? `-${message.interaction.message.id}` : ""
-          }`,
+          `${this.user}-${type || message.id}${
+            type === "leaderboard" ? `-${message.id}` : ""
+          }${type === "reference" ? `-${interaction.message.reference?.messageId}` : ""}`,
         );
     }, this.timeout);
     this.client.paginate.get(
-      `${this.user}-${type || message.interaction.message.id}${
-        type === "leaderboard" ? `-${message.interaction.message.id}` : ""
-      }`,
+      `${this.user}-${type || message.id}${
+        type === "leaderboard" ? `-${message.id}` : ""
+      }${type === "reference" ? `-${interaction.message.reference?.messageId}` : ""}`,
     ).timeout = time;
   }
 }

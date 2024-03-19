@@ -17,12 +17,12 @@ const button: Button = {
     }
 
     let paginate = client.paginate.get(
-      `${interaction.user.id}-${interaction.message.interaction?.id}`,
+      `${interaction.user.id}-reference`,
     );
     if (paginate) {
       clearTimeout(paginate.timeout);
       client.paginate.delete(
-        `${interaction.user.id}-${interaction.message.interaction?.id}`,
+        `${interaction.user.id}-reference`,
       );
     }
 
@@ -98,7 +98,7 @@ const button: Button = {
       ),
     );
 
-    return await page.start(interaction, null);
+    return await page.start(interaction, "reference");
   },
 };
 
