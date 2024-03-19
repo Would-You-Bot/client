@@ -19,6 +19,7 @@ const event: Event = {
         `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) COMMAND ${interaction.commandName}`,
       );
       const command = client.commands.get(interaction.commandName);
+      
       if (!interaction.guild) {
         if (command?.requireGuild) {
           interaction.reply({
@@ -62,7 +63,7 @@ const event: Event = {
         );
       }
 
-      await command.execute(interaction, client, guildDb).catch((err) => {
+      await command.execute(interaction, client, interaction.guild ? guildDb : null).catch((err) => {
         captureException(err);
         interaction.reply({
           content: "An error occurred while trying to execute that command.",
