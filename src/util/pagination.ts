@@ -41,8 +41,7 @@ export default class Paginator {
   }
 
   async start(interaction: any, type: string | null) {
-    if (!interaction || !interaction.channel || !this.pages.length) return;
-
+    if (!interaction || !interaction.channelId || !this.pages.length) return;
     let pFirst = new ButtonBuilder()
       .setDisabled(true)
       .setCustomId("paginateFirst")
@@ -99,14 +98,14 @@ export default class Paginator {
     });
 
     this.client.paginate.set(
-      `${this.user}-${type || message.id}${
-        type === "leaderboard" ? `-${message.id}` : ""
+      `${this.user}-${type || message.interaction.message.id}${
+        type === "leaderboard" ? `-${message.interaction.message.id}` : ""
       }`,
       {
         countedPages: [],
         pages: this.pages,
         page: this.page,
-        message: message.id,
+        message: message.interaction.message.id,
         channel: interaction.channel.id,
         timeout: null,
         time: this.timeout,
@@ -116,20 +115,20 @@ export default class Paginator {
     const time = setTimeout(() => {
       if (
         this.client.paginate.get(
-          `${this.user}-${type || message.id}${
-            type === "leaderboard" ? `-${message.id}` : ""
+          `${this.user}-${type || message.interaction.message.id}${
+            type === "leaderboard" ? `-${message.interaction.message.id}` : ""
           }`,
         )
       )
         this.client.paginate.delete(
-          `${this.user}-${type || message.id}${
-            type === "leaderboard" ? `-${message.id}` : ""
+          `${this.user}-${type || message.interaction.message.id}${
+            type === "leaderboard" ? `-${message.interaction.message.id}` : ""
           }`,
         );
     }, this.timeout);
     this.client.paginate.get(
-      `${this.user}-${type || message.id}${
-        type === "leaderboard" ? `-${message.id}` : ""
+      `${this.user}-${type || message.interaction.message.id}${
+        type === "leaderboard" ? `-${message.interaction.message.id}` : ""
       }`,
     ).timeout = time;
   }

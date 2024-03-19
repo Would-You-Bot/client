@@ -12,12 +12,12 @@ const button: Button = {
   execute: async (interaction, client, guildDb) => {
     let type: any = null;
     let paginate = client.paginate.get(
-      `${interaction.user.id}-${interaction.message.interaction?.id}`,
+      `${interaction.user.id}-${interaction.message.reference?.messageId}`,
     );
 
     if (!paginate)
       (paginate = client.paginate.get(
-        `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+        `${interaction.user.id}-leaderboard-${interaction.message.reference?.messageId}`,
       )),
         (type = "leaderboard");
 
@@ -57,19 +57,19 @@ const button: Button = {
       } else if (
         type === "leaderboard" &&
         client.paginate.get(
-          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+          `${interaction.user.id}-leaderboard-${interaction.message.reference?.messageId}`,
         )
       ) {
         client.paginate.delete(
-          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+          `${interaction.user.id}-leaderboard-${interaction.message.reference?.messageId}`,
         );
       } else if (
         client.paginate.get(
-          `${interaction.user.id}-${interaction.message.interaction?.id}`,
+          `${interaction.user.id}-${interaction.message.reference?.messageId}`,
         )
       ) {
         client.paginate.delete(
-          `${interaction.user.id}-${interaction.message.interaction?.id}`,
+          `${interaction.user.id}-${interaction.message.reference?.messageId}`,
         );
       }
     }, paginate.time);

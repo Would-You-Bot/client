@@ -20,24 +20,24 @@ const event: Event = {
       );
       const command = client.commands.get(interaction.commandName);
       
-      if (!interaction.guild) {
-        if (command?.requireGuild) {
-          interaction.reply({
-            content:
-              "This command is only usable on a Discord Server!\nYou want to test Would You? Join the support server!\nhttps://discord.gg/vMyXAxEznS",
-            ephemeral: true,
-          });
-        }
-        return;
-      }
+      // if (!interaction.guild) {
+      //   if (command?.requireGuild) {
+      //     interaction.reply({
+      //       content:
+      //         "This command is only usable on a Discord Server!\nYou want to test Would You? Join the support server!\nhttps://discord.gg/vMyXAxEznS",
+      //       ephemeral: true,
+      //     });
+      //   }
+      //   return;
+      // }
 
       const guildDb = await client.database.getGuild(
-        interaction.guildId as string,
+        "857797178596524042",
         true,
       );
 
       client.database
-        .updateGuild(interaction.guildId as string, {
+        .updateGuild("857797178596524042", {
           lastUsageTimestamp: Date.now(),
         })
         .then(() => {});
@@ -63,7 +63,7 @@ const event: Event = {
         );
       }
 
-      await command.execute(interaction, client, interaction.guild ? guildDb : null).catch((err) => {
+      await command.execute(interaction, client, guildDb || null).catch((err) => {
         captureException(err);
         interaction.reply({
           content: "An error occurred while trying to execute that command.",
@@ -76,7 +76,7 @@ const event: Event = {
         `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) CLICKED ${interaction.customId}`,
       );
       const guildDb = await client.database.getGuild(
-        interaction.guildId as string,
+        "857797178596524042",
         true,
       );
       if (!guildDb) return;
@@ -194,13 +194,13 @@ const event: Event = {
 
       if (
         guildDb.replayBy === "Guild" &&
-        client.used.has(interaction.guildId)
+        client.used.has("596546848882163723")
       ) {
         interaction
           .reply({
             ephemeral: true,
             content: `You can use this button again <t:${Math.floor(
-              client.used.get(interaction.guildId) / 1000,
+              client.used.get("596546848882163723") / 1000,
             )}:R>!`,
           })
           .catch((err) => {
@@ -293,7 +293,7 @@ const event: Event = {
             }
           } else {
             client.used.set(
-              interaction.guildId,
+              "596546848882163723",
               Date.now() + guildDb.replayCooldown,
             );
 
@@ -328,7 +328,7 @@ const event: Event = {
         `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) MENU ${interaction.customId}`,
       );
       const guildDb = await client.database.getGuild(
-        interaction.guildId as string,
+        "596546848882163723" as string,
         true,
       );
       if (!guildDb) return;
