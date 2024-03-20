@@ -119,24 +119,27 @@ const buttonInteractionEvent: Event = {
     ];
 
     // Check if the button is excluded from cooldown
-    const isExcludedButton = excludedButtons.includes(interaction.customId);
+    // if (excludedButtons.includes(interaction.customId)) {
+    //   return button.execute(interaction, client, guildDb);
+    // }
 
+      const isExcludedButton = excludedButtons.includes(interaction.customId);
     if (
       guildDb.replayType === "Channels" &&
-      guildDb.replayChannels.find((x) => x.id === interaction.channel?.id) &&
+      guildDb.replayChannels.find((x) => x.id === interaction.channelId) &&
       !isExcludedButton
     ) {
-      cooldownKey = `${interaction.user?.id}-${interaction.channel?.id}`;
+      cooldownKey = `${interaction.user?.id}-${interaction.channelId}`;
       cooldown = Number(
-        guildDb.replayChannels.find((x) => x.id === interaction.channel?.id)
+        guildDb.replayChannels.find((x) => x.id === interaction.channelId)
           ?.cooldown,
       );
-    } else {
+    } else if (!isExcludedButton) {
       cooldownKey = interaction.user?.id;
       cooldown = Number(guildDb.replayCooldown);
     }
 
-    if (cooldownKey && cooldown) {
+    if (cooldownKey && cooldown!) {
       if (
         client.used.has(cooldownKey) &&
         client.used.get(cooldownKey)! > Date.now()
