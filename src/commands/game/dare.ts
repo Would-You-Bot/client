@@ -36,9 +36,7 @@ const command: ChatInputCommand = {
       fr: "fr_FR",
     };
 
-    console.log(
-      guildDb.language
-    );
+    console.log(guildDb.language);
     let Dare = await getDare(
       guildDb.language ||
         localeMap[interaction.locale as keyof typeof localeMap],

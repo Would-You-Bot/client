@@ -59,8 +59,8 @@ const commandInteractionEvent: Event = {
         });
         return;
       }
-      
-      await command// @ts-ignore
+
+      await command // @ts-ignore
         .execute(interaction, client, guildDb || null)
         .catch((err) => {
           captureException(err);

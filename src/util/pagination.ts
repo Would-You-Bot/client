@@ -97,10 +97,7 @@ export default class Paginator {
       ephemeral: true,
     });
 
-    console.log(
-      message.id,
-      message.interaction?.message?.id,
-    );
+    console.log(message.id, message.interaction?.message?.id);
     this.client.paginate.set(
       `${this.user}-${type || message.id}${type === "leaderboard" ? `-${message.id}` : ""}${type === "reference" ? `-${message.interaction?.message?.id}` : ""}`,
       {

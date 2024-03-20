@@ -5,7 +5,7 @@ import {
   ButtonStyle,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button} from "../../interfaces";
+import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "dailyMsg",

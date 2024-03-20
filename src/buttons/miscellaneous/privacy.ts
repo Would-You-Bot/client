@@ -1,4 +1,4 @@
-import { Button} from "../../interfaces";
+import { Button } from "../../interfaces";
 import {
   EmbedBuilder,
   ActionRowBuilder,

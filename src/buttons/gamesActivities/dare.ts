@@ -16,7 +16,7 @@ import { getDare } from "../../util/Functions/jsonImport";
 const button: Button = {
   name: "dare",
   execute: async (interaction: any, client, guildDb) => {
-    console.log(interaction)
+    console.log(interaction);
     if (interaction.guild) {
       if (interaction.channel.isThread()) {
         if (

@@ -1,5 +1,5 @@
 import { EmbedBuilder } from "discord.js";
-import { Button} from "../../interfaces";
+import { Button } from "../../interfaces";
 import Paginator from "../../util/pagination";
 
 const button: Button = {
@@ -16,14 +16,10 @@ const button: Button = {
       return;
     }
 
-    let paginate = client.paginate.get(
-      `${interaction.user.id}-reference`,
-    );
+    let paginate = client.paginate.get(`${interaction.user.id}-reference`);
     if (paginate) {
       clearTimeout(paginate.timeout);
-      client.paginate.delete(
-        `${interaction.user.id}-reference`,
-      );
+      client.paginate.delete(`${interaction.user.id}-reference`);
     }
 
     const page = new Paginator({

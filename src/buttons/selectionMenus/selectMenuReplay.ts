@@ -6,7 +6,7 @@ import {
   ButtonStyle,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { Button} from "../../interfaces";
+import { Button } from "../../interfaces";
 
 const modalObject = {
   title: "Replay Cooldown",
