@@ -9,7 +9,7 @@ const event: Event = {
   execute: async (client: WouldYou, interaction: Interaction | ButtonInteraction) => {
     if (interaction.isCommand()) {
       await commandInteractionEvent.execute(client, interaction);
-    } else if (interaction.isButton()) {
+    } else if (interaction.isButton() || interaction.isAnySelectMenu()) {
       await buttonInteractionEvent.execute(client, interaction);
     }
   }

@@ -87,9 +87,44 @@ const buttonInteractionEvent: Event = {
     let cooldownKey: string | undefined;
     let cooldown: number;
 
+    const excludedButtons = [
+      "dailyChannel",
+      "deleteDailyRole",
+      "welcomeType",
+      "welcomeTest",
+      "selectMenuWelcomeType",
+      "replayType",
+      "replayBy",
+      "replayDelete",
+      "replayDeleteChannels",
+      "replayChannels",
+      "selectMenuReplay",
+      "welcomeChannel",
+      "dailyInterval",
+      "dailyType",
+      "replayCooldown",
+      "welcomePing",
+      "welcome",
+      "welcomeChannel",
+      "dailyRole",
+      "dailyTimezone",
+      "dailyMsg",
+      "dailyThread",
+      "votemodal",
+      "paginateFirst",
+      "paginateLast",
+      "paginateNext",
+      "paginatePrev",
+      "privacy",
+    ];
+
+    // Check if the button is excluded from cooldown
+    const isExcludedButton = excludedButtons.includes(interaction.customId);
+
     if (
       guildDb.replayType === "Channels" &&
-      guildDb.replayChannels.find((x) => x.id === interaction.channel?.id)
+      guildDb.replayChannels.find((x) => x.id === interaction.channel?.id) &&
+      !isExcludedButton
     ) {
       cooldownKey = `${interaction.user?.id}-${interaction.channel?.id}`;
       cooldown = Number(
