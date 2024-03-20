@@ -10,7 +10,7 @@ import { UserModel } from "../util/Models/userModel";
 const button: Button = {
   name: "paginateLast",
   execute: async (interaction, client, guildDb) => {
-    let type: any = null;
+    let type: string | null = null;
     let paginate = client.paginate.get(
       `${interaction.user.id}-${interaction.message.interaction?.id}`,
     );

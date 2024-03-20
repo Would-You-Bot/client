@@ -9,7 +9,7 @@ import { Button } from "../interfaces";
 const button: Button = {
   name: "paginateFirst",
   execute: async (interaction, client, guildDb) => {
-    let type: any = null;
+    let type: string | null = null;
     let paginate = client.paginate.get(
       `${interaction.user.id}-${interaction.message.interaction?.id}`,
     );

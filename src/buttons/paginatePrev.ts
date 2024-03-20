@@ -10,16 +10,16 @@ import { UserModel } from "../util/Models/userModel";
 const button: Button = {
   name: "paginatePrev",
   execute: async (interaction, client, guildDb) => {
-    let type: any = null;
+    let type: string | null = null;
     let paginate = client.paginate.get(
       `${interaction.user.id}-${interaction.message.interaction?.id}`,
     );
 
-  if (!paginate)
-    (paginate = client.paginate.get(
-      `${interaction.user.id}-reference-${interaction.message.reference?.messageId}`,
-    )),
-      (type = "reference");
+    if (!paginate)
+      (paginate = client.paginate.get(
+        `${interaction.user.id}-reference-${interaction.message.reference?.messageId}`,
+      )),
+        (type = "reference");
 
     if (!paginate)
       (paginate = client.paginate.get(

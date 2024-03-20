@@ -14,7 +14,7 @@ const button: Button = {
       client.paginate,
       `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
     );
-    let type: any = null;
+    let type: string | null = null;
     let paginate = client.paginate.get(
       `${interaction.user.id}-${interaction.message.interaction?.id}`,
     );
