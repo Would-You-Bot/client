@@ -193,9 +193,9 @@
         "name": "neverhaveiever",
         "description": "Gives you a 'Never Have I Ever' question",
         "dm_permission": false,
-        "contexts": null,
+        "contexts": [0, 1, 2],
         "integration_types": [
-            0
+            0, 1
         ],
         "nsfw": false
     },
@@ -212,7 +212,7 @@
         "integration_types": [
             0
         ],
-        "nsfw": false
+        "nsfw": false 
     },
     {
         "id": "1146930666802515997",
@@ -322,9 +322,9 @@
         "name": "wouldyourather",
         "description": "Gives you a 'Would You Rather' question",
         "dm_permission": false,
-        "contexts": null,
+        "contexts": [0, 1, 2],
         "integration_types": [
-            0
+            0, 1
         ],
         "nsfw": false
     },
@@ -337,9 +337,9 @@
         "name": "higherlower",
         "description": "Starts a game of 'Higher or Lower'",
         "dm_permission": false,
-        "contexts": null,
+        "contexts": [0, 1, 2],
         "integration_types": [
-            0
+            0, 1
         ],
         "nsfw": false
     },
@@ -367,9 +367,14 @@
         "name": "dare",
         "description": "Gives you a random dare to answer",
         "dm_permission": false,
-        "contexts": [0, 1, 2],
+        "contexts": [
+            0,
+            1,
+            2
+        ],
         "integration_types": [
-            0, 1
+            0,
+            1
         ],
         "nsfw": false
     },
@@ -382,9 +387,14 @@
         "name": "random",
         "description": "Gives you a random truth or dare question to answer",
         "dm_permission": false,
-        "contexts": null,
+        "contexts": [
+            0,
+            1,
+            2
+        ],
         "integration_types": [
-            0
+            0,
+            1
         ],
         "nsfw": false
     },
@@ -397,9 +407,9 @@
         "name": "truth",
         "description": "Gives you a random truth question to answer",
         "dm_permission": false,
-        "contexts": null,
+        "contexts": [0, 1, 2],
         "integration_types": [
-            0
+            0, 1
         ],
         "nsfw": false
     },
@@ -457,9 +467,9 @@
         "name": "whatwouldyoudo",
         "description": "Gives you a 'What Would You Do' question",
         "dm_permission": false,
-        "contexts": null,
+        "contexts": [0, 1, 2],
         "integration_types": [
-            0
+            0, 1
         ],
         "nsfw": false
     }

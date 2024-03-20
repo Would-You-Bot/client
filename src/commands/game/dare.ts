@@ -13,8 +13,6 @@ import { getDare } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
-  integration_types: [0, 1],
-  contexts: [0, 1, 2],
   data: new SlashCommandBuilder()
     .setName("dare")
     .setDescription("Gives you a random dare to answer")
