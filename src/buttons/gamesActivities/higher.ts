@@ -84,14 +84,20 @@ const button: Button = {
       const gameEmbed = new EmbedBuilder()
 
         .setDescription(
-          client.translation.get(guildDb?.language, "HigherLower.description", {
-            keyword: game.items.current.keyword,
-            history: game.items.history[game.items.history.length - 1].keyword,
-            source: game.items.current.link || "https://wouldyoubot.gg/nolink",
-            source2:
-              game.items.history[game.items.history.length - 1].link ||
-              "https://wouldyoubot.gg/nolink",
-          }),
+          client.translation.get(
+            guildDb?.language != null ? guildDb.language : "en_EN",
+            "HigherLower.description",
+            {
+              keyword: game.items.current.keyword,
+              history:
+                game.items.history[game.items.history.length - 1].keyword,
+              source:
+                game.items.current.link || "https://wouldyoubot.gg/nolink",
+              source2:
+                game.items.history[game.items.history.length - 1].link ||
+                "https://wouldyoubot.gg/nolink",
+            },
+          ),
         )
         .setColor("Green")
         .setImage("attachment://game.png")
@@ -128,11 +134,14 @@ const button: Button = {
     } else {
       const loseEmbed = new EmbedBuilder()
         .setTitle(
-          client.translation.get(guildDb?.language, "HigherLower.game.title"),
+          client.translation.get(
+            guildDb?.language != null ? guildDb.language : "en_EN",
+            "HigherLower.game.title",
+          ),
         )
         .setDescription(
           `${client.translation.get(
-            guildDb?.language,
+            guildDb?.language != null ? guildDb.language : "en_EN",
             "HigherLower.game.description",
             {
               score: game?.score,

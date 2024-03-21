@@ -126,11 +126,6 @@ const buttonInteractionEvent: Event = {
       "privacy",
     ];
 
-    // Check if the button is excluded from cooldown
-    // if (excludedButtons.includes(interaction.customId)) {
-    //   return button.execute(interaction, client, guildDb);
-    // }
-
     const isExcludedButton = excludedButtons.includes(interaction.customId);
     if (
       guildDb != null &&

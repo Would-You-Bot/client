@@ -43,25 +43,32 @@ const button: Button = {
       }
     }
 
-    let Truth = await getTruth(guildDb.language);
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "truth",
+    let Truth = await getTruth(
+      guildDb?.language != null ? guildDb.language : "en_EN",
     );
+
+    let dbquestions;
 
     let truthordare = [] as string[];
 
-    if (!dbquestions.length) guildDb.customTypes = "regular";
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter((c) => c.type === "truth");
 
-    switch (guildDb.customTypes) {
-      case "regular":
-        truthordare = shuffle([...Truth]);
-        break;
-      case "mixed":
-        truthordare = shuffle([...Truth, ...dbquestions.map((c) => c.msg)]);
-        break;
-      case "custom":
-        truthordare = shuffle(dbquestions.map((c) => c.msg));
-        break;
+      if (!dbquestions.length) guildDb.customTypes = "regular";
+
+      switch (guildDb.customTypes) {
+        case "regular":
+          truthordare = shuffle([...Truth]);
+          break;
+        case "mixed":
+          truthordare = shuffle([...Truth, ...dbquestions.map((c) => c.msg)]);
+          break;
+        case "custom":
+          truthordare = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+      truthordare = shuffle([...Truth]);
     }
 
     const Random = Math.floor(Math.random() * truthordare.length);

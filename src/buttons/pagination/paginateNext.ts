@@ -10,10 +10,6 @@ import { UserModel } from "../../util/Models/userModel";
 const button: Button = {
   name: "paginateNext",
   execute: async (interaction, client, guildDb) => {
-    console.log(
-      client.paginate,
-      `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
-    );
     let type: string | null = null;
     let paginate = client.paginate.get(
       `${interaction.user.id}-${interaction.message.interaction?.id}`,
