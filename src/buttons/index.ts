@@ -3,6 +3,7 @@ import { Event } from "../interfaces";
 import WouldYou from "../util/wouldYou";
 import { captureException } from "@sentry/node";
 import { UserModel } from "../util/Models/userModel";
+import { IGuildModel } from "../util/Models/guildModel";
 
 const buttonInteractionEvent: Event = {
   event: "interactionCreate",
@@ -10,8 +11,15 @@ const buttonInteractionEvent: Event = {
     console.log(
       `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) CLICKED ${interaction.customId}`,
     );
-    const guildDb = await client.database.getGuild("857797178596524042", true);
-    if (!guildDb) return;
+
+    let guildDb;
+
+    if (interaction.guildId !== null) {
+      guildDb = await client.database.getGuild(
+        interaction.guildId as string,
+        true,
+      );
+    }
     let button = client.buttons.get(interaction.customId);
 
     const customId = interaction.customId.split("_");
@@ -125,6 +133,7 @@ const buttonInteractionEvent: Event = {
 
     const isExcludedButton = excludedButtons.includes(interaction.customId);
     if (
+      guildDb != null &&
       guildDb.replayType === "Channels" &&
       guildDb.replayChannels.find((x) => x.id === interaction.channelId) &&
       !isExcludedButton
@@ -136,7 +145,7 @@ const buttonInteractionEvent: Event = {
       );
     } else if (!isExcludedButton) {
       cooldownKey = interaction.user?.id;
-      cooldown = Number(guildDb.replayCooldown);
+      cooldown = Number(guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0);
     }
 
     if (cooldownKey && cooldown!) {
@@ -160,7 +169,7 @@ const buttonInteractionEvent: Event = {
       setTimeout(() => client.used.delete(cooldownKey!), cooldown);
     }
 
-    return button.execute(interaction, client, guildDb);
+    return button.execute(interaction, client, guildDb as IGuildModel);
   },
 };
 

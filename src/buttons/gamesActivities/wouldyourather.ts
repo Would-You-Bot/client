@@ -103,7 +103,7 @@ const button: Button = {
         .setStyle(1)
         .setEmoji("1073954835533156402")
         .setCustomId(`wouldyourather`)
-        .setDisabled(!guildDb.replay),
+        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
     ]);
 
     const time = 60_000;

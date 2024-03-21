@@ -29,29 +29,37 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    let General = await getWouldYouRather(guildDb.language);
-
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "wouldyourather",
+    let General = await getWouldYouRather(
+      guildDb?.language != null ? guildDb.language : "en_EN",
     );
+
+    let dbquestions;
 
     let wouldyourather = [] as string[];
 
-    if (!dbquestions.length) guildDb.customTypes = "regular";
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter(
+        (c) => c.type === "wouldyourather",
+      );
 
-    switch (guildDb.customTypes) {
-      case "regular":
-        wouldyourather = shuffle([...General]);
-        break;
-      case "mixed":
-        wouldyourather = shuffle([
-          ...General,
-          ...dbquestions.map((c) => c.msg),
-        ]);
-        break;
-      case "custom":
-        wouldyourather = shuffle(dbquestions.map((c) => c.msg));
-        break;
+      if (!dbquestions.length) guildDb.customTypes = "regular";
+
+      switch (guildDb.customTypes) {
+        case "regular":
+          wouldyourather = shuffle([...General]);
+          break;
+        case "mixed":
+          wouldyourather = shuffle([
+            ...General,
+            ...dbquestions.map((c) => c.msg),
+          ]);
+          break;
+        case "custom":
+          wouldyourather = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+      wouldyourather = shuffle([...General]);
     }
 
     const Random = Math.floor(Math.random() * wouldyourather.length);
@@ -81,7 +89,7 @@ const command: ChatInputCommand = {
         .setStyle(1)
         .setEmoji("1073954835533156402")
         .setCustomId(`wouldyourather`)
-        .setDisabled(!guildDb.replay),
+        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
     ]);
 
     const time = 60_000;

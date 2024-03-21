@@ -28,27 +28,32 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    let WhatYouDo = await getWwyd(guildDb.language);
+    let WWYD = await getWwyd(
+      guildDb?.language != null ? guildDb.language : "en_EN",
+    );
 
-    const dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
+    let dbquestions;
 
     let whatwouldyoudo = [] as string[];
 
-    if (!dbquestions.length) guildDb.customTypes = "regular";
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
 
-    switch (guildDb.customTypes) {
-      case "regular":
-        whatwouldyoudo = shuffle([...WhatYouDo]);
-        break;
-      case "mixed":
-        whatwouldyoudo = shuffle([
-          ...WhatYouDo,
-          ...dbquestions.map((c) => c.msg),
-        ]);
-        break;
-      case "custom":
-        whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
-        break;
+      if (!dbquestions.length) guildDb.customTypes = "regular";
+
+      switch (guildDb.customTypes) {
+        case "regular":
+          whatwouldyoudo = shuffle([...WWYD]);
+          break;
+        case "mixed":
+          whatwouldyoudo = shuffle([...WWYD, ...dbquestions.map((c) => c.msg)]);
+          break;
+        case "custom":
+          whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+      whatwouldyoudo = shuffle([...WWYD]);
     }
 
     const Random = Math.floor(Math.random() * whatwouldyoudo.length);
@@ -78,6 +83,7 @@ const command: ChatInputCommand = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
+        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false)
         .setCustomId(`wwyd`),
     ]);
 

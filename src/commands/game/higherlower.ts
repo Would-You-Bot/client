@@ -54,7 +54,7 @@ const command: ChatInputCommand = {
       creator: interaction.user.id,
       created: new Date(),
       id: uuidv4(),
-      guild: interaction.guildId as string, //interaction.guild?.id
+      guild: interaction.guildId as string,
       items: {
         current: gameData[random],
         history: [gameData[comperator]],

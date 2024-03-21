@@ -1,8 +1,13 @@
-import { Interaction } from "discord.js";
+import {
+  CacheType,
+  ChatInputCommandInteraction,
+  Interaction,
+} from "discord.js";
 import { Event } from "../interfaces";
 import { UserModel } from "../util/Models/userModel";
 import WouldYou from "../util/wouldYou";
 import { captureException } from "@sentry/node";
+import { IGuildModel } from "../util/Models/guildModel";
 
 const commandInteractionEvent: Event = {
   event: "interactionCreate",
@@ -20,18 +25,23 @@ const commandInteractionEvent: Event = {
       );
       const command = client.commands.get(interaction.commandName);
 
-      const guildDb = await client.database.getGuild(
-        interaction.guildId as string,
-        true,
-      );
+      let guildDb;
+      
+      if (interaction.guildId !== null) {
+        guildDb = await client.database.getGuild(
+          interaction.guildId as string,
+          true,
+        );
+        client.database
+          .updateGuild(interaction.guildId as string, {
+            lastUsageTimestamp: Date.now(),
+          })
+          .then(() => {});
+      } else { 
+        guildDb = null;
+      }
 
-      client.database
-        .updateGuild(interaction.guildId as string, {
-          lastUsageTimestamp: Date.now(),
-        })
-        .then(() => {});
-
-      if (!guildDb || !command) return;
+      if (!command) return;
       const statsMap = {
         wouldyourather: "wouldyourather.used.command",
         neverhaveiever: "neverhaveiever.used.command",
@@ -51,7 +61,20 @@ const commandInteractionEvent: Event = {
         );
       }
 
-      if (command.requireGuild && !interaction.guild) {
+      // Check if the command is only allowed in guilds
+      const allowedInDMs = [
+        "dare",
+        "truth",
+        "random",
+        "wouldyourather",
+        "neverhaveiever",
+        "higherlower",
+        "whatwouldyoudo",
+      ];
+      if (
+        !interaction.guild &&
+        !allowedInDMs.includes(interaction.commandName)
+      ) {
         interaction.reply({
           content:
             "This command is only usable on a Discord Server!\nYou want to test Would You? Join the support server!\nhttps://discord.gg/vMyXAxEznS",
@@ -60,8 +83,12 @@ const commandInteractionEvent: Event = {
         return;
       }
 
-      await command // @ts-ignore
-        .execute(interaction, client, guildDb || null)
+      await command
+        .execute(
+          interaction as ChatInputCommandInteraction<CacheType>,
+          client,
+          guildDb as IGuildModel,
+        )
         .catch((err) => {
           captureException(err);
           interaction.reply({

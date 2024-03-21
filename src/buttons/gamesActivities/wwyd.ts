@@ -90,6 +90,7 @@ const button: Button = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
+        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false)
         .setCustomId(`wwyd`),
     ]);
 

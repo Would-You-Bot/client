@@ -30,25 +30,36 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    let Dare = await getRandomTod(guildDb.language);
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "dare" || c.type === "truth",
+    let Randomtod = await getRandomTod(
+      guildDb?.language != null ? guildDb.language : "en_EN",
     );
+
+    let dbquestions;
 
     let truthordare = [] as string[];
 
-    if (!dbquestions.length) guildDb.customTypes = "regular";
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter(
+        (c) => c.type === "dare" || c.type === "truth",
+      );
+      if (!dbquestions.length) guildDb.customTypes = "regular";
 
-    switch (guildDb.customTypes) {
-      case "regular":
-        truthordare = shuffle([...Dare]);
-        break;
-      case "mixed":
-        truthordare = shuffle([...Dare, ...dbquestions.map((c) => c.msg)]);
-        break;
-      case "custom":
-        truthordare = shuffle(dbquestions.map((c) => c.msg));
-        break;
+      switch (guildDb.customTypes) {
+        case "regular":
+          truthordare = shuffle([...Randomtod]);
+          break;
+        case "mixed":
+          truthordare = shuffle([
+            ...Randomtod,
+            ...dbquestions.map((c) => c.msg),
+          ]);
+          break;
+        case "custom":
+          truthordare = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+      truthordare = shuffle([...Randomtod]);
     }
 
     const Random = Math.floor(Math.random() * truthordare.length);

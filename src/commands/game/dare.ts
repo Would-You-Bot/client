@@ -29,35 +29,33 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    const localeMap = {
-      "en-US": "en_US",
-      de: "de_DE",
-      "es-ES": "es_ES",
-      fr: "fr_FR",
-    };
-
-    console.log(guildDb.language);
     let Dare = await getDare(
-      guildDb.language ||
-        localeMap[interaction.locale as keyof typeof localeMap],
+      guildDb?.language != null ? guildDb.language : "en_EN",
     );
-    let truthordare = Dare;
-    //
-    //const dbquestions = interaction.guild ? guildDb?.customMessages.filter((c) => c.type === "dare") : [];
-    //
-    //if (!dbquestions.length) guildDb.customTypes = "regular";
-    //
-    //switch (guildDb.customTypes) {
-    //  case "regular":
-    //    truthordare = shuffle([...Dare]);
-    //    break;
-    //  case "mixed":
-    //    truthordare = shuffle([...Dare, ...dbquestions.map((c) => c.msg)]);
-    //    break;
-    //  case "custom":
-    //    truthordare = shuffle(dbquestions.map((c) => c.msg));
-    //    break;
-    //}
+
+    let dbquestions;
+
+    let truthordare = [] as string[];
+
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter((c) => c.type === "dare");
+
+      if (!dbquestions.length) guildDb.customTypes = "regular";
+
+      switch (guildDb.customTypes) {
+        case "regular":
+          truthordare = shuffle([...Dare]);
+          break;
+        case "mixed":
+          truthordare = shuffle([...Dare, ...dbquestions.map((c) => c.msg)]);
+          break;
+        case "custom":
+          truthordare = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+      truthordare = shuffle([...Dare]);
+    }
 
     const Random = Math.floor(Math.random() * truthordare.length);
 
