@@ -70,6 +70,7 @@ const commandInteractionEvent: Event = {
         "neverhaveiever",
         "higherlower",
         "whatwouldyoudo",
+        "leaderboard",
       ];
       if (
         !interaction.guild &&

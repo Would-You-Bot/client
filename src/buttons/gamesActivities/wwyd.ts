@@ -15,52 +15,61 @@ import { getWwyd } from "../../util/Functions/jsonImport";
 const button: Button = {
   name: "wwyd",
   execute: async (interaction: any, client, guildDb) => {
-    if (interaction.channel.isThread()) {
-      if (
-        !interaction.channel
-          ?.permissionsFor(interaction.user.id)
-          .has(PermissionFlagsBits.SendMessagesInThreads)
-      ) {
-        return interaction.reply({
-          content:
-            "You don't have permission to use this button in this channel!",
-          ephemeral: true,
-        });
-      }
-    } else {
-      if (
-        !interaction.channel
-          ?.permissionsFor(interaction.user.id)
-          .has(PermissionFlagsBits.SendMessages)
-      ) {
-        return interaction.reply({
-          content:
-            "You don't have permission to use this button in this channel!",
-          ephemeral: true,
-        });
+    if (interaction.guild) {
+      if (interaction.channel.isThread()) {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessagesInThreads)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      } else {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessages)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
       }
     }
 
-    var WhatYouDo = await getWwyd(guildDb.language);
-    const dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
+    let WhatYouDo = await getWwyd(
+      guildDb?.language != null ? guildDb.language : "en_EN",
+    );
+    let dbquestions;
 
     let whatwouldyoudo = [] as string[];
 
-    if (!dbquestions.length) guildDb.customTypes = "regular";
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
+      if (!dbquestions.length) guildDb.customTypes = "regular";
 
-    switch (guildDb.customTypes) {
-      case "regular":
-        whatwouldyoudo = shuffle([...WhatYouDo]);
-        break;
-      case "mixed":
-        whatwouldyoudo = shuffle([
-          ...WhatYouDo,
-          ...dbquestions.map((c) => c.msg),
-        ]);
-        break;
-      case "custom":
-        whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
-        break;
+      switch (guildDb.customTypes) {
+        case "regular":
+          whatwouldyoudo = shuffle([...WhatYouDo]);
+          break;
+        case "mixed":
+          whatwouldyoudo = shuffle([
+            ...WhatYouDo,
+            ...dbquestions.map((c) => c.msg),
+          ]);
+          break;
+        case "custom":
+          whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+      whatwouldyoudo = shuffle([...WhatYouDo]);
     }
 
     const Random = Math.floor(Math.random() * whatwouldyoudo.length);

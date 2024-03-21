@@ -15,55 +15,64 @@ import { getWouldYouRather } from "../../util/Functions/jsonImport";
 const button: Button = {
   name: "wouldyourather",
   execute: async (interaction: any, client, guildDb) => {
-    if (interaction.channel.isThread()) {
-      if (
-        !interaction.channel
-          ?.permissionsFor(interaction.user.id)
-          .has(PermissionFlagsBits.SendMessagesInThreads)
-      ) {
-        return interaction.reply({
-          content:
-            "You don't have permission to use this button in this channel!",
-          ephemeral: true,
-        });
-      }
-    } else {
-      if (
-        !interaction.channel
-          ?.permissionsFor(interaction.user.id)
-          .has(PermissionFlagsBits.SendMessages)
-      ) {
-        return interaction.reply({
-          content:
-            "You don't have permission to use this button in this channel!",
-          ephemeral: true,
-        });
+    if (interaction.guild) {
+      if (interaction.channel.isThread()) {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessagesInThreads)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      } else {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessages)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
       }
     }
 
-    var General = await getWouldYouRather(guildDb.language);
-
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "wouldyourather",
+    let General = await getWouldYouRather(
+      guildDb?.language != null ? guildDb.language : "en_EN",
     );
+
+    let dbquestions;
 
     let wouldyourather = [] as string[];
 
-    if (!dbquestions.length) guildDb.customTypes = "regular";
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter(
+        (c) => c.type === "wouldyourather",
+      );
+      if (!dbquestions.length) guildDb.customTypes = "regular";
 
-    switch (guildDb.customTypes) {
-      case "regular":
-        wouldyourather = shuffle([...General]);
-        break;
-      case "mixed":
-        wouldyourather = shuffle([
-          ...General,
-          ...dbquestions.map((c) => c.msg),
-        ]);
-        break;
-      case "custom":
-        wouldyourather = shuffle(dbquestions.map((c) => c.msg));
-        break;
+      switch (guildDb.customTypes) {
+        case "regular":
+          wouldyourather = shuffle([...General]);
+          break;
+        case "mixed":
+          wouldyourather = shuffle([
+            ...General,
+            ...dbquestions.map((c) => c.msg),
+          ]);
+          break;
+        case "custom":
+          wouldyourather = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+          wouldyourather = shuffle([...General]);
     }
 
     const Random = Math.floor(Math.random() * wouldyourather.length);
@@ -76,7 +85,7 @@ const button: Button = {
       })
       .setDescription(bold(wouldyourather[Random]));
 
-    if (!guildDb.replay)
+    if (guildDb && !guildDb.replay)
       return interaction.reply({
         ephemeral: true,
         content: client.translation.get(
@@ -110,7 +119,7 @@ const button: Button = {
     const three_minutes = 3 * 60 * 1e3;
 
     const { row, id } = await client.voting.generateVoting(
-      interaction.guildId,
+      interaction.guildId ? interaction.guildId as string : null,
       interaction.channelId,
       time < three_minutes
         ? new Date(0)

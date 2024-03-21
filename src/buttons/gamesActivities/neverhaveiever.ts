@@ -15,68 +15,83 @@ import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
 const button: Button = {
   name: "neverhaveiever",
   execute: async (interaction: any, client, guildDb) => {
-    if (interaction.channel.isThread()) {
-      if (
-        !interaction.channel
-          ?.permissionsFor(interaction.user.id)
-          .has(PermissionFlagsBits.SendMessagesInThreads)
-      ) {
-        return interaction.reply({
-          content:
-            "You don't have permission to use this button in this channel!",
-          ephemeral: true,
-        });
-      }
-    } else {
-      if (
-        !interaction.channel
-          ?.permissionsFor(interaction.user.id)
-          .has(PermissionFlagsBits.SendMessages)
-      ) {
-        return interaction.reply({
-          content:
-            "You don't have permission to use this button in this channel!",
-          ephemeral: true,
-        });
+    if (interaction.guild) {
+      if (interaction.channel.isThread()) {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessagesInThreads)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      } else {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessages)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
       }
     }
 
-    var { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
-      guildDb.language,
+    let { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
+      guildDb?.language != null ? guildDb.language : "en_EN",
     );
 
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "neverhaveiever",
-    );
+    let dbquestions;
 
     let nererhaveIever = [] as string[];
 
-    if (!dbquestions.length) guildDb.customTypes = "regular";
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter(
+        (c) => c.type === "neverhaveiever",
+      );
 
-    switch (guildDb.customTypes) {
-      case "regular":
-        nererhaveIever = shuffle([
-          ...Funny,
-          ...Basic,
-          ...Young,
-          ...Food,
-          ...RuleBreak,
-        ]);
-        break;
-      case "mixed":
-        nererhaveIever = shuffle([
-          ...Funny,
-          ...Basic,
-          ...Young,
-          ...Food,
-          ...RuleBreak,
-          ...dbquestions.map((c) => c.msg),
-        ]);
-        break;
-      case "custom":
-        nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
-        break;
+      if (!dbquestions.length) guildDb.customTypes = "regular";
+
+      switch (guildDb.customTypes) {
+        case "regular":
+          nererhaveIever = shuffle([
+            ...Funny,
+            ...Basic,
+            ...Young,
+            ...Food,
+            ...RuleBreak,
+          ]);
+          break;
+        case "mixed":
+          nererhaveIever = shuffle([
+            ...Funny,
+            ...Basic,
+            ...Young,
+            ...Food,
+            ...RuleBreak,
+            ...dbquestions.map((c) => c.msg),
+          ]);
+          break;
+        case "custom":
+          nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+      nererhaveIever = shuffle([
+        ...Funny,
+        ...Basic,
+        ...Young,
+        ...Food,
+        ...RuleBreak,
+      ]);
     }
+
     const Random = Math.floor(Math.random() * nererhaveIever.length);
 
     let nhiembed = new EmbedBuilder()
@@ -112,7 +127,7 @@ const button: Button = {
     const three_minutes = 3 * 60 * 1e3;
 
     const { row, id } = await client.voting.generateVoting(
-      interaction.guildId as string,
+      interaction.guildId ? interaction.guildId as string : null,
       interaction.channelId,
       time < three_minutes
         ? new Date(0)
