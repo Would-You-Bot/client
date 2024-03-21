@@ -123,7 +123,7 @@ const buttonInteractionEvent: Event = {
     //   return button.execute(interaction, client, guildDb);
     // }
 
-      const isExcludedButton = excludedButtons.includes(interaction.customId);
+    const isExcludedButton = excludedButtons.includes(interaction.customId);
     if (
       guildDb.replayType === "Channels" &&
       guildDb.replayChannels.find((x) => x.id === interaction.channelId) &&
