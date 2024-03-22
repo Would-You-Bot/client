@@ -1,34 +1,48 @@
 import {
   EmbedBuilder,
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
+  PermissionFlagsBits,
   MessageActionRowComponentBuilder,
   bold,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../interfaces";
+import shuffle from "../../util/shuffle";
+import { Button } from "../../interfaces";
+
 import { getTruth } from "../../util/Functions/jsonImport";
 
-const command: ChatInputCommand = {
-  requireGuild: true,
-  data: new SlashCommandBuilder()
-    .setName("truth")
-    .setDescription("Gives you a random truth question to answer")
-    .setDMPermission(false)
-    .setDescriptionLocalizations({
-      de: "Postet eine zufällige Wahrheitsfrage, die du beantworten musst",
-      "es-ES": "Publica una pregunta de verdad aleatoria que debes responder",
-      fr: "Publie une question de vérité aléatoire que vous devez répondre",
-    }),
+const button: Button = {
+  name: "truth",
+  execute: async (interaction: any, client, guildDb) => {
+    if (interaction.guild) {
+      if (interaction.channel.isThread()) {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessagesInThreads)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      } else {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessages)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      }
+    }
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  execute: async (interaction, client, guildDb) => {
     let Truth = await getTruth(
       guildDb?.language != null ? guildDb.language : "en_EN",
     );
@@ -92,10 +106,10 @@ const command: ChatInputCommand = {
 
     interaction
       .reply({ embeds: [truthembed], components: components })
-      .catch((err) => {
+      .catch((err: Error) => {
         captureException(err);
       });
   },
 };
 
-export default command;
+export default button;

@@ -1,35 +1,48 @@
 import {
   EmbedBuilder,
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
+  PermissionFlagsBits,
   MessageActionRowComponentBuilder,
   bold,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import shuffle from "../../util/shuffle";
-import { ChatInputCommand } from "../../interfaces";
+import { Button } from "../../interfaces";
+
 import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
 
-const command: ChatInputCommand = {
-  requireGuild: true,
-  data: new SlashCommandBuilder()
-    .setName("neverhaveiever")
-    .setDescription("Gives you a 'Never Have I Ever' question")
-    .setDMPermission(false)
-    .setDescriptionLocalizations({
-      de: "Bekomme eine nie habe ich jemals Nachricht",
-      "es-ES": "Consigue un mensaje Nunca he tenido",
-      fr: "Afficher une question que je n'ai jamais posée",
-    }),
+const button: Button = {
+  name: "neverhaveiever",
+  execute: async (interaction: any, client, guildDb) => {
+    if (interaction.guild) {
+      if (interaction.channel.isThread()) {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessagesInThreads)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      } else {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessages)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      }
+    }
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-
-  execute: async (interaction, client, guildDb) => {
     let { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
       guildDb?.language != null ? guildDb.language : "en_EN",
     );
@@ -39,7 +52,9 @@ const command: ChatInputCommand = {
     let nererhaveIever = [] as string[];
 
     if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter((c) => c.type === "truth");
+      dbquestions = guildDb.customMessages.filter(
+        (c) => c.type === "neverhaveiever",
+      );
 
       if (!dbquestions.length) guildDb.customTypes = "regular";
 
@@ -79,7 +94,7 @@ const command: ChatInputCommand = {
 
     const Random = Math.floor(Math.random() * nererhaveIever.length);
 
-    let ratherembed = new EmbedBuilder()
+    let nhiembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
         text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${Random}`,
@@ -104,14 +119,15 @@ const command: ChatInputCommand = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
-        .setCustomId(`neverhaveiever`),
+        .setCustomId(`neverhaveiever`)
+        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
     ]);
 
     const time = 60_000;
     const three_minutes = 3 * 60 * 1e3;
 
     const { row, id } = await client.voting.generateVoting(
-      interaction.guildId as string,
+      interaction.guildId ? (interaction.guildId as string) : null,
       interaction.channelId,
       time < three_minutes
         ? new Date(0)
@@ -120,11 +136,15 @@ const command: ChatInputCommand = {
     );
 
     interaction
-      .reply({ embeds: [ratherembed], components: [row, mainRow] })
-      .catch((err) => {
+      .reply({
+        embeds: [nhiembed],
+        components: [row, mainRow],
+      })
+      .catch((err: Error) => {
         captureException(err);
       });
+    return;
   },
 };
 
-export default command;
+export default button;

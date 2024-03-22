@@ -34,7 +34,7 @@ export default class Voting {
     op_one,
     op_two,
   }: {
-    guildId: string;
+    guildId: string | null;
     type: string;
     until: Date;
     channelId: string;
@@ -62,7 +62,7 @@ export default class Voting {
   }
 
   async generateVoting(
-    guildId: string,
+    guildId: string | null,
     channelId: string,
     until = new Date(0),
     type: string,

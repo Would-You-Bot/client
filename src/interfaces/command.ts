@@ -15,6 +15,8 @@ export interface Command {
     | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
     | ContextMenuCommandBuilder;
   requireGuild?: boolean;
+  integration_types?: number[];
+  contexts?: number[];
   execute(
     interaction: CommandInteraction,
     client: WouldYou,

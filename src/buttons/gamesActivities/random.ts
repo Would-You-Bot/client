@@ -1,68 +1,83 @@
 import {
   EmbedBuilder,
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
+  PermissionFlagsBits,
   MessageActionRowComponentBuilder,
   bold,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../interfaces";
-import { getTruth } from "../../util/Functions/jsonImport";
+import shuffle from "../../util/shuffle";
+import { Button } from "../../interfaces";
 
-const command: ChatInputCommand = {
-  requireGuild: true,
-  data: new SlashCommandBuilder()
-    .setName("truth")
-    .setDescription("Gives you a random truth question to answer")
-    .setDMPermission(false)
-    .setDescriptionLocalizations({
-      de: "Postet eine zufällige Wahrheitsfrage, die du beantworten musst",
-      "es-ES": "Publica una pregunta de verdad aleatoria que debes responder",
-      fr: "Publie une question de vérité aléatoire que vous devez répondre",
-    }),
+import { getRandomTod } from "../../util/Functions/jsonImport";
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-  execute: async (interaction, client, guildDb) => {
-    let Truth = await getTruth(
+const button: Button = {
+  name: "random",
+  execute: async (interaction: any, client, guildDb) => {
+    if (interaction.guild) {
+      if (interaction.channel.isThread()) {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessagesInThreads)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      } else {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessages)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      }
+    }
+
+    let random = await getRandomTod(
       guildDb?.language != null ? guildDb.language : "en_EN",
     );
-
     let dbquestions;
 
     let truthordare = [] as string[];
 
     if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter((c) => c.type === "truth");
+      dbquestions = guildDb.customMessages.filter(
+        (c) => c.type === "truth" || c.type === "dare",
+      );
 
       if (!dbquestions.length) guildDb.customTypes = "regular";
 
       switch (guildDb.customTypes) {
         case "regular":
-          truthordare = shuffle([...Truth]);
+          truthordare = shuffle([...random]);
           break;
         case "mixed":
-          truthordare = shuffle([...Truth, ...dbquestions.map((c) => c.msg)]);
+          truthordare = shuffle([...random, ...dbquestions.map((c) => c.msg)]);
           break;
         case "custom":
           truthordare = shuffle(dbquestions.map((c) => c.msg));
           break;
       }
     } else {
-      truthordare = shuffle([...Truth]);
+      truthordare = shuffle([...random]);
     }
 
     const Random = Math.floor(Math.random() * truthordare.length);
 
-    const truthembed = new EmbedBuilder()
+    const randomebed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Truth | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
         iconURL: interaction.user.displayAvatarURL() || undefined,
       })
       .setDescription(bold(truthordare[Random]));
@@ -91,11 +106,11 @@ const command: ChatInputCommand = {
     ]);
 
     interaction
-      .reply({ embeds: [truthembed], components: components })
-      .catch((err) => {
+      .reply({ embeds: [randomebed], components: components })
+      .catch((err: Error) => {
         captureException(err);
       });
   },
 };
 
-export default command;
+export default button;

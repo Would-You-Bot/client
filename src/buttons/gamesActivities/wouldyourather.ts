@@ -1,34 +1,48 @@
 import {
-  SlashCommandBuilder,
+  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
+  PermissionFlagsBits,
   MessageActionRowComponentBuilder,
+  bold,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../interfaces";
+import shuffle from "../../util/shuffle";
+import { Button } from "../../interfaces";
+
 import { getWouldYouRather } from "../../util/Functions/jsonImport";
-import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
-const command: ChatInputCommand = {
-  requireGuild: true,
-  data: new SlashCommandBuilder()
-    .setName("wouldyourather")
-    .setDescription("Gives you a 'Would You Rather' question")
-    .setDMPermission(false)
-    .setDescriptionLocalizations({
-      de: "Erhalte eine Würdest du eher Frage",
-      "es-ES": "Obtiene une pregunta ¿Qué prefieres?",
-      fr: "Obtenez une question préférez-vous",
-    }),
+const button: Button = {
+  name: "wouldyourather",
+  execute: async (interaction: any, client, guildDb) => {
+    if (interaction.guild) {
+      if (interaction.channel.isThread()) {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessagesInThreads)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      } else {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessages)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      }
+    }
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-
-  execute: async (interaction, client, guildDb) => {
     let General = await getWouldYouRather(
       guildDb?.language != null ? guildDb.language : "en_EN",
     );
@@ -41,7 +55,6 @@ const command: ChatInputCommand = {
       dbquestions = guildDb.customMessages.filter(
         (c) => c.type === "wouldyourather",
       );
-
       if (!dbquestions.length) guildDb.customTypes = "regular";
 
       switch (guildDb.customTypes) {
@@ -64,12 +77,22 @@ const command: ChatInputCommand = {
 
     const Random = Math.floor(Math.random() * wouldyourather.length);
 
-    const ratherembed = new DefaultGameEmbed(
-      interaction,
-      Random,
-      wouldyourather,
-      "wyr",
-    );
+    let ratherembed = new EmbedBuilder()
+      .setColor("#0598F6")
+      .setFooter({
+        text: `Requested by ${interaction.user.username} | Type: WYR | ID: ${Random}`,
+        iconURL: interaction.user.avatarURL(),
+      })
+      .setDescription(bold(wouldyourather[Random]));
+
+    if (guildDb && !guildDb.replay)
+      return interaction.reply({
+        ephemeral: true,
+        content: client.translation.get(
+          guildDb?.language,
+          "Rather.replays.disabled",
+        ),
+      });
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
@@ -96,7 +119,7 @@ const command: ChatInputCommand = {
     const three_minutes = 3 * 60 * 1e3;
 
     const { row, id } = await client.voting.generateVoting(
-      interaction.guildId as string,
+      interaction.guildId ? (interaction.guildId as string) : null,
       interaction.channelId,
       time < three_minutes
         ? new Date(0)
@@ -104,16 +127,16 @@ const command: ChatInputCommand = {
       "wouldyourather",
     );
 
-    await interaction
+    interaction
       .reply({
         embeds: [ratherembed],
         components: [row, mainRow],
-        fetchReply: true,
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         captureException(err);
       });
+    return;
   },
 };
 
-export default command;
+export default button;

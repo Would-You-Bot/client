@@ -57,46 +57,48 @@ export default class LOSE {
       await user.save();
     }
 
-    if (!guild?.gameScores.find((e: any) => e.userID === this.game.creator)) {
-      guild?.gameScores.push({
-        userID: this.game.creator,
-        higherlower: score,
-      });
-
-      await client.database.updateGuild(
-        this.game.guild || "",
-        {
-          ...guild,
-          gameScores: guild?.gameScores,
-        },
-        true,
-      );
-    } else if (
-      score >
-      guild?.gameScores.find((e: any) => e.userID === this.game.creator)
-        ?.higherlower!
-    ) {
-      guild.gameScores = (guild.gameScores || []).filter(
-        (gameScore: { userID: string }) =>
-          gameScore.userID !== this.game.creator,
-      );
-
-      guild.gameScores = [
-        ...(guild.gameScores || []),
-        {
+    if (guild) {
+      if (!guild?.gameScores.find((e: any) => e.userID === this.game.creator)) {
+        guild?.gameScores.push({
           userID: this.game.creator,
           higherlower: score,
-        },
-      ];
+        });
 
-      await client.database.updateGuild(
-        this.game.guild || "",
-        {
-          ...guild,
-          gameScores: guild?.gameScores,
-        },
-        true,
-      );
+        await client.database.updateGuild(
+          this.game.guild || "",
+          {
+            ...guild,
+            gameScores: guild?.gameScores,
+          },
+          true,
+        );
+      } else if (
+        score >
+        guild?.gameScores.find((e: any) => e.userID === this.game.creator)
+          ?.higherlower!
+      ) {
+        guild.gameScores = (guild.gameScores || []).filter(
+          (gameScore: { userID: string }) =>
+            gameScore.userID !== this.game.creator,
+        );
+
+        guild.gameScores = [
+          ...(guild.gameScores || []),
+          {
+            userID: this.game.creator,
+            higherlower: score,
+          },
+        ];
+
+        await client.database.updateGuild(
+          this.game.guild || "",
+          {
+            ...guild,
+            gameScores: guild?.gameScores,
+          },
+          true,
+        );
+      }
     }
 
     // Create canvas
