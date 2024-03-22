@@ -63,6 +63,7 @@ const buttonInteractionEvent: Event = {
     }
 
     // Button identification logic
+    let bypass = false;
     const buttonMap: Record<string, string> = {
       wycustom_add: "wycustom_add",
       wycustom_remove: "wycustom_remove",
@@ -74,6 +75,7 @@ const buttonInteractionEvent: Event = {
 
     for (const [key, value] of Object.entries(buttonMap)) {
       if (interaction.customId.startsWith(key)) {
+        bypass = true;
         button = client.buttons.get(value);
         break;
       }
@@ -129,6 +131,7 @@ const buttonInteractionEvent: Event = {
     const isExcludedButton = excludedButtons.includes(interaction.customId);
     if (
       guildDb != null &&
+      !bypass &&
       guildDb.replayType === "Channels" &&
       guildDb.replayChannels.find((x) => x.id === interaction.channelId) &&
       !isExcludedButton
@@ -138,7 +141,7 @@ const buttonInteractionEvent: Event = {
         guildDb.replayChannels.find((x) => x.id === interaction.channelId)
           ?.cooldown,
       );
-    } else if (!isExcludedButton) {
+    } else if (!isExcludedButton && !bypass) {
       cooldownKey = interaction.user?.id;
       cooldown = Number(
         guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0,
