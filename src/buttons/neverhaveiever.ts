@@ -45,7 +45,7 @@ const button: Button = {
     );
 
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "neverhaveiever",
+      (c) => c.type !== "nsfw" && c.type === "neverhaveiever",
     );
 
     let nererhaveIever = [] as string[];

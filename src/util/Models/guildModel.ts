@@ -35,6 +35,7 @@ export interface IGuildModel {
   customTypes: string;
   debugMode: boolean;
   lastUsageTimestamp: number;
+  premium: number;
 }
 
 const guildProfileSchema = new Schema(
@@ -140,9 +141,13 @@ const guildProfileSchema = new Schema(
       type: Number,
       default: 0,
     },
+    premium: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true },
-);
+); 
 
 export const GuildModel = model<IGuildModel>(
   "guildProfile",

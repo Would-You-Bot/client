@@ -32,7 +32,7 @@ const command: ChatInputCommand = {
     let General = await getWouldYouRather(guildDb.language);
 
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "wouldyourather",
+      (c) => c.type !== "nsfw" && c.type === "wouldyourather",
     );
 
     let wouldyourather = [] as string[];

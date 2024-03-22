@@ -175,7 +175,10 @@ export default class Voting {
     const option_2 = Number(vote.votes.op_two?.length);
 
     const numbers = { op_one: "Have", op_two: "Have not" } as any;
-    const phrases = { op_one: "Option 1", op_two: "Option 2" } as any;
+    const phrases = {
+      op_one: "Option 1",
+      op_two: "Option 2",
+    } as any;
     const chartData = Object.keys(vote.votes).map((e) =>
       Number(all_votes > 0 ? vote.votes[e].length : 1),
     );

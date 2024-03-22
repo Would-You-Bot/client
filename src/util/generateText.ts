@@ -73,7 +73,11 @@ export function generateWWYD(
       text: `${responsePhrase} ${text}`,
       original: text,
     });
-    return { value: false, type: "wwyd", text: `${responsePhrase} ${text}` };
+    return {
+      value: false,
+      type: "wwyd",
+      text: `${responsePhrase} ${text}`,
+    };
   } else {
     return { value: true, type: "wwyd", text: text };
   }

@@ -31,7 +31,7 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     let Truth = await getTruth(guildDb.language);
     const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "truth",
+      (c) => c.type !== "nsfw" && c.type === "truth",
     );
 
     let truthordare = [] as string[];

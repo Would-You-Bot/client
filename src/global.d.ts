@@ -11,6 +11,15 @@ declare global {
     | readonly CanJSON[]
     | { readonly [key: string]: CanJSON }
     | { toJSON(): CanJSON };
+    enum Days {
+      MONDAY,
+      TUESDAY,
+      WEDNESDAY,
+      THURSDAY,
+      FRIDAY,
+      SATURDAY,
+      SUNDAY
+    }
 }
 
 export {};
@@ -31,8 +40,8 @@ export interface IQueueMessage {
     token: string | null;
   };
   channelId: string | null;
-  retries: number;
 }
 export type Result<T, E extends Error = Error> =
   | { success: true; result: T }
   | { success: false; error: E };
+
