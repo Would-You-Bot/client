@@ -244,6 +244,7 @@
     "voteSame": "The provided vote cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
     "cooldownInvalid": "Provided cooldown was invalid. Make sure the cooldown only includes numbers!",
     "welcomeTestSuccess": "This is a test message of what welcome messages look like.",
+    "daysSelection": "Select every day you **don't** want daily messages to be on.",
     "embed": {
       "generalTitle": "Would You - General Settings",
       "replayCooldown": "**Replay Cooldown**",
@@ -269,6 +270,7 @@
       "error": "You are missing the `Manage Guild` permission to use this command!"
     },
     "button": {
+      "daySelect": "Exclude Days",
       "dailyInterval": "Set Post Time",
       "dailyChannel": "Set Channel",
       "dailyRole": "Set Role",
@@ -288,6 +290,15 @@
     "modal": {
       "dailyIntervalTitle": "Daily Post Time",
       "dailyIntervalDescription": "When should the message be posted? (HH:MM)"
+    }, 
+    "select": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
     }
   },
   "Debug": {

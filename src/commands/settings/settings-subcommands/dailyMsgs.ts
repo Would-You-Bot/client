@@ -118,6 +118,16 @@ export default async function settingsGeneral(
         .setStyle(
           guildDb.dailyInterval ? ButtonStyle.Success : ButtonStyle.Secondary,
         ),
+      new ButtonBuilder()
+        .setCustomId("daySelection")
+        .setEmoji("1220826970133368842")
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.daySelect",
+          ),
+        )
+        .setStyle(ButtonStyle.Success),
     );
 
   // Third button row

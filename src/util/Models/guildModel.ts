@@ -17,6 +17,7 @@ export interface IGuildModel {
   dailyTimezone: string;
   dailyInterval: string;
   dailyThread: boolean;
+  excludedDays: Array<Number>;
   replay: boolean;
   replayCooldown: number;
   replayBy: string;
@@ -96,6 +97,7 @@ const guildProfileSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    excludedDays: [],
     replay: {
       type: Boolean,
       default: true,

@@ -174,6 +174,9 @@ const event: Event = {
         "viewCommands",
         "viewHelp",
         "privacy",
+        "selectMenuDays",
+        "daySelection",
+        "excludedDays",
       ];
 
       if (
