@@ -44,7 +44,9 @@ const button: Button = {
       }
     }
 
-    let Dare = await getDare(guildDb?.language != null ? guildDb.language : "en_EN");
+    let Dare = await getDare(
+      guildDb?.language != null ? guildDb.language : "en_EN",
+    );
 
     let dbquestions;
 

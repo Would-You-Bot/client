@@ -29,26 +29,24 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
+    const language = guildDb?.language != null ? guildDb.language : "en_EN";
     const db = await client.database.getUser(interaction.user.id);
 
     const setting = new EmbedBuilder()
-      .setTitle(client.translation.get(guildDb?.language, "Privacy.settings"))
+      .setTitle(client.translation.get(language, "Privacy.settings"))
       .setDescription(
         `${client.translation.get(
-          guildDb?.language,
+          language,
           "Privacy.desc",
-        )}\n\n${client.translation.get(guildDb?.language, "Privacy.status")} ${
+        )}\n\n${client.translation.get(language, "Privacy.status")} ${
           db?.votePrivacy
-            ? client.translation.get(guildDb?.language, "Privacy.on")
-            : client.translation.get(guildDb?.language, "Privacy.off")
+            ? client.translation.get(language, "Privacy.on")
+            : client.translation.get(language, "Privacy.off")
         }`,
       )
       .setColor("#0598F6")
       .setFooter({
-        text: client.translation.get(
-          guildDb?.language,
-          "Settings.embed.footer",
-        ),
+        text: client.translation.get(language, "Settings.embed.footer"),
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 

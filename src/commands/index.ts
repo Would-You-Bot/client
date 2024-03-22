@@ -26,7 +26,7 @@ const commandInteractionEvent: Event = {
       const command = client.commands.get(interaction.commandName);
 
       let guildDb;
-      
+
       if (interaction.guildId !== null) {
         guildDb = await client.database.getGuild(
           interaction.guildId as string,
@@ -37,7 +37,7 @@ const commandInteractionEvent: Event = {
             lastUsageTimestamp: Date.now(),
           })
           .then(() => {});
-      } else { 
+      } else {
         guildDb = null;
       }
 
@@ -71,6 +71,7 @@ const commandInteractionEvent: Event = {
         "higherlower",
         "whatwouldyoudo",
         "leaderboard",
+        "privacy",
       ];
       if (
         !interaction.guild &&

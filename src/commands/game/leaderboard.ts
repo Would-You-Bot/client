@@ -124,7 +124,10 @@ const command: ChatInputCommand = {
 
           case "local":
             if (!interaction.guild) {
-              interaction.reply({ ephemeral: true, content: `If you would like to check a server's leaderboard, run this in a server you and the bot share!` });
+              interaction.reply({
+                ephemeral: true,
+                content: `If you would like to check a server's leaderboard, run this in a server you and the bot share!`,
+              });
               return;
             }
             data = await Promise.all(

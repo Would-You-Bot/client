@@ -140,7 +140,9 @@ const buttonInteractionEvent: Event = {
       );
     } else if (!isExcludedButton) {
       cooldownKey = interaction.user?.id;
-      cooldown = Number(guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0);
+      cooldown = Number(
+        guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0,
+      );
     }
 
     if (cooldownKey && cooldown!) {

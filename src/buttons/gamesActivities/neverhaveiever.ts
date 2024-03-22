@@ -127,7 +127,7 @@ const button: Button = {
     const three_minutes = 3 * 60 * 1e3;
 
     const { row, id } = await client.voting.generateVoting(
-      interaction.guildId ? interaction.guildId as string : null,
+      interaction.guildId ? (interaction.guildId as string) : null,
       interaction.channelId,
       time < three_minutes
         ? new Date(0)
