@@ -15,7 +15,7 @@ const button: Button = {
       en_EN: "en",
       es_ES: "es",
       fr_FR: "fr",
-    } as any;
+    } as Record<string, string>;
 
     const commands = await client.application?.commands.fetch({
       withLocalizations: true,
