@@ -33,7 +33,7 @@ const command: ChatInputCommand = {
         .setNameLocalizations({
           de: "cooldowns",
           "es-ES": "cooldowns",
-          fr: "temps-de-recharge",	
+          fr: "temps-de-recharge",
         })
         .setDescription("Cooldown Settings")
         .setDescriptionLocalizations({
@@ -78,23 +78,23 @@ const command: ChatInputCommand = {
 
       return cmd;
     }),
-    //.addSubcommand((cmd) => {
-    //  cmd
-    //    .setName("premium")
-    //    .setNameLocalizations({
-    //      de: "premium",
-    //      "es-ES": "prémium",
-    //      fr: "premium",
-    //    })
-    //    .setDescription("Premium Settings")
-    //    .setDescriptionLocalizations({
-    //      de: "Premium-Einstellungen",
-    //      "es-ES": "Configuración prémium",
-    //      fr: "Paramètres premium",
-    //    });
-//
-    //  return cmd;
-    //}),
+  //.addSubcommand((cmd) => {
+  //  cmd
+  //    .setName("premium")
+  //    .setNameLocalizations({
+  //      de: "premium",
+  //      "es-ES": "prémium",
+  //      fr: "premium",
+  //    })
+  //    .setDescription("Premium Settings")
+  //    .setDescriptionLocalizations({
+  //      de: "Premium-Einstellungen",
+  //      "es-ES": "Configuración prémium",
+  //      fr: "Paramètres premium",
+  //    });
+  //
+  //  return cmd;
+  //}),
   execute: async (interaction, client, guildDb) => {
     const memberHasPermissions = (
       interaction.member?.permissions as Readonly<PermissionsBitField>
@@ -129,9 +129,9 @@ const command: ChatInputCommand = {
       welcome: {
         fileName: "welcomes",
       },
-     //premium: {
-     //  fileName: "premium",
-     //},
+      //premium: {
+      //  fileName: "premium",
+      //},
     };
 
     const subCommand =
