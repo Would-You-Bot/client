@@ -18,7 +18,7 @@ export default async function settingsGeneral(
   const premiumEmbed = new EmbedBuilder()
     .setTitle(`Premium`)
     .setDescription(
-      `${client.translation.get(guildDb?.language, "Premium.tier", { type: premium.tierName })}`, //TODO: Make this work with improved premium handler
+      `${client.translation.get(guildDb?.language, "Premium.tier", { type: premium.type })}`, //TODO: Make this work with improved premium handler
     )
     .setColor("#0598F6")
     .setFooter({
