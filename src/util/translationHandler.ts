@@ -118,7 +118,11 @@ export default class TranslationHandler {
    * @example
    * const translation = getTranslation('en_EN', 'commands.ping.pong', {ping: 100});
    */
-  get(language: string, translationPath: string, placeholders: Record<string, any> = {}): string {
+  get(
+    language: string,
+    translationPath: string,
+    placeholders: Record<string, any> = {},
+  ): string {
     if (!language) language = "en_EN";
 
     const languageData: Record<string, any> = this.getLanguage(language);
@@ -126,51 +130,51 @@ export default class TranslationHandler {
     let currentTranslation = null;
 
     if (pathSegments.length > 0) {
-        for (const segment of pathSegments) {
-            try {
-                if (!currentTranslation) {
-                    if (!languageData.hasOwnProperty(segment)) break;
-                    currentTranslation = languageData[segment];
-                } else {
-                    if (!currentTranslation.hasOwnProperty(segment)) break;
-                    currentTranslation = currentTranslation[segment];
-                }
-            } catch (err) {
-                captureException(err);
-                break;
-            }
+      for (const segment of pathSegments) {
+        try {
+          if (!currentTranslation) {
+            if (!languageData.hasOwnProperty(segment)) break;
+            currentTranslation = languageData[segment];
+          } else {
+            if (!currentTranslation.hasOwnProperty(segment)) break;
+            currentTranslation = currentTranslation[segment];
+          }
+        } catch (err) {
+          captureException(err);
+          break;
         }
+      }
     } else {
-        if (language !== "en_EN") {
-            return this.get("en_EN", translationPath, placeholders);
-        } else {
-            return translationPath;
-        }
+      if (language !== "en_EN") {
+        return this.get("en_EN", translationPath, placeholders);
+      } else {
+        return translationPath;
+      }
     }
 
     if (!currentTranslation) {
-        if (language !== "en_EN") {
-            // Check if "en_EN" also doesn't have the translation
-            const enTranslation = this.get("en_EN", translationPath, placeholders);
-            if (enTranslation === translationPath) {
-                // If "en_EN" also doesn't have the translation, return the path
-                return translationPath;
-            } else {
-                // If "en_EN" has the translation, return it
-                return enTranslation;
-            }
+      if (language !== "en_EN") {
+        // Check if "en_EN" also doesn't have the translation
+        const enTranslation = this.get("en_EN", translationPath, placeholders);
+        if (enTranslation === translationPath) {
+          // If "en_EN" also doesn't have the translation, return the path
+          return translationPath;
         } else {
-            return translationPath;
+          // If "en_EN" has the translation, return it
+          return enTranslation;
         }
+      } else {
+        return translationPath;
+      }
     }
 
     if (placeholders) {
-        return currentTranslation.replace(
-            /{(\w+)}/g,
-            (match: string, key: string) => placeholders[key] ?? match
-        );
+      return currentTranslation.replace(
+        /{(\w+)}/g,
+        (match: string, key: string) => placeholders[key] ?? match,
+      );
     }
 
     return currentTranslation;
-}
+  }
 }
