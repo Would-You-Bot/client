@@ -160,6 +160,28 @@ export default class Voting {
     return true;
   }
 
+  async getRawVotingResults(id: string) {
+    const vote = await this.getVoting(id);
+    if (!vote) return false;
+
+    let g;
+    if (vote.guildId !== null && typeof vote.guildId === "string")
+      g = this.client.database.getGuild(String(vote.guildId));
+
+    const all_votes = Number(
+      vote.votes.op_one?.length + vote.votes.op_two?.length,
+    );
+    const option_1 = Number(vote.votes.op_one?.length);
+    const option_2 = Number(vote.votes.op_two?.length);
+
+    return {
+      votes: vote.votes,
+      all_votes,
+      option_1,
+      option_2,
+    };
+  }
+
   async getVotingResults(id: string) {
     const vote = await this.getVoting(id);
     if (!vote) return false;
