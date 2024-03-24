@@ -14,11 +14,11 @@ export default async function settingsGeneral(
   client: WouldYou,
   guildDb: IGuildModel,
 ) {
-  const prem = await client.premium.check(interaction.guildId);
-  const premium = new EmbedBuilder()
+  const premium = await client.premium.check(interaction.guildId);
+  const premiumEmbed = new EmbedBuilder()
     .setTitle(`Premium`)
     .setDescription(
-      `${client.translation.get(guildDb?.language, "Premium.tier", { type: prem.tierName })}`, //TODO: Make this work with improved premium handler
+      `${client.translation.get(guildDb?.language, "Premium.tier", { type: premium.tierName })}`, //TODO: Make this work with improved premium handler
     )
     .setColor("#0598F6")
     .setFooter({
@@ -35,7 +35,7 @@ export default async function settingsGeneral(
     );
 
   interaction.reply({
-    embeds: [premium],
+    embeds: [premiumEmbed],
     components: [premiumTiers],
     ephemeral: true,
   });
