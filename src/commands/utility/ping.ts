@@ -12,7 +12,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("Displays the clients ping")
+    .setDescription("Checks how fast the bot responds")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Zeigt den Ping des Clients an",

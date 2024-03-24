@@ -7,11 +7,11 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("info")
-    .setDescription("Shows information about the bot.")
+    .setDescription("Gives you information about the bot")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Zeigt einige Informationen über den Bot.",
-      "es-ES": "Muestra información sobre el bot.",
+      de: "Zeigt einige Informationen über den Bot",
+      "es-ES": "Muestra información sobre el bot",
       fr: "Affiche des informations sur le bot",
     }),
   /**

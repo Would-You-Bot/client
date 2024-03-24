@@ -6,10 +6,10 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("vote")
-    .setDescription("Vote for me!")
+    .setDescription("Lets you vote for 'Would You'")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Stimme für mich ab!",
+      de: "Läst dich für den Bot abstimmen",
       "es-ES": "¡Vota por mí!",
       fr: "Votez pour le bot pour nous soutenir",
     }),

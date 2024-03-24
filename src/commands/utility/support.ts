@@ -12,7 +12,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("support")
-    .setDescription("Link to our support server")
+    .setDescription("Gives you a link to get help")
     .setDMPermission(true)
     .setDescriptionLocalizations({
       de: "Link zu unserem Support Server",

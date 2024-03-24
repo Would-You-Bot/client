@@ -40,6 +40,11 @@ export interface IQueueMessage {
     token: string | null;
   };
   channelId: string | null;
+  retries: number;
+  location: {
+    shard: number;
+    cluster: number;
+  };
 }
 export type Result<T, E extends Error = Error> =
   | { success: true; result: T }

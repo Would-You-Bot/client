@@ -15,10 +15,10 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("neverhaveiever")
-    .setDescription("Get a never have I ever message.")
+    .setDescription("Gives you a 'Never Have I Ever' question")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Bekomme eine nie habe ich jemals Nachricht.",
+      de: "Bekomme eine nie habe ich jemals Nachricht",
       "es-ES": "Consigue un mensaje Nunca he tenido",
       fr: "Afficher une question que je n'ai jamais posée",
     }),
@@ -31,41 +31,52 @@ const command: ChatInputCommand = {
 
   execute: async (interaction, client, guildDb) => {
     let { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
-      guildDb.language,
+      guildDb?.language != null ? guildDb.language : "en_EN",
     );
 
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "neverhaveiever",
-    );
+    let dbquestions;
 
     let nererhaveIever = [] as string[];
 
-    if (!dbquestions.length) guildDb.customTypes = "regular";
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter((c) => c.type === "truth");
 
-    switch (guildDb.customTypes) {
-      case "regular":
-        nererhaveIever = shuffle([
-          ...Funny,
-          ...Basic,
-          ...Young,
-          ...Food,
-          ...RuleBreak,
-        ]);
-        break;
-      case "mixed":
-        nererhaveIever = shuffle([
-          ...Funny,
-          ...Basic,
-          ...Young,
-          ...Food,
-          ...RuleBreak,
-          ...dbquestions.map((c) => c.msg),
-        ]);
-        break;
-      case "custom":
-        nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
-        break;
+      if (!dbquestions.length) guildDb.customTypes = "regular";
+
+      switch (guildDb.customTypes) {
+        case "regular":
+          nererhaveIever = shuffle([
+            ...Funny,
+            ...Basic,
+            ...Young,
+            ...Food,
+            ...RuleBreak,
+          ]);
+          break;
+        case "mixed":
+          nererhaveIever = shuffle([
+            ...Funny,
+            ...Basic,
+            ...Young,
+            ...Food,
+            ...RuleBreak,
+            ...dbquestions.map((c) => c.msg),
+          ]);
+          break;
+        case "custom":
+          nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+      nererhaveIever = shuffle([
+        ...Funny,
+        ...Basic,
+        ...Young,
+        ...Food,
+        ...RuleBreak,
+      ]);
     }
+
     const Random = Math.floor(Math.random() * nererhaveIever.length);
 
     let ratherembed = new EmbedBuilder()

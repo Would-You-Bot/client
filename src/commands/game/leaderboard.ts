@@ -7,7 +7,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("leaderboard")
-    .setDescription("Displays the leaderboard for a game")
+    .setDescription("Shows the top scores for a game")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Zeigt die Rangliste für ein Spiel an",
@@ -132,6 +132,13 @@ const command: ChatInputCommand = {
             break;
 
           case "local":
+            if (!interaction.guild) {
+              interaction.reply({
+                ephemeral: true,
+                content: `If you would like to check a server's leaderboard, run this in a server you and the bot share!`,
+              });
+              return;
+            }
             data = await Promise.all(
               guildDb.gameScores
                 .sort((a: any, b: any) => b.higherlower - a.higherlower)

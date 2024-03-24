@@ -14,12 +14,12 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("privacy")
-    .setDescription("Privacy settings")
+    .setDescription("Changes your privacy settings")
     .setDMPermission(false)
     .setDescriptionLocalizations({
-      de: "Lorem ipsum",
-      "es-ES": "Lorem ipsum",
-      fr: "Lorem ipsum",
+      de: "Ändert deine Datenschutzeinstellungen",
+      "es-ES": "Cambia tu configuración de privacidad",
+      fr: "Modifie vos paramètres de confidentialité",
     }),
 
   /**
@@ -29,26 +29,24 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
+    const language = guildDb?.language != null ? guildDb.language : "en_EN";
     const db = await client.database.getUser(interaction.user.id);
 
     const setting = new EmbedBuilder()
-      .setTitle(client.translation.get(guildDb?.language, "Privacy.settings"))
+      .setTitle(client.translation.get(language, "Privacy.settings"))
       .setDescription(
         `${client.translation.get(
-          guildDb?.language,
+          language,
           "Privacy.desc",
-        )}\n\n${client.translation.get(guildDb?.language, "Privacy.status")} ${
+        )}\n\n${client.translation.get(language, "Privacy.status")} ${
           db?.votePrivacy
-            ? client.translation.get(guildDb?.language, "Privacy.on")
-            : client.translation.get(guildDb?.language, "Privacy.off")
+            ? client.translation.get(language, "Privacy.on")
+            : client.translation.get(language, "Privacy.off")
         }`,
       )
       .setColor("#0598F6")
       .setFooter({
-        text: client.translation.get(
-          guildDb?.language,
-          "Settings.embed.footer",
-        ),
+        text: client.translation.get(language, "Settings.embed.footer"),
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 

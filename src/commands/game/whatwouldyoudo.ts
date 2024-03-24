@@ -15,7 +15,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("whatwouldyoudo")
-    .setDescription("What would you do in this situation")
+    .setDescription("Gives you a 'What Would You Do' question")
     .setDMPermission(false)
     .setDescriptionLocalizations({
       de: "Was würdest du in dieser Situation tun",
@@ -28,29 +28,32 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    let WhatYouDo = await getWwyd(guildDb.language);
-
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wwyd",
+    let WWYD = await getWwyd(
+      guildDb?.language != null ? guildDb.language : "en_EN",
     );
+
+    let dbquestions;
 
     let whatwouldyoudo = [] as string[];
 
-    if (!dbquestions.length) guildDb.customTypes = "regular";
+    if (guildDb != null) {
+      dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
 
-    switch (guildDb.customTypes) {
-      case "regular":
-        whatwouldyoudo = shuffle([...WhatYouDo]);
-        break;
-      case "mixed":
-        whatwouldyoudo = shuffle([
-          ...WhatYouDo,
-          ...dbquestions.map((c) => c.msg),
-        ]);
-        break;
-      case "custom":
-        whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
-        break;
+      if (!dbquestions.length) guildDb.customTypes = "regular";
+
+      switch (guildDb.customTypes) {
+        case "regular":
+          whatwouldyoudo = shuffle([...WWYD]);
+          break;
+        case "mixed":
+          whatwouldyoudo = shuffle([...WWYD, ...dbquestions.map((c) => c.msg)]);
+          break;
+        case "custom":
+          whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
+          break;
+      }
+    } else {
+      whatwouldyoudo = shuffle([...WWYD]);
     }
 
     const Random = Math.floor(Math.random() * whatwouldyoudo.length);
@@ -80,6 +83,7 @@ const command: ChatInputCommand = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
+        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false)
         .setCustomId(`wwyd`),
     ]);
 

@@ -43,9 +43,12 @@ You can run the below scripts with `pnpm <script>`.
 | `dev`          | Runs the code using nodemon in dev mode                              |
 | `format`       | Formats the code.                                                    |
 
+
 ### Discord logs
 
 Logs are also sent to Discord to allow for easier and more accessible debugging, as not everyone will have access to the host system, especially in production. The channels for the different log levels are defined in the `.env` file.
+# Docker deployment
+For a guide regarding the deployment on our production server go to [this link](https://github.com/Would-You-Bot/config)
 
 # Project Details
 
