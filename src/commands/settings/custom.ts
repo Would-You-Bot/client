@@ -36,6 +36,7 @@ const command: ChatInputCommand = {
     .setName("custom")
     .setDescription("Lets you manage your own questions")
     .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: "Fügt eigene WouldYou Fragen hinzu",
       "es-ES": "Añade mensajes Would You personalizados",

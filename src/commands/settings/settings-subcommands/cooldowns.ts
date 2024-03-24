@@ -65,7 +65,7 @@ export default async function settingsGeneral(
 
   // First button row
   // Deals with: replay type, replay by
-  const generalButtons =
+  const cooldownButtons =
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("replayType")
@@ -144,7 +144,7 @@ export default async function settingsGeneral(
   await interaction
     .reply({
       embeds: [emb],
-      components: [generalButtons, setDeleteButtons],
+      components: [cooldownButtons, setDeleteButtons],
       ephemeral: true,
     })
     .catch((err) => {

@@ -13,6 +13,7 @@ const command: ChatInputCommand = {
     .setName("language")
     .setDescription("Changes the language for your server")
     .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: "Ändere die Sprache für den aktuellen Server",
       "es-ES": "Cambiar el idioma del bot en el servidor",
