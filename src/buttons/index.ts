@@ -126,6 +126,8 @@ const buttonInteractionEvent: Event = {
       "paginateNext",
       "paginatePrev",
       "privacy",
+      "viewHelp",
+      "viewCommands",
     ];
 
     const isExcludedButton = excludedButtons.includes(interaction.customId);
