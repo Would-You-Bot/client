@@ -7,10 +7,9 @@ import {
   bold,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
 
-import { getWwyd } from "../../util/Functions/jsonImport";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const button: Button = {
   name: "wwyd",
@@ -43,44 +42,17 @@ const button: Button = {
       }
     }
 
-    let WhatYouDo = await getWwyd(
-      guildDb?.language != null ? guildDb.language : "en_EN",
-    );
-    let dbquestions;
-
-    let whatwouldyoudo = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          whatwouldyoudo = shuffle([...WhatYouDo]);
-          break;
-        case "mixed":
-          whatwouldyoudo = shuffle([
-            ...WhatYouDo,
-            ...dbquestions.map((c) => c.msg),
-          ]);
-          break;
-        case "custom":
-          whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      whatwouldyoudo = shuffle([...WhatYouDo]);
-    }
-
-    const Random = Math.floor(Math.random() * whatwouldyoudo.length);
+    let WWYD = await getQuestionsByType( "whatwouldyoudo", 
+    guildDb != null ? guildDb : null,
+  );
 
     const wwydembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL(),
+        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${WWYD.id}`,
+        iconURL: interaction.user.displayAvatarURL() || undefined,
       })
-      .setDescription(bold(whatwouldyoudo[Random]));
+      .setDescription(bold(WWYD.question));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {

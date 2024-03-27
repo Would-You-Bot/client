@@ -9,7 +9,7 @@ import {
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
-import { getWwyd } from "../../util/Functions/jsonImport";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -28,43 +28,17 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    let WWYD = await getWwyd(
-      guildDb?.language != null ? guildDb.language : "en_EN",
-    );
-
-    let dbquestions;
-
-    let whatwouldyoudo = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
-
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          whatwouldyoudo = shuffle([...WWYD]);
-          break;
-        case "mixed":
-          whatwouldyoudo = shuffle([...WWYD, ...dbquestions.map((c) => c.msg)]);
-          break;
-        case "custom":
-          whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      whatwouldyoudo = shuffle([...WWYD]);
-    }
-
-    const Random = Math.floor(Math.random() * whatwouldyoudo.length);
+    let WWYD = await getQuestionsByType( "whatwouldyoudo", 
+    guildDb != null ? guildDb : null,
+  );
 
     const wwydembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${WWYD.id}`,
         iconURL: interaction.user.displayAvatarURL() || undefined,
       })
-      .setDescription(bold(whatwouldyoudo[Random]));
+      .setDescription(bold(WWYD.question));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {

@@ -11,7 +11,7 @@ import { captureException } from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
 
-import { getDare } from "../../util/Functions/jsonImport";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const button: Button = {
   name: "dare",
@@ -44,43 +44,20 @@ const button: Button = {
       }
     }
 
-    let Dare = await getDare(
-      guildDb?.language != null ? guildDb.language : "en_EN",
+    let dare = await getQuestionsByType(
+      "dare",
+      guildDb != null ? guildDb : null,
     );
-
-    let dbquestions;
-
-    let truthordare = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter((c) => c.type === "dare");
-
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          truthordare = shuffle([...Dare]);
-          break;
-        case "mixed":
-          truthordare = shuffle([...Dare, ...dbquestions.map((c) => c.msg)]);
-          break;
-        case "custom":
-          truthordare = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      truthordare = shuffle([...Dare]);
-    }
-
-    const Random = Math.floor(Math.random() * truthordare.length);
 
     const dareembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Dare | ID: ${Random}`,
+        text: `Requested by ${
+          interaction.user.username || "Anonymous"
+        } | Type: Dare | ID: ${dare.id}`,
         iconURL: interaction.user.displayAvatarURL() || undefined,
       })
-      .setDescription(bold(truthordare[Random]));
+      .setDescription(bold(dare.question));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
