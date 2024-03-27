@@ -1,30 +1,16 @@
 import {
   EmbedBuilder,
   ActionRowBuilder,
-  ButtonBuilder,
-  SlashCommandBuilder,
   MessageActionRowComponentBuilder,
+  ButtonBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import { ChatInputCommand } from "../../interfaces";
+import { Button } from "../../interfaces";
 
-const command: ChatInputCommand = {
-  requireGuild: true,
-  data: new SlashCommandBuilder()
-    .setName("help")
-    .setDescription("Shows a list of all the 'Would You' commands")
-    .setDMPermission(false)
-    .setDescriptionLocalizations({
-      de: "Zeigt eine Liste aller Befehle an",
-      "es-ES": "Muestra una lista de cada comando",
-      fr: "Affiche une liste de toutes les commandes",
-    }),
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
+const button: Button = {
+  name: "viewHelp",
   execute: async (interaction, client, guildDb) => {
+
     const commands = await client.application?.commands.fetch({
       withLocalizations: false,
     });
@@ -33,7 +19,6 @@ const command: ChatInputCommand = {
       return commands?.find((command) => command.name === name)?.id;
     };
 
- console.log(getCommandByName("settings"))
     const helpembed = new EmbedBuilder()
       .setColor("#2b2d31")
       .setDescription(
@@ -61,8 +46,7 @@ const command: ChatInputCommand = {
           .setEmoji("➡️"),
       );
     await interaction
-      .reply({
-        content: "discord.gg/vMyXAxEznS",
+      .update({
         embeds: [helpembed],
         components: [button],
       })
@@ -72,4 +56,4 @@ const command: ChatInputCommand = {
   },
 };
 
-export default command;
+export default button;

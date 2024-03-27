@@ -7,10 +7,10 @@ import {
   bold,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
 
-import { getWouldYouRather } from "../../util/Functions/jsonImport";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const button: Button = {
   name: "wouldyourather",
@@ -43,47 +43,17 @@ const button: Button = {
       }
     }
 
-    let General = await getWouldYouRather(
-      guildDb?.language != null ? guildDb.language : "en_EN",
+    let WYR = await getQuestionsByType( "wouldyourather", 
+    guildDb != null ? guildDb : null,
+  );
+
+    const ratherembed = new DefaultGameEmbed(
+      interaction,
+      WYR.id,
+      WYR.question,
+      "wyr",
     );
 
-    let dbquestions;
-
-    let wouldyourather = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter(
-        (c) => c.type === "wouldyourather",
-      );
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          wouldyourather = shuffle([...General]);
-          break;
-        case "mixed":
-          wouldyourather = shuffle([
-            ...General,
-            ...dbquestions.map((c) => c.msg),
-          ]);
-          break;
-        case "custom":
-          wouldyourather = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      wouldyourather = shuffle([...General]);
-    }
-
-    const Random = Math.floor(Math.random() * wouldyourather.length);
-
-    let ratherembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: WYR | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL(),
-      })
-      .setDescription(bold(wouldyourather[Random]));
 
     if (guildDb && !guildDb.replay)
       return interaction.reply({

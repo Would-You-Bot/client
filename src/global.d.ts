@@ -11,6 +11,15 @@ declare global {
     | readonly CanJSON[]
     | { readonly [key: string]: CanJSON }
     | { toJSON(): CanJSON };
+  enum Days {
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY,
+  }
 }
 
 export {};

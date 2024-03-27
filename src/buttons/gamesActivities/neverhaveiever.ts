@@ -10,7 +10,7 @@ import { captureException } from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
 
-import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const button: Button = {
   name: "neverhaveiever",
@@ -42,65 +42,17 @@ const button: Button = {
         }
       }
     }
+    let NHIE = await getQuestionsByType( "neverhaveiever", 
+    guildDb != null ? guildDb : null,
+  );
 
-    let { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
-      guildDb?.language != null ? guildDb.language : "en_EN",
-    );
-
-    let dbquestions;
-
-    let nererhaveIever = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter(
-        (c) => c.type === "neverhaveiever",
-      );
-
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          nererhaveIever = shuffle([
-            ...Funny,
-            ...Basic,
-            ...Young,
-            ...Food,
-            ...RuleBreak,
-          ]);
-          break;
-        case "mixed":
-          nererhaveIever = shuffle([
-            ...Funny,
-            ...Basic,
-            ...Young,
-            ...Food,
-            ...RuleBreak,
-            ...dbquestions.map((c) => c.msg),
-          ]);
-          break;
-        case "custom":
-          nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      nererhaveIever = shuffle([
-        ...Funny,
-        ...Basic,
-        ...Young,
-        ...Food,
-        ...RuleBreak,
-      ]);
-    }
-
-    const Random = Math.floor(Math.random() * nererhaveIever.length);
-
-    let nhiembed = new EmbedBuilder()
+    let nhieEmbed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${NHIE.question}`,
         iconURL: interaction.user.displayAvatarURL() || undefined,
       })
-      .setDescription(bold(nererhaveIever[Random]));
+      .setDescription(bold(NHIE.question));
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
@@ -137,7 +89,7 @@ const button: Button = {
 
     interaction
       .reply({
-        embeds: [nhiembed],
+        embeds: [nhieEmbed],
         components: [row, mainRow],
       })
       .catch((err: Error) => {

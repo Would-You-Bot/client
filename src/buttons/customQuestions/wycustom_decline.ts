@@ -36,7 +36,10 @@ const button: Button = {
           .setCustomId("decline"),
       );
 
-    interaction.update({ embeds: [typeEmbed], components: [button] });
+    interaction.update({
+      embeds: [typeEmbed],
+      components: [button],
+    });
     return;
   },
 };
