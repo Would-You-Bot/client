@@ -160,26 +160,26 @@ const button: Button = {
         })
         .setTimestamp();
 
-        const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-        if (Math.round(Math.random() * 15) < 3) {
-          mainRow.addComponents([
-            new ButtonBuilder()
-              .setLabel("Invite")
-              .setStyle(5)
-              .setEmoji("1009964111045607525")
-              .setURL(
-                "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
-              ),
-          ]);
-        }
+      const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
+      if (Math.round(Math.random() * 15) < 3) {
         mainRow.addComponents([
           new ButtonBuilder()
-            .setLabel("Try Again")
-            .setStyle(1)
-            .setEmoji("1073954835533156402")
-            .setCustomId(`higherlower`)
-            .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
+            .setLabel("Invite")
+            .setStyle(5)
+            .setEmoji("1009964111045607525")
+            .setURL(
+              "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            ),
         ]);
+      }
+      mainRow.addComponents([
+        new ButtonBuilder()
+          .setLabel("Try Again")
+          .setStyle(1)
+          .setEmoji("1073954835533156402")
+          .setCustomId(`higherlower`)
+          .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
+      ]);
 
       const gameImage = new LOSE();
       gameImage.setGame(game);
