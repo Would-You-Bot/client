@@ -1,6 +1,6 @@
 {
   "name": "would-you",
-  "version": "1.3.10",
+  "version": "1.4.11",
   "description": "Would you rather die or use this bot. You got the choice",
   "main": "dist/cluster.js",
   "scripts": {
