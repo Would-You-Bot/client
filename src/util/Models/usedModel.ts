@@ -1,6 +1,11 @@
 import { Schema, model } from "mongoose";
-export interface IShardClusterStore {
+export interface IUsedQuestions {
   guildID: number;
+  truthQuestions: string[];
+  dareQuestions: string[];
+  wwydQuestions: string[];
+  wyrQuestions: string[];
+  nhieQuestions: string[];
 }
 
 const usedQuestionSchema = new Schema({
@@ -31,7 +36,7 @@ const usedQuestionSchema = new Schema({
     },
 });
 
-export const shardClusterStoreModel = model<IShardClusterStore>(
+export const usedQuestionModel = model<IUsedQuestions>(
   "usedQuestions",
   usedQuestionSchema,
 );

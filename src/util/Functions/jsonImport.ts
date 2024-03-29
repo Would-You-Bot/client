@@ -20,6 +20,7 @@ const languageMap: LanguageMapInterface = {
 };
 
 import shuffle from "../shuffle";
+import { markQuestionAsUsed, } from "./queueHandler";
 
 interface QuestionResult {
   id: string;
@@ -45,6 +46,7 @@ interface HigherLowerJsonModel {
   author: string;
   link: string;
 }
+
 
 export async function getHigherLower(): Promise<HigherLowerJsonModel[]> {
   let result = [] as HigherLowerJsonModel[];
@@ -74,6 +76,7 @@ export async function getQuestionsByType(
   if (!validTypes.includes(type)) {
     throw new Error(`Invalid question type: ${type}`);
   }
+
   // TODO: Make this work with the language system
   const normalizedLanguage =
     languageMap[guildDb?.language != null ? guildDb.language : "en_EN"];
@@ -151,6 +154,6 @@ export async function getQuestionsByType(
           : questions[0].translations[normalizedLanguage],
     };
   }
-
+  await markQuestionAsUsed(guildDb?.guildID as unknown as number, result.id, type as string);
   return result;
 }
