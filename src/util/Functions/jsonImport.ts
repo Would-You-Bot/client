@@ -22,7 +22,7 @@ const languageMap: LanguageMapInterface = {
 import shuffle from "../shuffle";
 import { markQuestionAsUsed, } from "./queueHandler";
 
-interface QuestionResult {
+export interface QuestionResult {
   id: string;
   question: string;
 }

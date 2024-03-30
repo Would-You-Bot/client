@@ -9,6 +9,7 @@ import {
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
+import { Questions } from "../../util/Functions/queueHandler";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
@@ -29,9 +30,17 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    let dare = await getQuestionsByType( "dare", 
+    let dare = await getQuestionsByType(
+      "dare",
       guildDb != null ? guildDb : null,
     );
+
+    // if (interaction.guild) {
+    //   dare = await Questions(dare, null, guildDb, {
+    //     quest: "dareQuestions",
+    //     questType: "dare",
+    //   });
+    // }
 
     const dareembed = new EmbedBuilder()
       .setColor("#0598F6")

@@ -1,25 +1,57 @@
-import { usedQuestionModel } from "../Models/usedModel";
+import { usedQuestionModel, IUsedQuestions } from "../Models/usedModel";
+import { getQuestionsByType, QuestionResult } from "../Functions/jsonImport";
+import { IGuildModel } from "../Models/guildModel";
 
-export async function markQuestionAsUsed(guildID: number, question: string, type: string) {
-    const validTypes = ["truth", "dare", "wwyd", "wyr", "nhie"];
+type Quest =
+  | "truthQuestions"
+  | "dareQuestions"
+  | "wwydQuestions"
+  | "nhieQuestions"
+  | "wyrQuestions";
+type QuestType =
+  | "wouldyourather"
+  | "neverhaveiever"
+  | "whatwouldyoudo"
+  | "truth"
+  | "dare";
+let question: any;
 
-    if (!validTypes.includes(type.toLowerCase())) {
-        throw new Error("Invalid question type");
-    }
+export async function markQuestionAsUsed(
+  guildID: number,
+  question: string,
+  type: string,
+) {
+  const validTypes = ["truth", "dare", "wwyd", "wyr", "nhie"];
 
-    try {
-        let questionDoc = await usedQuestionModel.findOneAndUpdate(
-            { 
-                guildID, 
-                [`${type}Questions`]: { $ne: question } // Check for non-existence 
-            },
-            { $push: { [`${type}Questions`]: question } },
-            { new: true, upsert: true }
-        );
+  if (!validTypes.includes(type.toLowerCase())) {
+    throw new Error("Invalid question type");
+  }
 
-        return questionDoc;
-    } catch (error) {
-        return true;
-        console.error("Error marking question as used:", error);
-    }
+  try {
+    let questionDoc = await usedQuestionModel.findOneAndUpdate(
+      {
+        guildID,
+        [`${type}Questions`]: { $ne: question }, // Check for non-existence
+      },
+      { $push: { [`${type}Questions`]: question } },
+      { new: true, upsert: true },
+    );
+
+    return questionDoc;
+  } catch (error) {
+    return true;
+    console.error("Error marking question as used:", error);
+  }
+}
+
+export async function Questions(
+  chose: QuestionResult,
+  guild: IUsedQuestions | null,
+  guildDb: IGuildModel | null,
+  type: { quest: Quest; questType: QuestType },
+) {
+  if (!guild)
+        guild = await usedQuestionModel.findOne({ guildID: guildDb?.guildID });
+    
+
 }
