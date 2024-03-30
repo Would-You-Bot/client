@@ -17,6 +17,7 @@ const button: Button = {
   name: "dare",
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
+      await interaction.message.edit({ components: [] });
       if (interaction.channel.isThread()) {
         if (
           !interaction.channel
@@ -104,8 +105,7 @@ const button: Button = {
       new ButtonBuilder().setLabel("Dare").setStyle(4).setCustomId("dare"),
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
-
-    interaction
+    await interaction
       .reply({ embeds: [dareembed], components: components })
       .catch((err: Error) => {
         captureException(err);

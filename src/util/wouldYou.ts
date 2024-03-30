@@ -4,6 +4,7 @@ import {
   GatewayIntentBits,
   Collection,
   LimitedCollection,
+  Partials,
 } from "discord.js";
 import { getInfo, ClusterClient } from "discord-hybrid-sharding";
 
@@ -48,7 +49,9 @@ export default class WouldYou extends Client {
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.DirectMessages,
       ],
+      partials: [Partials.Channel, Partials.Message],
       makeCache: (manager) => {
         switch (manager.name) {
           case "ThreadMemberManager":
@@ -65,15 +68,16 @@ export default class WouldYou extends Client {
           case "ReactionUserManager":
           case "VoiceStateManager":
           case "AutoModerationRuleManager":
+          case "ReactionManager":
             return new LimitedCollection({ maxSize: 0 });
           case "GuildMemberManager":
             return new LimitedCollection({
-              maxSize: 20000,
+              maxSize: 15000,
               keepOverLimit: (member) => member.id === member.client.user.id,
             });
           case "UserManager":
             return new LimitedCollection({
-              maxSize: 20000,
+              maxSize: 15000,
               keepOverLimit: (user) => user.id === user.client.user.id,
             });
           default:
