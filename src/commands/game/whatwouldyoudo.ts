@@ -9,6 +9,7 @@ import {
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
+import { Questions } from "../../util/Functions/queueHandler";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
@@ -28,9 +29,17 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    let WWYD = await getQuestionsByType( "whatwouldyoudo", 
-    guildDb != null ? guildDb : null,
-  );
+    let WWYD = await getQuestionsByType(
+      "whatwouldyoudo",
+      guildDb != null ? guildDb : null,
+    );
+
+    if (interaction.guild) {
+      WWYD = await Questions(WWYD, null, guildDb, {
+        quest: "wwydQuestions",
+        questType: "whatwouldyoudo",
+      });
+    }
 
     const wwydembed = new EmbedBuilder()
       .setColor("#0598F6")

@@ -9,6 +9,7 @@ import {
 import { captureException } from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { ChatInputCommand } from "../../interfaces";
+import { Questions } from "../../util/Functions/queueHandler";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
@@ -32,12 +33,19 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     let NHIE = await getQuestionsByType( "neverhaveiever", 
     guildDb != null ? guildDb : null,
-  );
+    );
+    
+        if (interaction.guild) {
+          NHIE = await Questions(NHIE, null, guildDb, {
+            quest: "nhieQuestions",
+            questType: "neverhaveiever",
+          });
+        }
 
     let nhieEmbed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${NHIE.question}`,
+        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${NHIE.id}`,
         iconURL: interaction.user.displayAvatarURL() || undefined,
       })
       .setDescription(bold(NHIE.question));

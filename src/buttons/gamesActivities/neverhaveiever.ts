@@ -49,7 +49,7 @@ const button: Button = {
     let nhieEmbed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${NHIE.question}`,
+        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${NHIE.id}`,
         iconURL: interaction.user.displayAvatarURL() || undefined,
       })
       .setDescription(bold(NHIE.question));

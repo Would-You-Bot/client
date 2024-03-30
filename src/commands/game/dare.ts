@@ -35,12 +35,12 @@ const command: ChatInputCommand = {
       guildDb != null ? guildDb : null,
     );
 
-    // if (interaction.guild) {
-    //   dare = await Questions(dare, null, guildDb, {
-    //     quest: "dareQuestions",
-    //     questType: "dare",
-    //   });
-    // }
+    if (interaction.guild) {
+      dare = await Questions(dare, null, guildDb, {
+        quest: "dareQuestions",
+        questType: "dare",
+      });
+    }
 
     const dareembed = new EmbedBuilder()
       .setColor("#0598F6")

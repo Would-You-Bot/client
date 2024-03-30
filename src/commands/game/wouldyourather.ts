@@ -34,12 +34,12 @@ const command: ChatInputCommand = {
       guildDb != null ? guildDb : null,
     );
 
-    // if (interaction.guild) {
-    //   WYR = await Questions(WYR, null, guildDb, {
-    //     quest: "wyrQuestions",
-    //     questType: "wouldyourather",
-    //   });
-    // }
+    if (interaction.guild) {
+      WYR = await Questions(WYR, null, guildDb, {
+        quest: "wyrQuestions",
+        questType: "wouldyourather",
+      });
+    }
 
     const ratherembed = new DefaultGameEmbed(
       interaction,
