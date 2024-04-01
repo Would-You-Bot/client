@@ -94,11 +94,7 @@ export default async function settingsGeneral(
   if (guildDb.replayType === "Channels") {
     setDeleteButtons.addComponents(
       new ButtonBuilder()
-        .setCustomId(
-          guildDb.replayType === "Channels"
-            ? "replayChannels"
-            : "replayCooldown",
-        )
+        .setCustomId("replayChannels")
         .setEmoji("1185973661736374405")
         .setLabel(
           client.translation.get(
@@ -123,11 +119,7 @@ export default async function settingsGeneral(
   } else {
     setDeleteButtons.addComponents(
       new ButtonBuilder()
-        .setCustomId(
-          guildDb.replayType === "Channels"
-            ? "replayChannels"
-            : "replayCooldown",
-        )
+        .setCustomId("replayCooldown")
         .setEmoji("1185973661736374405")
         .setLabel(
           client.translation.get(

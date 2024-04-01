@@ -94,11 +94,7 @@ const button: Button = {
       setDeleteButtons =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
           new ButtonBuilder()
-            .setCustomId(
-              guildDb.replayType === "Channels"
-                ? "replayChannels"
-                : "replayCooldown",
-            )
+            .setCustomId("replayChannels")
             .setEmoji("1185973661736374405")
             .setLabel(
               client.translation.get(
@@ -126,11 +122,7 @@ const button: Button = {
       setDeleteButtons =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
           new ButtonBuilder()
-            .setCustomId(
-              guildDb.replayType === "Channels"
-                ? "replayChannels"
-                : "replayCooldown",
-            )
+            .setCustomId("replayCooldown")
             .setEmoji("1185973661736374405")
             .setLabel(
               client.translation.get(

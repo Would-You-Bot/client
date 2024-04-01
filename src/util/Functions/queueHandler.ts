@@ -36,7 +36,6 @@ const models: { [key: string]: any } = {
   dare: dareModel,
   whatwouldyoudo: wwydModel,
 };
-let question: any;
 
 export async function markQuestionAsUsed(
   guildID: number,
@@ -72,6 +71,16 @@ export async function markQuestionAsUsed(
   }
 }
 
+async function reset(
+  guildID: string,
+  type: { quest: Quest; questType: QuestType },
+) {
+  await usedQuestionModel.findOneAndUpdate(
+    { guildID },
+    { $set: { [`${typeCheck[type.questType]}Questions`]: [] } },
+  );
+}
+
 export async function Questions(
   chose: QuestionResult,
   guild: IUsedQuestions | null,
@@ -79,17 +88,21 @@ export async function Questions(
   type: { quest: Quest; questType: QuestType },
   num: number = 0,
 ) {
+  let question: any;
   if (!guild)
     guild = await usedQuestionModel.findOne({ guildID: guildDb?.guildID });
-  question = await models[type.questType.toLowerCase()].aggregate([
+  let modal = await models[type.questType.toLowerCase()].aggregate([
     { $sample: { size: 1 } },
   ]);
-  question = question.filter(
+  question = modal.filter(
     (questionId: string) => !guild![type.quest].includes(questionId),
   );
   question = shuffle([...question]);
   const Random = Math.floor(Math.random() * question.length);
   question = question[Random];
+
+  if (!guild![type.quest].length >= modal.length)
+    reset(guildDb?.guildID!, type);
   if (guild![type.quest].includes(chose.id)) {
     return Questions(question, guild, guildDb, type, num++);
   } else {

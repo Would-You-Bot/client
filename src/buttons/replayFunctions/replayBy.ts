@@ -89,61 +89,52 @@ const button: Button = {
           .setEmoji("1207778786976989244"),
       );
 
-    let setDeleteButtons;
+    const setDeleteButtons =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (guildDb.replayType === "Channels") {
-      setDeleteButtons =
-        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-          new ButtonBuilder()
-            .setCustomId(
-              guildDb.replayType === "Channels"
-                ? "replayChannels"
-                : "replayCooldown",
-            )
-            .setEmoji("1185973661736374405")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.replayCooldown",
-              ),
-            )
-            .setStyle(
-              guildDb.replayCooldown
-                ? ButtonStyle.Success
-                : ButtonStyle.Secondary,
+      setDeleteButtons.addComponents(
+        new ButtonBuilder()
+          .setCustomId("replayChannels")
+          .setEmoji("1185973661736374405")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.replayCooldown",
             ),
-          new ButtonBuilder()
-            .setCustomId("replayDeleteChannels")
-            .setEmoji("1207774452230787182")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.replayDeleteChannels",
-              ),
-            )
-            .setStyle(ButtonStyle.Danger),
-        );
+          )
+          .setStyle(
+            guildDb.replayCooldown
+              ? ButtonStyle.Success
+              : ButtonStyle.Secondary,
+          ),
+        new ButtonBuilder()
+          .setCustomId("replayDeleteChannels")
+          .setEmoji("1207774452230787182")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.replayDeleteChannels",
+            ),
+          )
+          .setStyle(ButtonStyle.Danger),
+      );
     } else {
-      setDeleteButtons =
-        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-          new ButtonBuilder()
-            .setCustomId(
-              guildDb.replayType === "Channels"
-                ? "replayChannels"
-                : "replayCooldown",
-            )
-            .setEmoji("1185973661736374405")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.replayCooldown",
-              ),
-            )
-            .setStyle(
-              guildDb.replayCooldown
-                ? ButtonStyle.Success
-                : ButtonStyle.Secondary,
+      setDeleteButtons.addComponents(
+        new ButtonBuilder()
+          .setCustomId("replayCooldown")
+          .setEmoji("1185973661736374405")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.replayCooldown",
             ),
-        );
+          )
+          .setStyle(
+            guildDb.replayCooldown
+              ? ButtonStyle.Success
+              : ButtonStyle.Secondary,
+          ),
+      );
     }
 
     await client.database.updateGuild(interaction.guild?.id || "", {
