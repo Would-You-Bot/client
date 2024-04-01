@@ -75,7 +75,7 @@ async function reset(
   guildID: string,
   type: { quest: Quest; questType: QuestType },
 ) {
-  await usedQuestionModel.findOneAndUpdate(
+  return await usedQuestionModel.findOneAndUpdate(
     { guildID },
     { $set: { [`${typeCheck[type.questType]}Questions`]: [] } },
   );
