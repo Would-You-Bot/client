@@ -120,11 +120,11 @@ const command: ChatInputCommand = {
     }
 
     const subCommands = {
-      cooldown: {
+      cooldowns: {
         fileName: "cooldowns",
       },
-      "daily-messages": {
-        fileName: "dailyMsgs",
+      qotd: {
+        fileName: "qotd",
       },
       welcome: {
         fileName: "welcomes",
@@ -133,7 +133,6 @@ const command: ChatInputCommand = {
       //  fileName: "premium",
       //},
     };
-
     const subCommand =
       interaction.options.getSubcommand() as keyof typeof subCommands;
 
