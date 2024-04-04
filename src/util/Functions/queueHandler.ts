@@ -66,8 +66,8 @@ export async function markQuestionAsUsed(
 
     return questionDoc;
   } catch (error) {
-    return true;
     console.error("Error marking question as used:", error);
+    return true;
   }
 }
 
