@@ -36,10 +36,11 @@ const command: ChatInputCommand = {
     );
 
     if (interaction.guild) {
-      dare = await Questions(dare, null, guildDb, {
+      const updatedDare = await Questions(dare, null, guildDb, {
         quest: "dareQuestions",
         questType: "dare",
       });
+      dare = updatedDare || dare;
     }
 
     const dareembed = new EmbedBuilder()

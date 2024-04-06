@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 export interface IUsedQuestions {
-  guildID: number;
+  guildID: string;
   truthQuestions: string[];
   dareQuestions: string[];
   wwydQuestions: string[];
@@ -10,7 +10,7 @@ export interface IUsedQuestions {
 
 const usedQuestionSchema = new Schema({
     guildID: {
-        type: Number,
+        type: String,
         require: true,
         unique: true,
     },

@@ -9,6 +9,7 @@ import shuffle from "../shuffle";
 import { IGuildModel } from "../Models/guildModel";
 import { usedQuestionModel, IUsedQuestions } from "../Models/usedModel";
 import { getQuestionsByType, QuestionResult } from "../Functions/jsonImport";
+import { Error as MongooseError } from "mongoose";
 
 type Quest =
   | "truthQuestions"
@@ -38,7 +39,7 @@ const models: { [key: string]: any } = {
 };
 
 export async function markQuestionAsUsed(
-  guildID: number,
+  guildID: string,
   question: string,
   type: string,
 ) {
@@ -65,8 +66,11 @@ export async function markQuestionAsUsed(
     );
 
     return questionDoc;
-  } catch (error) {
-    console.error("Error marking question as used:", error);
+  } catch (error: MongooseError | any) {
+    if (error.codeName === "DuplicateKey" && error.code === 11000) {
+      console.log("Duplicate key error, resetting the questions");
+      reset(guildID, { quest: type as Quest, questType: type as QuestType });
+    }
     return true;
   }
 }
@@ -88,31 +92,35 @@ export async function Questions(
   type: { quest: Quest; questType: QuestType },
   num: number = 0,
 ) {
-  let question: any;
   if (!guild)
     guild = await usedQuestionModel.findOne({ guildID: guildDb?.guildID });
-  let modal = await models[type.questType.toLowerCase()].aggregate([
+
+  const modal = await models[type.questType.toLowerCase()].aggregate([
     { $sample: { size: 1 } },
   ]);
-  question = modal.filter(
+
+  const unusedQuestions = modal.filter(
     (questionId: string) => !guild![type.quest].includes(questionId),
   );
-  question = shuffle([...question]);
-  const Random = Math.floor(Math.random() * question.length);
-  question = question[Random];
-
-  if (!guild![type.quest].length >= modal.length)
+  
+  if (!unusedQuestions.length) {
+    console.log("All questions have been used");
     reset(guildDb?.guildID!, type);
-  if (guild![type.quest].includes(chose.id)) {
-    return Questions(question, guild, guildDb, type, num++);
-  } else {
-    if (num > 0)
-      await markQuestionAsUsed(
-        guildDb?.guildID as unknown as number,
-        chose.id,
-        type.questType,
-      );
+    return;
+  }
 
+  const shuffledQuestion = shuffle([...unusedQuestions]);
+  const randomIndex = Math.floor(Math.random() * shuffledQuestion.length);
+  const question = shuffledQuestion[randomIndex];
+  
+  console.log(num);
+
+  if (guild![type.quest].includes(chose.id)) {
+    return await Questions(question, guild, guildDb, type, num + 1);
+  } else {
+    if (num > 0) {
+      await markQuestionAsUsed(guildDb!.guildID!, chose.id, type.questType);
+    }
     return chose;
   }
 }

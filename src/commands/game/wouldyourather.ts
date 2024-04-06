@@ -35,6 +35,7 @@ const command: ChatInputCommand = {
     );
 
     if (interaction.guild) {
+      // @ts-ignore
       WYR = await Questions(WYR, null, guildDb, {
         quest: "wyrQuestions",
         questType: "wouldyourather",

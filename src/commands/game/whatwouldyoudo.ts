@@ -35,6 +35,7 @@ const command: ChatInputCommand = {
     );
 
     if (interaction.guild) {
+      // @ts-ignore
       WWYD = await Questions(WWYD, null, guildDb, {
         quest: "wwydQuestions",
         questType: "whatwouldyoudo",

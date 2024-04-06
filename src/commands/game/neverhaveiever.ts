@@ -36,6 +36,7 @@ const command: ChatInputCommand = {
     );
     
         if (interaction.guild) {
+          // @ts-ignore
           NHIE = await Questions(NHIE, null, guildDb, {
             quest: "nhieQuestions",
             questType: "neverhaveiever",

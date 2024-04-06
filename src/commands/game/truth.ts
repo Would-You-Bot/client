@@ -36,6 +36,7 @@ const command: ChatInputCommand = {
     );
 
     if (interaction.guild) {
+      // @ts-ignore
       truth = await Questions(truth, null, guildDb, {
         quest: "truthQuestions",
         questType: "truth",

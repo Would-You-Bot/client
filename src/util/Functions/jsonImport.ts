@@ -154,6 +154,6 @@ export async function getQuestionsByType(
           : questions[0].translations[normalizedLanguage],
     };
   }
-  await markQuestionAsUsed(guildDb?.guildID as unknown as number, result.id, type as string);
+  await markQuestionAsUsed(guildDb?.guildID as string, result.id, type as string);
   return result;
 }
