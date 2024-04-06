@@ -8,7 +8,6 @@ import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
-import { Questions } from "../../util/Functions/queueHandler";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -33,14 +32,6 @@ const command: ChatInputCommand = {
       "wouldyourather",
       guildDb != null ? guildDb : null,
     );
-
-    if (interaction.guild) {
-      // @ts-ignore
-      WYR = await Questions(WYR, null, guildDb, {
-        quest: "wyrQuestions",
-        questType: "wouldyourather",
-      });
-    }
 
     const ratherembed = new DefaultGameEmbed(
       interaction,

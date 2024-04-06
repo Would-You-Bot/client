@@ -11,14 +11,12 @@ import { usedQuestionModel, IUsedQuestions } from "../Models/usedModel";
 import { getQuestionsByType, QuestionResult } from "../Functions/jsonImport";
 import { Error as MongooseError } from "mongoose";
 
-type Quest =
-  | "truthQuestions"
+type Quest = "truthQuestions"
   | "dareQuestions"
   | "wwydQuestions"
   | "nhieQuestions"
   | "wyrQuestions";
-type QuestType =
-  | "wouldyourather"
+type QuestType = "wouldyourather"
   | "neverhaveiever"
   | "whatwouldyoudo"
   | "truth"
@@ -68,8 +66,8 @@ export async function markQuestionAsUsed(
     return questionDoc;
   } catch (error: MongooseError | any) {
     if (error.codeName === "DuplicateKey" && error.code === 11000) {
-      console.log("Duplicate key error, resetting the questions");
-      reset(guildID, { quest: type as Quest, questType: type as QuestType });
+      console.log(`Duplicate key error, resetting the questions | Guild ID: ${guildID}`);
+      await reset(guildID, { quest: type as Quest, questType: type as QuestType });
     }
     return true;
   }
@@ -92,35 +90,31 @@ export async function Questions(
   type: { quest: Quest; questType: QuestType },
   num: number = 0,
 ) {
-  if (!guild)
-    guild = await usedQuestionModel.findOne({ guildID: guildDb?.guildID });
+  if (!guild) 
+    guild = await usedQuestionModel.findOneAndUpdate({ guildID: guildDb?.guildID }, { $set: { guildID: guildDb?.guildID } }, { new: true, upsert: true });
 
   const modal = await models[type.questType.toLowerCase()].aggregate([
     { $sample: { size: 1 } },
   ]);
 
-  const unusedQuestions = modal.filter(
+  let unusedQuestions = modal.filter(
     (questionId: string) => !guild![type.quest].includes(questionId),
   );
   
-  if (!unusedQuestions.length) {
+  if (unusedQuestions.length === 0) {
     console.log("All questions have been used");
-    reset(guildDb?.guildID!, type);
-    return;
+    await reset(guildDb?.guildID!, type);
+    unusedQuestions = modal;
   }
 
   const shuffledQuestion = shuffle([...unusedQuestions]);
   const randomIndex = Math.floor(Math.random() * shuffledQuestion.length);
   const question = shuffledQuestion[randomIndex];
   
-  console.log(num);
-
   if (guild![type.quest].includes(chose.id)) {
     return await Questions(question, guild, guildDb, type, num + 1);
   } else {
-    if (num > 0) {
-      await markQuestionAsUsed(guildDb!.guildID!, chose.id, type.questType);
-    }
+    await markQuestionAsUsed(guildDb!.guildID!, chose.id, type.questType);
     return chose;
   }
 }

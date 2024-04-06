@@ -42,7 +42,7 @@ const button: Button = {
         }
       }
     }
-    let truth = await getQuestionsByType( "truth", 
+    let truth = await getQuestionsByType("truth", 
     guildDb != null ? guildDb : null,
   );
 

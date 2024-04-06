@@ -9,7 +9,6 @@ import {
 import { captureException } from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { ChatInputCommand } from "../../interfaces";
-import { Questions } from "../../util/Functions/queueHandler";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
@@ -34,14 +33,6 @@ const command: ChatInputCommand = {
     let NHIE = await getQuestionsByType( "neverhaveiever", 
     guildDb != null ? guildDb : null,
     );
-    
-        if (interaction.guild) {
-          // @ts-ignore
-          NHIE = await Questions(NHIE, null, guildDb, {
-            quest: "nhieQuestions",
-            questType: "neverhaveiever",
-          });
-        }
 
     let nhieEmbed = new EmbedBuilder()
       .setColor("#0598F6")

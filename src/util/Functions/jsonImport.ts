@@ -6,6 +6,7 @@ import {
   wwydModel,
 } from "../Models/questionModel";
 import { IGuildModel } from "../Models/guildModel";
+import { Questions } from "../Functions/queueHandler";
 import path from "path";
 
 interface LanguageMapInterface {
@@ -27,6 +28,16 @@ export interface QuestionResult {
   question: string;
 }
 
+type QuestType = "wouldyourather"
+  | "neverhaveiever"
+  | "whatwouldyoudo"
+  | "truth"
+  | "dare";
+type Quest = "truthQuestions"
+  | "dareQuestions"
+  | "wwydQuestions"
+  | "nhieQuestions"
+  | "wyrQuestions";
 const validTypes = [
   "wouldyourather",
   "neverhaveiever",
@@ -34,6 +45,13 @@ const validTypes = [
   "dare",
   "whatwouldyoudo",
 ];
+const typeCheck: { [key: string]: string } = {
+  wouldyourather: "wyrQuestions",
+  neverhaveiever: "nhieQuestions",
+  truth: "truthQuestions",
+  dare: "dareQuestions",
+  whatwouldyoudo: "wwydQuestions",
+};
 
 function getPath(file: string) {
   return path.join(__dirname, "..", "..", "data", file);
@@ -154,6 +172,10 @@ export async function getQuestionsByType(
           : questions[0].translations[normalizedLanguage],
     };
   }
-  await markQuestionAsUsed(guildDb?.guildID as string, result.id, type as string);
+
+  result = await Questions(result, null, guildDb, {
+    quest: typeCheck[type] as Quest,
+    questType: type as QuestType,
+  });
   return result;
 }
