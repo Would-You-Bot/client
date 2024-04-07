@@ -17,7 +17,7 @@ const button: Button = {
   name: "neverhaveiever",
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
-      await interaction.message.edit({ components: [] });
+      await interaction.message.edit({ components: [interaction.message.components[0]] });
       if (interaction.channel.isThread()) {
         if (
           !interaction.channel
@@ -45,7 +45,9 @@ const button: Button = {
       }
     }
 
-    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
+    const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
 
     let { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
       guildDb?.language != null ? guildDb.language : userDb.language,

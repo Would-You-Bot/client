@@ -21,7 +21,9 @@ const button: Button = {
   name: "higherlower",
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
-      await interaction.message.edit({ components: [] });
+      await interaction.message.edit({
+        components: [],
+      });
       if (interaction.channel.isThread()) {
         if (
           !interaction.channel
@@ -50,7 +52,9 @@ const button: Button = {
     }
     await interaction.deferReply();
 
-    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
+    const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
 
     const initembed = new HigherLowerEmbed(interaction, client, guildDb);
 

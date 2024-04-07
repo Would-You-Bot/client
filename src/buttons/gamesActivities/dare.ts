@@ -18,7 +18,9 @@ const button: Button = {
   name: "dare",
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
-      await interaction.message.edit({ components: [] });
+      await interaction.message.edit({
+        components: [],
+      });
       if (interaction.channel.isThread()) {
         if (
           !interaction.channel
@@ -46,7 +48,9 @@ const button: Button = {
       }
     }
 
-    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
+    const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
 
     let Dare = await getDare(
       guildDb?.language != null ? guildDb.language : userDb.language,
