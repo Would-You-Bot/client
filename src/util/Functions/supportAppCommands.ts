@@ -16,7 +16,7 @@ const userCommands = [
   "whatwouldyoudo",
   "leaderboard",
   "privacy",
-  "language"
+  "language",
 ];
 
 export default function supportAppCommands(

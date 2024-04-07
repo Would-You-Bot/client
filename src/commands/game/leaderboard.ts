@@ -38,9 +38,12 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
+    const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
 
-    let language = guildDb?.language != null ? guildDb.language : userDb.language;
+    let language =
+      guildDb?.language != null ? guildDb.language : userDb.language;
 
     switch (interaction.options.getString("game")) {
       case "higherlower":
@@ -70,10 +73,7 @@ const command: ChatInputCommand = {
 
             if (data.length === 0) {
               interaction.reply({
-                content: client.translation.get(
-                  language,
-                  "Leaderboard.none",
-                ),
+                content: client.translation.get(language, "Leaderboard.none"),
               });
               return;
             }
@@ -96,10 +96,7 @@ const command: ChatInputCommand = {
             page.add(
               new EmbedBuilder()
                 .setTitle(
-                  client.translation.get(
-                    language,
-                    "Leaderboard.global",
-                  ),
+                  client.translation.get(language, "Leaderboard.global"),
                 )
                 .setDescription(data.join("\n").toString())
                 .setColor("#0598F6"),
@@ -116,10 +113,7 @@ const command: ChatInputCommand = {
               page.add(
                 new EmbedBuilder()
                   .setTitle(
-                    client.translation.get(
-                      language,
-                      "Leaderboard.global",
-                    ),
+                    client.translation.get(language, "Leaderboard.global"),
                   )
                   .setColor("#0598F6"),
               );
@@ -147,10 +141,7 @@ const command: ChatInputCommand = {
 
             if (data.length === 0) {
               interaction.reply({
-                content: client.translation.get(
-                  language,
-                  "Leaderboard.none",
-                ),
+                content: client.translation.get(language, "Leaderboard.none"),
               });
               return;
             }
@@ -181,10 +172,7 @@ const command: ChatInputCommand = {
               page.add(
                 new EmbedBuilder()
                   .setTitle(
-                    client.translation.get(
-                      language,
-                      "Leaderboard.guild",
-                    ),
+                    client.translation.get(language, "Leaderboard.guild"),
                   )
                   .setDescription(e.slice(0, 10).join("\n").toString())
                   .setColor("#0598F6"),
