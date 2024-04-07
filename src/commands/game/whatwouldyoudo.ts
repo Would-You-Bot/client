@@ -10,6 +10,7 @@ import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 import { getWwyd } from "../../util/Functions/jsonImport";
+import { IUserModel, UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -28,8 +29,11 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
+
+    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
+
     let WWYD = await getWwyd(
-      guildDb?.language != null ? guildDb.language : "en_EN",
+      guildDb?.language != null ? guildDb.language : userDb.language,
     );
 
     let dbquestions;

@@ -9,6 +9,7 @@ import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 import { getWouldYouRather } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { IUserModel, UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -29,8 +30,11 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
+
+    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
+
     let General = await getWouldYouRather(
-      guildDb?.language != null ? guildDb.language : "en_EN",
+      guildDb?.language != null ? guildDb.language : userDb.language,
     );
 
     let dbquestions;

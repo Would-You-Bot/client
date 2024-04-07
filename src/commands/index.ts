@@ -72,6 +72,7 @@ const commandInteractionEvent: Event = {
         "whatwouldyoudo",
         "leaderboard",
         "privacy",
+        "language",
       ];
       if (
         !interaction.guild &&

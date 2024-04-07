@@ -11,6 +11,7 @@ import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
 
 import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
+import { UserModel, IUserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "neverhaveiever",
@@ -44,8 +45,10 @@ const button: Button = {
       }
     }
 
+    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
+
     let { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
-      guildDb?.language != null ? guildDb.language : "en_EN",
+      guildDb?.language != null ? guildDb.language : userDb.language,
     );
 
     let dbquestions;

@@ -10,6 +10,7 @@ import { captureException } from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { ChatInputCommand } from "../../interfaces";
 import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
+import { UserModel, IUserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -30,8 +31,11 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
+
+    let userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
+
     let { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
-      guildDb?.language != null ? guildDb.language : "en_EN",
+      guildDb?.language != null ? guildDb.language : userDb.language,
     );
 
     let dbquestions;

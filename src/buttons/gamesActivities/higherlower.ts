@@ -15,6 +15,7 @@ import { getHigherLower } from "../../util/Functions/jsonImport";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
 import HOR from "../../util/Classes/generateHOR";
+import { IUserModel, UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "higherlower",
@@ -48,6 +49,8 @@ const button: Button = {
       }
     }
     await interaction.deferReply();
+
+    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
 
     const initembed = new HigherLowerEmbed(interaction, client, guildDb);
 
@@ -93,7 +96,7 @@ const button: Button = {
 
       .setDescription(
         `${client.translation.get(
-          guildDb?.language,
+          guildDb?.language != null ? guildDb.language : userDb.language,
           "HigherLower.description",
           {
             keyword: game.items.current.keyword,

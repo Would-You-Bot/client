@@ -3,6 +3,7 @@ import { Schema, model } from "mongoose";
 export interface IUserModel {
   userID: { type: string; required: true };
   votePrivacy: boolean;
+  language: string;
   wouldyourather: {
     yes: number;
     no: number;
@@ -58,6 +59,7 @@ const userModelSchema = new Schema(
   {
     userID: { type: String, unique: true },
     votePrivacy: { type: Boolean, default: false },
+    language : { type: String, default: "en_EN" },
     wouldyourather: {
       yes: { type: Number, default: 0 },
       no: { type: Number, default: 0 },

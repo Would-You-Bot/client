@@ -13,6 +13,7 @@ import { ChatInputCommand } from "../../interfaces";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
 import { getHigherLower } from "../../util/Functions/jsonImport";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
+import { UserModel, IUserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -34,6 +35,8 @@ const command: ChatInputCommand = {
 
   execute: async (interaction, client, guildDb) => {
     await interaction.deferReply();
+
+    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
 
     const initembed = new HigherLowerEmbed(interaction, client, guildDb);
 
@@ -79,7 +82,7 @@ const command: ChatInputCommand = {
 
       .setDescription(
         `${client.translation.get(
-          guildDb?.language,
+          guildDb?.language != null ? guildDb.language : userDb.language,
           "HigherLower.description",
           {
             keyword: game.items.current.keyword,

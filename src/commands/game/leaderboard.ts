@@ -1,7 +1,7 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
 import Paginator from "../../util/pagination";
-import { UserModel } from "../../util/Models/userModel";
+import { IUserModel, UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -38,6 +38,10 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
+    const userDb = await UserModel.findOne({ userID: interaction.user?.id }) as IUserModel;
+
+    let language = guildDb?.language != null ? guildDb.language : userDb.language;
+
     switch (interaction.options.getString("game")) {
       case "higherlower":
         const page = new Paginator({
@@ -67,7 +71,7 @@ const command: ChatInputCommand = {
             if (data.length === 0) {
               interaction.reply({
                 content: client.translation.get(
-                  guildDb?.language,
+                  language,
                   "Leaderboard.none",
                 ),
               });
@@ -79,11 +83,11 @@ const command: ChatInputCommand = {
                 `${i++}. ${
                   s.user === "Anonymous"
                     ? `${s.user} • **${s.score}** ${client.translation.get(
-                        guildDb?.language,
+                        language,
                         "Leaderboard.points",
                       )}`
                     : `<@${s.user}> • **${s.score}** ${client.translation.get(
-                        guildDb?.language,
+                        language,
                         "Leaderboard.points",
                       )}`
                 }`,
@@ -93,7 +97,7 @@ const command: ChatInputCommand = {
               new EmbedBuilder()
                 .setTitle(
                   client.translation.get(
-                    guildDb?.language,
+                    language,
                     "Leaderboard.global",
                   ),
                 )
@@ -113,7 +117,7 @@ const command: ChatInputCommand = {
                 new EmbedBuilder()
                   .setTitle(
                     client.translation.get(
-                      guildDb?.language,
+                      language,
                       "Leaderboard.global",
                     ),
                   )
@@ -144,7 +148,7 @@ const command: ChatInputCommand = {
             if (data.length === 0) {
               interaction.reply({
                 content: client.translation.get(
-                  guildDb?.language,
+                  language,
                   "Leaderboard.none",
                 ),
               });
@@ -156,11 +160,11 @@ const command: ChatInputCommand = {
                 `${i++}. ${
                   s.user === "Anonymous"
                     ? `${s.user} • **${s.score}** ${client.translation.get(
-                        guildDb?.language,
+                        language,
                         "Leaderboard.points",
                       )}`
                     : `<@${s.user}> • **${s.score}** ${client.translation.get(
-                        guildDb?.language,
+                        language,
                         "Leaderboard.points",
                       )}`
                 }`,
@@ -178,7 +182,7 @@ const command: ChatInputCommand = {
                 new EmbedBuilder()
                   .setTitle(
                     client.translation.get(
-                      guildDb?.language,
+                      language,
                       "Leaderboard.guild",
                     ),
                   )
