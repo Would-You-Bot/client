@@ -51,19 +51,36 @@ const command: ChatInputCommand = {
     let languageembed;
 
     const languageMap = {
-      de_DE: { title: "Sprache geändert!", description: "Deutsch wurde als neue Sprache ausgewählt!" },
-      en_EN: { title: "Language changed!", description: "English has been selected as the new language!" },
-      es_ES: { title: "¡Idioma cambiado!", description: "¡Has seleccionado el español como nuevo idioma!"},
-      fr_FR: { title: "Langue changée!", description: "Français a été sélectionné comme nouvelle langue!"},
-    } as Record<string, { title: string; description: string }>
+      de_DE: {
+        title: "Sprache geändert!",
+        description: "Deutsch wurde als neue Sprache ausgewählt!",
+      },
+      en_EN: {
+        title: "Language changed!",
+        description: "English has been selected as the new language!",
+      },
+      es_ES: {
+        title: "¡Idioma cambiado!",
+        description: "¡Has seleccionado el español como nuevo idioma!",
+      },
+      fr_FR: {
+        title: "Langue changée!",
+        description: "Français a été sélectionné comme nouvelle langue!",
+      },
+    } as Record<string, { title: string; description: string }>;
 
     languageembed = new EmbedBuilder()
-    .setTitle(languageMap[interaction.options.getString("language") || "en_EN"].title)
-    .setDescription(languageMap[interaction.options.getString("language") || "en_EN"].description)
-    .setFooter({
-      text: "Would You",
-      iconURL: client?.user?.displayAvatarURL() || undefined,
-    });
+      .setTitle(
+        languageMap[interaction.options.getString("language") || "en_EN"].title,
+      )
+      .setDescription(
+        languageMap[interaction.options.getString("language") || "en_EN"]
+          .description,
+      )
+      .setFooter({
+        text: "Would You",
+        iconURL: client?.user?.displayAvatarURL() || undefined,
+      });
 
     switch (interaction.options.getString("type")) {
       case "user": {
@@ -83,14 +100,14 @@ const command: ChatInputCommand = {
         );
 
         interaction
-            .reply({
-              embeds: [languageembed as EmbedBuilder],
-              ephemeral: true,
-            })
-            .catch((err) => {
-              captureException(err);
-            });
-          break;
+          .reply({
+            embeds: [languageembed as EmbedBuilder],
+            ephemeral: true,
+          })
+          .catch((err) => {
+            captureException(err);
+          });
+        break;
       }
       case "server": {
         if (!interaction.guild) {
