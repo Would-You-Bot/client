@@ -85,7 +85,6 @@ const command: ChatInputCommand = {
     switch (interaction.options.getString("type")) {
       case "user": {
         if (interaction.guild) {
-          console.log(!interaction.guild);
           interaction.reply({
             content:
               "You can only change the language for your user in direct messages!",
@@ -111,7 +110,6 @@ const command: ChatInputCommand = {
       }
       case "server": {
         if (!interaction.guild) {
-          console.log(interaction.guild);
           interaction.reply({
             content:
               "You can only change the language for the server in a server!",
