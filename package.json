@@ -40,7 +40,7 @@
     "@sentry/node": "^7.109.0",
     "@top-gg/sdk": "^3.1.6",
     "amqplib": "^0.10.3",
-    "axios": "^1.6.5",
+    "axios": "^1.6.8",
     "canvabase": "^1.1.1",
     "chalk-advanced": "^1.0.7",
     "cron": "^3.1.6",
