@@ -71,7 +71,9 @@ export default class DatabaseHandler {
     guildId: number | string,
     createIfNotFound: boolean = false,
   ) {
-    const fetched = await this.guildModel.findOne({ guildID: guildId as string });
+    const fetched = await this.guildModel.findOne({
+      guildID: guildId as string,
+    });
 
     if (fetched) return fetched;
     if (!fetched && createIfNotFound) {
@@ -123,7 +125,9 @@ export default class DatabaseHandler {
     if (this.cache.has(guildId.toString()))
       this.cache.delete(guildId.toString());
 
-    return !onlyCache ? this.guildModel.deleteMany({ guildID: guildId as string }) : true; 
+    return !onlyCache
+      ? this.guildModel.deleteMany({ guildID: guildId as string })
+      : true;
   }
 
   /**
