@@ -45,7 +45,7 @@
     "chalk-advanced": "^1.0.7",
     "cron": "^3.1.6",
     "cryptr": "^6.3.0",
-    "discord-api-types": "^0.37.68",
+    "discord-api-types": "^0.37.79",
     "discord-hybrid-sharding": "^2.1.4",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
