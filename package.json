@@ -1,7 +1,7 @@
 {
   "name": "would-you",
   "version": "1.4.13",
-  "description": "Would you rather die or use this bot. You got the choice",
+  "description": "Would You is a popular Discord bot that allows you to play the classic game of Would You Rather with your friends!",
   "main": "dist/cluster.js",
   "scripts": {
     "start": "node dist/cluster.js",
