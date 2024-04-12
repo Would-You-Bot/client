@@ -4,6 +4,7 @@ import {
   GatewayIntentBits,
   Collection,
   LimitedCollection,
+  Partials,
 } from "discord.js";
 import { getInfo, ClusterClient } from "discord-hybrid-sharding";
 
@@ -49,6 +50,7 @@ export default class WouldYou extends Client {
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
       ],
+      partials: [Partials.Channel],
       makeCache: (manager) => {
         switch (manager.name) {
           case "ThreadMemberManager":
