@@ -84,7 +84,11 @@ const command: ChatInputCommand = {
 
       .setDescription(
         `${client.translation.get(
-          guildDb?.language != null ? guildDb.language : userDb?.language ? userDb.language : "en_EN",,
+          guildDb?.language != null
+            ? guildDb.language
+            : userDb?.language
+              ? userDb.language
+              : "en_EN",
           "HigherLower.description",
           {
             keyword: game.items.current.keyword,

@@ -35,7 +35,11 @@ const command: ChatInputCommand = {
     })) as IUserModel;
 
     let Truth = await getTruth(
-      guildDb?.language != null ? guildDb.language : userDb?.language ? userDb.language : "en_EN",,
+      guildDb?.language != null
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
     );
 
     let dbquestions;
