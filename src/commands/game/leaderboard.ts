@@ -43,7 +43,11 @@ const command: ChatInputCommand = {
     })) as IUserModel;
 
     let language =
-      guildDb?.language != null ? guildDb.language : userDb.language;
+      guildDb?.language != null
+        ? guildDb.language
+        : userDb.language
+          ? userDb.language
+          : "en_EN";
 
     switch (interaction.options.getString("game")) {
       case "higherlower":
