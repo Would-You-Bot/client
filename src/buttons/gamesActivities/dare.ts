@@ -53,7 +53,11 @@ const button: Button = {
     })) as IUserModel;
 
     let Dare = await getDare(
-      guildDb?.language != null ? guildDb.language : userDb?.language ? userDb.language : "en_EN",
+      guildDb?.language != null
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
     );
 
     let dbquestions;
