@@ -128,6 +128,7 @@ const buttonInteractionEvent: Event = {
       "privacy",
       "viewHelp",
       "viewCommands",
+      "daySelection"
     ];
 
     const isExcludedButton = excludedButtons.includes(interaction.customId);

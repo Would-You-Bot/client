@@ -5,7 +5,7 @@ import {
   ButtonStyle,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../interfaces";
+import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "selectMenuDays",
@@ -153,12 +153,10 @@ const button: Button = {
               guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
         );
-
     await client.database.updateGuild(interaction.guild.id, {
       ...guildDb,
       excludedDays: data.map((e: String) => Number(e)),
     });
-
     interaction.update({
       content: null,
       embeds: [dailyMsgs],
