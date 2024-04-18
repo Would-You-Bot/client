@@ -2,7 +2,7 @@ import { captureException } from "@sentry/node";
 import {
   ChatInputCommandInteraction,
   EmbedBuilder,
-  PermissionFlagsBits as Permissions,
+  PermissionFlagsBits,
   PermissionsBitField,
   SlashCommandBuilder,
 } from "discord.js";
@@ -14,6 +14,7 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setName("settings")
     .setNameLocalizations({
       de: "einstellungen",
@@ -28,34 +29,34 @@ const command: ChatInputCommand = {
     })
     .addSubcommand((cmd) => {
       cmd
-        .setName("general")
+        .setName("cooldowns")
         .setNameLocalizations({
-          de: "allgemein",
-          "es-ES": "general",
-          fr: "général",
+          de: "cooldowns",
+          "es-ES": "cooldowns",
+          fr: "temps-de-recharge",
         })
-        .setDescription("General Settings")
+        .setDescription("Cooldown Settings")
         .setDescriptionLocalizations({
-          de: "Allgemeine Einstellungen",
-          "es-ES": "Configuración General",
-          fr: "Réglages Généraux",
+          de: "Cooldown Einstellungen",
+          "es-ES": "Configuración Cooldown",
+          fr: "Réglages de temps de recharge",
         });
 
       return cmd;
     })
     .addSubcommand((cmd) => {
       cmd
-        .setName("daily-messages")
+        .setName("qotd")
         .setNameLocalizations({
-          de: "tägliche-nachrichten",
-          "es-ES": "mensajes-diarios",
-          fr: "messages-quotidiens",
+          de: "qotd",
+          "es-ES": "qotd",
+          fr: "qotd",
         })
-        .setDescription("Daily Message Settings")
+        .setDescription("QOTD Settings")
         .setDescriptionLocalizations({
-          de: "Tägliche Nachrichteneinstellungen",
-          "es-ES": "Configuración de mensajes diarios",
-          fr: "Paramètres des messages quotidiens",
+          de: "QOTD Nachrichteneinstellungen",
+          "es-ES": "QOTD de mensajes diarios",
+          fr: "Paramètres de message QOTD",
         });
 
       return cmd;
@@ -76,28 +77,28 @@ const command: ChatInputCommand = {
         });
 
       return cmd;
-    })
-    .addSubcommand((cmd) => {
-      cmd
-        .setName("premium")
-        .setNameLocalizations({
-          de: "premium",
-          "es-ES": "prémium",
-          fr: "premium",
-        })
-        .setDescription("Premium Settings")
-        .setDescriptionLocalizations({
-          de: "Premium-Einstellungen",
-          "es-ES": "Configuración prémium",
-          fr: "Paramètres premium",
-        });
-
-      return cmd;
     }),
+  //.addSubcommand((cmd) => {
+  //  cmd
+  //    .setName("premium")
+  //    .setNameLocalizations({
+  //      de: "premium",
+  //      "es-ES": "prémium",
+  //      fr: "premium",
+  //    })
+  //    .setDescription("Premium Settings")
+  //    .setDescriptionLocalizations({
+  //      de: "Premium-Einstellungen",
+  //      "es-ES": "Configuración prémium",
+  //      fr: "Paramètres premium",
+  //    });
+  //
+  //  return cmd;
+  //}),
   execute: async (interaction, client, guildDb) => {
     const memberHasPermissions = (
       interaction.member?.permissions as Readonly<PermissionsBitField>
-    ).has(Permissions.ManageGuild);
+    ).has(PermissionFlagsBits.ManageGuild);
 
     if (!memberHasPermissions) {
       const errorEmbed = new EmbedBuilder()
@@ -119,20 +120,19 @@ const command: ChatInputCommand = {
     }
 
     const subCommands = {
-      general: {
-        fileName: "general",
+      cooldowns: {
+        fileName: "cooldowns",
       },
-      "daily-messages": {
-        fileName: "dailyMsgs",
+      qotd: {
+        fileName: "qotd",
       },
       welcome: {
         fileName: "welcomes",
       },
-      premium: {
-        fileName: "premium",
-      },
+      //premium: {
+      //  fileName: "premium",
+      //},
     };
-
     const subCommand =
       interaction.options.getSubcommand() as keyof typeof subCommands;
 

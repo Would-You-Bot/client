@@ -34,7 +34,7 @@ export default class Voting {
     op_one,
     op_two,
   }: {
-    guildId: string;
+    guildId: string | null;
     type: string;
     until: Date;
     channelId: string;
@@ -62,7 +62,7 @@ export default class Voting {
   }
 
   async generateVoting(
-    guildId: string,
+    guildId: string | null,
     channelId: string,
     until = new Date(0),
     type: string,
@@ -158,6 +158,28 @@ export default class Voting {
     await vote.save();
 
     return true;
+  }
+
+  async getRawVotingResults(id: string) {
+    const vote = await this.getVoting(id);
+    if (!vote) return false;
+
+    let g;
+    if (vote.guildId !== null && typeof vote.guildId === "string")
+      g = this.client.database.getGuild(String(vote.guildId));
+
+    const all_votes = Number(
+      vote.votes.op_one?.length + vote.votes.op_two?.length,
+    );
+    const option_1 = Number(vote.votes.op_one?.length);
+    const option_2 = Number(vote.votes.op_two?.length);
+
+    return {
+      votes: vote.votes,
+      all_votes,
+      option_1,
+      option_2,
+    };
   }
 
   async getVotingResults(id: string) {

@@ -12,11 +12,14 @@ export class HigherLowerEmbed extends EmbedBuilder {
 
     this.setColor("#0598F6");
     this.setTitle(
-      client.translation.get(guildDb?.language, "HigherLower.initial.title"),
+      client.translation.get(
+        guildDb?.language != null ? guildDb.language : "en_EN",
+        "HigherLower.initial.title",
+      ),
     );
     this.setDescription(
       client.translation.get(
-        guildDb?.language,
+        guildDb?.language != null ? guildDb.language : "en_EN",
         "HigherLower.initial.description",
       ),
     ).setFooter({

@@ -4,10 +4,9 @@ import {
   ButtonBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
-import { getWouldYouRather } from "../../util/Functions/jsonImport";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const command: ChatInputCommand = {
@@ -29,37 +28,15 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    let General = await getWouldYouRather(guildDb.language);
-
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wouldyourather",
+    let WYR = await getQuestionsByType(
+      "wouldyourather",
+      guildDb != null ? guildDb : null,
     );
-
-    let wouldyourather = [] as string[];
-
-    if (!dbquestions.length) guildDb.customTypes = "regular";
-
-    switch (guildDb.customTypes) {
-      case "regular":
-        wouldyourather = shuffle([...General]);
-        break;
-      case "mixed":
-        wouldyourather = shuffle([
-          ...General,
-          ...dbquestions.map((c) => c.msg),
-        ]);
-        break;
-      case "custom":
-        wouldyourather = shuffle(dbquestions.map((c) => c.msg));
-        break;
-    }
-
-    const Random = Math.floor(Math.random() * wouldyourather.length);
 
     const ratherembed = new DefaultGameEmbed(
       interaction,
-      Random,
-      wouldyourather,
+      WYR.id,
+      WYR.question,
       "wyr",
     );
 
@@ -81,7 +58,7 @@ const command: ChatInputCommand = {
         .setStyle(1)
         .setEmoji("1073954835533156402")
         .setCustomId(`wouldyourather`)
-        .setDisabled(!guildDb.replay),
+        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
     ]);
 
     const time = 60_000;

@@ -9,7 +9,7 @@ import {
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
-import { getWwyd } from "../../util/Functions/jsonImport";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -28,40 +28,18 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    let WhatYouDo = await getWwyd(guildDb.language);
-
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "wwyd",
+    let WWYD = await getQuestionsByType(
+      "whatwouldyoudo",
+      guildDb != null ? guildDb : null,
     );
-
-    let whatwouldyoudo = [] as string[];
-
-    if (!dbquestions.length) guildDb.customTypes = "regular";
-
-    switch (guildDb.customTypes) {
-      case "regular":
-        whatwouldyoudo = shuffle([...WhatYouDo]);
-        break;
-      case "mixed":
-        whatwouldyoudo = shuffle([
-          ...WhatYouDo,
-          ...dbquestions.map((c) => c.msg),
-        ]);
-        break;
-      case "custom":
-        whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
-        break;
-    }
-
-    const Random = Math.floor(Math.random() * whatwouldyoudo.length);
 
     const wwydembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${WWYD.id}`,
         iconURL: interaction.user.displayAvatarURL() || undefined,
       })
-      .setDescription(bold(whatwouldyoudo[Random]));
+      .setDescription(bold(WWYD.question));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
@@ -80,6 +58,7 @@ const command: ChatInputCommand = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
+        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false)
         .setCustomId(`wwyd`),
     ]);
 

@@ -9,7 +9,7 @@ import {
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
-import { getTruth } from "../../util/Functions/jsonImport";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -29,36 +29,18 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    let Truth = await getTruth(guildDb.language);
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type !== "nsfw" && c.type === "truth",
+    let truth = await getQuestionsByType(
+      "truth",
+      guildDb != null ? guildDb : null,
     );
-
-    let truthordare = [] as string[];
-
-    if (!dbquestions.length) guildDb.customTypes = "regular";
-
-    switch (guildDb.customTypes) {
-      case "regular":
-        truthordare = shuffle([...Truth]);
-        break;
-      case "mixed":
-        truthordare = shuffle([...Truth, ...dbquestions.map((c) => c.msg)]);
-        break;
-      case "custom":
-        truthordare = shuffle(dbquestions.map((c) => c.msg));
-        break;
-    }
-
-    const Random = Math.floor(Math.random() * truthordare.length);
 
     const truthembed = new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Truth | ID: ${Random}`,
+        text: `Requested by ${interaction.user.username} | Type: Truth | ID: ${truth.id}`,
         iconURL: interaction.user.displayAvatarURL() || undefined,
       })
-      .setDescription(bold(truthordare[Random]));
+      .setDescription(bold(truth.question));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();

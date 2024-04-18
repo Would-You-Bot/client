@@ -5,6 +5,7 @@ import { white, gray, green, red } from "chalk-advanced";
 import { captureException } from "@sentry/node";
 import WouldYou from "../util/wouldYou";
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
+import appCommmands from "../util/Functions/supportAppCommands";
 import { Event } from "../interfaces/event";
 import axios from "axios";
 import { getInfo } from "discord-hybrid-sharding";
@@ -16,7 +17,6 @@ const event: Event = {
       let globalCommands = Array.from(
         client.commands.filter((x) => x.requireGuild === true).values(),
       ).map((x) => x.data.toJSON()) as RESTPostAPIApplicationCommandsJSONBody[];
-
       const rest = new REST({
         version: "10",
       }).setToken(process.env.DISCORD_TOKEN as string);
@@ -53,7 +53,7 @@ const event: Event = {
             // If the bot is in production mode it will load slash commands for all guilds
             if (client.user?.id) {
               await rest.put(Routes.applicationCommands(client.user.id), {
-                body: globalCommands,
+                body: await appCommmands(globalCommands),
               });
             }
             console.log(
@@ -76,7 +76,7 @@ const event: Event = {
                   process.env.TEST_GUILD_ID as string,
                 ),
                 {
-                  body: globalCommands,
+                  body: appCommmands(globalCommands),
                 },
               );
             }
