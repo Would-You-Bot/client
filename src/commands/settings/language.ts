@@ -109,7 +109,7 @@ const command: ChatInputCommand = {
         break;
       }
       case "server": {
-        if (!interaction.guild) {
+        if (!interaction.guild && !interaction.guildId) {
           interaction.reply({
             content:
               "You can only change the language for the server in a server!",
@@ -119,7 +119,7 @@ const command: ChatInputCommand = {
         }
         if (
           (
-            interaction.member?.permissions as Readonly<PermissionsBitField>
+            interaction.memberPermissions as Readonly<PermissionsBitField>
           ).has(PermissionFlagsBits.ManageGuild)
         ) {
           await client.database.updateGuild(
