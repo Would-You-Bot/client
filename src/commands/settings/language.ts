@@ -118,9 +118,9 @@ const command: ChatInputCommand = {
           return;
         }
         if (
-          (
-            interaction.memberPermissions as Readonly<PermissionsBitField>
-          ).has(PermissionFlagsBits.ManageGuild)
+          (interaction.memberPermissions as Readonly<PermissionsBitField>).has(
+            PermissionFlagsBits.ManageGuild,
+          )
         ) {
           await client.database.updateGuild(
             interaction.guildId as string,
