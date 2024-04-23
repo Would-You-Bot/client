@@ -1,39 +1,55 @@
 import {
   EmbedBuilder,
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
+  PermissionFlagsBits,
+  MessageActionRowComponentBuilder,
+  bold,
   ButtonStyle,
   AttachmentBuilder,
-  MessageActionRowComponentBuilder,
 } from "discord.js";
 import { v4 as uuidv4 } from "uuid";
-import HOR from "../../util/Classes/generateHOR";
-import { ChatInputCommand } from "../../interfaces";
-import { HigherlowerModel } from "../../util/Models/higherlowerModel";
+import { Button } from "../../interfaces";
+
 import { getHigherLower } from "../../util/Functions/jsonImport";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
-import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { HigherlowerModel } from "../../util/Models/higherlowerModel";
+import HOR from "../../util/Classes/generateHOR";
+import { IUserModel, UserModel } from "../../util/Models/userModel";
 
-const command: ChatInputCommand = {
-  requireGuild: true,
-  data: new SlashCommandBuilder()
-    .setName("higherlower")
-    .setDescription("Starts a game of 'Higher or Lower'")
-    .setDMPermission(false)
-    .setDescriptionLocalizations({
-      de: "Starte das Higher or Lower spiel",
-      "es-ES": "Iniciar el juego Higher or Lower",
-      fr: "Démarrer le jeu Higher or Lower",
-    }),
-
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-
-  execute: async (interaction, client, guildDb) => {
+const button: Button = {
+  name: "higherlower",
+  execute: async (interaction: any, client, guildDb) => {
+    if (interaction.guild) {
+      await interaction.message.edit({
+        components: [],
+      });
+      if (interaction.channel.isThread()) {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessagesInThreads)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      } else {
+        if (
+          !interaction.channel
+            ?.permissionsFor(interaction.user.id)
+            .has(PermissionFlagsBits.SendMessages)
+        ) {
+          return interaction.reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          });
+        }
+      }
+    }
     await interaction.deferReply();
 
     const userDb = (await UserModel.findOne({
@@ -132,7 +148,8 @@ const command: ChatInputCommand = {
         components: [guessRow],
       });
     });
+    return;
   },
 };
 
-export default command;
+export default button;

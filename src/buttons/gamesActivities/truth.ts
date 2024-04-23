@@ -16,6 +16,9 @@ const button: Button = {
   name: "truth",
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
+      await interaction.message.edit({
+        components: [],
+      });
       if (interaction.channel.isThread()) {
         if (
           !interaction.channel

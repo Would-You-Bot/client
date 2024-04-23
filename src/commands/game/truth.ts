@@ -9,7 +9,10 @@ import {
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
+
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { UserModel, IUserModel } from "../../util/Models/userModel";
+
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -29,10 +32,18 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
+
     let truth = await getQuestionsByType(
       "truth",
-      guildDb != null ? guildDb : null,
+          guildDb?.language != null
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
     );
+    const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
 
     const truthembed = new EmbedBuilder()
       .setColor("#0598F6")

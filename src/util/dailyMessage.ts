@@ -15,7 +15,6 @@ export default class DailyMessage {
    * Start the daily message Schedule
    */
   async listen() {
-    console.log(this.client.cluster.count);
     const URL = process.env.RABBITMQ_URL || "fallback";
     const connection = await amqplib.connect(URL, {
       clientProperties: {
@@ -78,7 +77,6 @@ export default class DailyMessage {
     message: IQueueMessage,
     properties: MessageProperties,
   ): Promise<Result<string>> {
-    console.log(message);
     if (message.channelId == null) {
       return {
         success: false,

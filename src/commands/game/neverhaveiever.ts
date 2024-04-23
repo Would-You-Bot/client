@@ -9,7 +9,9 @@ import {
 import { captureException } from "@sentry/node";
 import shuffle from "../../util/shuffle";
 import { ChatInputCommand } from "../../interfaces";
+
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { UserModel, IUserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -31,8 +33,16 @@ const command: ChatInputCommand = {
 
   execute: async (interaction, client, guildDb) => {
     let NHIE = await getQuestionsByType( "neverhaveiever", 
-    guildDb != null ? guildDb : null,
+      guildDb?.language != null
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
     );
+    
+    let userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
 
     let nhieEmbed = new EmbedBuilder()
       .setColor("#0598F6")

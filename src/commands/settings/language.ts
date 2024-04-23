@@ -6,6 +6,7 @@ import {
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
+import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -21,15 +22,25 @@ const command: ChatInputCommand = {
     })
     .addStringOption((option) =>
       option
+        .setName("type")
+        .setDescription("What you want to change the language for.")
+        .setRequired(true)
+        .addChoices(
+          { name: "User", value: "user" },
+          { name: "Server", value: "server" },
+        ),
+    )
+    .addStringOption((option) =>
+      option
         .setName("language")
         .setDescription("The language you want to use.")
         .setRequired(true)
         .addChoices(
-          { name: "🇩🇪 Deutsch", value: "german" },
-          { name: "🇺🇸 English", value: "english" },
-          { name: "🇪🇸 Español", value: "spanish" },
-          { name: "🇫🇷 Français", value: "french" },
-          // { name: "🇮🇹 Italiano", value: "italian" },
+          { name: "🇩🇪 Deutsch", value: "de_DE" },
+          { name: "🇺🇸 English", value: "en_EN" },
+          { name: "🇪🇸 Español", value: "es_ES" },
+          { name: "🇫🇷 Français", value: "fr_FR" },
+          // { name: "🇮🇹 Italiano", value: "fr_FR" },
         ),
     ),
 
@@ -40,116 +51,115 @@ const command: ChatInputCommand = {
    */
   execute: async (interaction, client, guildDb) => {
     let languageembed;
-    if (
-      (interaction.member?.permissions as Readonly<PermissionsBitField>).has(
-        PermissionFlagsBits.ManageGuild,
+
+    const languageMap = {
+      de_DE: {
+        title: "Sprache geändert!",
+        description: "Deutsch wurde als neue Sprache ausgewählt!",
+      },
+      en_EN: {
+        title: "Language changed!",
+        description: "English has been selected as the new language!",
+      },
+      es_ES: {
+        title: "¡Idioma cambiado!",
+        description: "¡Has seleccionado el español como nuevo idioma!",
+      },
+      fr_FR: {
+        title: "Langue changée!",
+        description: "Français a été sélectionné comme nouvelle langue!",
+      },
+    } as Record<string, { title: string; description: string }>;
+
+    languageembed = new EmbedBuilder()
+      .setTitle(
+        languageMap[interaction.options.getString("language") || "en_EN"].title,
       )
-    ) {
-      switch (interaction.options.getString("language")) {
-        case "english": {
-          await client.database.updateGuild(
-            interaction.guildId || "",
-            {
-              ...guildDb,
-              language: "en_EN",
-            },
-            true,
-          );
+      .setDescription(
+        languageMap[interaction.options.getString("language") || "en_EN"]
+          .description,
+      )
+      .setFooter({
+        text: "Would You",
+        iconURL: client?.user?.displayAvatarURL() || undefined,
+      });
 
-          languageembed = new EmbedBuilder()
-            .setTitle("Language changed!")
-            .setDescription("English has been selected as the new language!")
-            .setFooter({
-              text: "Would You",
-              iconURL: client?.user?.displayAvatarURL() || undefined,
-            });
-          break;
+    switch (interaction.options.getString("type")) {
+      case "user": {
+        if (interaction.guild) {
+          interaction.reply({
+            content:
+              "You can only change the language for your user in direct messages!",
+            ephemeral: true,
+          });
+          return;
         }
-        case "german": {
-          await client.database.updateGuild(
-            interaction.guildId || "",
-            {
-              ...guildDb,
-              language: "de_DE",
-            },
-            true,
-          );
-
-          languageembed = new EmbedBuilder()
-            .setTitle("Sprache bearbeitet!")
-            .setDescription("Deutsch wurde als neue Sprache ausgewählt!")
-            .setFooter({
-              text: "Would You",
-              iconURL: client?.user?.displayAvatarURL() || undefined,
-            });
-          break;
-        }
-        case "spanish": {
-          await client.database.updateGuild(
-            interaction.guildId || "",
-            {
-              ...guildDb,
-              language: "es_ES",
-            },
-            true,
-          );
-
-          languageembed = new EmbedBuilder()
-            .setTitle("¡Idioma cambiado!")
-            .setDescription("¡Has seleccionado el español como nuevo idioma!")
-            .setFooter({
-              text: "Would You",
-              iconURL: client?.user?.displayAvatarURL() || undefined,
-            });
-          break;
-        }
-        case "french": {
-          await client.database.updateGuild(
-            interaction.guildId || "",
-            {
-              ...guildDb,
-              language: "fr_FR",
-            },
-            true,
-          );
-
-          languageembed = new EmbedBuilder()
-            .setTitle("Langue changée!")
-            .setDescription("Français a été sélectionné comme nouvelle langue!")
-            .setFooter({
-              text: "Would You",
-              iconURL: client?.user?.displayAvatarURL() || undefined,
-            });
-          break;
-        }
-      }
-
-      interaction
-        .reply({
-          embeds: [languageembed as EmbedBuilder],
-          ephemeral: true,
-        })
-        .catch((err) => {
-          captureException(err);
-        });
-      return;
-    } else {
-      const errorembed = new EmbedBuilder()
-        .setColor("#F00505")
-        .setTitle("Error!")
-        .setDescription(
-          client.translation.get(guildDb?.language, "Language.embed.error"),
+        await UserModel.findOneAndUpdate(
+          { userID: interaction.user.id },
+          { language: interaction.options.getString("language") || "en_EN" },
+          { upsert: true },
         );
 
-      interaction
-        .reply({
-          embeds: [errorembed],
-          ephemeral: true,
-        })
-        .catch((err) => {
-          captureException(err);
-        });
-      return;
+        interaction
+          .reply({
+            embeds: [languageembed as EmbedBuilder],
+            ephemeral: true,
+          })
+          .catch((err) => {
+            captureException(err);
+          });
+        break;
+      }
+      case "server": {
+        if (!interaction.guild && !interaction.guildId) {
+          interaction.reply({
+            content:
+              "You can only change the language for the server in a server!",
+            ephemeral: true,
+          });
+          return;
+        }
+        if (
+          (interaction.memberPermissions as Readonly<PermissionsBitField>).has(
+            PermissionFlagsBits.ManageGuild,
+          )
+        ) {
+          await client.database.updateGuild(
+            interaction.guildId as string,
+            {
+              ...guildDb,
+              language: interaction.options.getString("language") || "en_EN",
+            },
+            true,
+          );
+
+          interaction
+            .reply({
+              embeds: [languageembed as EmbedBuilder],
+              ephemeral: true,
+            })
+            .catch((err) => {
+              captureException(err);
+            });
+          break;
+        } else {
+          const errorembed = new EmbedBuilder()
+            .setColor("#F00505")
+            .setTitle("Error!")
+            .setDescription(
+              client.translation.get(guildDb?.language, "Language.embed.error"),
+            );
+          interaction
+            .reply({
+              embeds: [errorembed],
+              ephemeral: true,
+            })
+            .catch((err) => {
+              captureException(err);
+            });
+          return;
+        }
+      }
     }
   },
 };

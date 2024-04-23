@@ -9,7 +9,7 @@ const buttonInteractionEvent: Event = {
   event: "interactionCreate",
   execute: async (client: WouldYou, interaction: ButtonInteraction) => {
     console.log(
-      `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) CLICKED ${interaction.customId}`,
+      `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.username}) CLICKED ${interaction.customId}`,
     );
 
     let guildDb;

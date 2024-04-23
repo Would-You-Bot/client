@@ -2,7 +2,9 @@ FROM node:18-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 #Hook into pnpm without installing pnpm. (magic) (https://nodejs.org/docs/latest-v18.x/api/corepack.html)
-RUN corepack enable
+# RUN corepack enable
+#Current fix for the corepack download issue
+RUN npm install -g pnpm 
 WORKDIR /usr/src/app
 COPY package*.json pnpm-lock*.yaml ./
 

@@ -46,7 +46,7 @@ const event: Event = {
                   shard_count: getInfo().TOTAL_SHARDS,
                 },
               }).catch((err) => {
-                console.log(err);
+                captureException(err);
               });
             };
             setInterval(postStats, 3600000);
@@ -69,7 +69,6 @@ const event: Event = {
                 ),
               );
             if (client.user?.id) {
-              console.log(client.user?.id);
               await rest.put(
                 Routes.applicationGuildCommands(
                   client.user.id,

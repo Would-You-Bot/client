@@ -8,15 +8,18 @@ import {
   ButtonInteraction,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { UserModel, IUserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "dare",
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
+      await interaction.message.edit({
+        components: [],
+      });
       if (interaction.channel.isThread()) {
         if (
           !interaction.channel
@@ -46,8 +49,17 @@ const button: Button = {
 
     let dare = await getQuestionsByType(
       "dare",
-      guildDb != null ? guildDb : null,
-    );
+      guildDb?.language != null
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
+          );
+    
+    const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
+
 
     const dareembed = new EmbedBuilder()
       .setColor("#0598F6")
@@ -81,8 +93,7 @@ const button: Button = {
       new ButtonBuilder().setLabel("Dare").setStyle(4).setCustomId("dare"),
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
-
-    interaction
+    await interaction
       .reply({ embeds: [dareembed], components: components })
       .catch((err: Error) => {
         captureException(err);

@@ -21,7 +21,7 @@ const commandInteractionEvent: Event = {
 
     if (interaction.isCommand()) {
       console.log(
-        `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.globalName}) COMMAND ${interaction.commandName}`,
+        `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.username}) COMMAND ${interaction.commandName}`,
       );
       const command = client.commands.get(interaction.commandName);
 
@@ -72,6 +72,7 @@ const commandInteractionEvent: Event = {
         "whatwouldyoudo",
         "leaderboard",
         "privacy",
+        "language",
       ];
       if (
         !interaction.guild &&

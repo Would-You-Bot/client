@@ -72,7 +72,7 @@ export default class DatabaseHandler {
     createIfNotFound: boolean = false,
   ) {
     const fetched = await this.guildModel.findOne({
-      guildID: guildId,
+      guildID: guildId as string,
     });
 
     if (fetched) return fetched;
@@ -83,7 +83,7 @@ export default class DatabaseHandler {
         botJoined: (Date.now() / 1000) | 0,
       });
 
-      return this.guildModel.findOne({ guildID: guildId });
+      return this.guildModel.findOne({ guildID: guildId as string });
     }
     return null;
   }
@@ -125,7 +125,9 @@ export default class DatabaseHandler {
     if (this.cache.has(guildId.toString()))
       this.cache.delete(guildId.toString());
 
-    return !onlyCache ? this.guildModel.deleteMany({ guildID: guildId }) : true;
+    return !onlyCache
+      ? this.guildModel.deleteMany({ guildID: guildId as string })
+      : true;
   }
 
   /**

@@ -6,7 +6,7 @@
 
 ---
 
-Would You bot provides activities and questions to keep your server active!
+Would You is a popular Discord bot that allows you to play the classic game of Would You Rather with your friends!
 
 ---
 
@@ -20,7 +20,7 @@ The development environment does not currently use Docker, so you will need to i
 
 1. Install [Node.js](https://nodejs.org/en/) (version 17.9.x or higher) and pnpm.
 2. Install all dependencies by running `pnpm install` in the root directory.
-3. Create a `.env` file in the root directory, copy the contents of `.env.example` into `.env`, then fill in the values with your own values.
+3. Create a `.env` file in the root directory, copy the contents of `.env.example` into `.env`, and then fill in the values with your values.
 4. Run `pnpm run test` to start the development environment. This will run all of the applications in development mode.
 
 ### Formatting

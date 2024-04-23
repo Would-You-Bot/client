@@ -43,8 +43,12 @@ const button: Button = {
       }
     }
     let NHIE = await getQuestionsByType( "neverhaveiever", 
-    guildDb != null ? guildDb : null,
-  );
+          guildDb?.language != null
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
+    );
 
     let nhieEmbed = new EmbedBuilder()
       .setColor("#0598F6")
