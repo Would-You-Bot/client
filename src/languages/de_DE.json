@@ -58,6 +58,7 @@
       "paginate": "Du kannst nichmehr weiter gehen :(",
       "maximum": "Du hast die maximale Anzahl an benutzerdefinierten Nachrichten erreicht. Du kannst mehr hinzufügen wenn du für den bot votest!",
       "empty": "Es gibt keine benutzerdefinierten nachrichten in diesem server!",
+      "limit": "Du hast über 100 {type} in deinen benutzerdefinierten Nachrichten. Wenn du mehr hinzufügen möchtest, musst du Premium abonnieren.",
       "import": {
         "att1": "Du musst eine JSON datei anheften!",
         "att2": "Du musst eine JSON Datei anheften!",
@@ -144,27 +145,14 @@
       "users": "Nutzern"
     }
   },
-  "Random": {
-    "embed": {
-      "text1": "Würdest du diese Kraft haben wollen aber ",
-      "text2": "kann eine Nebenwirkung auswählen?",
-      "footer": "Would You"
-    }
-  },
   "Help": {
     "embed": {
-      "title": "Info",
-      "description": "**Would You** ist ein Discord-Bot, der die Aktivität auf dem Discord-Server erhöhen soll. Mit ihm kannst du **Wahrheit oder Pflicht**, **Würdest du lieber**, **Höher oder tiefer**, **Nie habe ich jemals** und **Was würdest du tun** spielen.",
-      "footer": "Would You",
-      "Fields": {
-        "name": "**Meine Befehle**",
-        "value": "`/wouldyou` - Starte Diskussionen über zufällige Kräfte\n`/ping` - Pong!\n`/language` - Ändere die Sprache auf dem Server\n`/help` - Zeigt diese info\n`/rather` - Gibt dir zwei Kräfte aus denen du wählen kannst\n`/custom` - Sende eine benutzerdefinierte Would You Nachricht in den Chat!\n`/wwyd` - Sendet eine was würdest du tun Frage in den Chat!\n`/welcome` - Hinzufügen oder Entfernen des Willkommenskanals\n`/support` - Solltest du Hilfe benötigen, nutze diesen Befehl und wir helfen dir gerne weiter!",
-        "privacyname": "**Datenschutzbestimmung**",
-        "privacy": "Wir schätzen deine Privatsphäre sehr. Wenn du wissen möchtest, was mit deinen daten passiert, dann schaue dir unsere Datenschutzbestimmungen [hier](https://wouldyoubot.gg/privacy) an."
-      }
+      "description": "## Was ist Would You? \n\n **Would You** ist ein Bot, der dir ermöglicht, mit deinen Freunden auf Discord Spiele zu spielen und dabei Spaß zu haben und sich gegenseitig kennenzulernen. \n## Hauptspielmodi \n Die Spielmodi von <:roundyou:1009964111045607525> **Would You** umfassen </wouldyourather:{wouldyourather}>, </neverhaveiever:{neverhaveiever}>, </whatwouldyoudo:{whatwouldyoudo}>, </higherlower:{higherlower}> und zu guter Letzt gibt es </truth:{truth}> oder </dare:{dare}>! \n## Konfiguriere den Bot \n Mit den **/settings** Befehlen kannst du die **Cooldowns** der Buttons ändern, die **Frage des Tages** oder die**Willkommens Nachrichten** aktivieren oder deaktivieren. \n## Privatsphäre \n Wenn du nicht in den Bestenlisten oder Abstimmungen auftauchen willst. Du kannst deine Privatsphäre-Einstellungen mit </privacy:{privacy}> anpassen. Um herauszufinden, welche Daten wir speichern, besuche unsere [**Datenschutzrichtlinie**](https://wouldyoubot.gg/privacy)"
     },
     "button": {
-      "title": "Unser Support Server"
+      "discord": "Would You Support",
+      "invite": "Would You Einladen",
+      "commands": "Befehle anzeigen"
     }
   },
   "Vote": {
@@ -208,7 +196,7 @@
       "title": "Would You | Anleitung",
       "description": "Anleitung zur Nutzung des vollen Potenzials von Would You",
       "name1": "Wie man Would You richtig benutzt!",
-      "value1": "Erstelle einen eigenen Kanal für den Bot oder erlaube deinen Nutzern, den Bot im Hauptchat zu verwenden. \n > Das Ziel von Would You ist es, Chats aktiver zu machen, es wäre also sehr ironisch, die Verwendung von Would You in Hauptkanälen zu verbieten \n > Wenn du das volle Potenzial des Bots ausschöpfen willst, verwende den Befehl </welcome:1011374285350260914> und richte einen Willkommenskanal ein. Dieser Kanal wird verwendet, um eine Willkommensnachricht zu senden, sobald ein Benutzer dem server beitritt.",
+      "value1": "Erstelle einen eigenen Kanal für den Bot oder erlaube deinen Nutzern, den Bot im Hauptchat zu verwenden. \n > Das Ziel von Would You ist es, Chats aktiver zu machen, es wäre also sehr ironisch, die Verwendung von Would You in Hauptkanälen zu verbieten \n > Wenn du das volle Potenzial des Bots ausschöpfen willst, verwende den Befehl </settings:1099463656124723304> und richte einen Willkommenskanal ein. Dieser Kanal wird verwendet, um eine Willkommensnachricht zu senden, sobald ein Benutzer dem server beitritt.",
       "name2": "Warum brauche ich das?",
       "value2": "> Die Absicht dahinter ist, neuen Benutzern zu helfen, Teil der Konversation zu werden, indem man den Mitgliedern ein Thema gibt, über das sie direkt nach dem Beitritt sprechen können! Dies macht den Server nicht nur aktiver, sondern bezieht neue Benutzer direkt mit ein sodass diese sich nach Beitritt des Servers einbezogen fühlen und ermutigt werden, länger zu bleiben!",
       "name3": "Weitere Tipps?",
@@ -228,7 +216,7 @@
     "errorSame": "Die gegebene Zeitzone ist die gleiche Zeitzone, die schon gesetzt ist. Stelle sicher, dass du eine andere Zeitzone wählst.",
     "errorInvalid": "Die gegebene Zeitzone ist ungültig, du kannst eine gültige Zeitzone von diesen auswählen [Zeitzonenwähler](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "Die angegebene Veröffentlichungszeit ist die gleiche wie die bereits gesetzte. Stelle sicher, dass du einen andere Veröffentlichungszeit wählst.",
-    "intervalInvalid": "Die angegebene Veröffentlichungszeit war ungültig. Stelle sicher, dass deine Veröffentlichungszeit im 24h-Format ist und entweder mit 00 oder einem 5 minuten interval endet!",
+    "intervalInvalid": "Die angegebene Veröffentlichungszeit war ungültig. Stelle sicher, dass deine Veröffentlichungszeit im 24h-Format ist und entweder mit 00 oder 30 endet!",
     "dailyChannel": "Wähle einen Kanal, in dem du tägliche Nachrichten haben möchtest!",
     "replayChannel": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
     "replayChannelNone": "Du hast keine Replay-Kanäle gesetzt!",
@@ -338,5 +326,11 @@
     "error": {
       "user": "Dieses Spiel gehört nicht dir, es gehört {user}. Erstelle dein eigenes Spiel mit </higherlower:1153718305903890554>!"
     }
+  },
+  "Premium": {
+    "tier": "Stufe: {type}",
+    "tier1": "Premium",
+    "tier2": "Premium + AI",
+    "tier3": "Partner"
   }
 }
