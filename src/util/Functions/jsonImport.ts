@@ -92,6 +92,7 @@ export async function getQuestionsByType(
   guildDb: IGuildModel | null,
   language: string,
 ): Promise<QuestionResult> {
+  console.log(guildDb, typeof guildDb)
   if (!validTypes.includes(type)) {
     throw new Error(`Invalid question type: ${type}`);
   }
@@ -164,6 +165,10 @@ export async function getQuestionsByType(
         };
         break;
     }
+    result = await Questions(result, null, guildDb, {
+    quest: typeCheck[type] as Quest,
+    questType: type as QuestType,
+  });
   } else {
     result = {
       id: questions[0].id,
@@ -173,10 +178,6 @@ export async function getQuestionsByType(
           : questions[0].translations[normalizedLanguage],
     };
   }
-
-  result = await Questions(result, null, guildDb, {
-    quest: typeCheck[type] as Quest,
-    questType: type as QuestType,
-  });
+  
   return result;
 }
