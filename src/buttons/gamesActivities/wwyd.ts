@@ -10,6 +10,7 @@ import { captureException } from "@sentry/node";
 import { Button } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { IUserModel, UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "wwyd",
@@ -43,9 +44,19 @@ const button: Button = {
       }
     }
 
-    let WWYD = await getQuestionsByType( "whatwouldyoudo", 
-    guildDb != null ? guildDb : null,
-  );
+    const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
+
+    let WWYD = await getQuestionsByType(
+      "whatwouldyoudo",
+      guildDb,
+      guildDb?.language != null
+      ? guildDb.language
+      : userDb?.language
+        ? userDb.language
+        : "en_EN",
+        );
 
     const wwydembed = new EmbedBuilder()
       .setColor("#0598F6")

@@ -40,10 +40,12 @@ const event: Event = {
       const General = await getQuestionsByType(
         "wouldyourather",
         guildDb != null ? guildDb : null,
+        guildDb?.language != null ? guildDb.language : "en_EN",
       );
       const WhatYouDo = await getQuestionsByType(
         "whatwouldyoudop",
         guildDb != null ? guildDb : null,
+        guildDb?.language != null ? guildDb.language : "en_EN",
       );
 
       const randomMessage = Math.random() > 0.5 ? General : WhatYouDo;

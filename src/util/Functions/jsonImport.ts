@@ -90,6 +90,7 @@ export async function getRandomTod(language: string): Promise<string[]> {
 export async function getQuestionsByType(
   type: string,
   guildDb: IGuildModel | null,
+  language: string,
 ): Promise<QuestionResult> {
   if (!validTypes.includes(type)) {
     throw new Error(`Invalid question type: ${type}`);
@@ -97,7 +98,7 @@ export async function getQuestionsByType(
 
   // TODO: Make this work with the language system
   const normalizedLanguage =
-    languageMap[guildDb?.language != null ? guildDb.language : "en_EN"];
+    languageMap[language];
 
   const models: { [key: string]: any } = {
     wouldyourather: wyrModel,

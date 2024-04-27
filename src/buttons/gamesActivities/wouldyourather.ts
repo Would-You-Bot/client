@@ -11,6 +11,7 @@ import { Button } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { UserModel, IUserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "wouldyourather",
@@ -46,9 +47,19 @@ const button: Button = {
       }
     }
 
-    let WYR = await getQuestionsByType( "wouldyourather", 
-    guildDb != null ? guildDb : null,
-  );
+    const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
+
+    let WYR = await getQuestionsByType(
+      "wouldyourather",
+      guildDb,
+      guildDb?.language != null
+      ? guildDb.language
+      : userDb?.language
+        ? userDb.language
+        : "en_EN",
+        );
 
     const ratherembed = new DefaultGameEmbed(
       interaction,

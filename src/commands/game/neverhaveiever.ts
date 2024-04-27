@@ -31,8 +31,13 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
 
-  execute: async (interaction, client, guildDb) => {
-    let NHIE = await getQuestionsByType( "neverhaveiever", 
+  execute: async (interaction, client, guildDb) => {  
+
+    let userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
+
+    let NHIE = await getQuestionsByType( "neverhaveiever", guildDb,
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
@@ -40,9 +45,7 @@ const command: ChatInputCommand = {
           : "en_EN",
     );
     
-    let userDb = (await UserModel.findOne({
-      userID: interaction.user?.id,
-    })) as IUserModel;
+
 
     let nhieEmbed = new EmbedBuilder()
       .setColor("#0598F6")

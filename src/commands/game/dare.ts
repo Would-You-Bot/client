@@ -30,18 +30,21 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    
+
+        const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
+
     let dare = await getQuestionsByType(
       "dare",
+      guildDb,
             guildDb?.language != null
         ? guildDb.language
         : userDb?.language
           ? userDb.language
           : "en_EN",
     );
-    const userDb = (await UserModel.findOne({
-      userID: interaction.user?.id,
-    })) as IUserModel;
+
  
 
     const dareembed = new EmbedBuilder()

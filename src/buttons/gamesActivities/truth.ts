@@ -11,6 +11,7 @@ import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { UserModel, IUserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "truth",
@@ -45,9 +46,21 @@ const button: Button = {
         }
       }
     }
-    let truth = await getQuestionsByType("truth", 
-    guildDb != null ? guildDb : null,
-  );
+
+    const userDb = (await UserModel.findOne({
+      userID: interaction.user?.id,
+    })) as IUserModel;
+
+    let truth = await getQuestionsByType(
+      "truth",
+      guildDb,
+      guildDb?.language != null
+      ? guildDb.language
+      : userDb?.language
+        ? userDb.language
+        : "en_EN",
+        );
+
 
   const truthembed = new EmbedBuilder()
     .setColor("#0598F6")
