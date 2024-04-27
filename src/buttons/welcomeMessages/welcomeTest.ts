@@ -3,6 +3,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "welcomeTest",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     client.emit("guildMemberAdd", interaction.member as GuildMember);
     interaction.deferUpdate();

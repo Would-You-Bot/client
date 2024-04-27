@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "dailyMsg",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const check = guildDb.dailyMsg;
     const dailyMsgs = new EmbedBuilder()

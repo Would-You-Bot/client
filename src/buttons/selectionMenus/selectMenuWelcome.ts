@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "selectMenuWelcome",
+  cooldown: false,
   execute: async (interaction: any, client, guildDb) => {
     const newChannel = interaction.values[0];
 

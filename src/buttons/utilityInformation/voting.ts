@@ -2,6 +2,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "voting",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const customId = interaction.customId.split("_") as any;
 

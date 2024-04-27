@@ -33,6 +33,7 @@ function isFormat(str: string) {
 
 const button: Button = {
   name: "dailyInterval",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     await interaction.showModal(modalObject);
 

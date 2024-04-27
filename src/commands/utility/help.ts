@@ -33,7 +33,6 @@ const command: ChatInputCommand = {
       return commands?.find((command) => command.name === name)?.id;
     };
 
-    console.log(getCommandByName("settings"));
     const helpembed = new EmbedBuilder().setColor("#2b2d31").setDescription(
       client.translation.get(guildDb?.language, "Help.embed.description", {
         wouldyourather: getCommandByName("wouldyourather"),

@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "selectMenuChannel",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const newChannel = (interaction as any).values[0];
     const dailyMsgs = new EmbedBuilder()

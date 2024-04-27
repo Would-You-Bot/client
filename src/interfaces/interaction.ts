@@ -4,6 +4,7 @@ import { IGuildModel } from "../util/Models/guildModel";
 
 export interface Interaction {
   name: string;
+  cooldown?: boolean;
   execute(
     interaction: dInteraction,
     client: WouldYou,

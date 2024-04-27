@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "deleteDailyRole",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const dailyMsgs = new EmbedBuilder()
       .setTitle(

@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "dailyRole",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     var inter =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(

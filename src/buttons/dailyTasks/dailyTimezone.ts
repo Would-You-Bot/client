@@ -49,6 +49,7 @@ function dateType(tz: string) {
 
 const button: Button = {
   name: "dailyTimezone",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     await interaction.showModal(modalObject);
 

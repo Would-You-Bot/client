@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "replayBy",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const newType = guildDb.replayBy === "Guild" ? "User" : "Guild";
     const generalMsg = new EmbedBuilder()

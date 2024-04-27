@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "welcomePing",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const check = guildDb.welcomePing;
 

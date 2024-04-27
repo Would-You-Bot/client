@@ -58,6 +58,7 @@
       "paginate": "Vous ne pouvez pas continuer ainsi.",
       "maximum": "Vous avez atteint le nombre maximum de messages personnalisés. Vous pouvez en gagner plus en votant pour le bot !",
       "empty": "Il n'y a actuellement aucun message personnalisé à afficher !",
+      "limit": "Vous avez plus de 100 {type} dans vos messages personnalisés. Si vous souhaitez en ajouter davantage, vous devrez vous abonner à un niveau premium.",
       "import": {
         "att1": "Vous devez fournir un fichier JSON valide !",
         "att2": "Vous devez fournir un fichier JSON valide !",
@@ -144,27 +145,15 @@
       "users": "utilisateurs"
     }
   },
-  "Random": {
-    "embed": {
-      "text1": "Voulez-vous cette puissance mais",
-      "text2": "peut choisir un effet secondaire ?",
-      "footer": "Voudriez-vous"
-    }
-  },
   "Help": {
     "embed": {
-      "title": "Information",
-      "description": "**Would You** est un bot discord conçu pour augmenter l'activité du serveur discord. Il vous permet de jouer à **Action ou Vérité**, **Préférez-vous**, **Plus ou moins**, **Je n'ai jamais** et **Que feriez-vous**.",
-      "footer": "Would You",
-      "Fields": {
-        "name": "**Mes commandes**",
-        "value": "`/Would You` - Commence une discussion sur un sujet aléatoire.\n`/ping` - Pong!\n`/language` - Change la langue du bot pour le serveur\n`/help` - Affiche ce panel d'informations\n`/rather` - Pose une question du type \"Tu préfères avoir quel pouvoir\" entre deux pouvoirs possible\n`/custom` - Envoie un message personnalisé dans le chat!\n`/wwyd` - Envoie une question dans le chat\n`/welcome` - Ajoute ou supprime le canal de bienvenue !\n`/support` - Si vous avez besoin d'aide sur le bot, utilisez cette commande pour obtenir de l'aide de l'équipe de support !",
-        "privacyname": "**Politique de confidentialité**",
-        "privacy": "Nous apprécions votre vie privée. Si vous avez des inquiétudes concernant vos données, consultez la politique de confidentialité [ici](https://wouldyoubot.gg/privacy)."
-      }
+      "description": "## Qu'est-ce que Would You ?\n\n  **Would You** est un bot qui vous permet de jouer à des jeux avec vos amis sur Discord tout en vous amusant et en apprenant à vous connaître.\n## Principaux modes de jeu\n  Les modes de jeu de <:roundyou:1009964111045607525> **Voulez-vous** incluent </wouldyourather:{wouldyourather}>, </neverhaveiever:{neverhaveiever}>, </whatwouldyoudo:{whatwouldyoudo}>, </higherlower:{higherlower}> et enfin et surtout, il y a </truth:{truth}> ou </dare:{dare}> !\n## Configurer le bot\n  Vous pouvez utiliser les commandes **/settings** pour modifier les **temps de recharge** du bouton, activer et désactiver la fonctionnalité **question du jour** ou le **bienvenue**.\n## Confidentialité\n  Si vous ne souhaitez pas apparaître dans les classements ou les votes. Vous pouvez ajuster vos paramètres de confidentialité en utilisant </privacy:{privacy}>. Pour savoir quelles données nous stockons, visitez notre [**Politique de confidentialité**](https://wouldyoubot.gg/privacy)"
     },
     "button": {
-      "title": "Notre serveur Discord"
+      "discord": "Would You Support",
+      "invite": "Invite Would You",
+      "commands": "Voir les commandes",
+      "help": "Voir l'aide"
     }
   },
   "Vote": {
@@ -208,7 +197,7 @@
       "title": "Would You | Guide",
       "description": "Guide pour utiliser tout le potentiel de la fonction Would You",
       "name1": "Comment utiliser correctement Would You !",
-      "value1": "Créez un canal dédié pour le bot ou autorisez les utilisateurs à utiliser le bot dans le chat principal. \n > Voudriez-vous rendre les chats plus actifs, donc il serait très ironique de refuser l'utilisation de vous dans les chats principaux. \n > Si vous voulez utiliser le bot à son plein potentiel, utilisez la commande </welcome:1011374285350260914> et configurez un canal de bienvenue. Le canal sera utilisé pour envoyer un message une fois qu'un utilisateur se connecte.",
+      "value1": "Créez un canal dédié pour le bot ou autorisez les utilisateurs à utiliser le bot dans le chat principal. \n > Voudriez-vous rendre les chats plus actifs, donc il serait très ironique de refuser l'utilisation de vous dans les chats principaux. \n > Si vous voulez utiliser le bot à son plein potentiel, utilisez la commande </settings:1099463656124723304> et configurez un canal de bienvenue. Le canal sera utilisé pour envoyer un message une fois qu'un utilisateur se connecte.",
       "name2": "Pourquoi ai-je besoin de cela?",
       "value2": "> L'intention est d'aider les nouveaux utilisateurs à prendre part à la conversation en donnant aux membres un sujet pour discuter dès leur arrivée ! Cela ne rend pas seulement le serveur plus actif, mais cela permet aussi que les nouveaux utilisateurs se sentent plus inclus juste après avoir rejoint le serveur et les encourage à rester plus longtemps !",
       "name3": "Vous avez d'autres conseils?",
@@ -228,7 +217,7 @@
     "errorSame": "Le fuseau horaire fourni est le même fuseau horaire que celui déjà défini. Assurez-vous de choisir un autre fuseau horaire.",
     "errorInvalid": "Le fuseau horaire fourni est invalide, vous pouvez choisir un fuseau horaire valide sur ce [sélecteur de fuseau horaire](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "L'heure de publication indiquée est la même que celle déjà définie. Assure-toi de choisir une autre heure de publication.",
-    "intervalInvalid": "L'heure de publication fournie n'est pas valide. Assure-toi que ton heure d'envoi est au format 24h et que les minutes sont soit 00, soit un intervalle de 5 !",
+    "intervalInvalid": "L'heure de publication indiquée n'était pas valide. Assure-toi que ton heure de publication est au format 24h et se termine soit par 00 soit par 30 !",
     "dailyChannel": "Sélectionnez le channel où vous voulez que les messages quotidiens soient postés !",
     "replayChannel": "Sélectionnez un salon auquel vous souhaitez ajouter un temps de recharge !",
     "replayChannelNone": "Vous n'avez défini aucun salon de rediffusion !",
@@ -247,7 +236,7 @@
       "generalTitle": "Would You - Paramètres généraux",
       "replayCooldown": "**Rejouer le temps de recharge**",
       "replayType": "**Type de rediffusion**",
-      "replayBy": "**Rejouer le temps de refroidissement par**",
+      "replayBy": "**Rejouer le temps de rechargement par**",
       "replayBy1": "• Chaque utilisateur dispose d'un temps de recharge personnel.",
       "replayBy2": "• Tout le serveur a un seul temps de recharge.",
       "replayChannels": "**Salon de rediffusion**",
@@ -279,7 +268,7 @@
       "replayCooldown": "Définir le cooldown de la relecture",
       "replayDeleteChannels": "Supprimer les salons de rediffusion",
       "replayType": "Type de rediffusion",
-      "replayBy": "Rejouer par",
+      "replayBy": "Rejoué par",
       "welcomeChannel": "Définir le salon",
       "welcome": "Activer/désactiver les accueils",
       "welcomePing": "Activer/désactiver le ping de l'utilisateur"
@@ -338,5 +327,11 @@
     "error": {
       "user": "Ce jeu ne t'appartient pas, il appartient à {user}. Crée ton propre jeu en utilisant </higherlower:1153718305903890554> !"
     }
+  },
+  "Premium": {
+    "tier": "Palier : {type}",
+    "tier1": "Premium",
+    "tier2": "Premium + IA",
+    "tier3": "Partenaire"
   }
 }

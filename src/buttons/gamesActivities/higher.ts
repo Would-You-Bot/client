@@ -15,6 +15,7 @@ import { getHigherLower } from "../../util/Functions/jsonImport";
 
 const button: Button = {
   name: "higher",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     if (
       interaction.message.interaction?.user.id !== interaction.user.id &&

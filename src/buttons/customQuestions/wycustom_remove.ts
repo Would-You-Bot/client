@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "wycustom_remove",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const id = interaction.customId.split("-")[1],
       data = client.customAdd.get(id);

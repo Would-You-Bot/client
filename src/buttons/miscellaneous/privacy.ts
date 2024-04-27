@@ -9,6 +9,7 @@ import {
 
 const button: Button = {
   name: "privacy",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const db = await client.database.getUser(interaction.user.id);
 

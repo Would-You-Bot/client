@@ -4,6 +4,7 @@ import Paginator from "../../util/pagination";
 
 const button: Button = {
   name: "result",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const customId = interaction.customId.split("_");
 

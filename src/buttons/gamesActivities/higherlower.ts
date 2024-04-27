@@ -19,6 +19,7 @@ import { IUserModel, UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "higherlower",
+  cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
       await interaction.message.edit({

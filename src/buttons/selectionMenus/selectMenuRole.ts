@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "selectMenuRole",
+  cooldown: false,
   execute: async (interaction: any, client, guildDb) => {
     const newRole = interaction.values[0];
     const dailyMsgs = new EmbedBuilder()

@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "replayDelete",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const arr =
       guildDb.replayChannels.filter(

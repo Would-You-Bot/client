@@ -92,7 +92,6 @@ export async function getQuestionsByType(
   guildDb: IGuildModel | null,
   language: string,
 ): Promise<QuestionResult> {
-  console.log(guildDb, typeof guildDb)
   if (!validTypes.includes(type)) {
     throw new Error(`Invalid question type: ${type}`);
   }

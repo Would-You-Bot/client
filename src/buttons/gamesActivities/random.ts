@@ -14,6 +14,7 @@ import { getRandomTod } from "../../util/Functions/jsonImport";
 
 const button: Button = {
   name: "random",
+  cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
       await interaction.message.edit({

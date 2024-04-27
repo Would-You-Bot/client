@@ -15,6 +15,7 @@ import { UserModel, IUserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "neverhaveiever",
+  cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
       if (interaction.channel.isThread()) {

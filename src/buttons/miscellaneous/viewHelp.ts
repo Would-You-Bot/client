@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "viewHelp",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
 
     const commands = await client.application?.commands.fetch({

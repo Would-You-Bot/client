@@ -30,6 +30,7 @@ function isNumericRegex(str: string) {
 
 const button: Button = {
   name: "replayCooldown",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     await interaction.showModal(modalObject);
 

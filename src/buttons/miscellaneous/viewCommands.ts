@@ -9,6 +9,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "viewCommands",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const languageMappings = {
       de_DE: "de",

@@ -152,7 +152,8 @@
     "button": {
       "discord": "Would You Support",
       "invite": "Would You Einladen",
-      "commands": "Befehle anzeigen"
+      "commands": "Befehle anzeigen",
+      "help": "Hilfe Anzeigen"
     }
   },
   "Vote": {

@@ -30,9 +30,8 @@ const buttonInteractionEvent: Event = {
         customId[2] === "wouldyourather"
       ) {
         const action = Number(customId[3]) == 0 ? "yes" : "no";
-        const commandName = customId[2];
-        const fieldName = `${commandName}.${action}`;
-
+        const buttonName = customId[2];
+        const fieldName = `${buttonName}.${action}`;
         // Increment the specified field using $inc
         await UserModel.updateOne(
           { userID: interaction.user?.id },
@@ -53,7 +52,6 @@ const buttonInteractionEvent: Event = {
 
     // Get the field path based on the command name
     const fieldPath = replyMap[interaction.customId];
-
     if (fieldPath) {
       // Increment the specified field using $inc
       await UserModel.updateOne(
@@ -97,38 +95,7 @@ const buttonInteractionEvent: Event = {
     let cooldownKey: string | undefined;
     let cooldown: number;
 
-    const excludedButtons = [
-      "dailyChannel",
-      "deleteDailyRole",
-      "welcomeType",
-      "welcomeTest",
-      "selectMenuWelcomeType",
-      "replayType",
-      "replayBy",
-      "replayDelete",
-      "replayDeleteChannels",
-      "replayChannels",
-      "selectMenuReplay",
-      "welcomeChannel",
-      "dailyInterval",
-      "dailyType",
-      "replayCooldown",
-      "welcomePing",
-      "welcome",
-      "welcomeChannel",
-      "dailyRole",
-      "dailyTimezone",
-      "dailyMsg",
-      "dailyThread",
-      "votemodal",
-      "paginateFirst",
-      "paginateLast",
-      "paginateNext",
-      "paginatePrev",
-      "privacy",
-      "viewHelp",
-      "viewCommands",
-    ];
+    const excludedButtons = client.buttons.filter((button) => button.cooldown === false).map((button) => button.name)
 
     const isExcludedButton = excludedButtons.includes(interaction.customId);
     if (

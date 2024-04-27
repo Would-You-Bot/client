@@ -102,7 +102,6 @@ export async function Questions(
   );
   
   if (unusedQuestions.length === 0) {
-    console.log("All questions have been used");
     await reset(guildDb?.guildID!, type);
     unusedQuestions = modal;
   }
