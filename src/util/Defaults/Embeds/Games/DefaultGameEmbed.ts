@@ -11,8 +11,7 @@ export class DefaultGameEmbed extends EmbedBuilder {
 
     this.setColor("#0598F6");
     this.setFooter({
-      text: `Requested by ${interaction.user.username} | Type: ${type.toUpperCase()
-      } | ID: ${id}`,
+      text: `Requested by ${interaction.user.username} | Type: ${type.toUpperCase()} | ID: ${id}`,
       iconURL: interaction.user.displayAvatarURL() || undefined,
     });
     this.setDescription(bold(question));

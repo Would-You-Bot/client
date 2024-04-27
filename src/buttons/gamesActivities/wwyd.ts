@@ -53,11 +53,11 @@ const button: Button = {
       "whatwouldyoudo",
       guildDb,
       guildDb?.language != null
-      ? guildDb.language
-      : userDb?.language
-        ? userDb.language
-        : "en_EN",
-        );
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
+    );
 
     const wwydembed = new EmbedBuilder()
       .setColor("#0598F6")

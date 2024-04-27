@@ -52,11 +52,11 @@ const button: Button = {
       "neverhaveiever",
       guildDb,
       guildDb?.language != null
-      ? guildDb.language
-      : userDb?.language
-        ? userDb.language
-        : "en_EN",
-        );
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
+    );
 
     let nhieEmbed = new EmbedBuilder()
       .setColor("#0598F6")

@@ -26,7 +26,7 @@ const questionModelSchema = new Schema({
 
 const createModel = (modelName: string, schema: Schema) => {
   return model<IQuestionModel>(modelName, schema);
-}
+};
 
 export const wyrModel = createModel("wyrModel", questionModelSchema);
 export const wwydModel = createModel("wwydModel", questionModelSchema);

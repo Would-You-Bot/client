@@ -30,7 +30,6 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    
     const userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
     })) as IUserModel;
@@ -38,7 +37,7 @@ const command: ChatInputCommand = {
     let WWYD = await getQuestionsByType(
       "whatwouldyoudo",
       guildDb,
-            guildDb?.language != null
+      guildDb?.language != null
         ? guildDb.language
         : userDb?.language
           ? userDb.language

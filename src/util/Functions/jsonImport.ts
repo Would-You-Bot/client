@@ -21,19 +21,21 @@ const languageMap: LanguageMapInterface = {
 };
 
 import shuffle from "../shuffle";
-import { markQuestionAsUsed, } from "./queueHandler";
+import { markQuestionAsUsed } from "./queueHandler";
 
 export interface QuestionResult {
   id: string;
   question: string;
 }
 
-type QuestType = "wouldyourather"
+type QuestType =
+  | "wouldyourather"
   | "neverhaveiever"
   | "whatwouldyoudo"
   | "truth"
   | "dare";
-type Quest = "truthQuestions"
+type Quest =
+  | "truthQuestions"
   | "dareQuestions"
   | "wwydQuestions"
   | "nhieQuestions"
@@ -64,7 +66,6 @@ interface HigherLowerJsonModel {
   author: string;
   link: string;
 }
-
 
 export async function getHigherLower(): Promise<HigherLowerJsonModel[]> {
   let result = [] as HigherLowerJsonModel[];
@@ -97,8 +98,7 @@ export async function getQuestionsByType(
   }
 
   // TODO: Make this work with the language system
-  const normalizedLanguage =
-    languageMap[language];
+  const normalizedLanguage = languageMap[language];
 
   const models: { [key: string]: any } = {
     wouldyourather: wyrModel,
@@ -165,9 +165,9 @@ export async function getQuestionsByType(
         break;
     }
     result = await Questions(result, null, guildDb, {
-    quest: typeCheck[type] as Quest,
-    questType: type as QuestType,
-  });
+      quest: typeCheck[type] as Quest,
+      questType: type as QuestType,
+    });
   } else {
     result = {
       id: questions[0].id,
@@ -177,6 +177,6 @@ export async function getQuestionsByType(
           : questions[0].translations[normalizedLanguage],
     };
   }
-  
+
   return result;
 }

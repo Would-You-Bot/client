@@ -95,7 +95,9 @@ const buttonInteractionEvent: Event = {
     let cooldownKey: string | undefined;
     let cooldown: number;
 
-    const excludedButtons = client.buttons.filter((button) => button.cooldown === false).map((button) => button.name)
+    const excludedButtons = client.buttons
+      .filter((button) => button.cooldown === false)
+      .map((button) => button.name);
 
     const isExcludedButton = excludedButtons.includes(interaction.customId);
     if (

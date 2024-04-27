@@ -56,11 +56,11 @@ const button: Button = {
       "wouldyourather",
       guildDb,
       guildDb?.language != null
-      ? guildDb.language
-      : userDb?.language
-        ? userDb.language
-        : "en_EN",
-        );
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
+    );
 
     const ratherembed = new DefaultGameEmbed(
       interaction,
@@ -68,7 +68,6 @@ const button: Button = {
       WYR.question,
       "wyr",
     );
-
 
     if (guildDb && !guildDb.replay)
       return interaction.reply({

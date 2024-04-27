@@ -31,21 +31,20 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
 
-  execute: async (interaction, client, guildDb) => {  
-
+  execute: async (interaction, client, guildDb) => {
     let userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
     })) as IUserModel;
 
-    let NHIE = await getQuestionsByType( "neverhaveiever", guildDb,
+    let NHIE = await getQuestionsByType(
+      "neverhaveiever",
+      guildDb,
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
           ? userDb.language
           : "en_EN",
     );
-    
-
 
     let nhieEmbed = new EmbedBuilder()
       .setColor("#0598F6")

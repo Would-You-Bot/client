@@ -56,20 +56,19 @@ const button: Button = {
       "truth",
       guildDb,
       guildDb?.language != null
-      ? guildDb.language
-      : userDb?.language
-        ? userDb.language
-        : "en_EN",
-        );
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
+    );
 
-
-  const truthembed = new EmbedBuilder()
-    .setColor("#0598F6")
-    .setFooter({
-      text: `Requested by ${interaction.user.username} | Type: Truth | ID: ${truth.id}`,
-      iconURL: interaction.user.displayAvatarURL() || undefined,
-    })
-    .setDescription(bold(truth.question));
+    const truthembed = new EmbedBuilder()
+      .setColor("#0598F6")
+      .setFooter({
+        text: `Requested by ${interaction.user.username} | Type: Truth | ID: ${truth.id}`,
+        iconURL: interaction.user.displayAvatarURL() || undefined,
+      })
+      .setDescription(bold(truth.question));
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();

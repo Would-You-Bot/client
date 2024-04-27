@@ -13,7 +13,6 @@ import { ChatInputCommand } from "../../interfaces";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel, IUserModel } from "../../util/Models/userModel";
 
-
 const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
@@ -32,7 +31,6 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-
     const userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
     })) as IUserModel;
@@ -40,13 +38,12 @@ const command: ChatInputCommand = {
     let truth = await getQuestionsByType(
       "truth",
       guildDb,
-          guildDb?.language != null
+      guildDb?.language != null
         ? guildDb.language
         : userDb?.language
           ? userDb.language
           : "en_EN",
     );
-
 
     const truthembed = new EmbedBuilder()
       .setColor("#0598F6")

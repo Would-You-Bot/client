@@ -60,7 +60,7 @@ const button: Button = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-          );
+    );
 
     const dareembed = new EmbedBuilder()
       .setColor("#0598F6")
