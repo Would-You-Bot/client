@@ -44,7 +44,8 @@ export default async function settingsGeneral(
             )}: ${
               guildDb.replayChannels.length > 0
                 ? `\n${guildDb.replayChannels
-                    .map((c) => `<#${c.id}>: ${c.cooldown}`)
+                    .sort((a: any, b: any) => b.cooldown / 1000 - a.cooldown / 1000,)
+                    .map((c) => `<#${c.id}>: ${Number(c.cooldown) / 1000}s`)
                     .join("\n")}`
                 : client.translation.get(
                     guildDb?.language,
@@ -54,7 +55,7 @@ export default async function settingsGeneral(
           : `${client.translation.get(
               guildDb?.language,
               "Settings.embed.replayCooldown",
-            )}: ${guildDb.replayCooldown}`
+            )}: ${guildDb.replayCooldown / 1000}s`
       }`,
     )
     .setColor("#0598F6")

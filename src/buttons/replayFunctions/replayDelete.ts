@@ -49,8 +49,9 @@ const button: Button = {
           arr === "None"
             ? arr
             : `\n${arr
+                .sort((a: any, b: any) => b.cooldown / 1000 - a.cooldown / 1000)
                 .filter((c) => c.id !== (interaction as any).values[0])
-                .map((c) => `<#${c.id}>: ${c.cooldown}`)
+                .map((c) => `<#${c.id}>: ${Number(c.cooldown) / 1000}s`)
                 .join("\n")}`
         }`,
       )

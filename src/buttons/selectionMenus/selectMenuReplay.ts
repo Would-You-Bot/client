@@ -19,7 +19,7 @@ const modalObject = {
           type: 4,
           style: 1,
           custom_id: "input",
-          label: "Provide a replay cooldown in milliseconds",
+          label: "Provide a replay cooldown in seconds",
         },
       ],
     },
@@ -27,8 +27,9 @@ const modalObject = {
 };
 
 function isNumericRegex(str: string) {
-  return /^[0-9]+$/.test(str); // regex for extra 0,00000002% speeds :trol:
+  return /^\d*\.?\d+$/.test(str); // regex for extra 0,00000002% speeds :trol:
 }
+
 const button: Button = {
   name: "selectMenuReplay",
   cooldown: false,
@@ -41,7 +42,7 @@ const button: Button = {
         time: 600000,
       })
       .then(async (modalInteraction) => {
-        const value = modalInteraction.components[0].components[0].value;
+        let value = modalInteraction.components[0].components[0].value as any;
         if (isNumericRegex(value) === false) {
           modalInteraction.reply({
             ephemeral: true,
@@ -53,7 +54,7 @@ const button: Button = {
           return;
         }
 
-        if (Number(value) < 2000) {
+        if (Number(value) < 2) {
           modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
@@ -64,7 +65,7 @@ const button: Button = {
           return;
         }
 
-        if (Number(value) > 21600000) {
+        if (Number(value) > 21600) {
           modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
@@ -85,6 +86,7 @@ const button: Button = {
           );
         }
 
+        value = value * 1000;
         const arr =
           guildDb.replayChannels.length > 0
             ? [
@@ -127,7 +129,7 @@ const button: Button = {
             }\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.replayChannels",
-            )}:\n${arr.map((c) => `<#${c.id}>: ${c.cooldown}`).join("\n")}`,
+            )}:\n${arr.sort((a, b) => (b.cooldown / 1000) - (a.cooldown / 1000)).map((c) => `<#${c.id}>: ${c.cooldown / 1000}s`).join("\n")}`,
           )
           .setColor("#0598F6")
           .setFooter({

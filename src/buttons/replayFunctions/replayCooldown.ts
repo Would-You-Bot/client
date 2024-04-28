@@ -17,7 +17,7 @@ const modalObject = {
           type: 4,
           style: 1,
           custom_id: "input",
-          label: "Provide a replay cooldown in milliseconds",
+          label: "Provide a replay cooldown in seconds",
         },
       ],
     },
@@ -25,7 +25,7 @@ const modalObject = {
 };
 
 function isNumericRegex(str: string) {
-  return /^[0-9]+$/.test(str); // regex for extra 0,00000002% speeds :trol:
+  return /^\d*\.?\d+$/.test(str); // regex for extra 0,00000002% speeds :trol:
 }
 
 const button: Button = {
@@ -40,7 +40,7 @@ const button: Button = {
         time: 6000000,
       })
       .then(async (modalInteraction) => {
-        const value = modalInteraction.components[0].components[0].value;
+        let value = modalInteraction.components[0].components[0].value as any;
 
         if (guildDb.replayCooldown.toString() === value)
           return modalInteraction.reply({
@@ -59,6 +59,28 @@ const button: Button = {
               "Settings.cooldownInvalid",
             ),
           });
+
+        if (Number(value) < 2) {
+          modalInteraction.reply({
+            ephemeral: true,
+            content: client.translation.get(
+              guildDb?.language,
+              "Settings.replayCooldownMin",
+            ),
+          });
+          return;
+        }
+
+        if (Number(value) > 21600) {
+          modalInteraction.reply({
+            ephemeral: true,
+            content: client.translation.get(
+              guildDb?.language,
+              "Settings.cooldownTooLong",
+            ),
+          });
+          return;
+        }
 
         const generalMsg = new EmbedBuilder()
           .setTitle(
@@ -89,7 +111,7 @@ const button: Button = {
               "Settings.embed.replayCooldown",
             )}: ${
               guildDb.replayCooldown
-                ? `${Math.min(Number(value), 86400000)}`
+                ? `${value}s`
                 : ":x:"
             }\n`,
           )
@@ -146,7 +168,7 @@ const button: Button = {
 
         await client.database.updateGuild(interaction.guild?.id || "", {
           ...guildDb,
-          replayCooldown: Math.min(Number(value), 86400000),
+          replayCooldown: value * 1000,
         });
 
         (modalInteraction as any).update({
