@@ -335,7 +335,7 @@
       "description": "Tu as atteint un score de **{score}** !"
     },
     "error": {
-      "user": "Ce jeu ne t'appartient pas, il appartient à {user}. Crée ton propre jeu en utilisant </higherlower:1153718305903890554> !"
+      "user": "Ce jeu ne t'appartient pas, il appartient à **{user}**. Crée ton propre jeu en utilisant </higherlower:1153718305903890554> !"
     }
   }
 }

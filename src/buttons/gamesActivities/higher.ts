@@ -17,7 +17,7 @@ const button: Button = {
   name: "higher",
   execute: async (interaction, client, guildDb) => {
     if (
-      interaction.message.interaction?.user.id !== interaction.user.id ||
+      interaction.message.interaction?.user.id !== interaction.user.id &&
       interaction?.message.embeds[0]?.footer?.text.split(" | ")[0] !==
         interaction.user.tag
     ) {
@@ -26,7 +26,7 @@ const button: Button = {
           guildDb?.language,
           "HigherLower.error.user",
           {
-            user: interaction.message.interaction?.user.username,
+            user: interaction.message.interaction?.user.username ? interaction.message.interaction?.user.username : interaction?.message.embeds[0]?.footer?.text.split(" | ")[0],
           },
         ),
         ephemeral: true,
