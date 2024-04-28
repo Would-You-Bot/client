@@ -26,7 +26,9 @@ const button: Button = {
           guildDb?.language != null ? guildDb.language : "en_EN",
           "HigherLower.error.user",
           {
-            user: interaction.message.interaction?.user.username ? interaction.message.interaction?.user.username : interaction?.message.embeds[0]?.footer?.text.split(" | ")[0],
+            user: interaction.message.interaction?.user.username
+              ? interaction.message.interaction?.user.username
+              : interaction?.message.embeds[0]?.footer?.text.split(" | ")[0],
           },
         ),
         ephemeral: true,
