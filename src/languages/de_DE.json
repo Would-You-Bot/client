@@ -153,7 +153,7 @@
       "discord": "Would You Support",
       "invite": "Would You Einladen",
       "commands": "Befehle anzeigen",
-      "help": "Hilfe Anzeigen"
+      "help": "Hilfe anzeigen"
     }
   },
   "Vote": {
@@ -221,9 +221,9 @@
     "dailyChannel": "Wähle einen Kanal, in dem du tägliche Nachrichten haben möchtest!",
     "replayChannel": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
     "replayChannelNone": "Du hast keine Replay-Kanäle gesetzt!",
-    "replayCooldownMin": "Die Abklingzeit ist zu kurz, stelle sicher, dass die Abklingzeit über 2 Sekunden liegt! (2000 Millisekunden)",
+    "replayCooldownMin": "Die Abklingzeit ist zu kurz, stelle sicher, dass die Abklingzeit über 2 Sekunden liegt!",
     "replayDelete": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
-    "cooldownTooLong": "Die Abklingzeit ist zu lang, stelle sicher, dass die Abklingzeit nicht über 6 stunden liegt! (21600000 Millisekunden)!",
+    "cooldownTooLong": "Die Abklingzeit ist zu lang, stelle sicher, dass die Abklingzeit nicht über 6 stunden liegt! (21,600 Sekunden)!",
     "replayChannelLimit": "Du kannst dem Cooldown nur 15 Kanäle hinzufügen!",
     "dailyType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",
     "welcomeType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",

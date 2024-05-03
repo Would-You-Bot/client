@@ -49,13 +49,6 @@ const command: ChatInputCommand = {
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setLabel(
-            client.translation.get(guildDb?.language, "Help.button.discord"),
-          )
-          .setStyle(5)
-          .setEmoji("💫")
-          .setURL("https://discord.gg/vMyXAxEznS"),
-        new ButtonBuilder()
-          .setLabel(
             client.translation.get(guildDb?.language, "Help.button.invite"),
           )
           .setStyle(5)
