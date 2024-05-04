@@ -330,8 +330,8 @@
   },
   "Premium": {
     "tier": "Nivel: {type}",
-    "tier1": "Premium",
-    "tier2": "Premium + AI",
+    "tier1": "Prémium",
+    "tier2": "Prémium + AI",
     "tier3": "Socio"
   }
 }
