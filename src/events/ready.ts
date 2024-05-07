@@ -32,7 +32,7 @@ const event: Event = {
         try {
           if (process.env.PRODUCTION === "true") {
             const loadServers = async () => {
-              const serverCount = await client.cluster.broadcastEval((c) =>
+              const featuredServers = await client.cluster.broadcastEval((c) =>
                 c.guilds.cache.filter(
                   (g) =>
                     g.features.includes("PARTNERED") ||
@@ -40,7 +40,18 @@ const event: Event = {
                 ),
               );
 
-              await redis.set("server_count", JSON.stringify(serverCount));
+              const mergedServers = await featuredServers.reduce((result, array) => result.concat(array), [])
+
+              mergedServers.map(server => ({
+                name: server.name,
+                id: server.id,
+                features: server.features,
+                memberCount: server.memberCount,
+                iconURL: server.iconURL,
+                vanityURLCode: server.vanityURLCode
+            }));
+
+              await redis.set("server_count", JSON.stringify(mergedServers));
             };
 
             // Post data to top.gg
@@ -69,7 +80,7 @@ const event: Event = {
               });
             };
             setInterval(postStats, 3600000);
-            loadServers();
+            setTimeout(loadServers, 300000);
             setInterval(loadServers, 3600000 / 2);
             // If the bot is in production mode it will load slash commands for all guilds
             if (client.user?.id) {
