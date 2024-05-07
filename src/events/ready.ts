@@ -9,7 +9,7 @@ import appCommmands from "../util/Functions/supportAppCommands";
 import { Event } from "../interfaces/event";
 import axios from "axios";
 import { getInfo } from "discord-hybrid-sharding";
-import { Redis } from "@upstash/redis"
+import { Redis } from "@upstash/redis";
 
 // TODO: Clean up this file
 const event: Event = {
@@ -26,7 +26,7 @@ const event: Event = {
       const redis = new Redis({
         url: process.env.REDIS_URL!,
         token: process.env.REDIS_TOKEN!,
-      })
+      });
 
       setTimeout(async () => {
         try {
@@ -34,14 +34,14 @@ const event: Event = {
             const loadServers = async () => {
               const serverCount = client.cluster.broadcastEval((c) =>
                 c.guilds.cache.filter(
-                    (g) =>
-                        g.features.includes('PARTNERED') ||
-                        g.features.includes('VERIFIED')
-                )
-            )
+                  (g) =>
+                    g.features.includes("PARTNERED") ||
+                    g.features.includes("VERIFIED"),
+                ),
+              );
 
-              await redis.set("server_count", JSON.stringify(serverCount))
-            }
+              await redis.set("server_count", JSON.stringify(serverCount));
+            };
 
             // Post data to top.gg
             const postStats = async () => {
