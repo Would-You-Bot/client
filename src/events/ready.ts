@@ -32,7 +32,7 @@ const event: Event = {
         try {
           if (process.env.PRODUCTION === "true") {
             const loadServers = async () => {
-              const serverCount = client.cluster.broadcastEval((c) =>
+              const serverCount = await client.cluster.broadcastEval((c) =>
                 c.guilds.cache.filter(
                   (g) =>
                     g.features.includes("PARTNERED") ||
@@ -69,7 +69,8 @@ const event: Event = {
               });
             };
             setInterval(postStats, 3600000);
-            setInterval(loadServers, 3600000);
+            loadServers();
+            setInterval(loadServers, 3600000 / 2);
             // If the bot is in production mode it will load slash commands for all guilds
             if (client.user?.id) {
               await rest.put(Routes.applicationCommands(client.user.id), {
