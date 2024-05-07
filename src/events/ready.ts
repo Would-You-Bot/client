@@ -42,7 +42,7 @@ const event: Event = {
 
               const mergedServers = await featuredServers.reduce((result, array) => result.concat(array), [])
 
-              mergedServers.map(server => ({
+              const finalServer = mergedServers.map(server => ({
                 name: server.name,
                 id: server.id,
                 features: server.features,
@@ -51,7 +51,7 @@ const event: Event = {
                 vanityURLCode: server.vanityURLCode
             }));
 
-              await redis.set("server_count", JSON.stringify(mergedServers));
+              await redis.set("server_count", JSON.stringify(finalServer));
             };
 
             // Post data to top.gg
