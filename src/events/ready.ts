@@ -40,16 +40,19 @@ const event: Event = {
                 ),
               );
 
-              const mergedServers = await featuredServers.reduce((result, array) => result.concat(array), [])
+              const mergedServers = await featuredServers.reduce(
+                (result, array) => result.concat(array),
+                [],
+              );
 
-              const finalServer = mergedServers.map(server => ({
+              const finalServer = mergedServers.map((server) => ({
                 name: server.name,
                 id: server.id,
                 features: server.features,
                 memberCount: server.memberCount,
                 iconURL: server.iconURL,
-                vanityURLCode: server.vanityURLCode
-            }));
+                vanityURLCode: server.vanityURLCode,
+              }));
 
               await redis.set("server_count", JSON.stringify(finalServer));
             };
