@@ -85,7 +85,8 @@ const command: ChatInputCommand = {
       .setFooter({
         text: "Would You",
         iconURL: client?.user?.displayAvatarURL() || undefined,
-      });
+      })
+      .setColor("#0598F6");
 
     switch (interaction.options.getString("type")) {
       case "user": {
