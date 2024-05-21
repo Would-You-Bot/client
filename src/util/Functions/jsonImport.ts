@@ -66,11 +66,7 @@ export async function getHigherLower(): Promise<HigherLowerJsonModel[]> {
 }
 
 interface NeverHaveIEverResult {
-  Funny: string[];
-  Basic: string[];
-  Young: string[];
-  Food: string[];
-  RuleBreak: string[];
+  NeverHaveIever: string[];
 }
 
 export async function getNeverHaveIEver(
@@ -79,11 +75,7 @@ export async function getNeverHaveIEver(
   var result = {} as NeverHaveIEverResult;
 
   await import(getPath(`nhie-${language}.json`)).then((value) => {
-    result.Funny = value.Funny;
-    result.Basic = value.Funny;
-    result.Young = value.Young;
-    result.Food = value.Food;
-    result.RuleBreak = value.RuleBreak;
+    result.NeverHaveIever = value.NeverHaveIever;
   });
 
   return result;

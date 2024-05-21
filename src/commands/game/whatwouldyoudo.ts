@@ -22,6 +22,7 @@ const command: ChatInputCommand = {
       de: "Was würdest du in dieser Situation tun",
       "es-ES": "¿Qué harías en esta situación?",
       fr: "Que feriez-vous dans cette situation",
+      it: "Cosa faresti in questa situazione",
     }),
   /**
    * @param {CommandInteraction} interaction

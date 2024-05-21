@@ -18,6 +18,7 @@ const command: ChatInputCommand = {
       de: "Zeigt eine Liste aller Befehle an",
       "es-ES": "Muestra una lista de cada comando",
       fr: "Affiche une liste de toutes les commandes",
+      it: "Mostra un elenco di tutti i comandi",
     }),
   /**
    * @param {CommandInteraction} interaction
@@ -30,11 +31,13 @@ const command: ChatInputCommand = {
       en_EN: "en",
       es_ES: "es",
       fr_FR: "fr",
+      it_IT: "it",
     } as any;
 
     const commands = await client.application?.commands.fetch({
       withLocalizations: true,
     });
+    console.log(commands)
     const type = languageMappings[guildDb?.language] || "en";
     const helpembed = new EmbedBuilder()
       .setColor("#0598F6")
@@ -60,18 +63,19 @@ const command: ChatInputCommand = {
           `\n\n${(commands as any)
             .filter((e: any) => e.name !== "reload")
             .sort((a: any, b: any) => a.name.localeCompare(b.name))
-            .map(
-              (n: any) =>
-                `</${n.name}:${n.id}> - ${
-                  type === "de"
-                    ? n.descriptionLocalizations.de
-                    : type === "es"
-                      ? n.descriptionLocalizations["es-ES"]
-                      : type === "fr"
-                        ? n.descriptionLocalizations.fr
-                        : n.description
-                }`,
-            )
+            .map((n: any) => {
+              const descriptionMap: { [key: string]: string | undefined } = {
+                de: n.descriptionLocalizations.de,
+                es: n.descriptionLocalizations["es-ES"],
+                fr: n.descriptionLocalizations.fr,
+                it: n.descriptionLocalizations.it,
+              };
+            
+              const description = descriptionMap[type] || n.description;
+            
+              return `</${n.name}:${n.id}> - ${description}`;
+            })
+            
             .join("\n")}`,
       );
 

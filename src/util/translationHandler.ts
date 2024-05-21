@@ -12,7 +12,7 @@ export default class TranslationHandler {
      * The available languages
      * @type {string[]}
      */
-    this.availableLanguages = languages ?? ["de_DE", "en_EN", "es_ES", "fr_FR"];
+    this.availableLanguages = languages ?? ["de_DE", "en_EN", "es_ES", "fr_FR", "it_IT"];
 
     /**
      * The translations

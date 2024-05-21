@@ -12,6 +12,7 @@ const command: ChatInputCommand = {
       de: "Läst dich für den Bot abstimmen",
       "es-ES": "¡Vota por mí!",
       fr: "Votez pour le bot pour nous soutenir",
+      it: "Vota per me!",
     }),
 
   /**

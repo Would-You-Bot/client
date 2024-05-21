@@ -22,6 +22,7 @@ const command: ChatInputCommand = {
       "es-ES":
         "Cambiar la configuración de los mensajes diarios y las bienvenidas",
       fr: "Modifier les paramètres des messages quotidiens et des messages de bienvenue",
+      it: "Cambia le impostazioni dei messaggi giornalieri e di benvenuto",
     })
     .addStringOption((option) =>
       option

@@ -103,12 +103,14 @@ const buttonInteractionEvent: Event = {
       "welcomeType",
       "welcomeTest",
       "selectMenuWelcomeType",
+      "selectMenuChannel",
       "replayType",
       "replayBy",
       "replayDelete",
       "replayDeleteChannels",
       "replayChannels",
       "selectMenuReplay",
+      "selectMenuRole",
       "welcomeChannel",
       "dailyInterval",
       "dailyType",
@@ -126,6 +128,8 @@ const buttonInteractionEvent: Event = {
       "paginateNext",
       "paginatePrev",
       "privacy",
+      "selectMenuWelcome",
+      "selectMenuType",
     ];
 
     const isExcludedButton = excludedButtons.includes(interaction.customId);

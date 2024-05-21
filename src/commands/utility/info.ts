@@ -13,6 +13,7 @@ const command: ChatInputCommand = {
       de: "Zeigt einige Informationen über den Bot",
       "es-ES": "Muestra información sobre el bot",
       fr: "Affiche des informations sur le bot",
+      it: "Mostra alcune informazioni sul bot",
     }),
   /**
    * @param {CommandInteraction} interaction

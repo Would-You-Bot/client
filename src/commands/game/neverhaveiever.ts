@@ -22,6 +22,7 @@ const command: ChatInputCommand = {
       de: "Bekomme eine nie habe ich jemals Nachricht",
       "es-ES": "Consigue un mensaje Nunca he tenido",
       fr: "Afficher une question que je n'ai jamais posée",
+      it: "Ottieni un messaggio che non ho mai avuto",
     }),
 
   /**
@@ -35,7 +36,7 @@ const command: ChatInputCommand = {
       userID: interaction.user?.id,
     })) as IUserModel;
 
-    let { Funny, Basic, Young, Food, RuleBreak } = await getNeverHaveIEver(
+    let { NeverHaveIever } = await getNeverHaveIEver(
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
@@ -55,20 +56,12 @@ const command: ChatInputCommand = {
       switch (guildDb.customTypes) {
         case "regular":
           nererhaveIever = shuffle([
-            ...Funny,
-            ...Basic,
-            ...Young,
-            ...Food,
-            ...RuleBreak,
+            ...NeverHaveIever
           ]);
           break;
         case "mixed":
           nererhaveIever = shuffle([
-            ...Funny,
-            ...Basic,
-            ...Young,
-            ...Food,
-            ...RuleBreak,
+            ...NeverHaveIever,
             ...dbquestions.map((c) => c.msg),
           ]);
           break;
@@ -78,11 +71,7 @@ const command: ChatInputCommand = {
       }
     } else {
       nererhaveIever = shuffle([
-        ...Funny,
-        ...Basic,
-        ...Young,
-        ...Food,
-        ...RuleBreak,
+        ...NeverHaveIever
       ]);
     }
 

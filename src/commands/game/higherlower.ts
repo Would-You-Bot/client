@@ -25,6 +25,7 @@ const command: ChatInputCommand = {
       de: "Starte das Higher or Lower spiel",
       "es-ES": "Iniciar el juego Higher or Lower",
       fr: "Démarrer le jeu Higher or Lower",
+      it: "Avvia il gioco Higher or Lower",
     }),
 
   /**

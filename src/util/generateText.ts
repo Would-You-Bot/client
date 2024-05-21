@@ -15,6 +15,7 @@ export function generateWYR(
     de_DE: /^(?!.*(?:würdest du eher|wuerdest du eher)).*$/i,
     es_ES: /^(?!.*(?:preferirías|preferirias)).*$/i,
     fr_FR: /^(?!.*(?:préfères-tu|preferes-tu)).*$/i,
+    it_IT: /^(?!.*(?:preferiresti)).*$/i,
   };
 
   const wyrMap: Record<string, string> = {
@@ -22,6 +23,7 @@ export function generateWYR(
     de_DE: "Würdest du eher",
     es_ES: "Preferirías",
     fr_FR: "Préfères-tu",
+    it_IT: "Preferiresti",
   };
 
   const guildLanguage = guilddb.language as string;
@@ -55,6 +57,7 @@ export function generateWWYD(
     de_DE: /^(?!.*(?:was würdest du tun|was wuerdest du tun)).*$/i,
     es_ES: /^(?!.*(?:qué harías|que harias)).*$/i,
     fr_FR: /^(?!.*(?:que ferais-tu)).*$/i,
+    it_IT: /^(?!.*(?:cosa faresti)).*$/i,
   };
 
   const languageMap: Record<string, string> = {
@@ -62,6 +65,7 @@ export function generateWWYD(
     de_DE: "Was würdest du tun",
     es_ES: "Qué harías",
     fr_FR: "Que ferais-tu",
+    it_IT: "Cosa faresti",
   };
 
   const guildLanguage = guilddb.language as string;
@@ -90,6 +94,7 @@ export function generateNHIE(
     de_DE: /^(?!.*(?:niemals habe ich)).*$/i,
     es_ES: /^(?!.*(?:nunca he)).*$/i,
     fr_FR: /^(?!.*(?:jamais je)).*$/i,
+    it_IT: /^(?!.*(?:non ho mai)).*$/i,
   };
 
   const nhieMap: Record<string, string> = {
@@ -97,6 +102,7 @@ export function generateNHIE(
     de_DE: "Niemals habe ich",
     es_ES: "Nunca he",
     fr_FR: "Jamais je",
+    it_IT: "Non ho mai",
   };
 
   const guildLanguage = guilddb.language as string;
