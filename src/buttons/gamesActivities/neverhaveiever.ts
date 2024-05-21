@@ -72,9 +72,7 @@ const button: Button = {
 
       switch (guildDb.customTypes) {
         case "regular":
-          nererhaveIever = shuffle([
-            ...NeverHaveIever
-          ]);
+          nererhaveIever = shuffle([...NeverHaveIever]);
           break;
         case "mixed":
           nererhaveIever = shuffle([
@@ -87,9 +85,7 @@ const button: Button = {
           break;
       }
     } else {
-      nererhaveIever = shuffle([
-        ...NeverHaveIever
-      ]);
+      nererhaveIever = shuffle([...NeverHaveIever]);
     }
 
     const Random = Math.floor(Math.random() * nererhaveIever.length);
