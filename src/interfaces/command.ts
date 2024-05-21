@@ -13,7 +13,7 @@ export interface Command {
   data:
     | SlashCommandBuilder
     | SlashCommandSubcommandsOnlyBuilder
-    | SlashCommandOptionsOnlyBuilder 
+    | SlashCommandOptionsOnlyBuilder
     | ContextMenuCommandBuilder;
   requireGuild?: boolean;
   integration_types?: number[];
@@ -29,7 +29,7 @@ export interface ChatInputCommand extends Command {
   data:
     | SlashCommandBuilder
     | SlashCommandOptionsOnlyBuilder
-    | SlashCommandSubcommandsOnlyBuilder
+    | SlashCommandSubcommandsOnlyBuilder;
   execute(
     interaction: ChatInputCommandInteraction,
     client: WouldYou,
