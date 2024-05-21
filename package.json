@@ -52,7 +52,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "moment-timezone": "^0.5.45",
-    "mongoose": "^8.3.1",
+    "mongoose": "^8.4.0",
     "profanity-check": "^0.0.3",
     "prom-client": "^15.1.1",
     "quickchart-js": "^3.1.3",
