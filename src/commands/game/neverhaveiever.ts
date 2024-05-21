@@ -55,9 +55,7 @@ const command: ChatInputCommand = {
 
       switch (guildDb.customTypes) {
         case "regular":
-          nererhaveIever = shuffle([
-            ...NeverHaveIever
-          ]);
+          nererhaveIever = shuffle([...NeverHaveIever]);
           break;
         case "mixed":
           nererhaveIever = shuffle([
@@ -70,9 +68,7 @@ const command: ChatInputCommand = {
           break;
       }
     } else {
-      nererhaveIever = shuffle([
-        ...NeverHaveIever
-      ]);
+      nererhaveIever = shuffle([...NeverHaveIever]);
     }
 
     const Random = Math.floor(Math.random() * nererhaveIever.length);
