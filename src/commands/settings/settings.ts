@@ -13,6 +13,7 @@ import WouldYou from "../../util/wouldYou";
 const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
+    .setName("settings")
     .setDMPermission(false)
     .setDescription("Change various settings throughout the bot")
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)

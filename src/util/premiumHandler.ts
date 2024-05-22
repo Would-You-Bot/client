@@ -16,7 +16,14 @@ export default class PremiumHandler {
       true,
       true,
     );
-    if (guild?.premium === 0) return { result: false, type: ":x:", rawType: 0 };
+    if (guild?.premium === 0 || !guild?.premiumExpiration)
+      return {
+        result: false,
+        type: ":x:",
+        rawType: 0,
+        expiration: guild?.premiumExpiration,
+        user: guild?.premiumUser,
+      };
     else
       return {
         result: true,
@@ -25,13 +32,15 @@ export default class PremiumHandler {
           `Premium.tier${guild?.premium}`,
         ),
         rawType: guild?.premium,
+        expiration: guild?.premiumExpiration,
+        user: guild?.premiumUser,
       };
   }
 
   async update(guildId: string, data: object) {
     try {
       const guild = await this.client.database.getGuild(guildId);
-      await this.client.database.updateGuild(guildId || "", {
+      await this.client.database.updateGuild(guildId, {
         ...guild,
         data,
       });
