@@ -51,7 +51,11 @@ const button: Button = {
   name: "dailyTimezone",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
-    await interaction.showModal(modalObject);
+    const newModalObject = JSON.parse(JSON.stringify(modalObject));
+    newModalObject.components[0].components[0].placeholder =
+      guildDb.dailyTimezone;
+
+    await interaction.showModal(newModalObject);
 
     interaction
       .awaitModalSubmit({

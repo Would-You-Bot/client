@@ -22,6 +22,7 @@ const command: ChatInputCommand = {
       de: "Gibt dir eine zufällige pflicht Aufgabe, die du beantworten musst",
       "es-ES": "Publica un reto aleatorio que tienes que cumplir",
       fr: "Publie un défi aléatoire que tu dois relever",
+      it: "Pubblica una sfida casuale che devi affrontare",
     }),
 
   /**

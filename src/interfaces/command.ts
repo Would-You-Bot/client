@@ -3,6 +3,7 @@ import {
   CommandInteraction,
   ContextMenuCommandBuilder,
   SlashCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
 import WouldYou from "../util/wouldYou";
@@ -12,7 +13,7 @@ export interface Command {
   data:
     | SlashCommandBuilder
     | SlashCommandSubcommandsOnlyBuilder
-    | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
+    | SlashCommandOptionsOnlyBuilder
     | ContextMenuCommandBuilder;
   requireGuild?: boolean;
   integration_types?: number[];
@@ -27,8 +28,8 @@ export interface Command {
 export interface ChatInputCommand extends Command {
   data:
     | SlashCommandBuilder
-    | SlashCommandSubcommandsOnlyBuilder
-    | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
+    | SlashCommandOptionsOnlyBuilder
+    | SlashCommandSubcommandsOnlyBuilder;
   execute(
     interaction: ChatInputCommandInteraction,
     client: WouldYou,

@@ -14,18 +14,14 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setDMPermission(false)
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
-    .setName("settings")
-    .setNameLocalizations({
-      de: "einstellungen",
-      "es-ES": "ajustes",
-      fr: "paramètres",
-    })
     .setDescription("Change various settings throughout the bot")
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
-      de: "Ändern Sie verschiedene Einstellungen im gesamten Bot",
-      "es-ES": "Cambiar varias configuraciones en todo el bot",
-      fr: "Modifier divers paramètres dans tout le bot",
+      de: "Ändere Einstellungen für täglichen Nachrichten und Willkommensnachrichten.",
+      "es-ES":
+        "Cambiar la configuración de los mensajes diarios y las bienvenidas",
+      fr: "Modifier les paramètres des messages quotidiens et des messages de bienvenue",
+      it: "Cambia le impostazioni dei messaggi giornalieri e di benvenuto",
     })
     .addSubcommand((cmd) => {
       cmd

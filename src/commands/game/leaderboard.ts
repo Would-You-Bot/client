@@ -13,6 +13,7 @@ const command: ChatInputCommand = {
       de: "Zeigt die Rangliste für ein Spiel an",
       "es-ES": "Muestra la lista de clasificación de un partido",
       fr: "Consulter le classement d'un jeu",
+      it: "Mostra la classifica di un gioco",
     })
     .addStringOption((option) =>
       option

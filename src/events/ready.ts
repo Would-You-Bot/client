@@ -9,7 +9,9 @@ import appCommmands from "../util/Functions/supportAppCommands";
 import { Event } from "../interfaces/event";
 import axios from "axios";
 import { getInfo } from "discord-hybrid-sharding";
+import { Redis } from "@upstash/redis";
 
+// TODO: Clean up this file
 const event: Event = {
   event: "ready",
   execute: async (client: WouldYou) => {
@@ -21,9 +23,40 @@ const event: Event = {
         version: "10",
       }).setToken(process.env.DISCORD_TOKEN as string);
 
+      const redis = new Redis({
+        url: process.env.REDIS_URL!,
+        token: process.env.REDIS_TOKEN!,
+      });
+
       setTimeout(async () => {
         try {
           if (process.env.PRODUCTION === "true") {
+            const loadServers = async () => {
+              const featuredServers = await client.cluster.broadcastEval((c) =>
+                c.guilds.cache.filter(
+                  (g) =>
+                    g.features.includes("PARTNERED") ||
+                    g.features.includes("VERIFIED"),
+                ),
+              );
+
+              const mergedServers = await featuredServers.reduce(
+                (result, array) => result.concat(array),
+                [],
+              );
+
+              const finalServer = mergedServers.map((server) => ({
+                name: server.name,
+                id: server.id,
+                features: server.features,
+                memberCount: server.memberCount,
+                iconURL: server.iconURL,
+                vanityURLCode: server.vanityURLCode,
+              }));
+
+              await redis.set("server_count", JSON.stringify(finalServer));
+            };
+
             // Post data to top.gg
             const postStats = async () => {
               const serverCount = await client.cluster.broadcastEval(
@@ -50,6 +83,8 @@ const event: Event = {
               });
             };
             setInterval(postStats, 3600000);
+            setTimeout(loadServers, 300000);
+            setInterval(loadServers, 3600000 / 2);
             // If the bot is in production mode it will load slash commands for all guilds
             if (client.user?.id) {
               await rest.put(Routes.applicationCommands(client.user.id), {

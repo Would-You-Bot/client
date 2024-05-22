@@ -20,6 +20,7 @@ const command: ChatInputCommand = {
       de: "Erhalte eine Würdest du eher Frage",
       "es-ES": "Obtiene une pregunta ¿Qué prefieres?",
       fr: "Obtenez une question préférez-vous",
+      it: "Ottieni una domanda Preferiresti",
     }),
 
   /**

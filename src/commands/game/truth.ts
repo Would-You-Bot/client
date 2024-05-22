@@ -23,6 +23,7 @@ const command: ChatInputCommand = {
       de: "Postet eine zufällige Wahrheitsfrage, die du beantworten musst",
       "es-ES": "Publica una pregunta de verdad aleatoria que debes responder",
       fr: "Publie une question de vérité aléatoire que vous devez répondre",
+      it: "Pubblica una domanda di verità casuale che devi rispondere",
     }),
 
   /**

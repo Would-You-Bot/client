@@ -18,6 +18,7 @@ const command: ChatInputCommand = {
       de: "Zeigt eine Liste aller Befehle an",
       "es-ES": "Muestra una lista de cada comando",
       fr: "Affiche une liste de toutes les commandes",
+      it: "Mostra un elenco di tutti i comandi",
     }),
   /**
    * @param {CommandInteraction} interaction

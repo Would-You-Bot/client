@@ -41,6 +41,7 @@ const command: ChatInputCommand = {
       de: "Fügt eigene WouldYou Fragen hinzu",
       "es-ES": "Añade mensajes Would You personalizados",
       fr: "Ajoute des messages personnalisés au bot",
+      it: "Aggiungi messaggi personalizzati a Would You",
     })
     .addSubcommand((subcommand) =>
       subcommand

@@ -19,6 +19,7 @@ const command: ChatInputCommand = {
       de: "Ändere die Sprache für den aktuellen Server",
       "es-ES": "Cambiar el idioma del bot en el servidor",
       fr: "Changer la langue du serveur actuel",
+      it: "Cambia la lingua per il server attuale",
     })
     .addStringOption((option) =>
       option
@@ -40,7 +41,7 @@ const command: ChatInputCommand = {
           { name: "🇺🇸 English", value: "en_EN" },
           { name: "🇪🇸 Español", value: "es_ES" },
           { name: "🇫🇷 Français", value: "fr_FR" },
-          // { name: "🇮🇹 Italiano", value: "fr_FR" },
+          { name: "🇮🇹 Italiano", value: "it_IT" },
         ),
     ),
 
@@ -69,6 +70,10 @@ const command: ChatInputCommand = {
         title: "Langue changée!",
         description: "Français a été sélectionné comme nouvelle langue!",
       },
+      it_IT: {
+        title: "Lingua cambiata!",
+        description: "Italiano è stato selezionato come nuova lingua!",
+      },
     } as Record<string, { title: string; description: string }>;
 
     languageembed = new EmbedBuilder()
@@ -82,7 +87,8 @@ const command: ChatInputCommand = {
       .setFooter({
         text: "Would You",
         iconURL: client?.user?.displayAvatarURL() || undefined,
-      });
+      })
+      .setColor("#0598F6");
 
     switch (interaction.options.getString("type")) {
       case "user": {

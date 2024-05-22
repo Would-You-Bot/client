@@ -1,6 +1,6 @@
 {
   "name": "would-you",
-  "version": "1.4.13",
+  "version": "1.5.0",
   "description": "Would You is a popular Discord bot that allows you to play the classic game of Would You Rather with your friends!",
   "main": "dist/cluster.js",
   "scripts": {
@@ -36,7 +36,8 @@
     "@sentry/node": "^7.94.1",
     "@sentry/profiling-node": "^1.3.5",
     "@top-gg/sdk": "^3.1.6",
-    "amqplib": "^0.10.3",
+    "@upstash/redis": "^1.30.1",
+    "amqplib": "^0.10.4",
     "axios": "^1.6.8",
     "canvabase": "^1.1.1",
     "chalk-advanced": "^1.0.7",
@@ -44,11 +45,11 @@
     "cryptr": "^6.3.0",
     "discord-api-types": "^0.37.79",
     "discord-hybrid-sharding": "^2.1.9",
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.15.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "moment-timezone": "^0.5.45",
-    "mongoose": "^8.3.1",
+    "mongoose": "^8.4.0",
     "profanity-check": "^0.0.3",
     "prom-client": "^15.1.1",
     "quickchart-js": "^3.1.3",
@@ -62,6 +63,6 @@
     "copyfiles": "^2.4.1",
     "nodemon": "3.0.1",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   }
 }

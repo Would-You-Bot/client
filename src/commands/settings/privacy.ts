@@ -20,6 +20,7 @@ const command: ChatInputCommand = {
       de: "Ändert deine Datenschutzeinstellungen",
       "es-ES": "Cambia tu configuración de privacidad",
       fr: "Modifie vos paramètres de confidentialité",
+      it: "Modifica le impostazioni sulla privacy",
     }),
 
   /**

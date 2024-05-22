@@ -17,6 +17,7 @@ const command: ChatInputCommand = {
       de: "Ändert den Typ der Nachrichten, die verwendet werden",
       "es-ES": "Cambia el tipo de mensajes que se utilizarán",
       fr: "Modifie le type de messages qui seront utilisés",
+      it: "Cambia il tipo di messaggi da utilizzare",
     })
     .addSubcommand((subcommand) =>
       subcommand

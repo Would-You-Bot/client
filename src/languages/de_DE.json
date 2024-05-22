@@ -325,7 +325,7 @@
       "description": "Du hast eine Punktzahl von **{score}** erreicht!"
     },
     "error": {
-      "user": "Dieses Spiel gehört nicht dir, es gehört {user}. Erstelle dein eigenes Spiel mit </higherlower:1153718305903890554>!"
+      "user": "Dieses Spiel gehört nicht dir, es gehört **{user}**. Erstelle dein eigenes Spiel mit </higherlower:1153718305903890554>!"
     }
   },
   "Premium": {

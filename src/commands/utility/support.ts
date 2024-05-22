@@ -18,6 +18,7 @@ const command: ChatInputCommand = {
       de: "Link zu unserem Support Server",
       "es-ES": "Link para nuestro servidor de soporte",
       fr: "Lien vers notre serveur d'assistance",
+      it: "Link al nostro server di supporto",
     }),
 
   /**
