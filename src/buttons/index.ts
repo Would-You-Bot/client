@@ -103,6 +103,10 @@ const buttonInteractionEvent: Event = {
       "welcomeType",
       "welcomeTest",
       "selectMenuWelcomeType",
+      "selectMenuChannel",
+      "selectMenuRole",
+      "selectMenuType",
+      "selectMenuDays",
       "replayType",
       "replayBy",
       "replayDelete",
@@ -128,7 +132,7 @@ const buttonInteractionEvent: Event = {
       "privacy",
       "viewHelp",
       "viewCommands",
-      "daySelection"
+      "daySelection",
     ];
 
     const isExcludedButton = excludedButtons.includes(interaction.customId);
