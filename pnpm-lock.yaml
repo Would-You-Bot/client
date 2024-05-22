@@ -39,7 +39,7 @@ dependencies:
     specifier: ^6.3.0
     version: 6.3.0
   discord-api-types:
-    specifier: ^0.37.79
+    specifier: ^0.37.84
     version: 0.37.84
   discord-hybrid-sharding:
     specifier: ^2.2.0
