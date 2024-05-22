@@ -9,7 +9,7 @@ dependencies:
     specifier: ^2.2.0
     version: 2.3.0
   '@napi-rs/canvas':
-    specifier: ^0.1.51
+    specifier: ^0.1.52
     version: 0.1.52
   '@sentry/node':
     specifier: ^7.109.0
@@ -24,7 +24,7 @@ dependencies:
     specifier: ^0.10.4
     version: 0.10.4
   axios:
-    specifier: ^1.6.8
+    specifier: ^1.7.2
     version: 1.7.2
   canvabase:
     specifier: ^1.1.1
