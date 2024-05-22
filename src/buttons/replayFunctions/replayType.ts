@@ -48,7 +48,10 @@ const button: Button = {
               )}: ${
                 guildDb.replayChannels.length > 0
                   ? `\n${guildDb.replayChannels
-                      .sort((a: any, b: any) => b.cooldown / 1000 - a.cooldown / 1000,)
+                      .sort(
+                        (a: any, b: any) =>
+                          b.cooldown / 1000 - a.cooldown / 1000,
+                      )
                       .map((c) => `<#${c.id}>: ${Number(c.cooldown) / 1000}s`)
                       .join("\n")}`
                   : client.translation.get(

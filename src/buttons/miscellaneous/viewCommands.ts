@@ -35,9 +35,9 @@ const button: Button = {
             fr: n.descriptionLocalizations.fr,
             it: n.descriptionLocalizations.it,
           };
-        
+
           const description = descriptionMap[type] || n.description;
-        
+
           return `</${n.name}:${n.id}> - ${description}`;
         })
         .join("\n"),

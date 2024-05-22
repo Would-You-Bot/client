@@ -129,7 +129,10 @@ const button: Button = {
             }\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.replayChannels",
-            )}:\n${arr.sort((a, b) => (b.cooldown / 1000) - (a.cooldown / 1000)).map((c) => `<#${c.id}>: ${c.cooldown / 1000}s`).join("\n")}`,
+            )}:\n${arr
+              .sort((a, b) => b.cooldown / 1000 - a.cooldown / 1000)
+              .map((c) => `<#${c.id}>: ${c.cooldown / 1000}s`)
+              .join("\n")}`,
           )
           .setColor("#0598F6")
           .setFooter({

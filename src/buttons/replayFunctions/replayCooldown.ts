@@ -109,11 +109,7 @@ const button: Button = {
             }\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.replayCooldown",
-            )}: ${
-              guildDb.replayCooldown
-                ? `${value}s`
-                : ":x:"
-            }\n`,
+            )}: ${guildDb.replayCooldown ? `${value}s` : ":x:"}\n`,
           )
           .setColor("#0598F6")
           .setFooter({
