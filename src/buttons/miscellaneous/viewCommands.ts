@@ -16,6 +16,7 @@ const button: Button = {
       en_EN: "en",
       es_ES: "es",
       fr_FR: "fr",
+      it_IT: "it",
     } as Record<string, string>;
 
     const commands = await client.application?.commands.fetch({
@@ -27,18 +28,18 @@ const button: Button = {
       (commands as any)
         .filter((e: any) => e.name !== "reload")
         .sort((a: any, b: any) => a.name.localeCompare(b.name))
-        .map(
-          (n: any) =>
-            `</${n.name}:${n.id}> - ${
-              type === "de"
-                ? n.descriptionLocalizations.de
-                : type === "es"
-                  ? n.descriptionLocalizations["es-ES"]
-                  : type === "fr"
-                    ? n.descriptionLocalizations.fr
-                    : n.description
-            }`,
-        )
+        .map((n: any) => {
+          const descriptionMap: { [key: string]: string | undefined } = {
+            de: n.descriptionLocalizations.de,
+            es: n.descriptionLocalizations["es-ES"],
+            fr: n.descriptionLocalizations.fr,
+            it: n.descriptionLocalizations.it,
+          };
+        
+          const description = descriptionMap[type] || n.description;
+        
+          return `</${n.name}:${n.id}> - ${description}`;
+        })
         .join("\n"),
     );
 
