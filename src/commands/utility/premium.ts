@@ -19,12 +19,11 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
 
     const premium = await client.premium.check(interaction.guildId)
-    console.log(premium)
     
     await interaction
       .reply({
-        content: String(premium),
-        ephemeral: true,
+        content: `Premium: ${premium.result} \nExpiration: ${premium.expiration} \nUser: ${premium.user}`,
+        ephemeral: false,
       })
       .catch((err) => {
         captureException(err);

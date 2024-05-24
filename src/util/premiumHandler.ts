@@ -1,6 +1,6 @@
 import { GuildModel, IGuildModel } from "./Models/guildModel";
 import WouldYou from "./wouldYou";
-import { Model } from "mongoose";
+import { Error, Model } from "mongoose";
 
 export default class PremiumHandler {
   private guildModel: Model<IGuildModel>;
@@ -37,16 +37,4 @@ export default class PremiumHandler {
       };
   }
 
-  async update(guildId: string, data: object) {
-    try {
-      const guild = await this.client.database.getGuild(guildId);
-      await this.client.database.updateGuild(guildId, {
-        ...guild,
-        data,
-      });
-      return { result: true, error: false };
-    } catch (e: any) {
-      return { result: false, error: e.message };
-    }
-  }
 }
