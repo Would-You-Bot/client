@@ -32,12 +32,14 @@ export default class DailyMessage {
         });
         channel.consume(QUEUE, async (message) => {
           if (message) {
+            console.log(message)
             setTimeout(async () => {
               try {
                 const result = await this.sendDaily(
                   <IQueueMessage>JSON.parse(message.content.toString()),
                   message.properties,
                 );
+                console.log(result);
                 if (!result.success) {
                   const error: QueueError = new QueueError(
                     `Could not acknowledge queue message`,
