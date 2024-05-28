@@ -32,7 +32,7 @@ export default class DailyMessage {
         });
         channel.consume(QUEUE, async (message) => {
           if (message) {
-            console.log(message)
+            console.log(message);
             setTimeout(async () => {
               try {
                 const result = await this.sendDaily(
