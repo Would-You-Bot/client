@@ -1,17 +1,15 @@
 import {
-  EmbedBuilder,
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
-  bold,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import shuffle from "../../util/shuffle";
 import { ChatInputCommand } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -47,13 +45,12 @@ const command: ChatInputCommand = {
           : "en_EN",
     );
 
-    let nhieEmbed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${NHIE.id}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(NHIE.question));
+    const nhieEmbed = new DefaultGameEmbed(
+      interaction,
+      NHIE.id,
+      NHIE.question,
+      "neverhaveiever",
+    );
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {

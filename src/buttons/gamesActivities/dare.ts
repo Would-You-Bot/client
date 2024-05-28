@@ -1,17 +1,15 @@
 import {
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
-  bold,
-  ButtonInteraction,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { Button } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const button: Button = {
   name: "dare",
@@ -62,15 +60,12 @@ const button: Button = {
           : "en_EN",
     );
 
-    const dareembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${
-          interaction.user.username || "Anonymous"
-        } | Type: Dare | ID: ${dare.id}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(dare.question));
+    const dareEmbed = new DefaultGameEmbed(
+      interaction,
+      dare.id,
+      dare.question,
+      "dare",
+    );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
@@ -95,7 +90,7 @@ const button: Button = {
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
     await interaction
-      .reply({ embeds: [dareembed], components: components })
+      .reply({ embeds: [dareEmbed], components: components })
       .catch((err: Error) => {
         captureException(err);
       });

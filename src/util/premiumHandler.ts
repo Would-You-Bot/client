@@ -36,5 +36,4 @@ export default class PremiumHandler {
         user: guild?.premiumUser,
       };
   }
-
 }

@@ -74,15 +74,19 @@ export async function getHigherLower(): Promise<HigherLowerJsonModel[]> {
   return result;
 }
 
-export async function getRandomTod(language: string): Promise<string[]> {
-  let result = [] as string[];
-  const truth = await import(getPath(`truth-${language}.json`));
-  const dare = await import(getPath(`dare-${language}.json`));
+export async function getRandomTod(
+  guildDb: IGuildModel,
+  language: string,
+): Promise<QuestionResult> {
+  let result;
+
+  const truth = await getQuestionsByType("truth", guildDb, language);
+  const dare = await getQuestionsByType("dare", guildDb, language);
 
   if (Math.random() < 0.5) {
-    result = truth.General;
+    result = truth;
   } else {
-    result = dare.General;
+    result = dare;
   }
   return result;
 }

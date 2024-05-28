@@ -1,10 +1,8 @@
 import {
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
-  bold,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { Button } from "../../interfaces";
@@ -62,7 +60,7 @@ const button: Button = {
           : "en_EN",
     );
 
-    const ratherembed = new DefaultGameEmbed(
+    const ratherEmbed = new DefaultGameEmbed(
       interaction,
       WYR.id,
       WYR.question,
@@ -113,7 +111,7 @@ const button: Button = {
 
     interaction
       .reply({
-        embeds: [ratherembed],
+        embeds: [ratherEmbed],
         components: [row, mainRow],
       })
       .catch((err: Error) => {

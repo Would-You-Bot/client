@@ -1,17 +1,15 @@
 import {
-  EmbedBuilder,
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
-  bold,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -44,14 +42,14 @@ const command: ChatInputCommand = {
           ? userDb.language
           : "en_EN",
     );
+    console.log(WWYD);
 
-    const wwydembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${WWYD.id}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(WWYD.question));
+    const wwydEmbed = new DefaultGameEmbed(
+      interaction,
+      WWYD.id,
+      WWYD.question,
+      "wwyd",
+    );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
@@ -75,7 +73,7 @@ const command: ChatInputCommand = {
     ]);
 
     interaction
-      .reply({ embeds: [wwydembed], components: [row] })
+      .reply({ embeds: [wwydEmbed], components: [row] })
       .catch((err) => {
         captureException(err);
       });

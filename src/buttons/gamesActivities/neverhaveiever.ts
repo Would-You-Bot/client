@@ -1,17 +1,14 @@
 import {
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
-  bold,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
-
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const button: Button = {
   name: "neverhaveiever",
@@ -58,13 +55,12 @@ const button: Button = {
           : "en_EN",
     );
 
-    let nhieEmbed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${NHIE.id}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(NHIE.question));
+    const nhieEmbed = new DefaultGameEmbed(
+      interaction,
+      NHIE.id,
+      NHIE.question,
+      "nhie",
+    );
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {

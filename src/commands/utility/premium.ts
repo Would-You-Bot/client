@@ -1,6 +1,4 @@
-import {
-  SlashCommandBuilder,
-} from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 
@@ -17,9 +15,8 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
+    const premium = await client.premium.check(interaction.guildId);
 
-    const premium = await client.premium.check(interaction.guildId)
-    
     await interaction
       .reply({
         content: `Premium: ${premium.result} \nExpiration: ${premium.expiration} \nUser: ${premium.user}`,

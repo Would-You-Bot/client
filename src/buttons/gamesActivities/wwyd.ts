@@ -1,16 +1,15 @@
 import {
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
-  bold,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { Button } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const button: Button = {
   name: "wwyd",
@@ -59,13 +58,12 @@ const button: Button = {
           : "en_EN",
     );
 
-    const wwydembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${WWYD.id}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(WWYD.question));
+    const wwydEmbed = new DefaultGameEmbed(
+      interaction,
+      WWYD.id,
+      WWYD.question,
+      "wwyd",
+    );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
@@ -90,7 +88,7 @@ const button: Button = {
 
     interaction
       .reply({
-        embeds: [wwydembed],
+        embeds: [wwydEmbed],
         components: [row],
       })
       .catch((err: Error) => {

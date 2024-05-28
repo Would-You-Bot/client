@@ -1,16 +1,15 @@
 import {
-  EmbedBuilder,
   SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
-  bold,
 } from "discord.js";
 import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 import { getRandomTod } from "../../util/Functions/jsonImport";
 import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -36,7 +35,8 @@ const command: ChatInputCommand = {
       userID: interaction.user?.id,
     })) as IUserModel;
 
-    let Randomtod = await getRandomTod(
+    const random = await getRandomTod(
+      guildDb,
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
@@ -44,43 +44,12 @@ const command: ChatInputCommand = {
           : "en_EN",
     );
 
-    let dbquestions;
-
-    let truthordare = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter(
-        (c) => c.type === "dare" || c.type === "truth",
-      );
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          truthordare = shuffle([...Randomtod]);
-          break;
-        case "mixed":
-          truthordare = shuffle([
-            ...Randomtod,
-            ...dbquestions.map((c) => c.msg),
-          ]);
-          break;
-        case "custom":
-          truthordare = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      truthordare = shuffle([...Randomtod]);
-    }
-
-    const Random = Math.floor(Math.random() * truthordare.length);
-
-    const randomembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Random | ID: ${Random}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(truthordare[Random]));
+    const randomEmbed = new DefaultGameEmbed(
+      interaction,
+      random.id,
+      random.question,
+      "random",
+    );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
@@ -106,7 +75,7 @@ const command: ChatInputCommand = {
     ]);
 
     interaction
-      .reply({ embeds: [randomembed], components: components })
+      .reply({ embeds: [randomEmbed], components: components })
       .catch((err) => {
         captureException(err);
       });

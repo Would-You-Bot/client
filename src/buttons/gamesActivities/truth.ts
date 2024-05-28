@@ -1,17 +1,15 @@
 import {
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
-  bold,
 } from "discord.js";
 import { captureException } from "@sentry/node";
-import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const button: Button = {
   name: "truth",
@@ -62,13 +60,12 @@ const button: Button = {
           : "en_EN",
     );
 
-    const truthembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Truth | ID: ${truth.id}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(truth.question));
+    const truthEmbed = new DefaultGameEmbed(
+      interaction,
+      truth.id,
+      truth.question,
+      "truth",
+    );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
@@ -94,7 +91,7 @@ const button: Button = {
     ]);
 
     interaction
-      .reply({ embeds: [truthembed], components: components })
+      .reply({ embeds: [truthEmbed], components: components })
       .catch((err: Error) => {
         captureException(err);
       });
