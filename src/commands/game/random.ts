@@ -53,7 +53,7 @@ const command: ChatInputCommand = {
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-    let components = [] as any[];
+    let components = [];
     if (Math.round(Math.random() * 15) < 3) {
       row2.addComponents([
         new ButtonBuilder()
