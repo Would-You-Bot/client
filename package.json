@@ -28,12 +28,6 @@
     "url": "https://github.com/Would-You-Bot/client/issues"
   },
   "homepage": "https://wouldyoubot.gg",
-  "prettier": {
-    "trailingComma": "all",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": false
-  },
   "dependencies": {
     "@discordjs/rest": "^2.2.0",
     "@napi-rs/canvas": "^0.1.52",
@@ -53,6 +47,7 @@
     "express": "^4.19.2",
     "moment-timezone": "^0.5.45",
     "mongoose": "^8.4.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "profanity-check": "^0.0.3",
     "prom-client": "^15.1.1",
     "quickchart-js": "^3.1.3",

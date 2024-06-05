@@ -37,7 +37,7 @@ const command: ChatInputCommand = {
     const commands = await client.application?.commands.fetch({
       withLocalizations: true,
     });
-    console.log(commands);
+
     const type = languageMappings[guildDb?.language] || "en";
     const helpembed = new EmbedBuilder()
       .setColor("#0598F6")
