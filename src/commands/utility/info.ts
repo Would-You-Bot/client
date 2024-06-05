@@ -36,7 +36,7 @@ const command: ChatInputCommand = {
 
       return round(process.memoryUsage().heapUsed / 1000000000);
     });
-    console.log(ramUsage);
+
     const unixstamp =
       Math.floor(Date.now() / 1000) - Math.floor((client.uptime || 0) / 1000);
 
