@@ -1,10 +1,10 @@
-import WouldYou from "./util/wouldYou";
-import { white, gray, green } from "chalk-advanced";
 import {
-  init,
   autoDiscoverNodePerformanceMonitoringIntegrations,
+  init,
 } from "@sentry/node";
+import { gray, green, white } from "chalk-advanced";
 import "dotenv/config";
+import WouldYou from "./util/wouldYou";
 // Token to UserID Function
 // Credits to Meister#9667 for helping me with this
 const retriveUserIdbyToken = (token: string) => {

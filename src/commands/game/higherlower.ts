@@ -1,19 +1,19 @@
 import {
-  EmbedBuilder,
-  SlashCommandBuilder,
   ActionRowBuilder,
+  AttachmentBuilder,
   ButtonBuilder,
   ButtonStyle,
-  AttachmentBuilder,
+  EmbedBuilder,
   MessageActionRowComponentBuilder,
+  SlashCommandBuilder,
 } from "discord.js";
 import { v4 as uuidv4 } from "uuid";
-import HOR from "../../util/Classes/generateHOR";
 import { ChatInputCommand } from "../../interfaces";
-import { HigherlowerModel } from "../../util/Models/higherlowerModel";
-import { getHigherLower } from "../../util/Functions/jsonImport";
+import HOR from "../../util/Classes/generateHOR";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
-import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { getHigherLower } from "../../util/Functions/jsonImport";
+import { HigherlowerModel } from "../../util/Models/higherlowerModel";
+import { IUserModel, UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,

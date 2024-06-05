@@ -1,15 +1,15 @@
-import "dotenv/config";
 import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v10";
-import { white, gray, green, red } from "chalk-advanced";
 import { captureException } from "@sentry/node";
-import WouldYou from "../util/wouldYou";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
-import appCommmands from "../util/Functions/supportAppCommands";
-import { Event } from "../interfaces/event";
-import axios from "axios";
-import { getInfo } from "discord-hybrid-sharding";
 import { Redis } from "@upstash/redis";
+import axios from "axios";
+import { gray, green, red, white } from "chalk-advanced";
+import { Routes } from "discord-api-types/v10";
+import { getInfo } from "discord-hybrid-sharding";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
+import "dotenv/config";
+import { Event } from "../interfaces/event";
+import appCommmands from "../util/Functions/supportAppCommands";
+import WouldYou from "../util/wouldYou";
 
 // TODO: Clean up this file
 const event: Event = {

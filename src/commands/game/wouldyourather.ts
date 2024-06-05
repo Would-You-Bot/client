@@ -1,15 +1,15 @@
+import { captureException } from "@sentry/node";
 import {
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  SlashCommandBuilder,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
-import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
-import { getWouldYouRather } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getWouldYouRather } from "../../util/Functions/jsonImport";
 import { IUserModel, UserModel } from "../../util/Models/userModel";
+import shuffle from "../../util/shuffle";
 
 const command: ChatInputCommand = {
   requireGuild: true,

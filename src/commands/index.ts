@@ -1,13 +1,13 @@
+import { captureException } from "@sentry/node";
 import {
   CacheType,
   ChatInputCommandInteraction,
   Interaction,
 } from "discord.js";
 import { Event } from "../interfaces";
+import { IGuildModel } from "../util/Models/guildModel";
 import { UserModel } from "../util/Models/userModel";
 import WouldYou from "../util/wouldYou";
-import { captureException } from "@sentry/node";
-import { IGuildModel } from "../util/Models/guildModel";
 
 const commandInteractionEvent: Event = {
   event: "interactionCreate",
