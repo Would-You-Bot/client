@@ -1,12 +1,10 @@
 import {
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  SlashCommandBuilder,
-  PermissionFlagsBits,
-  PermissionsBitField,
   ButtonStyle,
+  EmbedBuilder,
   MessageActionRowComponentBuilder,
+  SlashCommandBuilder,
 } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
 

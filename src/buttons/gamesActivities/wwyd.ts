@@ -1,14 +1,14 @@
+import { captureException } from "@sentry/node";
 import {
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  PermissionFlagsBits,
+  EmbedBuilder,
   MessageActionRowComponentBuilder,
+  PermissionFlagsBits,
   bold,
 } from "discord.js";
-import { captureException } from "@sentry/node";
-import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
+import shuffle from "../../util/shuffle";
 
 import { getWwyd } from "../../util/Functions/jsonImport";
 

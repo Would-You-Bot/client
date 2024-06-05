@@ -1,11 +1,11 @@
-import { Button } from "../../interfaces";
 import {
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  MessageActionRowComponentBuilder,
   ButtonStyle,
+  EmbedBuilder,
+  MessageActionRowComponentBuilder,
 } from "discord.js";
+import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "privacy",

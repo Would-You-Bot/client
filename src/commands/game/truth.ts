@@ -1,16 +1,16 @@
+import { captureException } from "@sentry/node";
 import {
-  EmbedBuilder,
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
+  EmbedBuilder,
   MessageActionRowComponentBuilder,
+  SlashCommandBuilder,
   bold,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
-import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 import { getTruth } from "../../util/Functions/jsonImport";
-import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { IUserModel, UserModel } from "../../util/Models/userModel";
+import shuffle from "../../util/shuffle";
 
 const command: ChatInputCommand = {
   requireGuild: true,

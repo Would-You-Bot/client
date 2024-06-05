@@ -1,8 +1,8 @@
-import "dotenv/config";
-import { WebhookClient, EmbedBuilder, Guild } from "discord.js";
 import { captureException } from "@sentry/node";
-import WouldYou from "../util/wouldYou";
+import { EmbedBuilder, Guild, WebhookClient } from "discord.js";
+import "dotenv/config";
 import { Event } from "../interfaces";
+import WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "guildCreate",

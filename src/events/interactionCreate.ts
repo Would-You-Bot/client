@@ -1,8 +1,8 @@
 import { ButtonInteraction, Interaction } from "discord.js";
+import buttonInteractionEvent from "../buttons";
+import commandInteractionEvent from "../commands";
 import { Event } from "../interfaces";
 import WouldYou from "../util/wouldYou";
-import commandInteractionEvent from "../commands";
-import buttonInteractionEvent from "../buttons";
 
 const event: Event = {
   event: "interactionCreate",

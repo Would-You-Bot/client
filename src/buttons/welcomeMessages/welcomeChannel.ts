@@ -1,7 +1,7 @@
 import {
   ActionRowBuilder,
-  ChannelType,
   ChannelSelectMenuBuilder,
+  ChannelType,
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { Button } from "../../interfaces";

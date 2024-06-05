@@ -1,15 +1,14 @@
+import Cryptr from "cryptr";
 import {
+  APIMessage,
+  Channel,
   PermissionFlagsBits,
   WebhookClient,
-  Channel,
-  APIMessage,
 } from "discord.js";
-import { captureException } from "@sentry/node";
 import { Document, Model } from "mongoose";
+import { IQueueMessage, Result } from "../global";
 import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
 import WouldYou from "./wouldYou";
-import Cryptr from "cryptr";
-import { IQueueMessage, Result } from "../global";
 
 const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string);
 

@@ -1,8 +1,8 @@
 import {
-  ButtonBuilder,
   ActionRowBuilder,
-  MessageActionRowComponentBuilder,
+  ButtonBuilder,
   ButtonStyle,
+  MessageActionRowComponentBuilder,
 } from "discord.js";
 import { Button } from "../../interfaces";
 import { UserModel } from "../../util/Models/userModel";

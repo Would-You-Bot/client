@@ -1,10 +1,10 @@
-import { WebhookClient, EmbedBuilder, Guild } from "discord.js";
 import { captureException } from "@sentry/node";
+import { EmbedBuilder, Guild, WebhookClient } from "discord.js";
 import "dotenv/config";
-import WouldYou from "../util/wouldYou";
 import { Event } from "../interfaces";
 import { GuildModel } from "../util/Models/guildModel";
 import { WebhookCache } from "../util/Models/webhookCache";
+import WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "guildDelete",

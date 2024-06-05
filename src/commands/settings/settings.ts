@@ -1,14 +1,14 @@
+import { captureException } from "@sentry/node";
 import {
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  SlashCommandBuilder,
+  ButtonStyle,
+  EmbedBuilder,
+  MessageActionRowComponentBuilder,
   PermissionFlagsBits,
   PermissionsBitField,
-  ButtonStyle,
-  MessageActionRowComponentBuilder,
+  SlashCommandBuilder,
 } from "discord.js";
-import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {

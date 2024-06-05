@@ -6,8 +6,8 @@ import {
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
-import WouldYou from "../util/wouldYou";
 import { IGuildModel } from "../util/Models/guildModel";
+import WouldYou from "../util/wouldYou";
 
 export interface Command {
   data:

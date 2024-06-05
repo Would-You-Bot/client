@@ -1,9 +1,9 @@
 import {
-  ButtonBuilder,
   ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
   EmbedBuilder,
   MessageActionRowComponentBuilder,
-  ButtonStyle,
 } from "discord.js";
 import { Button } from "../../interfaces";
 

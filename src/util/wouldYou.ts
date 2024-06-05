@@ -1,29 +1,29 @@
 // Main Bot Librarys
+import { ClusterClient, getInfo } from "discord-hybrid-sharding";
 import {
   Client,
-  GatewayIntentBits,
   Collection,
+  GatewayIntentBits,
   LimitedCollection,
   Partials,
 } from "discord.js";
-import { getInfo, ClusterClient } from "discord-hybrid-sharding";
 
 // Utils and Config
-import { gray, white, green } from "chalk-advanced";
+import { gray, green, white } from "chalk-advanced";
 import "dotenv/config";
 
 // Classes for the bot
-import TranslationHandler from "./translationHandler";
-import DatabaseHandler from "./databaseHandler";
-import KeepAlive from "./keepAlive";
-import WebhookHandler from "./webhookHandler";
+import path from "path";
+import { Button, ChatInputCommand } from "../interfaces";
+import { Event } from "../interfaces/event";
+import { fileToCollection } from "./Functions/fileToCollection";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
+import DatabaseHandler from "./databaseHandler";
+import KeepAlive from "./keepAlive";
+import TranslationHandler from "./translationHandler";
 import Voting from "./votingHandler";
-import { Button, ChatInputCommand } from "../interfaces";
-import { fileToCollection } from "./Functions/fileToCollection";
-import path from "path";
-import { Event } from "../interfaces/event";
+import WebhookHandler from "./webhookHandler";
 // User filter to filter all users out of the cache expect the bot
 //const userFilter = (u) => u?.id !== client?.user?.id;
 
