@@ -31,7 +31,7 @@
   "dependencies": {
     "@discordjs/rest": "^2.2.0",
     "@napi-rs/canvas": "^0.1.52",
-    "@sentry/node": "^7.109.0",
+    "@sentry/node": "^8.9.2",
     "@top-gg/sdk": "^3.1.6",
     "@upstash/redis": "^1.31.2",
     "amqplib": "^0.10.4",
