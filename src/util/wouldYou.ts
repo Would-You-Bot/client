@@ -5,6 +5,7 @@ import {
   Collection,
   GatewayIntentBits,
   LimitedCollection,
+  Options,
   Partials,
 } from "discord.js";
 
@@ -24,8 +25,6 @@ import KeepAlive from "./keepAlive";
 import TranslationHandler from "./translationHandler";
 import Voting from "./votingHandler";
 import WebhookHandler from "./webhookHandler";
-// User filter to filter all users out of the cache expect the bot
-//const userFilter = (u) => u?.id !== client?.user?.id;
 
 export default class WouldYou extends Client {
   public commands: Collection<string, ChatInputCommand>;
@@ -51,6 +50,21 @@ export default class WouldYou extends Client {
         GatewayIntentBits.GuildMessages,
       ],
       partials: [Partials.Channel],
+      sweepers: {
+        ...Options.DefaultSweeperSettings,
+        users: {
+          interval: 3_600, // Every hour.
+          filter: () => (user) => user.bot && user.id !== user.client.user.id, // Remove all bots.
+        },
+      guildMembers: {
+          interval: 60,
+          filter: () => (member) => member.id !== member.client.user?.id,
+      },
+      threads: {
+          interval: 60,
+          filter: () => (thread) => !!thread.archived,
+      }
+      },
       makeCache: (manager) => {
         switch (manager.name) {
           case "ThreadMemberManager":
