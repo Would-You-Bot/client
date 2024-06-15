@@ -56,14 +56,14 @@ export default class WouldYou extends Client {
           interval: 3_600, // Every hour.
           filter: () => (user) => user.bot && user.id !== user.client.user.id, // Remove all bots.
         },
-      guildMembers: {
+        guildMembers: {
           interval: 60,
           filter: () => (member) => member.id !== member.client.user?.id,
-      },
-      threads: {
+        },
+        threads: {
           interval: 60,
           filter: () => (thread) => !!thread.archived,
-      }
+        },
       },
       makeCache: (manager) => {
         switch (manager.name) {
