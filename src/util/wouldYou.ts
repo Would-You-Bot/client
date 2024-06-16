@@ -50,17 +50,6 @@ export default class WouldYou extends Client {
         GatewayIntentBits.GuildMessages,
       ],
       partials: [Partials.Channel],
-      sweepers: {
-        ...Options.DefaultSweeperSettings,
-        users: {
-          interval: 3_600, // Every hour.
-          filter: () => (user) => user.bot && user.id !== user.client.user.id, // Remove all bots.
-        },
-      threads: {
-          interval: 60,
-          filter: () => (thread) => !!thread.archived,
-        },
-      },
       makeCache: (manager) => {
         switch (manager.name) {
           case "ThreadMemberManager":
