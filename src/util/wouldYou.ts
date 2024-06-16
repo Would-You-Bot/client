@@ -59,7 +59,7 @@ export default class WouldYou extends Client {
       threads: {
           interval: 60,
           filter: () => (thread) => !!thread.archived,
-      }
+        },
       },
       makeCache: (manager) => {
         switch (manager.name) {
