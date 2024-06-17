@@ -32,7 +32,13 @@ const button: Button = {
         )}: ${newType}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.welcomeChannel",
-        )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}`,
+        )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}\n${client.translation.get(
+          guildDb?.language,
+          "Settings.embed.username",
+        )}: ${guildDb.premName ? guildDb.premName : ":x:"}\n${client.translation.get(
+          guildDb?.language,
+          "Settings.embed.avatar",
+        )}: ${guildDb.premAvatar ? `[Image](<${guildDb.premAvatar}>)` : `:x:`}`,
       )
       .setColor("#0598F6")
       .setFooter({

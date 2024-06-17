@@ -232,6 +232,8 @@
     "voteSame": "The provided vote cooldown is the same cooldown that is already set. Make sure to choose a different cooldown.",
     "cooldownInvalid": "Provided cooldown was invalid. Make sure the cooldown only includes numbers!",
     "welcomeTestSuccess": "This is a test message of what welcome messages look like.",
+    "premium": "To access this feature you will need to subscribe to [Would You Premium](https://wouldyoubot.gg/premium)",
+    "invalidLink": "Please provide a valid PNG, JPG (JPEG), or GIF Discord attachment to set as the bot's avatar.",
     "embed": {
       "generalTitle": "Would You - General Settings",
       "replayCooldown": "**Replay Cooldown**",
@@ -254,7 +256,9 @@
       "welcomeChannel": "**Channel**",
       "welcomePing": "**User Pings**",
       "footer": "Would You",
-      "error": "You are missing the `Manage Guild` permission to use this command!"
+      "error": "You are missing the `Manage Guild` permission to use this command!",
+      "username": "Username",
+      "avatar": "Avatar"
     },
     "button": {
       "dailyInterval": "Set Post Time",
@@ -271,7 +275,9 @@
       "replayBy": "Replay By",
       "welcomeChannel": "Set Channel",
       "welcome": "Toggle Welcomes",
-      "welcomePing": "Toggle User Ping"
+      "welcomePing": "Toggle User Ping",
+      "avatar": "Set Avatar",
+      "name": "Set Username"
     },
     "modal": {
       "dailyIntervalTitle": "Daily Post Time",

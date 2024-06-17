@@ -38,6 +38,8 @@ export interface IGuildModel {
   premium: number;
   premiumExpiration: Date;
   premiumUser: string;
+  premName: string;
+  premAvatar: string;
 }
 
 const guildProfileSchema = new Schema<IGuildModel>(
@@ -153,6 +155,12 @@ const guildProfileSchema = new Schema<IGuildModel>(
     premiumUser: {
       type: String,
     },
+    premName: {
+      type: String,
+    },
+    premAvatar: {
+      type: String,
+    }
   },
   { timestamps: true },
 );
