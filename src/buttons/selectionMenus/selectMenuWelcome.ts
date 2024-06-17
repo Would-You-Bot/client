@@ -33,13 +33,7 @@ const button: Button = {
         )}: ${guildDb.welcomeType}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.welcomeChannel",
-        )}: <#${newChannel}>\n${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.username",
-        )}: ${guildDb.premName ? guildDb.premName : ":x:"}\n${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.avatar",
-        )}: ${guildDb.premAvatar ? `[Image](<${guildDb.premAvatar}>)` : `:x:`}`,
+        )}: <#${newChannel}>`,
       )
       .setColor("#0598F6")
       .setFooter({

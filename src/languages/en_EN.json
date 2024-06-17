@@ -257,8 +257,8 @@
       "welcomePing": "**User Pings**",
       "footer": "Would You",
       "error": "You are missing the `Manage Guild` permission to use this command!",
-      "username": "Username",
-      "avatar": "Avatar"
+      "username": "**Username**",
+      "avatar": "**Avatar**"
     },
     "button": {
       "dailyInterval": "Set Post Time",

@@ -68,18 +68,6 @@ const button: Button = {
           .setDescription(
             `${client.translation.get(
               guildDb?.language,
-              "Settings.embed.welcome",
-            )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
-              guildDb?.language,
-              "Settings.embed.welcomePing",
-            )}: ${guildDb.welcomePing ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
-              guildDb?.language,
-              "Settings.embed.dailyType",
-            )}: ${guildDb.welcomeType}\n${client.translation.get(
-              guildDb?.language,
-              "Settings.embed.welcomeChannel",
-            )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}\n${client.translation.get(
-              guildDb?.language,
               "Settings.embed.username",
             )}: ${value}\n${client.translation.get(
               guildDb?.language,
