@@ -5,7 +5,6 @@ import {
   Collection,
   GatewayIntentBits,
   LimitedCollection,
-  Options,
   Partials,
 } from "discord.js";
 
