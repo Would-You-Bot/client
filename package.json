@@ -31,11 +31,10 @@
   "homepage": "https://wouldyoubot.gg",
   "dependencies": {
     "@discordjs/rest": "^2.2.0",
-    "@sentry/cli": "^2.26.0",
-    "@sentry/profiling-node": "^1.3.5",
     "@napi-rs/canvas": "^0.1.52",
+    "@sentry/cli": "^2.26.0",
     "@sentry/node": "^7.109.0",
-
+    "@sentry/profiling-node": "^1.3.5",
     "@top-gg/sdk": "^3.1.6",
     "@upstash/redis": "^1.30.1",
     "amqplib": "^0.10.4",
@@ -48,7 +47,6 @@
     "discord-hybrid-sharding": "^2.2.0",
     "discord.js": "^14.15.2",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
     "moment-timezone": "^0.5.45",
     "mongoose": "^8.4.0",
     "profanity-check": "^0.0.3",

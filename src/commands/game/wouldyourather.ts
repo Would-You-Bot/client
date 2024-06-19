@@ -84,15 +84,29 @@ const command: ChatInputCommand = {
       "wouldyourather",
     );
 
-    await interaction
-      .reply({
-        embeds: [ratherembed],
-        components: [row, mainRow],
-        fetchReply: true,
-      })
-      .catch((err) => {
-        captureException(err);
-      });
+    const classicMode = true;
+// make this more redable 
+    classicMode
+      ? interaction
+          .reply({
+            content: WYR.question,
+            components: [],
+            fetchReply: true,
+          })
+          .then(async (msg) => {
+            msg.react("🇦"), msg.react("🇧");
+          })
+          .catch((err) => {
+            captureException(err);
+          })
+      : await interaction
+          .reply({
+            embeds: [ratherembed],
+            components: [row, mainRow],
+          })
+          .catch((err) => {
+            captureException(err);
+          });
   },
 };
 
