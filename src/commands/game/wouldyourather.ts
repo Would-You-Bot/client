@@ -32,7 +32,7 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     const userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    }));
 
     let WYR = await getQuestionsByType(
       "wouldyourather",
@@ -85,7 +85,7 @@ const command: ChatInputCommand = {
     );
 
     const classicMode = true;
-// make this more redable 
+    // make this more redable
     classicMode
       ? interaction
           .reply({

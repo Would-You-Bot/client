@@ -44,7 +44,7 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     const userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    }));
 
     let language =
       guildDb?.language != null
@@ -88,6 +88,7 @@ const command: ChatInputCommand = {
             if (data.length === 0) {
               interaction.reply({
                 content: client.translation.get(language, "Leaderboard.none"),
+                ephemeral: true,
               });
               return;
             }
@@ -156,6 +157,7 @@ const command: ChatInputCommand = {
             if (data.length === 0) {
               interaction.reply({
                 content: client.translation.get(language, "Leaderboard.none"),
+                ephemeral: true,
               });
               return;
             }

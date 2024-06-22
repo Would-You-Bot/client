@@ -34,7 +34,7 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     const userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    }));
 
     let truth = await getQuestionsByType(
       "truth",

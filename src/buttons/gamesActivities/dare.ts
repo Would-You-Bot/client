@@ -2,7 +2,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   PermissionFlagsBits,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { Button } from "../../interfaces";
@@ -45,10 +45,9 @@ const button: Button = {
         }
       }
     }
-
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    });
 
     let dare = await getQuestionsByType(
       "dare",
@@ -69,7 +68,8 @@ const button: Button = {
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-    let components = [] as any[];
+    let components: ActionRowBuilder<MessageActionRowComponentBuilder>[];
+
     if (Math.round(Math.random() * 15) < 3) {
       row2.addComponents([
         new ButtonBuilder()
@@ -89,7 +89,8 @@ const button: Button = {
       new ButtonBuilder().setLabel("Dare").setStyle(4).setCustomId("dare"),
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
-    await interaction
+
+    interaction
       .reply({ embeds: [dareEmbed], components: components })
       .catch((err: Error) => {
         captureException(err);

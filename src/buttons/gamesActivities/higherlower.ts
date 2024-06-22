@@ -55,7 +55,7 @@ const button: Button = {
 
     const userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    }));
 
     const initembed = new HigherLowerEmbed(interaction, client, guildDb);
 

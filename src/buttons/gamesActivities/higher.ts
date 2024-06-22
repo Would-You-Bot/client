@@ -40,7 +40,7 @@ const button: Button = {
     await interaction.deferUpdate();
 
     const gameId = interaction.customId.split("_")[1];
-    var game = await HigherlowerModel.findOne({ id: gameId });
+    const game = await HigherlowerModel.findOne({ id: gameId });
 
     if (
       game &&
@@ -50,7 +50,7 @@ const button: Button = {
       game.score += 1;
       game.items.history.push(game.items.current);
 
-      var gameData = await getHigherLower();
+      const gameData = await getHigherLower();
 
       if (game.items.history.length == gameData.length) {
         interaction.followUp({

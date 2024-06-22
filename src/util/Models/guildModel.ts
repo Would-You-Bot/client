@@ -160,7 +160,7 @@ const guildProfileSchema = new Schema<IGuildModel>(
     },
     premAvatar: {
       type: String,
-    }
+    },
   },
   { timestamps: true },
 );

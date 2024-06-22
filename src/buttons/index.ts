@@ -15,10 +15,7 @@ const buttonInteractionEvent: Event = {
     let guildDb;
 
     if (interaction.guildId !== null) {
-      guildDb = await client.database.getGuild(
-        interaction.guildId as string,
-        true,
-      );
+      guildDb = await client.database.getGuild(interaction.guildId, true);
     }
     let button = client.buttons.get(interaction.customId);
 
@@ -40,7 +37,7 @@ const buttonInteractionEvent: Event = {
       }
     }
 
-    const replyMap = {
+    const replyMap: Record<string, string> = {
       wouldyourather: "wouldyourather.used.replay",
       neverhaveiever: "neverhaveiever.used.replay",
       higherlower: "higherlower.used.replay",
@@ -48,7 +45,7 @@ const buttonInteractionEvent: Event = {
       truth: "truth.used.replay",
       dare: "dare.used.replay",
       random: "random.used.replay",
-    } as Record<string, string>;
+    };
 
     // Get the field path based on the command name
     const fieldPath = replyMap[interaction.customId];
@@ -140,7 +137,11 @@ const buttonInteractionEvent: Event = {
       setTimeout(() => client.used.delete(cooldownKey!), cooldown);
     }
 
-    return button.execute(interaction, client, guildDb as IGuildModel);
+    if (guildDb == null) return;
+
+    const guildDB: IGuildModel = guildDb;
+
+    return button.execute(interaction, client, guildDB);
   },
 };
 

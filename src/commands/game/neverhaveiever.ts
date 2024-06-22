@@ -33,7 +33,7 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     let userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    }));
 
     let NHIE = await getQuestionsByType(
       "neverhaveiever",

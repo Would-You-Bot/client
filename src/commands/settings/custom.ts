@@ -116,9 +116,9 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    var typeEmbed = new EmbedBuilder();
-    var message: string | null;
-    var generativeText: any;
+    let typeEmbed = new EmbedBuilder();
+    let message: string | null;
+    let generativeText: any;
 
     if (
       (interaction?.member?.permissions as Readonly<PermissionsBitField>).has(
@@ -710,7 +710,7 @@ const command: ChatInputCommand = {
                 return;
               }
 
-              for (var key in response.data) {
+              for (const key in response.data) {
                 if (!response.data.hasOwnProperty(key)) continue;
                 if (
                   !(await client.premium.check(interaction.guildId)) &&

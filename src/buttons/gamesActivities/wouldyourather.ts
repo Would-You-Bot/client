@@ -48,7 +48,7 @@ const button: Button = {
 
     const userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    }));
 
     let WYR = await getQuestionsByType(
       "wouldyourather",

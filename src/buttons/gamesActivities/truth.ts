@@ -48,7 +48,7 @@ const button: Button = {
 
     const userDb = (await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    }));
 
     let truth = await getQuestionsByType(
       "truth",
@@ -69,7 +69,8 @@ const button: Button = {
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-    let components = [] as any[];
+    let components: ActionRowBuilder<MessageActionRowComponentBuilder>[];
+
     if (Math.round(Math.random() * 15) < 3) {
       row2.addComponents([
         new ButtonBuilder()

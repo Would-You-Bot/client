@@ -14,7 +14,7 @@ const retriveUserIdbyToken = (token: string) => {
 
 global.devBot = false;
 
-const botId = retriveUserIdbyToken(process.env.DISCORD_TOKEN as string);
+const botId = retriveUserIdbyToken(process.env.DISCORD_TOKEN!);
 if (botId !== "981649513427111957" || process.env.STATUS === "DEVELOPMENT") {
   global.devBot = true;
 } else if (
@@ -39,7 +39,6 @@ if (process.env.SENTRY_DSN) {
 }
 
 global.wouldYouDevs = [
-  "805898988402376725", // Finn
   "347077478726238228", // Dominik
   "268843733317976066", // Sky
   "510759794911739905", // Alt
