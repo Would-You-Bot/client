@@ -232,7 +232,7 @@ export default class DatabaseHandler {
 
   async updateUser(
     userId: number | string,
-    data: IUserModel,
+    data: object | IUserModel,
     createIfNotFound: boolean = false,
   ) {
     let oldData = await this.getUser(userId.toString(), createIfNotFound);
@@ -240,12 +240,12 @@ export default class DatabaseHandler {
     if (oldData) {
       data = { ...oldData, ...data };
 
-      this.userCache.set(userId.toString(), data);
+      this.userCache.set(userId.toString(), data as IUserModel);
       return this.userModel.updateOne(
         {
           userID: userId,
         },
-        data,
+        data as IUserModel,
       );
     }
     return null;

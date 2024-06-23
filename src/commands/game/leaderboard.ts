@@ -42,9 +42,17 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    }));
+    });
+
+    if (!userDb) {
+      interaction.reply({
+        content: "An error occurred while fetching your data",
+        ephemeral: true,
+      });
+      return;
+    }
 
     let language =
       guildDb?.language != null
