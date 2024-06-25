@@ -3,6 +3,9 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  CommandInteraction,
+  InteractionReplyOptions,
+  InteractionResponse,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
@@ -30,9 +33,9 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    }));
+    });
 
     let WYR = await getQuestionsByType(
       "wouldyourather",
@@ -44,7 +47,7 @@ const command: ChatInputCommand = {
           : "en_EN",
     );
 
-    const ratherembed = new DefaultGameEmbed(
+    const ratherEmbed = new DefaultGameEmbed(
       interaction,
       WYR.id,
       WYR.question,
@@ -84,29 +87,19 @@ const command: ChatInputCommand = {
       "wouldyourather",
     );
 
-    const classicMode = true;
-    // make this more redable
-    classicMode
-      ? interaction
-          .reply({
-            content: WYR.question,
-            components: [],
-            fetchReply: true,
-          })
-          .then(async (msg) => {
-            msg.react("🇦"), msg.react("🇧");
-          })
-          .catch((err) => {
-            captureException(err);
-          })
-      : await interaction
-          .reply({
-            embeds: [ratherembed],
-            components: [row, mainRow],
-          })
-          .catch((err) => {
-            captureException(err);
-          });
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: WYR.question, fetchReply: true }
+      : { embeds: [ratherEmbed], components: [row, mainRow] };
+
+    interaction
+      .reply(classicData)
+      .then(async (msg: any) => {
+        if (!guildDb.classicMode) return;
+        msg.react("🇦"), msg.react("🇧");
+      })
+      .catch((err) => {
+        captureException(err);
+      });
   },
 };
 

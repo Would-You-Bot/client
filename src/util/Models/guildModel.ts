@@ -35,6 +35,7 @@ export interface IGuildModel {
   customTypes: string;
   debugMode: boolean;
   lastUsageTimestamp: number;
+  classicMode: boolean;
   premium: number;
   premiumExpiration: Date;
   premiumUser: string;
@@ -144,6 +145,10 @@ const guildProfileSchema = new Schema<IGuildModel>(
     lastUsageTimestamp: {
       type: Number,
       default: 0,
+    },
+    classicMode: {
+      type: Boolean,
+      default: false,
     },
     premium: {
       type: Number,

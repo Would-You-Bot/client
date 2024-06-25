@@ -37,9 +37,9 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     await interaction.deferReply();
 
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    }));
+    });
 
     const initembed = new HigherLowerEmbed(interaction, client, guildDb);
 

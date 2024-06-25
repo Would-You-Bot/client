@@ -53,9 +53,9 @@ const button: Button = {
     }
     await interaction.deferReply();
 
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    }));
+    });
 
     const initembed = new HigherLowerEmbed(interaction, client, guildDb);
 

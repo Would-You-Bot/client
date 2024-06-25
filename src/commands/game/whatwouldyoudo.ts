@@ -29,9 +29,9 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    }));
+    });
 
     let WWYD = await getQuestionsByType(
       "whatwouldyoudo",
@@ -74,6 +74,9 @@ const command: ChatInputCommand = {
 
     interaction
       .reply({ embeds: [wwydEmbed], components: [row] })
+      .then((msg) => {
+        console.log(msg);
+      })
       .catch((err) => {
         captureException(err);
       });
