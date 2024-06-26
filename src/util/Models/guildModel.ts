@@ -34,13 +34,14 @@ export interface IGuildModel {
   }>;
   customTypes: string;
   debugMode: boolean;
-  lastUsageTimestamp: number;
   classicMode: boolean;
+  autoPin: boolean;
   premium: number;
   premiumExpiration: Date;
   premiumUser: string;
-  premName: string;
-  premAvatar: string;
+  webhookName: string;
+  webhookAvatar: string;
+  lastUsageTimestamp: number;
 }
 
 const guildProfileSchema = new Schema<IGuildModel>(
@@ -142,11 +143,11 @@ const guildProfileSchema = new Schema<IGuildModel>(
       type: Boolean,
       default: false,
     },
-    lastUsageTimestamp: {
-      type: Number,
-      default: 0,
-    },
     classicMode: {
+      type: Boolean,
+      default: false,
+    },
+    autoPin: {
       type: Boolean,
       default: false,
     },
@@ -160,11 +161,15 @@ const guildProfileSchema = new Schema<IGuildModel>(
     premiumUser: {
       type: String,
     },
-    premName: {
+    webhookName: {
       type: String,
     },
-    premAvatar: {
+    webhookAvatar: {
       type: String,
+    },
+    lastUsageTimestamp: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true },

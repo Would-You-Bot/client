@@ -10,7 +10,7 @@ import { captureException } from "@sentry/node";
 
 const modalObject = {
   title: "Custom Username",
-  custom_id: "premNameModal",
+  custom_id: "webhookNameModal",
   components: [
     {
       type: 1,
@@ -31,7 +31,7 @@ const modalObject = {
 };
 
 const button: Button = {
-  name: "premName",
+  name: "webhookName",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
     if (!guildDb.premium) {
@@ -72,7 +72,7 @@ const button: Button = {
             )}: ${value}\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.avatar",
-            )}: ${guildDb.premAvatar ? `[Image](<${guildDb.premAvatar}>)` : `:x:`}`,
+            )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : `:x:`}`,
           )
           .setColor("#0598F6")
           .setFooter({
@@ -157,7 +157,7 @@ const button: Button = {
         const button3 =
           new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
             new ButtonBuilder()
-              .setCustomId("premName")
+              .setCustomId("webhookName")
               .setEmoji("1185973660465500180")
               .setLabel(
                 client.translation.get(
@@ -167,7 +167,7 @@ const button: Button = {
               )
               .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
-              .setCustomId("premAvatar")
+              .setCustomId("webhookAvatar")
               .setEmoji("1207801424503644260")
               .setLabel(
                 client.translation.get(
@@ -176,7 +176,7 @@ const button: Button = {
                 ),
               )
               .setStyle(
-                guildDb.premAvatar
+                guildDb.webhookAvatar
                   ? ButtonStyle.Success
                   : ButtonStyle.Secondary,
               ),
@@ -184,7 +184,7 @@ const button: Button = {
 
         await client.database.updateGuild(interaction.guild?.id || "", {
           ...guildDb,
-          premName: value,
+          webhookName: value,
         });
 
         await (modalInteraction as any).update({

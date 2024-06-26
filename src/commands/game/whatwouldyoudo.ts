@@ -3,12 +3,13 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  InteractionReplyOptions,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const command: ChatInputCommand = {
@@ -72,10 +73,15 @@ const command: ChatInputCommand = {
         .setCustomId(`wwyd`),
     ]);
 
-    interaction
-      .reply({ embeds: [wwydEmbed], components: [row] })
-      .then((msg) => {
-        console.log(msg);
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: WWYD.question, fetchReply: true }
+      : {embeds: [wwydEmbed], components: [row] };
+
+      interaction
+      .reply(classicData)
+      .then(async (msg: any) => {
+        if (!guildDb.classicMode) return;
+        msg.react("🇦"), msg.react("🇧");
       })
       .catch((err) => {
         captureException(err);

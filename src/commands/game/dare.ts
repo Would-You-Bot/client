@@ -3,12 +3,13 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  InteractionReplyOptions,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
-import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const command: ChatInputCommand = {
@@ -34,7 +35,7 @@ const command: ChatInputCommand = {
       userID: interaction.user?.id,
     });
 
-    let dare = await getQuestionsByType(
+    let DARE = await getQuestionsByType(
       "dare",
       guildDb,
       guildDb?.language != null
@@ -46,8 +47,8 @@ const command: ChatInputCommand = {
 
     const dareEmbed = new DefaultGameEmbed(
       interaction,
-      dare.id,
-      dare.question,
+      DARE.id,
+      DARE.question,
       "dare",
     );
 
@@ -74,8 +75,12 @@ const command: ChatInputCommand = {
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+    ? { content: DARE.question }
+    : {embeds: [dareEmbed], components: components };
+
     interaction
-      .reply({ embeds: [dareEmbed], components: components })
+      .reply(classicData)
       .catch((err) => {
         captureException(err);
       });

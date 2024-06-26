@@ -35,7 +35,11 @@ export interface IQueueMessage {
   type: string;
   role: string | null;
   thread: boolean;
+  premium: number;
+  autoPin: boolean;
   webhook: {
+    avatar: string;
+    name: string;
     id: string | null;
     token: string | null;
   };

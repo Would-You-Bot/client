@@ -3,14 +3,13 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
-  APIActionRowComponent,
-  APIMessageActionRowComponent,
+  InteractionReplyOptions,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
-import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const command: ChatInputCommand = {
@@ -36,7 +35,7 @@ const command: ChatInputCommand = {
       userID: interaction.user?.id,
     });
 
-    let truth = await getQuestionsByType(
+    let TRUTH = await getQuestionsByType(
       "truth",
       guildDb,
       guildDb?.language != null
@@ -48,8 +47,8 @@ const command: ChatInputCommand = {
 
     const truthEmbed = new DefaultGameEmbed(
       interaction,
-      truth.id,
-      truth.question,
+      TRUTH.id,
+      TRUTH.question,
       "truth",
     );
 
@@ -76,8 +75,12 @@ const command: ChatInputCommand = {
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+    ? { content: TRUTH.question }
+    : {embeds: [truthEmbed], components: components };
+
     interaction
-      .reply({ embeds: [truthEmbed], components: components })
+      .reply(classicData)
       .catch((err) => {
         captureException(err);
       });

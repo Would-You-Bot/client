@@ -20,10 +20,10 @@ export default async function settingsGeneral(
       `${client.translation.get(
         guildDb?.language,
         "Settings.embed.username",
-      )}: ${guildDb.premName ? guildDb.premName : ":x:"}\n${client.translation.get(
+      )}: ${guildDb.webhookName ? guildDb.webhookName : ":x:"}\n${client.translation.get(
         guildDb?.language,
         "Settings.embed.avatar",
-      )}: ${guildDb.premAvatar ? `[Image](<${guildDb.premAvatar}>)` : `:x:`}`,
+      )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : `:x:`}`,
     )
     .setColor("#0598F6")
     .setFooter({
@@ -34,22 +34,22 @@ export default async function settingsGeneral(
   const welcomeButtons =
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
-        .setCustomId("premName")
+        .setCustomId("webhookName")
         .setEmoji("1185973660465500180")
         .setLabel(
           client.translation.get(guildDb?.language, "Settings.button.name"),
         )
         .setStyle(
-          guildDb.premName ? ButtonStyle.Success : ButtonStyle.Secondary,
+          guildDb.webhookName ? ButtonStyle.Success : ButtonStyle.Secondary,
         ),
       new ButtonBuilder()
-        .setCustomId("premAvatar")
+        .setCustomId("webhookAvatar")
         .setEmoji("1207801424503644260")
         .setLabel(
           client.translation.get(guildDb?.language, "Settings.button.avatar"),
         )
         .setStyle(
-          guildDb.premAvatar ? ButtonStyle.Success : ButtonStyle.Secondary,
+          guildDb.webhookAvatar ? ButtonStyle.Success : ButtonStyle.Secondary,
         ),
     );
 

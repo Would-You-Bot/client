@@ -3,12 +3,13 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  InteractionReplyOptions,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
-import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const command: ChatInputCommand = {
@@ -84,11 +85,20 @@ const command: ChatInputCommand = {
       "neverhaveiever",
     );
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+    ? { content: NHIE.question, fetchReply: true }
+    : {embeds: [nhieEmbed], components: [row, mainRow] };
+
+
     interaction
-      .reply({ embeds: [nhieEmbed], components: [row, mainRow] })
-      .catch((err) => {
-        captureException(err);
-      });
+    .reply(classicData)
+    .then(async (msg: any) => {
+      if (!guildDb.classicMode) return;
+      msg.react(":white_check_mark:"), msg.react(":x:");
+    })
+    .catch((err) => {
+      captureException(err);
+    });
   },
 };
 

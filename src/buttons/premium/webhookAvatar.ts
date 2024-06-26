@@ -10,7 +10,7 @@ import { captureException } from "@sentry/node";
 
 const modalObject = {
   title: "Custom Avatar",
-  custom_id: "premAvatarModal",
+  custom_id: "webhookAvatarModal",
   components: [
     {
       type: 1,
@@ -29,7 +29,7 @@ const modalObject = {
 };
 
 const button: Button = {
-  name: "premAvatar",
+  name: "webhookAvatar",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
     try {
@@ -69,7 +69,7 @@ const button: Button = {
               `${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.username",
-              )}: ${guildDb.premName}\n${client.translation.get(
+              )}: ${guildDb.webhookName}\n${client.translation.get(
                 guildDb?.language,
                 "Settings.embed.avatar",
               )}: [Image](<${value}>)`,
@@ -157,7 +157,7 @@ const button: Button = {
           const button3 =
             new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
               new ButtonBuilder()
-                .setCustomId("premName")
+                .setCustomId("webhookName")
                 .setEmoji("1185973660465500180")
                 .setLabel(
                   client.translation.get(
@@ -166,12 +166,12 @@ const button: Button = {
                   ),
                 )
                 .setStyle(
-                  guildDb.premName
+                  guildDb.webhookName
                     ? ButtonStyle.Success
                     : ButtonStyle.Secondary,
                 ),
               new ButtonBuilder()
-                .setCustomId("premAvatar")
+                .setCustomId("webhookAvatar")
                 .setEmoji("1207801424503644260")
                 .setLabel(
                   client.translation.get(
@@ -184,7 +184,7 @@ const button: Button = {
 
           await client.database.updateGuild(interaction.guild?.id || "", {
             ...guildDb,
-            premAvatar: value,
+            webhookAvatar: value,
           });
 
           await (modalInteraction as any).update({

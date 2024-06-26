@@ -3,12 +3,12 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
+  InteractionReplyOptions,
 } from "discord.js";
-import shuffle from "../../util/shuffle";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 import { getRandomTod } from "../../util/Functions/jsonImport";
-import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 
 const command: ChatInputCommand = {
@@ -35,7 +35,7 @@ const command: ChatInputCommand = {
       userID: interaction.user?.id,
     });
 
-    const random = await getRandomTod(
+    const RANDOM = await getRandomTod(
       guildDb,
       guildDb?.language != null
         ? guildDb.language
@@ -46,8 +46,8 @@ const command: ChatInputCommand = {
 
     const randomEmbed = new DefaultGameEmbed(
       interaction,
-      random.id,
-      random.question,
+      RANDOM.id,
+      RANDOM.question,
       "random",
     );
 
@@ -74,8 +74,12 @@ const command: ChatInputCommand = {
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+    ? { content: RANDOM.question }
+    : {embeds: [randomEmbed], components: components };
+
     interaction
-      .reply({ embeds: [randomEmbed], components: components })
+      .reply(classicData)
       .catch((err) => {
         captureException(err);
       });

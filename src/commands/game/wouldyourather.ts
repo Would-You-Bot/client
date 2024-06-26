@@ -3,15 +3,13 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   MessageActionRowComponentBuilder,
-  CommandInteraction,
   InteractionReplyOptions,
-  InteractionResponse,
 } from "discord.js";
 import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -93,7 +91,7 @@ const command: ChatInputCommand = {
 
     interaction
       .reply(classicData)
-      .then(async (msg: any) => {
+      .then(async (msg:  any) => {
         if (!guildDb.classicMode) return;
         msg.react("🇦"), msg.react("🇧");
       })
