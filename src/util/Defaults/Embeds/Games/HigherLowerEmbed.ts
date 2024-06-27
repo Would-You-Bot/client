@@ -1,6 +1,6 @@
-import { EmbedBuilder, CommandInteraction } from "discord.js";
-import WouldYou from "../../../wouldYou";
+import { CommandInteraction, EmbedBuilder } from "discord.js";
 import { IGuildModel } from "../../../Models/guildModel";
+import WouldYou from "../../../wouldYou";
 
 export class HigherLowerEmbed extends EmbedBuilder {
   constructor(

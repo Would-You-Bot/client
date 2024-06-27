@@ -1,9 +1,9 @@
+import { captureException } from "@sentry/node";
 import { ButtonInteraction } from "discord.js";
 import { Event } from "../interfaces";
-import WouldYou from "../util/wouldYou";
-import { captureException } from "@sentry/node";
-import { UserModel } from "../util/Models/userModel";
 import { IGuildModel } from "../util/Models/guildModel";
+import { UserModel } from "../util/Models/userModel";
+import WouldYou from "../util/wouldYou";
 
 const buttonInteractionEvent: Event = {
   event: "interactionCreate",

@@ -1,16 +1,16 @@
 // Main Bot Librarys
+import { ClusterClient, getInfo } from "discord-hybrid-sharding";
 import {
   Client,
-  GatewayIntentBits,
   Collection,
+  GatewayIntentBits,
   LimitedCollection,
   Partials,
   Options,
 } from "discord.js";
-import { getInfo, ClusterClient } from "discord-hybrid-sharding";
 
 // Utils and Config
-import { gray, white, green } from "chalk-advanced";
+import { gray, green, white } from "chalk-advanced";
 import "dotenv/config";
 
 // Classes for the bot
@@ -19,15 +19,13 @@ import DatabaseHandler from "./databaseHandler";
 import PremiumHandler from "./premiumHandler";
 import KeepAlive from "./keepAlive";
 import WebhookHandler from "./webhookHandler";
+import path from "path";
+import { Button, ChatInputCommand } from "../interfaces";
+import { Event } from "../interfaces/event";
+import { fileToCollection } from "./Functions/fileToCollection";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
 import Voting from "./votingHandler";
-import { Button, ChatInputCommand } from "../interfaces";
-import { fileToCollection } from "./Functions/fileToCollection";
-import path from "path";
-import { Event } from "../interfaces/event";
-// User filter to filter all users out of the cache expect the bot
-//const userFilter = (u) => u?.id !== client?.user?.id;
 
 export default class WouldYou extends Client {
   public commands: Collection<string, ChatInputCommand>;

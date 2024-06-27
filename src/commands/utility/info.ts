@@ -1,5 +1,5 @@
-import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { captureException } from "@sentry/node";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
 const { version } = require("../../../package.json");
 
@@ -28,14 +28,17 @@ const command: ChatInputCommand = {
     const userCount = await client.cluster.broadcastEval((c) =>
       c.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
     );
+    let ramUsage = await client.cluster.broadcastEval(() => {
+      function round(num: number) {
+        const m = Number((Math.abs(num) * 100).toPrecision(15));
+        return (Math.round(m) / 100) * Math.sign(num);
+      }
+
+      return round(process.memoryUsage().heapUsed / 1000000000);
+    });
 
     const unixstamp =
       Math.floor(Date.now() / 1000) - Math.floor((client.uptime || 0) / 1000);
-
-    function round(num: number) {
-      const m = Number((Math.abs(num) * 100).toPrecision(15));
-      return (Math.round(m) / 100) * Math.sign(num);
-    }
 
     const infoEmbed = new EmbedBuilder()
       .setColor("#5865f4")
@@ -59,9 +62,7 @@ const command: ChatInputCommand = {
         },
         {
           name: "Memory 🎇",
-          value: `\`\`\`${round(
-            process.memoryUsage().heapUsed / 1000000000,
-          )}GB\n\`\`\``,
+          value: `\`\`\`${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB\n\`\`\``,
           inline: true,
         },
         {

@@ -1,20 +1,19 @@
 import {
-  EmbedBuilder,
   ActionRowBuilder,
-  ButtonBuilder,
-  PermissionFlagsBits,
-  MessageActionRowComponentBuilder,
-  bold,
-  ButtonStyle,
   AttachmentBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  EmbedBuilder,
+  MessageActionRowComponentBuilder,
+  PermissionFlagsBits,
 } from "discord.js";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "../../interfaces";
 
-import { getHigherLower } from "../../util/Functions/jsonImport";
-import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
-import { HigherlowerModel } from "../../util/Models/higherlowerModel";
 import HOR from "../../util/Classes/generateHOR";
+import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
+import { getHigherLower } from "../../util/Functions/jsonImport";
+import { HigherlowerModel } from "../../util/Models/higherlowerModel";
 import { IUserModel, UserModel } from "../../util/Models/userModel";
 
 const button: Button = {

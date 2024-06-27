@@ -1,15 +1,16 @@
+import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
   PermissionFlagsBits,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { captureException } from "@sentry/node";
+
 import { Button } from "../../interfaces";
 
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
-import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "wouldyourather",

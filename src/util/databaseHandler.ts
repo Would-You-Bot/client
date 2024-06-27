@@ -1,8 +1,8 @@
-import { Model, connect, set } from "mongoose";
-import { white, gray, green } from "chalk-advanced";
 import { captureException } from "@sentry/node";
-import { UserModel, IUserModel } from "./Models/userModel";
+import { gray, green, white } from "chalk-advanced";
+import { Model, connect, set } from "mongoose";
 import { GuildModel, IGuildModel } from "./Models/guildModel";
+import { IUserModel, UserModel } from "./Models/userModel";
 import WouldYou from "./wouldYou";
 
 export default class DatabaseHandler {

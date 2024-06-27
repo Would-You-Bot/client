@@ -1,13 +1,13 @@
+import { captureException } from "@sentry/node";
 import {
   GuildMember,
   GuildTextBasedChannel,
   PermissionFlagsBits,
 } from "discord.js";
 import "dotenv/config";
-import { captureException } from "@sentry/node";
-import WouldYou from "../util/wouldYou";
 import { Event } from "../interfaces";
 import { getQuestionsByType } from "../util/Functions/jsonImport";
+import WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "guildMemberAdd",

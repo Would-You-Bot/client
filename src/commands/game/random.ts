@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/node";
 import {
   SlashCommandBuilder,
   ActionRowBuilder,
@@ -5,11 +6,10 @@ import {
   MessageActionRowComponentBuilder,
   InteractionReplyOptions,
 } from "discord.js";
-import { captureException } from "@sentry/node";
 import { ChatInputCommand } from "../../interfaces";
 import { getRandomTod } from "../../util/Functions/jsonImport";
-import { UserModel } from "../../util/Models/userModel";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,

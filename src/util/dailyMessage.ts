@@ -1,9 +1,9 @@
-import { Channel, ChannelType, EmbedBuilder, bold } from "discord.js";
+import { EmbedBuilder, bold } from "discord.js";
 import WouldYou from "./wouldYou";
+import { captureException, withScope } from "@sentry/node";
 import amqplib, { MessageProperties } from "amqplib";
 import { IQueueMessage, Result } from "../global";
 import QueueError from "./Error/QueueError";
-import { Scope, captureException, withScope } from "@sentry/node";
 import { WebHookCompatibleChannel } from "./webhookHandler";
 
 export default class DailyMessage {

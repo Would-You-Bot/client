@@ -1,15 +1,15 @@
 import {
-  EmbedBuilder,
   ActionRowBuilder,
+  AttachmentBuilder,
   ButtonBuilder,
   ButtonStyle,
-  AttachmentBuilder,
+  EmbedBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
-import { HigherlowerModel } from "../../util/Models/higherlowerModel";
-import LOSE from "../../util/Classes/generateLOSE";
-import HOR from "../../util/Classes/generateHOR";
 import { Button } from "../../interfaces";
+import HOR from "../../util/Classes/generateHOR";
+import LOSE from "../../util/Classes/generateLOSE";
+import { HigherlowerModel } from "../../util/Models/higherlowerModel";
 
 import { getHigherLower } from "../../util/Functions/jsonImport";
 

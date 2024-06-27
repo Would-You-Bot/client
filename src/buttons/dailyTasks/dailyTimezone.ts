@@ -1,11 +1,10 @@
 import {
-  ButtonBuilder,
   ActionRowBuilder,
-  EmbedBuilder,
+  ButtonBuilder,
   ButtonStyle,
   MessageActionRowComponentBuilder,
+  EmbedBuilder,
 } from "discord.js";
-import { captureException } from "@sentry/node";
 import { Button } from "../../interfaces";
 
 const modalObject = {

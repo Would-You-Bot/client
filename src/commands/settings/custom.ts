@@ -1,23 +1,23 @@
-import {
-  EmbedBuilder,
-  SlashCommandBuilder,
-  ButtonBuilder,
-  ActionRowBuilder,
-  PermissionFlagsBits,
-  PermissionsBitField,
-  MessageActionRowComponentBuilder,
-  ButtonStyle,
-} from "discord.js";
 import { captureException } from "@sentry/node";
 import axios from "axios";
-import Paginator from "../../util/pagination";
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  EmbedBuilder,
+  MessageActionRowComponentBuilder,
+  PermissionFlagsBits,
+  PermissionsBitField,
+  SlashCommandBuilder,
+} from "discord.js";
 import "dotenv/config";
 import { ChatInputCommand } from "../../interfaces";
 import {
-  generateWYR,
   generateNHIE,
   generateWWYD,
+  generateWYR,
 } from "../../util/generateText";
+import Paginator from "../../util/pagination";
 
 function makeID(length: number) {
   let result = "";

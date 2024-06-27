@@ -1,8 +1,8 @@
+import { captureException } from "@sentry/node";
 import { gray, green, white } from "chalk-advanced";
-import WouldYou from "../util/wouldYou";
 import { Event } from "../interfaces/event";
 import { shardClusterStoreModel } from "../util/Models/ShardClusterStore";
-import { captureException } from "@sentry/node";
+import WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "shardDeath",

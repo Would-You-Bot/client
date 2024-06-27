@@ -1,16 +1,15 @@
+import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  PermissionFlagsBits,
   MessageActionRowComponentBuilder,
+  PermissionFlagsBits,
 } from "discord.js";
-import { captureException } from "@sentry/node";
-import shuffle from "../../util/shuffle";
 import { Button } from "../../interfaces";
 
 import { getRandomTod } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
-import { UserModel, IUserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "random",

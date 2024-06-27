@@ -1,4 +1,4 @@
-import { bold, EmbedBuilder, CommandInteraction } from "discord.js";
+import { CommandInteraction, EmbedBuilder, bold } from "discord.js";
 
 export class DefaultGameEmbed extends EmbedBuilder {
   constructor(

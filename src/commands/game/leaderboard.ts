@@ -1,7 +1,7 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
-import Paginator from "../../util/pagination";
 import { IUserModel, UserModel } from "../../util/Models/userModel";
+import Paginator from "../../util/pagination";
 
 const command: ChatInputCommand = {
   requireGuild: true,

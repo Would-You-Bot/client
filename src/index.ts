@@ -1,7 +1,8 @@
 import WouldYou from "./util/wouldYou";
 import { white, gray, green } from "chalk-advanced";
-import { init } from "@sentry/node";
+import { init, autoDiscoverNodePerformanceMonitoringIntegrations } from "@sentry/node";
 import { ProfilingIntegration } from "@sentry/profiling-node";
+
 import "dotenv/config";
 // Token to UserID Function
 // Credits to Meister#9667 for helping me with this

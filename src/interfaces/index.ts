@@ -1,3 +1,3 @@
-export { Command, ChatInputCommand } from "./command";
-export { Interaction, Button } from "./interaction";
+export { ChatInputCommand, Command } from "./command";
 export { Event } from "./event";
+export { Button, Interaction } from "./interaction";
