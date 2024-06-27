@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -6,7 +7,6 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { Button } from "../../interfaces";
-import { captureException } from "@sentry/node";
 
 const modalObject = {
   title: "Custom Avatar",

@@ -1,15 +1,15 @@
 import { captureException } from "@sentry/node";
 import {
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  MessageActionRowComponentBuilder,
   InteractionReplyOptions,
+  MessageActionRowComponentBuilder,
+  SlashCommandBuilder,
 } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
 
-import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 import { UserModel } from "../../util/Models/userModel";
 
@@ -77,14 +77,12 @@ const command: ChatInputCommand = {
     ]);
 
     const classicData: InteractionReplyOptions = guildDb.classicMode
-    ? { content: TRUTH.question }
-    : {embeds: [truthEmbed], components: components };
+      ? { content: TRUTH.question }
+      : { embeds: [truthEmbed], components: components };
 
-    interaction
-      .reply(classicData)
-      .catch((err) => {
-        captureException(err);
-      });
+    interaction.reply(classicData).catch((err) => {
+      captureException(err);
+    });
   },
 };
 

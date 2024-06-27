@@ -1,14 +1,14 @@
 import { captureException } from "@sentry/node";
 import {
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  MessageActionRowComponentBuilder,
   InteractionReplyOptions,
+  MessageActionRowComponentBuilder,
+  SlashCommandBuilder,
 } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
-import { getRandomTod } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getRandomTod } from "../../util/Functions/jsonImport";
 import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
@@ -75,14 +75,12 @@ const command: ChatInputCommand = {
     ]);
 
     const classicData: InteractionReplyOptions = guildDb.classicMode
-    ? { content: RANDOM.question }
-    : {embeds: [randomEmbed], components: components };
+      ? { content: RANDOM.question }
+      : { embeds: [randomEmbed], components: components };
 
-    interaction
-      .reply(classicData)
-      .catch((err) => {
-        captureException(err);
-      });
+    interaction.reply(classicData).catch((err) => {
+      captureException(err);
+    });
   },
 };
 

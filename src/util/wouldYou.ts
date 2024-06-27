@@ -6,7 +6,6 @@ import {
   GatewayIntentBits,
   LimitedCollection,
   Partials,
-  Options,
 } from "discord.js";
 
 // Utils and Config
@@ -14,18 +13,18 @@ import { gray, green, white } from "chalk-advanced";
 import "dotenv/config";
 
 // Classes for the bot
-import TranslationHandler from "./translationHandler";
-import DatabaseHandler from "./databaseHandler";
-import PremiumHandler from "./premiumHandler";
-import KeepAlive from "./keepAlive";
-import WebhookHandler from "./webhookHandler";
 import path from "path";
 import { Button, ChatInputCommand } from "../interfaces";
 import { Event } from "../interfaces/event";
 import { fileToCollection } from "./Functions/fileToCollection";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
+import DatabaseHandler from "./databaseHandler";
+import KeepAlive from "./keepAlive";
+import PremiumHandler from "./premiumHandler";
+import TranslationHandler from "./translationHandler";
 import Voting from "./votingHandler";
+import WebhookHandler from "./webhookHandler";
 
 export default class WouldYou extends Client {
   public commands: Collection<string, ChatInputCommand>;

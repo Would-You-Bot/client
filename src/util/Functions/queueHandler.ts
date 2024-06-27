@@ -1,15 +1,15 @@
+import { Error as MongooseError } from "mongoose";
+import { QuestionResult } from "../Functions/jsonImport";
+import { IGuildModel } from "../Models/guildModel";
 import {
-  wyrModel,
+  dareModel,
   nhieModel,
   truthModel,
-  dareModel,
   wwydModel,
+  wyrModel,
 } from "../Models/questionModel";
+import { IUsedQuestions, usedQuestionModel } from "../Models/usedModel";
 import shuffle from "../shuffle";
-import { IGuildModel } from "../Models/guildModel";
-import { usedQuestionModel, IUsedQuestions } from "../Models/usedModel";
-import { getQuestionsByType, QuestionResult } from "../Functions/jsonImport";
-import { Error as MongooseError } from "mongoose";
 
 type Quest =
   | "truthQuestions"

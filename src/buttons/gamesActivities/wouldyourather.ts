@@ -2,14 +2,14 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  PermissionFlagsBits,
   MessageActionRowComponentBuilder,
+  PermissionFlagsBits,
 } from "discord.js";
 
 import { Button } from "../../interfaces";
 
-import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {

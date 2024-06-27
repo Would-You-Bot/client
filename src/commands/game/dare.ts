@@ -1,18 +1,17 @@
 import { captureException } from "@sentry/node";
 import {
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  MessageActionRowComponentBuilder,
   InteractionReplyOptions,
+  MessageActionRowComponentBuilder,
+  SlashCommandBuilder,
 } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
 
-import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 
 import { UserModel } from "../../util/Models/userModel";
-
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -78,14 +77,12 @@ const command: ChatInputCommand = {
     ]);
 
     const classicData: InteractionReplyOptions = guildDb.classicMode
-    ? { content: DARE.question }
-    : {embeds: [dareEmbed], components: components };
+      ? { content: DARE.question }
+      : { embeds: [dareEmbed], components: components };
 
-    interaction
-      .reply(classicData)
-      .catch((err) => {
-        captureException(err);
-      });
+    interaction.reply(classicData).catch((err) => {
+      captureException(err);
+    });
   },
 };
 

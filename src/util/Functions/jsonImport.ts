@@ -1,13 +1,13 @@
+import path from "path";
+import { Questions } from "../Functions/queueHandler";
+import { IGuildModel } from "../Models/guildModel";
 import {
-  wyrModel,
+  dareModel,
   nhieModel,
   truthModel,
-  dareModel,
   wwydModel,
+  wyrModel,
 } from "../Models/questionModel";
-import { IGuildModel } from "../Models/guildModel";
-import { Questions } from "../Functions/queueHandler";
-import path from "path";
 
 interface LanguageMapInterface {
   [key: string]: string;

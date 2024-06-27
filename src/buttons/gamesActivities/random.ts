@@ -7,8 +7,8 @@ import {
 } from "discord.js";
 import { Button } from "../../interfaces";
 
-import { getRandomTod } from "../../util/Functions/jsonImport";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getRandomTod } from "../../util/Functions/jsonImport";
 import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {

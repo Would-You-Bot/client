@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from "discord.js";
 import { captureException } from "@sentry/node";
+import { SlashCommandBuilder } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {

@@ -1,15 +1,15 @@
 import { captureException } from "@sentry/node";
 import {
-  SlashCommandBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  MessageActionRowComponentBuilder,
   InteractionReplyOptions,
+  MessageActionRowComponentBuilder,
+  SlashCommandBuilder,
 } from "discord.js";
 
-import { getQuestionsByType } from "../../util/Functions/jsonImport";
-import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 import { ChatInputCommand } from "../../interfaces";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
@@ -75,9 +75,9 @@ const command: ChatInputCommand = {
 
     const classicData: InteractionReplyOptions = guildDb.classicMode
       ? { content: WWYD.question, fetchReply: true }
-      : {embeds: [wwydEmbed], components: [row] };
+      : { embeds: [wwydEmbed], components: [row] };
 
-      interaction
+    interaction
       .reply(classicData)
       .then(async (msg: any) => {
         if (!guildDb.classicMode) return;

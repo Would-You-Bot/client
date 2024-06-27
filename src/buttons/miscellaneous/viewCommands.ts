@@ -1,10 +1,10 @@
-import {
-  EmbedBuilder,
-  ActionRowBuilder,
-  MessageActionRowComponentBuilder,
-  ButtonBuilder,
-} from "discord.js";
 import { captureException } from "@sentry/node";
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  EmbedBuilder,
+  MessageActionRowComponentBuilder,
+} from "discord.js";
 import { Button } from "../../interfaces";
 
 const button: Button = {
