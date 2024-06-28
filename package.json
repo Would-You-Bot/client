@@ -33,7 +33,7 @@
     "@napi-rs/canvas": "^0.1.52",
     "@sentry/node": "^7.109.0",
     "@top-gg/sdk": "^3.1.6",
-    "@upstash/redis": "^1.31.2",
+    "@upstash/redis": "^1.31.6",
     "amqplib": "^0.10.4",
     "axios": "^1.7.2",
     "canvabase": "^1.1.1",
