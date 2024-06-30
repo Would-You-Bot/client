@@ -19,8 +19,8 @@ const modalObject = {
           type: 4,
           style: 1,
           custom_id: "input",
-          label: "Provide a username for Daily Messages",
-          placeholder: "This username will be used for Daily Message webhooks.",
+          label: "Provide a username for QOTD webhooks.",
+          placeholder: "This username will be used for QOTD webhooks.",
           max_length: 32,
           min_length: 3,
           required: true,
@@ -51,7 +51,14 @@ const button: Button = {
       })
       .then(async (modalInteraction) => {
         let value = modalInteraction.components[0].components[0].value as any;
-        let filter = ["Discord", "discord", "Everyone", "everyone"];
+        let filter = [
+          "Discord",
+          "discord",
+          "Everyone",
+          "everyone",
+          "clyde",
+          "Clyde",
+        ];
         for (let i = 0; filter.length > i; i++) {
           if (value.includes(filter[i]))
             return modalInteraction.reply({
@@ -72,7 +79,10 @@ const button: Button = {
             )}: ${value}\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.avatar",
-            )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : `:x:`}`,
+            )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : `:x:`}\n${client.translation.get(
+              guildDb?.language,
+              "Settings.embed.classicMode",
+            )}: ${guildDb.classicMode ? ":white_check_mark:" : ":x:"}`,
           )
           .setColor("#0598F6")
           .setFooter({
@@ -83,78 +93,7 @@ const button: Button = {
             iconURL: client?.user?.displayAvatarURL() || undefined,
           });
 
-        const button2 =
-          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-            new ButtonBuilder()
-              .setCustomId("welcomeType")
-              .setEmoji("1185973664538177557")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.dailyType",
-                ),
-              )
-              .setStyle(ButtonStyle.Primary),
-            new ButtonBuilder()
-              .setCustomId("welcomeChannel")
-              .setEmoji("1185973667973320775")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.welcomeChannel",
-                ),
-              )
-              .setStyle(
-                guildDb.welcomeChannel
-                  ? ButtonStyle.Primary
-                  : ButtonStyle.Secondary,
-              ),
-            new ButtonBuilder()
-              .setCustomId("welcomeTest")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.welcomeTest",
-                ),
-              )
-              .setDisabled(guildDb.welcome ? false : true)
-              .setStyle(
-                guildDb.welcome ? ButtonStyle.Primary : ButtonStyle.Secondary,
-              )
-              .setEmoji("1207800685928910909"),
-          );
-
-        const button1 =
-          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-            new ButtonBuilder()
-              .setCustomId("welcome")
-              .setEmoji("1185973660465500180")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.welcome",
-                ),
-              )
-              .setStyle(
-                guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary,
-              ),
-            new ButtonBuilder()
-              .setCustomId("welcomePing")
-              .setEmoji("1207801424503644260")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.welcomePing",
-                ),
-              )
-              .setStyle(
-                guildDb.welcomePing
-                  ? ButtonStyle.Success
-                  : ButtonStyle.Secondary,
-              ),
-          );
-
-        const button3 =
+        const button =
           new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
             new ButtonBuilder()
               .setCustomId("webhookName")
@@ -182,6 +121,24 @@ const button: Button = {
               ),
           );
 
+        const button2 =
+          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+            new ButtonBuilder()
+              .setCustomId("classicMode")
+              .setEmoji("1256977616242606091")
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  "Settings.button.classicMode",
+                ),
+              )
+              .setStyle(
+                guildDb.classicMode
+                  ? ButtonStyle.Success
+                  : ButtonStyle.Secondary,
+              ),
+          );
+
         await client.database.updateGuild(interaction.guild?.id || "", {
           ...guildDb,
           webhookName: value,
@@ -189,7 +146,7 @@ const button: Button = {
 
         await (modalInteraction as any).update({
           embeds: [emb],
-          components: [button1, button2, button3],
+          components: [button, button2],
           options: {
             ephemeral: true,
           },

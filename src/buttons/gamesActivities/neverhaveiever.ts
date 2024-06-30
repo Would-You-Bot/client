@@ -2,6 +2,7 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  InteractionReplyOptions,
   MessageActionRowComponentBuilder,
   PermissionFlagsBits,
 } from "discord.js";
@@ -95,10 +96,14 @@ const button: Button = {
       "neverhaveiever",
     );
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: NHIE.question, fetchReply: true }
+      : { embeds: [nhieEmbed], components: [row, mainRow] };
+
     interaction
-      .reply({
-        embeds: [nhieEmbed],
-        components: [row, mainRow],
+      .reply(classicData).then(async (msg: any) => {
+        if (!guildDb.classicMode) return;
+        msg.react(":white_check_mark:"), msg.react(":x:");
       })
       .catch((err: Error) => {
         captureException(err);

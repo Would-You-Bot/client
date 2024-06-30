@@ -13,7 +13,7 @@ import HOR from "../../util/Classes/generateHOR";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
 import { getHigherLower } from "../../util/Functions/jsonImport";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,

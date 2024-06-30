@@ -2,6 +2,7 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  InteractionReplyOptions,
   MessageActionRowComponentBuilder,
   PermissionFlagsBits,
 } from "discord.js";
@@ -110,14 +111,19 @@ const button: Button = {
       "wouldyourather",
     );
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+    ? { content: WYR.question, fetchReply: true }
+    : { embeds: [ratherEmbed], components: [row, mainRow] };
+
     interaction
-      .reply({
-        embeds: [ratherEmbed],
-        components: [row, mainRow],
-      })
-      .catch((err: Error) => {
-        captureException(err);
-      });
+    .reply(classicData)
+    .then(async (msg: any) => {
+      if (!guildDb.classicMode) return;
+      msg.react("🅰️"), msg.react("🇧");
+    })
+    .catch((err: Error) => {
+      captureException(err);
+    });
     return;
   },
 };

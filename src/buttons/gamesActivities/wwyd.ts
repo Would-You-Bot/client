@@ -2,6 +2,7 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  InteractionReplyOptions,
   MessageActionRowComponentBuilder,
   PermissionFlagsBits,
 } from "discord.js";
@@ -87,11 +88,13 @@ const button: Button = {
         .setCustomId(`wwyd`),
     ]);
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: WWYD.question, fetchReply: true }
+      : { embeds: [wwydEmbed],
+        components: [row], };
+
     interaction
-      .reply({
-        embeds: [wwydEmbed],
-        components: [row],
-      })
+      .reply(classicData)
       .catch((err: Error) => {
         captureException(err);
       });

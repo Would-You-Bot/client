@@ -93,9 +93,9 @@ const command: ChatInputCommand = {
       .reply(classicData)
       .then(async (msg: any) => {
         if (!guildDb.classicMode) return;
-        msg.react("🇦"), msg.react("🇧");
+        msg.react("🅰️"), msg.react("🇧");
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         captureException(err);
       });
   },

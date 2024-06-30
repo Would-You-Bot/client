@@ -2,6 +2,7 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  InteractionReplyOptions,
   PermissionFlagsBits,
   type MessageActionRowComponentBuilder,
 } from "discord.js";
@@ -48,7 +49,7 @@ const button: Button = {
       userID: interaction.user?.id,
     });
 
-    let dare = await getQuestionsByType(
+    let DARE = await getQuestionsByType(
       "dare",
       guildDb,
       guildDb?.language != null
@@ -60,8 +61,8 @@ const button: Button = {
 
     const dareEmbed = new DefaultGameEmbed(
       interaction,
-      dare.id,
-      dare.question,
+      DARE.id,
+      DARE.question,
       "dare",
     );
 
@@ -89,8 +90,12 @@ const button: Button = {
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+    ? { content: DARE.question }
+    : { embeds: [dareEmbed], components: components };
+
     interaction
-      .reply({ embeds: [dareEmbed], components: components })
+      .reply(classicData)
       .catch((err: Error) => {
         captureException(err);
       });

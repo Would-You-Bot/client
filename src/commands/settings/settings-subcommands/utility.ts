@@ -23,7 +23,10 @@ export default async function settingsGeneral(
       )}: ${guildDb.webhookName ? guildDb.webhookName : ":x:"}\n${client.translation.get(
         guildDb?.language,
         "Settings.embed.avatar",
-      )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : `:x:`}`,
+      )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : `:x:`}\n${client.translation.get(
+        guildDb?.language,
+        "Settings.embed.classicMode",
+      )}: ${guildDb.classicMode ? ":white_check_mark:" : ":x:"}`,
     )
     .setColor("#0598F6")
     .setFooter({
@@ -31,7 +34,7 @@ export default async function settingsGeneral(
       iconURL: client?.user?.displayAvatarURL() || undefined,
     });
 
-  const welcomeButtons =
+  const button =
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("webhookName")
@@ -53,9 +56,25 @@ export default async function settingsGeneral(
         ),
     );
 
+  const button2 =
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("classicMode")
+        .setEmoji("1256977616242606091")
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.classicMode",
+          ),
+        )
+        .setStyle(
+          guildDb.classicMode ? ButtonStyle.Success : ButtonStyle.Secondary,
+        ),
+    );
+
   await interaction.reply({
     embeds: [emb],
-    components: [welcomeButtons],
+    components: [button, button2],
     ephemeral: true,
   });
 }

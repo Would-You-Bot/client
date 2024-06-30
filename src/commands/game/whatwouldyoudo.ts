@@ -74,15 +74,11 @@ const command: ChatInputCommand = {
     ]);
 
     const classicData: InteractionReplyOptions = guildDb.classicMode
-      ? { content: WWYD.question, fetchReply: true }
+      ? { content: WWYD.question }
       : { embeds: [wwydEmbed], components: [row] };
 
     interaction
       .reply(classicData)
-      .then(async (msg: any) => {
-        if (!guildDb.classicMode) return;
-        msg.react("🇦"), msg.react("🇧");
-      })
       .catch((err) => {
         captureException(err);
       });

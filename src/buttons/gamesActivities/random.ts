@@ -2,6 +2,7 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  InteractionReplyOptions,
   MessageActionRowComponentBuilder,
   PermissionFlagsBits,
 } from "discord.js";
@@ -50,7 +51,7 @@ const button: Button = {
       userID: interaction.user?.id,
     });
 
-    const random = await getRandomTod(
+    const RANDOM = await getRandomTod(
       guildDb,
       guildDb?.language != null
         ? guildDb.language
@@ -61,8 +62,8 @@ const button: Button = {
 
     const randomEmbed = new DefaultGameEmbed(
       interaction,
-      random.id,
-      random.question,
+      RANDOM.id,
+      RANDOM.question,
       "random",
     );
 
@@ -89,8 +90,12 @@ const button: Button = {
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+    ? { content: RANDOM.question }
+    : { embeds: [randomEmbed], components: components };
+
     interaction
-      .reply({ embeds: [randomEmbed], components: components })
+      .reply(classicData)
       .catch((err: Error) => {
         captureException(err);
       });
