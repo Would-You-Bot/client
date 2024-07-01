@@ -114,7 +114,8 @@ const button: Button = {
               guildDb.dailyInterval
                 ? ButtonStyle.Success
                 : ButtonStyle.Secondary,
-            ),
+          ),
+          
         ),
       dailyButtons3 =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(

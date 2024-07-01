@@ -113,7 +113,17 @@ const button: Button = {
               guildDb.dailyInterval
                 ? ButtonStyle.Success
                 : ButtonStyle.Secondary,
-            ),
+          ),
+          new ButtonBuilder()
+            .setCustomId("daySelection")
+            .setEmoji("1220826970133368842")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.daySelect",
+              ),
+            )
+            .setStyle(ButtonStyle.Success),
         ),
       dailyButtons3 =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(

@@ -234,6 +234,7 @@
     "welcomeTestSuccess": "This is a test message of what welcome messages look like.",
     "premium": "To access this feature you will need to subscribe to [Would You Premium](https://wouldyoubot.gg/premium)",
     "invalidLink": "Please provide a valid PNG, JPG (JPEG), or GIF Discord attachment to set as the bot's avatar.",
+    "daysSelection": "Select every day you **don't** want daily messages to be on.",
     "embed": {
       "generalTitle": "Would You - General Settings",
       "replayCooldown": "**Replay Cooldown**",
@@ -262,6 +263,7 @@
       "classicMode": "**Classic Mode **"
     },
     "button": {
+      "daySelect": "Exclude Days",
       "dailyInterval": "Set Post Time",
       "dailyChannel": "Set Channel",
       "dailyRole": "Set Role",
@@ -284,6 +286,15 @@
     "modal": {
       "dailyIntervalTitle": "Daily Post Time",
       "dailyIntervalDescription": "When should the message be posted? (HH:MM)"
+    },
+     "select": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
     }
   },
   "Debug": {

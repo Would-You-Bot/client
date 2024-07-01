@@ -1,17 +1,18 @@
 import {
-  ActionRowBuilder,
   ButtonBuilder,
-  ButtonStyle,
+  ActionRowBuilder,
   EmbedBuilder,
+  ButtonStyle,
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { Button } from "../../interfaces";
 
 const button: Button = {
-  name: "selectMenuChannel",
-  cooldown: false,
-  execute: async (interaction, client, guildDb) => {
-    const newChannel = (interaction as any).values[0];
+    name: "selectMenuDays",
+    cooldown: false,
+  execute: async (interaction: any, client, guildDb) => {
+    const data = interaction.values;
+
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.dailyTitle"),
@@ -20,7 +21,7 @@ const button: Button = {
         `${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyChannel",
-        )}: <#${newChannel}>\n` +
+        )}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyRole",
@@ -73,9 +74,7 @@ const button: Button = {
                 "Settings.button.dailyRole",
               ),
             )
-            .setStyle(
-              guildDb.dailyRole ? ButtonStyle.Primary : ButtonStyle.Secondary,
-            ),
+            .setStyle(ButtonStyle.Primary),
           new ButtonBuilder()
             .setCustomId("dailyType")
             .setEmoji("1185973664538177557")
@@ -116,7 +115,7 @@ const button: Button = {
               guildDb.dailyInterval
                 ? ButtonStyle.Success
                 : ButtonStyle.Secondary,
-          ),
+            ),
           new ButtonBuilder()
             .setCustomId("daySelection")
             .setEmoji("1220826970133368842")
@@ -155,19 +154,15 @@ const button: Button = {
               guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
             ),
         );
-
-    await client.database.updateGuild(interaction.guild?.id || "", {
+    await client.database.updateGuild(interaction.guild.id, {
       ...guildDb,
-      dailyChannel: newChannel,
+      excludedDays: data.map((e: String) => Number(e)),
     });
-
     interaction.update({
       content: null,
       embeds: [dailyMsgs],
       components: [dailyButtons, dailyButtons2, dailyButtons3],
-      options: {
-        ephemeral: true,
-      },
+      ephemeral: true,
     });
     return;
   },
