@@ -151,7 +151,7 @@
     },
     "button": {
       "discord": "Would You Support",
-      "invite": "Would You Invite",
+      "invite": "Invite Would You",
       "commands": "Voir les commandes",
       "help": "Voir l'aide"
     }
@@ -217,13 +217,13 @@
     "errorSame": "Le fuseau horaire fourni est le même fuseau horaire que celui déjà défini. Assurez-vous de choisir un autre fuseau horaire.",
     "errorInvalid": "Le fuseau horaire fourni est invalide, vous pouvez choisir un fuseau horaire valide sur ce [sélecteur de fuseau horaire](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "L'heure de publication indiquée est la même que celle déjà définie. Assure-toi de choisir une autre heure de publication.",
-    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or an interval of 5!",
+    "intervalInvalid": "L'heure de publication fournie n'est pas valide. Assure-toi que ton heure d'envoi est au format 24h et que les minutes sont soit 00, soit un multiple de 5 !",
     "dailyChannel": "Sélectionnez le channel où vous voulez que les messages quotidiens soient postés !",
     "replayChannel": "Sélectionnez un salon auquel vous souhaitez ajouter un temps de recharge !",
     "replayChannelNone": "Vous n'avez défini aucun salon de rediffusion !",
-    "replayCooldownMin": "Provided cooldown is too short, make sure cooldowns are above 2 seconds!",
+    "replayCooldownMin": "Le temps de rechargement est trop court, assurez-vous qu'il soit supérieur à 2 secondes !",
     "replayDelete": "Sélectionnez un salon pour lequel vous souhaitez supprimer un temps de recharge de rediffusion !",
-    "cooldownTooLong": "Provided cooldown was too long. Make sure the cooldown is less than 6 hours (21,600 seconds)!",
+    "cooldownTooLong": "Le temps de rechargement fourni était trop long. Assurez-vous que le temps de recharge est inférieur à 6 heures (21600 secondes) !",
     "replayChannelLimit": "Vous ne pouvez ajouter que 15 salons au temps de recharge de la rediffusion !",
     "dailyType": "Sélectionnez un type de message quotidien que vous souhaitez recevoir !",
     "welcomeType": "Sélectionnez un type de message de bienvenue que vous souhaitez envoyer !",
@@ -232,9 +232,9 @@
     "voteSame": "Le temps de récupération de vote fourni est le même que celui déjà défini. Assurez-vous de choisir un autre temps de recharge.",
     "cooldownInvalid": "Le temps de recharge fourni n'est pas valide. Assurez-vous que le temps de recharge ne comprend que des chiffres !",
     "welcomeTestSuccess": "Ceci est un message test qui illustre les messages de bienvenue.",
-    "premium": "To access this feature you will need to subscribe to [Would You Premium](https://wouldyoubot.gg/premium)",
-    "invalidLink": "Please provide a valid PNG, JPG (JPEG), WEBP or GIF Discord attachment to set as the bot's avatar.",
-    "daysSelection": "Select every day you **don't** want daily messages to be on.",
+    "premium": "Pour accéder à cette fonctionnalité, vous devrez vous abonner à [Would You Premium](https://wouldyoubot.gg/premium)",
+    "invalidLink": "Veuillez fournir une pièce jointe Discord valide PNG, JPG (JPEG), WEBP ou GIF à définir comme avatar du bot.",
+    "daysSelection": "Sélectionnez chaque jour que vous **ne voulez pas** que les messages quotidiens soient allumés.",
     "embed": {
       "generalTitle": "Would You - Paramètres généraux",
       "replayCooldown": "**Rejouer le temps de recharge**",
@@ -258,12 +258,12 @@
       "welcomePing": "**Pings de l'utilisateur**",
       "footer": "Voulez-vous",
       "error": "Vous avez besoin de la permission `Gérer le serveur` pour utiliser cette commande!",
-      "username": "<:crown:1256988872160710808> **QOTD Username**",
-      "avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
-      "classicMode": "**Classic Mode **"
+      "username": "<:crown:1256988872160710808> **Nom d'utilisateur QOTD**",
+      "avatar": "<:crown:1256988872160710808> **Avatar QOTD**",
+      "classicMode": "**Mode classique**"
     },
     "button": {
-      "daySelect": "Exclude Days",
+      "daySelect": "Jours exclus",
       "dailyInterval": "Définir l'heure de publication",
       "dailyChannel": "Définir le salon",
       "dailyRole": "Définir le rôle",
@@ -279,9 +279,9 @@
       "welcomeChannel": "Définir le salon",
       "welcome": "Activer/désactiver les accueils",
       "welcomePing": "Activer/désactiver le ping de l'utilisateur",
-      "avatar": "Set Avatar",
-      "name": "Set Username",
-      "classicMode": "Toggle Classic Mode"
+      "avatar": "Définir l'avatar",
+      "name": "Définir le nom d'utilisateur",
+      "classicMode": "Activer/désactiver le mode classique"
     },
     "modal": {
       "dailyIntervalTitle": "Heure de publication quotidienne",
