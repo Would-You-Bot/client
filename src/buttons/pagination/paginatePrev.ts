@@ -9,6 +9,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "paginatePrev",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     let type: string | null = null;
     let paginate = client.paginate.get(

@@ -125,12 +125,12 @@ export default class Either {
     ctx.fillStyle = "#000000";
     ctx.fillText(this.text2, 140, 242);
 
-    var rad = 15;
+    const rad = 15;
 
     const sliced = this.rowOne.slice(0, 3);
 
-    var pos = rad * sliced.length + 430;
-    var yPos = 162;
+    let pos = rad * sliced.length + 430;
+    let yPos = 162;
     sliced.reverse();
 
     for (let i = 0; i < sliced.length; i++) {
@@ -156,8 +156,8 @@ export default class Either {
 
     const sliced2 = this.rowTwo.slice(0, 3);
 
-    var pos1 = rad * sliced2.length + 430;
-    var yPos1 = 248;
+    let pos1 = rad * sliced2.length + 430;
+    let yPos1 = 248;
     sliced2.reverse();
 
     for (let i = 0; i < sliced2.length; i++) {

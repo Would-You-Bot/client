@@ -8,6 +8,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "paginateFirst",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     let type: string | null = null;
     let paginate = client.paginate.get(

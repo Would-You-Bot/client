@@ -21,6 +21,7 @@ import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
 import DatabaseHandler from "./databaseHandler";
 import KeepAlive from "./keepAlive";
+import PremiumHandler from "./premiumHandler";
 import TranslationHandler from "./translationHandler";
 import Voting from "./votingHandler";
 import WebhookHandler from "./webhookHandler";
@@ -35,11 +36,13 @@ export default class WouldYou extends Client {
   public cluster: ClusterClient<Client>;
   public cooldownHandler: CooldownHandler;
   public database: DatabaseHandler;
+  public premium: PremiumHandler;
   public translation: TranslationHandler;
   public webhookHandler: WebhookHandler;
   public keepAlive: KeepAlive;
   public dailyMessage: DailyMessage;
   public voting: Voting;
+  translate: any;
 
   constructor() {
     super({
@@ -113,6 +116,9 @@ export default class WouldYou extends Client {
 
       // Webhook Manager
       this.webhookHandler = new WebhookHandler(this);
+
+      // Premium Handler
+      this.premium = new PremiumHandler(this);
 
       // Keep Alive system after the necessary things that are allowed to crash are loaded
       this.keepAlive = new KeepAlive(this);

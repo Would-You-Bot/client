@@ -12,7 +12,7 @@ export default class Paginator {
   private client: WouldYou;
   private user: any;
   private page: number;
-  private timeout: number;
+  private timeout: number | null;
 
   constructor({
     user,
@@ -123,11 +123,11 @@ export default class Paginator {
             type === "leaderboard" ? `-${message.id}` : ""
           }${type === "reference" ? `-${interaction.message.reference?.messageId}` : ""}`,
         );
-    }, this.timeout);
+    }, this.timeout || 180000);
     this.client.paginate.get(
       `${this.user}-${type || message.id}${
         type === "leaderboard" ? `-${message.id}` : ""
       }${type === "reference" ? `-${interaction.message.reference?.messageId}` : ""}`,
-    ).timeout = time;
+    ).timeout = time ? time : 180000;
   }
 }

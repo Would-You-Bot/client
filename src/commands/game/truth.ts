@@ -2,15 +2,16 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  EmbedBuilder,
+  InteractionReplyOptions,
   MessageActionRowComponentBuilder,
   SlashCommandBuilder,
-  bold,
 } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
-import { getTruth } from "../../util/Functions/jsonImport";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
-import shuffle from "../../util/shuffle";
+
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
+
+import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -31,11 +32,13 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    });
 
-    let Truth = await getTruth(
+    let TRUTH = await getQuestionsByType(
+      "truth",
+      guildDb,
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
@@ -43,43 +46,16 @@ const command: ChatInputCommand = {
           : "en_EN",
     );
 
-    let dbquestions;
-
-    let truthordare = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter((c) => c.type === "truth");
-
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          truthordare = shuffle([...Truth]);
-          break;
-        case "mixed":
-          truthordare = shuffle([...Truth, ...dbquestions.map((c) => c.msg)]);
-          break;
-        case "custom":
-          truthordare = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      truthordare = shuffle([...Truth]);
-    }
-
-    const Random = Math.floor(Math.random() * truthordare.length);
-
-    const truthembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Truth | ID: ${Random}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(truthordare[Random]));
+    const truthEmbed = new DefaultGameEmbed(
+      interaction,
+      TRUTH.id,
+      TRUTH.question,
+      "truth",
+    );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-    let components = [] as any[];
+    let components = [];
     if (Math.round(Math.random() * 15) < 3) {
       row2.addComponents([
         new ButtonBuilder()
@@ -100,11 +76,13 @@ const command: ChatInputCommand = {
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
 
-    interaction
-      .reply({ embeds: [truthembed], components: components })
-      .catch((err) => {
-        captureException(err);
-      });
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: TRUTH.question }
+      : { embeds: [truthEmbed], components: components };
+
+    interaction.reply(classicData).catch((err) => {
+      captureException(err);
+    });
   },
 };
 

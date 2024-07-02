@@ -8,6 +8,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "wycustom_add",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const id = interaction.customId.split("-")[1],
       data = client.customAdd.get(id);
@@ -83,7 +84,10 @@ const button: Button = {
     );
 
     client.customAdd.delete(id);
-    interaction.update({ embeds: [typeEmbed], components: [button] });
+    interaction.update({
+      embeds: [typeEmbed],
+      components: [button],
+    });
     return;
   },
 };

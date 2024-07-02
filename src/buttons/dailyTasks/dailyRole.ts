@@ -9,15 +9,16 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "dailyRole",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
-    var inter =
+    const inter =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new RoleSelectMenuBuilder()
           .setCustomId("selectMenuRole")
           .setPlaceholder("Select a role"),
       );
 
-    var inter2 =
+    const inter2 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId("deleteDailyRole")

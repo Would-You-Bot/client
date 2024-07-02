@@ -13,7 +13,7 @@ import HOR from "../../util/Classes/generateHOR";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
 import { getHigherLower } from "../../util/Functions/jsonImport";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -37,9 +37,9 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     await interaction.deferReply();
 
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    });
 
     const initembed = new HigherLowerEmbed(interaction, client, guildDb);
 

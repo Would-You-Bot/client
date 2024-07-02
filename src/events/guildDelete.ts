@@ -23,7 +23,9 @@ const event: Event = {
       { dailyMsg: false },
     );
 
-    await WebhookCache.findOneAndDelete({ channelId: guildData?.dailyChannel });
+    await WebhookCache.findOneAndDelete({
+      channelId: guildData?.dailyChannel,
+    });
 
     // Only delete the guild settings from the cache we don't want a data lose but also don't need not used data in the cache :)
     await client.database.deleteGuild(guild?.id, true);

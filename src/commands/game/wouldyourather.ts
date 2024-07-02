@@ -2,14 +2,14 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
+  InteractionReplyOptions,
   MessageActionRowComponentBuilder,
   SlashCommandBuilder,
 } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
-import { getWouldYouRather } from "../../util/Functions/jsonImport";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
-import shuffle from "../../util/shuffle";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -31,11 +31,13 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    });
 
-    let General = await getWouldYouRather(
+    let WYR = await getQuestionsByType(
+      "wouldyourather",
+      guildDb,
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
@@ -43,41 +45,10 @@ const command: ChatInputCommand = {
           : "en_EN",
     );
 
-    let dbquestions;
-
-    let wouldyourather = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter(
-        (c) => c.type === "wouldyourather",
-      );
-
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          wouldyourather = shuffle([...General]);
-          break;
-        case "mixed":
-          wouldyourather = shuffle([
-            ...General,
-            ...dbquestions.map((c) => c.msg),
-          ]);
-          break;
-        case "custom":
-          wouldyourather = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      wouldyourather = shuffle([...General]);
-    }
-
-    const Random = Math.floor(Math.random() * wouldyourather.length);
-
-    const ratherembed = new DefaultGameEmbed(
+    const ratherEmbed = new DefaultGameEmbed(
       interaction,
-      Random,
-      wouldyourather,
+      WYR.id,
+      WYR.question,
       "wyr",
     );
 
@@ -114,13 +85,17 @@ const command: ChatInputCommand = {
       "wouldyourather",
     );
 
-    await interaction
-      .reply({
-        embeds: [ratherembed],
-        components: [row, mainRow],
-        fetchReply: true,
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: WYR.question, fetchReply: true }
+      : { embeds: [ratherEmbed], components: [row, mainRow] };
+
+    interaction
+      .reply(classicData)
+      .then(async (msg: any) => {
+        if (!guildDb.classicMode) return;
+        msg.react("🅰️"), msg.react("🇧");
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         captureException(err);
       });
   },

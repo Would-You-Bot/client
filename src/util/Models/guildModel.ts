@@ -17,6 +17,7 @@ export interface IGuildModel {
   dailyTimezone: string;
   dailyInterval: string;
   dailyThread: boolean;
+  excludedDays: Array<Number>;
   replay: boolean;
   replayCooldown: number;
   replayBy: string;
@@ -34,10 +35,17 @@ export interface IGuildModel {
   }>;
   customTypes: string;
   debugMode: boolean;
+  classicMode: boolean;
+  autoPin: boolean;
+  premium: number;
+  premiumExpiration: Date;
+  premiumUser: string;
+  webhookName: string;
+  webhookAvatar: string;
   lastUsageTimestamp: number;
 }
 
-const guildProfileSchema = new Schema(
+const guildProfileSchema = new Schema<IGuildModel>(
   {
     guildID: {
       type: String,
@@ -95,6 +103,10 @@ const guildProfileSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    excludedDays: {
+      type: [Number],
+      default: [],
+    },
     replay: {
       type: Boolean,
       default: true,
@@ -135,6 +147,30 @@ const guildProfileSchema = new Schema(
     debugMode: {
       type: Boolean,
       default: false,
+    },
+    classicMode: {
+      type: Boolean,
+      default: false,
+    },
+    autoPin: {
+      type: Boolean,
+      default: false,
+    },
+    premium: {
+      type: Number,
+      default: 0,
+    },
+    premiumExpiration: {
+      type: Date,
+    },
+    premiumUser: {
+      type: String,
+    },
+    webhookName: {
+      type: String,
+    },
+    webhookAvatar: {
+      type: String,
     },
     lastUsageTimestamp: {
       type: Number,

@@ -11,6 +11,15 @@ declare global {
     | readonly CanJSON[]
     | { readonly [key: string]: CanJSON }
     | { toJSON(): CanJSON };
+  enum Days {
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY,
+  }
 }
 
 export {};
@@ -26,7 +35,11 @@ export interface IQueueMessage {
   type: string;
   role: string | null;
   thread: boolean;
+  premium: number;
+  autoPin: boolean;
   webhook: {
+    avatar: string;
+    name: string;
     id: string | null;
     token: string | null;
   };

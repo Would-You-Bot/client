@@ -7,6 +7,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "replayDeleteChannels",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     if (guildDb.replayChannels.length <= 0) {
       interaction.reply({

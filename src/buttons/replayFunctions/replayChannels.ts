@@ -8,6 +8,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "replayChannels",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     if (guildDb.replayChannels.length >= 15) {
       interaction.reply({
