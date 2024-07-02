@@ -62,8 +62,8 @@
       "import": {
         "att1": "Vous devez fournir un fichier JSON valide !",
         "att2": "Vous devez fournir un fichier JSON valide !",
-        "att3": "Le fichier JSON que vous avez fourni n'a aucune donnée ! Exemple: [ici](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
-        "att4": "Le JSON que vous avez fourni ne contient pas de messages personnalisés ! Exemple: [ici](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att3": "Le fichier JSON que vous avez fourni n'a aucune donnée ! Exemple: [ici](https://i.imgur.com/glkbKrL.png)",
+        "att4": "Le JSON que tu as fourni ne contenait pas de messages personnalisés ou en manquait ! Exemple : [ici](https://i.imgur.com/glkbKrL.png)",
         "att5": "Le JSON que vous avez fourni ne contient pas de messages personnalisés ! Exemple: [ici](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att15": "Une erreur s'est produite lors de l'exécution de cette commande, veuillez la signaler au serveur de support s'il vous plait !",
         "att16": "Le JSON que vous avez fourni a trop de données pour la catégorie \"wouldyourather\", nous n'acceptons que 30 messages personnalisés au maximum. Vous pouvez en gagner plus en votant pour le bot !",
@@ -126,7 +126,7 @@
   "Custom": {
     "embed": {
       "title": "Voulez-vous cette puissance ?",
-      "footer": "Voulez-vous"
+      "footer": "Would You"
     }
   },
   "WouldYou": {
@@ -151,7 +151,7 @@
     },
     "button": {
       "discord": "Would You Support",
-      "invite": "Invite Would You",
+      "invite": "Would You Invite",
       "commands": "Voir les commandes",
       "help": "Voir l'aide"
     }
@@ -176,7 +176,7 @@
       "disabled": "La relecture sur ce serveur est actuellement désactivée !"
     },
     "button": {
-      "nocustom": "Il n'y a actuellement aucun message personnalisé à afficher ! Soit faites un peu ou changez le type en utilisant /Would You"
+      "nocustom": "Il n'y a actuellement aucun message personnalisé à afficher ! Soit faites un peu ou changez le type en utilisant /type"
     }
   },
   "REPLAY": {
@@ -217,13 +217,13 @@
     "errorSame": "Le fuseau horaire fourni est le même fuseau horaire que celui déjà défini. Assurez-vous de choisir un autre fuseau horaire.",
     "errorInvalid": "Le fuseau horaire fourni est invalide, vous pouvez choisir un fuseau horaire valide sur ce [sélecteur de fuseau horaire](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "L'heure de publication indiquée est la même que celle déjà définie. Assure-toi de choisir une autre heure de publication.",
-    "intervalInvalid": "L'heure de publication indiquée n'était pas valide. Assure-toi que ton heure de publication est au format 24h et se termine soit par 00 soit par 30 !",
+    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or an interval of 5!",
     "dailyChannel": "Sélectionnez le channel où vous voulez que les messages quotidiens soient postés !",
     "replayChannel": "Sélectionnez un salon auquel vous souhaitez ajouter un temps de recharge !",
     "replayChannelNone": "Vous n'avez défini aucun salon de rediffusion !",
-    "replayCooldownMin": "Le temps de recharge est trop court, assurez-vous qu'il soit supérieur à 2 secondes !",
+    "replayCooldownMin": "Provided cooldown is too short, make sure cooldowns are above 2 seconds!",
     "replayDelete": "Sélectionnez un salon pour lequel vous souhaitez supprimer un temps de recharge de rediffusion !",
-    "cooldownTooLong": "Le temps de recharge fourni était trop long. Assurez-vous que le temps de recharge est inférieur à 6 heures (21,600 secondes) !",
+    "cooldownTooLong": "Provided cooldown was too long. Make sure the cooldown is less than 6 hours (21,600 seconds)!",
     "replayChannelLimit": "Vous ne pouvez ajouter que 15 salons au temps de recharge de la rediffusion !",
     "dailyType": "Sélectionnez un type de message quotidien que vous souhaitez recevoir !",
     "welcomeType": "Sélectionnez un type de message de bienvenue que vous souhaitez envoyer !",
@@ -232,11 +232,14 @@
     "voteSame": "Le temps de récupération de vote fourni est le même que celui déjà défini. Assurez-vous de choisir un autre temps de recharge.",
     "cooldownInvalid": "Le temps de recharge fourni n'est pas valide. Assurez-vous que le temps de recharge ne comprend que des chiffres !",
     "welcomeTestSuccess": "Ceci est un message test qui illustre les messages de bienvenue.",
+    "premium": "To access this feature you will need to subscribe to [Would You Premium](https://wouldyoubot.gg/premium)",
+    "invalidLink": "Please provide a valid PNG, JPG (JPEG), WEBP or GIF Discord attachment to set as the bot's avatar.",
+    "daysSelection": "Select every day you **don't** want daily messages to be on.",
     "embed": {
       "generalTitle": "Would You - Paramètres généraux",
       "replayCooldown": "**Rejouer le temps de recharge**",
       "replayType": "**Type de rediffusion**",
-      "replayBy": "**Rejouer le temps de rechargement par**",
+      "replayBy": "**Rejouer le temps de refroidissement par**",
       "replayBy1": "• Chaque utilisateur dispose d'un temps de recharge personnel.",
       "replayBy2": "• Tout le serveur a un seul temps de recharge.",
       "replayChannels": "**Salon de rediffusion**",
@@ -247,16 +250,20 @@
       "dailyMsg": "**Activé**",
       "dailyRole": "**Rôle**",
       "dailyChannel": "**Canal**",
-      "dailyTimezone": "**Timezone**",
+      "dailyTimezone": "**Fuseau horaire**",
       "dailyThread": "**Fils**",
       "welcomeTitle": "Would You - Bienvenus",
       "welcome": "**Activé**",
       "welcomeChannel": "**Canal**",
       "welcomePing": "**Pings de l'utilisateur**",
       "footer": "Voulez-vous",
-      "error": "Vous avez besoin de la permission `Gérer le serveur` pour utiliser cette commande!"
+      "error": "Vous avez besoin de la permission `Gérer le serveur` pour utiliser cette commande!",
+      "username": "<:crown:1256988872160710808> **QOTD Username**",
+      "avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
+      "classicMode": "**Classic Mode **"
     },
     "button": {
+      "daySelect": "Exclude Days",
       "dailyInterval": "Définir l'heure de publication",
       "dailyChannel": "Définir le salon",
       "dailyRole": "Définir le rôle",
@@ -268,14 +275,26 @@
       "replayCooldown": "Définir le cooldown de la relecture",
       "replayDeleteChannels": "Supprimer les salons de rediffusion",
       "replayType": "Type de rediffusion",
-      "replayBy": "Rejoué par",
+      "replayBy": "Rejouer par",
       "welcomeChannel": "Définir le salon",
       "welcome": "Activer/désactiver les accueils",
-      "welcomePing": "Activer/désactiver le ping de l'utilisateur"
+      "welcomePing": "Activer/désactiver le ping de l'utilisateur",
+      "avatar": "Set Avatar",
+      "name": "Set Username",
+      "classicMode": "Toggle Classic Mode"
     },
     "modal": {
       "dailyIntervalTitle": "Heure de publication quotidienne",
       "dailyIntervalDescription": "Quand le message doit-il être publié? (HH:MM)"
+    },
+    "select": {
+      "monday": "Lundi",
+      "tuesday": "Mardi",
+      "wednesday": "Mercredi",
+      "thursday": "Jeudi",
+      "friday": "Vendredi",
+      "saturday": "Samedi",
+      "sunday": "Dimanche"
     }
   },
   "Debug": {
@@ -299,7 +318,7 @@
       "sendMessages": "Je ne peux **pas** envoyer des messages dans ce salon.",
       "viewChannel": "Je ne peux **pas** voir ce salon.",
       "readMessageHistory": "Je ne peux **pas** lire l'historique des messages dans ce salon.",
-      "global": "Global",
+      "global": "Général",
       "g_manageWebhooks": "Je ne peux **pas** gérer les webhooks de ce serveur.",
       "g_embedLinks": "Je ne peux **pas** envoyer d'embeds dans ce serveur.",
       "g_sendMessages": "Je ne peux **pas** envoyer de messages dans ce serveur.",

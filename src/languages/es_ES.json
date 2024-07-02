@@ -1,7 +1,7 @@
 {
   "Ping": {
     "embed": {
-      "title": "🏓 Pong!",
+      "title": "🏓 ¡Pong!",
       "api": "Latencia de la API",
       "client": "Latencia del cliente",
       "footer": "Would You"
@@ -62,8 +62,8 @@
       "import": {
         "att1": "¡Debes proporcionar un archivo JSON válido!",
         "att2": "¡Debes proporcionar un archivo JSON válido!",
-        "att3": "¡El JSON que proporcionaste no tenía ningún dato! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
-        "att4": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att3": "¡El JSON que proporcionaste no tenía ningún dato! Ejemplo: [here](https://i.imgur.com/glkbKrL.png)",
+        "att4": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado o faltaba alguno! Ejemplo: [aquí](https://i.imgur.com/glkbKrL.png)",
         "att5": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att15": "Se produjo un error al ejecutar este comando, por favor infórmelo al servidor de soporte.",
         "att16": "El JSON que proporcionaste tenía demasiados datos para la categoría wouldyourather, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
@@ -169,14 +169,14 @@
       "uselessname2": "o",
       "usefulname": "Would you rather",
       "usefulname2": "o",
-      "footer": "Would You Rather",
+      "footer": "Prefieres",
       "thispower": "Según la votación, la mayoría de los usuarios preferirían:"
     },
     "replays": {
       "disabled": "¡Volver a jugar está actualmente deshabilitado en este servidor!"
     },
     "button": {
-      "nocustom": "¡Actualmente no hay mensajes personalizados! Haga algunos o cambie el tipo usando /Would You type"
+      "nocustom": "There's currently no custom Would You messages to be displayed! Either make some or change the type using /type"
     }
   },
   "REPLAY": {
@@ -217,13 +217,13 @@
     "errorSame": "La zona horaria proporcionada es la misma zona horaria que ya está definida. Asegúrese de elegir una zona horaria diferente.",
     "errorInvalid": "La zona horaria proporcionada no es válida, puedes elegir una zona horaria válida aquí: [Selector de Zona Horaria](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "La hora de publicación especificada es la misma que la ya establecida. Asegúrese de elegir una hora de publicación diferente.",
-    "intervalInvalid": "La hora de publicación especificada no es válida. Asegúrese de que la hora de publicación está en formato de 24 horas y termina en 00 o 30!",
+    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or an interval of 5!",
     "dailyChannel": "¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!",
     "replayChannel": "Selecciona un canal al que quieras añadir un enfriamiento por repetición!",
     "replayChannelNone": "¡No tienes ningún canal de repetición configurado!",
-    "replayCooldownMin": "El Enfriamiento proporcionado es demasiado corto, ¡asegúrate de que los Enfriamientos sean superiores a 2 segundos!",
+    "replayCooldownMin": "Provided cooldown is too short, make sure cooldowns are above 2 seconds!",
     "replayDelete": "Selecciona un canal del que quieras eliminar el enfriamiento por repetición",
-    "cooldownTooLong": "El enfriamiento proporcionado era demasiado largo. ¡Asegúrate de que el enfriamiento es inferior a 6 horas (21,600 segundos)!",
+    "cooldownTooLong": "Provided cooldown was too long. Make sure the cooldown is less than 6 hours (21,600 seconds)!",
     "replayChannelLimit": "¡Sólo puedes añadir 15 canales al enfriamiento de la repetición!",
     "dailyType": "¡Selecciona un tipo de mensaje diario que quieres enviar!",
     "welcomeType": "Selecciona el tipo de Mensaje de Bienvenida que quieres que te envíen.",
@@ -232,6 +232,9 @@
     "voteSame": "El tiempo de espera de votación proporcionado es el mismo tiempo de espera que ya está establecido. Asegúrese de elegir un tiempo de espera diferente.",
     "cooldownInvalid": "El tiempo de reutilización proporcionado no es válido. ¡Asegúrese de que el tiempo de reutilización solo incluye números!",
     "welcomeTestSuccess": "Este es un mensaje de prueba de cómo son los mensajes de bienvenida.",
+    "premium": "To access this feature you will need to subscribe to [Would You Premium](https://wouldyoubot.gg/premium)",
+    "invalidLink": "Please provide a valid PNG, JPG (JPEG), WEBP or GIF Discord attachment to set as the bot's avatar.",
+    "daysSelection": "Select every day you **don't** want daily messages to be on.",
     "embed": {
       "generalTitle": "Would You - Configuración general",
       "replayCooldown": "**Tiempo de Repetición**",
@@ -254,9 +257,13 @@
       "welcomeChannel": "**Canal**",
       "welcomePing": "**Pings de usuario**",
       "footer": "Would You",
-      "error": "¡Te falta el permiso `Manage guild` para usar este comando!"
+      "error": "¡Te falta el permiso `Manage guild` para usar este comando!",
+      "username": "<:crown:1256988872160710808> **QOTD Username**",
+      "avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
+      "classicMode": "**Classic Mode **"
     },
     "button": {
+      "daySelect": "Exclude Days",
       "dailyInterval": "Fijar la hora de publicación",
       "dailyChannel": "Establecer canal",
       "dailyRole": "Establecer rol",
@@ -271,11 +278,23 @@
       "replayBy": "Reproducir por",
       "welcomeChannel": "Establecer canal",
       "welcome": "Alternar Bienvenidas",
-      "welcomePing": "Alternar ping de usuario"
+      "welcomePing": "Alternar ping de usuario",
+      "avatar": "Set Avatar",
+      "name": "Set Username",
+      "classicMode": "Toggle Classic Mode"
     },
     "modal": {
       "dailyIntervalTitle": "Hora de publicación diaria",
       "dailyIntervalDescription": "¿Cuándo debe publicarse el mensaje? (HH:MM)"
+    },
+    "select": {
+      "monday": "Lunes",
+      "tuesday": "Martes",
+      "wednesday": "Miércoles",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado",
+      "sunday": "Domingo"
     }
   },
   "Debug": {

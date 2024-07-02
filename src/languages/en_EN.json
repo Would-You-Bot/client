@@ -176,7 +176,7 @@
       "disabled": "Replaying in this server is currently disabled!"
     },
     "button": {
-      "nocustom": "There's currently no custom Would You messages to be displayed! Either make some or change the type using /Would You type"
+      "nocustom": "There's currently no custom Would You messages to be displayed! Either make some or change the type using /type"
     }
   },
   "REPLAY": {
@@ -217,7 +217,7 @@
     "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
     "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "The provided post time is the same post time that is already set. Make sure to choose a different post time.",
-    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or 30!",
+    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or an interval of 5!",
     "dailyChannel": "Select a channel where you want Daily Messages to be!",
     "replayChannel": "Select a channel that you want to add a replay cooldown to!",
     "replayChannelNone": "You don't have any replay channels set!",
@@ -233,7 +233,7 @@
     "cooldownInvalid": "Provided cooldown was invalid. Make sure the cooldown only includes numbers!",
     "welcomeTestSuccess": "This is a test message of what welcome messages look like.",
     "premium": "To access this feature you will need to subscribe to [Would You Premium](https://wouldyoubot.gg/premium)",
-    "invalidLink": "Please provide a valid PNG, JPG (JPEG), or GIF Discord attachment to set as the bot's avatar.",
+    "invalidLink": "Please provide a valid PNG, JPG (JPEG), WEBP or GIF Discord attachment to set as the bot's avatar.",
     "daysSelection": "Select every day you **don't** want daily messages to be on.",
     "embed": {
       "generalTitle": "Would You - General Settings",
@@ -287,7 +287,7 @@
       "dailyIntervalTitle": "Daily Post Time",
       "dailyIntervalDescription": "When should the message be posted? (HH:MM)"
     },
-     "select": {
+    "select": {
       "monday": "Monday",
       "tuesday": "Tuesday",
       "wednesday": "Wednesday",

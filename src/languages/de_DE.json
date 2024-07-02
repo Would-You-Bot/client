@@ -58,12 +58,12 @@
       "paginate": "Du kannst nichmehr weiter gehen :(",
       "maximum": "Du hast die maximale Anzahl an benutzerdefinierten Nachrichten erreicht. Du kannst mehr hinzufügen wenn du für den bot votest!",
       "empty": "Es gibt keine benutzerdefinierten nachrichten in diesem server!",
-      "limit": "Du hast über 100 {type} in deinen benutzerdefinierten Nachrichten. Wenn du mehr hinzufügen möchtest, musst du Premium abonnieren.",
+      "limit": "Du hast mehr als 100 {type} in deinen benutzerdefinierten Nachrichten. Wenn du mehr hinzufügen möchtest, musst du Premium abonnieren.",
       "import": {
         "att1": "Du musst eine JSON datei anheften!",
         "att2": "Du musst eine JSON Datei anheften!",
-        "att3": "Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
-        "att4": "Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att3": "Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [here](https://i.imgur.com/glkbKrL.png)",
+        "att4": "Das JSON, das du bereitgestellt hast, enthielt keine oder fehlende benutzerdefinierte Nachrichten! Beispiel: [hier](https://i.imgur.com/glkbKrL.png)",
         "att5": "Die JSON Datei beinhaltet keine Nachrichten. Beispiel: [hier](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att15": "Bei der Ausführung dieses Befehls ist ein Fehler aufgetreten. Bitte melde ihn dem Support-Server!",
         "att16": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die wouldyourather Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
@@ -147,7 +147,7 @@
   },
   "Help": {
     "embed": {
-      "description": "## Was ist Would You? \n\n **Would You** ist ein Bot, der dir ermöglicht, mit deinen Freunden auf Discord Spiele zu spielen und dabei Spaß zu haben und sich gegenseitig kennenzulernen. \n## Hauptspielmodi \n Die Spielmodi von <:roundyou:1009964111045607525> **Would You** umfassen </wouldyourather:{wouldyourather}>, </neverhaveiever:{neverhaveiever}>, </whatwouldyoudo:{whatwouldyoudo}>, </higherlower:{higherlower}> und zu guter Letzt gibt es </truth:{truth}> oder </dare:{dare}>! \n## Konfiguriere den Bot \n Mit den **/settings** Befehlen kannst du die **Cooldowns** der Buttons ändern, die **Frage des Tages** oder die**Willkommens Nachrichten** aktivieren oder deaktivieren. \n## Privatsphäre \n Wenn du nicht in den Bestenlisten oder Abstimmungen auftauchen willst. Du kannst deine Privatsphäre-Einstellungen mit </privacy:{privacy}> anpassen. Um herauszufinden, welche Daten wir speichern, besuche unsere [**Datenschutzrichtlinie**](https://wouldyoubot.gg/privacy)"
+      "description": "## Was ist Would You? \n\n **Would You** ist ein Bot, der dir ermöglicht, mit deinen Freunden auf Discord Spiele zu spielen, dabei Spaß zu haben und sich gegenseitig kennenzulernen. \n## Hauptspielmodi \n Die Spielmodi von <:roundyou:1009964111045607525> **Would You** umfassen </wouldyourather:{wouldyourather}>, </neverhaveiever:{neverhaveiever}>, </whatwouldyoudo:{whatwouldyoudo}>, </higherlower:{higherlower}> und zu guter Letzt gibt es </truth:{truth}> oder </dare:{dare}>! \n## Konfiguriere den Bot \n Mit den **/settings** Befehlen kannst du die **Cooldowns** der Buttons ändern, die **Frage des Tages** oder die**Willkommens Nachrichten** aktivieren oder deaktivieren. \n## Privatsphäre \n Wenn du nicht in den Bestenlisten oder Abstimmungen auftauchen willst. Du kannst deine Privatsphäre-Einstellungen mit </privacy:{privacy}> anpassen. Um herauszufinden, welche Daten wir speichern, besuche unsere [**Datenschutzerklärung**](https://wouldyoubot.gg/privacy)"
     },
     "button": {
       "discord": "Would You Support",
@@ -176,7 +176,7 @@
       "disabled": "Wiederholungen sind in diesem Server momentan deaktiviert!"
     },
     "button": {
-      "nocustom": "Es gibt momentan keine benutzerdefinierten Would You Nachrichten, die angezeigt werden könnten. Mache welche oder ändere den Typen mit /WouldYou typ"
+      "nocustom": "Es gibt momentan keine benutzerdefinierten Would You Nachrichten, die angezeigt werden könnten. Erstelle welche oder ändere den Typen mit /type"
     }
   },
   "REPLAY": {
@@ -217,13 +217,13 @@
     "errorSame": "Die gegebene Zeitzone ist die gleiche Zeitzone, die schon gesetzt ist. Stelle sicher, dass du eine andere Zeitzone wählst.",
     "errorInvalid": "Die gegebene Zeitzone ist ungültig, du kannst eine gültige Zeitzone von diesen auswählen [Zeitzonenwähler](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "Die angegebene Veröffentlichungszeit ist die gleiche wie die bereits gesetzte. Stelle sicher, dass du einen andere Veröffentlichungszeit wählst.",
-    "intervalInvalid": "Die angegebene Veröffentlichungszeit war ungültig. Stelle sicher, dass deine Veröffentlichungszeit im 24h-Format ist und entweder mit 00 oder 30 endet!",
+    "intervalInvalid": "Die angegebene Veröffentlichungszeit war ungültig. Stelle sicher, dass deine Veröffentlichungszeit im 24h-Format ist und entweder mit 00 oder einem 5-Minuten-Intervall endet!",
     "dailyChannel": "Wähle einen Kanal, in dem du tägliche Nachrichten haben möchtest!",
     "replayChannel": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
     "replayChannelNone": "Du hast keine Replay-Kanäle gesetzt!",
-    "replayCooldownMin": "Die Abklingzeit ist zu kurz, stelle sicher, dass die Abklingzeit über 2 Sekunden liegt!",
+    "replayCooldownMin": "Der Cooldown ist zu kurz, stelle sicher, dass der Cooldown über 2 Sekunden liegt!",
     "replayDelete": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
-    "cooldownTooLong": "Die Abklingzeit ist zu lang, stelle sicher, dass die Abklingzeit nicht über 6 stunden liegt! (21,600 Sekunden)!",
+    "cooldownTooLong": "Der Cooldown ist zu lang, stelle sicher, dass der Cooldown nicht über 6 stunden liegt! (21,600 Millisekunden)!",
     "replayChannelLimit": "Du kannst dem Cooldown nur 15 Kanäle hinzufügen!",
     "dailyType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",
     "welcomeType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",
@@ -232,6 +232,9 @@
     "voteSame": "Die angegebene vote Cooldown ist derselbe Cooldown, der bereits gesetzt ist. Stelle sicher, dass du einen andere Cooldown wählst.",
     "cooldownInvalid": "Der Cooldown ist ungültig. Stelle sicher, dass der Cooldown nur Zahlen enthält!",
     "welcomeTestSuccess": "Dies ist eine Testnachricht, die zeigt, wie Willkommensnachrichten aussehen.",
+    "premium": "Um auf diese Funktion zuzugreifen, musst du ein [Would You Premium](https://wouldyoubot.gg/premium) Abo abschließen",
+    "invalidLink": "Bitte gib einen gültigen PNG, JPG (JPEG), WEBP oder GIF Discord Anhang an, um ihn als Avatar des Bots festzulegen.",
+    "daysSelection": "Wähle jeden Tag aus, an dem du **nicht** möchtest, dass tägliche Nachrichten gesendet werden.",
     "embed": {
       "generalTitle": "Would You - Generelle Einstellungen",
       "replayCooldown": "**Replay Cooldown**",
@@ -254,9 +257,13 @@
       "welcomeChannel": "**Kanal**",
       "welcomePing": "**Benutzer Pings**",
       "footer": "Would You",
-      "error": "Dir fehlen die `Manage Guild` rechte um diesen Befehl auszuführen!"
+      "error": "Dir fehlen die `Manage Guild` rechte um diesen Befehl auszuführen!",
+      "username": "<:crown:1256988872160710808> **QOTD Nutzername**",
+      "avatar": "<:crown:1256988872160710808> **QOTD Profilbild**",
+      "classicMode": "**Klassik Modus **"
     },
     "button": {
+      "daySelect": "Tage ausschließen",
       "dailyInterval": "Veröffentlichungszeit festlegen",
       "dailyChannel": "Kanal setzen",
       "dailyRole": "Rolle setzen",
@@ -271,11 +278,23 @@
       "replayBy": "Wiedergeben von",
       "welcomeChannel": "Kanal setzen",
       "welcome": "Begrüßungsnachrichten einstellen",
-      "welcomePing": "Nutzer ping einstellen"
+      "welcomePing": "Nutzer ping einstellen",
+      "avatar": "Avatar festlegen",
+      "name": "Benutzername festlegen",
+      "classicMode": "Klassik Modus umschalten"
     },
     "modal": {
       "dailyIntervalTitle": "Tägliche Veröffentlichungszeit",
       "dailyIntervalDescription": "Wann sollen wir die Nachricht senden? (HH:MM)"
+    },
+    "select": {
+      "monday": "Montag",
+      "tuesday": "Dienstag",
+      "wednesday": "Mittwoch",
+      "thursday": "Donnerstag",
+      "friday": "Freitag",
+      "saturday": "Samstag",
+      "sunday": "Sonntag"
     }
   },
   "Debug": {
