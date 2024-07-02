@@ -140,9 +140,7 @@ const command: ChatInputCommand = {
             const premiumButton =
               new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
                 new ButtonBuilder()
-                  .setLabel(
-                    client.translation.get(guildDb?.language, "Premium.tiers"),
-                  )
+                  .setLabel("Premium")
                   .setStyle(ButtonStyle.Link)
                   .setURL("https://wouldyoubot.gg/premium"),
               );
@@ -150,7 +148,7 @@ const command: ChatInputCommand = {
               content: `:x: ${client.translation.get(
                 guildDb?.language,
                 "wyCustom.error.limit",
-                { type: `'${option}'` },
+                { type: `\`${option}\`` },
               )}`,
               components: [premiumButton],
               ephemeral: true,
@@ -295,6 +293,7 @@ const command: ChatInputCommand = {
               }, 30 * 1000),
             )
             .catch((err) => {
+              console.log(err);
               captureException(err);
             });
           return;
@@ -710,10 +709,22 @@ const command: ChatInputCommand = {
                 return;
               }
 
+              const all = [];
               for (const key in response.data) {
                 if (!response.data.hasOwnProperty(key)) continue;
                 if (
-                  !(await client.premium.check(interaction.guildId)) &&
+                  guildDb.customMessages.filter((e) => e.type === key).length +
+                    response.data[key].length >
+                  100
+                )
+                  all.push(key);
+              }
+
+              for (const key in response.data) {
+                if (!response.data.hasOwnProperty(key)) continue;
+
+                if (
+                  !(await client.premium.check(interaction.guildId)).result &&
                   guildDb.customMessages.filter((e) => e.type === key).length +
                     response.data[key].length >
                     100
@@ -725,11 +736,15 @@ const command: ChatInputCommand = {
                         .setStyle(ButtonStyle.Link)
                         .setURL("https://wouldyoubot.gg/premium"),
                     );
-                  return interaction.editReply({
+
+                  interaction.editReply({
                     content: `:x: ${client.translation.get(
                       guildDb?.language,
                       "wyCustom.error.limit",
-                      { type: `'${key}'` },
+                      { type: all.map((e) => `\`${e}\``).join(", ") },
+                    )}\n\n${client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.error.addToLimit",
                     )}`,
                     components: [premiumButton],
                   });
@@ -737,7 +752,12 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.wouldyourather) {
-                response.data.wouldyourather.map((d: any) => {
+                let i = guildDb.customMessages.filter(
+                  (e) => e.type === "wouldyourather",
+                ).length;
+                response.data.wouldyourather.map((d: string) => {
+                  if (i === 100) return;
+                  else i++;
                   let newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
@@ -748,7 +768,12 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.truth) {
-                response.data.truth.map((d: any) => {
+                let i = guildDb.customMessages.filter(
+                  (e) => e.type === "truth",
+                ).length;
+                response.data.truth.map((d: string) => {
+                  if (i === 100) return;
+                  else i++;
                   let newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
@@ -759,7 +784,12 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.dare) {
-                response.data.dare.map((d: any) => {
+                let i = guildDb.customMessages.filter(
+                  (e) => e.type === "dare",
+                ).length;
+                response.data.dare.map((d: string) => {
+                  if (i === 100) return;
+                  else i++;
                   let newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
@@ -770,7 +800,13 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.neverhaveiever) {
-                response.data.neverhaveiever.map((d: any) => {
+                let i = guildDb.customMessages.filter(
+                  (e) => e.type === "neverhaveiever",
+                ).length;
+                response.data.neverhaveiever.map((d: string) => {
+                  if (i === 100) return;
+                  else i++;
+
                   let newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
@@ -781,7 +817,13 @@ const command: ChatInputCommand = {
               }
 
               if (response.data.wwyd) {
-                response.data.wwyd.map((d: any) => {
+                let i = guildDb.customMessages.filter(
+                  (e) => e.type === "wwyd",
+                ).length;
+                response.data.wwyd.map((d: string) => {
+                  if (i === 100) return;
+                  else i++;
+
                   let newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
@@ -800,6 +842,7 @@ const command: ChatInputCommand = {
                 true,
               );
 
+              if (all.length > 0) return;
               interaction.editReply({
                 options: {
                   ephemeral: true,

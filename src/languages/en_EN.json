@@ -59,6 +59,7 @@
       "maximum": "You've reached the maximum amount of custom messages. You can gain more by voting for the bot!",
       "empty": "There currently is no custom Would You messages to view!",
       "limit": "You have over 100 {type} in your custom messages. If you would like to add more, you will have to subscribe to a premium tier.",
+      "addToLimit": "The first 100 questions for all categories have been automatically added.",
       "import": {
         "att1": "You need to provide a valid JSON file!",
         "att2": "You need to provide a valid JSON file!",
