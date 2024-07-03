@@ -45,6 +45,10 @@ export default async function settingsGeneral(
         )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}\n` +
         `${client.translation.get(
           guildDb?.language,
+          "Settings.embed.autoPin",
+        )}: ${guildDb.autoPin ? ":white_check_mark:" : ":x:"}\n` +
+        `${client.translation.get(
+          guildDb?.language,
           "Settings.embed.dailyMsg",
         )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
     )
@@ -117,17 +121,17 @@ export default async function settingsGeneral(
         )
         .setStyle(
           guildDb.dailyInterval ? ButtonStyle.Success : ButtonStyle.Secondary,
-      ),
+        ),
       new ButtonBuilder()
-            .setCustomId("daySelection")
-            .setEmoji("1220826970133368842")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.daySelect",
-              ),
-            )
-            .setStyle(ButtonStyle.Success),
+        .setCustomId("daySelection")
+        .setEmoji("1220826970133368842")
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.daySelect",
+          ),
+        )
+        .setStyle(ButtonStyle.Success),
     );
 
   // Third button row
@@ -145,6 +149,15 @@ export default async function settingsGeneral(
         )
         .setStyle(
           guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary,
+        ),
+      new ButtonBuilder()
+        .setCustomId("autoPin")
+        .setEmoji("1189521962318450698")
+        .setLabel(
+          client.translation.get(guildDb?.language, "Settings.button.autoPin"),
+        )
+        .setStyle(
+          guildDb.autoPin ? ButtonStyle.Success : ButtonStyle.Secondary,
         ),
       new ButtonBuilder()
         .setCustomId("dailyMsg")

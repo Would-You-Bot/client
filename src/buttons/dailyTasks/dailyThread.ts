@@ -43,6 +43,10 @@ const button: Button = {
           )}: ${check ? ":x:" : ":white_check_mark:"}\n` +
           `${client.translation.get(
             guildDb?.language,
+            "Settings.embed.autoPin",
+          )}: ${guildDb.autoPin ? ":white_check_mark:" : ":x:"}\n` +
+          `${client.translation.get(
+            guildDb?.language,
             "Settings.embed.dailyMsg",
           )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
       )
@@ -116,7 +120,7 @@ const button: Button = {
               guildDb.dailyInterval
                 ? ButtonStyle.Success
                 : ButtonStyle.Secondary,
-          ),
+            ),
           new ButtonBuilder()
             .setCustomId("daySelection")
             .setEmoji("1220826970133368842")
@@ -140,6 +144,18 @@ const button: Button = {
               ),
             )
             .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success),
+          new ButtonBuilder()
+            .setCustomId("autoPin")
+            .setEmoji("1189521962318450698")
+            .setLabel(
+              client.translation.get(
+                guildDb?.language,
+                "Settings.button.autoPin",
+              ),
+            )
+            .setStyle(
+              guildDb.autoPin ? ButtonStyle.Success : ButtonStyle.Secondary,
+            ),
           new ButtonBuilder()
             .setCustomId("dailyMsg")
             .setEmoji("1185973660465500180")

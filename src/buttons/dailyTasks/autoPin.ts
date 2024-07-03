@@ -8,11 +8,11 @@ import {
 import { Button } from "../../interfaces";
 
 const button: Button = {
-  name: "selectMenuRole",
+  name: "autoPin",
   cooldown: false,
-  execute: async (interaction: any, client, guildDb) => {
-    const newRole = interaction.values[0];
-    const dailyMsgs = new EmbedBuilder()
+  execute: async (interaction, client, guildDb) => {
+    const check = guildDb.autoPin;
+    const autoPin = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.dailyTitle"),
       )
@@ -24,7 +24,7 @@ const button: Button = {
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyRole",
-          )}: <@&${newRole}>\n` +
+          )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyType",
@@ -44,14 +44,14 @@ const button: Button = {
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.autoPin",
-          )}: ${guildDb.autoPin ? ":white_check_mark:" : ":x:"}\n` +
+          )}: ${check ? ":x:" : ":white_check_mark:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyMsg",
           )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
       )
-
       .setColor("#0598F6");
+
     const dailyButtons =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
           new ButtonBuilder()
@@ -77,7 +77,9 @@ const button: Button = {
                 "Settings.button.dailyRole",
               ),
             )
-            .setStyle(ButtonStyle.Primary),
+            .setStyle(
+              guildDb.dailyRole ? ButtonStyle.Primary : ButtonStyle.Secondary,
+            ),
           new ButtonBuilder()
             .setCustomId("dailyType")
             .setEmoji("1185973664538177557")
@@ -154,7 +156,7 @@ const button: Button = {
               ),
             )
             .setStyle(
-              guildDb.autoPin ? ButtonStyle.Success : ButtonStyle.Secondary,
+              guildDb.autoPin ? ButtonStyle.Secondary : ButtonStyle.Success,
             ),
           new ButtonBuilder()
             .setCustomId("dailyMsg")
@@ -170,16 +172,18 @@ const button: Button = {
             ),
         );
 
-    await client.database.updateGuild(interaction.guild.id, {
+    await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
-      dailyRole: newRole,
+      autoPin: !guildDb.autoPin,
     });
 
     interaction.update({
       content: null,
-      embeds: [dailyMsgs],
+      embeds: [autoPin],
       components: [dailyButtons, dailyButtons2, dailyButtons3],
-      ephemeral: true,
+      options: {
+        ephemeral: true,
+      },
     });
     return;
   },
