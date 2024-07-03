@@ -101,7 +101,8 @@ const button: Button = {
       : { embeds: [nhieEmbed], components: [row, mainRow] };
 
     interaction
-      .reply(classicData).then(async (msg: any) => {
+      .reply(classicData)
+      .then(async (msg: any) => {
         if (!guildDb.classicMode) return;
         msg.react(":white_check_mark:"), msg.react(":x:");
       })

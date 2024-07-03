@@ -6,6 +6,8 @@ import {
   EmbedBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
+import { R2 } from "node-cloudflare-r2";
+import { v4 as uuid } from "uuid";
 import { Button } from "../../interfaces";
 
 const modalObject = {
@@ -132,9 +134,39 @@ const button: Button = {
                 ),
             );
 
+          console.log(value);
+
+          async function getImageData() {
+            return fetch(value)
+              .then((response) => response.arrayBuffer())
+              .then((buffer) => new Uint8Array(buffer));
+          }
+
+          const r2 = new R2({
+            accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
+            accessKeyId: process.env.CLOUDFLARE_ACCESS_KEY_ID!,
+            secretAccessKey: process.env.CLOUDFLARE_SECRET_ACCESS_KEY!,
+          });
+
+          const bucket = r2.bucket("would-you");
+          const image = await getImageData();
+          const upload = await bucket.upload(
+            image,
+            guildDb.guildID + "-" + uuid(),
+            undefined,
+            "image",
+          );
+
+          if (!upload.objectKey) {
+            return interaction.reply({
+              content: "An error occurred while uploading the image",
+              ephemeral: true,
+            });
+          }
+
           await client.database.updateGuild(interaction.guild?.id || "", {
             ...guildDb,
-            webhookAvatar: value,
+            webhookAvatar: "https://bucket.wouldyoubot.gg/" + upload.objectKey,
           });
 
           await (modalInteraction as any).update({

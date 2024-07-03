@@ -77,11 +77,9 @@ const command: ChatInputCommand = {
       ? { content: WWYD.question }
       : { embeds: [wwydEmbed], components: [row] };
 
-    interaction
-      .reply(classicData)
-      .catch((err) => {
-        captureException(err);
-      });
+    interaction.reply(classicData).catch((err) => {
+      captureException(err);
+    });
   },
 };
 

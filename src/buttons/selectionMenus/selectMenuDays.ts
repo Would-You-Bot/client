@@ -1,15 +1,15 @@
 import {
-  ButtonBuilder,
   ActionRowBuilder,
-  EmbedBuilder,
+  ButtonBuilder,
   ButtonStyle,
+  EmbedBuilder,
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { Button } from "../../interfaces";
 
 const button: Button = {
-    name: "selectMenuDays",
-    cooldown: false,
+  name: "selectMenuDays",
+  cooldown: false,
   execute: async (interaction: any, client, guildDb) => {
     const data = interaction.values;
 

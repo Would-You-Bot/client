@@ -90,14 +90,11 @@ const button: Button = {
 
     const classicData: InteractionReplyOptions = guildDb.classicMode
       ? { content: WWYD.question, fetchReply: true }
-      : { embeds: [wwydEmbed],
-        components: [row], };
+      : { embeds: [wwydEmbed], components: [row] };
 
-    interaction
-      .reply(classicData)
-      .catch((err: Error) => {
-        captureException(err);
-      });
+    interaction.reply(classicData).catch((err: Error) => {
+      captureException(err);
+    });
     return;
   },
 };

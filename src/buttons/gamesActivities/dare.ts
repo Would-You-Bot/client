@@ -91,14 +91,12 @@ const button: Button = {
     ]);
 
     const classicData: InteractionReplyOptions = guildDb.classicMode
-    ? { content: DARE.question }
-    : { embeds: [dareEmbed], components: components };
+      ? { content: DARE.question }
+      : { embeds: [dareEmbed], components: components };
 
-    interaction
-      .reply(classicData)
-      .catch((err: Error) => {
-        captureException(err);
-      });
+    interaction.reply(classicData).catch((err: Error) => {
+      captureException(err);
+    });
   },
 };
 

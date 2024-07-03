@@ -38,9 +38,7 @@ export default class WebhookHandler {
     content: WebhookMessageCreateOptions,
     message: IQueueMessage,
     overwriteProfile: boolean,
-    thread?: boolean,
-    pin?: boolean,
-  ): Promise<Result<any>> {
+  ): Promise<Result<any> | undefined> {
     if (message.webhook.id && message.webhook.token) {
       const webhookClient = new WebhookClient({
         id: message.webhook.id,
@@ -51,13 +49,17 @@ export default class WebhookHandler {
           webhookClient,
           content,
           overwriteProfile,
+          message,
         );
         if (result.success) {
+          if (!message.thread && !message.autoPin) return result;
           if (message.thread) {
             const thread = await this.createThread(message, result.result);
             return thread;
-          } else {
-            return result;
+          }
+          if (message.autoPin) {
+            const autoPin = await this.autoPinMessage(message, result.result);
+            return autoPin;
           }
         } else {
           return result;
@@ -69,13 +71,17 @@ export default class WebhookHandler {
             newWebhook.result,
             content,
             overwriteProfile,
+            message,
           );
           if (result.success) {
+            if (!message.thread && !message.autoPin) return result;
             if (message.thread) {
               const thread = await this.createThread(message, result.result);
               return thread;
-            } else {
-              return result;
+            }
+            if (message.autoPin) {
+              const autoPin = await this.autoPinMessage(message, result.result);
+              return autoPin;
             }
           } else {
             return result;
@@ -91,13 +97,17 @@ export default class WebhookHandler {
           newWebhook.result,
           content,
           overwriteProfile,
+          message,
         );
         if (result.success) {
+          if (!message.thread && !message.autoPin) return result;
           if (message.thread) {
             const thread = await this.createThread(message, result.result);
             return thread;
-          } else {
-            return result;
+          }
+          if (message.autoPin) {
+            const autoPin = await this.autoPinMessage(message, result.result);
+            return autoPin;
           }
         } else {
           return result;
@@ -114,14 +124,14 @@ export default class WebhookHandler {
      * If true, it will overwrite the webhook to the bot's name and avatar.
      */
     overwriteProfile: boolean,
+    message: IQueueMessage,
   ): Promise<Result<APIMessage>> {
     if (overwriteProfile) {
       // Edit these if bot name/avatar ever changes
 
       await webhook.edit({
-        name: "Would You",
-        avatar:
-          "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96",
+        name: message.webhook.name,
+        avatar: message.webhook.avatar,
         reason: "Custom WebHook name and avatar are a premium feature!",
       });
     }
@@ -140,8 +150,8 @@ export default class WebhookHandler {
     const webhook = await this.createWebhook(
       channel,
       "Webhook token unavailable, creating new webhook",
-      "Would You",
-      this.client.user?.avatarURL({ extension: "png" }) as string,
+      message.webhook.name,
+      message.webhook.avatar,
     );
     if (webhook.success) {
       const result = await this.updateCache(
@@ -183,9 +193,8 @@ export default class WebhookHandler {
       // Edit these if bot name/avatar ever changes
 
       const webhook = await channel.createWebhook({
-        name: this.client.user?.username || fallbackName || "Would You",
+        name: fallbackName || "Would You",
         avatar:
-          this.client.user?.displayAvatarURL() ||
           fallbackAvatarURL ||
           "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96",
         reason: reason ?? "Creating a webhook for the daily message system",
@@ -277,6 +286,35 @@ export default class WebhookHandler {
         },
       );
       return { success: true, result: "Thread created" };
+    } catch (error) {
+      return { success: false, error: error as Error };
+    }
+  }
+
+  private async autoPinMessage(
+    message: IQueueMessage,
+    apiReturnValue: APIMessage,
+  ): Promise<Result<string>> {
+    const pinChannel: any = await this.client.rest.get(
+      `/channels/${message.channelId}/pins`,
+    );
+
+    try {
+      await this.client.rest.delete(
+        `/channels/${pinChannel[0].channel_id}/pins/${pinChannel[0].id}`,
+        {
+          reason: "Automatic unpinning of daily message",
+        },
+      );
+
+      this.client.rest.put(
+        `/channels/${message.channelId}/pins/${apiReturnValue?.id}`,
+        {
+          reason: "Automatic pinning of daily message",
+        },
+      );
+
+      return { success: true, result: "Pinned message" };
     } catch (error) {
       return { success: false, error: error as Error };
     }
