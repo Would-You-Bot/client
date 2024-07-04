@@ -59,6 +59,7 @@
       "maximum": "Vous avez atteint le nombre maximum de messages personnalisés. Vous pouvez en gagner plus en votant pour le bot !",
       "empty": "Il n'y a actuellement aucun message personnalisé à afficher !",
       "limit": "Vous avez plus de 100 {type} dans vos messages personnalisés. Si vous souhaitez en ajouter davantage, vous devrez vous abonner à un niveau premium.",
+      "addToLimit": "Les 100 premières questions pour toutes les catégories ont été ajoutées automatiquement.",
       "import": {
         "att1": "Vous devez fournir un fichier JSON valide !",
         "att2": "Vous devez fournir un fichier JSON valide !",

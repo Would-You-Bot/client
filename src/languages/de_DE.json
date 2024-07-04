@@ -59,6 +59,7 @@
       "maximum": "Du hast die maximale Anzahl an benutzerdefinierten Nachrichten erreicht. Du kannst mehr hinzufügen wenn du für den bot votest!",
       "empty": "Es gibt keine benutzerdefinierten nachrichten in diesem server!",
       "limit": "Du hast mehr als 100 {type} in deinen benutzerdefinierten Nachrichten. Wenn du mehr hinzufügen möchtest, musst du Premium abonnieren.",
+      "addToLimit": "Die ersten 100 Fragen für alle Kategorien wurden automatisch hinzugefügt.",
       "import": {
         "att1": "Du musst eine JSON datei anheften!",
         "att2": "Du musst eine JSON Datei anheften!",

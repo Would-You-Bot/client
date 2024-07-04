@@ -59,6 +59,7 @@
       "maximum": "Has alcanzado la cantidad máxima de mensajes personalizados. ¡Puedes ganar más votando por el bot!",
       "empty": "¡Actualmente no hay mensajes personalizados para ver!",
       "limit": "Tienes más de 100 {type} en tus mensajes personalizados. Si quieres añadir más, tendrás que suscribirte a un nivel premium.",
+      "addToLimit": "Se han añadido automáticamente las 100 primeras preguntas de todas las categorías.",
       "import": {
         "att1": "¡Debes proporcionar un archivo JSON válido!",
         "att2": "¡Debes proporcionar un archivo JSON válido!",
@@ -176,7 +177,7 @@
       "disabled": "¡Volver a jugar está actualmente deshabilitado en este servidor!"
     },
     "button": {
-      "nocustom": "There's currently no custom Would You messages to be displayed! Either make some or change the type using /type"
+      "nocustom": "Actualmente no hay mensajes personalizados de Would You para mostrar. Haz algunos o cambia el tipo usando /type"
     }
   },
   "REPLAY": {
@@ -217,13 +218,13 @@
     "errorSame": "La zona horaria proporcionada es la misma zona horaria que ya está definida. Asegúrese de elegir una zona horaria diferente.",
     "errorInvalid": "La zona horaria proporcionada no es válida, puedes elegir una zona horaria válida aquí: [Selector de Zona Horaria](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "La hora de publicación especificada es la misma que la ya establecida. Asegúrese de elegir una hora de publicación diferente.",
-    "intervalInvalid": "Provided post time was invalid. Make sure your post time is in the 24h format and mintues are either 00 or an interval of 5!",
+    "intervalInvalid": "La hora del mensaje no es válida. ¡Asegúrese de que la hora del mensaje está en formato de 24 horas y de que los minutos son 00 o un intervalo de 5!",
     "dailyChannel": "¡Selecciona un canal donde quieres que sean enviados los Mensajes Diarios!",
     "replayChannel": "Selecciona un canal al que quieras añadir un enfriamiento por repetición!",
     "replayChannelNone": "¡No tienes ningún canal de repetición configurado!",
-    "replayCooldownMin": "Provided cooldown is too short, make sure cooldowns are above 2 seconds!",
+    "replayCooldownMin": "El tiempo de reutilización es demasiado corto, ¡asegúrate de que sea superior a 2 segundos!",
     "replayDelete": "Selecciona un canal del que quieras eliminar el enfriamiento por repetición",
-    "cooldownTooLong": "Provided cooldown was too long. Make sure the cooldown is less than 6 hours (21,600 seconds)!",
+    "cooldownTooLong": "El tiempo de reutilización es demasiado largo. ¡Asegúrate de que sea inferior a 6 horas (21.600 segundos)!",
     "replayChannelLimit": "¡Sólo puedes añadir 15 canales al enfriamiento de la repetición!",
     "dailyType": "¡Selecciona un tipo de mensaje diario que quieres enviar!",
     "welcomeType": "Selecciona el tipo de Mensaje de Bienvenida que quieres que te envíen.",
@@ -232,9 +233,9 @@
     "voteSame": "El tiempo de espera de votación proporcionado es el mismo tiempo de espera que ya está establecido. Asegúrese de elegir un tiempo de espera diferente.",
     "cooldownInvalid": "El tiempo de reutilización proporcionado no es válido. ¡Asegúrese de que el tiempo de reutilización solo incluye números!",
     "welcomeTestSuccess": "Este es un mensaje de prueba de cómo son los mensajes de bienvenida.",
-    "premium": "To access this feature you will need to subscribe to [Would You Premium](https://wouldyoubot.gg/premium)",
-    "invalidLink": "Please provide a valid PNG, JPG (JPEG), WEBP or GIF Discord attachment to set as the bot's avatar.",
-    "daysSelection": "Select every day you **don't** want daily messages to be on.",
+    "premium": "Para acceder a esta función deberá suscribirse a [Would You Premium](https://wouldyoubot.gg/premium)",
+    "invalidLink": "Proporciona un archivo adjunto válido PNG, JPG (JPEG), WEBP o GIF de Discord para establecerlo como avatar del bot.",
+    "daysSelection": "Seleccione todos los días en los que **no** desea que aparezcan los mensajes diarios.",
     "embed": {
       "generalTitle": "Would You - Configuración general",
       "replayCooldown": "**Tiempo de Repetición**",
@@ -250,7 +251,7 @@
       "dailyMsg": "**Habilitado**",
       "dailyRole": "**Papel**",
       "dailyChannel": "**Canal**",
-      "dailyTimezone": "**Timezone**",
+      "dailyTimezone": "**Zona Horaria**",
       "dailyThread": "**Hilos**",
       "welcomeTitle": "Would You - Bienvenidas",
       "welcome": "**Habilitado**",
@@ -260,10 +261,10 @@
       "error": "¡Te falta el permiso `Manage guild` para usar este comando!",
       "username": "<:crown:1256988872160710808> **QOTD Username**",
       "avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
-      "classicMode": "**Classic Mode **"
+      "classicMode": "**Modo Clásico**"
     },
     "button": {
-      "daySelect": "Exclude Days",
+      "daySelect": "Excluir días",
       "dailyInterval": "Fijar la hora de publicación",
       "dailyChannel": "Establecer canal",
       "dailyRole": "Establecer rol",
@@ -279,9 +280,9 @@
       "welcomeChannel": "Establecer canal",
       "welcome": "Alternar Bienvenidas",
       "welcomePing": "Alternar ping de usuario",
-      "avatar": "Set Avatar",
-      "name": "Set Username",
-      "classicMode": "Toggle Classic Mode"
+      "avatar": "Establecer avatar",
+      "name": "Establecer nombre de usuario",
+      "classicMode": "Activar el modo clásico"
     },
     "modal": {
       "dailyIntervalTitle": "Hora de publicación diaria",

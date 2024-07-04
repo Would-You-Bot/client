@@ -59,6 +59,7 @@
       "maximum": "Hai raggiunto il limite massimo di messaggi personalizzati. Guadagnane altri votando per il bot!",
       "empty": "Non ci sono messaggi personalizzati di Would You da visualizzare!",
       "limit": "Hai più di 100 {type} nei tuoi messaggi personalizzati. Se desideri aggiungerne di più, dovrai iscriverti a un livello premium.",
+      "addToLimit": "Le prime 100 domande per tutte le categorie sono state aggiunte automaticamente.",
       "import": {
         "att1": "È necessario fornire un file JSON valido!",
         "att2": "È necessario fornire un file JSON valido!",
