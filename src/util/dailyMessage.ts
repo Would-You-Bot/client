@@ -179,7 +179,6 @@ export default class DailyMessage {
         },
         message,
         !premium,
-        message.thread,
       );
       return result;
     } catch (err) {

@@ -134,8 +134,6 @@ const button: Button = {
                 ),
             );
 
-          console.log(value);
-
           async function getImageData() {
             return fetch(value)
               .then((response) => response.arrayBuffer())

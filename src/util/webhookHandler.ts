@@ -38,7 +38,7 @@ export default class WebhookHandler {
     content: WebhookMessageCreateOptions,
     message: IQueueMessage,
     overwriteProfile: boolean,
-  ): Promise<Result<any> | undefined> {
+  ): Promise<Result<any>> {
     if (message.webhook.id && message.webhook.token) {
       const webhookClient = new WebhookClient({
         id: message.webhook.id,
@@ -116,6 +116,10 @@ export default class WebhookHandler {
         return newWebhook;
       }
     }
+    return {
+      success: false,
+      error: new Error("Unhandled case in handleWebhook"),
+    };
   }
   private async send(
     webhook: WebhookClient,
