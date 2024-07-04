@@ -12,7 +12,7 @@ export default class PremiumHandler {
 
   async check(guildId: string | null) {
     const guild = await this.client.database.getGuild(
-      guildId || "",
+      guildId!,
       true,
       true,
     );
@@ -28,7 +28,7 @@ export default class PremiumHandler {
       return {
         result: true,
         type: this.client.translation.get(
-          guildId || "",
+          guildId!,
           `Premium.tier${guild?.premium}`,
         ),
         rawType: guild?.premium,

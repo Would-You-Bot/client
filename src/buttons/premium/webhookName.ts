@@ -34,9 +34,14 @@ const button: Button = {
   name: "webhookName",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
-    if (!guildDb.premium) {
+    const premium = await client.premium.check(interaction.guildId);
+
+    if(!premium.result) {
       interaction.reply({
-        content: client.translation.get(guildDb?.language, "Settings.premium"),
+        content: client.translation.get(
+          guildDb?.language,
+          "Settings.premium",
+        ),
         ephemeral: true,
       });
       return;

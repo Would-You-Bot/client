@@ -35,7 +35,9 @@ const button: Button = {
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
     try {
-      if (!guildDb.premium) {
+      const premium = await client.premium.check(interaction.guildId);
+
+      if(!premium.result) {
         interaction.reply({
           content: client.translation.get(
             guildDb?.language,
