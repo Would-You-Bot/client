@@ -62,9 +62,6 @@ dependencies:
   mongoose:
     specifier: ^8.4.1
     version: 8.4.4
-  node-base64-image:
-    specifier: ^2.0.6
-    version: 2.0.6
   node-cloudflare-r2:
     specifier: ^0.2.3
     version: 0.2.3
@@ -1890,16 +1887,6 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: false
 
-  /axios@1.6.0:
-    resolution: {integrity: sha512-EZ1DYihju9pwVB+jg67ogm+Tmqc6JmhamRN6I4Zt8DfZu5lbcQGw3ozH9lFejSJgs/ibaef3A9PMXPLeefFGJg==}
-    dependencies:
-      follow-redirects: 1.15.6
-      form-data: 4.0.0
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
   /axios@1.7.2:
     resolution: {integrity: sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==}
     dependencies:
@@ -2493,15 +2480,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       semver: 7.5.4
-    dev: false
-
-  /node-base64-image@2.0.6:
-    resolution: {integrity: sha512-fUioszu6tGacTl5QkUI1CERjg1y5loOwSMb2LMiHt98DMkWxirhVg35kEnLghbeLQjZ9Mik5NbaV881jcC2tow==}
-    engines: {node: '>=16'}
-    dependencies:
-      axios: 1.6.0
-    transitivePeerDependencies:
-      - debug
     dev: false
 
   /node-cloudflare-r2@0.2.3:

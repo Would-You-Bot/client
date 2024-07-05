@@ -166,16 +166,19 @@ export default class DailyMessage {
 
     try {
       const result = await this.client.webhookHandler.handleWebhook(
+        /// mhmmmm I'm in general btw @ debug // one sec
         channel,
         {
           embeds: [embed],
           content: message.role ? `<@&${message.role}>` : undefined,
-          // avatarURL:
+          avatarURL:
+            message.webhook.avatar ||
+            this.client.user?.displayAvatarURL({ forceStatic: false }),
           //   // Change fallback url in case bot pfp changes
           //   this.client.user?.displayAvatarURL({ forceStatic: false }) ||
           //   "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96",
           // // Change fallback username in case bot username changes (in like 12 thousand years xD)
-          // username: this.client.user?.username || "Would You", // Not sure if <User>#username is appropiate, might be better to use <User>#displayName
+          username: message.webhook.name || "Would You", // Not sure if <User>#username is appropiate, might be better to use <User>#displayName
         },
         message,
         !premium,

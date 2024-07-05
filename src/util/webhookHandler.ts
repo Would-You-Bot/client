@@ -299,17 +299,27 @@ export default class WebhookHandler {
     message: IQueueMessage,
     apiReturnValue: APIMessage,
   ): Promise<Result<string>> {
-    const pinChannel: any = await this.client.rest.get(
+    let pinChannel: any = await this.client.rest.get(
       `/channels/${message.channelId}/pins`,
     );
 
-    try {
-      await this.client.rest.delete(
-        `/channels/${pinChannel[0].channel_id}/pins/${pinChannel[0].id}`,
-        {
-          reason: "Automatic unpinning of daily message",
-        },
+    if (pinChannel) {
+      pinChannel = pinChannel.filter(
+        (x: any) => x.application_id === this.client.user?.id,
       );
+    }
+
+    console.log(pinChannel[0]);
+
+    try {
+      if (pinChannel && pinChannel.length > 0) {
+        await this.client.rest.delete(
+          `/channels/${pinChannel[0].channel_id}/pins/${pinChannel[0].id}`,
+          {
+            reason: "Automatic unpinning of daily message",
+          },
+        );
+      }
 
       this.client.rest.put(
         `/channels/${message.channelId}/pins/${apiReturnValue?.id}`,
@@ -317,9 +327,10 @@ export default class WebhookHandler {
           reason: "Automatic pinning of daily message",
         },
       );
-
+      console.log("Pinned message");
       return { success: true, result: "Pinned message" };
     } catch (error) {
+      console.log(error);
       return { success: false, error: error as Error };
     }
   }
