@@ -17,6 +17,6 @@ jobs:
           node-version: "18.x"
           cache: "pnpm"
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       - name: Run build
         run: pnpm run build
