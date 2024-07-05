@@ -4,6 +4,7 @@ import WouldYou from "../util/wouldYou";
 
 export interface Interaction {
   name: string;
+  cooldown?: boolean;
   execute(
     interaction: dInteraction,
     client: WouldYou,

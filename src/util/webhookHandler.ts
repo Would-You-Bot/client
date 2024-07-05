@@ -1,9 +1,13 @@
 import Cryptr from "cryptr";
 import {
   APIMessage,
-  Channel,
+  NewsChannel,
   PermissionFlagsBits,
+  StageChannel,
+  TextChannel,
+  VoiceChannel,
   WebhookClient,
+  WebhookMessageCreateOptions,
 } from "discord.js";
 import { Document, Model } from "mongoose";
 import { IQueueMessage, Result } from "../global";
@@ -11,6 +15,12 @@ import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
 import WouldYou from "./wouldYou";
 
 const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string);
+
+export type WebHookCompatibleChannel =
+  | NewsChannel
+  | StageChannel
+  | TextChannel
+  | VoiceChannel;
 
 export default class WebhookHandler {
   private webhookModel: Model<IWebhookCache>;
@@ -24,11 +34,10 @@ export default class WebhookHandler {
     this.client = client;
   }
   async handleWebhook(
-    channel: Channel,
-    content: any,
+    channel: WebHookCompatibleChannel,
+    content: WebhookMessageCreateOptions,
     message: IQueueMessage,
-    thread?: boolean,
-    pin?: boolean,
+    overwriteProfile: boolean,
   ): Promise<Result<any>> {
     if (message.webhook.id && message.webhook.token) {
       const webhookClient = new WebhookClient({
@@ -36,13 +45,21 @@ export default class WebhookHandler {
         token: cryptr.decrypt(message.webhook.token),
       });
       try {
-        const result = await this.send(webhookClient, content);
+        const result = await this.send(
+          webhookClient,
+          content,
+          overwriteProfile,
+          message,
+        );
         if (result.success) {
+          if (!message.thread && !message.autoPin) return result;
           if (message.thread) {
             const thread = await this.createThread(message, result.result);
             return thread;
-          } else {
-            return result;
+          }
+          if (message.autoPin) {
+            const autoPin = await this.autoPinMessage(message, result.result);
+            return autoPin;
           }
         } else {
           return result;
@@ -50,13 +67,21 @@ export default class WebhookHandler {
       } catch (error) {
         const newWebhook = await this.webhookFallBack(channel, message);
         if (newWebhook.success) {
-          const result = await this.send(newWebhook.result, content);
+          const result = await this.send(
+            newWebhook.result,
+            content,
+            overwriteProfile,
+            message,
+          );
           if (result.success) {
+            if (!message.thread && !message.autoPin) return result;
             if (message.thread) {
               const thread = await this.createThread(message, result.result);
               return thread;
-            } else {
-              return result;
+            }
+            if (message.autoPin) {
+              const autoPin = await this.autoPinMessage(message, result.result);
+              return autoPin;
             }
           } else {
             return result;
@@ -68,13 +93,21 @@ export default class WebhookHandler {
     } else {
       const newWebhook = await this.webhookFallBack(channel, message);
       if (newWebhook.success) {
-        const result = await this.send(newWebhook.result, content);
+        const result = await this.send(
+          newWebhook.result,
+          content,
+          overwriteProfile,
+          message,
+        );
         if (result.success) {
+          if (!message.thread && !message.autoPin) return result;
           if (message.thread) {
             const thread = await this.createThread(message, result.result);
             return thread;
-          } else {
-            return result;
+          }
+          if (message.autoPin) {
+            const autoPin = await this.autoPinMessage(message, result.result);
+            return autoPin;
           }
         } else {
           return result;
@@ -83,24 +116,46 @@ export default class WebhookHandler {
         return newWebhook;
       }
     }
+    return {
+      success: false,
+      error: new Error("Unhandled case in handleWebhook"),
+    };
   }
   private async send(
     webhook: WebhookClient,
-    content: any,
+    content: WebhookMessageCreateOptions,
+    /**
+     * If true, it will overwrite the webhook to the bot's name and avatar.
+     */
+    overwriteProfile: boolean,
+    message: IQueueMessage,
   ): Promise<Result<APIMessage>> {
+    if (overwriteProfile) {
+      // Edit these if bot name/avatar ever changes
+
+      await webhook.edit({
+        name: message.webhook.name,
+        avatar: message.webhook.avatar,
+        reason: "Custom WebHook name and avatar are a premium feature!",
+      });
+    }
+
     const result = await webhook.send(content);
     if (result) return { success: true, result: result };
-    return { success: false, error: new Error(`Failed to send webhook`) };
+    return {
+      success: false,
+      error: new Error(`Failed to send webhook`),
+    };
   }
   private async webhookFallBack(
-    channel: any,
+    channel: WebHookCompatibleChannel,
     message: IQueueMessage,
   ): Promise<Result<WebhookClient>> {
     const webhook = await this.createWebhook(
       channel,
-      "Would You",
-      this.client.user?.avatarURL({ extension: "png" }) as string,
       "Webhook token unavailable, creating new webhook",
+      message.webhook.name,
+      message.webhook.avatar,
     );
     if (webhook.success) {
       const result = await this.updateCache(
@@ -118,14 +173,20 @@ export default class WebhookHandler {
     }
   }
   private async createWebhook(
-    channel: any,
-    name: string,
-    avatar: string,
+    channel: WebHookCompatibleChannel,
     reason: string,
+    fallbackName?: string,
+    fallbackAvatarURL?: string,
   ): Promise<Result<WebhookClient>> {
+    if (!channel.guild.members.me)
+      return {
+        success: false,
+        error: new Error("I don't exist in the guild!"),
+      };
+
     if (
       !channel
-        .permissionsFor(this.client.user)
+        .permissionsFor(channel.guild.members.me)
         ?.has([PermissionFlagsBits.ManageWebhooks])
     )
       return {
@@ -133,15 +194,25 @@ export default class WebhookHandler {
         error: new Error("No permissions to create a webhook"),
       };
     try {
+      // Edit these if bot name/avatar ever changes
+
       const webhook = await channel.createWebhook({
-        name: name ?? "Would You",
-        avatar: avatar ?? this.client.user?.displayAvatarURL(),
+        name: fallbackName || "Would You",
+        avatar:
+          fallbackAvatarURL ||
+          "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96",
         reason: reason ?? "Creating a webhook for the daily message system",
       });
-      return {
-        success: true,
-        result: new WebhookClient({ id: webhook.id, token: webhook.token }),
-      };
+
+      if (webhook.token)
+        return {
+          success: true,
+          result: new WebhookClient({
+            id: webhook.id,
+            token: webhook.token,
+          }),
+        };
+      else throw new Error("Webhook token is null");
     } catch (error) {
       return { success: false, error: error as Error };
     }
@@ -220,6 +291,46 @@ export default class WebhookHandler {
       );
       return { success: true, result: "Thread created" };
     } catch (error) {
+      return { success: false, error: error as Error };
+    }
+  }
+
+  private async autoPinMessage(
+    message: IQueueMessage,
+    apiReturnValue: APIMessage,
+  ): Promise<Result<string>> {
+    let pinChannel: any = await this.client.rest.get(
+      `/channels/${message.channelId}/pins`,
+    );
+
+    if (pinChannel) {
+      pinChannel = pinChannel.filter(
+        (x: any) => x.application_id === this.client.user?.id,
+      );
+    }
+
+    console.log(pinChannel[0]);
+
+    try {
+      if (pinChannel && pinChannel.length > 0) {
+        await this.client.rest.delete(
+          `/channels/${pinChannel[0].channel_id}/pins/${pinChannel[0].id}`,
+          {
+            reason: "Automatic unpinning of daily message",
+          },
+        );
+      }
+
+      this.client.rest.put(
+        `/channels/${message.channelId}/pins/${apiReturnValue?.id}`,
+        {
+          reason: "Automatic pinning of daily message",
+        },
+      );
+      console.log("Pinned message");
+      return { success: true, result: "Pinned message" };
+    } catch (error) {
+      console.log(error);
       return { success: false, error: error as Error };
     }
   }

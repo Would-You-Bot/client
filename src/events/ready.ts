@@ -5,7 +5,7 @@ import axios from "axios";
 import { gray, green, red, white } from "chalk-advanced";
 import { Routes } from "discord-api-types/v10";
 import { getInfo } from "discord-hybrid-sharding";
-import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
+import type { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 import "dotenv/config";
 import { Event } from "../interfaces/event";
 import appCommmands from "../util/Functions/supportAppCommands";

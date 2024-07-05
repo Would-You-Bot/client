@@ -2,19 +2,18 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  InteractionReplyOptions,
   PermissionFlagsBits,
-  bold,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
 import { Button } from "../../interfaces";
-import shuffle from "../../util/shuffle";
-
-import { getDare } from "../../util/Functions/jsonImport";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "dare",
+  cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
       await interaction.message.edit({
@@ -46,12 +45,13 @@ const button: Button = {
         }
       }
     }
-
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    });
 
-    let Dare = await getDare(
+    let DARE = await getQuestionsByType(
+      "dare",
+      guildDb,
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
@@ -59,43 +59,17 @@ const button: Button = {
           : "en_EN",
     );
 
-    let dbquestions;
-
-    let truthordare = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter((c) => c.type === "dare");
-
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          truthordare = shuffle([...Dare]);
-          break;
-        case "mixed":
-          truthordare = shuffle([...Dare, ...dbquestions.map((c) => c.msg)]);
-          break;
-        case "custom":
-          truthordare = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      truthordare = shuffle([...Dare]);
-    }
-
-    const Random = Math.floor(Math.random() * truthordare.length);
-
-    const dareembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: Dare | ID: ${Random}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(truthordare[Random]));
+    const dareEmbed = new DefaultGameEmbed(
+      interaction,
+      DARE.id,
+      DARE.question,
+      "dare",
+    );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-    let components = [] as any[];
+    let components: ActionRowBuilder<MessageActionRowComponentBuilder>[];
+
     if (Math.round(Math.random() * 15) < 3) {
       row2.addComponents([
         new ButtonBuilder()
@@ -115,11 +89,14 @@ const button: Button = {
       new ButtonBuilder().setLabel("Dare").setStyle(4).setCustomId("dare"),
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
-    await interaction
-      .reply({ embeds: [dareembed], components: components })
-      .catch((err: Error) => {
-        captureException(err);
-      });
+
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: DARE.question }
+      : { embeds: [dareEmbed], components: components };
+
+    interaction.reply(classicData).catch((err: Error) => {
+      captureException(err);
+    });
   },
 };
 

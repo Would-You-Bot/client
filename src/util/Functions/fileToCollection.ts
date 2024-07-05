@@ -9,7 +9,7 @@ export async function fileToCollection<
   const collection: Collection<string, Type> = new Collection();
   try {
     const dirents = readdirSync(dirPath, { withFileTypes: true });
-    var promises: Promise<void>[] = [];
+    let promises: Promise<void>[] = [];
 
     dirents
       .filter((dirent) => dirent.isDirectory())

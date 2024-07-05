@@ -2,18 +2,20 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  EmbedBuilder,
+  InteractionReplyOptions,
   MessageActionRowComponentBuilder,
   PermissionFlagsBits,
-  bold,
 } from "discord.js";
-import { Button } from "../../interfaces";
-import shuffle from "../../util/shuffle";
 
-import { getWouldYouRather } from "../../util/Functions/jsonImport";
+import { Button } from "../../interfaces";
+
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "wouldyourather",
+  cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
       await interaction.message.edit({
@@ -46,47 +48,26 @@ const button: Button = {
       }
     }
 
-    let General = await getWouldYouRather(
-      guildDb?.language != null ? guildDb.language : "en_EN",
+    const userDb = await UserModel.findOne({
+      userID: interaction.user?.id,
+    });
+
+    let WYR = await getQuestionsByType(
+      "wouldyourather",
+      guildDb,
+      guildDb?.language != null
+        ? guildDb.language
+        : userDb?.language
+          ? userDb.language
+          : "en_EN",
     );
 
-    let dbquestions;
-
-    let wouldyourather = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter(
-        (c) => c.type === "wouldyourather",
-      );
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          wouldyourather = shuffle([...General]);
-          break;
-        case "mixed":
-          wouldyourather = shuffle([
-            ...General,
-            ...dbquestions.map((c) => c.msg),
-          ]);
-          break;
-        case "custom":
-          wouldyourather = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      wouldyourather = shuffle([...General]);
-    }
-
-    const Random = Math.floor(Math.random() * wouldyourather.length);
-
-    let ratherembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: WYR | ID: ${Random}`,
-        iconURL: interaction.user.avatarURL(),
-      })
-      .setDescription(bold(wouldyourather[Random]));
+    const ratherEmbed = new DefaultGameEmbed(
+      interaction,
+      WYR.id,
+      WYR.question,
+      "wyr",
+    );
 
     if (guildDb && !guildDb.replay)
       return interaction.reply({
@@ -130,10 +111,15 @@ const button: Button = {
       "wouldyourather",
     );
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: WYR.question, fetchReply: true }
+      : { embeds: [ratherEmbed], components: [row, mainRow] };
+
     interaction
-      .reply({
-        embeds: [ratherembed],
-        components: [row, mainRow],
+      .reply(classicData)
+      .then(async (msg: any) => {
+        if (!guildDb.classicMode) return;
+        msg.react("🅰️"), msg.react("🇧");
       })
       .catch((err: Error) => {
         captureException(err);

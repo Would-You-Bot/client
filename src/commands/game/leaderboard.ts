@@ -1,6 +1,6 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 import Paginator from "../../util/pagination";
 
 const command: ChatInputCommand = {
@@ -19,7 +19,10 @@ const command: ChatInputCommand = {
       option
         .setName("game")
         .setDescription("Which game do you want leaderboards from?")
-        .addChoices({ name: "Higher or Lower", value: "higherlower" })
+        .addChoices({
+          name: "Higher or Lower",
+          value: "higherlower",
+        })
         .setRequired(true),
     )
     .addStringOption((option) =>
@@ -39,9 +42,17 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    });
+
+    if (!userDb) {
+      interaction.reply({
+        content: "An error occurred while fetching your data",
+        ephemeral: true,
+      });
+      return;
+    }
 
     let language =
       guildDb?.language != null
@@ -71,14 +82,21 @@ const command: ChatInputCommand = {
               data2.map(async (u: any) => {
                 const user = await client.database.getUser(u.userID, true);
                 return user?.votePrivacy
-                  ? { user: "Anonymous", score: u.higherlower.highscore }
-                  : { user: u.userID, score: u.higherlower.highscore };
+                  ? {
+                      user: "Anonymous",
+                      score: u.higherlower.highscore,
+                    }
+                  : {
+                      user: u.userID,
+                      score: u.higherlower.highscore,
+                    };
               }),
             );
 
             if (data.length === 0) {
               interaction.reply({
                 content: client.translation.get(language, "Leaderboard.none"),
+                ephemeral: true,
               });
               return;
             }
@@ -147,6 +165,7 @@ const command: ChatInputCommand = {
             if (data.length === 0) {
               interaction.reply({
                 content: client.translation.get(language, "Leaderboard.none"),
+                ephemeral: true,
               });
               return;
             }

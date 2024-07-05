@@ -15,10 +15,7 @@ const buttonInteractionEvent: Event = {
     let guildDb;
 
     if (interaction.guildId !== null) {
-      guildDb = await client.database.getGuild(
-        interaction.guildId as string,
-        true,
-      );
+      guildDb = await client.database.getGuild(interaction.guildId, true);
     }
     let button = client.buttons.get(interaction.customId);
 
@@ -30,9 +27,8 @@ const buttonInteractionEvent: Event = {
         customId[2] === "wouldyourather"
       ) {
         const action = Number(customId[3]) == 0 ? "yes" : "no";
-        const commandName = customId[2];
-        const fieldName = `${commandName}.${action}`;
-
+        const buttonName = customId[2];
+        const fieldName = `${buttonName}.${action}`;
         // Increment the specified field using $inc
         await UserModel.updateOne(
           { userID: interaction.user?.id },
@@ -41,7 +37,7 @@ const buttonInteractionEvent: Event = {
       }
     }
 
-    const replyMap = {
+    const replyMap: Record<string, string> = {
       wouldyourather: "wouldyourather.used.replay",
       neverhaveiever: "neverhaveiever.used.replay",
       higherlower: "higherlower.used.replay",
@@ -49,11 +45,10 @@ const buttonInteractionEvent: Event = {
       truth: "truth.used.replay",
       dare: "dare.used.replay",
       random: "random.used.replay",
-    } as Record<string, string>;
+    };
 
     // Get the field path based on the command name
     const fieldPath = replyMap[interaction.customId];
-
     if (fieldPath) {
       // Increment the specified field using $inc
       await UserModel.updateOne(
@@ -97,40 +92,9 @@ const buttonInteractionEvent: Event = {
     let cooldownKey: string | undefined;
     let cooldown: number;
 
-    const excludedButtons = [
-      "dailyChannel",
-      "deleteDailyRole",
-      "welcomeType",
-      "welcomeTest",
-      "selectMenuWelcomeType",
-      "selectMenuChannel",
-      "replayType",
-      "replayBy",
-      "replayDelete",
-      "replayDeleteChannels",
-      "replayChannels",
-      "selectMenuReplay",
-      "selectMenuRole",
-      "welcomeChannel",
-      "dailyInterval",
-      "dailyType",
-      "replayCooldown",
-      "welcomePing",
-      "welcome",
-      "welcomeChannel",
-      "dailyRole",
-      "dailyTimezone",
-      "dailyMsg",
-      "dailyThread",
-      "votemodal",
-      "paginateFirst",
-      "paginateLast",
-      "paginateNext",
-      "paginatePrev",
-      "privacy",
-      "selectMenuWelcome",
-      "selectMenuType",
-    ];
+    const excludedButtons = await client.buttons
+      .filter((button) => button.cooldown === false)
+      .map((button) => button.name);
 
     const isExcludedButton = excludedButtons.includes(interaction.customId);
     if (
@@ -173,7 +137,11 @@ const buttonInteractionEvent: Event = {
       setTimeout(() => client.used.delete(cooldownKey!), cooldown);
     }
 
-    return button.execute(interaction, client, guildDb as IGuildModel);
+    if (guildDb == null) return;
+
+    const guildDB: IGuildModel = guildDb;
+
+    return button.execute(interaction, client, guildDB);
   },
 };
 

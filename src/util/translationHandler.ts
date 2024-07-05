@@ -28,27 +28,27 @@ export default class TranslationHandler {
     this.translations = {};
 
     // Init default languages
-    for (const l of this.availableLanguages) {
-      const data = require(`../languages/${l}.json`);
-      this.initLanguage(l, data);
+    for (const language of this.availableLanguages) {
+      const data = require(`../languages/${language}.json`);
+      this.initLanguage(language, data);
     }
 
     // Init what would you do
-    for (const l of this.availableLanguages) {
-      const data = require(`../data/wwyd-${l}.json`);
-      this.initLanguage(l + "_wwyd", data);
+    for (const language of this.availableLanguages) {
+      const data = require(`../data/wwyd-${language}.json`);
+      this.initLanguage(language + "_wwyd", data);
     }
 
     // Inti rather
-    for (const l of this.availableLanguages) {
-      const data = require(`../data/rather-${l}.json`);
-      this.initLanguage(l + "_rather", data);
+    for (const language of this.availableLanguages) {
+      const data = require(`../data/rather-${language}.json`);
+      this.initLanguage(language + "_rather", data);
     }
 
     // Init never have I ever
-    for (const l of this.availableLanguages) {
-      const data = require(`../data/nhie-${l}.json`);
-      this.initLanguage(l + "_nhie", data);
+    for (const language of this.availableLanguages) {
+      const data = require(`../data/nhie-${language}.json`);
+      this.initLanguage(language + "_nhie", data);
     }
   }
 
@@ -102,13 +102,13 @@ export default class TranslationHandler {
    */
   reload(): void {
     this.translations = {};
-    for (const l of this.availableLanguages) {
+    for (const language of this.availableLanguages) {
       try {
-        const d = require(`../languages/${l}.json`);
+        const data = require(`../languages/${language}.json`);
 
-        if (!d) continue;
+        if (!data) continue;
 
-        this.initLanguage(l, d);
+        this.initLanguage(language, data);
       } catch (err) {
         captureException(err);
       }
@@ -124,22 +124,26 @@ export default class TranslationHandler {
    * @example
    * const translation = getTranslation('en_EN', 'commands.ping.pong', {ping: 100});
    */
-  get(language: string, path: string, data: Record<string, any> = {}): string {
+  get(
+    language: string,
+    translationPath: string,
+    placeholders: Record<string, any> = {},
+  ): string {
     if (!language) language = "en_EN";
 
-    const l: Record<string, any> = this.getLanguage(language);
-    const p = path.split(".");
-    let c = null;
+    const languageData: Record<string, any> = this.getLanguage(language);
+    const pathSegments = translationPath.split(".");
+    let currentTranslation = null;
 
-    if (p.length > 0) {
-      for (const i of p) {
+    if (pathSegments.length > 0) {
+      for (const segment of pathSegments) {
         try {
-          if (!c) {
-            if (!l.hasOwnProperty(i)) break;
-            c = l[i];
+          if (!currentTranslation) {
+            if (!languageData.hasOwnProperty(segment)) break;
+            currentTranslation = languageData[segment];
           } else {
-            if (!c.hasOwnProperty(i)) break;
-            c = c[i];
+            if (!currentTranslation.hasOwnProperty(segment)) break;
+            currentTranslation = currentTranslation[segment];
           }
         } catch (err) {
           captureException(err);
@@ -147,18 +151,36 @@ export default class TranslationHandler {
         }
       }
     } else {
-      return path;
+      if (language !== "en_EN") {
+        return this.get("en_EN", translationPath, placeholders);
+      } else {
+        return translationPath;
+      }
     }
 
-    if (!c) return path;
+    if (!currentTranslation) {
+      if (language !== "en_EN") {
+        // Check if "en_EN" also doesn't have the translation
+        const enTranslation = this.get("en_EN", translationPath, placeholders);
+        if (enTranslation === translationPath) {
+          // If "en_EN" also doesn't have the translation, return the path
+          return translationPath;
+        } else {
+          // If "en_EN" has the translation, return it
+          return enTranslation;
+        }
+      } else {
+        return translationPath;
+      }
+    }
 
-    if (data) {
-      return c?.replace(
+    if (placeholders) {
+      return currentTranslation.replace(
         /{(\w+)}/g,
-        (match: string, key: string) => data[key] ?? match,
+        (match: string, key: string) => placeholders[key] ?? match,
       );
     }
 
-    return c;
+    return currentTranslation;
   }
 }

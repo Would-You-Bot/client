@@ -2,15 +2,15 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  EmbedBuilder,
+  InteractionReplyOptions,
   MessageActionRowComponentBuilder,
   SlashCommandBuilder,
-  bold,
 } from "discord.js";
+
 import { ChatInputCommand } from "../../interfaces";
-import { getWwyd } from "../../util/Functions/jsonImport";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
-import shuffle from "../../util/shuffle";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -30,51 +30,27 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    });
 
-    let WWYD = await getWwyd(
+    let WWYD = await getQuestionsByType(
+      "whatwouldyoudo",
+      guildDb,
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
           ? userDb.language
           : "en_EN",
     );
+    console.log(WWYD);
 
-    let dbquestions;
-
-    let whatwouldyoudo = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter((c) => c.type === "wwyd");
-
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          whatwouldyoudo = shuffle([...WWYD]);
-          break;
-        case "mixed":
-          whatwouldyoudo = shuffle([...WWYD, ...dbquestions.map((c) => c.msg)]);
-          break;
-        case "custom":
-          whatwouldyoudo = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      whatwouldyoudo = shuffle([...WWYD]);
-    }
-
-    const Random = Math.floor(Math.random() * whatwouldyoudo.length);
-
-    const wwydembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: WWYD | ID: ${Random}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(whatwouldyoudo[Random]));
+    const wwydEmbed = new DefaultGameEmbed(
+      interaction,
+      WWYD.id,
+      WWYD.question,
+      "wwyd",
+    );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
@@ -97,11 +73,13 @@ const command: ChatInputCommand = {
         .setCustomId(`wwyd`),
     ]);
 
-    interaction
-      .reply({ embeds: [wwydembed], components: [row] })
-      .catch((err) => {
-        captureException(err);
-      });
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: WWYD.question }
+      : { embeds: [wwydEmbed], components: [row] };
+
+    interaction.reply(classicData).catch((err) => {
+      captureException(err);
+    });
   },
 };
 

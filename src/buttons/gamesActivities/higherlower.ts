@@ -14,10 +14,11 @@ import HOR from "../../util/Classes/generateHOR";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
 import { getHigherLower } from "../../util/Functions/jsonImport";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "higherlower",
+  cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
       await interaction.message.edit({
@@ -51,9 +52,9 @@ const button: Button = {
     }
     await interaction.deferReply();
 
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    });
 
     const initembed = new HigherLowerEmbed(interaction, client, guildDb);
 

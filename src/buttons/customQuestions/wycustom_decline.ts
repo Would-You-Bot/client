@@ -8,6 +8,7 @@ import { Button } from "../../interfaces";
 
 const button: Button = {
   name: "wycustom_decline",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const typeEmbed = new EmbedBuilder()
       .setTitle(
@@ -36,7 +37,10 @@ const button: Button = {
           .setCustomId("decline"),
       );
 
-    interaction.update({ embeds: [typeEmbed], components: [button] });
+    interaction.update({
+      embeds: [typeEmbed],
+      components: [button],
+    });
     return;
   },
 };

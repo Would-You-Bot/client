@@ -19,7 +19,7 @@ const modalObject = {
           type: 4,
           style: 1,
           custom_id: "input",
-          label: "Provide a replay cooldown in milliseconds",
+          label: "Provide a replay cooldown in seconds",
         },
       ],
     },
@@ -27,10 +27,12 @@ const modalObject = {
 };
 
 function isNumericRegex(str: string) {
-  return /^[0-9]+$/.test(str); // regex for extra 0,00000002% speeds :trol:
+  return /^\d*\.?\d+$/.test(str); // regex for extra 0,00000002% speeds :trol:
 }
+
 const button: Button = {
   name: "selectMenuReplay",
+  cooldown: false,
   execute: async (interaction, client, guildDb) => {
     await interaction.showModal(modalObject);
 
@@ -40,7 +42,7 @@ const button: Button = {
         time: 600000,
       })
       .then(async (modalInteraction) => {
-        const value = modalInteraction.components[0].components[0].value;
+        let value = modalInteraction.components[0].components[0].value as any;
         if (isNumericRegex(value) === false) {
           modalInteraction.reply({
             ephemeral: true,
@@ -52,7 +54,7 @@ const button: Button = {
           return;
         }
 
-        if (Number(value) < 2000) {
+        if (Number(value) < 2) {
           modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
@@ -63,7 +65,7 @@ const button: Button = {
           return;
         }
 
-        if (Number(value) > 21600000) {
+        if (Number(value) > 21600) {
           modalInteraction.reply({
             ephemeral: true,
             content: client.translation.get(
@@ -84,12 +86,21 @@ const button: Button = {
           );
         }
 
+        value = value * 1000;
         const arr =
           guildDb.replayChannels.length > 0
-            ? [{ id: (interaction as any).values[0], cooldown: value }].concat(
-                guildDb.replayChannels,
-              )
-            : [{ id: (interaction as any).values[0], cooldown: value }];
+            ? [
+                {
+                  id: (interaction as any).values[0],
+                  cooldown: value,
+                },
+              ].concat(guildDb.replayChannels)
+            : [
+                {
+                  id: (interaction as any).values[0],
+                  cooldown: value,
+                },
+              ];
 
         const generalMsg = new EmbedBuilder()
           .setTitle(
@@ -100,6 +111,9 @@ const button: Button = {
           )
           .setDescription(
             `${client.translation.get(
+              guildDb?.language,
+              "Settings.embed.replayType",
+            )}: ${guildDb.replayType}\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.replayBy",
             )}: ${guildDb.replayBy}\n${
@@ -112,13 +126,13 @@ const button: Button = {
                     guildDb?.language,
                     "Settings.embed.replayBy1",
                   )
-            }\n\n${client.translation.get(
-              guildDb?.language,
-              "Settings.embed.replayType",
-            )}: ${guildDb.replayType}\n ${client.translation.get(
+            }\n${client.translation.get(
               guildDb?.language,
               "Settings.embed.replayChannels",
-            )}:\n${arr.map((c) => `<#${c.id}>: ${c.cooldown}`).join("\n")}`,
+            )}:\n${arr
+              .sort((a, b) => b.cooldown / 1000 - a.cooldown / 1000)
+              .map((c) => `<#${c.id}>: ${c.cooldown / 1000}s`)
+              .join("\n")}`,
           )
           .setColor("#0598F6")
           .setFooter({
@@ -132,7 +146,32 @@ const button: Button = {
         const generalButtons =
           new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
             new ButtonBuilder()
+              .setCustomId("replayType")
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  "Settings.button.replayType",
+                ),
+              )
+              .setStyle(ButtonStyle.Primary)
+              .setEmoji("1207774450658050069"),
+            new ButtonBuilder()
+              .setCustomId("replayBy")
+              .setLabel(
+                client.translation.get(
+                  guildDb?.language,
+                  "Settings.button.replayBy",
+                ),
+              )
+              .setStyle(ButtonStyle.Primary)
+              .setEmoji("1207778786976989244"),
+          );
+
+        const setDeleteButtons =
+          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+            new ButtonBuilder()
               .setCustomId("replayChannels")
+              .setEmoji("1185973661736374405")
               .setLabel(
                 client.translation.get(
                   guildDb?.language,
@@ -145,31 +184,8 @@ const button: Button = {
                   : ButtonStyle.Secondary,
               ),
             new ButtonBuilder()
-              .setCustomId("replayType")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.replayType",
-                ),
-              )
-              .setStyle(ButtonStyle.Primary)
-              .setEmoji("📝"),
-            new ButtonBuilder()
-              .setCustomId("replayBy")
-              .setLabel(
-                client.translation.get(
-                  guildDb?.language,
-                  "Settings.button.replayBy",
-                ),
-              )
-              .setStyle(ButtonStyle.Primary)
-              .setEmoji("📝"),
-          );
-
-        const chanDelete =
-          new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-            new ButtonBuilder()
               .setCustomId("replayDeleteChannels")
+              .setEmoji("1207774452230787182")
               .setLabel(
                 client.translation.get(
                   guildDb?.language,
@@ -196,7 +212,7 @@ const button: Button = {
         (modalInteraction as any).update({
           content: null,
           embeds: [generalMsg],
-          components: [generalButtons, chanDelete],
+          components: [generalButtons, setDeleteButtons],
           ephemeral: true,
         });
         return;

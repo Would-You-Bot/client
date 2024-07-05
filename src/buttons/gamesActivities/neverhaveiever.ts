@@ -2,24 +2,20 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  EmbedBuilder,
+  InteractionReplyOptions,
   MessageActionRowComponentBuilder,
   PermissionFlagsBits,
-  bold,
 } from "discord.js";
 import { Button } from "../../interfaces";
-import shuffle from "../../util/shuffle";
-
-import { getNeverHaveIEver } from "../../util/Functions/jsonImport";
-import { IUserModel, UserModel } from "../../util/Models/userModel";
+import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
+import { getQuestionsByType } from "../../util/Functions/jsonImport";
+import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "neverhaveiever",
+  cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
-      await interaction.message.edit({
-        components: [interaction.message.components[0]],
-      });
       if (interaction.channel.isThread()) {
         if (
           !interaction.channel
@@ -46,12 +42,13 @@ const button: Button = {
         }
       }
     }
-
-    const userDb = (await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
-    })) as IUserModel;
+    });
 
-    let { NeverHaveIever } = await getNeverHaveIEver(
+    let NHIE = await getQuestionsByType(
+      "neverhaveiever",
+      guildDb,
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
@@ -59,44 +56,12 @@ const button: Button = {
           : "en_EN",
     );
 
-    let dbquestions;
-
-    let nererhaveIever = [] as string[];
-
-    if (guildDb != null) {
-      dbquestions = guildDb.customMessages.filter(
-        (c) => c.type === "neverhaveiever",
-      );
-
-      if (!dbquestions.length) guildDb.customTypes = "regular";
-
-      switch (guildDb.customTypes) {
-        case "regular":
-          nererhaveIever = shuffle([...NeverHaveIever]);
-          break;
-        case "mixed":
-          nererhaveIever = shuffle([
-            ...NeverHaveIever,
-            ...dbquestions.map((c) => c.msg),
-          ]);
-          break;
-        case "custom":
-          nererhaveIever = shuffle(dbquestions.map((c) => c.msg));
-          break;
-      }
-    } else {
-      nererhaveIever = shuffle([...NeverHaveIever]);
-    }
-
-    const Random = Math.floor(Math.random() * nererhaveIever.length);
-
-    let nhiembed = new EmbedBuilder()
-      .setColor("#0598F6")
-      .setFooter({
-        text: `Requested by ${interaction.user.username} | Type: NHIE | ID: ${Random}`,
-        iconURL: interaction.user.displayAvatarURL() || undefined,
-      })
-      .setDescription(bold(nererhaveIever[Random]));
+    const nhieEmbed = new DefaultGameEmbed(
+      interaction,
+      NHIE.id,
+      NHIE.question,
+      "nhie",
+    );
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     if (Math.round(Math.random() * 15) < 3) {
@@ -131,10 +96,15 @@ const button: Button = {
       "neverhaveiever",
     );
 
+    const classicData: InteractionReplyOptions = guildDb.classicMode
+      ? { content: NHIE.question, fetchReply: true }
+      : { embeds: [nhieEmbed], components: [row, mainRow] };
+
     interaction
-      .reply({
-        embeds: [nhiembed],
-        components: [row, mainRow],
+      .reply(classicData)
+      .then(async (msg: any) => {
+        if (!guildDb.classicMode) return;
+        msg.react(":white_check_mark:"), msg.react(":x:");
       })
       .catch((err: Error) => {
         captureException(err);

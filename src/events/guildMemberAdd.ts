@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import "dotenv/config";
 import { Event } from "../interfaces";
-import { getWouldYouRather, getWwyd } from "../util/Functions/jsonImport";
+import { getQuestionsByType } from "../util/Functions/jsonImport";
 import WouldYou from "../util/wouldYou";
 
 const event: Event = {
@@ -36,41 +36,19 @@ const event: Event = {
           ])
       )
         return;
-      var General = await getWouldYouRather(guildDb.language);
-      var WhatYouDo = await getWwyd(guildDb.language);
 
-      let randomMessage;
-      if (guildDb.welcomeType === "regular") {
-        let array = [];
-        array.push(...General, ...WhatYouDo);
-        randomMessage = array[Math.floor(Math.random() * array.length)];
-      } else if (guildDb.welcomeType === "mixed") {
-        let array = [];
-        if (
-          guildDb.customMessages.filter((c) => c.type !== "nsfw").length != 0
-        ) {
-          array.push(
-            guildDb.customMessages.filter((c) => c.type !== "nsfw")[
-              Math.floor(
-                Math.random() *
-                  guildDb.customMessages.filter((c) => c.type !== "nsfw")
-                    .length,
-              )
-            ].msg,
-          );
-        } else {
-          randomMessage = [...General, ...WhatYouDo];
-        }
-        array.push(...General, ...WhatYouDo);
-        randomMessage = array[Math.floor(Math.random() * array.length)];
-      } else if (guildDb.welcomeType === "custom") {
-        randomMessage = guildDb.customMessages.filter((c) => c.type !== "nsfw")[
-          Math.floor(
-            Math.random() *
-              guildDb.customMessages.filter((c) => c.type !== "nsfw").length,
-          )
-        ].msg;
-      }
+      const General = await getQuestionsByType(
+        "wouldyourather",
+        guildDb != null ? guildDb : null,
+        guildDb?.language != null ? guildDb.language : "en_EN",
+      );
+      const WhatYouDo = await getQuestionsByType(
+        "whatwouldyoudop",
+        guildDb != null ? guildDb : null,
+        guildDb?.language != null ? guildDb.language : "en_EN",
+      );
+
+      const randomMessage = Math.random() > 0.5 ? General : WhatYouDo;
 
       channel
         .send({
@@ -81,7 +59,7 @@ const event: Event = {
             guildDb.welcomePing
               ? `<@${member.user.id}>`
               : `${member.user.username}`
-          }! ${randomMessage}`,
+          }! ${randomMessage.question}`,
         })
         .catch((err: Error) => {
           captureException(err);

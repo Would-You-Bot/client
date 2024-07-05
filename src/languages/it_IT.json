@@ -58,11 +58,14 @@
       "paginate": "Stai già guardando i messaggi personalizzati:",
       "maximum": "Hai raggiunto il limite massimo di messaggi personalizzati. Guadagnane altri votando per il bot!",
       "empty": "Non ci sono messaggi personalizzati di Would You da visualizzare!",
+      "limit": "Hai più di 100 {type} nei tuoi messaggi personalizzati. Se desideri aggiungerne di più, dovrai iscriverti a un livello premium.",
+      "addToLimit": "Le prime 100 domande per tutte le categorie sono state aggiunte automaticamente.",
       "import": {
         "att1": "È necessario fornire un file JSON valido!",
         "att2": "È necessario fornire un file JSON valido!",
         "att3": "Il file JSON che hai fornito non conteneva alcun dato! [Scopri come fare](https://i.imgur.com/glkbKrL.png)",
         "att4": "Il file JSON che hai fornito non conteneva alcun messaggio personalizzato! [Scopri come fare](https://i.imgur.com/glkbKrL.png)",
+        "att5": "Il file JSON che hai fornito non conteneva alcun messaggio personalizzato! [Scopri come fare](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
         "att15": "Si è verificato un errore durante l'esecuzione di questo comando, si prega di segnalarlo nel [server di supporto](https://discord.gg/vMyXAxEznS)!",
         "att16": "Il file JSON che hai fornito conteneva troppi dati per la categoria wouldyourather, il limite è di 30 messaggi personalizzati. Puoi guadagnarne di più votando per il bot!",
         "att17": "Il file JSON che hai fornito conteneva troppi dati per la categoria neverhaveiever, il limite è di 30 messaggi personalizzati. Puoi guadagnarne di più votando per il bot!",
@@ -121,6 +124,12 @@
       "descCust": "I comandi di Would You utilizzeranno solo i messaggi personalizzati."
     }
   },
+  "Custom": {
+    "embed": {
+      "title": "Vorresti questo potere?",
+      "footer": "Would You"
+    }
+  },
   "WouldYou": {
     "embed": {
       "Usefulname": "Vorresti questo potere?",
@@ -137,24 +146,15 @@
       "users": "utenti"
     }
   },
-  "Random": {
-    "embed": {
-      "footer": "Would You"
-    }
-  },
   "Help": {
     "embed": {
-      "title": "Informazioni",
-      "description": "**Would You** è un bot per discord costruito per aumentare l'attività del server discord. Ti permette di giocare a **Verità o Obbligo**, **Vuoi Preferire**, **Alto o Basso**, **Non ho mai** e **Cosa faresti**.",
-      "footer": "Would You",
-      "Fields": {
-        "name": "**I miei comandi**",
-        "privacyname": "**Informativa sulla privacy **",
-        "privacy": "Ci teniamo alla tua privacy. Se hai qualche dubbio su come trattiamo i tuoi dati consulta l'informativa sulla privacy [qua](https://wouldyoubot.gg/privacy)."
-      }
+      "description": "## Cos'è Would You? \n\n **Would You** è un bot che ti permette di giocare con i tuoi amici su Discord divertendoti e conoscendoti. \n## Modalità di gioco principali \n Le modalità di gioco di <:roundyou:1009964111045607525> **Would You** includono </wouldyourather:{wouldyourather}>, </neverhaveiever:{neverhaveiever}>, </whatwouldyoudo:{whatwouldyoudo}>, </higherlower:{higherlower}> e infine </truth:{truth}> o </dare:{dare}>! \n## Configurare il bot \n Puoi utilizzare i comandi **/settings** per modificare i **cooldown** dei pulsanti, abilitare e disabilitare la funzione **domanda del giorno** o il **welcomer**. \n## Privacy \n Se non vuoi apparire nelle classifiche o nei voti. Puoi regolare le tue impostazioni sulla privacy utilizzando </privacy:{privacy}>. Per sapere quali dati memorizziamo, visita la nostra [**Privacy Policy**](https://wouldyoubot.gg/privacy)"
     },
     "button": {
-      "title": "Il nostro Discord"
+      "discord": "Would You Supporto",
+      "invite": "Would You Invito",
+      "commands": "Mostra comandi",
+      "help": "Visualizza aiuto"
     }
   },
   "Vote": {
@@ -175,6 +175,9 @@
     },
     "replays": {
       "disabled": "La possibilità di giocare di nuovo è disabilitata in questo server!"
+    },
+    "button": {
+      "nocustom": "Al momento non c'è nessun messaggio personalizzato per essere visualizzato! O fare alcuni o cambiare il tipo usando /type"
     }
   },
   "REPLAY": {
@@ -215,13 +218,13 @@
     "errorSame": "Il fuso orario selezionato è lo stesso già impostato. Assicurati di scegliere un fuso orario diverso.",
     "errorInvalid": "Il fuso orario fornito non è valido, puoi sceglierne uno da questa [Lista di Fusi Orari](https://kevinnovak.github.io/Time-Zone-Picker/)",
     "intervalSame": "L'orario di pubblicazione selezionato è lo stesso già impostato. Assicurati di scegliere un orario diverso.",
-    "intervalInvalid": "L'orario di pubblicazione fornito non è valido. Assicurati che l'orario sia nel formato 24 ore e i minuti siano un multiplo di 5!",
+    "intervalInvalid": "L'orario del messaggio fornito non è valido. Assicurati che l'ora di invio sia nel formato 24h e che i minuti siano 00 o un intervallo di 5!",
     "dailyChannel": "Seleziona il canale dove vuoi che vengano inviati i Messaggi Giornalieri!",
     "replayChannel": "Seleziona il canale a cui vuoi applicare il cooldown per Gioca Ancora!",
     "replayChannelNone": "Non hai alcun canale per il Gioca Ancora!",
-    "replayCooldownMin": "Il cooldown fornito è troppo corto, assicurati che sia superiore a 2 secondi! (2000 millisecondi)",
+    "replayCooldownMin": "Il clown fornito è troppo corto, assicurati che sia superiore a 2 secondi!",
     "replayDelete": "Seleziona il canale da cui vuoi rimuovere il cooldown per Gioca Ancora!",
-    "cooldownTooLong": "Il cooldown fornito è troppo lungo. Assicurati che sia inferiore a 6 secondi! (21600000 millisecondi)!",
+    "cooldownTooLong": "Il cooldown fornito è troppo lungo. Assicurati che sia inferiore a 6 secondi! (21,600 secondi)!",
     "replayChannelLimit": "Puoi aggiungere solo 15 canali al cooldown per Gioca Ancora!",
     "dailyType": "Seleziona il tipo di Messaggio Giornaliero che vuoi venga inviato!",
     "welcomeType": "Seleziona il tipo di Messaggio di Benvenuto che vuoi venga inviato!",
@@ -230,6 +233,9 @@
     "voteSame": "Il cooldown per la votazione selezionato è lo stesso già impostato. Assicurati di scegliere un intervallo diverso.",
     "cooldownInvalid": "Il cooldown fornito non è valido. Assicurati che includa solo numeri!",
     "welcomeTestSuccess": "Questo è un esempio di come appaiono i Messaggi di Benvenuto.",
+    "premium": "Per accedere a questa funzionalità dovrai iscriverti a [Would You Premium](https://wouldyoubot.gg/premium)",
+    "invalidLink": "Fornisci un valido allegato PNG, JPG (JPEG), WEBP o GIF Discord da impostare come avatar del bot.",
+    "daysSelection": "Seleziona ogni giorno che **non** vuoi che i messaggi giornalieri siano attivi.",
     "embed": {
       "generalTitle": "Would You - Impostazioni generali",
       "replayCooldown": "**Cooldown Gioca Ancora**",
@@ -243,6 +249,7 @@
       "dailyTitle": "Would You - Messaggi Giornalieri",
       "dailyType": "**Tipo**",
       "dailyMsg": "**Attivato**",
+      "autoPin": "<:crown:1256988872160710808> **Perno automatico**",
       "dailyRole": "**Ruolo**",
       "dailyChannel": "**Canale**",
       "dailyTimezone": "**Fuso orario**",
@@ -252,9 +259,13 @@
       "welcomeChannel": "**Canale**",
       "welcomePing": "**Menzioni utente**",
       "footer": "Would You",
-      "error": "Hai bisogno del permesso `Gestire Server` per usare questo comando!"
+      "error": "Hai bisogno del permesso `Gestire Server` per usare questo comando!",
+      "username": "<:crown:1256988872160710808> **Nome Utente QOTD**",
+      "avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
+      "classicMode": "**Modalità classica **"
     },
     "button": {
+      "daySelect": "Escludere giorni",
       "dailyInterval": "Imposta ora di pubblicazione",
       "dailyChannel": "Imposta canale",
       "dailyRole": "Imposta ruolo",
@@ -263,17 +274,30 @@
       "welcomeTest": "Invia una prova",
       "dailyThread": "Attiva/disattiva thread",
       "dailyMsg": "Attiva/disattiva Messaggi Giornalieri",
+      "autoPin": "Alterna il pin automatico",
       "replayCooldown": "Imposta cooldown Gioca Ancora",
       "replayDeleteChannels": "Elimina canali Giova Ancora",
       "replayType": "Tipo Gioca Ancora",
       "replayBy": "Gioca Ancora da",
       "welcomeChannel": "Imposta canale",
       "welcome": "Attiva/disattiva benvenuti",
-      "welcomePing": "Attiva/disattiva menzioni utente"
+      "welcomePing": "Attiva/disattiva menzioni utente",
+      "avatar": "Imposta Avatar",
+      "name": "Imposta Nome Utente",
+      "classicMode": "Alterna la modalità classica"
     },
     "modal": {
       "dailyIntervalTitle": "Orario pubblicazione giornaliero",
       "dailyIntervalDescription": "Quando dovrebbe essere pubblicato il messaggio? (HH:MM)"
+    },
+    "select": {
+      "monday": "Lunedì",
+      "tuesday": "Martedì",
+      "wednesday": "Mercoledì",
+      "thursday": "Giovedì",
+      "friday": "Venerdì",
+      "saturday": "Sabato",
+      "sunday": "Domenica"
     }
   },
   "Debug": {
@@ -325,5 +349,11 @@
     "error": {
       "user": "Questa partita non appartiene a te, ma a **{user}**. Inizia la tua partita usando </higherlower:1153718305903890554>!"
     }
+  },
+  "Premium": {
+    "tier": "Livello: {type}",
+    "tier1": "Premium",
+    "tier2": "Premium + AI",
+    "tier3": "Alleato"
   }
 }
