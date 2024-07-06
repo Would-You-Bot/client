@@ -11,11 +11,7 @@ export default class PremiumHandler {
   }
 
   async check(guildId: string | null) {
-    const guild = await this.client.database.getGuild(
-      guildId!,
-      true,
-      true,
-    );
+    const guild = await this.client.database.getGuild(guildId!, true, true);
     if (guild?.premium === 0 || !guild?.premiumExpiration)
       return {
         result: false,
