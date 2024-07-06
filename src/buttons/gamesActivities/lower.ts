@@ -164,11 +164,11 @@ const button: Button = {
         .setTimestamp();
 
       const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-      
+
       const randomValue = Math.round(Math.random() * 15);
 
       const premium = await client.premium.check(interaction?.guildId);
-  
+
       if (!premium.result && randomValue < 3) {
         mainRow.addComponents([
           new ButtonBuilder()

@@ -65,7 +65,7 @@ const command: ChatInputCommand = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
           ),
       ]);
     } else if (!premium.result && randomValue >= 3 && randomValue < 8) {
@@ -77,7 +77,7 @@ const command: ChatInputCommand = {
           .setURL("https://wouldyoubot.gg/premium"),
       ]);
     }
-    
+
     mainRow.addComponents([
       new ButtonBuilder()
         .setLabel("New Question")

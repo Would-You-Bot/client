@@ -71,9 +71,9 @@ const button: Button = {
     );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-    
+
     const randomValue = Math.round(Math.random() * 15);
-    
+
     const premium = await client.premium.check(interaction?.guildId);
 
     if (!premium.result && randomValue < 3) {
