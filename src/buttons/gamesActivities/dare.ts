@@ -15,17 +15,18 @@ const button: Button = {
   name: "dare",
   cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
+    await interaction.deferUpdate();
+    await interaction.editReply({
+      components: [],
+    });
     if (interaction.guild) {
-      await interaction.message.edit({
-        components: [],
-      });
       if (interaction.channel.isThread()) {
         if (
           !interaction.channel
             ?.permissionsFor(interaction.user.id)
             .has(PermissionFlagsBits.SendMessagesInThreads)
         ) {
-          return interaction.reply({
+          return interaction.followUp({
             content:
               "You don't have permission to use this button in this channel!",
             ephemeral: true,
@@ -37,7 +38,7 @@ const button: Button = {
             ?.permissionsFor(interaction.user.id)
             .has(PermissionFlagsBits.SendMessages)
         ) {
-          return interaction.reply({
+          return interaction.followUp({
             content:
               "You don't have permission to use this button in this channel!",
             ephemeral: true,
@@ -94,7 +95,7 @@ const button: Button = {
       ? { content: DARE.question }
       : { embeds: [dareEmbed], components: components };
 
-    interaction.reply(classicData).catch((err: Error) => {
+    interaction.followUp(classicData).catch((err: Error) => {
       captureException(err);
     });
   },
