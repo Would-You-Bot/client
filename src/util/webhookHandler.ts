@@ -200,7 +200,7 @@ export default class WebhookHandler {
         name: fallbackName || "Would You",
         avatar:
           fallbackAvatarURL ||
-          "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96",
+          "https://wouldyoubot.gg/Logo.png",
         reason: reason ?? "Creating a webhook for the daily message system",
       });
 

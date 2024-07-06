@@ -176,7 +176,7 @@ export default class DailyMessage {
             this.client.user?.displayAvatarURL({ forceStatic: false }),
           //   // Change fallback url in case bot pfp changes
           //   this.client.user?.displayAvatarURL({ forceStatic: false }) ||
-          //   "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96",
+          //   "https://wouldyoubot.gg/Logo.png"",
           // // Change fallback username in case bot username changes (in like 12 thousand years xD)
           username: message.webhook.name || "Would You", // Not sure if <User>#username is appropiate, might be better to use <User>#displayName
         },
