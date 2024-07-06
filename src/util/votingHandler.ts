@@ -71,7 +71,7 @@ export default class Voting {
   ) {
     let g;
     if (guildId !== null && typeof guildId === "string")
-      g = this.client.database.getGuild(String(guildId));
+      g = this.client.database.getGuild(String(guildId), true, true);
 
     const voteId = await this.saveVoting({
       guildId,
@@ -166,7 +166,7 @@ export default class Voting {
 
     let g;
     if (vote.guildId !== null && typeof vote.guildId === "string")
-      g = this.client.database.getGuild(String(vote.guildId));
+      g = this.client.database.getGuild(String(vote.guildId), true, true);
 
     const all_votes = Number(
       vote.votes.op_one?.length + vote.votes.op_two?.length,
@@ -188,7 +188,7 @@ export default class Voting {
 
     let g;
     if (vote.guildId !== null && typeof vote.guildId === "string")
-      g = this.client.database.getGuild(String(vote.guildId));
+      g = this.client.database.getGuild(String(vote.guildId), true, true);
 
     const all_votes = Number(
       vote.votes.op_one?.length + vote.votes.op_two?.length,

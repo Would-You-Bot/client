@@ -98,7 +98,7 @@ export default class DatabaseHandler {
   async getGuild(
     guildId: string,
     createIfNotFound: boolean = true,
-    force: boolean = false,
+    force?: boolean,
   ): Promise<IGuildModel | null> {
     if (force) return this.fetchGuild(guildId, createIfNotFound);
 
@@ -142,7 +142,7 @@ export default class DatabaseHandler {
     data: object | IGuildModel,
     createIfNotFound: boolean = false,
   ) {
-    let oldData = await this.getGuild(guildId.toString(), createIfNotFound);
+    let oldData = await this.getGuild(guildId.toString(), createIfNotFound, true);
 
     if (oldData) {
       data = { ...oldData, ...data };

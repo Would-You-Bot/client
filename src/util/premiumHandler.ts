@@ -11,17 +11,14 @@ export default class PremiumHandler {
   }
 
   async check(guildId: string | null) {
-    const guild = await this.guildModel.findOne({ guildId: guildId });
 
-    if (guild?.premium === 0 || !guild?.premiumExpiration)
-      return {
-        result: false,
-        type: ":x:",
-        rawType: 0,
-        expiration: guild?.premiumExpiration,
-        user: guild?.premiumUser,
-      };
-    else
+    const guild = await this.client.database.getGuild(guildId!, true, true);
+
+    console.log("guild " + guild)
+
+    console.log(guild?.premium)
+
+    if (guild?.premium == 1)
       return {
         result: true,
         type: this.client.translation.get(
@@ -29,6 +26,14 @@ export default class PremiumHandler {
           `Premium.tier${guild?.premium}`,
         ),
         rawType: guild?.premium,
+        expiration: guild?.premiumExpiration,
+        user: guild?.premiumUser,
+      };
+    else
+      return {
+        result: false,
+        type: ":x:",
+        rawType: 0,
         expiration: guild?.premiumExpiration,
         user: guild?.premiumUser,
       };

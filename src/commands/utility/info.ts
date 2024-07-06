@@ -43,6 +43,10 @@ const command: ChatInputCommand = {
 
     const premium = await client.premium.check(interaction.guildId)
 
+    console.log(premium)
+
+    console.log(interaction.guildId)
+
     const infoEmbed = new EmbedBuilder()
       .setColor("#5865f4")
       .setTitle("Bot Info")

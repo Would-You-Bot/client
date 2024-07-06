@@ -31,6 +31,7 @@ const commandInteractionEvent: Event = {
         guildDb = await client.database.getGuild(
           interaction.guildId as string,
           true,
+          true,
         );
         client.database
           .updateGuild(interaction.guildId as string, {

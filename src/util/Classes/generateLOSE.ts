@@ -52,7 +52,7 @@ export default class LOSE {
     const user = await UserModel.findOne({
       userID: this.game.creator,
     });
-    const guild = await client.database.getGuild(this.game.guild);
+    const guild = await client.database.getGuild(this.game.guild, true, true);
 
     if (user && score > user.higherlower.highscore) {
       user.higherlower.highscore = score;
