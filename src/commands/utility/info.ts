@@ -82,7 +82,7 @@ const command: ChatInputCommand = {
         },
         {
           name: "Guild Premium 🌟",
-          value: `\`\`\`${premiumEmoji}\`\`\``,
+          value: `${premiumEmoji}`,
           inline: true,
         },
       )
