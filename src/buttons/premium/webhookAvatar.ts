@@ -37,7 +37,7 @@ const button: Button = {
     try {
       const premium = await client.premium.check(interaction.guildId);
 
-      if(!premium.result) {
+      if (!premium.result) {
         interaction.reply({
           content: client.translation.get(
             guildDb?.language,
