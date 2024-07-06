@@ -15,7 +15,7 @@ const event: Event = {
     // Always do simple if checks before the main code. This is a little but not so little performance boost :)
     if (member?.user?.bot) return;
 
-    const guildDb = await client.database.getGuild(member.guild.id, false, true);
+    const guildDb = await client.database.getGuild(member.guild.id, false);
     if (guildDb && guildDb?.welcome) {
       const channel = (await member.guild.channels
         .fetch(guildDb.welcomeChannel)

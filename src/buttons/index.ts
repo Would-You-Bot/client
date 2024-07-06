@@ -15,7 +15,7 @@ const buttonInteractionEvent: Event = {
     let guildDb;
 
     if (interaction.guildId !== null) {
-      guildDb = await client.database.getGuild(interaction.guildId, true, true);
+      guildDb = await client.database.getGuild(interaction.guildId, true);
     }
     let button = client.buttons.get(interaction.customId);
 
