@@ -142,7 +142,7 @@ export default class DatabaseHandler {
     data: object | IGuildModel,
     createIfNotFound: boolean = false,
   ) {
-    let oldData = await this.getGuild(guildId.toString(), createIfNotFound, true);
+    let oldData = await this.getGuild(guildId.toString(), createIfNotFound);
 
     if (oldData) {
       data = { ...oldData, ...data };
