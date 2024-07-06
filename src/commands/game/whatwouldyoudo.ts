@@ -43,7 +43,6 @@ const command: ChatInputCommand = {
           ? userDb.language
           : "en_EN",
     );
-    console.log(WWYD);
 
     const wwydEmbed = new DefaultGameEmbed(
       interaction,
