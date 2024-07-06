@@ -52,7 +52,12 @@ const command: ChatInputCommand = {
     );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-    if (Math.round(Math.random() * 15) < 3) {
+
+    const randomValue = Math.round(Math.random() * 15);
+    
+    const premium = await client.premium.check(interaction?.guildId);
+
+    if (!premium.result && randomValue < 3) {
       row.addComponents([
         new ButtonBuilder()
           .setLabel("Invite")
@@ -61,6 +66,14 @@ const command: ChatInputCommand = {
           .setURL(
             "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
           ),
+      ]);
+    } else if (!premium.result && randomValue >= 3 && randomValue < 8) {
+      row.addComponents([
+        new ButtonBuilder()
+          .setLabel("Premium")
+          .setStyle(5)
+          .setEmoji("1256988872160710808")
+          .setURL("https://wouldyoubot.gg/premium"),
       ]);
     }
     row.addComponents([
