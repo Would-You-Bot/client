@@ -85,7 +85,6 @@ const command: ChatInputCommand = {
       "wouldyourather",
     );
 
-
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: WYR.question, fetchReply: true }
       : { embeds: [ratherEmbed], components: [row, mainRow] };
