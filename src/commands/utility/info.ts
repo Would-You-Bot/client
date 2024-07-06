@@ -47,7 +47,7 @@ const command: ChatInputCommand = {
         {
           name: "Developers 🐧",
           value:
-            "```@dominikdev\n@forgetfulskybro\n@536b656c6c79\n@sans._.\n@gersti```",
+            "```@dominikdev\n@forgetfulskybro\n@536b656c6c79\n@dpaulos6\n@angulord```",
           inline: false,
         },
         {
