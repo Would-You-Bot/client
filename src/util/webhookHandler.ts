@@ -198,9 +198,7 @@ export default class WebhookHandler {
 
       const webhook = await channel.createWebhook({
         name: fallbackName || "Would You",
-        avatar:
-          fallbackAvatarURL ||
-          "https://wouldyoubot.gg/Logo.png",
+        avatar: fallbackAvatarURL || "https://wouldyoubot.gg/Logo.png",
         reason: reason ?? "Creating a webhook for the daily message system",
       });
 
