@@ -137,11 +137,7 @@ const buttonInteractionEvent: Event = {
       setTimeout(() => client.used.delete(cooldownKey!), cooldown);
     }
 
-    if (guildDb == null) return;
-
-    const guildDB: IGuildModel = guildDb;
-
-    return button.execute(interaction, client, guildDB);
+    return button.execute(interaction, client, guildDb as IGuildModel);
   },
 };
 
