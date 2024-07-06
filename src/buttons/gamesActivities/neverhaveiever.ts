@@ -68,7 +68,7 @@ const button: Button = {
     );
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-      
+
     const randomValue = Math.round(Math.random() * 15);
 
     const premium = await client.premium.check(interaction?.guildId);
