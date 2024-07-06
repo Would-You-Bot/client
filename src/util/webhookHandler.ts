@@ -54,12 +54,10 @@ export default class WebhookHandler {
         if (result.success) {
           if (!message.thread && !message.autoPin) return result;
           if (message.thread) {
-            const thread = await this.createThread(message, result.result);
-            return thread;
+            await this.createThread(message, result.result);
           }
           if (message.autoPin) {
-            const autoPin = await this.autoPinMessage(message, result.result);
-            return autoPin;
+            await this.autoPinMessage(message, result.result);
           }
         } else {
           return result;
@@ -75,13 +73,11 @@ export default class WebhookHandler {
           );
           if (result.success) {
             if (!message.thread && !message.autoPin) return result;
-            if (message.thread) {
-              const thread = await this.createThread(message, result.result);
-              return thread;
-            }
             if (message.autoPin) {
-              const autoPin = await this.autoPinMessage(message, result.result);
-              return autoPin;
+              await this.autoPinMessage(message, result.result);
+            }
+            if (message.thread) {
+              await this.createThread(message, result.result);
             }
           } else {
             return result;
@@ -101,13 +97,12 @@ export default class WebhookHandler {
         );
         if (result.success) {
           if (!message.thread && !message.autoPin) return result;
-          if (message.thread) {
-            const thread = await this.createThread(message, result.result);
-            return thread;
-          }
+          
           if (message.autoPin) {
-            const autoPin = await this.autoPinMessage(message, result.result);
-            return autoPin;
+             await this.autoPinMessage(message, result.result);
+          }
+          if (message.thread) {
+            await this.createThread(message, result.result);
           }
         } else {
           return result;
