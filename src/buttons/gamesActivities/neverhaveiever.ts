@@ -15,6 +15,10 @@ const button: Button = {
   name: "neverhaveiever",
   cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
+    await interaction.deferUpdate();
+    await interaction.editReply({
+      components: [interaction.message.components[0]],
+    });
     if (interaction.guild) {
       if (interaction.channel.isThread()) {
         if (
@@ -22,7 +26,7 @@ const button: Button = {
             ?.permissionsFor(interaction.user.id)
             .has(PermissionFlagsBits.SendMessagesInThreads)
         ) {
-          return interaction.reply({
+          return interaction.followUp({
             content:
               "You don't have permission to use this button in this channel!",
             ephemeral: true,
@@ -34,7 +38,7 @@ const button: Button = {
             ?.permissionsFor(interaction.user.id)
             .has(PermissionFlagsBits.SendMessages)
         ) {
-          return interaction.reply({
+          return interaction.followUp({
             content:
               "You don't have permission to use this button in this channel!",
             ephemeral: true,
@@ -101,7 +105,7 @@ const button: Button = {
       : { embeds: [nhieEmbed], components: [row, mainRow] };
 
     interaction
-      .reply(classicData)
+      .followUp(classicData)
       .then(async (msg: any) => {
         if (!guildDb?.classicMode) return;
         msg.react(":white_check_mark:"), msg.react(":x:");

@@ -41,7 +41,7 @@ const command: ChatInputCommand = {
       Math.floor(Date.now() / 1000) - Math.floor((client.uptime || 0) / 1000);
 
     const premium = await client.premium.check(interaction.guildId);
-    //Change emojis to custom if you wish
+
     let premiumEmoji = premium.result ? "✅" : "❌";
 
     const infoEmbed = new EmbedBuilder()
@@ -82,7 +82,7 @@ const command: ChatInputCommand = {
         },
         {
           name: "Guild Premium 🌟",
-          value: `${premiumEmoji}`,
+          value: `\`\`\`${premiumEmoji + " " + premium.result}\`\`\``,
           inline: true,
         },
       )

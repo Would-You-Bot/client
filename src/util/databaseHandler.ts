@@ -98,14 +98,8 @@ export default class DatabaseHandler {
   async getGuild(
     guildId: string,
     createIfNotFound: boolean = true,
-    force?: boolean,
+    force: boolean = false,
   ): Promise<IGuildModel | null> {
-    if (force) return this.fetchGuild(guildId, createIfNotFound);
-
-    if (this.cache.has(guildId)) {
-      return this.cache.get(guildId) || null;
-    }
-
     const fetched = await this.fetchGuild(guildId, createIfNotFound);
     if (fetched) {
       this.cache.set(guildId, fetched?.toObject() ?? fetched);
@@ -142,21 +136,12 @@ export default class DatabaseHandler {
     data: object | IGuildModel,
     createIfNotFound: boolean = false,
   ) {
-    let oldData = await this.getGuild(guildId.toString(), createIfNotFound);
-
-    if (oldData) {
-      data = { ...oldData, ...data };
-
-      this.cache.set(guildId.toString(), data as IGuildModel);
-
-      return this.guildModel.updateOne(
-        {
-          guildID: guildId,
-        },
-        data,
-      );
-    }
-    return null;
+    return this.guildModel.updateOne(
+      {
+        guildID: guildId,
+      },
+      data,
+    );
   }
 
   /**
