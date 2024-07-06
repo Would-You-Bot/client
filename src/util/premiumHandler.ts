@@ -14,10 +14,6 @@ export default class PremiumHandler {
 
     const guild = await this.client.database.getGuild(guildId!, true, true);
 
-    console.log("guild " + guild)
-
-    console.log(guild?.premium)
-
     if (guild?.premium == 1)
       return {
         result: true,
