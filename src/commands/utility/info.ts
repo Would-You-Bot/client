@@ -40,6 +40,9 @@ const command: ChatInputCommand = {
     const unixstamp =
       Math.floor(Date.now() / 1000) - Math.floor((client.uptime || 0) / 1000);
 
+
+    const premium = await client.premium.check(interaction.guildId)
+
     const infoEmbed = new EmbedBuilder()
       .setColor("#5865f4")
       .setTitle("Bot Info")
@@ -74,6 +77,11 @@ const command: ChatInputCommand = {
         {
           name: "Bot Version 🧾",
           value: `\`\`\`v${version}\`\`\``,
+          inline: true,
+        },
+        {
+          name: "Guild Premium 🌟",
+          value: `\`\`\`${premium.result}\`\`\``,
           inline: true,
         },
       )
