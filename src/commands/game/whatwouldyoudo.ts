@@ -72,7 +72,7 @@ const command: ChatInputCommand = {
         .setCustomId(`wwyd`),
     ]);
 
-    const classicData: InteractionReplyOptions = guildDb.classicMode
+    const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: WWYD.question }
       : { embeds: [wwydEmbed], components: [row] };
 

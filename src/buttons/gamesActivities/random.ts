@@ -90,7 +90,7 @@ const button: Button = {
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
 
-    const classicData: InteractionReplyOptions = guildDb.classicMode
+    const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: RANDOM.question }
       : { embeds: [randomEmbed], components: components };
 

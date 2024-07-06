@@ -76,7 +76,7 @@ const command: ChatInputCommand = {
       new ButtonBuilder().setLabel("Random").setStyle(1).setCustomId("random"),
     ]);
 
-    const classicData: InteractionReplyOptions = guildDb.classicMode
+    const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: TRUTH.question }
       : { embeds: [truthEmbed], components: components };
 

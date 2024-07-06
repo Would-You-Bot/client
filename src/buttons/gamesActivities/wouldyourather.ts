@@ -111,14 +111,14 @@ const button: Button = {
       "wouldyourather",
     );
 
-    const classicData: InteractionReplyOptions = guildDb.classicMode
+    const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: WYR.question, fetchReply: true }
       : { embeds: [ratherEmbed], components: [row, mainRow] };
 
     interaction
       .reply(classicData)
       .then(async (msg: any) => {
-        if (!guildDb.classicMode) return;
+        if (!guildDb?.classicMode) return;
         msg.react("🅰️"), msg.react("🇧");
       })
       .catch((err: Error) => {

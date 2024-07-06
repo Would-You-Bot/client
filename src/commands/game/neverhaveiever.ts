@@ -84,14 +84,14 @@ const command: ChatInputCommand = {
       "neverhaveiever",
     );
 
-    const classicData: InteractionReplyOptions = guildDb.classicMode
+    const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: NHIE.question, fetchReply: true }
       : { embeds: [nhieEmbed], components: [row, mainRow] };
 
     interaction
       .reply(classicData)
       .then(async (msg: any) => {
-        if (!guildDb.classicMode) return;
+        if (!guildDb?.classicMode) return;
         msg.react(":white_check_mark:"), msg.react(":x:");
       })
       .catch((err) => {

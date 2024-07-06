@@ -88,7 +88,7 @@ const button: Button = {
         .setCustomId(`wwyd`),
     ]);
 
-    const classicData: InteractionReplyOptions = guildDb.classicMode
+    const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: WWYD.question, fetchReply: true }
       : { embeds: [wwydEmbed], components: [row] };
 
