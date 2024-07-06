@@ -136,13 +136,12 @@ export default class DatabaseHandler {
     data: object | IGuildModel,
     createIfNotFound: boolean = false,
   ) {
- 
-      return this.guildModel.updateOne(
-        {
-          guildID: guildId,
-        },
-        data,
-      );
+    return this.guildModel.updateOne(
+      {
+        guildID: guildId,
+      },
+      data,
+    );
   }
 
   /**
