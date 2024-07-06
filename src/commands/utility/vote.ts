@@ -24,24 +24,14 @@ const command: ChatInputCommand = {
     const votemebed = new EmbedBuilder()
       .setColor("#5865f4")
       .setTitle(client.translation.get(guildDb?.language, "Vote.embed.title"))
-      .addFields(
-        {
-          name: "Wumpus.store",
-          value: `> [ ${client.translation.get(
-            guildDb?.language,
-            "Vote.embed.value",
-          )}  ](https://wumpus.store/bot/981649513427111957/vote)`,
-          inline: true,
-        },
-        {
-          name: "Top.gg",
-          value: `> [ ${client.translation.get(
-            guildDb?.language,
-            "Vote.embed.value",
-          )}  ](https://top.gg/bot/981649513427111957/vote)`,
-          inline: true,
-        },
-      )
+      .addFields({
+        name: "Top.gg",
+        value: `> [ ${client.translation.get(
+          guildDb?.language,
+          "Vote.embed.value",
+        )}  ](https://top.gg/bot/981649513427111957/vote)`,
+        inline: true,
+      })
       .setThumbnail(client.user?.displayAvatarURL() || "")
       .setFooter({
         text: client.translation.get(guildDb?.language, "Vote.embed.footer"),
