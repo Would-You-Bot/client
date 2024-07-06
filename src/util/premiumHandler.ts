@@ -11,7 +11,6 @@ export default class PremiumHandler {
   }
 
   async check(guildId: string | null) {
-
     const guild = await GuildModel.findOne({ guildID: guildId });
 
     if (guild?.premium == 1)

@@ -97,9 +97,9 @@ export default class WebhookHandler {
         );
         if (result.success) {
           if (!message.thread && !message.autoPin) return result;
-          
+
           if (message.autoPin) {
-             await this.autoPinMessage(message, result.result);
+            await this.autoPinMessage(message, result.result);
           }
           if (message.thread) {
             await this.createThread(message, result.result);
