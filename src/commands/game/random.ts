@@ -54,7 +54,7 @@ const command: ChatInputCommand = {
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     let components = [];
-    
+
     const premium = await client.premium.check(interaction?.guildId);
 
     const randomValue = Math.round(Math.random() * 15);
@@ -66,7 +66,7 @@ const command: ChatInputCommand = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
           ),
       ]);
       components = [row, row2];
