@@ -27,16 +27,12 @@ const command: ChatInputCommand = {
     .addSubcommand((cmd) => {
       cmd
         .setName("cooldowns")
-        .setNameLocalizations({
-          de: "cooldowns",
-          "es-ES": "cooldowns",
-          fr: "temps-de-recharge",
-        })
-        .setDescription("Cooldown Settings")
+        .setDescription("Change settings regarding cooldowns")
         .setDescriptionLocalizations({
-          de: "Cooldown Einstellungen",
-          "es-ES": "Configuración Cooldown",
-          fr: "Réglages de temps de recharge",
+          de: "Ändere Einstellungen bezüglich des Cooldowns",
+          "es-ES": "Cambiar la configuración del tiempo de espera",
+          fr: "Modifier les paramètres de temps d'attente",
+          it: "Cambia le impostazioni relative al tempo di attesa",
         });
 
       return cmd;
@@ -44,16 +40,12 @@ const command: ChatInputCommand = {
     .addSubcommand((cmd) => {
       cmd
         .setName("qotd")
-        .setNameLocalizations({
-          de: "qotd",
-          "es-ES": "qotd",
-          fr: "qotd",
-        })
-        .setDescription("QOTD Settings")
+        .setDescription("Change settings regarding the QOTD system")
         .setDescriptionLocalizations({
-          de: "QOTD Nachrichteneinstellungen",
-          "es-ES": "QOTD de mensajes diarios",
-          fr: "Paramètres de message QOTD",
+          de: "Ändere Einstellungen bezüglich des QOTD-Systems",
+          "es-ES": "Cambiar la configuración del sistema de Pregunta del día",
+          fr: "Modifier les paramètres du système QOTD",
+          it: "Cambia le impostazioni relative al sistema QOTD",
         });
 
       return cmd;
@@ -61,16 +53,12 @@ const command: ChatInputCommand = {
     .addSubcommand((cmd) => {
       cmd
         .setName("welcome")
-        .setNameLocalizations({
-          de: "willkommen",
-          "es-ES": "bienvenido",
-          fr: "bienvenu",
-        })
-        .setDescription("Welcome Settings")
+        .setDescription("Change settings regarding welcome messages")
         .setDescriptionLocalizations({
-          de: "Willkommenseinstellungen",
-          "es-ES": "Configuración de bienvenida",
-          fr: "Paramètres de bienvenue",
+          de: "Ändere Einstellungen bezüglich der Willkommensnachrichten",
+          "es-ES": "Cambiar la configuración de los mensajes de bienvenida",
+          fr: "Modifier les paramètres des messages de bienvenue",
+          it: "Cambia le impostazioni dei messaggi di benvenuto",
         });
 
       return cmd;
@@ -78,16 +66,12 @@ const command: ChatInputCommand = {
     .addSubcommand((cmd) => {
       cmd
         .setName("utility")
-        .setNameLocalizations({
-          de: "nützliches",
-          "es-ES": "utilidad",
-          fr: "utilitaire",
-        })
-        .setDescription("Utility Settings")
+        .setDescription("Change useful utility settings")
         .setDescriptionLocalizations({
-          de: "Nützliche Einstellungen",
-          "es-ES": "Configuración de utilidad",
-          fr: "Paramètres d'utilité",
+          de: "Ändere nützliche Einstellungen",
+          "es-ES": "Cambiar la configuración de utilidad útil",
+          fr: "Modifier les paramètres d'utilité utile",
+          it: "Cambia le impostazioni utility utili",
         });
 
       return cmd;
