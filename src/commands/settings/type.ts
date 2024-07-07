@@ -13,6 +13,7 @@ const command: ChatInputCommand = {
     .setName("type")
     .setDescription("Changes the kind of questions you get")
     .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: "Ändert den Typ der Nachrichten, die verwendet werden",
       "es-ES": "Cambia el tipo de mensajes que se utilizarán",
