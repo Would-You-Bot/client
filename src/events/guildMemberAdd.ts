@@ -41,9 +41,9 @@ const event: Event = {
         "wouldyourather",
         guildDb != null ? guildDb : null,
         guildDb?.language != null ? guildDb.language : "en_EN",
-      );
+      );  
       const WhatYouDo = await getQuestionsByType(
-        "whatwouldyoudop",
+        "whatwouldyoudo",
         guildDb != null ? guildDb : null,
         guildDb?.language != null ? guildDb.language : "en_EN",
       );
