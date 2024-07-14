@@ -202,7 +202,10 @@ const button: Button = {
 
       gameImage.build(game?.score || 0, client).then((image) => {
         interaction.editReply({
-          content: !premium.result && randomValue >= 3 && randomValue < 6 ? client.translation.get(guildDb?.language, "Premium.message") : undefined,
+          content:
+            !premium.result && randomValue >= 3 && randomValue < 6
+              ? client.translation.get(guildDb?.language, "Premium.message")
+              : undefined,
           embeds: [loseEmbed],
           components: [mainRow],
           files: [

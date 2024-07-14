@@ -107,7 +107,14 @@ const button: Button = {
 
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: RANDOM.question }
-      : { content: !premium.result && randomValue >= 3 && randomValue < 6 ? client.translation.get(guildDb?.language, "Premium.message") : undefined, embeds: [randomEmbed], components: components };
+      : {
+          content:
+            !premium.result && randomValue >= 3 && randomValue < 6
+              ? client.translation.get(guildDb?.language, "Premium.message")
+              : undefined,
+          embeds: [randomEmbed],
+          components: components,
+        };
 
     interaction.followUp(classicData).catch((err: Error) => {
       captureException(err);
