@@ -351,6 +351,7 @@
     }
   },
   "Premium": {
+    "message": "*You can [subscribe to Would You Premium](https://wouldyoubot.gg/premium) to unlock more features and support the bot!*",
     "tier": "Tier: {type}",
     "tier1": "Premium",
     "tier2": "Premium + AI",

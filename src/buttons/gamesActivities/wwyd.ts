@@ -86,7 +86,7 @@ const button: Button = {
             "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
           ),
       ]);
-    } else if (!premium.result && randomValue >= 3 && randomValue < 8) {
+    } else if (!premium.result && randomValue >= 3 && randomValue < 6) {
       row.addComponents([
         new ButtonBuilder()
           .setLabel("Premium")
@@ -106,7 +106,7 @@ const button: Button = {
 
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: WWYD.question, fetchReply: true }
-      : { embeds: [wwydEmbed], components: [row] };
+      : { content: !premium.result && randomValue >= 3 && randomValue < 6 ? client.translation.get(guildDb?.language, "Premium.message") : undefined, embeds: [wwydEmbed], components: [row] };
 
     interaction.followUp(classicData).catch((err: Error) => {
       captureException(err);
