@@ -63,7 +63,7 @@ export default class Voting {
         upsert: true,
         new: true,
         runValidators: true,
-      }
+      },
     );
 
     this._cache.set(id, vote);
