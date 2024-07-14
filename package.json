@@ -4,7 +4,7 @@
   "description": "Would You is a popular Discord bot that allows you to play the classic game of Would You Rather with your friends!",
   "main": "dist/cluster.js",
   "scripts": {
-    "start": "node --enable-source-maps dist/cluster.js",
+    "start": "node --enable-source-maps --max-old-space-size=12288 dist/cluster.js",
     "dev": "tsc && pnpm run copy-files && node --enable-source-maps dist/cluster.js",
     "build": "tsc && pnpm run copy-files",
     "copy-files": "copyfiles -u 1 src/**/*.ttf src/**/*.png src/**/*.psd dist/",
