@@ -43,18 +43,28 @@ export default class Voting {
   }) {
     const id = uuidv4();
 
-    const vote = new VoteModel({
-      id,
-      guild: guildId,
-      channel: channelId,
-      type,
-      until: until,
-      votes: {
-        op_one,
-        op_two,
+    const vote = await VoteModel.findOneAndUpdate(
+      { id: id },
+      {
+        $set: {
+          guild: guildId,
+          channel: channelId,
+          type: type,
+          until: until,
+        },
+        $setOnInsert: {
+          votes: {
+            op_one: op_one,
+            op_two: op_two,
+          },
+        },
       },
-    });
-    await vote.save();
+      {
+        upsert: true,
+        new: true,
+        runValidators: true,
+      }
+    );
 
     this._cache.set(id, vote);
 
