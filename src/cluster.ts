@@ -6,6 +6,7 @@ const manager = new ClusterManager(`${__dirname}/index.js`, {
   totalShards: "auto",
   mode: "process",
   token: process.env.TOKEN,
+  execArgv: ["--max-old-space-size=6000"],
 });
 
 manager.on("clusterCreate", (cluster) => {
