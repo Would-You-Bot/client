@@ -39,11 +39,13 @@ const event: Event = {
 
       const General = await getQuestionsByType(
         "wouldyourather",
+        // @ts-ignore
         guildDb != null ? guildDb : null,
         guildDb?.language != null ? guildDb.language : "en_EN",
       );
       const WhatYouDo = await getQuestionsByType(
         "whatwouldyoudo",
+         // @ts-ignore
         guildDb != null ? guildDb : null,
         guildDb?.language != null ? guildDb.language : "en_EN",
       );

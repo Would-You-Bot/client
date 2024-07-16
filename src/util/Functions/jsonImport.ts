@@ -1,6 +1,6 @@
 import path from "path";
-import { Questions } from "../Functions/queueHandler";
 import { IGuildModel } from "../Models/guildModel";
+import { usedQuestionModel } from "../Models/usedModel";
 import {
   dareModel,
   nhieModel,
@@ -8,6 +8,23 @@ import {
   wwydModel,
   wyrModel,
 } from "../Models/questionModel";
+
+
+import * as winston from 'winston';
+
+// Configure Winston logger
+const logger = winston.createLogger({
+  level: 'debug',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+});
 
 interface LanguageMapInterface {
   [key: string]: string;
@@ -21,6 +38,7 @@ const languageMap: LanguageMapInterface = {
 };
 
 import shuffle from "../shuffle";
+import { MongooseError, UpdateWriteOpResult } from "mongoose";
 
 export interface QuestionResult {
   id: string;
@@ -54,23 +72,25 @@ const typeCheck: { [key: string]: string } = {
   whatwouldyoudo: "wwydQuestions",
 };
 
+
 function getPath(file: string) {
-  return path.join(__dirname, "..", "..", "data", file);
+  const fullPath = path.join(__dirname, "..", "..", "data", file);
+  logger.debug(`Getting path for file: ${file}, Full path: ${fullPath}`);
+  return fullPath;
 }
 
-interface HigherLowerJsonModel {
-  id: string;
-  keyword: string;
-  value: number;
-  author: string;
-  link: string;
-}
-
-export async function getHigherLower(): Promise<HigherLowerJsonModel[]> {
-  let result = [] as HigherLowerJsonModel[];
-  await import(getPath("hl-en_EN.json")).then((value) => {
-    result = value.data;
-  });
+export async function getHigherLower(): Promise<any[]> {
+  logger.info('Fetching HigherLower data');
+  let result = [] as any[];
+  try {
+    await import(getPath("hl-en_EN.json")).then((value) => {
+      result = value.data;
+    });
+    logger.debug(`HigherLower data fetched, length: ${result.length}`);
+  } catch (error) {
+    logger.error('Error fetching HigherLower data', { error });
+    throw error;
+  }
   return result;
 }
 
@@ -78,30 +98,33 @@ export async function getRandomTod(
   guildDb: IGuildModel,
   language: string,
 ): Promise<QuestionResult> {
+  logger.info(`Getting random ToD for guild: ${guildDb.guildID}, language: ${language}`);
   let result;
 
-  const truth = await getQuestionsByType("truth", guildDb, language);
-  const dare = await getQuestionsByType("dare", guildDb, language);
+  try {
+    const truth = await getQuestionsByType("truth", guildDb, language);
+    const dare = await getQuestionsByType("dare", guildDb, language);
 
-  if (Math.random() < 0.5) {
-    result = truth;
-  } else {
-    result = dare;
+    result = Math.random() < 0.5 ? truth : dare;
+    logger.debug(`Random ToD result: ${result.id}`);
+  } catch (error) {
+    logger.error('Error getting random ToD', { error, guildId: guildDb.guildID, language });
+    throw error;
   }
+
   return result;
 }
 
 export async function getQuestionsByType(
   type: string,
-  guildDb: IGuildModel | null,
+  guildDb: IGuildModel,
   language: string,
 ): Promise<QuestionResult> {
   if (!validTypes.includes(type)) {
-    throw new Error(`Invalid question type: ${type}`);
+    return Promise.reject("Invalid type");
   }
 
-  // TODO: Make this work with the language system
-  const normalizedLanguage = languageMap[language];
+  const normalizedLanguage = languageMap[language] || "en";
 
   const models: { [key: string]: any } = {
     wouldyourather: wyrModel,
@@ -113,73 +136,40 @@ export async function getQuestionsByType(
 
   const selectedModel = models[type.toLowerCase()];
 
-  let result = {} as QuestionResult;
+  let result: QuestionResult | Object = {};
 
-  if (!selectedModel) {
-    throw new Error(`Invalid question type: ${type}`);
-  }
+  const usedQuqestions = await usedQuestionModel.find({ guildID: guildDb.guildID });
 
-  const questions = await selectedModel.aggregate([{ $sample: { size: 1 } }]);
+  let questions;
 
-  if (questions.length === 0) {
-    throw new Error("No questions found");
-  }
+  const unwantedIds = usedQuqestions
 
-  if (guildDb != null) {
-    const dbquestions = guildDb.customMessages.filter(
-      (c) => c.type === "dare" || c.type === "truth",
-    );
-    if (!dbquestions.length) guildDb.customTypes = "regular";
-
-    const Random = Math.floor(Math.random() * dbquestions.length);
-
-    switch (guildDb.customTypes) {
-      case "regular":
-        result = {
-          id: questions[0].id,
-          question:
-            normalizedLanguage === "en"
-              ? questions[0].question
-              : questions[0].translations[normalizedLanguage],
-        };
-        break;
-      case "mixed":
-        const mixedQuestions = shuffle([
-          ...questions.concat(dbquestions[Random]),
-        ]);
-
-        result = {
-          id: mixedQuestions[0].id,
-          question:
-            normalizedLanguage === "en"
-              ? mixedQuestions[0].msg
-                ? mixedQuestions[0].msg
-                : mixedQuestions[0].question
-              : mixedQuestions[0].msg
-                ? mixedQuestions[0].msg
-                : mixedQuestions[0].translations[normalizedLanguage],
-        };
-        break;
-      case "custom":
-        result = {
-          id: dbquestions[Random].id,
-          question: dbquestions[Random].msg,
-        };
-        break;
-    }
-    result = await Questions(result, null, guildDb, {
-      quest: typeCheck[type] as Quest,
-      questType: type as QuestType,
+  const questionDatabase = selectedModel.aggregate([
+    { $match: { ["id"]: { $nin: unwantedIds } } },
+    { $sample: { size: 1 } }
+  ])
+    .then((result: Array<QuestionResult>) => {
+      questions = result;
+    })
+    .catch((err: MongooseError) => {
+      console.log(err)
     });
-  } else {
-    result = {
-      id: questions[0].id,
-      question:
-        normalizedLanguage === "en"
-          ? questions[0].question
-          : questions[0].translations[normalizedLanguage],
-    };
-  }
 
-  return result;
+    questionDatabase
+  
+return Promise.resolve({id: '1', question: 'test'});
+}
+
+export async function reset(type: Quest, guildID: string): Promise<UpdateWriteOpResult> {
+
+  const selectedModel = typeCheck[type];
+
+  return await usedQuestionModel.updateOne(
+    { guildID },
+    { $set: { 
+        [selectedModel]: [],
+      } 
+    }
+  )
+
 }
