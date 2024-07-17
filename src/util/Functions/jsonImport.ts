@@ -7,6 +7,7 @@ import {
   truthModel,
   wwydModel,
   wyrModel,
+  IQuestionModel,
 } from "../Models/questionModel";
 
 
@@ -38,7 +39,7 @@ const languageMap: LanguageMapInterface = {
 };
 
 import shuffle from "../shuffle";
-import { MongooseError, UpdateWriteOpResult } from "mongoose";
+import type { MongooseError, UpdateWriteOpResult } from "mongoose";
 
 export interface QuestionResult {
   id: string;
@@ -136,26 +137,35 @@ export async function getQuestionsByType(
 
   const selectedModel = models[type.toLowerCase()];
 
+
+
+  console.log(selectedModel);
+
   let result: QuestionResult | Object = {};
 
   const usedQuqestions = await usedQuestionModel.find({ guildID: guildDb.guildID });
 
-  let questions;
+  console.log(usedQuqestions[0]["wwydQuestions"]);
 
-  const unwantedIds = usedQuqestions
-
-  const questionDatabase = selectedModel.aggregate([
-    { $match: { ["id"]: { $nin: unwantedIds } } },
+  const questionDatabase = await selectedModel.aggregate([
+    { $match: { "id": { $nin: usedQuqestions[0]["wwydQuestions"] } } },
     { $sample: { size: 1 } }
   ])
-    .then((result: Array<QuestionResult>) => {
-      questions = result;
-    })
     .catch((err: MongooseError) => {
       console.log(err)
     });
 
-    questionDatabase
+    console.log(questionDatabase);
+
+    console.log(questionDatabase[0].id);
+
+   //if (questionDatabase?.length === 0) {
+   //  console.log('No questions found')
+   //  reset(type as Quest, guildDb.guildID);
+   //}
+
+  //result = questionDatabase;
+
   
 return Promise.resolve({id: '1', question: 'test'});
 }
