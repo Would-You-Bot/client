@@ -128,8 +128,7 @@ const button: Button = {
       .followUp(classicData)
       .then(async (msg: any) => {
         if (!guildDb?.classicMode) return;
-        await msg.react("✅"), 
-        await msg.react("❌")
+        await msg.react("✅"), await msg.react("❌");
       })
       .catch((err: Error) => {
         captureException(err);

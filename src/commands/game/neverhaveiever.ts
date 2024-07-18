@@ -106,8 +106,7 @@ const command: ChatInputCommand = {
       .reply(classicData)
       .then(async (msg: any) => {
         if (!guildDb?.classicMode) return;
-        await msg.react("✅"), 
-        await msg.react("❌")
+        await msg.react("✅"), await msg.react("❌");
       })
       .catch((err) => {
         captureException(err);
