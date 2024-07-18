@@ -157,14 +157,17 @@ export async function getQuestionsByType(
 
     console.log(questionDatabase);
 
-    console.log(questionDatabase[0].id);
+   if (!questionDatabase[0]?.id) {
+     await reset(type as Quest, guildDb.guildID);
+     return getQuestionsByType(type, guildDb, language);
+   }
 
-   //if (questionDatabase?.length === 0) {
-   //  console.log('No questions found')
-   //  reset(type as Quest, guildDb.guildID);
-   //}
-
-  //result = questionDatabase;
+   // Add the question to the used questions
+    await usedQuestionModel.updateOne(
+      { guildID: guildDb.guildID },
+      { $push: { [typeCheck[type]]: questionDatabase[0].id } }
+    );
+  
 
   
 return Promise.resolve({id: '1', question: 'test'});
