@@ -55,12 +55,17 @@ export default class WebhookHandler {
           if (!message.thread && !message.autoPin) return result;
           if (message.thread) {
             const thread = await this.createThread(message, result.result);
-            return thread;
+            if (!thread.success) {
+              return thread;
+            }
           }
           if (message.autoPin) {
             const autoPin = await this.autoPinMessage(message, result.result);
-            return autoPin;
+            if (!autoPin.success) {
+              return autoPin;
+            }
           }
+          return result;
         } else {
           return result;
         }
@@ -77,12 +82,17 @@ export default class WebhookHandler {
             if (!message.thread && !message.autoPin) return result;
             if (message.thread) {
               const thread = await this.createThread(message, result.result);
-              return thread;
+              if (!thread.success) {
+                return thread;
+              }
             }
             if (message.autoPin) {
               const autoPin = await this.autoPinMessage(message, result.result);
-              return autoPin;
+              if (!autoPin.success) {
+                return autoPin;
+              }
             }
+            return result;
           } else {
             return result;
           }
@@ -92,6 +102,7 @@ export default class WebhookHandler {
       }
     } else {
       const newWebhook = await this.webhookFallBack(channel, message);
+
       if (newWebhook.success) {
         const result = await this.send(
           newWebhook.result,
@@ -103,12 +114,17 @@ export default class WebhookHandler {
           if (!message.thread && !message.autoPin) return result;
           if (message.thread) {
             const thread = await this.createThread(message, result.result);
-            return thread;
+            if (!thread.success) {
+              return thread;
+            }
           }
           if (message.autoPin) {
             const autoPin = await this.autoPinMessage(message, result.result);
-            return autoPin;
+            if (!autoPin.success) {
+              return autoPin;
+            }
           }
+          return result;
         } else {
           return result;
         }
@@ -118,7 +134,7 @@ export default class WebhookHandler {
     }
     return {
       success: false,
-      error: new Error("Unhandled case in handleWebhook"),
+      error: new Error("Unhandled case in handleWebhook"), // (Skeleton man) Yea no Idea how this gets called?
     };
   }
   private async send(

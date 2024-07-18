@@ -163,7 +163,6 @@ export default class DailyMessage {
   ): Promise<Result<string>> {
     const premium: boolean = (await this.client.premium.check(channel.guildId))
       .result;
-
     try {
       const result = await this.client.webhookHandler.handleWebhook(
         /// mhmmmm I'm in general btw @ debug // one sec
