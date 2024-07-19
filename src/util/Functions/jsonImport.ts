@@ -1,5 +1,5 @@
 import path from "path";
-import { IGuildModel } from "../Models/guildModel";
+import { IGuildModel, GuildModel } from "../Models/guildModel";
 import {
   dareModel,
   nhieModel,
@@ -28,33 +28,25 @@ export interface QuestionResult {
   question: string;
 }
 
-type QuestType =
-  | "wouldyourather"
-  | "neverhaveiever"
-  | "whatwouldyoudo"
-  | "truth"
-  | "dare";
-
 type Quest =
   | "truthQuestions"
-  | "customTruthQuestions"
   | "dareQuestions"
-  | "customDareQuestions"
   | "wwydQuestions"
-  | "customWwydQuestions"
   | "nhieQuestions"
-  | "customNhieQuestions"
-  | "wyrQuestions"
-  | "customWyrQuestions"
+  | "wyrQuestions";
 
 const validTypes = [
   "wouldyourather",
+  "customwouldyourather",
   "neverhaveiever",
+  "customneverhaveiever",
   "truth",
+  "customtruth",
   "dare",
+  "customdare",
   "whatwouldyoudo",
+  "customwhatwouldyoudo",
 ];
-
 
 interface IUsedQuestions {
   wyrQuestions: string[];
@@ -71,23 +63,26 @@ interface IUsedQuestions {
 
 const typeCheck: { [key: string]: keyof IUsedQuestions } = {
   wouldyourather: "wyrQuestions",
-  customwouldyourather: "customWyrQuestions",
   neverhaveiever: "nhieQuestions",
-  customneverhaveiever: "customNhieQuestions",
   truth: "truthQuestions",
-  customtruth: "customTruthQuestions",
   dare: "dareQuestions",
-  customdare: "customDareQuestions",
   whatwouldyoudo: "wwydQuestions",
-  customwhatwouldyoudo: "customWwydQuestions",
+};
+
+const resetCustomTypeCheck: { [key: string]: keyof IUsedQuestions } = {
+  wouldyourather: "customWyrQuestions",
+  neverhaveiever: "customNhieQuestions",
+  truth: "customTruthQuestions",
+  dare: "customDareQuestions",
+  whatwouldyoudo: "customWwydQuestions",
 };
 
 const customTypeCheck: { [key: string]: string } = {
-  wouldyourather: "wouldyourather",
-  neverhaveiever: "neverhaveiever",
-  truth: "truth",
-  dare: "dare",
-  whatwouldyoudo: "wwyd",
+  customwouldyourather: "customWouldyourather",
+  customneverhaveiever: "customNeverhaveiever",
+  customtruth: "customTruth",
+  customdare: "customDare",
+  customwhatwouldyoudo: "customWwyd",
 };
 
 function getPath(file: string) {
@@ -130,126 +125,141 @@ export async function getQuestionsByType(
   guildDb: IGuildModel,
   language: string,
 ): Promise<QuestionResult> {
-    if (!validTypes.includes(type)) {
-      return Promise.reject("Invalid type");
-    }
-    console.log("uwu")
+  if (!validTypes.includes(type)) {
+    return Promise.reject("Invalid type");
+  }
 
-    const normalizedLanguage = languageMap[language] || "en";
+  const normalizedLanguage = languageMap[language] || "en";
 
-    const models: { [key: string]: any } = {
-      wouldyourather: wyrModel,
-      neverhaveiever: nhieModel,
-      truth: truthModel,
-      dare: dareModel,
-      whatwouldyoudo: wwydModel,
-    };
+  const models: { [key: string]: any } = {
+    wouldyourather: wyrModel,
+    neverhaveiever: nhieModel,
+    truth: truthModel,
+    dare: dareModel,
+    whatwouldyoudo: wwydModel,
+  };
 
-    const selectedModel = models[type.toLowerCase()];
+  const selectedModel = models[type.toLowerCase()];
 
-    let result: QuestionResult = { id: "", question: "" };
+  let result: QuestionResult = { id: "", question: "" };
 
-    if (guildDb != null) {
-      const usedQuestions = await usedQuestionModel.find({
+  if (guildDb != null) {
+    const usedQuestions = await usedQuestionModel.find({
+      guildID: guildDb.guildID,
+    });
+
+    if (!usedQuestions[0]) {
+      await usedQuestionModel.create({
         guildID: guildDb.guildID,
+        customTruthQuestions: [],
+        truthQuestions: [],
+        customDareQuestions: [],
+        dareQuestions: [],
+        customNhieQuestions: [],
+        nhieQuestions: [],
+        wwydQuestions: [],
+        customWwydQuestions: [],
+        wyrQuestions: [],
+        customWyrQuestions: [],
       });
-      console.log("no spam pls " + String(usedQuestions[0][typeCheck[type]]));
+    }
 
-      const questionDatabase = await selectedModel.aggregate([
-        { $match: { id: { $nin: usedQuestions[0][typeCheck[type]] } } },
-        { $sample: { size: 1 } },
-      ]);
+    console.log(usedQuestions[0]);
 
-      if (!questionDatabase[0]?.id) {
-        console.log(questionDatabase)
-        console.log("reset");
-        await reset(type as Quest, guildDb.customTypes, guildDb.guildID);
-        return getQuestionsByType(type, guildDb, language);
-      }
+    const questionDatabase = await selectedModel.aggregate([
+      { $match: { id: { $nin: usedQuestions[0][typeCheck[type]] } } },
+      { $sample: { size: 1 } },
+    ]);
 
-      const randomCustomQuestion = shuffle(
-        guildDb.customMessages.filter(
-          (q) => q.type === type &&
-            !usedQuestions[0][typeCheck[customTypeCheck["custom" + type]]].includes(q.id)
-        )
-      )[0];
-      console.log("debug: " + !usedQuestions[0][typeCheck[customTypeCheck["custom" + type]]])
+    console.log("questionDatabase 172" + questionDatabase)
 
-      if(!randomCustomQuestion) {
-        console.log(randomCustomQuestion);
-        guildDb.customTypes = "regular";
-      }
+    if (!questionDatabase[0]?.id && guildDb.customTypes == "regular") {
+      await reset(type as any, guildDb.customTypes, guildDb.guildID);
+      return getQuestionsByType(type, guildDb, language);
+    }
 
-      switch (guildDb.customTypes) {
-        case "regular":
-          result = {
-            id: questionDatabase[0].id,
-            question:
-              normalizedLanguage === "en"
-                ? questionDatabase[0].question
-                : questionDatabase[0].translations[normalizedLanguage],
-          };
-          console.log(result);
-          console.log("regular");
-          break;
-        case "mixed":
-          const mixedQuestions = shuffle([
-            ...questionDatabase.concat(randomCustomQuestion),
-          ]);
+    const newRandomCustomQuestion = await GuildModel.aggregate([
+      { $match: { guildID: guildDb.guildID } },
+      { $unwind: "$customMessages" },
+      { $match: { 
+        "customMessages.id": { $nin: usedQuestions[0][typeCheck[type]] },
+        "customMessages.type": type === "whatwouldyoudo" ? "wwyd" : type
+      } },
+      { $sample: { size: 1 } },
+      { $project: {
+        id: "$customMessages.id",
+        msg: "$customMessages.msg",
+        type: "$customMessages.type"
+      }}
+    ]);
 
-          result = {
-            id: mixedQuestions[0].id,
-            question:
-              normalizedLanguage === "en"
-                ? mixedQuestions[0].msg || mixedQuestions[0].question
-                : mixedQuestions[0].msg ||
-                  mixedQuestions[0].translations[normalizedLanguage],
-          };
-          console.log(result);
-          console.log("mixed");
-          break;
-        case "custom":
-        // result = {
-        //   id: randomCustomQuestion.id,
-        //   question: randomCustomQuestion.msg,
-        // };
-        // console.log(result);
-        // console.log("custom");
-          break;
-      }
+    console.log("new random questio 194" + newRandomCustomQuestion[0]?.id)
+
+    if (!newRandomCustomQuestion[0]?.id) {
+      console.log("no custom questions")
+      guildDb.customTypes = "regular";
+    }
+
+    switch (guildDb.customTypes) {
+      case "regular":
+        result = {
+          id: questionDatabase[0].id,
+          question:
+            normalizedLanguage === "en"
+              ? questionDatabase[0].question
+              : questionDatabase[0].translations[normalizedLanguage],
+        };
+
+        break;
+      case "mixed":
+        const mixedQuestions = shuffle([
+          ...questionDatabase.concat(newRandomCustomQuestion[0]),
+        ]);
+
+        result = {
+          id: mixedQuestions[0].id,
+          question:
+            normalizedLanguage === "en"
+              ? mixedQuestions[0].msg || mixedQuestions[0].question
+              : mixedQuestions[0].msg ||
+                mixedQuestions[0].translations[normalizedLanguage],
+        };
+        break;
+      case "custom":
+        result = {
+          id: newRandomCustomQuestion[0].id,
+          question: newRandomCustomQuestion[0].msg,
+        };
+        break;
+    }
+  } else {
+    const questionDatabase = await selectedModel.aggregate([
+      { $sample: { size: 1 } },
+    ]);
+
+    result = {
+      id: questionDatabase[0].id,
+      question:
+        normalizedLanguage === "en"
+          ? questionDatabase[0].question
+          : questionDatabase[0].translations[normalizedLanguage],
+    };
+  }
+
+  if (guildDb) {
+    let selectedModel;
+    if (guildDb.customTypes === "custom") {
+      selectedModel = typeCheck[customTypeCheck["custom" + type]];
     } else {
-      const questionDatabase = await selectedModel.aggregate([
-        { $sample: { size: 1 } },
-      ]);
-
-      result = {
-        id: questionDatabase[0].id,
-        question:
-          normalizedLanguage === "en"
-            ? questionDatabase[0].question
-            : questionDatabase[0].translations[normalizedLanguage],
-      };
-      console.log(result);
-      console.log("no guild");
+      selectedModel = typeCheck[type];
     }
+    await usedQuestionModel.updateOne(
+      { guildID: guildDb.guildID },
+      { $push: { [selectedModel]: result.id } },
+    );
+  }
 
-    if (guildDb) {
-
-      let selectedModel;
-
-      if(guildDb.customTypes === "custom") {
-        selectedModel = typeCheck[`custom${type}`];
-      } else {
-        selectedModel = typeCheck[type];
-      }
-
-      await usedQuestionModel.updateOne(
-        { guildID: guildDb.guildID },
-        { $push: { [selectedModel]: result.id } },
-      );
-    }
-
-    return result as QuestionResult;
+  return result as QuestionResult;
 }
 
 export async function reset(
@@ -257,16 +267,16 @@ export async function reset(
   customType: string,
   guildID: string,
 ): Promise<UpdateWriteOpResult> {
-
   let selectedModel;
-
-  if(customType === "custom") {
-    selectedModel = typeCheck[`custom${type}`];
-    console.log(selectedModel);
+  console.log("dominik was on line 277");
+  if (customType === "custom") {
+    console.log(resetCustomTypeCheck[type]);
+    selectedModel = resetCustomTypeCheck[customTypeCheck["custom" + type]];
   } else {
-    selectedModel = typeCheck[type];
-    console.log(selectedModel);
+    console.log("not custom");
+    selectedModel = type;
   }
+
   console.log(selectedModel);
 
   return await usedQuestionModel.updateOne(
