@@ -2,10 +2,15 @@ import { Schema, model } from "mongoose";
 export interface IUsedQuestions {
   guildID: string;
   truthQuestions: string[];
+  customTruthQuestions: string[];
   dareQuestions: string[];
+  customDareQuestions: string[];
   wwydQuestions: string[];
+  customWwydQuestions: string[];
   wyrQuestions: string[];
+  customWyrQuestions: string[];
   nhieQuestions: string[];
+  customNhieQuestions: string[];
 }
 
 const usedQuestionSchema = new Schema({
