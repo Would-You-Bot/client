@@ -33,7 +33,8 @@ const event: Event = {
           PermissionFlagsBits.SendMessages,
           PermissionFlagsBits.EmbedLinks,
         ])
-    ) return;
+    )
+      return;
 
     const premium = await client.premium.check(member?.guild.id);
 
