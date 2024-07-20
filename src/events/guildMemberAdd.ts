@@ -12,11 +12,10 @@ import WouldYou from "../util/wouldYou";
 const event: Event = {
   event: "guildMemberAdd",
   execute: async (client: WouldYou, member: GuildMember) => {
-    // Always do simple if checks before the main code. This is a little but not so little performance boost :)
     if (member?.user?.bot) return;
 
     const guildDb = await client.database.getGuild(member.guild.id, false);
-    if (guildDb && guildDb?.welcome) {
+    if (!guildDb || !guildDb?.welcome) return;
       const channel = (await member.guild.channels
         .fetch(guildDb.welcomeChannel)
         .catch((err: Error) => {
@@ -37,19 +36,18 @@ const event: Event = {
       )
         return;
 
+
       const premium = await client.premium.check(member?.guild.id);
 
       const General = await getQuestionsByType(
         "wouldyourather",
-        // @ts-ignore
-        guildDb != null ? guildDb : null,
+        guildDb,
         guildDb?.language != null ? guildDb.language : "en_EN",
         premium.result,
       );
       const WhatYouDo = await getQuestionsByType(
         "whatwouldyoudo",
-        // @ts-ignore
-        guildDb != null ? guildDb : null,
+        guildDb,
         guildDb?.language != null ? guildDb.language : "en_EN",
         premium.result,
       );
@@ -71,7 +69,6 @@ const event: Event = {
           captureException(err);
         });
       return;
-    }
   },
 };
 
