@@ -27,8 +27,8 @@ importers:
         specifier: ^3.1.6
         version: 3.1.6
       '@upstash/redis':
-        specifier: ^1.31.2
-        version: 1.31.6
+        specifier: ^1.33.0
+        version: 1.33.0
       amqplib:
         specifier: ^0.10.4
         version: 0.10.4
@@ -805,8 +805,8 @@ packages:
   '@types/ws@8.5.10':
     resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
 
-  '@upstash/redis@1.31.6':
-    resolution: {integrity: sha512-7sDQQqvVnnV+2PUVGjocITa34CULGLoWhmfSY/LtpxNYv24EsgOk9VXhmGXIyzJBcXxB614wOF6ccEN0Lr7fqQ==}
+  '@upstash/redis@1.33.0':
+    resolution: {integrity: sha512-5WOilc7AE0ITAdE3NCyMwgOq1n3RHcqW0OfmbotiAyfA+QAEe1R7kXin8L/Yladgdc5lkA0GcYyewqKfAw53jQ==}
 
   '@vladfrangu/async_event_emitter@2.2.4':
     resolution: {integrity: sha512-ButUPz9E9cXMLgvAW8aLAKKJJsPu1dY1/l/E8xzLFuysowXygs6GBcyunK9rnGC4zTsnIc2mQo71rGw9U+Ykug==}
@@ -2657,7 +2657,7 @@ snapshots:
     dependencies:
       '@types/node': 20.11.5
 
-  '@upstash/redis@1.31.6':
+  '@upstash/redis@1.33.0':
     dependencies:
       crypto-js: 4.2.0
 
