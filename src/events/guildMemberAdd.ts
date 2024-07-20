@@ -16,59 +16,59 @@ const event: Event = {
 
     const guildDb = await client.database.getGuild(member.guild.id, false);
     if (!guildDb || !guildDb?.welcome) return;
-      const channel = (await member.guild.channels
-        .fetch(guildDb.welcomeChannel)
-        .catch((err: Error) => {
-          captureException(err);
-        })) as GuildTextBasedChannel;
+    const channel = (await member.guild.channels
+      .fetch(guildDb.welcomeChannel)
+      .catch((err: Error) => {
+        captureException(err);
+      })) as GuildTextBasedChannel;
 
-      if (!channel?.id) return;
+    if (!channel?.id) return;
 
-      if (
-        member.guild.members.me &&
-        !channel
-          ?.permissionsFor(member.guild.members.me)
-          ?.has([
-            PermissionFlagsBits.ViewChannel,
-            PermissionFlagsBits.SendMessages,
-            PermissionFlagsBits.EmbedLinks,
-          ])
-      )
-        return;
+    if (
+      member.guild.members.me &&
+      !channel
+        ?.permissionsFor(member.guild.members.me)
+        ?.has([
+          PermissionFlagsBits.ViewChannel,
+          PermissionFlagsBits.SendMessages,
+          PermissionFlagsBits.EmbedLinks,
+        ])
+    ) return;
 
+    const premium = await client.premium.check(member?.guild.id);
 
-      const premium = await client.premium.check(member?.guild.id);
+    const General = await getQuestionsByType(
+      "wouldyourather",
+      guildDb,
+      guildDb?.language != null ? guildDb.language : "en_EN",
+      premium.result,
+      false,
+    );
+    const WhatYouDo = await getQuestionsByType(
+      "whatwouldyoudo",
+      guildDb,
+      guildDb?.language != null ? guildDb.language : "en_EN",
+      premium.result,
+      false,
+    );
 
-      const General = await getQuestionsByType(
-        "wouldyourather",
-        guildDb,
-        guildDb?.language != null ? guildDb.language : "en_EN",
-        premium.result,
-      );
-      const WhatYouDo = await getQuestionsByType(
-        "whatwouldyoudo",
-        guildDb,
-        guildDb?.language != null ? guildDb.language : "en_EN",
-        premium.result,
-      );
+    const randomMessage = Math.random() > 0.5 ? General : WhatYouDo;
 
-      const randomMessage = Math.random() > 0.5 ? General : WhatYouDo;
-
-      channel
-        .send({
-          content: `${client.translation.get(
-            guildDb?.language,
-            "Welcome.embed.title",
-          )} ${
-            guildDb.welcomePing
-              ? `<@${member.user.id}>`
-              : `${member.user.username}`
-          }! ${randomMessage.question}`,
-        })
-        .catch((err: Error) => {
-          captureException(err);
-        });
-      return;
+    channel
+      .send({
+        content: `${client.translation.get(
+          guildDb?.language,
+          "Welcome.embed.title",
+        )} ${
+          guildDb.welcomePing
+            ? `<@${member.user.id}>`
+            : `${member.user.username}`
+        }! ${randomMessage.question}`,
+      })
+      .catch((err: Error) => {
+        captureException(err);
+      });
+    return;
   },
 };
 

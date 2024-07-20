@@ -95,12 +95,13 @@ export async function getRandomTod(
   guildDb: IGuildModel,
   language: string,
   premium: Boolean,
+  enabled: Boolean = true,
 ): Promise<QuestionResult> {
   let result;
 
   try {
-    const truth = await getQuestionsByType("truth", guildDb, language, premium);
-    const dare = await getQuestionsByType("dare", guildDb, language, premium);
+    const truth = await getQuestionsByType("truth", guildDb, language, premium, enabled);
+    const dare = await getQuestionsByType("dare", guildDb, language, premium, enabled);
 
     result = Math.random() < 0.5 ? truth : dare;
   } catch (error) {
@@ -115,6 +116,7 @@ export async function getQuestionsByType(
   guildDb: IGuildModel,
   language: string,
   premium: Boolean,
+  enabled: Boolean = true,
 ): Promise<QuestionResult> {
   if (!validTypes.includes(type)) {
     return Promise.reject("Invalid type");
@@ -139,7 +141,7 @@ export async function getQuestionsByType(
       guildID: guildDb.guildID,
     });
 
-    if (!usedQuestions[0] && premium) {
+    if (!usedQuestions[0] && premium && enabled) {
       await usedQuestionModel.create({
         guildID: guildDb.guildID,
         customTruthQuestions: [],
@@ -167,9 +169,9 @@ export async function getQuestionsByType(
     }
 
     let questionDatabase = await getDBQuestion(
-      premium ? usedQuestions[0][typeCheck[type]] : [],
+      premium && enabled ? usedQuestions[0][typeCheck[type]] : [],
     );
-    if (!questionDatabase[0]?.id && premium) {
+    if (!questionDatabase[0]?.id && premium && enabled) {
       await reset(type as Quest, guildDb.customTypes, guildDb.guildID, "db");
       questionDatabase = await getDBQuestion([]);
     }
@@ -198,10 +200,10 @@ export async function getQuestionsByType(
     }
 
     let newRandomCustomQuestion = await getRandomCustom(
-      premium ? usedQuestions[0][typeCheck["custom" + type]] : [],
+      premium && enabled ? usedQuestions[0][typeCheck["custom" + type]] : [],
     );
 
-    if (!newRandomCustomQuestion[0]?.id && premium) {
+    if (!newRandomCustomQuestion[0]?.id && premium && enabled) {
       await reset(
         type as Quest,
         guildDb.customTypes,
@@ -244,7 +246,7 @@ export async function getQuestionsByType(
         break;
     }
 
-    if (premium) {
+    if (premium && enabled) {
       if (guildDb.customTypes === "custom") {
         selectedModel = typeCheck["custom" + type];
       } else if (guildDb.customTypes === "mixed") {
