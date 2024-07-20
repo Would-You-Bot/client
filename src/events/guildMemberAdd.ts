@@ -37,17 +37,21 @@ const event: Event = {
       )
         return;
 
+      const premium = await client.premium.check(member?.guild.id);
+
       const General = await getQuestionsByType(
         "wouldyourather",
         // @ts-ignore
         guildDb != null ? guildDb : null,
         guildDb?.language != null ? guildDb.language : "en_EN",
+        premium.result,
       );
       const WhatYouDo = await getQuestionsByType(
         "whatwouldyoudo",
-         // @ts-ignore
+        // @ts-ignore
         guildDb != null ? guildDb : null,
         guildDb?.language != null ? guildDb.language : "en_EN",
+        premium.result,
       );
 
       const randomMessage = Math.random() > 0.5 ? General : WhatYouDo;
