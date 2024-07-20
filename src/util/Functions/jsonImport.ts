@@ -100,8 +100,20 @@ export async function getRandomTod(
   let result;
 
   try {
-    const truth = await getQuestionsByType("truth", guildDb, language, premium, enabled);
-    const dare = await getQuestionsByType("dare", guildDb, language, premium, enabled);
+    const truth = await getQuestionsByType(
+      "truth",
+      guildDb,
+      language,
+      premium,
+      enabled,
+    );
+    const dare = await getQuestionsByType(
+      "dare",
+      guildDb,
+      language,
+      premium,
+      enabled,
+    );
 
     result = Math.random() < 0.5 ? truth : dare;
   } catch (error) {
@@ -121,6 +133,12 @@ export async function getQuestionsByType(
   if (!validTypes.includes(type)) {
     return Promise.reject("Invalid type");
   }
+
+  if (
+    guildDb.customTypes !== "regular" &&
+    guildDb.customMessages.filter((e) => e.type === type).length === 0
+  )
+    guildDb.customTypes = "regular";
 
   const normalizedLanguage = languageMap[language] || "en";
 
