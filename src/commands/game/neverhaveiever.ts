@@ -31,6 +31,7 @@ const command: ChatInputCommand = {
    */
 
   execute: async (interaction, client, guildDb) => {
+    const premium = await client.premium.check(interaction?.guildId);
     let userDb = await UserModel.findOne({
       userID: interaction.user?.id,
     });
@@ -43,6 +44,7 @@ const command: ChatInputCommand = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
+      premium.result,
     );
 
     const nhieEmbed = new DefaultGameEmbed(
@@ -53,8 +55,6 @@ const command: ChatInputCommand = {
     );
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-
-    const premium = await client.premium.check(interaction.guildId);
 
     const randomValue = Math.round(Math.random() * 15);
 
@@ -68,7 +68,7 @@ const command: ChatInputCommand = {
             "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
           ),
       ]);
-    } else if (!premium.result && randomValue >= 3 && randomValue < 6) {
+    } else if (!premium.result && randomValue >= 3 && randomValue < 5) {
       mainRow.addComponents([
         new ButtonBuilder()
           .setLabel("Premium")

@@ -48,6 +48,8 @@ const button: Button = {
       }
     }
 
+    const premium = await client.premium.check(interaction?.guildId);
+
     const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
     });
@@ -59,6 +61,7 @@ const button: Button = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
+      premium.result,
     );
 
     const randomEmbed = new DefaultGameEmbed(
@@ -71,8 +74,6 @@ const button: Button = {
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     let components = [];
-
-    const premium = await client.premium.check(interaction?.guildId);
 
     const randomValue = Math.round(Math.random() * 15);
 
@@ -87,7 +88,7 @@ const button: Button = {
           ),
       ]);
       components = [row, row2];
-    } else if (!premium.result && randomValue >= 3 && randomValue < 7) {
+    } else if (!premium.result && randomValue >= 3 && randomValue < 5) {
       row2.addComponents([
         new ButtonBuilder()
           .setLabel("Premium")
@@ -109,7 +110,7 @@ const button: Button = {
       ? { content: RANDOM.question }
       : {
           content:
-            !premium.result && randomValue >= 3 && randomValue < 6
+            !premium.result && randomValue >= 3 && randomValue < 5
               ? client.translation.get(guildDb?.language, "Premium.message")
               : undefined,
           embeds: [randomEmbed],

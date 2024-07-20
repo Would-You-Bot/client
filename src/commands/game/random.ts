@@ -31,6 +31,7 @@ const command: ChatInputCommand = {
    * @param {guildModel} guildDb
    */
   execute: async (interaction, client, guildDb) => {
+    const premium = await client.premium.check(interaction?.guildId);
     const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
     });
@@ -42,6 +43,7 @@ const command: ChatInputCommand = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
+      premium.result,
     );
 
     const randomEmbed = new DefaultGameEmbed(
@@ -54,8 +56,6 @@ const command: ChatInputCommand = {
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     const row2 = new ActionRowBuilder<MessageActionRowComponentBuilder>();
     let components = [];
-
-    const premium = await client.premium.check(interaction?.guildId);
 
     const randomValue = Math.round(Math.random() * 15);
 
@@ -70,7 +70,7 @@ const command: ChatInputCommand = {
           ),
       ]);
       components = [row, row2];
-    } else if (!premium.result && randomValue >= 3 && randomValue < 7) {
+    } else if (!premium.result && randomValue >= 3 && randomValue < 5) {
       row2.addComponents([
         new ButtonBuilder()
           .setLabel("Premium")
