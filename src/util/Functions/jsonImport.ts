@@ -134,12 +134,6 @@ export async function getQuestionsByType(
     return Promise.reject("Invalid type");
   }
 
-  if (
-    guildDb.customTypes !== "regular" &&
-    guildDb.customMessages.filter((e) => e.type === type).length === 0
-  )
-    guildDb.customTypes = "regular";
-
   const normalizedLanguage = languageMap[language] || "en";
 
   const models: { [key: string]: any } = {
@@ -155,6 +149,12 @@ export async function getQuestionsByType(
   let result: QuestionResult = { id: "", question: "" };
 
   if (guildDb != null) {
+    if (
+      guildDb.customTypes !== "regular" &&
+      guildDb.customMessages.filter((e) => e.type === type).length === 0
+    )
+      guildDb.customTypes = "regular";
+
     let usedQuestions = await usedQuestionModel.find({
       guildID: guildDb.guildID,
     });
