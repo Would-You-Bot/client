@@ -219,7 +219,7 @@ const button: Button = {
       dailyInterval: value,
     });
 
-    await(data?.modal as any).update({
+    await (data?.modal as any).update({
       content: null,
       embeds: [dailyMsgs],
       components: [dailyButtons, dailyButtons2, dailyButtons3],

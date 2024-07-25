@@ -197,7 +197,7 @@ const button: Button = {
       replayChannels: guildDb.replayChannels,
     });
 
-    await(data?.modal as any).update({
+    await (data?.modal as any).update({
       content: null,
       embeds: [generalMsg],
       components: [generalButtons, setDeleteButtons],

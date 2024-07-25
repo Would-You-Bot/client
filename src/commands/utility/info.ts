@@ -44,49 +44,50 @@ const command: ChatInputCommand = {
 
     let premiumEmoji = premium.result ? "✅" : "❌";
 
+    const { dominik, sky, skelly, paul, paulos } = client.config.emojis.info;
+
     const infoEmbed = new EmbedBuilder()
       .setColor("#5865f4")
       .setTitle("Bot Info")
       .addFields(
         {
-          name: "Developers 🐧",
-          value:
-            "```@dominikdev\n@forgetfulskybro\n@536b656c6c79\n@dpaulos6\n@angulord```",
+          name: "Developers:",
+          value: `${dominik + sky + skelly + paul + paulos}`,
           inline: false,
         },
         {
-          name: "Guilds 🏢",
-          value: `\`\`\`${serverCount.reduce((prev, val) => prev + val, 0)}\`\`\``,
-          inline: true,
+          name: "Servercount:",
+          value: `${serverCount.reduce((prev, val) => prev + val, 0)}`,
+          inline: false,
         },
         {
-          name: "Users 🐧",
-          value: `\`\`\`${userCount.reduce((a, b) => a + b, 0).toLocaleString()}\`\`\``,
-          inline: true,
+          name: "Users:",
+          value: `${userCount.reduce((a, b) => a + b, 0).toLocaleString()}`,
+          inline: false,
         },
         {
-          name: "Memory 🎇",
-          value: `\`\`\`${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB\n\`\`\``,
-          inline: true,
+          name: "Memory:",
+          value: `${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB`,
+          inline: false,
         },
         {
-          name: "Last Restart 🚀",
+          name: "Last Restart:",
           value: `
           <t:${unixstamp}:R>`,
-          inline: true,
+          inline: false,
         },
         {
-          name: "Bot Version 🧾",
-          value: `\`\`\`v${version}\`\`\``,
-          inline: true,
+          name: "Bot Version:",
+          value: `v${version}`,
+          inline: false,
         },
         {
-          name: "Guild Premium 🌟",
-          value: `\`\`\`${premiumEmoji + " " + premium.result}\`\`\``,
-          inline: true,
+          name: "Premium Server:",
+          value: `${premiumEmoji + " " + premium.result}`,
+          inline: false,
         },
       )
-      .setThumbnail(client.user?.displayAvatarURL() || null)
+      .setThumbnail(client.user?.displayAvatarURL() || "https://wouldyoubot.gg/Logo.png")
       .setFooter({
         text:
           interaction.user.tag +
@@ -96,7 +97,7 @@ const command: ChatInputCommand = {
           " |" +
           " Cluster #" +
           client.cluster.id,
-        iconURL: client?.user?.displayAvatarURL() || undefined,
+        iconURL: client?.user?.displayAvatarURL() || "https://wouldyoubot.gg/Logo.png",
       });
 
     interaction

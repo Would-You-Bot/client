@@ -148,7 +148,7 @@ const button: Button = {
       webhookAvatar: "https://bucket.wouldyoubot.gg/" + upload.objectKey,
     });
 
-    await(data?.modal as any).update({
+    await (data?.modal as any).update({
       embeds: [emb],
       components: [button, button2],
       options: {

@@ -20,14 +20,10 @@ const event: Event = {
       )
       .catch((err: string) => captureException(err));
 
-    const random = [
-      "Would You Rather",
-      "Truth or Dare",
-      "What Would You Do",
-      "Higher or Lower",
-      "Never Have I Ever",
-    ];
-    const randomStatus = random[Math.floor(Math.random() * random.length)];
+    const randomStatus =
+      client.config.status[
+        Math.floor(Math.random() * client.config.status.length)
+      ];
 
     const setStatus = () => {
       if (!client.user) return;

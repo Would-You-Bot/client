@@ -46,7 +46,7 @@ const event: Event = {
 
     await webhookPrivate.send({
       avatarURL:
-        "https://cdn.discordapp.com/avatars/981649513427111957/23da96bbf1eef64855a352e0e29cdc10.webp?size=96", // Make sure to update this if you ever change the link thx <3
+        "https://wouldyoubot.gg/Logo.png", // Make sure to update this if you ever change the link thx <3
       username: global?.devBot ? "Dev Bot" : "Main Bot",
       embeds: [
         new EmbedBuilder()
