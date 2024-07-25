@@ -87,7 +87,9 @@ const command: ChatInputCommand = {
           inline: false,
         },
       )
-      .setThumbnail(client.user?.displayAvatarURL() || "https://wouldyoubot.gg/Logo.png")
+      .setThumbnail(
+        client.user?.displayAvatarURL() || "https://wouldyoubot.gg/Logo.png",
+      )
       .setFooter({
         text:
           interaction.user.tag +
@@ -97,7 +99,8 @@ const command: ChatInputCommand = {
           " |" +
           " Cluster #" +
           client.cluster.id,
-        iconURL: client?.user?.displayAvatarURL() || "https://wouldyoubot.gg/Logo.png",
+        iconURL:
+          client?.user?.displayAvatarURL() || "https://wouldyoubot.gg/Logo.png",
       });
 
     interaction
