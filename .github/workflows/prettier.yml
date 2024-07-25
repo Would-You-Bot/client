@@ -25,7 +25,7 @@ jobs:
           node-version: "18.x"
           cache: "pnpm"
           
-      - run: pnpm i
+      - run: pnpm i --no-frozen-lockfile
 
       - name: Prettier
         run: pnpm run format
