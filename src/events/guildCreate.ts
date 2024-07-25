@@ -34,8 +34,7 @@ const event: Event = {
     }
 
     await webhookPrivate.send({
-      avatarURL:
-        "https://wouldyoubot.gg/Logo.png", // Make sure to update this if you ever change the link thx <3
+      avatarURL: "https://wouldyoubot.gg/Logo.png", // Make sure to update this if you ever change the link thx <3
       username: global?.devBot ? "Dev Bot" : "Main Bot",
       embeds: [
         new EmbedBuilder()
