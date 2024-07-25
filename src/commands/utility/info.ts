@@ -57,7 +57,7 @@ const command: ChatInputCommand = {
         },
         {
           name: "Servercount:",
-          value: `${serverCount.reduce((prev, val) => prev + val, 0)}`,
+          value: `${serverCount.reduce((prev, val) => prev + val, 0).toLocaleString()}`,
           inline: false,
         },
         {
