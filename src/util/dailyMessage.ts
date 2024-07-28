@@ -171,7 +171,7 @@ export default class DailyMessage {
         {
           embeds: [embed],
           content: message.role ? `<@&${message.role}>` : undefined,
-          allowedMentions: { roles: message.role ? [message.role] : undefined },
+          allowedMentions: message.role ? { roles: [message.role] } : undefined,
           avatarURL:
             message.webhook.avatar ||
             this.client.user?.displayAvatarURL({ forceStatic: false }),
