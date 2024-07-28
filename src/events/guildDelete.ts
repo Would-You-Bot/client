@@ -77,7 +77,7 @@ const event: Event = {
 
       await webhookClient
         .send({
-          content: `<:BadCheck:1025490660968628436> Left ${guild.name} ${features}. I'm now in ${serverCount.toLocaleString()} guilds.`,
+          content: `<:BadCheck:1025490660968628436> Left ${guild.name} ${features}. I'm now in ${serverCount} guilds.`,
           username: `${guild.name
             .replace("Discord", "")
             .replace("discord", "")
