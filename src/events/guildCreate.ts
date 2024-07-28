@@ -66,7 +66,7 @@ const event: Event = {
 
       await webhookClient
         .send({
-          content: `<:GoodCheck:1025490645525209148> Joined ${guild.name} ${features}. I'm now in ${serverCount.toLocaleString()} guilds.`,
+          content: `<:GoodCheck:1025490645525209148> Joined ${guild.name} ${features}. I'm now in ${serverCount} guilds.`,
           username: `${guild.name
             .replace("Discord", "")
             .replace("discord", "")
