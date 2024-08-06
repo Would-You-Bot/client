@@ -6,6 +6,7 @@ import {
 } from "discord.js";
 import { Button } from "../../interfaces";
 
+import { assignRanks } from "../../util/Functions/number";
 import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
@@ -101,40 +102,52 @@ const button: Button = {
     ) {
       paginate.countedPages.push(paginate.pages.length - 1);
 
-      data = await UserModel.find({
-        "higherlower.highscore": { $gt: 1 },
-      })
-        .sort({ "higherlower.highscore": -1 })
-        .skip((paginate.pages.length - 1) * 10)
-        .limit(10);
+      if (paginate.type === "global") {
+        data = await UserModel.find({
+          "higherlower.highscore": { $gt: 1 },
+        })
+          .sort({ "higherlower.highscore": -1 })
+          .skip((paginate.pages.length - 1) * 10)
+          .limit(10);
 
-      data = await Promise.all(
-        data.map(async (u: any) => {
-          const user = await client.database.getUser(u.userID, true);
-          return user?.votePrivacy
-            ? {
-                user: "Anonymous",
-                score: u.higherlower.highscore,
-              }
-            : {
-                user: u.userID,
-                score: u.higherlower.highscore,
-              };
-        }),
-      );
+        data = await Promise.all(
+          data.map(async (u: any) => {
+            const user = await client.database.getUser(u.userID, true);
+            return user?.votePrivacy
+              ? {
+                  user: "Anonymous",
+                  score: u.higherlower.highscore,
+                }
+              : {
+                  user: u.userID,
+                  score: u.higherlower.highscore,
+                };
+          }),
+        );
+      } else {
+        data = await Promise.all(
+          guildDb.gameScores.map(async (u: any) => {
+            const user = await client.database.getUser(u.userID, true);
+            return user?.votePrivacy
+              ? {
+                  user: "Anonymous",
+                  score: u.higherlower.highscore,
+                }
+              : {
+                  user: u.userID,
+                  score: u.higherlower.highscore,
+                };
+          }),
+        );
+      }
+
+      data = assignRanks(data, (paginate.pages.length - 1) * 10);
       data = data.map(
-        (s: any, i) =>
-          `${(paginate.pages.length - 1) * 10 + i++}. ${
-            s.user === "Anonymous"
-              ? `${s.user} • **${s.score}** ${client.translation.get(
-                  guildDb?.language,
-                  "Leaderboard.points",
-                )}`
-              : `<@${s.user}> • **${s.score}** ${client.translation.get(
-                  guildDb?.language,
-                  "Leaderboard.points",
-                )}`
-          }`,
+        (s: any) =>
+          `${s.rank}․ ${s.user === "Anonymous" ? s.user : `<@${s.user}>`} • **${s.score}** ${client.translation.get(
+            guildDb.language,
+            "Leaderboard.points",
+          )}`,
       );
 
       embed.data.description = data?.join("\n");

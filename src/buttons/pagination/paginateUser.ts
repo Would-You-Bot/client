@@ -9,7 +9,7 @@ import { assignRanks } from "../../util/Functions/number";
 import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
-  name: "paginatePrev",
+  name: "paginateUser",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
     let type: string | null = null;
@@ -58,6 +58,15 @@ const button: Button = {
     clearTimeout(paginate.timeout);
     const time = setTimeout(() => {
       if (
+        type === "leaderboard" &&
+        client.paginate.get(
+          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+        )
+      ) {
+        client.paginate.delete(
+          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
+        );
+      } else if (
         type === "reference" &&
         client.paginate.get(
           `${interaction.user.id}-reference-${interaction.message.reference?.messageId}`,
@@ -72,15 +81,6 @@ const button: Button = {
       ) {
         client.paginate.delete(`${interaction.user.id}-custom`);
       } else if (
-        type === "leaderboard" &&
-        client.paginate.get(
-          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
-        )
-      ) {
-        client.paginate.delete(
-          `${interaction.user.id}-leaderboard-${interaction.message.interaction?.id}`,
-        );
-      } else if (
         client.paginate.get(
           `${interaction.user.id}-${interaction.message.interaction?.id}`,
         )
@@ -92,7 +92,7 @@ const button: Button = {
     }, paginate.time);
     paginate.timeout = time;
 
-    let embed = paginate.pages[--paginate.page];
+    let embed = paginate.pages[++paginate.page];
     let data;
     if (
       type === "leaderboard" &&
@@ -100,44 +100,27 @@ const button: Button = {
     ) {
       paginate.countedPages.push(paginate.page);
 
-      if (paginate.type === "global") {
-        data = await UserModel.find({
-          "higherlower.highscore": { $gt: 1 },
-        })
-          .sort({ "higherlower.highscore": -1 })
-          .skip(paginate.page * 10)
-          .limit(10);
+      data = await UserModel.find({
+        "higherlower.highscore": { $gt: 1 },
+      })
+        .sort({ "higherlower.highscore": -1 })
+        .skip(paginate.page * 10)
+        .limit(10);
 
-        data = await Promise.all(
-          data.map(async (u: any) => {
-            const user = await client.database.getUser(u.userID, true);
-            return user?.votePrivacy
-              ? {
-                  user: "Anonymous",
-                  score: u.higherlower.highscore,
-                }
-              : {
-                  user: u.userID,
-                  score: u.higherlower.highscore,
-                };
-          }),
-        );
-      } else {
-        data = await Promise.all(
-          guildDb.gameScores.map(async (u: any) => {
-            const user = await client.database.getUser(u.userID, true);
-            return user?.votePrivacy
-              ? {
-                  user: "Anonymous",
-                  score: u.higherlower.highscore,
-                }
-              : {
-                  user: u.userID,
-                  score: u.higherlower.highscore,
-                };
-          }),
-        );
-      }
+      data = await Promise.all(
+        data.map(async (u: any) => {
+          const user = await client.database.getUser(u.userID, true);
+          return user?.votePrivacy
+            ? {
+                user: "Anonymous",
+                score: u.higherlower.highscore,
+              }
+            : {
+                user: u.userID,
+                score: u.higherlower.highscore,
+              };
+        }),
+      );
 
       data = assignRanks(data, paginate.page * 10);
       data = data.map(
@@ -151,24 +134,24 @@ const button: Button = {
       embed.data.description = data?.join("\n");
     }
 
-    if (paginate.page === 0) {
+    if (paginate.page + 1 === paginate.pages.length) {
       const buttons =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
           new ButtonBuilder()
-            .setDisabled(true)
             .setCustomId("paginateFirst")
             .setLabel("⏪")
             .setStyle(ButtonStyle.Secondary),
           new ButtonBuilder()
-            .setDisabled(true)
             .setCustomId("paginatePrev")
             .setLabel("◀️")
             .setStyle(ButtonStyle.Secondary),
           new ButtonBuilder()
+            .setDisabled(true)
             .setCustomId("paginateNext")
             .setLabel("▶️")
             .setStyle(ButtonStyle.Secondary),
           new ButtonBuilder()
+            .setDisabled(true)
             .setCustomId("paginateLast")
             .setLabel("⏩")
             .setStyle(ButtonStyle.Secondary),
@@ -214,4 +197,5 @@ const button: Button = {
     }
   },
 };
+
 export default button;

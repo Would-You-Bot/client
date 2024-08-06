@@ -1,5 +1,6 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { ChatInputCommand } from "../../interfaces";
+import { assignRanks } from "../../util/Functions/number";
 import { UserModel } from "../../util/Models/userModel";
 import Paginator from "../../util/pagination";
 
@@ -70,13 +71,14 @@ const command: ChatInputCommand = {
         });
 
         let data: any;
+
         switch (interaction.options.getString("for")) {
           case "global":
             let data2 = await UserModel.find({
               "higherlower.highscore": { $gt: 1 },
             })
               .sort({ "higherlower.highscore": -1 })
-              .limit(9);
+              .limit(10);
 
             data = await Promise.all(
               data2.map(async (u: any) => {
@@ -101,19 +103,13 @@ const command: ChatInputCommand = {
               return;
             }
 
+            data = assignRanks(data);
             data = data.map(
-              (s: any, i = 1) =>
-                `${i++}. ${
-                  s.user === "Anonymous"
-                    ? `${s.user} • **${s.score}** ${client.translation.get(
-                        language,
-                        "Leaderboard.points",
-                      )}`
-                    : `<@${s.user}> • **${s.score}** ${client.translation.get(
-                        language,
-                        "Leaderboard.points",
-                      )}`
-                }`,
+              (s: typeof data) =>
+                `${s.rank}․ ${s.user === "Anonymous" ? s.user : `<@${s.user}>`} • **${s.score}** ${client.translation.get(
+                  language,
+                  "Leaderboard.points",
+                )}`,
             );
 
             page.add(
@@ -170,20 +166,15 @@ const command: ChatInputCommand = {
               return;
             }
 
+            data = assignRanks(data);
             data = data.map(
-              (s: any, i = 1) =>
-                `${i++}. ${
-                  s.user === "Anonymous"
-                    ? `${s.user} • **${s.score}** ${client.translation.get(
-                        language,
-                        "Leaderboard.points",
-                      )}`
-                    : `<@${s.user}> • **${s.score}** ${client.translation.get(
-                        language,
-                        "Leaderboard.points",
-                      )}`
-                }`,
+              (s: typeof data) =>
+                `${s.rank}․ ${s.user === "Anonymous" ? s.user : `<@${s.user}>`} • **${s.score}** ${client.translation.get(
+                  language,
+                  "Leaderboard.points",
+                )}`,
             );
+
             data = Array.from(
               {
                 length: Math.ceil(data.length / 10),
@@ -205,7 +196,11 @@ const command: ChatInputCommand = {
             break;
         }
 
-        page.start(interaction, "leaderboard");
+        page.start(
+          interaction,
+          "leaderboard",
+          interaction.options.getString("for"),
+        );
         break;
     }
   },

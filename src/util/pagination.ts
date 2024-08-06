@@ -40,7 +40,7 @@ export default class Paginator {
     return this;
   }
 
-  async start(interaction: any, type: string | null) {
+  async start(interaction: any, type: string | null, leaderboard: string | null = "none") {
     if (!interaction || !interaction.channelId || !this.pages.length) return;
     let pFirst = new ButtonBuilder()
       .setDisabled(true)
@@ -100,6 +100,7 @@ export default class Paginator {
     this.client.paginate.set(
       `${this.user}-${type || message.id}${type === "leaderboard" ? `-${message.id}` : ""}${type === "reference" ? `-${message.interaction?.message?.id}` : ""}`,
       {
+        type: leaderboard,
         countedPages: [],
         pages: this.pages,
         page: this.page,
