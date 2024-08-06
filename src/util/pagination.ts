@@ -40,7 +40,11 @@ export default class Paginator {
     return this;
   }
 
-  async start(interaction: any, type: string | null, leaderboard: string | null = "none") {
+  async start(
+    interaction: any,
+    type: string | null,
+    leaderboard: string | null = "none",
+  ) {
     if (!interaction || !interaction.channelId || !this.pages.length) return;
     let pFirst = new ButtonBuilder()
       .setDisabled(true)
