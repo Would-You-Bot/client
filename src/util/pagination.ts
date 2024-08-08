@@ -40,7 +40,11 @@ export default class Paginator {
     return this;
   }
 
-  async start(interaction: any, type: string | null, leaderboard: string | null = "none") {
+  async start(
+    interaction: any,
+    type: string | null,
+    leaderboard: string | null = "none",
+  ) {
     if (!interaction || !interaction.channelId || !this.pages.length) return;
     let pFirst = new ButtonBuilder()
       .setDisabled(true)
@@ -60,6 +64,10 @@ export default class Paginator {
       .setCustomId("paginateLast")
       .setLabel("⏩")
       .setStyle(ButtonStyle.Secondary);
+    let goToUser = new ButtonBuilder()
+      .setCustomId("paginateUser")
+      .setLabel("⭐")
+      .setStyle(ButtonStyle.Primary);
 
     if (this.pages.length === 1) {
       pNext = new ButtonBuilder()
@@ -75,13 +83,25 @@ export default class Paginator {
         .setStyle(ButtonStyle.Secondary);
     }
 
-    const buttons =
-      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        pFirst,
-        pPrev,
-        pNext,
-        pLast,
-      );
+    let buttons;
+    if (leaderboard) {
+      buttons =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          pFirst,
+          pPrev,
+          pNext,
+          pLast,
+          goToUser,
+        );
+    } else {
+      buttons =
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          pFirst,
+          pPrev,
+          pNext,
+          pLast,
+        );
+    }
 
     for (let i = 0; i < this.pages.length; i++) {
       const e = this.pages[i];

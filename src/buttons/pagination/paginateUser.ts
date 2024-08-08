@@ -10,7 +10,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
   name: "paginateUser",
-  cooldown: false,
+  cooldown: true,
   execute: async (interaction, client, guildDb) => {
     let type: string | null = null;
     let paginate = client.paginate.get(
@@ -92,24 +92,46 @@ const button: Button = {
     }, paginate.time);
     paginate.timeout = time;
 
-    let embed = paginate.pages[++paginate.page];
+    let embed;
     let data;
+
     if (
       type === "leaderboard" &&
       !paginate.countedPages.includes(paginate.page)
     ) {
-      paginate.countedPages.push(paginate.page);
-
       data = await UserModel.find({
-        "higherlower.highscore": { $gt: 1 },
+        "higherlower.highscore": { $gt: 2 },
       })
         .sort({ "higherlower.highscore": -1 })
-        .skip(paginate.page * 10)
-        .limit(10);
+        .limit(paginate.pages.length * paginate.pages.length)
+        .select("userID higherlower.highscore");
+
+      const user = data.findIndex(
+        (u) => String(u.userID) === interaction.user.id,
+      );
+
+      if (!user || data[user].higherlower.highscore < 2) {
+        interaction.reply({
+          content: ":(",
+        });
+        return;
+      }
+
+      const usersPerPage = Math.ceil(data.length / paginate.pages.length);
+      const usersPage = Math.ceil((user + 1) / usersPerPage);
+
+      const startIndex = (usersPage - 1) * 10;
+      const endIndex = startIndex + 10;
+
+      embed = paginate.pages[usersPage - 1];
+      paginate.page = usersPage - 1;
+      paginate.countedPages.push(paginate.page);
+
+      data = data.slice(startIndex, endIndex); // Slice data for current page
 
       data = await Promise.all(
-        data.map(async (u: any) => {
-          const user = await client.database.getUser(u.userID, true);
+        data.map(async (u) => {
+          const user = await client.database.getUser(String(u.userID), true);
           return user?.votePrivacy
             ? {
                 user: "Anonymous",
@@ -122,17 +144,17 @@ const button: Button = {
         }),
       );
 
-      data = assignRanks(data, paginate.page * 10);
+      data = assignRanks(data, startIndex);
       data = data.map(
-        (s: any) =>
+        (s) =>
           `${s.rank}․ ${s.user === "Anonymous" ? s.user : `<@${s.user}>`} • **${s.score}** ${client.translation.get(
             guildDb.language,
             "Leaderboard.points",
-          )}`,
+          )} ${s.user === interaction.user.id ? `⭐` : ``}`,
       );
-
-      embed.data.description = data?.join("\n");
     }
+
+    embed.data.description = data?.join("\n");
 
     if (paginate.page + 1 === paginate.pages.length) {
       const buttons =
