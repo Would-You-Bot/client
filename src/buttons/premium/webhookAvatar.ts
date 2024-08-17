@@ -40,9 +40,8 @@ const button: Button = {
 
     data?.modal.deferUpdate();
     const value = data?.fieldValues[0].value;
-
     let regex =
-      /https?:\/\/(www.|i.|)cdn\.discordapp\.com\/attachments\/[^\s]+\/[^\s]+\/[^\s]+(.png|.jpg|.gif|.jpeg|.webp)/g;
+      /https?:\/\/(www.|i.|cdn.|media.)discordapp\.(com|net)\/attachments\/[^\s]+\/[^\s]+\/[^\s]+(.png|.jpg|.gif|.jpeg|.webp)/g;
 
     if (!regex.test(value!)) {
       data?.modal.reply({
