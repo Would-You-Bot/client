@@ -6,9 +6,15 @@ import WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "entitlementUpdate",
-  execute: async (client: WouldYou, oldEntitlement: Entitlement, newEntitlement: Entitlement) => {
+  execute: async (
+    client: WouldYou,
+    oldEntitlement: Entitlement,
+    newEntitlement: Entitlement,
+  ) => {
     if (!newEntitlement.guildId) return;
-    const alreadyHasPremium = await client.premium.check(newEntitlement.guildId);
+    const alreadyHasPremium = await client.premium.check(
+      newEntitlement.guildId,
+    );
 
     // Check if the guild already has premium and which expiration date is higher
     if (
@@ -26,9 +32,8 @@ const event: Event = {
           ? new Date(newEntitlement?.endsTimestamp)
           : new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
       },
-    )
+    );
   },
-   
 };
 
 export default event;
