@@ -13,6 +13,24 @@ export default class PremiumHandler {
   async check(guildId: string | null) {
     const guild = await GuildModel.findOne({ guildID: guildId });
 
+    if (
+      guild?.premiumExpiration &&
+      guild?.premiumExpiration.getTime() < Date.now()
+    ) {
+      guild.premium = 0;
+      guild.premiumExpiration = null;
+      guild.premiumUser = null;
+      await guild.save();
+
+      return {
+        result: false,
+        type: ":x:",
+        rawType: 0,
+        expiration: null,
+        user: null,
+      };
+    }
+
     if (guild?.premium == 1)
       return {
         result: true,
