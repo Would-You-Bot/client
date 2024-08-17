@@ -24,12 +24,6 @@ const command: ChatInputCommand = {
       it: "Ottieni una domanda Preferiresti",
     }),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-
   execute: async (interaction, client, guildDb) => {
     const premium = await client.premium.check(interaction?.guildId);
     const userDb = await UserModel.findOne({

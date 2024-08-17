@@ -15,11 +15,7 @@ const command: ChatInputCommand = {
       fr: "Affiche des informations sur le bot",
       it: "Mostra alcune informazioni sul bot",
     }),
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
+
   execute: async (interaction, client, guildDb) => {
     const serverCount = await client.cluster.broadcastEval(
       (c) => c.guilds.cache.size,

@@ -21,11 +21,6 @@ const command: ChatInputCommand = {
       it: "Link al nostro server di supporto",
     }),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
   execute: async (interaction, client, guildDb) => {
     const supportembed = new EmbedBuilder()
       .setColor("#F00505")

@@ -24,11 +24,7 @@ const command: ChatInputCommand = {
       fr: "Que feriez-vous dans cette situation",
       it: "Cosa faresti in questa situazione",
     }),
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
+
   execute: async (interaction, client, guildDb) => {
     const premium = await client.premium.check(interaction?.guildId);
     const userDb = await UserModel.findOne({

@@ -37,11 +37,6 @@ const command: ChatInputCommand = {
         .setRequired(true),
     ),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
   execute: async (interaction, client, guildDb) => {
     const userDb = await UserModel.findOne({
       userID: interaction.user?.id,

@@ -110,11 +110,7 @@ const command: ChatInputCommand = {
         .setName("export")
         .setDescription("Exports custom messages into a JSON file."),
     ),
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
+
   execute: async (interaction, client, guildDb) => {
     let typeEmbed = new EmbedBuilder();
     let message: string | null;

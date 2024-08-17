@@ -15,12 +15,6 @@ const command: ChatInputCommand = {
       it: "Guida su come utilizzare il bot e aumentare l'attività",
     }),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-
   execute: async (interaction, client, guildDb) => {
     const guideembed = new EmbedBuilder()
       .setColor("#0598F6")
