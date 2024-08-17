@@ -16,9 +16,8 @@ const event: Event = {
         premiumExpiration: null,
         premiumUser: null,
       },
-    )
+    );
   },
-   
 };
 
 export default event;
