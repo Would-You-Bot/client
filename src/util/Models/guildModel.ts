@@ -38,8 +38,8 @@ export interface IGuildModel {
   classicMode: boolean;
   autoPin: boolean;
   premium: number;
-  premiumExpiration: Date;
-  premiumUser: string;
+  premiumExpiration: Date | null;
+  premiumUser: string | null;
   webhookName: string;
   webhookAvatar: string;
   lastUsageTimestamp: number;

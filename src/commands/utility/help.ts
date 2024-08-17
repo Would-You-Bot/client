@@ -20,11 +20,7 @@ const command: ChatInputCommand = {
       fr: "Affiche une liste de toutes les commandes",
       it: "Mostra un elenco di tutti i comandi",
     }),
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
+
   execute: async (interaction, client, guildDb) => {
     const commands = await client.application?.commands.fetch({
       withLocalizations: false,

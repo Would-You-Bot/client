@@ -28,12 +28,6 @@ const command: ChatInputCommand = {
       it: "Avvia il gioco Higher or Lower",
     }),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-
   execute: async (interaction, client, guildDb) => {
     await interaction.deferReply();
 

@@ -21,11 +21,6 @@ const command: ChatInputCommand = {
       it: "Mostra il ping del client",
     }),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
   execute: async (interaction, client, guildDb) => {
     const pingembed = new EmbedBuilder()
 

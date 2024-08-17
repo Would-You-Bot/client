@@ -38,12 +38,6 @@ const command: ChatInputCommand = {
         .setDescription("This changes it to use only custom messages"),
     ),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
-
   execute: async (interaction, client, guildDb) => {
     let typeEmbed;
     if (

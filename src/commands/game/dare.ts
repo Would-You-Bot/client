@@ -26,11 +26,6 @@ const command: ChatInputCommand = {
       it: "Pubblica una sfida casuale che devi affrontare",
     }),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
   execute: async (interaction, client, guildDb) => {
     const premium = await client.premium.check(interaction?.guildId);
     const userDb = await UserModel.findOne({

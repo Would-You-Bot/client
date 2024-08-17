@@ -45,11 +45,6 @@ const command: ChatInputCommand = {
         ),
     ),
 
-  /**
-   * @param {CommandInteraction} interaction
-   * @param {WouldYou} client
-   * @param {guildModel} guildDb
-   */
   execute: async (interaction, client, guildDb) => {
     let languageembed;
 
