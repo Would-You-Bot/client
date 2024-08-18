@@ -38,7 +38,6 @@ const button: Button = {
       ],
     } as ModalData).getData(interaction);
 
-    data?.modal.deferUpdate();
     const value = data?.fieldValues[0].value;
     let regex =
       /https?:\/\/(www.|i.|cdn.|media.)discordapp\.(com|net)\/attachments\/[^\s]+\/[^\s]+\/[^\s]+(.png|.jpg|.gif|.jpeg|.webp)/g;
