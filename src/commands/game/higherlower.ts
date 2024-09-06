@@ -20,7 +20,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("higherlower")
     .setDescription("Starts a game of 'Higher or Lower'")
-    .setDMPermission(false)
+    .setContexts([0, 1, 2])
+    .setIntegrationTypes([0, 1])
     .setDescriptionLocalizations({
       de: "Starte das Higher or Lower spiel",
       "es-ES": "Iniciar el juego Higher or Lower",

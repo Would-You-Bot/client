@@ -18,7 +18,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("dare")
     .setDescription("Gives you a random dare to answer")
-    .setDMPermission(false)
+    .setContexts([0, 1, 2])
+    .setIntegrationTypes([0, 1])
     .setDescriptionLocalizations({
       de: "Gibt dir eine zufällige pflicht Aufgabe, die du beantworten musst",
       "es-ES": "Publica un reto aleatorio que tienes que cumplir",

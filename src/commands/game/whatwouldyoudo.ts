@@ -17,7 +17,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("whatwouldyoudo")
     .setDescription("Gives you a 'What Would You Do' question")
-    .setDMPermission(false)
+    .setContexts([0, 1, 2])
+    .setIntegrationTypes([0, 1])
     .setDescriptionLocalizations({
       de: "Was würdest du in dieser Situation tun",
       "es-ES": "¿Qué harías en esta situación?",

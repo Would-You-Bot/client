@@ -8,7 +8,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("info")
     .setDescription("Gives you information about the bot")
-    .setDMPermission(false)
+    .setContexts([0])
+    .setIntegrationTypes([0])
     .setDescriptionLocalizations({
       de: "Zeigt einige Informationen über den Bot",
       "es-ES": "Muestra información sobre el bot",

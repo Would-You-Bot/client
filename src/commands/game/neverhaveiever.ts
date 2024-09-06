@@ -16,7 +16,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("neverhaveiever")
     .setDescription("Gives you a 'Never Have I Ever' question")
-    .setDMPermission(false)
+    .setContexts([0, 1, 2])
+    .setIntegrationTypes([0, 1])
     .setDescriptionLocalizations({
       de: "Bekomme eine nie habe ich jemals Nachricht",
       "es-ES": "Consigue un mensaje Nunca he tenido",

@@ -9,7 +9,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("leaderboard")
     .setDescription("Shows the top scores for a game")
-    .setDMPermission(false)
+    .setContexts([0, 1, 2])
+    .setIntegrationTypes([0, 1])
     .setDescriptionLocalizations({
       de: "Zeigt die Rangliste für ein Spiel an",
       "es-ES": "Muestra la lista de clasificación de un partido",

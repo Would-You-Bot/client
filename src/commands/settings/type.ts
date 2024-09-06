@@ -12,7 +12,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("type")
     .setDescription("Changes the kind of questions you get")
-    .setDMPermission(false)
+    .setContexts([0])
+    .setIntegrationTypes([0])
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: "Ändert den Typ der Nachrichten, die verwendet werden",

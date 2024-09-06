@@ -64,14 +64,16 @@ const event: Event = {
         message.content &&
         new RegExp(`^(<@!?${client?.user?.id}>)`).test(message.content)
       )
-        message.channel
-          .send({
-            embeds: [embed],
-            components: [supportbutton],
-          })
-          .catch((err: Error) => {
-            captureException(err);
-          });
+        if (message.inGuild()) {
+          message.channel
+            .send({
+              embeds: [embed],
+              components: [supportbutton],
+            })
+            .catch((err: Error) => {
+              captureException(err);
+            });
+        }
       return;
     }
   },

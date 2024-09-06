@@ -14,7 +14,8 @@ const command: ChatInputCommand = {
   requireGuild: true,
   data: new SlashCommandBuilder()
     .setName("settings")
-    .setDMPermission(false)
+    .setContexts([0])
+    .setIntegrationTypes([0])
     .setDescription("Change various settings throughout the bot")
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({

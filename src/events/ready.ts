@@ -8,7 +8,6 @@ import { getInfo } from "discord-hybrid-sharding";
 import type { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 import "dotenv/config";
 import { Event } from "../interfaces/event";
-import appCommmands from "../util/Functions/supportAppCommands";
 import WouldYou from "../util/wouldYou";
 
 // TODO: Clean up this file
@@ -88,7 +87,7 @@ const event: Event = {
             // If the bot is in production mode it will load slash commands for all guilds
             if (client.user?.id) {
               await rest.put(Routes.applicationCommands(client.user.id), {
-                body: await appCommmands(globalCommands),
+                body: globalCommands,
               });
             }
             console.log(
@@ -110,7 +109,7 @@ const event: Event = {
                   process.env.TEST_GUILD_ID as string,
                 ),
                 {
-                  body: appCommmands(globalCommands),
+                  body: globalCommands,
                 },
               );
             }

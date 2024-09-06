@@ -13,7 +13,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription("Shows a list of all the 'Would You' commands")
-    .setDMPermission(false)
+    .setContexts([0])
+    .setIntegrationTypes([0])
     .setDescriptionLocalizations({
       de: "Zeigt eine Liste aller Befehle an",
       "es-ES": "Muestra una lista de cada comando",

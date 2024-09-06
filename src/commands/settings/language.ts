@@ -13,7 +13,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("language")
     .setDescription("Changes the language for your server")
-    .setDMPermission(false)
+    .setContexts([0, 1, 2])
+    .setIntegrationTypes([0, 1])
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: "Ändere die Sprache für den aktuellen Server",

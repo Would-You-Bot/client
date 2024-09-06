@@ -18,7 +18,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("truth")
     .setDescription("Gives you a random truth question to answer")
-    .setDMPermission(false)
+    .setContexts([0, 1, 2])
+    .setIntegrationTypes([0, 1])
     .setDescriptionLocalizations({
       de: "Postet eine zufällige Wahrheitsfrage, die du beantworten musst",
       "es-ES": "Publica una pregunta de verdad aleatoria que debes responder",

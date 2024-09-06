@@ -13,7 +13,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("privacy")
     .setDescription("Changes your privacy settings")
-    .setDMPermission(false)
+    .setContexts([0, 1, 2])
+    .setIntegrationTypes([0, 1])
     .setDescriptionLocalizations({
       de: "Ändert deine Datenschutzeinstellungen",
       "es-ES": "Cambia tu configuración de privacidad",

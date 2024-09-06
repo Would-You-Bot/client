@@ -16,7 +16,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("wouldyourather")
     .setDescription("Gives you a 'Would You Rather' question")
-    .setDMPermission(false)
+    .setContexts([0, 1, 2])
+    .setIntegrationTypes([0, 1])
     .setDescriptionLocalizations({
       de: "Erhalte eine Würdest du eher Frage",
       "es-ES": "Obtiene une pregunta ¿Qué prefieres?",

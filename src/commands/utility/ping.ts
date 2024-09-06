@@ -13,7 +13,8 @@ const command: ChatInputCommand = {
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Checks how fast the bot responds")
-    .setDMPermission(false)
+    .setContexts([0])
+    .setIntegrationTypes([0])
     .setDescriptionLocalizations({
       de: "Zeigt den Ping des Clients an",
       "es-ES": "Muestra el ping del cliente",
