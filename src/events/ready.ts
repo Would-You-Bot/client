@@ -15,7 +15,6 @@ const event: Event = {
   event: "ready",
   execute: async (client: WouldYou) => {
     if (client.cluster.id === 0) {
-      client.server.startServer();
 
       let globalCommands = Array.from(
         client.commands.filter((x) => x.requireGuild === true).values(),
@@ -57,6 +56,8 @@ const event: Event = {
 
               await redis.set("server_count", JSON.stringify(finalServer));
             };
+
+            client.server.startServer();
 
             // Post data to top.gg
             const postStats = async () => {

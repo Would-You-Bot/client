@@ -14,7 +14,7 @@ import "dotenv/config";
 
 // Classes for the bot
 import path from "path";
-import { IConfig } from "../config";
+import Config, { IConfig } from "../config";
 import { Button, ChatInputCommand } from "../interfaces";
 import { Event } from "../interfaces/event";
 import { fileToCollection } from "./Functions/fileToCollection";
@@ -102,6 +102,9 @@ export default class WouldYou extends Client {
 
     // Init the cluster client
     this.cluster = new ClusterClient(this);
+
+    // The config
+    this.config = Config;
 
     this.cluster.on("ready", async () => {
       // The database handler

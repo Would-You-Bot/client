@@ -1,6 +1,7 @@
 import type { Guild, WebSocketShard } from "discord.js";
 import express, { Request, Response } from "express";
 import type WouldYou from "../util/wouldYou";
+import { gray, green, white } from "chalk-advanced";
 
 interface ShardStats {
   id: number;
@@ -56,6 +57,12 @@ export default class ExpressServer {
   }
 
   public startServer(): void {
-    this.app.listen(this.port);
+    this.app.listen(this.port, () => {
+      console.log(
+        `${white("Express API")} ${gray(">")} ${green(
+          "Server is now running on port " + this.port,
+        )}`,
+      );
+    });
   }
 }
