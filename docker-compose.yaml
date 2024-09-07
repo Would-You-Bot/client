@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    ports:
+    - "4959"
     stdin_open: true 
     tty: true
     env_file:
