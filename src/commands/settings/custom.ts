@@ -61,6 +61,7 @@ const command: ChatInputCommand = {
               { name: "What Would You Do", value: "wwyd" },
               { name: "Truth", value: "truth" },
               { name: "Dare", value: "dare" },
+              { name: "Topic", value: "topic" },
             ),
         )
         .addStringOption((option) =>
@@ -618,6 +619,39 @@ const command: ChatInputCommand = {
               ),
             );
           }
+
+          if (
+            guildDb.customMessages.filter((c) => c.type === "topic").length > 0
+          ) {
+            let data: any;
+            data = guildDb.customMessages
+              .filter((c) => c.type === "topic")
+              .map((s, i) => `${s.id}: ${s.msg}`);
+            data = Array.from({ length: Math.ceil(data.length / 5) }, (a, r) =>
+              data.slice(r * 5, r * 5 + 5),
+            );
+
+            Math.ceil(data.length / 5);
+            data = data.map((e: any) =>
+              page.add(
+                new EmbedBuilder()
+                  .setTitle(
+                    client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.paginator.title",
+                    ),
+                  )
+                  .setDescription(
+                    `${client.translation.get(
+                      guildDb?.language,
+                      "wyCustom.success.paginator.descCatTOPIC",
+                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
+                  )
+                  .setColor("#0795F6"),
+              ),
+            );
+          }
+
           page.start(interaction, "custom");
           return;
         case "import":
@@ -673,7 +707,8 @@ const command: ChatInputCommand = {
                 !response.data.neverhaveiever &&
                 !response.data.truth &&
                 !response.data.dare &&
-                !response.data.wwyd
+                !response.data.wwyd &&
+                !response.data.topic
               ) {
                 interaction.editReply({
                   options: {
@@ -692,7 +727,8 @@ const command: ChatInputCommand = {
                 response.data.neverhaveiever?.length === 0 ||
                 response.data.truth?.length === 0 ||
                 response.data.dare?.length === 0 ||
-                response.data.wwyd?.length === 0
+                response.data.wwyd?.length === 0 ||
+                response.data.topic?.length === 0
               ) {
                 interaction.editReply({
                   options: {
@@ -885,6 +921,7 @@ const command: ChatInputCommand = {
             (c) => c.type === "neverhaveiever",
           );
           let wwyd = guildDb.customMessages.filter((c) => c.type === "wwyd");
+          let topic = guildDb.customMessages.filter((c) => c.type === "topic");
 
           let text = "{\n";
           let arrays = [];
@@ -938,6 +975,16 @@ const command: ChatInputCommand = {
             wwyd.map((a, i) => {
               i = i++ + 1;
               arrayText += `\n"${a.msg}"${wwyd.length !== i ? "," : ""}`;
+            });
+            arrayText += `\n]`;
+            arrays.push(arrayText);
+          }
+
+          if (topic.length > 0) {
+            let arrayText = `"topic": [`;
+            topic.map((a, i) => {
+              i = i++ + 1;
+              arrayText += `\n"${a.msg}"${topic.length !== i ? "," : ""}`;
             });
             arrayText += `\n]`;
             arrays.push(arrayText);
