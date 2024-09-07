@@ -1,6 +1,6 @@
 {
   "name": "would-you",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Would You is a popular Discord bot that allows you to play the classic game of Would You Rather with your friends!",
   "main": "dist/cluster.js",
   "scripts": {
