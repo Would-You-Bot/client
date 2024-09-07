@@ -14,19 +14,19 @@ import "dotenv/config";
 
 // Classes for the bot
 import path from "path";
-import Config, { IConfig } from "../config";
+import { IConfig } from "../config";
 import { Button, ChatInputCommand } from "../interfaces";
 import { Event } from "../interfaces/event";
 import { fileToCollection } from "./Functions/fileToCollection";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
 import DatabaseHandler from "./databaseHandler";
+import ExpressServer from "./expressServer";
 import KeepAlive from "./keepAlive";
 import PremiumHandler from "./premiumHandler";
 import TranslationHandler from "./translationHandler";
 import Voting from "./votingHandler";
 import WebhookHandler from "./webhookHandler";
-import ExpressServer from "./expressServer";
 
 export default class WouldYou extends Client {
   public commands: Collection<string, ChatInputCommand>;

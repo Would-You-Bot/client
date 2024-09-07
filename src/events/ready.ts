@@ -15,7 +15,6 @@ const event: Event = {
   event: "ready",
   execute: async (client: WouldYou) => {
     if (client.cluster.id === 0) {
-
       client.server.startServer();
 
       let globalCommands = Array.from(
