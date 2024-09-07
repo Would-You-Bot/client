@@ -14,13 +14,14 @@ import "dotenv/config";
 
 // Classes for the bot
 import path from "path";
-import Config, { IConfig } from "../config";
+import { IConfig } from "../config";
 import { Button, ChatInputCommand } from "../interfaces";
 import { Event } from "../interfaces/event";
 import { fileToCollection } from "./Functions/fileToCollection";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
 import DatabaseHandler from "./databaseHandler";
+import ExpressServer from "./expressServer";
 import KeepAlive from "./keepAlive";
 import PremiumHandler from "./premiumHandler";
 import TranslationHandler from "./translationHandler";
@@ -44,6 +45,7 @@ export default class WouldYou extends Client {
   public dailyMessage: DailyMessage;
   public voting: Voting;
   public config: IConfig;
+  public server: ExpressServer;
   translate: any;
 
   constructor() {
@@ -101,8 +103,6 @@ export default class WouldYou extends Client {
     // Init the cluster client
     this.cluster = new ClusterClient(this);
 
-    this.config = Config;
-
     this.cluster.on("ready", async () => {
       // The database handler
       this.database = new DatabaseHandler(process.env.MONGO_URI as string);
@@ -114,6 +114,8 @@ export default class WouldYou extends Client {
         );
       });
       this.database.startSweeper(this);
+
+      this.server = new ExpressServer(this, parseInt(process.env.PORT!));
 
       // The translations handler
       this.translation = new TranslationHandler();
