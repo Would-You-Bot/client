@@ -15,7 +15,6 @@ const event: Event = {
   event: "ready",
   execute: async (client: WouldYou) => {
     if (client.cluster.id === 0) {
-
       let globalCommands = Array.from(
         client.commands.filter((x) => x.requireGuild === true).values(),
       ).map((x) => x.data.toJSON()) as RESTPostAPIApplicationCommandsJSONBody[];
