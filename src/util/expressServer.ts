@@ -1,7 +1,7 @@
+import { gray, green, white } from "chalk-advanced";
 import type { Guild, WebSocketShard } from "discord.js";
 import express, { Request, Response } from "express";
 import type WouldYou from "../util/wouldYou";
-import { gray, green, white } from "chalk-advanced";
 
 interface ShardStats {
   id: number;
