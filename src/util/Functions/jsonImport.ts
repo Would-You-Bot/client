@@ -3,10 +3,10 @@ import { GuildModel, type IGuildModel } from "../Models/guildModel";
 import {
   dareModel,
   nhieModel,
+  topicModel,
   truthModel,
   wwydModel,
   wyrModel,
-  topicModel,
 } from "../Models/questionModel";
 import { usedQuestionModel } from "../Models/usedModel";
 
