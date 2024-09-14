@@ -2,12 +2,12 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ChatInputCommandInteraction,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type ChatInputCommandInteraction,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { IGuildModel } from "../../../util/Models/guildModel";
-import WouldYou from "../../../util/wouldYou";
+import type { IGuildModel } from "../../../util/Models/guildModel";
+import type WouldYou from "../../../util/wouldYou";
 
 export default async function settingsGeneral(
   interaction: ChatInputCommandInteraction,
@@ -27,18 +27,9 @@ export default async function settingsGeneral(
           guildDb?.language,
           "Settings.embed.dailyRole",
         )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
-        `${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.dailyType",
-        )}: ${guildDb?.customTypes}\n` +
-        `${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.dailyTimezone",
-        )}: ${guildDb.dailyTimezone}\n` +
-        `${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.dailyInterval",
-        )}: ${guildDb.dailyInterval}\n` +
+        `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${guildDb?.customTypes}\n` +
+        `${client.translation.get(guildDb?.language, "Settings.embed.dailyTimezone")}: ${guildDb.dailyTimezone}\n` +
+        `${client.translation.get(guildDb?.language, "Settings.embed.dailyInterval")}: ${guildDb.dailyInterval}\n` +
         `${client.translation.get(
           guildDb?.language,
           "Settings.embed.dailyThread",

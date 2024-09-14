@@ -2,10 +2,10 @@ import { captureException } from "@sentry/node";
 import {
   EmbedBuilder,
   PermissionFlagsBits,
-  PermissionsBitField,
   SlashCommandBuilder,
+  type PermissionsBitField,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
@@ -47,7 +47,7 @@ const command: ChatInputCommand = {
     ),
 
   execute: async (interaction, client, guildDb) => {
-    let languageembed;
+    let languageembed: EmbedBuilder;
 
     const languageMap = {
       de_DE: {
@@ -144,23 +144,22 @@ const command: ChatInputCommand = {
               captureException(err);
             });
           break;
-        } else {
-          const errorembed = new EmbedBuilder()
-            .setColor("#F00505")
-            .setTitle("Error!")
-            .setDescription(
-              client.translation.get(guildDb?.language, "Language.embed.error"),
-            );
-          interaction
-            .reply({
-              embeds: [errorembed],
-              ephemeral: true,
-            })
-            .catch((err) => {
-              captureException(err);
-            });
-          return;
         }
+        const errorembed = new EmbedBuilder()
+          .setColor("#F00505")
+          .setTitle("Error!")
+          .setDescription(
+            client.translation.get(guildDb?.language, "Language.embed.error"),
+          );
+        interaction
+          .reply({
+            embeds: [errorembed],
+            ephemeral: true,
+          })
+          .catch((err) => {
+            captureException(err);
+          });
+        return;
       }
     }
   },

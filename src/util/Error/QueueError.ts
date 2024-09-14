@@ -26,8 +26,7 @@ export default class QueueError extends Error {
   get causeError() {
     if (this.error) {
       return this.error;
-    } else {
-      return new Error("QueueError: no cause error provided.");
     }
+    return new Error("QueueError: no cause error provided.");
   }
 }

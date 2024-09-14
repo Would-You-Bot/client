@@ -3,10 +3,10 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
   SlashCommandBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,

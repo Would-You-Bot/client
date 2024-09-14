@@ -17,7 +17,7 @@ export interface IGuildModel {
   dailyTimezone: string;
   dailyInterval: string;
   dailyThread: boolean;
-  excludedDays: Array<Number>;
+  excludedDays: number[];
   replay: boolean;
   replayCooldown: number;
   replayBy: string;

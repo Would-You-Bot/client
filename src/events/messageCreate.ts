@@ -3,13 +3,13 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   EmbedBuilder,
-  GuildTextBasedChannel,
-  Message,
-  MessageActionRowComponentBuilder,
   PermissionFlagsBits,
+  type GuildTextBasedChannel,
+  type Message,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Event } from "../interfaces/event";
-import WouldYou from "../util/wouldYou";
+import type { Event } from "../interfaces/event";
+import type WouldYou from "../util/wouldYou";
 const Cooldown = new Set();
 
 const event: Event = {
@@ -35,7 +35,7 @@ const event: Event = {
             "https://cdn.discordapp.com/emojis/953349395955470406.gif?size=40&quality=lossless",
         })
         .setDescription(
-          `My purpose is to help users have better engagement in your servers to bring up more activity! You can use </help:982400982921138226> to see all of my commands.`,
+          "My purpose is to help users have better engagement in your servers to bring up more activity! You can use </help:982400982921138226> to see all of my commands.",
         )
         .setColor("#0598F6");
 

@@ -1,18 +1,18 @@
 import Cryptr from "cryptr";
 import {
-  APIMessage,
-  NewsChannel,
   PermissionFlagsBits,
-  StageChannel,
-  TextChannel,
-  VoiceChannel,
   WebhookClient,
-  WebhookMessageCreateOptions,
+  type APIMessage,
+  type NewsChannel,
+  type StageChannel,
+  type TextChannel,
+  type VoiceChannel,
+  type WebhookMessageCreateOptions,
 } from "discord.js";
-import { Document, Model } from "mongoose";
-import { IQueueMessage, Result } from "../global";
-import { IWebhookCache, WebhookCache } from "./Models/webhookCache";
-import WouldYou from "./wouldYou";
+import type { Document, Model } from "mongoose";
+import type { IQueueMessage, Result } from "../global";
+import { WebhookCache, type IWebhookCache } from "./Models/webhookCache";
+import type WouldYou from "./wouldYou";
 
 const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string);
 
@@ -139,7 +139,7 @@ export default class WebhookHandler {
     if (result) return { success: true, result: result };
     return {
       success: false,
-      error: new Error(`Failed to send webhook`),
+      error: new Error("Failed to send webhook"),
     };
   }
   private async webhookFallBack(
@@ -160,12 +160,10 @@ export default class WebhookHandler {
       );
       if (result.success) {
         return webhook;
-      } else {
-        return { success: false, error: result.error };
       }
-    } else {
-      return webhook;
+      return { success: false, error: result.error };
     }
+    return webhook;
   }
   private async createWebhook(
     channel: WebHookCompatibleChannel,
@@ -205,7 +203,7 @@ export default class WebhookHandler {
             token: webhook.token,
           }),
         };
-      else throw new Error("Webhook token is null");
+      throw new Error("Webhook token is null");
     } catch (error) {
       return { success: false, error: error as Error };
     }
@@ -226,14 +224,13 @@ export default class WebhookHandler {
       );
       if (doc) {
         return { success: true, result: doc };
-      } else {
-        const createdEntry = await this.createEntryInCache(
-          channelId,
-          guildId,
-          webhook,
-        );
-        return createdEntry;
       }
+      const createdEntry = await this.createEntryInCache(
+        channelId,
+        guildId,
+        webhook,
+      );
+      return createdEntry;
     } catch (error) {
       return { success: false, error: error as Error };
     }
@@ -253,12 +250,11 @@ export default class WebhookHandler {
       });
       if (doc) {
         return { success: true, result: doc };
-      } else {
-        return {
-          success: false,
-          error: new Error("No new document could be created"),
-        };
       }
+      return {
+        success: false,
+        error: new Error("No new document could be created"),
+      };
     } catch (error) {
       return { success: false, error: error as Error };
     }

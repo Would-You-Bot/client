@@ -2,11 +2,11 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  InteractionReplyOptions,
-  MessageActionRowComponentBuilder,
   SlashCommandBuilder,
+  type InteractionReplyOptions,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
@@ -33,7 +33,7 @@ const command: ChatInputCommand = {
       userID: interaction.user?.id,
     });
 
-    let TRUTH = await getQuestionsByType(
+    const TRUTH = await getQuestionsByType(
       "truth",
       guildDb,
       guildDb?.language != null

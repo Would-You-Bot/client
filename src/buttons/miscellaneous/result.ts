@@ -1,5 +1,5 @@
 import { EmbedBuilder } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 import Paginator from "../../util/pagination";
 
 const button: Button = {
@@ -17,7 +17,7 @@ const button: Button = {
       return;
     }
 
-    let paginate = client.paginate.get(`${interaction.user.id}-reference`);
+    const paginate = client.paginate.get(`${interaction.user.id}-reference`);
     if (paginate) {
       clearTimeout(paginate.timeout);
       client.paginate.delete(`${interaction.user.id}-reference`);
@@ -61,7 +61,7 @@ const button: Button = {
     data = data.map((e: any) =>
       page.add(
         new EmbedBuilder()
-          .setTitle(`Voted for Option 1`)
+          .setTitle("Voted for Option 1")
           .setDescription(e.slice(0, 10).join("\n").toString())
           .setColor("#0598F6"),
       ),
@@ -89,7 +89,7 @@ const button: Button = {
     data2 = data2.map((e: any) =>
       page.add(
         new EmbedBuilder()
-          .setTitle(`Voted for Option 2`)
+          .setTitle("Voted for Option 2")
           .setDescription(e.slice(0, 10).join("\n").toString())
           .setColor("#F00605"),
       ),

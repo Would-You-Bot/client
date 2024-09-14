@@ -1,4 +1,4 @@
-import WouldYou from "./wouldYou";
+import type WouldYou from "./wouldYou";
 
 interface GuildDB {
   language: string;
@@ -41,9 +41,8 @@ export function generateWYR(
       type: "wouldyourather",
       text: `${responsePhrase} ${text}`,
     };
-  } else {
-    return { value: true, type: "wouldyourather", text: text };
   }
+  return { value: true, type: "wouldyourather", text: text };
 }
 
 export function generateWWYD(
@@ -82,9 +81,8 @@ export function generateWWYD(
       type: "wwyd",
       text: `${responsePhrase} ${text}`,
     };
-  } else {
-    return { value: true, type: "wwyd", text: text };
   }
+  return { value: true, type: "wwyd", text: text };
 }
 
 export function generateNHIE(
@@ -124,7 +122,6 @@ export function generateNHIE(
       type: "neverhaveiever",
       text: `${responsePhrase} ${text}`,
     };
-  } else {
-    return { value: true, type: "neverhaveiever", text: text };
   }
+  return { value: true, type: "neverhaveiever", text: text };
 }

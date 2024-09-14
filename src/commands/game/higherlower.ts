@@ -4,11 +4,11 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
   SlashCommandBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
 import { v4 as uuidv4 } from "uuid";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 import HOR from "../../util/Classes/generateHOR";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
 import { getHigherLower } from "../../util/Functions/jsonImport";
@@ -40,23 +40,23 @@ const command: ChatInputCommand = {
 
     await interaction.editReply({ embeds: [initembed] });
 
-    let gameData = await getHigherLower();
+    const gameData = await getHigherLower();
 
     const random = Math.floor(Math.random() * gameData.length);
     let comperator = Math.floor(Math.random() * gameData.length);
 
     const regenerateComperator = () => {
       comperator = Math.floor(Math.random() * gameData.length);
-      if (comperator == random) regenerateComperator();
+      if (comperator === random) regenerateComperator();
     };
-    if (comperator == random) regenerateComperator();
+    if (comperator === random) regenerateComperator();
 
     const game = new HigherlowerModel({
       creator: interaction.user.id,
       created: new Date(),
       id: uuidv4(),
       guild: interaction.guild
-        ? (interaction.guildId as String)
+        ? (interaction.guildId as string)
         : interaction.channelId,
       items: {
         current: gameData[random],
@@ -70,9 +70,7 @@ const command: ChatInputCommand = {
     const gameImage = new HOR();
     gameImage.setGame(game);
     gameImage.setImages([
-      `https://cdn.wouldyoubot.gg/higherlower/${
-        game.items.history[game.items.history.length - 1].id
-      }.png`,
+      `https://cdn.wouldyoubot.gg/higherlower/${game.items.history[game.items.history.length - 1].id}.png`,
       `https://cdn.wouldyoubot.gg/higherlower/${game.items.current.id}.png`,
     ]);
 

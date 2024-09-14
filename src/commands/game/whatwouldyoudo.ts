@@ -2,12 +2,12 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  InteractionReplyOptions,
-  MessageActionRowComponentBuilder,
   SlashCommandBuilder,
+  type InteractionReplyOptions,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
 
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel } from "../../util/Models/userModel";
@@ -32,7 +32,7 @@ const command: ChatInputCommand = {
       userID: interaction.user?.id,
     });
 
-    let WWYD = await getQuestionsByType(
+    const WWYD = await getQuestionsByType(
       "whatwouldyoudo",
       guildDb,
       guildDb?.language != null
@@ -79,7 +79,7 @@ const command: ChatInputCommand = {
         .setStyle(1)
         .setEmoji("1073954835533156402")
         .setDisabled(guildDb?.replay != null ? !guildDb.replay : false)
-        .setCustomId(`wwyd`),
+        .setCustomId("wwyd"),
     ]);
 
     const classicData: InteractionReplyOptions = guildDb?.classicMode

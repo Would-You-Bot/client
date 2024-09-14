@@ -1,14 +1,14 @@
 import { captureException } from "@sentry/node";
 import {
-  ChatInputCommandInteraction,
   EmbedBuilder,
   PermissionFlagsBits,
-  PermissionsBitField,
   SlashCommandBuilder,
+  type ChatInputCommandInteraction,
+  type PermissionsBitField,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
-import { IGuildModel } from "../../util/Models/guildModel";
-import WouldYou from "../../util/wouldYou";
+import type { ChatInputCommand } from "../../interfaces";
+import type { IGuildModel } from "../../util/Models/guildModel";
+import type WouldYou from "../../util/wouldYou";
 
 const command: ChatInputCommand = {
   requireGuild: true,

@@ -1,5 +1,4 @@
 import { init } from "@sentry/node";
-import { ProfilingIntegration } from "@sentry/profiling-node";
 import { gray, green, white } from "chalk-advanced";
 import WouldYou from "./util/wouldYou";
 
@@ -30,12 +29,6 @@ if (botId !== "981649513427111957" || process.env.STATUS === "DEVELOPMENT") {
 if (process.env.SENTRY_DSN) {
   init({
     dsn: process.env.SENTRY_DSN,
-    // Performance Monitoring
-    integrations: [new ProfilingIntegration()],
-    // Performance Monitoring
-    tracesSampleRate: 0.5, //  Capture 100% of the transactions
-    // Set sampling rate for profiling - this is relative to tracesSampleRate
-    profilesSampleRate: 0.5,
   });
 }
 
@@ -52,8 +45,6 @@ global.checkDebug = (d, i) => {
 const client = new WouldYou();
 client.loginBot().then(() => {
   console.log(
-    `${white("Would You?")} ${gray(">")} ${green(
-      "Bot should be started now...",
-    )}`,
+    `${white("Would You?")} ${gray(">")} ${green("Bot should be started now...")}`,
   );
 });

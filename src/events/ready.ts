@@ -7,15 +7,15 @@ import { Routes } from "discord-api-types/v10";
 import { getInfo } from "discord-hybrid-sharding";
 import type { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 import "dotenv/config";
-import { Event } from "../interfaces/event";
-import WouldYou from "../util/wouldYou";
+import type { Event } from "../interfaces/event";
+import type WouldYou from "../util/wouldYou";
 
 // TODO: Clean up this file
 const event: Event = {
   event: "ready",
   execute: async (client: WouldYou) => {
     if (client.cluster.id === 0) {
-      let globalCommands = Array.from(
+      const globalCommands = Array.from(
         client.commands.filter((x) => x.requireGuild === true).values(),
       ).map((x) => x.data.toJSON()) as RESTPostAPIApplicationCommandsJSONBody[];
       const rest = new REST({
@@ -66,7 +66,7 @@ const event: Event = {
 
               await axios({
                 method: "POST",
-                url: `https://top.gg/api/bots/981649513427111957/stats`,
+                url: "https://top.gg/api/bots/981649513427111957/stats",
                 headers: {
                   Authorization: process.env.TOPGG_TOKEN,
                   "Content-Type": "application/json",
@@ -93,9 +93,7 @@ const event: Event = {
               });
             }
             console.log(
-              `${white("Would You?")} ${gray(">")} ${green(
-                "Successfully registered commands globally",
-              )}`,
+              `${white("Would You?")} ${gray(">")} ${green("Successfully registered commands globally")}`,
             );
           } else {
             if (!process.env.TEST_GUILD_ID)
@@ -116,9 +114,7 @@ const event: Event = {
               );
             }
             console.log(
-              `${white("Would You?")} ${gray(">")} ${green(
-                "Successfully registered commands locally",
-              )}`,
+              `${white("Would You?")} ${gray(">")} ${green("Successfully registered commands locally")}`,
             );
           }
         } catch (err) {

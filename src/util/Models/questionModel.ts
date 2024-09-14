@@ -33,3 +33,4 @@ export const wwydModel = createModel("wwydModel", questionModelSchema);
 export const nhieModel = createModel("nhieModel", questionModelSchema);
 export const dareModel = createModel("dareModel", questionModelSchema);
 export const truthModel = createModel("truthModel", questionModelSchema);
+export const topicModel = createModel("topicModel", questionModelSchema);

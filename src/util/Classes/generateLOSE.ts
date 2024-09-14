@@ -1,7 +1,7 @@
 import Canvas from "@napi-rs/canvas";
-import path from "path";
+import path from "node:path";
 import { UserModel } from "../Models/userModel";
-import WouldYou from "../wouldYou";
+import type WouldYou from "../wouldYou";
 
 // Import font
 Canvas.GlobalFonts.registerFromPath(
@@ -27,8 +27,6 @@ Canvas.GlobalFonts.registerFromPath(
 export default class LOSE {
   private game: any;
 
-  constructor() {}
-
   /**
    *
    * @param {Object} game
@@ -37,7 +35,7 @@ export default class LOSE {
 
   setGame(game: any) {
     if (typeof game !== "object") {
-      throw new TypeError("Expected game object instead got " + typeof game);
+      throw new TypeError(`Expected game object instead got ${typeof game}`);
     }
     this.game = game;
   }

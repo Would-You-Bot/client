@@ -1,9 +1,9 @@
 import {
   ActionRowBuilder,
-  MessageActionRowComponentBuilder,
   StringSelectMenuBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "dailyType",

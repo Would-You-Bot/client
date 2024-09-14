@@ -13,10 +13,10 @@ import { gray, green, white } from "chalk-advanced";
 import "dotenv/config";
 
 // Classes for the bot
-import path from "path";
-import Config, { IConfig } from "../config";
-import { Button, ChatInputCommand } from "../interfaces";
-import { Event } from "../interfaces/event";
+import path from "node:path";
+import Config, { type IConfig } from "../config";
+import type { Button, ChatInputCommand } from "../interfaces";
+import type { Event } from "../interfaces/event";
 import { fileToCollection } from "./Functions/fileToCollection";
 import CooldownHandler from "./cooldownHandler";
 import DailyMessage from "./dailyMessage";
@@ -56,6 +56,7 @@ export default class WouldYou extends Client {
         GatewayIntentBits.GuildMessages,
       ],
       partials: [Partials.Channel],
+      failIfNotExists: false,
       makeCache: (manager) => {
         switch (manager.name) {
           case "ThreadMemberManager":
@@ -111,9 +112,7 @@ export default class WouldYou extends Client {
       this.database = new DatabaseHandler(process.env.MONGO_URI as string);
       this.database.connectToDatabase().then(() => {
         console.log(
-          `${white("Would You?")} ${gray(">")} ${green(
-            "Successfully connected to the database",
-          )}`,
+          `${white("Would You?")} ${gray(">")} ${green("Successfully connected to the database")}`,
         );
       });
       this.database.startSweeper(this);

@@ -3,9 +3,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "replayDelete",
@@ -42,10 +42,7 @@ const button: Button = {
                 guildDb?.language,
                 "Settings.embed.replayBy1",
               )
-        }\n${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.replayChannels",
-        )}: ${
+        }\n${client.translation.get(guildDb?.language, "Settings.embed.replayChannels")}: ${
           arr === "None"
             ? arr
             : `\n${arr

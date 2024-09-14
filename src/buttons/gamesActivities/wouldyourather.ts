@@ -2,12 +2,12 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  InteractionReplyOptions,
-  MessageActionRowComponentBuilder,
   PermissionFlagsBits,
+  type InteractionReplyOptions,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
 
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
@@ -34,18 +34,16 @@ const button: Button = {
             ephemeral: true,
           });
         }
-      } else {
-        if (
-          !interaction.channel
-            ?.permissionsFor(interaction.user.id)
-            .has(PermissionFlagsBits.SendMessages)
-        ) {
-          return interaction.followUp({
-            content:
-              "You don't have permission to use this button in this channel!",
-            ephemeral: true,
-          });
-        }
+      } else if (
+        !interaction.channel
+          ?.permissionsFor(interaction.user.id)
+          .has(PermissionFlagsBits.SendMessages)
+      ) {
+        return interaction.followUp({
+          content:
+            "You don't have permission to use this button in this channel!",
+          ephemeral: true,
+        });
       }
     }
 
@@ -55,7 +53,7 @@ const button: Button = {
       userID: interaction.user?.id,
     });
 
-    let WYR = await getQuestionsByType(
+    const WYR = await getQuestionsByType(
       "wouldyourather",
       guildDb,
       guildDb?.language != null
@@ -110,7 +108,7 @@ const button: Button = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
-        .setCustomId(`wouldyourather`)
+        .setCustomId("wouldyourather")
         .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
     ]);
 

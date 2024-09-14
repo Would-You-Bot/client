@@ -2,10 +2,10 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type EmbedBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import WouldYou from "./wouldYou";
+import type WouldYou from "./wouldYou";
 
 export default class Paginator {
   private pages: EmbedBuilder[];
@@ -46,12 +46,12 @@ export default class Paginator {
     leaderboard: string | null = "none",
   ) {
     if (!interaction || !interaction.channelId || !this.pages.length) return;
-    let pFirst = new ButtonBuilder()
+    const pFirst = new ButtonBuilder()
       .setDisabled(true)
       .setCustomId("paginateFirst")
       .setLabel("⏪")
       .setStyle(ButtonStyle.Secondary);
-    let pPrev = new ButtonBuilder()
+    const pPrev = new ButtonBuilder()
       .setDisabled(true)
       .setCustomId("paginatePrev")
       .setLabel("◀️")

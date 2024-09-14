@@ -1,8 +1,8 @@
 import { captureException } from "@sentry/node";
-import { EmbedBuilder, Guild, WebhookClient } from "discord.js";
+import { EmbedBuilder, WebhookClient, type Guild } from "discord.js";
 import "dotenv/config";
-import { Event } from "../interfaces";
-import WouldYou from "../util/wouldYou";
+import type { Event } from "../interfaces";
+import type WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "guildCreate",
@@ -25,7 +25,7 @@ const event: Event = {
 
     let features = "";
     if (
-      (guild.features && guild.features.includes("VERIFIED")) ||
+      guild.features?.includes("VERIFIED") ||
       guild.features.includes("PARTNERED")
     ) {
       features = guild.features.includes("VERIFIED")
@@ -38,8 +38,8 @@ const event: Event = {
       username: global?.devBot ? "Dev Bot" : "Main Bot",
       embeds: [
         new EmbedBuilder()
-          .setTitle(`→ Joined Server`)
-          .setColor(`#0598F4`)
+          .setTitle("→ Joined Server")
+          .setColor("#0598F4")
           .setThumbnail(
             guild.iconURL({
               extension: "png",
@@ -49,7 +49,7 @@ const event: Event = {
             `**Name**: ${
               guild.name
             }\n**Users**: ${guild.memberCount.toLocaleString()}\n**Server Owner**: ${guild.ownerId}${
-              features ? `\n**Features**: ${features}` : ``
+              features ? `\n**Features**: ${features}` : ""
             }`,
           )
           .setFooter({

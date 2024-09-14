@@ -3,12 +3,12 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
 import { R2 } from "node-cloudflare-r2";
 import { v4 as uuid } from "uuid";
-import { Button } from "../../interfaces";
-import { Modal, ModalData } from "../../util/modalHandler";
+import type { Button } from "../../interfaces";
+import { Modal, type ModalData } from "../../util/modalHandler";
 
 const button: Button = {
   name: "webhookAvatar",
@@ -39,7 +39,7 @@ const button: Button = {
     } as ModalData).getData(interaction);
 
     const value = data?.fieldValues[0].value;
-    let regex =
+    const regex =
       /https?:\/\/(www.|i.|cdn.|media.)discordapp\.(com|net)\/attachments\/[^\s]+\/[^\s]+\/[^\s]+(.png|.jpg|.gif|.jpeg|.webp)/g;
 
     if (!regex.test(value!)) {
@@ -128,7 +128,7 @@ const button: Button = {
     const image = await getImageData();
     const upload = await bucket.upload(
       image,
-      guildDb.guildID + "-" + uuid(),
+      `${guildDb.guildID}-${uuid()}`,
       undefined,
       "image",
     );
@@ -143,7 +143,7 @@ const button: Button = {
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
-      webhookAvatar: "https://bucket.wouldyoubot.gg/" + upload.objectKey,
+      webhookAvatar: `https://bucket.wouldyoubot.gg/${upload.objectKey}`,
     });
 
     await (data?.modal as any).update({

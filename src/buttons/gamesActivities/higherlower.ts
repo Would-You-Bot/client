@@ -4,11 +4,11 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
   PermissionFlagsBits,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
 import { v4 as uuidv4 } from "uuid";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 import HOR from "../../util/Classes/generateHOR";
 import { HigherLowerEmbed } from "../../util/Defaults/Embeds/Games/HigherLowerEmbed";
@@ -36,18 +36,16 @@ const button: Button = {
             ephemeral: true,
           });
         }
-      } else {
-        if (
-          !interaction.channel
-            ?.permissionsFor(interaction.user.id)
-            .has(PermissionFlagsBits.SendMessages)
-        ) {
-          return interaction.reply({
-            content:
-              "You don't have permission to use this button in this channel!",
-            ephemeral: true,
-          });
-        }
+      } else if (
+        !interaction.channel
+          ?.permissionsFor(interaction.user.id)
+          .has(PermissionFlagsBits.SendMessages)
+      ) {
+        return interaction.reply({
+          content:
+            "You don't have permission to use this button in this channel!",
+          ephemeral: true,
+        });
       }
     }
     await interaction.deferReply();
@@ -60,23 +58,23 @@ const button: Button = {
 
     await interaction.editReply({ embeds: [initembed] });
 
-    let gameData = await getHigherLower();
+    const gameData = await getHigherLower();
 
     const random = Math.floor(Math.random() * gameData.length);
     let comperator = Math.floor(Math.random() * gameData.length);
 
     const regenerateComperator = () => {
       comperator = Math.floor(Math.random() * gameData.length);
-      if (comperator == random) regenerateComperator();
+      if (comperator === random) regenerateComperator();
     };
-    if (comperator == random) regenerateComperator();
+    if (comperator === random) regenerateComperator();
 
     const game = new HigherlowerModel({
       creator: interaction.user.id,
       created: new Date(),
       id: uuidv4(),
       guild: interaction.guild
-        ? (interaction.guildId as String)
+        ? (interaction.guildId as string)
         : interaction.channelId,
       items: {
         current: gameData[random],
@@ -90,9 +88,7 @@ const button: Button = {
     const gameImage = new HOR();
     gameImage.setGame(game);
     gameImage.setImages([
-      `https://cdn.wouldyoubot.gg/higherlower/${
-        game.items.history[game.items.history.length - 1].id
-      }.png`,
+      `https://cdn.wouldyoubot.gg/higherlower/${game.items.history[game.items.history.length - 1].id}.png`,
       `https://cdn.wouldyoubot.gg/higherlower/${game.items.current.id}.png`,
     ]);
 

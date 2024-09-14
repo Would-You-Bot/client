@@ -2,12 +2,12 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ChatInputCommandInteraction,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type ChatInputCommandInteraction,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { IGuildModel } from "../../../util/Models/guildModel";
-import WouldYou from "../../../util/wouldYou";
+import type { IGuildModel } from "../../../util/Models/guildModel";
+import type WouldYou from "../../../util/wouldYou";
 
 export default async function settingsGeneral(
   interaction: ChatInputCommandInteraction,
@@ -73,7 +73,7 @@ export default async function settingsGeneral(
             "Settings.button.welcomeTest",
           ),
         )
-        .setDisabled(guildDb.welcome ? false : true)
+        .setDisabled(!guildDb.welcome)
         .setStyle(guildDb.welcome ? ButtonStyle.Primary : ButtonStyle.Secondary)
         .setEmoji("1207800685928910909"),
     );

@@ -1,6 +1,6 @@
-import { CommandInteraction, EmbedBuilder } from "discord.js";
-import { IGuildModel } from "../../../Models/guildModel";
-import WouldYou from "../../../wouldYou";
+import { EmbedBuilder, type CommandInteraction } from "discord.js";
+import type { IGuildModel } from "../../../Models/guildModel";
+import type WouldYou from "../../../wouldYou";
 
 export class HigherLowerEmbed extends EmbedBuilder {
   constructor(
@@ -23,7 +23,7 @@ export class HigherLowerEmbed extends EmbedBuilder {
         "HigherLower.initial.description",
       ),
     ).setFooter({
-      text: "Requested by " + interaction.user.username,
+      text: `Requested by ${interaction.user.username}`,
       iconURL: interaction.user.displayAvatarURL() || undefined,
     });
   }

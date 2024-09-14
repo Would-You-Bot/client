@@ -1,6 +1,6 @@
 import { captureException } from "@sentry/node";
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,

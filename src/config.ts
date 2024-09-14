@@ -1,5 +1,5 @@
 export interface IConfig {
-  status: Array<string>;
+  status: string[];
   emojis: {
     info: {
       dominik: string;

@@ -3,9 +3,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "welcome",
@@ -45,69 +45,69 @@ const button: Button = {
       });
 
     const welcomeButtons =
-        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-          new ButtonBuilder()
-            .setCustomId("welcomeType")
-            .setEmoji("1185973664538177557")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.dailyType",
-              ),
-            )
-            .setStyle(ButtonStyle.Primary)
-            .setEmoji("1185973667973320775"),
-          new ButtonBuilder()
-            .setCustomId("welcomeChannel")
-            .setEmoji("1185973667973320775")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.welcomeChannel",
-              ),
-            )
-            .setStyle(
-              guildDb.welcomeChannel
-                ? ButtonStyle.Primary
-                : ButtonStyle.Secondary,
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId("welcomeType")
+          .setEmoji("1185973664538177557")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.dailyType",
             ),
-          new ButtonBuilder()
-            .setCustomId("welcomeTest")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.welcomeTest",
-              ),
-            )
-            .setDisabled(check ? true : false)
-            .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Primary)
-            .setEmoji("1207800685928910909"),
-        ),
-      welcomeButtons2 =
-        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-          new ButtonBuilder()
-            .setCustomId("welcome")
-            .setEmoji("1185973660465500180")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.welcome",
-              ),
-            )
-            .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success),
-          new ButtonBuilder()
-            .setCustomId("welcomePing")
-            .setEmoji("1207801424503644260")
-            .setLabel(
-              client.translation.get(
-                guildDb?.language,
-                "Settings.button.welcomePing",
-              ),
-            )
-            .setStyle(
-              guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary,
+          )
+          .setStyle(ButtonStyle.Primary)
+          .setEmoji("1185973667973320775"),
+        new ButtonBuilder()
+          .setCustomId("welcomeChannel")
+          .setEmoji("1185973667973320775")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.welcomeChannel",
             ),
-        );
+          )
+          .setStyle(
+            guildDb.welcomeChannel
+              ? ButtonStyle.Primary
+              : ButtonStyle.Secondary,
+          ),
+        new ButtonBuilder()
+          .setCustomId("welcomeTest")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.welcomeTest",
+            ),
+          )
+          .setDisabled(!!check)
+          .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Primary)
+          .setEmoji("1207800685928910909"),
+      );
+    const welcomeButtons2 =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId("welcome")
+          .setEmoji("1185973660465500180")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.welcome",
+            ),
+          )
+          .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success),
+        new ButtonBuilder()
+          .setCustomId("welcomePing")
+          .setEmoji("1207801424503644260")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.welcomePing",
+            ),
+          )
+          .setStyle(
+            guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary,
+          ),
+      );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,

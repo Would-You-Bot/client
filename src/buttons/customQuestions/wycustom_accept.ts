@@ -2,9 +2,9 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "wycustom_accept",

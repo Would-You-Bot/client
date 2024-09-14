@@ -1,9 +1,9 @@
 import { captureException } from "@sentry/node";
 import { gray, green, white } from "chalk-advanced";
-import { Model, connect, set } from "mongoose";
-import { GuildModel, IGuildModel } from "./Models/guildModel";
-import { IUserModel, UserModel } from "./Models/userModel";
-import WouldYou from "./wouldYou";
+import { connect, set, type Model } from "mongoose";
+import { GuildModel, type IGuildModel } from "./Models/guildModel";
+import { UserModel, type IUserModel } from "./Models/userModel";
+import type WouldYou from "./wouldYou";
 
 export default class DatabaseHandler {
   private cache: Map<string, IGuildModel>;
@@ -53,9 +53,7 @@ export default class DatabaseHandler {
       })
       .then(() =>
         console.log(
-          `${white("Database")} ${gray(">")} ${green(
-            "Successfully loaded database",
-          )}`,
+          `${white("Database")} ${gray(">")} ${green("Successfully loaded database")}`,
         ),
       );
   }
@@ -67,10 +65,7 @@ export default class DatabaseHandler {
    * @returns {this.guildModel}
    * @private
    */
-  async fetchGuild(
-    guildId: number | string,
-    createIfNotFound: boolean = false,
-  ) {
+  async fetchGuild(guildId: number | string, createIfNotFound = false) {
     const fetched = await this.guildModel.findOne({
       guildID: guildId as string,
     });
@@ -97,8 +92,8 @@ export default class DatabaseHandler {
    */
   async getGuild(
     guildId: string,
-    createIfNotFound: boolean = true,
-    force: boolean = false,
+    createIfNotFound = true,
+    force = false,
   ): Promise<IGuildModel | null> {
     const fetched = await this.fetchGuild(guildId, createIfNotFound);
     if (fetched) {
@@ -115,13 +110,13 @@ export default class DatabaseHandler {
    * @param {boolean} onlyCache if you want to only delete the cache
    * @returns {Promise<deleteMany|boolean>}
    */
-  async deleteGuild(guildId: number | string, onlyCache: boolean = false) {
+  async deleteGuild(guildId: number | string, onlyCache = false) {
     if (this.cache.has(guildId.toString()))
       this.cache.delete(guildId.toString());
 
-    return !onlyCache
-      ? this.guildModel.deleteMany({ guildID: guildId as string })
-      : true;
+    return onlyCache
+      ? true
+      : this.guildModel.deleteMany({ guildID: guildId as string });
   }
 
   /**
@@ -134,7 +129,7 @@ export default class DatabaseHandler {
   async updateGuild(
     guildId: string,
     data: object | IGuildModel,
-    createIfNotFound: boolean = false,
+    createIfNotFound = false,
   ) {
     return this.guildModel.updateOne(
       {
@@ -151,7 +146,7 @@ export default class DatabaseHandler {
    * @returns {this.userModel}
    * @private
    */
-  async fetchUser(userId: number | string, createIfNotFound: boolean = false) {
+  async fetchUser(userId: number | string, createIfNotFound = false) {
     const fetched = await this.userModel.findOne({
       userID: userId,
     });
@@ -177,7 +172,7 @@ export default class DatabaseHandler {
   async getUser(
     userId: string,
     createIfNotFound = true,
-    force: boolean = false,
+    force = false,
   ): Promise<IUserModel | null> {
     if (force) return this.fetchUser(userId, createIfNotFound);
 
@@ -200,11 +195,11 @@ export default class DatabaseHandler {
    * @param {boolean} onlyCache if you want to only delete the cache
    * @returns {Promise<deleteMany|boolean>}
    */
-  async deleteUser(userId: number | string, onlyCache: boolean = false) {
+  async deleteUser(userId: number | string, onlyCache = false) {
     if (this.userCache.has(userId.toString()))
       this.userCache.delete(userId.toString());
 
-    return !onlyCache ? this.userModel.deleteMany({ userID: userId }) : true;
+    return onlyCache ? true : this.userModel.deleteMany({ userID: userId });
   }
 
   /**
@@ -218,9 +213,9 @@ export default class DatabaseHandler {
   async updateUser(
     userId: number | string,
     data: object | IUserModel,
-    createIfNotFound: boolean = false,
+    createIfNotFound = false,
   ) {
-    let oldData = await this.getUser(userId.toString(), createIfNotFound);
+    const oldData = await this.getUser(userId.toString(), createIfNotFound);
 
     if (oldData) {
       data = { ...oldData, ...data };

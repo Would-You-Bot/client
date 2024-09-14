@@ -1,6 +1,6 @@
 import { captureException } from "@sentry/node";
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 const { version } = require("../../../package.json");
 
 const command: ChatInputCommand = {
@@ -25,7 +25,7 @@ const command: ChatInputCommand = {
     const userCount = await client.cluster.broadcastEval((c) =>
       c.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
     );
-    let ramUsage = await client.cluster.broadcastEval(() => {
+    const ramUsage = await client.cluster.broadcastEval(() => {
       function round(num: number) {
         const m = Number((Math.abs(num) * 100).toPrecision(15));
         return (Math.round(m) / 100) * Math.sign(num);
@@ -39,7 +39,7 @@ const command: ChatInputCommand = {
 
     const premium = await client.premium.check(interaction.guildId);
 
-    let premiumEmoji = premium.result ? "✅" : "❌";
+    const premiumEmoji = premium.result ? "✅" : "❌";
 
     const { dominik, sky, skelly, paul, paulos } = client.config.emojis.info;
 
@@ -80,24 +80,14 @@ const command: ChatInputCommand = {
         },
         {
           name: "Premium Server:",
-          value: `${premiumEmoji + " " + premium.result}`,
+          value: `${`${premiumEmoji} ${premium.result}`}`,
           inline: false,
         },
       )
-      .setThumbnail(
-        client.user?.displayAvatarURL() || "https://wouldyoubot.gg/Logo.png",
-      )
+      .setThumbnail("https://wouldyoubot.gg/Logo.png")
       .setFooter({
-        text:
-          interaction.user.tag +
-          " |" +
-          " Shard #" +
-          interaction?.guild?.shardId +
-          " |" +
-          " Cluster #" +
-          client.cluster.id,
-        iconURL:
-          client?.user?.displayAvatarURL() || "https://wouldyoubot.gg/Logo.png",
+        text: `${interaction.user.tag} | Shard #${interaction?.guild?.shardId} | Cluster #${client.cluster.id}`,
+        iconURL: "https://wouldyoubot.gg/Logo.png",
       });
 
     interaction

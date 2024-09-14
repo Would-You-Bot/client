@@ -4,12 +4,12 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
 import QuickChart from "quickchart-js";
 import { v4 as uuidv4 } from "uuid";
 import { VoteModel } from "./Models/voteModel";
-import WouldYou from "./wouldYou";
+import type WouldYou from "./wouldYou";
 
 const chart = new QuickChart();
 chart.setWidth(750);
@@ -74,7 +74,7 @@ export default class Voting {
   async generateVoting(
     guildId: string | null,
     channelId: string,
-    until = new Date(0),
+    until: Date,
     type: string,
     op_one?: string[],
     op_tow?: string[],
@@ -216,7 +216,7 @@ export default class Voting {
     );
 
     const chartLabels = Object.keys(vote.votes).map((e) =>
-      vote.type == "neverhaveiever" ? numbers[e] : phrases[e],
+      vote.type === "neverhaveiever" ? numbers[e] : phrases[e],
     );
 
     chart.setConfig({
@@ -281,9 +281,7 @@ export default class Voting {
       }
 
       console.log(
-        `${white("Would You?")} ${gray(">")} ${green(
-          "Successfully loaded votes from database",
-        )}`,
+        `${white("Would You?")} ${gray(">")} ${green("Successfully loaded votes from database")}`,
       );
     }, 500);
   }

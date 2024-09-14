@@ -1,12 +1,12 @@
 import {
   ActionRowBuilder,
-  AutocompleteInteraction,
-  Interaction,
-  ModalActionRowComponentBuilder,
   ModalBuilder,
-  ModalSubmitInteraction,
   TextInputBuilder,
   TextInputStyle,
+  type AutocompleteInteraction,
+  type Interaction,
+  type ModalActionRowComponentBuilder,
+  type ModalSubmitInteraction,
 } from "discord.js";
 
 export type ModalCompatibleInteraction = Exclude<
@@ -71,7 +71,7 @@ export class Modal {
     if (titlesToCheck.some((title) => !inRange(title.length, 1, 45))) {
       return {
         valid: false,
-        reason: `At least 1 title or label length is out of range (1, 45)`,
+        reason: "At least 1 title or label length is out of range (1, 45)",
       };
     }
 
@@ -214,7 +214,7 @@ export class Modal {
     /**
      * Time in ms to wait for a submit before rejecting. Defaults to 1 minute.
      */
-    time: number = 60_000,
+    time = 60_000,
   ) {
     const showResult = await this.show(interaction);
 

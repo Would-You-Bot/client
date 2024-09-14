@@ -1,8 +1,8 @@
-import { Entitlement } from "discord.js";
+import type { Entitlement } from "discord.js";
 import "dotenv/config";
-import { Event } from "../interfaces";
+import type { Event } from "../interfaces";
 import { GuildModel } from "../util/Models/guildModel";
-import WouldYou from "../util/wouldYou";
+import type WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "entitlementDelete",

@@ -36,19 +36,19 @@ export default class TranslationHandler {
     // Init what would you do
     for (const language of this.availableLanguages) {
       const data = require(`../data/wwyd-${language}.json`);
-      this.initLanguage(language + "_wwyd", data);
+      this.initLanguage(`${language}_wwyd`, data);
     }
 
     // Inti rather
     for (const language of this.availableLanguages) {
       const data = require(`../data/rather-${language}.json`);
-      this.initLanguage(language + "_rather", data);
+      this.initLanguage(`${language}_rather`, data);
     }
 
     // Init never have I ever
     for (const language of this.availableLanguages) {
       const data = require(`../data/nhie-${language}.json`);
-      this.initLanguage(language + "_nhie", data);
+      this.initLanguage(`${language}_nhie`, data);
     }
   }
 
@@ -80,7 +80,7 @@ export default class TranslationHandler {
    * @private
    */
   getLanguage(language: string): object {
-    if (!this.checkRegex(language)) return this.translations["en_EN"];
+    if (!this.checkRegex(language)) return this.translations.en_EN;
     return this.translations[language];
   }
 
@@ -138,24 +138,22 @@ export default class TranslationHandler {
     if (pathSegments.length > 0) {
       for (const segment of pathSegments) {
         try {
-          if (!currentTranslation) {
-            if (!languageData.hasOwnProperty(segment)) break;
-            currentTranslation = languageData[segment];
-          } else {
+          if (currentTranslation) {
             if (!currentTranslation.hasOwnProperty(segment)) break;
             currentTranslation = currentTranslation[segment];
+          } else {
+            if (!languageData.hasOwnProperty(segment)) break;
+            currentTranslation = languageData[segment];
           }
         } catch (err) {
           captureException(err);
           break;
         }
       }
+    } else if (language !== "en_EN") {
+      return this.get("en_EN", translationPath, placeholders);
     } else {
-      if (language !== "en_EN") {
-        return this.get("en_EN", translationPath, placeholders);
-      } else {
-        return translationPath;
-      }
+      return translationPath;
     }
 
     if (!currentTranslation) {
@@ -165,13 +163,11 @@ export default class TranslationHandler {
         if (enTranslation === translationPath) {
           // If "en_EN" also doesn't have the translation, return the path
           return translationPath;
-        } else {
-          // If "en_EN" has the translation, return it
-          return enTranslation;
         }
-      } else {
-        return translationPath;
+        // If "en_EN" has the translation, return it
+        return enTranslation;
       }
+      return translationPath;
     }
 
     if (placeholders) {

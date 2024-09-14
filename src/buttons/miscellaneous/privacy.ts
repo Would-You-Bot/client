@@ -3,9 +3,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "privacy",
@@ -52,7 +52,7 @@ const button: Button = {
     });
 
     await client.database.updateUser(interaction.user.id, {
-      votePrivacy: db?.votePrivacy ? false : true,
+      votePrivacy: !db?.votePrivacy,
     });
   },
 };

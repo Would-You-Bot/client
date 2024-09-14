@@ -3,9 +3,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "replayType",
@@ -23,10 +23,7 @@ const button: Button = {
         `${client.translation.get(
           guildDb?.language,
           "Settings.embed.replayType",
-        )}: ${newType}\n${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.replayBy",
-        )}: ${guildDb.replayBy}\n${
+        )}: ${newType}\n${client.translation.get(guildDb?.language, "Settings.embed.replayBy")}: ${guildDb.replayBy}\n${
           guildDb.replayBy === "Guild"
             ? client.translation.get(
                 guildDb?.language,
@@ -42,10 +39,7 @@ const button: Button = {
                 guildDb?.language,
                 "Settings.embed.replayCooldown",
               )}: ${guildDb.replayCooldown / 1000}s`
-            : `${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.replayChannels",
-              )}: ${
+            : `${client.translation.get(guildDb?.language, "Settings.embed.replayChannels")}: ${
                 guildDb.replayChannels.length > 0
                   ? `\n${guildDb.replayChannels
                       .sort(
@@ -56,7 +50,7 @@ const button: Button = {
                       .join("\n")}`
                   : client.translation.get(
                       guildDb?.language,
-                      `Settings.embed.replayChannelsNone`,
+                      "Settings.embed.replayChannelsNone",
                     )
               }`
         }`,
