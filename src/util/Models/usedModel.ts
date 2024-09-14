@@ -15,8 +15,6 @@ export interface IUsedQuestions {
   customTopicQuestions: string[];
 }
 
-
-
 const usedQuestionSchema = new Schema({
   guildID: {
     type: String,
