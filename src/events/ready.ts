@@ -56,6 +56,8 @@ const event: Event = {
               await redis.set("server_count", JSON.stringify(finalServer));
             };
 
+            client.server.startServer();
+
             // Post data to top.gg
             const postStats = async () => {
               const serverCount = await client.cluster.broadcastEval(

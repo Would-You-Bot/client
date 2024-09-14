@@ -25,16 +25,19 @@ const event: Event = {
 
     const setStatus = () => {
       if (!client.user) return;
-
-      client.user.setPresence({
-        activities: [
-          {
-            name: `${randomStatus || "Would You?"}`,
-          },
-        ],
-        status: "dnd",
-        shardId: id,
-      });
+      try {
+        client.user.setPresence({
+          activities: [
+            {
+              name: `${randomStatus || "Would You?"}`,
+            },
+          ],
+          status: "dnd",
+          shardId: id,
+        });
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     setTimeout(() => setStatus(), 35 * 1000);
