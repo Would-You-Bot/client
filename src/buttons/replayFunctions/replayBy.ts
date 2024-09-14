@@ -3,9 +3,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "replayBy",
@@ -42,10 +42,7 @@ const button: Button = {
                 guildDb?.language,
                 "Settings.embed.replayCooldown",
               )}: ${guildDb.replayCooldown / 1000}s`
-            : `${client.translation.get(
-                guildDb?.language,
-                "Settings.embed.replayChannels",
-              )}: ${
+            : `${client.translation.get(guildDb?.language, "Settings.embed.replayChannels")}: ${
                 guildDb.replayChannels.length > 0
                   ? `\n${guildDb.replayChannels
                       .sort(
@@ -56,7 +53,7 @@ const button: Button = {
                       .join("\n")}`
                   : client.translation.get(
                       guildDb?.language,
-                      `Settings.embed.replayChannelsNone`,
+                      "Settings.embed.replayChannelsNone",
                     )
               }`
         }`,

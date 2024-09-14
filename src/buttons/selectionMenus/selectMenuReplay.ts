@@ -3,10 +3,10 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
-import { Modal, ModalData } from "../../util/modalHandler";
+import type { Button } from "../../interfaces";
+import { Modal, type ModalData } from "../../util/modalHandler";
 
 function isNumericRegex(str: string) {
   return /^\d*\.?\d+$/.test(str); // regex for extra 0,00000002% speeds :trol:
@@ -75,7 +75,7 @@ const button: Button = {
       );
     }
 
-    value = value * 1000;
+    value *= 1000;
     const arr =
       guildDb.replayChannels.length > 0
         ? [
@@ -115,10 +115,7 @@ const button: Button = {
                 guildDb?.language,
                 "Settings.embed.replayBy1",
               )
-        }\n${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.replayChannels",
-        )}:\n${arr
+        }\n${client.translation.get(guildDb?.language, "Settings.embed.replayChannels")}:\n${arr
           .sort((a, b) => b.cooldown / 1000 - a.cooldown / 1000)
           .map((c) => `<#${c.id}>: ${c.cooldown / 1000}s`)
           .join("\n")}`,

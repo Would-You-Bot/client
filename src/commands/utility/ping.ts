@@ -3,10 +3,10 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
   SlashCommandBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -35,9 +35,7 @@ const command: ChatInputCommand = {
       .addFields(
         {
           name: client.translation.get(guildDb?.language, "Ping.embed.client"),
-          value: `> **${Math.abs(
-            Date.now() - interaction.createdTimestamp,
-          )}**ms`,
+          value: `> **${Math.abs(Date.now() - interaction.createdTimestamp)}**ms`,
           inline: false,
         },
         {

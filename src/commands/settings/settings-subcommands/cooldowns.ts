@@ -3,12 +3,12 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ChatInputCommandInteraction,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type ChatInputCommandInteraction,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { IGuildModel } from "../../../util/Models/guildModel";
-import WouldYou from "../../../util/wouldYou";
+import type { IGuildModel } from "../../../util/Models/guildModel";
+import type WouldYou from "../../../util/wouldYou";
 
 export default async function settingsGeneral(
   interaction: ChatInputCommandInteraction,
@@ -38,10 +38,7 @@ export default async function settingsGeneral(
             )
       }\n${
         guildDb.replayType === "Channels"
-          ? `${client.translation.get(
-              guildDb?.language,
-              "Settings.embed.replayChannels",
-            )}: ${
+          ? `${client.translation.get(guildDb?.language, "Settings.embed.replayChannels")}: ${
               guildDb.replayChannels.length > 0
                 ? `\n${guildDb.replayChannels
                     .sort(
@@ -51,7 +48,7 @@ export default async function settingsGeneral(
                     .join("\n")}`
                 : client.translation.get(
                     guildDb?.language,
-                    `Settings.embed.replayChannelsNone`,
+                    "Settings.embed.replayChannelsNone",
                   )
             }`
           : `${client.translation.get(

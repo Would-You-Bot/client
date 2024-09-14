@@ -1,5 +1,5 @@
 import Canvas from "@napi-rs/canvas";
-import { join } from "path";
+import { join } from "node:path";
 Canvas.GlobalFonts.registerFromPath(
   join(__dirname, "..", "data", "Fonts", "OpenSans-Bold.ttf"),
   "OpenSans",
@@ -12,8 +12,6 @@ export default class Either {
   private text1: string;
   private text2: string;
 
-  constructor() {}
-
   /**
    *
    * @param {Array} rowOne
@@ -23,7 +21,7 @@ export default class Either {
   setVotes(rowOne: any[], rowTwo: any[]) {
     if (!Array.isArray(rowOne && rowTwo)) {
       throw new Error(
-        "Expected rows array instead got " + typeof rowOne || typeof rowTwo,
+        `Expected rows array instead got ${typeof rowOne}` || typeof rowTwo,
       );
     }
     this.rowOne = rowOne;
@@ -38,7 +36,7 @@ export default class Either {
    */
   setLanguage(language: string) {
     if (!language) {
-      throw new Error("Expected language instead got " + typeof language);
+      throw new Error(`Expected language instead got ${typeof language}`);
     }
     this.language = language;
     return this;
@@ -130,12 +128,12 @@ export default class Either {
     const sliced = this.rowOne.slice(0, 3);
 
     let pos = rad * sliced.length + 430;
-    let yPos = 162;
+    const yPos = 162;
     sliced.reverse();
 
     for (let i = 0; i < sliced.length; i++) {
       ctx.beginPath();
-      let user = sliced[i];
+      const user = sliced[i];
 
       const a = Canvas.createCanvas(rad * 2, rad * 2);
       const context = a.getContext("2d");
@@ -157,12 +155,12 @@ export default class Either {
     const sliced2 = this.rowTwo.slice(0, 3);
 
     let pos1 = rad * sliced2.length + 430;
-    let yPos1 = 248;
+    const yPos1 = 248;
     sliced2.reverse();
 
     for (let i = 0; i < sliced2.length; i++) {
       ctx.beginPath();
-      let user = sliced2[i];
+      const user = sliced2[i];
 
       const a = Canvas.createCanvas(rad * 2, rad * 2);
       const context = a.getContext("2d");

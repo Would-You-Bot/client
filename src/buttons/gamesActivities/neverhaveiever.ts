@@ -2,11 +2,11 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  InteractionReplyOptions,
-  MessageActionRowComponentBuilder,
   PermissionFlagsBits,
+  type InteractionReplyOptions,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel } from "../../util/Models/userModel";
@@ -32,18 +32,16 @@ const button: Button = {
             ephemeral: true,
           });
         }
-      } else {
-        if (
-          !interaction.channel
-            ?.permissionsFor(interaction.user.id)
-            .has(PermissionFlagsBits.SendMessages)
-        ) {
-          return interaction.followUp({
-            content:
-              "You don't have permission to use this button in this channel!",
-            ephemeral: true,
-          });
-        }
+      } else if (
+        !interaction.channel
+          ?.permissionsFor(interaction.user.id)
+          .has(PermissionFlagsBits.SendMessages)
+      ) {
+        return interaction.followUp({
+          content:
+            "You don't have permission to use this button in this channel!",
+          ephemeral: true,
+        });
       }
     }
 
@@ -53,7 +51,7 @@ const button: Button = {
       userID: interaction.user?.id,
     });
 
-    let NHIE = await getQuestionsByType(
+    const NHIE = await getQuestionsByType(
       "neverhaveiever",
       guildDb,
       guildDb?.language != null
@@ -99,7 +97,7 @@ const button: Button = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
-        .setCustomId(`neverhaveiever`)
+        .setCustomId("neverhaveiever")
         .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
     ]);
 

@@ -1,4 +1,4 @@
-import {
+import type {
   ChatInputCommandInteraction,
   CommandInteraction,
   ContextMenuCommandBuilder,
@@ -6,8 +6,8 @@ import {
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
-import { IGuildModel } from "../util/Models/guildModel";
-import WouldYou from "../util/wouldYou";
+import type { IGuildModel } from "../util/Models/guildModel";
+import type WouldYou from "../util/wouldYou";
 
 export interface Command {
   data:

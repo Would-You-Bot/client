@@ -3,9 +3,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "classicMode",
@@ -21,7 +21,7 @@ const button: Button = {
         )}: ${guildDb.webhookName}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.avatar",
-        )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : `:x:`}\n${client.translation.get(
+        )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : ":x:"}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.classicMode",
         )}: ${check ? ":x:" : ":white_check_mark:"}`,
@@ -71,7 +71,7 @@ const button: Button = {
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
-      classicMode: check ? false : true,
+      classicMode: !check,
     });
 
     interaction.update({

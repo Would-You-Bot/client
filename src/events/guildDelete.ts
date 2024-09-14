@@ -1,10 +1,10 @@
 import { captureException } from "@sentry/node";
-import { EmbedBuilder, Guild, WebhookClient } from "discord.js";
+import { EmbedBuilder, WebhookClient, type Guild } from "discord.js";
 import "dotenv/config";
-import { Event } from "../interfaces";
+import type { Event } from "../interfaces";
 import { GuildModel } from "../util/Models/guildModel";
 import { WebhookCache } from "../util/Models/webhookCache";
-import WouldYou from "../util/wouldYou";
+import type WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "guildDelete",
@@ -36,7 +36,7 @@ const event: Event = {
 
     let features = "";
     if (
-      (guild.features && guild.features.includes("VERIFIED")) ||
+      guild.features?.includes("VERIFIED") ||
       guild.features.includes("PARTNERED")
     ) {
       features = guild.features.includes("VERIFIED")
@@ -49,8 +49,8 @@ const event: Event = {
       username: global?.devBot ? "Dev Bot" : "Main Bot",
       embeds: [
         new EmbedBuilder()
-          .setTitle(`← Left Server`)
-          .setColor(`#f00704`)
+          .setTitle("← Left Server")
+          .setColor("#f00704")
           .setThumbnail(
             guild.iconURL({
               extension: "png",
@@ -60,7 +60,7 @@ const event: Event = {
             `**Name**: ${
               guild.name
             }\n**Users**: ${guild.memberCount.toLocaleString()}\n**Server Owner**: ${guild.ownerId}${
-              features ? `\n**Features**: ${features}` : ``
+              features ? `\n**Features**: ${features}` : ""
             }`,
           )
           .setFooter({

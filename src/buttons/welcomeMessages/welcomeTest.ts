@@ -1,5 +1,5 @@
-import { GuildMember } from "discord.js";
-import { Button } from "../../interfaces";
+import type { GuildMember } from "discord.js";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "welcomeTest",

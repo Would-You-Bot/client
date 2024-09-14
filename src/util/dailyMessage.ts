@@ -1,10 +1,10 @@
 import { captureException, withScope } from "@sentry/node";
-import amqplib, { MessageProperties } from "amqplib";
+import amqplib, { type MessageProperties } from "amqplib";
 import { EmbedBuilder, bold } from "discord.js";
-import { IQueueMessage, Result } from "../global";
+import type { IQueueMessage, Result } from "../global";
 import QueueError from "./Error/QueueError";
-import { WebHookCompatibleChannel } from "./webhookHandler";
-import WouldYou from "./wouldYou";
+import type { WebHookCompatibleChannel } from "./webhookHandler";
+import type WouldYou from "./wouldYou";
 
 export default class DailyMessage {
   private client: WouldYou;
@@ -21,7 +21,7 @@ export default class DailyMessage {
         connection_name: `client-cluster-${this.client.cluster.id}`,
       },
     });
-    let QUEUE = `cluster-${this.client.cluster.id}`;
+    const QUEUE = `cluster-${this.client.cluster.id}`;
     if (connection) {
       const channel = await connection.createChannel();
       if (channel) {
@@ -39,9 +39,11 @@ export default class DailyMessage {
                   <IQueueMessage>JSON.parse(message.content.toString()),
                   message.properties,
                 );
-                if (!result.success) {
+                if (result.success) {
+                  channel.ack(message);
+                } else {
                   const error: QueueError = new QueueError(
-                    `Could not acknowledge queue message`,
+                    "Could not acknowledge queue message",
                     {
                       error: result.error,
                       id: message.properties.messageId,
@@ -53,8 +55,6 @@ export default class DailyMessage {
                   );
                   this.captureError(error, QUEUE);
                   this.handleReject(channel, error.causeError.message, message);
-                } else {
-                  channel.ack(message);
                 }
               } catch (error) {
                 this.handleReject(channel, (error as Error).message, message);
@@ -92,8 +92,8 @@ export default class DailyMessage {
       };
     }
 
-    let channel = await this.getDailyMessageChannel(message.channelId);
-    let embed = this.buildEmbed(
+    const channel = await this.getDailyMessageChannel(message.channelId);
+    const embed = this.buildEmbed(
       message.message[0],
       message.message[1],
       message.type,
@@ -112,7 +112,9 @@ export default class DailyMessage {
         success: false,
         error: new Error(
           `No channel has been fetched to post a daily message to! ${message.guildId}`,
-          { cause: channel.error },
+          {
+            cause: channel.error,
+          },
         ),
       };
     }
@@ -120,9 +122,8 @@ export default class DailyMessage {
     if (result.success) {
       // console.log("Sent webhook, first try");
       return { success: true, result: "I have send the webhook" };
-    } else {
-      return { success: false, error: result.error };
     }
+    return { success: false, error: result.error };
   }
   /**
    * @name getDailyMessageChannel

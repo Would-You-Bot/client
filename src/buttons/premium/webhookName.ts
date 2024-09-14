@@ -3,10 +3,10 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
-import { Modal, ModalData } from "../../util/modalHandler";
+import type { Button } from "../../interfaces";
+import { Modal, type ModalData } from "../../util/modalHandler";
 
 const button: Button = {
   name: "webhookName",
@@ -38,7 +38,7 @@ const button: Button = {
 
     const value = data?.fieldValues[0].value;
 
-    let filter = [
+    const filter = [
       "Discord",
       "discord",
       "Everyone",
@@ -59,13 +59,10 @@ const button: Button = {
     const emb = new EmbedBuilder()
       .setTitle("Would You - Utility")
       .setDescription(
-        `${client.translation.get(
-          guildDb?.language,
-          "Settings.embed.username",
-        )}: ${value}\n${client.translation.get(
+        `${client.translation.get(guildDb?.language, "Settings.embed.username")}: ${value}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.avatar",
-        )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : `:x:`}\n${client.translation.get(
+        )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : ":x:"}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.classicMode",
         )}: ${guildDb.classicMode ? ":white_check_mark:" : ":x:"}`,

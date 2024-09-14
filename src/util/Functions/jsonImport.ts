@@ -1,11 +1,12 @@
-import path from "path";
-import { GuildModel, IGuildModel } from "../Models/guildModel";
+import path from "node:path";
+import { GuildModel, type IGuildModel } from "../Models/guildModel";
 import {
   dareModel,
   nhieModel,
   truthModel,
   wwydModel,
   wyrModel,
+  topicModel,
 } from "../Models/questionModel";
 import { usedQuestionModel } from "../Models/usedModel";
 
@@ -33,7 +34,8 @@ type Quest =
   | "dareQuestions"
   | "wwydQuestions"
   | "nhieQuestions"
-  | "wyrQuestions";
+  | "wyrQuestions"
+  | "topicQuestions";
 
 const validTypes = [
   "wouldyourather",
@@ -46,6 +48,8 @@ const validTypes = [
   "customdare",
   "whatwouldyoudo",
   "customwhatwouldyoudo",
+  "topic",
+  "customtopic",
 ];
 
 interface IUsedQuestions {
@@ -59,6 +63,8 @@ interface IUsedQuestions {
   customDareQuestions: string[];
   wwydQuestions: string[];
   customWwydQuestions: string[];
+  topicQuestions: string[];
+  customTopicQuestions: string[];
 }
 
 const typeCheck: { [key: string]: keyof IUsedQuestions } = {
@@ -72,6 +78,8 @@ const typeCheck: { [key: string]: keyof IUsedQuestions } = {
   customdare: "customDareQuestions",
   whatwouldyoudo: "wwydQuestions",
   customwhatwouldyoudo: "customWwydQuestions",
+  topic: "topicQuestions",
+  customtopic: "customTopicQuestions",
 };
 
 function getPath(file: string) {
@@ -81,44 +89,35 @@ function getPath(file: string) {
 
 export async function getHigherLower(): Promise<any[]> {
   let result = [] as any[];
-  try {
-    await import(getPath("hl-en_EN.json")).then((value) => {
-      result = value.data;
-    });
-  } catch (error) {
-    throw error;
-  }
+  await import(getPath("hl-en_EN.json")).then((value) => {
+    result = value.data;
+  });
   return result;
 }
 
 export async function getRandomTod(
   guildDb: IGuildModel,
   language: string,
-  premium: Boolean,
-  enabled: Boolean = true,
+  premium: boolean,
+  enabled = true,
 ): Promise<QuestionResult> {
   let result;
+  const truth = await getQuestionsByType(
+    "truth",
+    guildDb,
+    language,
+    premium,
+    enabled,
+  );
+  const dare = await getQuestionsByType(
+    "dare",
+    guildDb,
+    language,
+    premium,
+    enabled,
+  );
 
-  try {
-    const truth = await getQuestionsByType(
-      "truth",
-      guildDb,
-      language,
-      premium,
-      enabled,
-    );
-    const dare = await getQuestionsByType(
-      "dare",
-      guildDb,
-      language,
-      premium,
-      enabled,
-    );
-
-    result = Math.random() < 0.5 ? truth : dare;
-  } catch (error) {
-    throw error;
-  }
+  result = Math.random() < 0.5 ? truth : dare;
 
   return result;
 }
@@ -127,8 +126,8 @@ export async function getQuestionsByType(
   type: string,
   guildDb: IGuildModel,
   language: string,
-  premium: Boolean,
-  enabled: Boolean = true,
+  premium: boolean,
+  enabled = true,
 ): Promise<QuestionResult> {
   if (!validTypes.includes(type)) {
     return Promise.reject("Invalid type");
@@ -142,6 +141,7 @@ export async function getQuestionsByType(
     truth: truthModel,
     dare: dareModel,
     whatwouldyoudo: wwydModel,
+    topic: topicModel,
   };
 
   let selectedModel = models[type.toLowerCase()];
@@ -189,6 +189,7 @@ export async function getQuestionsByType(
     let questionDatabase = await getDBQuestion(
       premium && enabled ? usedQuestions[0][typeCheck[type]] : [],
     );
+
     if (!questionDatabase[0]?.id && premium && enabled) {
       await reset(type as Quest, guildDb.customTypes, guildDb.guildID, "db");
       questionDatabase = await getDBQuestion([]);
@@ -218,7 +219,7 @@ export async function getQuestionsByType(
     }
 
     let newRandomCustomQuestion = await getRandomCustom(
-      premium && enabled ? usedQuestions[0][typeCheck["custom" + type]] : [],
+      premium && enabled ? usedQuestions[0][typeCheck[`custom${type}`]] : [],
     );
 
     if (!newRandomCustomQuestion[0]?.id && premium && enabled) {
@@ -242,7 +243,7 @@ export async function getQuestionsByType(
         };
 
         break;
-      case "mixed":
+      case "mixed": {
         const mixedQuestions = shuffle([
           ...questionDatabase.concat(newRandomCustomQuestion[0]),
         ]);
@@ -256,6 +257,7 @@ export async function getQuestionsByType(
                 mixedQuestions[0].translations[normalizedLanguage],
         };
         break;
+      }
       case "custom":
         result = {
           id: newRandomCustomQuestion[0].id,
@@ -266,11 +268,11 @@ export async function getQuestionsByType(
 
     if (premium && enabled) {
       if (guildDb.customTypes === "custom") {
-        selectedModel = typeCheck["custom" + type];
+        selectedModel = typeCheck[`custom${type}`];
       } else if (guildDb.customTypes === "mixed") {
         if (result.id === questionDatabase[0].id)
           selectedModel = typeCheck[type];
-        else selectedModel = typeCheck["custom" + type];
+        else selectedModel = typeCheck[`custom${type}`];
       } else {
         selectedModel = typeCheck[type];
       }
@@ -304,9 +306,9 @@ export async function reset(
 ): Promise<UpdateWriteOpResult> {
   let selectedModel;
   if (customType === "custom") {
-    selectedModel = typeCheck["custom" + type];
+    selectedModel = typeCheck[`custom${type}`];
   } else if (customType === "mixed") {
-    if (resetType === "custom") selectedModel = typeCheck["custom" + type];
+    if (resetType === "custom") selectedModel = typeCheck[`custom${type}`];
     else selectedModel = typeCheck[type];
   } else {
     selectedModel = type;

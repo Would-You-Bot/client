@@ -1,6 +1,6 @@
-import { Model } from "mongoose";
-import { GuildModel, IGuildModel } from "./Models/guildModel";
-import WouldYou from "./wouldYou";
+import type { Model } from "mongoose";
+import { GuildModel, type IGuildModel } from "./Models/guildModel";
+import type WouldYou from "./wouldYou";
 
 export default class PremiumHandler {
   private guildModel: Model<IGuildModel>;
@@ -31,7 +31,7 @@ export default class PremiumHandler {
       };
     }
 
-    if (guild?.premium == 1)
+    if (guild?.premium === 1)
       return {
         result: true,
         type: this.client.translation.get(
@@ -42,13 +42,13 @@ export default class PremiumHandler {
         expiration: guild?.premiumExpiration,
         user: guild?.premiumUser,
       };
-    else
-      return {
-        result: false,
-        type: ":x:",
-        rawType: 0,
-        expiration: guild?.premiumExpiration,
-        user: guild?.premiumUser,
-      };
+
+    return {
+      result: false,
+      type: ":x:",
+      rawType: 0,
+      expiration: guild?.premiumExpiration,
+      user: guild?.premiumUser,
+    };
   }
 }

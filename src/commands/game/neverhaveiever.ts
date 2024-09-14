@@ -2,11 +2,11 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  InteractionReplyOptions,
-  MessageActionRowComponentBuilder,
   SlashCommandBuilder,
+  type InteractionReplyOptions,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel } from "../../util/Models/userModel";
@@ -27,11 +27,11 @@ const command: ChatInputCommand = {
 
   execute: async (interaction, client, guildDb) => {
     const premium = await client.premium.check(interaction?.guildId);
-    let userDb = await UserModel.findOne({
+    const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
     });
 
-    let NHIE = await getQuestionsByType(
+    const NHIE = await getQuestionsByType(
       "neverhaveiever",
       guildDb,
       guildDb?.language != null
@@ -78,7 +78,7 @@ const command: ChatInputCommand = {
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
-        .setCustomId(`neverhaveiever`),
+        .setCustomId("neverhaveiever"),
     ]);
 
     const time = 60_000;

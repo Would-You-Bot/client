@@ -3,10 +3,10 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
-import { Modal, ModalData } from "../../util/modalHandler";
+import type { Button } from "../../interfaces";
+import { Modal, type ModalData } from "../../util/modalHandler";
 
 function isNumericRegex(str: string) {
   return /^\d*\.?\d+$/.test(str); // regex for extra 0,00000002% speeds :trol:

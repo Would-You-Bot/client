@@ -3,16 +3,16 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "wycustom_remove",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
-    const id = interaction.customId.split("-")[1],
-      data = client.customAdd.get(id);
+    const id = interaction.customId.split("-")[1];
+    const data = client.customAdd.get(id);
 
     const typeEmbed = new EmbedBuilder()
       .setTitle(
@@ -35,7 +35,7 @@ const button: Button = {
         )}**: \`${data.original}\``,
       )
       .setFooter({
-        text: `Would You`,
+        text: "Would You",
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
@@ -50,7 +50,7 @@ const button: Button = {
           .setLabel("Don't Add")
           .setDisabled(true)
           .setStyle(ButtonStyle.Secondary)
-          .setCustomId(`remove`),
+          .setCustomId("remove"),
       );
 
     client.customAdd.delete(id);

@@ -2,10 +2,10 @@ import { captureException } from "@sentry/node";
 import {
   EmbedBuilder,
   PermissionFlagsBits,
-  PermissionsBitField,
   SlashCommandBuilder,
+  type PermissionsBitField,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -118,24 +118,23 @@ const command: ChatInputCommand = {
           captureException(err);
         });
       return;
-    } else {
-      const errorembed = new EmbedBuilder()
-        .setColor("#F00505")
-        .setTitle("Error!")
-        .setDescription(
-          client.translation.get(guildDb?.language, "Settings.embed.error"),
-        );
-
-      interaction
-        .reply({
-          embeds: [errorembed],
-          ephemeral: true,
-        })
-        .catch((err) => {
-          captureException(err);
-        });
-      return;
     }
+    const errorembed = new EmbedBuilder()
+      .setColor("#F00505")
+      .setTitle("Error!")
+      .setDescription(
+        client.translation.get(guildDb?.language, "Settings.embed.error"),
+      );
+
+    interaction
+      .reply({
+        embeds: [errorembed],
+        ephemeral: true,
+      })
+      .catch((err) => {
+        captureException(err);
+      });
+    return;
   },
 };
 

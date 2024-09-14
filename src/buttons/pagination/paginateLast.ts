@@ -2,9 +2,9 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 import { assignRanks } from "../../util/Functions/number";
 import { UserModel } from "../../util/Models/userModel";
@@ -93,7 +93,7 @@ const button: Button = {
     }, paginate.time);
     paginate.timeout = time;
 
-    let embed = paginate.pages[paginate.pages.length - 1];
+    const embed = paginate.pages[paginate.pages.length - 1];
     let data;
 
     if (

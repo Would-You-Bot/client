@@ -2,7 +2,7 @@ export function formatNumber(number: number): string {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export function assignRanks(leaderboard: any[], start: number = 0) {
+export function assignRanks(leaderboard: any[], start = 0) {
   let rank = 1;
 
   return leaderboard.map((item, index) => {

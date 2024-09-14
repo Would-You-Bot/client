@@ -1,13 +1,13 @@
 import { captureException } from "@sentry/node";
 import {
-  GuildMember,
-  GuildTextBasedChannel,
   PermissionFlagsBits,
+  type GuildMember,
+  type GuildTextBasedChannel,
 } from "discord.js";
 import "dotenv/config";
-import { Event } from "../interfaces";
+import type { Event } from "../interfaces";
 import { getQuestionsByType } from "../util/Functions/jsonImport";
-import WouldYou from "../util/wouldYou";
+import type WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "guildMemberAdd",
@@ -57,10 +57,7 @@ const event: Event = {
 
     channel
       .send({
-        content: `${client.translation.get(
-          guildDb?.language,
-          "Welcome.embed.title",
-        )} ${
+        content: `${client.translation.get(guildDb?.language, "Welcome.embed.title")} ${
           guildDb.welcomePing
             ? `<@${member.user.id}>`
             : `${member.user.username}`

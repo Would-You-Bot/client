@@ -1,16 +1,14 @@
 import { captureException } from "@sentry/node";
 import { gray, green, white } from "chalk-advanced";
-import { Event } from "../interfaces/event";
+import type { Event } from "../interfaces/event";
 import { shardClusterStoreModel } from "../util/Models/ShardClusterStore";
-import WouldYou from "../util/wouldYou";
+import type WouldYou from "../util/wouldYou";
 
 const event: Event = {
   event: "shardReady",
   execute: async (client: WouldYou, id: number) => {
     console.log(
-      `${white("Would You?")} ${gray(">")} ${green(
-        "Shard is now ready #" + id,
-      )}`,
+      `${white("Would You?")} ${gray(">")} ${green(`Shard is now ready #${id}`)}`,
     );
     shardClusterStoreModel
       .findOneAndUpdate(

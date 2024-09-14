@@ -11,7 +11,11 @@ export interface IUsedQuestions {
   customWyrQuestions: string[];
   nhieQuestions: string[];
   customNhieQuestions: string[];
+  topicQuestions: string[];
+  customTopicQuestions: string[];
 }
+
+
 
 const usedQuestionSchema = new Schema({
   guildID: {
@@ -56,6 +60,14 @@ const usedQuestionSchema = new Schema({
     default: [],
   },
   nhieQuestions: {
+    type: Array,
+    default: [],
+  },
+  customTopicQuestions: {
+    type: Array,
+    default: [],
+  },
+  topicQuestions: {
     type: Array,
     default: [],
   },

@@ -1,4 +1,4 @@
-import WouldYou from "./wouldYou";
+import type WouldYou from "./wouldYou";
 
 export default class CooldownHandler {
   private client: WouldYou;

@@ -1,6 +1,9 @@
-import { ButtonInteraction, Interaction as dInteraction } from "discord.js";
-import { IGuildModel } from "../util/Models/guildModel";
-import WouldYou from "../util/wouldYou";
+import type {
+  ButtonInteraction,
+  Interaction as dInteraction,
+} from "discord.js";
+import type { IGuildModel } from "../util/Models/guildModel";
+import type WouldYou from "../util/wouldYou";
 
 export interface Interaction {
   name: string;

@@ -1,9 +1,9 @@
 import { captureException } from "@sentry/node";
-import { ButtonInteraction } from "discord.js";
-import { Event } from "../interfaces";
-import { IGuildModel } from "../util/Models/guildModel";
+import type { ButtonInteraction } from "discord.js";
+import type { Event } from "../interfaces";
+import type { IGuildModel } from "../util/Models/guildModel";
 import { UserModel } from "../util/Models/userModel";
-import WouldYou from "../util/wouldYou";
+import type WouldYou from "../util/wouldYou";
 
 const buttonInteractionEvent: Event = {
   event: "interactionCreate",
@@ -26,7 +26,7 @@ const buttonInteractionEvent: Event = {
         customId[2] === "neverhaveiever" ||
         customId[2] === "wouldyourather"
       ) {
-        const action = Number(customId[3]) == 0 ? "yes" : "no";
+        const action = Number(customId[3]) === 0 ? "yes" : "no";
         const buttonName = customId[2];
         const fieldName = `${buttonName}.${action}`;
         // Increment the specified field using $inc
@@ -123,9 +123,7 @@ const buttonInteractionEvent: Event = {
       ) {
         interaction
           .reply({
-            content: `You can use this button again <t:${Math.floor(
-              client.used.get(cooldownKey) / 1000,
-            )}:R>!`,
+            content: `You can use this button again <t:${Math.floor(client.used.get(cooldownKey) / 1000)}:R>!`,
             ephemeral: true,
           })
           .catch((err) => {

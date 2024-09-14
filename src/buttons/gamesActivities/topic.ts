@@ -14,12 +14,12 @@ import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel } from "../../util/Models/userModel";
 
 const button: Button = {
-  name: "wwyd",
+  name: "topic",
   cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
     await interaction.deferUpdate();
     await interaction.editReply({
-      components: [],
+      components: [interaction.message.components[0]],
     });
     if (interaction.guild) {
       if (interaction.channel.isThread()) {
@@ -53,8 +53,8 @@ const button: Button = {
       userID: interaction.user?.id,
     });
 
-    const WWYD = await getQuestionsByType(
-      "whatwouldyoudo",
+    const TOPIC = await getQuestionsByType(
+      "topic",
       guildDb,
       guildDb?.language != null
         ? guildDb.language
@@ -64,19 +64,28 @@ const button: Button = {
       premium.result,
     );
 
-    const wwydEmbed = new DefaultGameEmbed(
+    const ratherEmbed = new DefaultGameEmbed(
       interaction,
-      WWYD.id,
-      WWYD.question,
-      "wwyd",
+      TOPIC.id,
+      TOPIC.question,
+      "topic",
     );
 
-    const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
+    if (guildDb && !guildDb.replay)
+      return interaction.followUp({
+        ephemeral: true,
+        content: client.translation.get(
+          guildDb?.language,
+          "Rather.replays.disabled",
+        ),
+      });
+
+    const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
 
     const randomValue = Math.round(Math.random() * 15);
 
     if (!premium.result && randomValue < 3) {
-      row.addComponents([
+      mainRow.addComponents([
         new ButtonBuilder()
           .setLabel("Invite")
           .setStyle(5)
@@ -86,7 +95,7 @@ const button: Button = {
           ),
       ]);
     } else if (!premium.result && randomValue >= 3 && randomValue < 5) {
-      row.addComponents([
+      mainRow.addComponents([
         new ButtonBuilder()
           .setLabel("Premium")
           .setStyle(5)
@@ -94,29 +103,35 @@ const button: Button = {
           .setURL("https://wouldyoubot.gg/premium"),
       ]);
     }
-    row.addComponents([
+    mainRow.addComponents([
       new ButtonBuilder()
         .setLabel("New Question")
         .setStyle(1)
         .setEmoji("1073954835533156402")
-        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false)
-        .setCustomId("wwyd"),
+        .setCustomId("topic")
+        .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
     ]);
 
     const classicData: InteractionReplyOptions = guildDb?.classicMode
-      ? { content: WWYD.question, fetchReply: true }
+      ? { content: TOPIC.question, fetchReply: true }
       : {
           content:
             !premium.result && randomValue >= 3 && randomValue < 5
               ? client.translation.get(guildDb?.language, "Premium.message")
               : undefined,
-          embeds: [wwydEmbed],
-          components: [row],
+          embeds: [ratherEmbed],
+          components: [mainRow],
         };
 
-    interaction.followUp(classicData).catch((err: Error) => {
-      captureException(err);
-    });
+    interaction
+      .followUp(classicData)
+      .then(async (msg: any) => {
+        if (!guildDb?.classicMode) return;
+        await msg.react("🅰️"), await msg.react("🇧");
+      })
+      .catch((err: Error) => {
+        captureException(err);
+      });
     return;
   },
 };

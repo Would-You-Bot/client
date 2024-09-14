@@ -2,11 +2,11 @@ import { captureException } from "@sentry/node";
 import {
   ActionRowBuilder,
   ButtonBuilder,
-  InteractionReplyOptions,
-  MessageActionRowComponentBuilder,
   SlashCommandBuilder,
+  type InteractionReplyOptions,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 import { DefaultGameEmbed } from "../../util/Defaults/Embeds/Games/DefaultGameEmbed";
 import { getQuestionsByType } from "../../util/Functions/jsonImport";
 import { UserModel } from "../../util/Models/userModel";
@@ -31,7 +31,7 @@ const command: ChatInputCommand = {
       userID: interaction.user?.id,
     });
 
-    let TOPIC = await getQuestionsByType(
+    const TOPIC = await getQuestionsByType(
       "topic",
       guildDb,
       guildDb?.language != null
@@ -79,7 +79,7 @@ const command: ChatInputCommand = {
         .setStyle(1)
         .setDisabled(guildDb?.replay != null ? !guildDb.replay : false)
         .setEmoji("1073954835533156402")
-        .setCustomId(`topic`),
+        .setCustomId("topic"),
     ]);
 
     const classicData: InteractionReplyOptions = guildDb?.classicMode
@@ -93,11 +93,9 @@ const command: ChatInputCommand = {
           components: [mainRow],
         };
 
-    interaction
-      .reply(classicData)
-      .catch((err: Error) => {
-        captureException(err);
-      });
+    interaction.reply(classicData).catch((err: Error) => {
+      captureException(err);
+    });
   },
 };
 

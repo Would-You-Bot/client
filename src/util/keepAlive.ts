@@ -1,6 +1,6 @@
 import { captureException, captureMessage } from "@sentry/node";
 import "dotenv/config";
-import WouldYou from "./wouldYou";
+import type WouldYou from "./wouldYou";
 
 export default class KeepAlive {
   private client: WouldYou;

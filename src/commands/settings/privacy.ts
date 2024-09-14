@@ -3,10 +3,10 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
   SlashCommandBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -35,10 +35,7 @@ const command: ChatInputCommand = {
     const setting = new EmbedBuilder()
       .setTitle(client.translation.get(language, "Privacy.settings"))
       .setDescription(
-        `${client.translation.get(
-          language,
-          "Privacy.desc",
-        )}\n\n${client.translation.get(language, "Privacy.status")} ${
+        `${client.translation.get(language, "Privacy.desc")}\n\n${client.translation.get(language, "Privacy.status")} ${
           db?.votePrivacy
             ? client.translation.get(language, "Privacy.on")
             : client.translation.get(language, "Privacy.off")

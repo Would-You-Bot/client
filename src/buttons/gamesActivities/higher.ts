@@ -4,9 +4,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 import HOR from "../../util/Classes/generateHOR";
 import LOSE from "../../util/Classes/generateLOSE";
 import { HigherlowerModel } from "../../util/Models/higherlowerModel";
@@ -52,7 +52,7 @@ const button: Button = {
 
       const gameData = await getHigherLower();
 
-      if (game.items.history.length == gameData.length) {
+      if (game.items.history.length === gameData.length) {
         interaction.followUp({
           content: "There is no more data available!",
           ephemeral: true,
@@ -64,14 +64,14 @@ const button: Button = {
       const regenerateComperator = () => {
         comperator = Math.floor(Math.random() * gameData.length);
         if (
-          game?.items.current.id == gameData[comperator].id ||
-          game?.items.history.find((i) => i.id == gameData[comperator].id)
+          game?.items.current.id === gameData[comperator].id ||
+          game?.items.history.find((i) => i.id === gameData[comperator].id)
         )
           regenerateComperator();
       };
       if (
-        game.items.current.id == gameData[comperator].id ||
-        game.items.history.find((i) => i.id == gameData[comperator].id)
+        game.items.current.id === gameData[comperator].id ||
+        game.items.history.find((i) => i.id === gameData[comperator].id)
       )
         regenerateComperator();
 
@@ -82,9 +82,7 @@ const button: Button = {
       const gameImage = new HOR();
       gameImage.setGame(game);
       gameImage.setImages([
-        `https://cdn.wouldyoubot.gg/higherlower/${
-          game.items.history[game.items.history.length - 1].id
-        }.png`,
+        `https://cdn.wouldyoubot.gg/higherlower/${game.items.history[game.items.history.length - 1].id}.png`,
         `https://cdn.wouldyoubot.gg/higherlower/${game.items.current.id}.png`,
       ]);
 
@@ -193,7 +191,7 @@ const button: Button = {
           .setLabel("Try Again")
           .setStyle(1)
           .setEmoji("1073954835533156402")
-          .setCustomId(`higherlower`)
+          .setCustomId("higherlower")
           .setDisabled(guildDb?.replay != null ? !guildDb.replay : false),
       ]);
 

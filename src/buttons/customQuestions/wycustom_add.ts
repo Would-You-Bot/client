@@ -2,16 +2,16 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "wycustom_add",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
-    const id = interaction.customId.split("-")[1],
-      data = client.customAdd.get(id);
+    const id = interaction.customId.split("-")[1];
+    const data = client.customAdd.get(id);
 
     const typeEmbed = new EmbedBuilder()
       .setTitle(
@@ -54,7 +54,7 @@ const button: Button = {
         )}**: \`${data.text}\``,
       )
       .setFooter({
-        text: `Would You`,
+        text: "Would You",
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
@@ -67,7 +67,9 @@ const button: Button = {
           .setCustomId("add"),
       );
 
-    let filtered = guildDb.customMessages.filter((c) => c.id.toString() != id);
+    const filtered = guildDb.customMessages.filter(
+      (c) => c.id.toString() !== id,
+    );
     filtered.push({
       id: id,
       msg: data.text,

@@ -1,4 +1,4 @@
-import WouldYou from "../util/wouldYou";
+import type WouldYou from "../util/wouldYou";
 
 export interface Event {
   event: string;

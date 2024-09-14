@@ -2,9 +2,9 @@ import {
   ActionRowBuilder,
   ChannelSelectMenuBuilder,
   ChannelType,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 
 const button: Button = {
   name: "dailyChannel",

@@ -2,9 +2,9 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  MessageActionRowComponentBuilder,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { Button } from "../../interfaces";
+import type { Button } from "../../interfaces";
 import { assignRanks } from "../../util/Functions/number";
 import { UserModel } from "../../util/Models/userModel";
 
@@ -92,7 +92,7 @@ const button: Button = {
     }, paginate.time);
     paginate.timeout = time;
 
-    let embed = paginate.pages[--paginate.page];
+    const embed = paginate.pages[--paginate.page];
     let data;
     if (
       type === "leaderboard" &&
@@ -182,36 +182,35 @@ const button: Button = {
         },
       });
       return;
-    } else {
-      const buttons =
-        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-          new ButtonBuilder()
-            .setCustomId("paginateFirst")
-            .setLabel("⏪")
-            .setStyle(ButtonStyle.Secondary),
-          new ButtonBuilder()
-            .setCustomId("paginatePrev")
-            .setLabel("◀️")
-            .setStyle(ButtonStyle.Secondary),
-          new ButtonBuilder()
-            .setCustomId("paginateNext")
-            .setLabel("▶️")
-            .setStyle(ButtonStyle.Secondary),
-          new ButtonBuilder()
-            .setCustomId("paginateLast")
-            .setLabel("⏩")
-            .setStyle(ButtonStyle.Secondary),
-        );
-
-      await interaction.update({
-        embeds: [embed],
-        components: [buttons],
-        options: {
-          ephemeral: true,
-        },
-      });
-      return;
     }
+    const buttons =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId("paginateFirst")
+          .setLabel("⏪")
+          .setStyle(ButtonStyle.Secondary),
+        new ButtonBuilder()
+          .setCustomId("paginatePrev")
+          .setLabel("◀️")
+          .setStyle(ButtonStyle.Secondary),
+        new ButtonBuilder()
+          .setCustomId("paginateNext")
+          .setLabel("▶️")
+          .setStyle(ButtonStyle.Secondary),
+        new ButtonBuilder()
+          .setCustomId("paginateLast")
+          .setLabel("⏩")
+          .setStyle(ButtonStyle.Secondary),
+      );
+
+    await interaction.update({
+      embeds: [embed],
+      components: [buttons],
+      options: {
+        ephemeral: true,
+      },
+    });
+    return;
   },
 };
 export default button;

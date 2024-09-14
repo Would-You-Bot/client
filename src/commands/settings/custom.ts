@@ -5,13 +5,13 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
   PermissionFlagsBits,
-  PermissionsBitField,
   SlashCommandBuilder,
+  type MessageActionRowComponentBuilder,
+  type PermissionsBitField,
 } from "discord.js";
 import "dotenv/config";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 import {
   generateNHIE,
   generateWWYD,
@@ -21,9 +21,9 @@ import Paginator from "../../util/pagination";
 
 function makeID(length: number) {
   let result = "";
-  let characters =
+  const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let charactersLength = characters.length;
+  const charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
@@ -124,10 +124,10 @@ const command: ChatInputCommand = {
       )
     ) {
       switch (interaction.options.getSubcommand()) {
-        case "add":
+        case "add": {
           const option =
-              interaction?.options?.getString("options")?.toLowerCase() || "",
-            premium = await client.premium.check(interaction.guildId);
+            interaction?.options?.getString("options")?.toLowerCase() || "";
+          const premium = await client.premium.check(interaction.guildId);
           message = interaction.options.getString("message");
 
           if (
@@ -146,7 +146,9 @@ const command: ChatInputCommand = {
               content: `:x: ${client.translation.get(
                 guildDb?.language,
                 "wyCustom.error.limit",
-                { type: `\`${option}\`` },
+                {
+                  type: `\`${option}\``,
+                },
               )}`,
               components: [premiumButton],
               ephemeral: true,
@@ -154,7 +156,7 @@ const command: ChatInputCommand = {
             return;
           }
 
-          let newID = makeID(6);
+          const newID = makeID(6);
           if (option === "wouldyourather")
             generativeText = generateWYR(client, message || "", newID, guildDb);
           else if (option === "neverhaveiever")
@@ -182,8 +184,9 @@ const command: ChatInputCommand = {
             .setColor("#0598F4")
             .setDescription(
               `${
-                !generativeText.value
-                  ? `${client.translation.get(
+                generativeText.value
+                  ? ""
+                  : `${client.translation.get(
                       guildDb?.language,
                       "wyCustom.success.embedAdd.descAccept",
                       {
@@ -204,7 +207,6 @@ const command: ChatInputCommand = {
                                 ),
                       },
                     )}\n\n`
-                  : ""
               }**${client.translation.get(
                 guildDb?.language,
                 "wyCustom.success.embedAdd.descID",
@@ -218,12 +220,9 @@ const command: ChatInputCommand = {
             )
             .setFooter({
               text: `Would You ${
-                !generativeText.value
-                  ? `| ${client.translation.get(
-                      guildDb?.language,
-                      "wyCustom.success.embedAdd.footerDisable",
-                    )}`
-                  : ""
+                generativeText.value
+                  ? ""
+                  : `| ${client.translation.get(guildDb?.language, "wyCustom.success.embedAdd.footerDisable")}`
               }`,
               iconURL: client?.user?.displayAvatarURL() || undefined,
             });
@@ -261,24 +260,24 @@ const command: ChatInputCommand = {
                 .setLabel("Add")
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
-                .setCustomId(`wycustom_add`),
+                .setCustomId("wycustom_add"),
               new ButtonBuilder()
                 .setLabel("Don't Add")
                 .setDisabled(true)
                 .setStyle(ButtonStyle.Secondary)
-                .setCustomId(`wycustom_remove`),
+                .setCustomId("wycustom_remove"),
             );
 
           interaction
             .reply(
-              !generativeText.value
+              generativeText.value
                 ? {
                     embeds: [typeEmbed],
-                    components: [add],
                     ephemeral: true,
                   }
                 : {
                     embeds: [typeEmbed],
+                    components: [add],
                     ephemeral: true,
                   },
             )
@@ -295,7 +294,8 @@ const command: ChatInputCommand = {
               captureException(err);
             });
           return;
-        case "remove":
+        }
+        case "remove": {
           message = interaction.options.getString("message");
           typeEmbed = new EmbedBuilder()
             .setTitle(
@@ -311,16 +311,18 @@ const command: ChatInputCommand = {
             });
           if (!guildDb.customMessages.find((c) => c.id === message)) {
             interaction.reply({
-              content: "Custom message with ID: " + message + " doesn't exist.",
+              content: `Custom message with ID: ${message} doesn't exist.`,
               ephemeral: true,
             });
             return;
           }
           interaction.reply({
-            content: "Sucessfully deleted question with id: " + message,
+            content: `Sucessfully deleted question with id: ${message}`,
             ephemeral: true,
           });
-          let filtered = guildDb.customMessages.filter((c) => c.id != message);
+          const filtered = guildDb.customMessages.filter(
+            (c) => c.id !== message,
+          );
 
           await client.database.updateGuild(
             interaction.guildId || "",
@@ -331,7 +333,8 @@ const command: ChatInputCommand = {
             true,
           );
           break;
-        case "removeall":
+        }
+        case "removeall": {
           if (guildDb.customMessages.length === 0) {
             interaction.reply({
               content: client.translation.get(
@@ -374,7 +377,8 @@ const command: ChatInputCommand = {
             ephemeral: true,
           });
           return;
-        case "view":
+        }
+        case "view": {
           if (guildDb.customMessages.length === 0) {
             interaction.reply({
               ephemeral: true,
@@ -386,7 +390,7 @@ const command: ChatInputCommand = {
             return;
           }
 
-          let paginate = client.paginate.get(`${interaction.user.id}-custom`);
+          const paginate = client.paginate.get(`${interaction.user.id}-custom`);
           if (paginate) {
             clearTimeout(paginate.timeout);
             client.paginate.delete(`${interaction.user.id}-custom`);
@@ -654,7 +658,8 @@ const command: ChatInputCommand = {
 
           page.start(interaction, "custom");
           return;
-        case "import":
+        }
+        case "import": {
           const attachment = interaction.options.get("attachment");
 
           if (!attachment) {
@@ -755,7 +760,6 @@ const command: ChatInputCommand = {
 
               for (const key in response.data) {
                 if (!response.data.hasOwnProperty(key)) continue;
-
                 if (
                   !(await client.premium.check(interaction.guildId)).result &&
                   guildDb.customMessages.filter((e) => e.type === key).length +
@@ -774,11 +778,10 @@ const command: ChatInputCommand = {
                     content: `:x: ${client.translation.get(
                       guildDb?.language,
                       "wyCustom.error.limit",
-                      { type: all.map((e) => `\`${e}\``).join(", ") },
-                    )}\n\n${client.translation.get(
-                      guildDb?.language,
-                      "wyCustom.error.addToLimit",
-                    )}`,
+                      {
+                        type: all.map((e) => `\`${e}\``).join(", "),
+                      },
+                    )}\n\n${client.translation.get(guildDb?.language, "wyCustom.error.addToLimit")}`,
                     components: [premiumButton],
                   });
                 }
@@ -790,8 +793,8 @@ const command: ChatInputCommand = {
                 ).length;
                 response.data.wouldyourather.map((d: string) => {
                   if (i === 100) return;
-                  else i++;
-                  let newID = makeID(6);
+                  i++;
+                  const newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
                     msg: d,
@@ -806,8 +809,8 @@ const command: ChatInputCommand = {
                 ).length;
                 response.data.truth.map((d: string) => {
                   if (i === 100) return;
-                  else i++;
-                  let newID = makeID(6);
+                  i++;
+                  const newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
                     msg: d,
@@ -822,8 +825,8 @@ const command: ChatInputCommand = {
                 ).length;
                 response.data.dare.map((d: string) => {
                   if (i === 100) return;
-                  else i++;
-                  let newID = makeID(6);
+                  i++;
+                  const newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
                     msg: d,
@@ -838,9 +841,9 @@ const command: ChatInputCommand = {
                 ).length;
                 response.data.neverhaveiever.map((d: string) => {
                   if (i === 100) return;
-                  else i++;
+                  i++;
 
-                  let newID = makeID(6);
+                  const newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
                     msg: d,
@@ -855,9 +858,9 @@ const command: ChatInputCommand = {
                 ).length;
                 response.data.wwyd.map((d: string) => {
                   if (i === 100) return;
-                  else i++;
+                  i++;
 
-                  let newID = makeID(6);
+                  const newID = makeID(6);
                   guildDb.customMessages.push({
                     id: newID,
                     msg: d,
@@ -890,15 +893,13 @@ const command: ChatInputCommand = {
             .catch((err) => {
               captureException(err);
               interaction.editReply(
-                `${client.translation.get(
-                  guildDb?.language,
-                  "wyCustom.error.import.att15",
-                )}\n\nError: ${err}`,
+                `${client.translation.get(guildDb?.language, "wyCustom.error.import.att15")}\n\nError: ${err}`,
               );
               return;
             });
           break;
-        case "export":
+        }
+        case "export": {
           if (guildDb.customMessages.length === 0) {
             interaction.reply({
               ephemeral: true,
@@ -912,81 +913,82 @@ const command: ChatInputCommand = {
 
           await interaction.deferReply();
 
-          let wouldyourather = guildDb.customMessages.filter(
+          const wouldyourather = guildDb.customMessages.filter(
             (c) => c.type === "wouldyourather",
           );
-          let truth = guildDb.customMessages.filter((c) => c.type === "truth");
-          let dare = guildDb.customMessages.filter((c) => c.type === "dare");
-          let neverhaveiever = guildDb.customMessages.filter(
+          const truth = guildDb.customMessages.filter(
+            (c) => c.type === "truth",
+          );
+          const dare = guildDb.customMessages.filter((c) => c.type === "dare");
+          const neverhaveiever = guildDb.customMessages.filter(
             (c) => c.type === "neverhaveiever",
           );
-          let wwyd = guildDb.customMessages.filter((c) => c.type === "wwyd");
-          let topic = guildDb.customMessages.filter((c) => c.type === "topic");
+          const wwyd = guildDb.customMessages.filter((c) => c.type === "wwyd");
+          const topic = guildDb.customMessages.filter(
+            (c) => c.type === "topic",
+          );
 
           let text = "{\n";
-          let arrays = [];
+          const arrays = [];
 
           if (wouldyourather.length > 0) {
             let arrayText = `"wouldyourather": [`;
-            wouldyourather.map((a, i) => {
-              i = i++ + 1;
-              arrayText += `\n"${a.msg}"${
-                wouldyourather.length !== i ? "," : ""
-              }`;
-            });
-            arrayText += `\n]`;
+            arrayText += wouldyourather
+              .map((a, index) => {
+                const i = index + 1;
+                return `\n"${a.msg}"${wouldyourather.length !== i ? "," : ""}`;
+              })
+              .join("");
+            arrayText += "\n]";
             arrays.push(arrayText);
           }
-
           if (truth.length > 0) {
             let arrayText = `"truth": [`;
-            truth.map((a, i) => {
-              i = i++ + 1;
+            truth.map((a, index) => {
+              const i = index + 1;
               arrayText += `\n"${a.msg}"${truth.length !== i ? "," : ""}`;
             });
-            arrayText += `\n]`;
+            arrayText += "\n]";
             arrays.push(arrayText);
           }
 
           if (dare.length > 0) {
             let arrayText = `"dare": [`;
-            dare.map((a, i) => {
-              i = i++ + 1;
+            dare.map((a, index) => {
+              const i = index + 1;
               arrayText += `\n"${a.msg}"${dare.length !== i ? "," : ""}`;
             });
-            arrayText += `\n]`;
+            arrayText += "\n]";
             arrays.push(arrayText);
           }
 
           if (neverhaveiever.length > 0) {
             let arrayText = `"neverhaveiever": [`;
-            neverhaveiever.map((a, i) => {
-              i = i++ + 1;
-              arrayText += `\n"${a.msg}"${
-                neverhaveiever.length !== i ? "," : ""
-              }`;
+            neverhaveiever.map((a, index) => {
+              const i = index + 1;
+              arrayText += `\n"${a.msg}"${neverhaveiever.length !== i ? "," : ""}`;
             });
-            arrayText += `\n]`;
+            arrayText += "\n]";
             arrays.push(arrayText);
           }
 
           if (wwyd.length > 0) {
             let arrayText = `"wwyd": [`;
-            wwyd.map((a, i) => {
-              i = i++ + 1;
+            wwyd.map((a, index) => {
+              const i = index + 1;
               arrayText += `\n"${a.msg}"${wwyd.length !== i ? "," : ""}`;
             });
-            arrayText += `\n]`;
+            arrayText += "\n]";
             arrays.push(arrayText);
           }
 
           if (topic.length > 0) {
             let arrayText = `"topic": [`;
-            topic.map((a, i) => {
-              i = i++ + 1;
+            topic.map((a, index) => {
+              const i = index + 1;
               arrayText += `\n"${a.msg}"${topic.length !== i ? "," : ""}`;
             });
-            arrayText += `\n]`;
+            arrayText += "\n]";
             arrays.push(arrayText);
           }
 
@@ -1006,6 +1008,7 @@ const command: ChatInputCommand = {
             ],
           });
           return;
+        }
       }
     } else {
       const errorembed = new EmbedBuilder()

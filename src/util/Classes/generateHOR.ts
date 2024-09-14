@@ -1,5 +1,5 @@
 import Canvas from "@napi-rs/canvas";
-import path from "path";
+import path from "node:path";
 import { formatNumber } from "../Functions/number";
 
 // Import font
@@ -26,7 +26,6 @@ Canvas.GlobalFonts.registerFromPath(
 export default class HOR {
   private game: any;
   private images: any;
-  constructor() {}
 
   /**
    *
@@ -36,7 +35,7 @@ export default class HOR {
 
   setGame(game: any) {
     if (typeof game !== "object") {
-      throw new TypeError("Expected game object instead got " + typeof game);
+      throw new TypeError(`Expected game object instead got ${typeof game}`);
     }
     this.game = game;
   }
@@ -49,7 +48,7 @@ export default class HOR {
 
   setImages(images: any) {
     if (!Array.isArray(images)) {
-      throw new TypeError("Expected images array instead got " + typeof images);
+      throw new TypeError(`Expected images array instead got ${typeof images}`);
     }
     this.images = images;
     return this;
@@ -127,9 +126,7 @@ export default class HOR {
     ctx.font = "50px Poppins-Bold";
     ctx.textAlign = "center";
     ctx.fillText(
-      `"${
-        this.game.items.history[this.game.items.history.length - 1].keyword
-      }"`,
+      `"${this.game.items.history[this.game.items.history.length - 1].keyword}"`,
       356,
       170,
     );
@@ -149,9 +146,7 @@ export default class HOR {
     ctx.font = "80px Poppins-Black";
     ctx.textAlign = "center";
     ctx.fillText(
-      `${formatNumber(
-        this.game.items.history[this.game.items.history.length - 1].value,
-      )}`,
+      `${formatNumber(this.game.items.history[this.game.items.history.length - 1].value)}`,
       356,
       285,
     );

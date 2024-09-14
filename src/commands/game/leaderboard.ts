@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { ChatInputCommand } from "../../interfaces";
+import type { ChatInputCommand } from "../../interfaces";
 import { assignRanks } from "../../util/Functions/number";
 import { UserModel } from "../../util/Models/userModel";
 import Paginator from "../../util/pagination";
@@ -51,7 +51,7 @@ const command: ChatInputCommand = {
       return;
     }
 
-    let language =
+    const language =
       guildDb?.language != null
         ? guildDb.language
         : userDb.language
@@ -59,7 +59,7 @@ const command: ChatInputCommand = {
           : "en_EN";
 
     switch (interaction.options.getString("game")) {
-      case "higherlower":
+      case "higherlower": {
         const page = new Paginator({
           user: interaction.user.id,
           client,
@@ -69,8 +69,8 @@ const command: ChatInputCommand = {
         let data: any;
 
         switch (interaction.options.getString("for")) {
-          case "global":
-            let data2 = await UserModel.find({
+          case "global": {
+            const data2 = await UserModel.find({
               "higherlower.highscore": { $gt: 1 },
             })
               .sort({ "higherlower.highscore": -1 })
@@ -134,6 +134,7 @@ const command: ChatInputCommand = {
               );
             }
             break;
+          }
 
           case "local":
             if (!interaction.guild) {
@@ -198,6 +199,7 @@ const command: ChatInputCommand = {
           interaction.options.getString("for"),
         );
         break;
+      }
     }
   },
 };

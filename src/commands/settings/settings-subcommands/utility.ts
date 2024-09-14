@@ -2,12 +2,12 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ChatInputCommandInteraction,
   EmbedBuilder,
-  MessageActionRowComponentBuilder,
+  type ChatInputCommandInteraction,
+  type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { IGuildModel } from "../../../util/Models/guildModel";
-import WouldYou from "../../../util/wouldYou";
+import type { IGuildModel } from "../../../util/Models/guildModel";
+import type WouldYou from "../../../util/wouldYou";
 
 export default async function settingsGeneral(
   interaction: ChatInputCommandInteraction,
@@ -23,7 +23,7 @@ export default async function settingsGeneral(
       )}: ${guildDb.webhookName ? guildDb.webhookName : ":x:"}\n${client.translation.get(
         guildDb?.language,
         "Settings.embed.avatar",
-      )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : `:x:`}\n${client.translation.get(
+      )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : ":x:"}\n${client.translation.get(
         guildDb?.language,
         "Settings.embed.classicMode",
       )}: ${guildDb.classicMode ? ":white_check_mark:" : ":x:"}`,
