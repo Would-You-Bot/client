@@ -32,6 +32,7 @@
   "dependencies": {
     "@discordjs/rest": "^2.4.0",
     "@napi-rs/canvas": "^0.1.53",
+    "@rivo-gg/cloudflare-r2": "^1.1.1",
     "@sentry/cli": "^2.33.0",
     "@sentry/node": "^8.30.0",
     "@sentry/profiling-node": "^8.30.0",
@@ -50,7 +51,6 @@
     "express": "^4.19.2",
     "moment-timezone": "^0.5.45",
     "mongoose": "^8.5.3",
-    "node-cloudflare-r2": "^0.2.3",
     "prettier-plugin-organize-imports": "^4.0.0",
     "profanity-check": "^0.0.3",
     "quickchart-js": "^3.1.3",

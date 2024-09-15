@@ -1,3 +1,4 @@
+import { R2 } from "@rivo-gg/cloudflare-r2";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -5,7 +6,6 @@ import {
   EmbedBuilder,
   type MessageActionRowComponentBuilder,
 } from "discord.js";
-import { R2 } from "node-cloudflare-r2";
 import { v4 as uuid } from "uuid";
 import type { Button } from "../../interfaces";
 import { Modal, type ModalData } from "../../util/modalHandler";
