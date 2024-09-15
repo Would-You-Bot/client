@@ -18,7 +18,7 @@ const button: Button = {
         `${client.translation.get(
           guildDb?.language,
           "Settings.embed.username",
-        )}: ${guildDb.webhookName}\n${client.translation.get(
+        )}: ${guildDb.webhookName ? guildDb.webhookName : ":x:"}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.avatar",
         )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : ":x:"}\n${client.translation.get(
