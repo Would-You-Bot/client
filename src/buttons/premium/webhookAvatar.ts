@@ -1,3 +1,4 @@
+// @ts-ignore
 import { R2 } from "@rivo-gg/cloudflare-r2";
 import {
   ActionRowBuilder,

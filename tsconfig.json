@@ -1,9 +1,8 @@
 {
     "compilerOptions": {
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "CommonJS",
         "rootDir": "./src/",
-        "target": "ESNext",
+        "target": "ES6",
         "typeRoots": [
             "node_modules/@types"
         ],
