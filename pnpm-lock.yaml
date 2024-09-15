@@ -14,6 +14,9 @@ importers:
       '@napi-rs/canvas':
         specifier: ^0.1.53
         version: 0.1.55
+      '@rivo-gg/cloudflare-r2':
+        specifier: ^1.1.1
+        version: 1.1.1
       '@sentry/cli':
         specifier: ^2.33.0
         version: 2.36.1
@@ -68,9 +71,6 @@ importers:
       mongoose:
         specifier: ^8.5.3
         version: 8.6.2
-      node-cloudflare-r2:
-        specifier: ^0.2.3
-        version: 0.2.3
       prettier-plugin-organize-imports:
         specifier: ^4.0.0
         version: 4.0.0(prettier@3.3.3)(typescript@5.6.2)
@@ -624,6 +624,9 @@ packages:
 
   '@prisma/instrumentation@5.19.1':
     resolution: {integrity: sha512-VLnzMQq7CWroL5AeaW0Py2huiNKeoMfCH3SUxstdzPrlWQi6UQ9UrfcbUkNHlVFqOMacqy8X/8YtE0kuKDpD9w==}
+
+  '@rivo-gg/cloudflare-r2@1.1.1':
+    resolution: {integrity: sha512-lYohu6I6+pFRxoefoB16NLa3eo5O/f4ylK8uTOHLVt+FB1ftWmRw2brBkSqcHWbtnGSxmYWchof1d52209eVyQ==}
 
   '@sapphire/async-queue@1.5.3':
     resolution: {integrity: sha512-x7zadcfJGxFka1Q3f8gCts1F0xMwCKbZweM85xECGI0hBTeIZJGGCrHgLggihBoprlQ/hBmDR5LKfIPqnmHM3w==}
@@ -1458,9 +1461,6 @@ packages:
   node-abi@3.67.0:
     resolution: {integrity: sha512-bLn/fU/ALVBE9wj+p4Y21ZJWYFjUXLXPi/IewyLZkx3ApxKDNBWCKdReeKOtD8dWpOdDCeMyLh6ZewzcLsG2Nw==}
     engines: {node: '>=10'}
-
-  node-cloudflare-r2@0.2.3:
-    resolution: {integrity: sha512-dTZtHfwGAHE8o1pmzxHsaVTYoK/ZPeiCA6PC2G0HexLFWBwHypblTsOs5uwv9gFDZISrjLc5nsDd02e6PkBCYQ==}
 
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -2719,6 +2719,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@rivo-gg/cloudflare-r2@1.1.1':
+    dependencies:
+      '@aws-sdk/client-s3': 3.651.1
+      '@aws-sdk/lib-storage': 3.651.1(@aws-sdk/client-s3@3.651.1)
+      '@aws-sdk/s3-request-presigner': 3.651.1
+    transitivePeerDependencies:
+      - aws-crt
+
   '@sapphire/async-queue@1.5.3': {}
 
   '@sapphire/shapeshift@4.0.0':
@@ -3733,14 +3741,6 @@ snapshots:
   node-abi@3.67.0:
     dependencies:
       semver: 7.6.3
-
-  node-cloudflare-r2@0.2.3:
-    dependencies:
-      '@aws-sdk/client-s3': 3.651.1
-      '@aws-sdk/lib-storage': 3.651.1(@aws-sdk/client-s3@3.651.1)
-      '@aws-sdk/s3-request-presigner': 3.651.1
-    transitivePeerDependencies:
-      - aws-crt
 
   node-fetch@2.7.0:
     dependencies:
