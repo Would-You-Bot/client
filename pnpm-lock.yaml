@@ -69,8 +69,8 @@ importers:
         specifier: ^0.5.45
         version: 0.5.45
       mongoose:
-        specifier: ^8.5.3
-        version: 8.6.2
+        specifier: ^8.6.3
+        version: 8.6.3
       prettier-plugin-organize-imports:
         specifier: ^4.0.0
         version: 4.0.0(prettier@3.3.3)(typescript@5.6.2)
@@ -1436,8 +1436,8 @@ packages:
       socks:
         optional: true
 
-  mongoose@8.6.2:
-    resolution: {integrity: sha512-ErbDVvuUzUfyQpXvJ6sXznmZDICD8r6wIsa0VKjJtB6/LZncqwUn5Um040G1BaNo6L3Jz+xItLSwT0wZmSmUaQ==}
+  mongoose@8.6.3:
+    resolution: {integrity: sha512-++yRmm7hjMbqVA/8WeiygTnEfrFbiy+OBjQi49GFJIvCQuSYE56myyQWo4j5hbpcHjhHQU8NukMNGTwAWFWjIw==}
     engines: {node: '>=16.20.1'}
 
   mpath@0.9.0:
@@ -3705,7 +3705,7 @@ snapshots:
       bson: 6.8.0
       mongodb-connection-string-url: 3.0.1
 
-  mongoose@8.6.2:
+  mongoose@8.6.3:
     dependencies:
       bson: 6.8.0
       kareem: 2.6.3
