@@ -124,16 +124,16 @@ const button: Button = {
         );
       } else {
         data = await Promise.all(
-          guildDb.gameScores.map(async (u: any) => {
+          guildDb.gameScores.sort((a: any, b: any) => b.higherlower - a.higherlower).slice(paginate.page * 10).map(async (u: any) => { // , paginate.page * 10 + 10
             const user = await client.database.getUser(u.userID, true);
             return user?.votePrivacy
               ? {
                   user: "Anonymous",
-                  score: u.higherlower.highscore,
+                  score: u.higherlower,
                 }
               : {
                   user: u.userID,
-                  score: u.higherlower.highscore,
+                  score: u.higherlower,
                 };
           }),
         );

@@ -95,6 +95,7 @@ const button: Button = {
     const embed = paginate.pages[--paginate.page];
     let data;
     if (
+      typeof embed.data.description !== "string" &&
       type === "leaderboard" &&
       !paginate.countedPages.includes(paginate.page)
     ) {
@@ -129,11 +130,11 @@ const button: Button = {
             return user?.votePrivacy
               ? {
                   user: "Anonymous",
-                  score: u.higherlower.highscore,
+                  score: u.higherlower,
                 }
               : {
                   user: u.userID,
-                  score: u.higherlower.highscore,
+                  score: u.higherlower,
                 };
           }),
         );
