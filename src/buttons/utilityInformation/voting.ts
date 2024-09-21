@@ -16,10 +16,10 @@ const button: Button = {
 
     const optionChosen =
       customId[2] === "wouldyourather"
-        ? customId[3] === '0' 
+        ? customId[3] === "0"
           ? "Option 1"
           : "Option 2"
-        : customId[3] === '0' 
+        : customId[3] === "0"
           ? "have done this"
           : "have not done this";
 
