@@ -16,19 +16,19 @@ const button: Button = {
 
     const optionChosen =
       customId[2] === "wouldyourather"
-        ? customId[3] === 0 || customId[2] === 0
+        ? customId[3] === '0' 
           ? "Option 1"
           : "Option 2"
-        : customId[3] === 0 || customId[2] === 0
+        : customId[3] === '0' 
           ? "have done this"
           : "have not done this";
 
     let replyContent = `You've voted for **${optionChosen}**.`;
 
     if (optionChosen === "Option 1") {
-      replyContent += ` **Option 1** got ${option1Votes} votes (${((option1Votes / totalVotes) * 100) | 0}%) and **Option 2** got ${option2Votes} votes (${(option2Votes / totalVotes) * 100}%).`;
+      replyContent += ` **Option 1** got ${option1Votes} vote(s) (${((option1Votes / totalVotes) * 100) | 0}%) and **Option 2** got ${option2Votes} vote(s) (${~~(option2Votes / totalVotes) * 100}%).`;
     } else if (optionChosen === "Option 2") {
-      replyContent += ` **Option 2** got ${option2Votes} votes (${((option2Votes / totalVotes) * 100) | 0}%) and **Option 1** got ${option1Votes} votes (${(option1Votes / totalVotes) * 100}%).`;
+      replyContent += ` **Option 2** got ${option2Votes} vote(s) (${((option2Votes / totalVotes) * 100) | 0}%) and **Option 1** got ${option1Votes} vote(s) (${~~(option1Votes / totalVotes) * 100}%).`;
     } else {
       replyContent;
     }
