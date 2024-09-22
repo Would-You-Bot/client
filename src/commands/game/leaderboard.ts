@@ -146,6 +146,7 @@ const command: ChatInputCommand = {
             }
             data = await Promise.all(
               guildDb.gameScores
+                .filter((u: any) => u.higherlower >= 1)
                 .sort((a: any, b: any) => b.higherlower - a.higherlower)
                 .map(async (u: any) => {
                   const user = await client.database.getUser(u.userID, true);
