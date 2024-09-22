@@ -126,18 +126,21 @@ const button: Button = {
         );
       } else {
         data = await Promise.all(
-          guildDb.gameScores.sort((a: any, b: any) => b.higherlower - a.higherlower).slice((paginate.pages.length - 1) * 10).map(async (u: any) => {
-            const user = await client.database.getUser(u.userID, true);
-            return user?.votePrivacy
-              ? {
-                  user: "Anonymous",
-                  score: u.higherlower,
-                }
-              : {
-                  user: u.userID,
-                  score: u.higherlower,
-                };
-          }),
+          guildDb.gameScores
+            .sort((a: any, b: any) => b.higherlower - a.higherlower)
+            .slice((paginate.pages.length - 1) * 10)
+            .map(async (u: any) => {
+              const user = await client.database.getUser(u.userID, true);
+              return user?.votePrivacy
+                ? {
+                    user: "Anonymous",
+                    score: u.higherlower,
+                  }
+                : {
+                    user: u.userID,
+                    score: u.higherlower,
+                  };
+            }),
         );
       }
 
