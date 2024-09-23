@@ -33,7 +33,7 @@
     "@discordjs/rest": "^2.4.0",
     "@napi-rs/canvas": "^0.1.56",
     "@rivo-gg/cloudflare-r2": "^1.1.1",
-    "@sentry/cli": "^2.33.0",
+    "@sentry/cli": "^2.36.2",
     "@sentry/node": "^8.30.0",
     "@sentry/profiling-node": "^8.30.0",
     "@top-gg/sdk": "^3.1.6",
