@@ -11,8 +11,12 @@ const button: Button = {
   name: "wycustom_remove",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
-    const id = interaction.customId.split("-")[1];
+    const id = interaction.customId.replace("-", ":").split(":")[1];
     const data = client.customAdd.get(id);
+    if (!data) {
+      interaction.deferUpdate();
+      return;
+    }
 
     const typeEmbed = new EmbedBuilder()
       .setTitle(

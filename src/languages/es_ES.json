@@ -63,9 +63,9 @@
       "import": {
         "att1": "¡Debes proporcionar un archivo JSON válido!",
         "att2": "¡Debes proporcionar un archivo JSON válido!",
-        "att3": "¡El JSON que proporcionaste no tenía ningún dato! Ejemplo: [here](https://i.imgur.com/glkbKrL.png)",
-        "att4": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado o faltaba alguno! Ejemplo: [aquí](https://i.imgur.com/glkbKrL.png)",
-        "att5": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado! Ejemplo: [here](https://cdn.discordapp.com/attachments/945100320973934653/1017597246189097030/unknown.png)",
+        "att3": "¡El JSON que proporcionaste no tenía ningún dato! [Ejemplo](https://i.imgur.com/xdEzfyW.png)",
+        "att4": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado o faltaba alguno! [Ejemplo](https://i.imgur.com/xdEzfyW.png)",
+        "att5": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado! [Ejemplo](https://i.imgur.com/xdEzfyW.png)",
         "att15": "Se produjo un error al ejecutar este comando, por favor infórmelo al servidor de soporte.",
         "att16": "El JSON que proporcionaste tenía demasiados datos para la categoría wouldyourather, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
         "att17": "El JSON que proporcionaste tenía demasiados datos para la categoría neverhaveiever, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",

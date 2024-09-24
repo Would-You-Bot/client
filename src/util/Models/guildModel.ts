@@ -30,7 +30,7 @@ export interface IGuildModel {
   botJoined: number;
   customMessages: Array<{
     id: string;
-    msg: string;
+    question: string;
     type: string;
   }>;
   customTypes: string;
@@ -136,7 +136,7 @@ const guildProfileSchema = new Schema<IGuildModel>(
     customMessages: [
       {
         id: { type: String, required: true },
-        msg: { type: String, required: true },
+        question: { type: String, required: true },
         type: { type: String, required: true },
       },
     ],
