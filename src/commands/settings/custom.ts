@@ -11,6 +11,7 @@ import {
   type PermissionsBitField,
 } from "discord.js";
 import "dotenv/config";
+import { v4 as uuidv4 } from "uuid";
 import type { ChatInputCommand } from "../../interfaces";
 import {
   generateNHIE,
@@ -18,17 +19,6 @@ import {
   generateWYR,
 } from "../../util/generateText";
 import Paginator from "../../util/pagination";
-
-function makeID(length: number) {
-  let result = "";
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -156,7 +146,7 @@ const command: ChatInputCommand = {
             return;
           }
 
-          const newID = makeID(6);
+          const newID = uuidv4();
           if (option === "wouldyourather")
             generativeText = generateWYR(client, message || "", newID, guildDb);
           else if (option === "neverhaveiever")
@@ -229,7 +219,7 @@ const command: ChatInputCommand = {
 
           guildDb.customMessages.push({
             id: newID,
-            msg: message || "",
+            question: message || "",
             type: option,
           });
 
@@ -417,7 +407,7 @@ const command: ChatInputCommand = {
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
                     "wyCustom.success.embedAdd.descMsg",
-                  )}: ${s.msg}`,
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
@@ -462,7 +452,7 @@ const command: ChatInputCommand = {
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
                     "wyCustom.success.embedAdd.descMsg",
-                  )}: ${s.msg}`,
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
@@ -506,7 +496,7 @@ const command: ChatInputCommand = {
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
                     "wyCustom.success.embedAdd.descMsg",
-                  )}: ${s.msg}`,
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
@@ -550,7 +540,7 @@ const command: ChatInputCommand = {
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
                     "wyCustom.success.embedAdd.descMsg",
-                  )}: ${s.msg}`,
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
@@ -594,7 +584,7 @@ const command: ChatInputCommand = {
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
                     "wyCustom.success.embedAdd.descMsg",
-                  )}: ${s.msg}`,
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
@@ -630,7 +620,7 @@ const command: ChatInputCommand = {
             let data: any;
             data = guildDb.customMessages
               .filter((c) => c.type === "topic")
-              .map((s, i) => `${s.id}: ${s.msg}`);
+              .map((s, i) => `${s.id}: ${s.question}`);
             data = Array.from({ length: Math.ceil(data.length / 5) }, (a, r) =>
               data.slice(r * 5, r * 5 + 5),
             );
@@ -787,17 +777,33 @@ const command: ChatInputCommand = {
                 }
               }
 
+              for (const key in response.data) {
+                if (!response.data.hasOwnProperty(key)) continue;
+                // check if d["question"] has content in it or even exists
+                for (const d of response.data[key]) {
+                  if (!d["question"] || d["question"] === "") {
+                    return interaction.editReply({
+                      content: client.translation.get(
+                        guildDb?.language,
+                        "wyCustom.error.import.att4",
+                      ),
+                      components: [],
+                    });
+                  }
+                }
+              }
+
               if (response.data.wouldyourather) {
                 let i = guildDb.customMessages.filter(
                   (e) => e.type === "wouldyourather",
                 ).length;
-                response.data.wouldyourather.map((d: string) => {
+                response.data.wouldyourather.map((d: any) => {
                   if (i === 100) return;
                   i++;
-                  const newID = makeID(6);
+                  const newID = uuidv4();
                   guildDb.customMessages.push({
-                    id: newID,
-                    msg: d,
+                    id: d["id"] ? d["id"] : newID,
+                    question: d["question"],
                     type: "wouldyourather",
                   });
                 });
@@ -807,13 +813,13 @@ const command: ChatInputCommand = {
                 let i = guildDb.customMessages.filter(
                   (e) => e.type === "truth",
                 ).length;
-                response.data.truth.map((d: string) => {
+                response.data.truth.map((d: any) => {
                   if (i === 100) return;
                   i++;
-                  const newID = makeID(6);
+                  const newID = uuidv4();
                   guildDb.customMessages.push({
-                    id: newID,
-                    msg: d,
+                    id: d["id"] ? d["id"] : newID,
+                    question: d["question"],
                     type: "truth",
                   });
                 });
@@ -823,13 +829,13 @@ const command: ChatInputCommand = {
                 let i = guildDb.customMessages.filter(
                   (e) => e.type === "dare",
                 ).length;
-                response.data.dare.map((d: string) => {
+                response.data.dare.map((d: any) => {
                   if (i === 100) return;
                   i++;
-                  const newID = makeID(6);
+                  const newID = uuidv4();
                   guildDb.customMessages.push({
-                    id: newID,
-                    msg: d,
+                    id: d["id"] ? d["id"] : newID,
+                    question: d["question"],
                     type: "dare",
                   });
                 });
@@ -839,14 +845,14 @@ const command: ChatInputCommand = {
                 let i = guildDb.customMessages.filter(
                   (e) => e.type === "neverhaveiever",
                 ).length;
-                response.data.neverhaveiever.map((d: string) => {
+                response.data.neverhaveiever.map((d: any) => {
                   if (i === 100) return;
                   i++;
 
-                  const newID = makeID(6);
+                  const newID = uuidv4();
                   guildDb.customMessages.push({
-                    id: newID,
-                    msg: d,
+                    id: d["id"] ? d["id"] : newID,
+                    question: d["question"],
                     type: "neverhaveiever",
                   });
                 });
@@ -856,14 +862,14 @@ const command: ChatInputCommand = {
                 let i = guildDb.customMessages.filter(
                   (e) => e.type === "wwyd",
                 ).length;
-                response.data.wwyd.map((d: string) => {
+                response.data.wwyd.map((d: any) => {
                   if (i === 100) return;
                   i++;
 
-                  const newID = makeID(6);
+                  const newID = uuidv4();
                   guildDb.customMessages.push({
-                    id: newID,
-                    msg: d,
+                    id: d["id"] ? d["id"] : newID,
+                    question: d["question"],
                     type: "wwyd",
                   });
                 });
@@ -936,7 +942,7 @@ const command: ChatInputCommand = {
             arrayText += wouldyourather
               .map((a, index) => {
                 const i = index + 1;
-                return `\n"${a.msg}"${wouldyourather.length !== i ? "," : ""}`;
+                return `\n{ "question": "${a.question}", "id": "${a.id}" }${wouldyourather.length !== i ? "," : ""}`;
               })
               .join("");
             arrayText += "\n]";
@@ -946,7 +952,7 @@ const command: ChatInputCommand = {
             let arrayText = `"truth": [`;
             truth.map((a, index) => {
               const i = index + 1;
-              arrayText += `\n"${a.msg}"${truth.length !== i ? "," : ""}`;
+              arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${truth.length !== i ? "," : ""}`;
             });
             arrayText += "\n]";
             arrays.push(arrayText);
@@ -956,7 +962,7 @@ const command: ChatInputCommand = {
             let arrayText = `"dare": [`;
             dare.map((a, index) => {
               const i = index + 1;
-              arrayText += `\n"${a.msg}"${dare.length !== i ? "," : ""}`;
+              arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${dare.length !== i ? "," : ""}`;
             });
             arrayText += "\n]";
             arrays.push(arrayText);
@@ -966,7 +972,7 @@ const command: ChatInputCommand = {
             let arrayText = `"neverhaveiever": [`;
             neverhaveiever.map((a, index) => {
               const i = index + 1;
-              arrayText += `\n"${a.msg}"${neverhaveiever.length !== i ? "," : ""}`;
+              arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${neverhaveiever.length !== i ? "," : ""}`;
             });
             arrayText += "\n]";
             arrays.push(arrayText);
@@ -976,7 +982,7 @@ const command: ChatInputCommand = {
             let arrayText = `"wwyd": [`;
             wwyd.map((a, index) => {
               const i = index + 1;
-              arrayText += `\n"${a.msg}"${wwyd.length !== i ? "," : ""}`;
+              arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${wwyd.length !== i ? "," : ""}`;
             });
             arrayText += "\n]";
             arrays.push(arrayText);
@@ -986,7 +992,7 @@ const command: ChatInputCommand = {
             let arrayText = `"topic": [`;
             topic.map((a, index) => {
               const i = index + 1;
-              arrayText += `\n"${a.msg}"${topic.length !== i ? "," : ""}`;
+              arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${topic.length !== i ? "," : ""}`;
             });
             arrayText += "\n]";
             arrays.push(arrayText);

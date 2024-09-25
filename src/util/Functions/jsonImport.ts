@@ -211,7 +211,7 @@ export async function getQuestionsByType(
         {
           $project: {
             id: "$customMessages.id",
-            msg: "$customMessages.msg",
+            question: "$customMessages.question",
             type: "$customMessages.type",
           },
         },
@@ -252,8 +252,8 @@ export async function getQuestionsByType(
           id: mixedQuestions[0].id,
           question:
             normalizedLanguage === "en"
-              ? mixedQuestions[0].msg || mixedQuestions[0].question
-              : mixedQuestions[0].msg ||
+              ? mixedQuestions[0].question || mixedQuestions[0].question
+              : mixedQuestions[0].question ||
                 mixedQuestions[0].translations[normalizedLanguage],
         };
         break;
@@ -261,7 +261,7 @@ export async function getQuestionsByType(
       case "custom":
         result = {
           id: newRandomCustomQuestion[0].id,
-          question: newRandomCustomQuestion[0].msg,
+          question: newRandomCustomQuestion[0].question,
         };
         break;
     }
