@@ -11,12 +11,12 @@ COPY package*.json pnpm-lock*.yaml ./
 
 #Create node_modules files without dev dependencies.
 FROM base AS prod_dependencies
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN pnpm install --prod --frozen-lockfile
 
 #Create dist.
 FROM base AS builder
 COPY . .
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 
 #Final image
