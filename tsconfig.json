@@ -1,39 +1,31 @@
 {
-    "compilerOptions": {
-        "module": "CommonJS",
-        "rootDir": "./src/",
-        "target": "ES6",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
+	"compilerOptions": {
+		"module": "CommonJS",
+		"rootDir": "./src/",
+		"target": "ES6",
+		"typeRoots": ["node_modules/@types"],
 
-        "outDir": "./dist/",
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "forceConsistentCasingInFileNames": true,
-        "importHelpers": true,
-        "noFallthroughCasesInSwitch": true,
-        "removeComments": true,
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
-        "sourceMap": true,
-        "strict": true,
-        "strictPropertyInitialization": false,
-        "lib": ["ES2022.Error"],
-        "inlineSources": true,
+		"outDir": "./dist/",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"forceConsistentCasingInFileNames": true,
+		"importHelpers": true,
+		"noFallthroughCasesInSwitch": true,
+		"removeComments": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"strictPropertyInitialization": false,
+		"lib": ["ES2022.Error"],
+		"inlineSources": true,
 
-        // Set `sourceRoot` to  "/" to strip the build path prefix
-        // from generated source code references.
-        // This improves issue grouping in Sentry.
-        "sourceRoot": "/"
-    },
-    "include": [
-        "src/**/*",
-        "src/**/*.json"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+		// Set `sourceRoot` to  "/" to strip the build path prefix
+		// from generated source code references.
+		// This improves issue grouping in Sentry.
+		"sourceRoot": "/"
+	},
+	"include": ["src/**/*", "src/**/*.json"],
+	"exclude": ["node_modules", "dist"]
 }
