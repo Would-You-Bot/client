@@ -21,8 +21,6 @@ const voteModelSchema = new Schema(
       op_one: { type: [String], default: [] },
       op_two: { type: [String], default: [] },
     },
-
-    until: { type: Date, required: false },
   },
   { timestamps: true },
 );
