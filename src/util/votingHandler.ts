@@ -1,3 +1,5 @@
+import { captureException } from "@sentry/node";
+import { gray, green, white } from "chalk-advanced";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -248,5 +250,35 @@ export default class Voting {
       option_2,
       chart: chart.getUrl(),
     };
+  }
+
+  /**
+   * Start the daily message Schedule
+   */
+  start() {
+    const olderthen = (date: Date, daysBetween: number) => {
+      const then = new Date();
+      then.setDate(then.getDate() - daysBetween);
+
+      const msBetweenDates = date.getTime() - then.getTime();
+
+      return !(Math.round(msBetweenDates / 1000 / 60 / 60 / 24) >= daysBetween);
+    };
+
+    setTimeout(async () => {
+      const votes = await VoteModel.find();
+      for (const vote of votes) {
+        if (olderthen(new Date((vote as any).createdAt), 30))
+          return VoteModel.deleteOne({ id: vote.id }).catch((err) => {
+            captureException(err);
+            return;
+          });
+        this._cache.set(vote.id, vote);
+      }
+
+      console.log(
+        `${white("Would You?")} ${gray(">")} ${green("Successfully loaded votes from database")}`,
+      );
+    }, 500);
   }
 }
