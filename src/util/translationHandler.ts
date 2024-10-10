@@ -139,10 +139,10 @@ export default class TranslationHandler {
       for (const segment of pathSegments) {
         try {
           if (currentTranslation) {
-            if (!currentTranslation.hasOwn(segment)) break;
+            if (!currentTranslation.hasOwnProperty(segment)) break;
             currentTranslation = currentTranslation[segment];
           } else {
-            if (!languageData.hasOwn(segment)) break;
+            if (!languageData.hasOwnProperty(segment)) break;
             currentTranslation = languageData[segment];
           }
         } catch (err) {
