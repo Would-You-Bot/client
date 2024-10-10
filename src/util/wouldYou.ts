@@ -137,7 +137,6 @@ export default class WouldYou extends Client {
       this.dailyMessage.listen();
 
       this.voting = new Voting(this);
-      this.voting.start();
 
       await this.initialize();
     });
