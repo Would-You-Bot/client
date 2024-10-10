@@ -88,7 +88,7 @@ const button: Button = {
           .setEmoji("1207778786976989244"),
       );
 
-    let setDeleteButtons: ActionRowBuilder;
+    let setDeleteButtons: any;
     if (newType === "Channels") {
       setDeleteButtons =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(

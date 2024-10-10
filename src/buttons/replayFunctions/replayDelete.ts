@@ -85,7 +85,7 @@ const button: Button = {
           .setEmoji("1207778786976989244"),
       );
 
-    let setDeleteButtons: ActionRowBuilder;
+    let setDeleteButtons: any;
     if (guildDb.replayType === "Channels") {
       setDeleteButtons =
         new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
