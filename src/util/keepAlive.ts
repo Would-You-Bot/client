@@ -25,30 +25,24 @@ export default class KeepAlive {
 
     this.client.on("error", (err) => {
       captureException(err);
-      console.log(err);
     });
 
     this.client.on("warn", async (info) => {
       captureMessage(info);
-      console.log(info);
     });
 
     process.on("unhandledRejection", async (reason) => {
       captureException(reason);
-      console.log(reason);
     });
 
     process.on("uncaughtException", async (err) => {
       captureException(err);
-      console.log(err);
     });
     process.on("uncaughtExceptionMonitor", async (err) => {
       captureException(err);
-      console.log(err);
     });
     process.on("UnhandledPromiseRejection", (err) => {
       captureException(err);
-      console.log(err);
     });
   }
 }
