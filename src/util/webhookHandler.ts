@@ -59,6 +59,7 @@ export default class WebhookHandler {
           if (message.autoPin) {
             await this.autoPinMessage(message, result.result);
           }
+          return result;
         } else {
           return result;
         }
@@ -105,6 +106,7 @@ export default class WebhookHandler {
           if (message.thread) {
             await this.createThread(message, result.result);
           }
+          return result;
         } else {
           return result;
         }
