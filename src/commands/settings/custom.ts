@@ -739,7 +739,7 @@ const command: ChatInputCommand = {
 
               const all = [];
               for (const key in response.data) {
-                if (!response.data.hasOwn(key)) continue;
+                if (!response.data.hasOwnProperty(key)) continue;
                 if (
                   guildDb.customMessages.filter((e) => e.type === key).length +
                     response.data[key].length >
@@ -749,7 +749,7 @@ const command: ChatInputCommand = {
               }
 
               for (const key in response.data) {
-                if (!response.data.hasOwn(key)) continue;
+                if (!response.data.hasOwnProperty(key)) continue;
                 if (
                   !(await client.premium.check(interaction.guildId)).result &&
                   guildDb.customMessages.filter((e) => e.type === key).length +
@@ -778,7 +778,7 @@ const command: ChatInputCommand = {
               }
 
               for (const key in response.data) {
-                if (!response.data.hasOwn(key)) continue;
+                if (!response.data.hasOwnProperty(key)) continue;
                 // check if d["question"] has content in it or even exists
                 for (const d of response.data[key]) {
                   if (!d.question || d.question === "") {
