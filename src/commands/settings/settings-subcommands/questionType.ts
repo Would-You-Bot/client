@@ -23,7 +23,7 @@ export default async function settingsGeneral(
   const emb = new EmbedBuilder()
     .setTitle("Would You - Question Types")
     .setDescription(
-      `**Global Question Type**: ${guildDb.customTypes}\n**Per-Channel Settings**: ${channelSettings}`
+      `**Global Question Type**: ${guildDb.customTypes}\n**Per-Channel Settings**: \n${channelSettings}`
     )
     .setColor("#0598F6")
     .setFooter({

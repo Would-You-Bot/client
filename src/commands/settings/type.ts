@@ -40,7 +40,7 @@ const command: ChatInputCommand = {
     ),
 
   execute: async (interaction, client, guildDb) => {
-    let typeEmbed: EmbedBuilder;
+    let typeEmbed: EmbedBuilder = new EmbedBuilder();
     if (
       (interaction.member?.permissions as Readonly<PermissionsBitField>).has(
         PermissionFlagsBits.ManageGuild,
