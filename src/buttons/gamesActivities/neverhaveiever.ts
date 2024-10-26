@@ -52,6 +52,7 @@ const button: Button = {
     });
 
     const NHIE = await getQuestionsByType(
+      interaction.channelId,
       "neverhaveiever",
       guildDb,
       guildDb?.language != null
@@ -59,7 +60,7 @@ const button: Button = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const nhieEmbed = new DefaultGameEmbed(

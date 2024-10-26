@@ -54,6 +54,7 @@ const button: Button = {
     });
 
     const TRUTH = await getQuestionsByType(
+      interaction.channelId,
       "truth",
       guildDb,
       guildDb?.language != null
@@ -61,7 +62,7 @@ const button: Button = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const truthEmbed = new DefaultGameEmbed(

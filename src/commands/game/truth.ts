@@ -34,6 +34,7 @@ const command: ChatInputCommand = {
     });
 
     const TRUTH = await getQuestionsByType(
+      interaction.channelId,
       "truth",
       guildDb,
       guildDb?.language != null
@@ -41,7 +42,7 @@ const command: ChatInputCommand = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const truthEmbed = new DefaultGameEmbed(

@@ -53,13 +53,14 @@ const button: Button = {
     });
 
     const RANDOM = await getRandomTod(
+      interaction.channelId,
       guildDb,
       guildDb?.language != null
         ? guildDb.language
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const randomEmbed = new DefaultGameEmbed(

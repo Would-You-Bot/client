@@ -42,6 +42,12 @@ const button: Button = {
       return;
     }
 
+    if (guildDb.channelTypes.find((c) => c.channelId === newChannel)) {
+      guildDb.channelTypes = guildDb.channelTypes.filter(
+        (c) => c.channelId!== newChannel,
+      );
+    }
+
     guildDb.channelTypes.push({
       channelId: newChannel,
       questionType: value as "regular" | "custom" | "mixed",

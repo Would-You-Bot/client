@@ -52,6 +52,7 @@ const button: Button = {
     });
 
     const DARE = await getQuestionsByType(
+      interaction.channelId,
       "dare",
       guildDb,
       guildDb?.language != null
@@ -59,7 +60,7 @@ const button: Button = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const dareEmbed = new DefaultGameEmbed(

@@ -33,6 +33,7 @@ const command: ChatInputCommand = {
     });
 
     const WWYD = await getQuestionsByType(
+      interaction.channelId,
       "whatwouldyoudo",
       guildDb,
       guildDb?.language != null
@@ -40,7 +41,7 @@ const command: ChatInputCommand = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const wwydEmbed = new DefaultGameEmbed(

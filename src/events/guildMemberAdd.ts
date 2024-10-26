@@ -39,13 +39,15 @@ const event: Event = {
     const premium = await client.premium.check(member?.guild.id);
 
     const General = await getQuestionsByType(
+      guildDb.welcomeChannel,
       "wouldyourather",
       guildDb,
       guildDb?.language != null ? guildDb.language : "en_EN",
       premium.result,
-      false,
+      false
     );
     const WhatYouDo = await getQuestionsByType(
+      guildDb.welcomeChannel,
       "whatwouldyoudo",
       guildDb,
       guildDb?.language != null ? guildDb.language : "en_EN",
