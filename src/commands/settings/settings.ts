@@ -76,6 +76,19 @@ const command: ChatInputCommand = {
         });
 
       return cmd;
+    })
+    .addSubcommand((cmd) => {
+      cmd
+        .setName("question-types")
+        .setDescription("Change settings regarding question types")
+        .setDescriptionLocalizations({
+          de: "Ändere Einstellungen bezüglich der Fragetypen",
+          "es-ES": "Cambiar la configuración de los tipos de preguntas",
+          fr: "Modifier les paramètres des types de questions",
+          it: "Cambia le impostazioni relative ai tipi di domande",
+        });
+
+      return cmd;
     }),
   execute: async (interaction, client, guildDb) => {
     const memberHasPermissions = (
@@ -113,6 +126,9 @@ const command: ChatInputCommand = {
       },
       utility: {
         fileName: "utility",
+      },
+      "question-types": {
+        fileName: "questionType",
       },
     };
     const subCommand =
