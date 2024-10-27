@@ -40,7 +40,7 @@ const command: ChatInputCommand = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result
+      premium.result,
     );
 
     const ratherEmbed = new DefaultGameEmbed(
@@ -93,7 +93,6 @@ const command: ChatInputCommand = {
           embeds: [ratherEmbed],
           components: [mainRow],
         };
-
     interaction.reply(classicData).catch((err: Error) => {
       captureException(err);
     });

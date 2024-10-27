@@ -41,7 +41,7 @@ const command: ChatInputCommand = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result
+      premium.result,
     );
 
     const wwydEmbed = new DefaultGameEmbed(

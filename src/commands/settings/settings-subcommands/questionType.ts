@@ -15,15 +15,16 @@ export default async function settingsGeneral(
   guildDb: IGuildModel,
 ) {
   // Create a string for each channel's question type setting
-  const channelSettings = guildDb.channelTypes.map(
-    (ch) => `<#${ch.channelId}>: ${ch.questionType}`
-  ).join("\n") || "No specific channel settings";
+  const channelSettings =
+    guildDb.channelTypes
+      .map((ch) => `<#${ch.channelId}>: ${ch.questionType}`)
+      .join("\n") || "No specific channel settings";
 
   // Embed with replaced translation strings and updated fields
   const emb = new EmbedBuilder()
     .setTitle("Would You - Question Types")
     .setDescription(
-      `**Global Question Type**: ${guildDb.customTypes}\n**Per-Channel Settings**: \n${channelSettings}`
+      `**Global Question Type**: ${guildDb.customTypes}\n**Per-Channel Settings**: \n${channelSettings}`,
     )
     .setColor("#0598F6")
     .setFooter({
@@ -32,20 +33,22 @@ export default async function settingsGeneral(
     });
 
   // Button to set the global question type
-  const buttonGlobal = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-    new ButtonBuilder()
-      .setCustomId("customTypes")
-      .setLabel("Set Global Question Type")
-      .setStyle(ButtonStyle.Primary),
-  );
+  const buttonGlobal =
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("customTypes")
+        .setLabel("Set Global Question Type")
+        .setStyle(ButtonStyle.Primary),
+    );
 
   // Button to configure per-channel types
-  const buttonPerChannel = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-    new ButtonBuilder()
-      .setCustomId("setPerChannel")
-      .setLabel("Configure Per-Channel Types")
-      .setStyle(ButtonStyle.Secondary),
-  );
+  const buttonPerChannel =
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("setPerChannel")
+        .setLabel("Configure Per-Channel Types")
+        .setStyle(ButtonStyle.Secondary),
+    );
 
   await interaction.reply({
     embeds: [emb],

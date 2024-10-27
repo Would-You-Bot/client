@@ -42,6 +42,7 @@ export interface IGuildModel {
   classicMode: boolean;
   autoPin: boolean;
   premium: number;
+  pending: boolean;
   premiumExpiration: Date | null;
   premiumUser: string | null;
   webhookName: string;
@@ -151,7 +152,11 @@ const guildProfileSchema = new Schema<IGuildModel>(
     channelTypes: [
       {
         channelId: { type: String, required: true },
-        questionType: { type: String, enum: ["regular", "custom", "mixed"], default: "regular" },
+        questionType: {
+          type: String,
+          enum: ["regular", "custom", "mixed"],
+          default: "regular",
+        },
       },
     ],
     debugMode: {
@@ -169,6 +174,10 @@ const guildProfileSchema = new Schema<IGuildModel>(
     premium: {
       type: Number,
       default: 0,
+    },
+    pending: {
+      type: Boolean,
+      default: false,
     },
     premiumExpiration: {
       type: Date,
