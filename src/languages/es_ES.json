@@ -55,17 +55,17 @@
 		"error": {
 			"noPages": "No se puede continuar. Hay cero páginas a las que ir.",
 			"issue": "No se ha podido recuperar ese mensaje. Rehaz el botón para ver la paginación.",
-			"paginate": "No puedes continuar para ese lado.",
+			"paginate": "Ya estás viendo mensajes personalizados:",
 			"maximum": "Has alcanzado la cantidad máxima de mensajes personalizados. ¡Puedes ganar más votando por el bot!",
 			"empty": "¡Actualmente no hay mensajes personalizados para ver!",
 			"limit": "Tienes más de 100 {type} en tus mensajes personalizados. Si quieres añadir más, tendrás que suscribirte a un nivel premium.",
 			"addToLimit": "Se han añadido automáticamente las 100 primeras preguntas de todas las categorías.",
 			"import": {
-				"att1": "¡Debes proporcionar un archivo JSON válido!",
-				"att2": "¡Debes proporcionar un archivo JSON válido!",
+				"att1": "¡Necesitas proporcionar un archivo JSON válido! [Example](https://i.imgur.com/xdEzfyW.png)",
+				"att2": "¡Necesitas proporcionar un archivo JSON válido! [Example](https://i.imgur.com/xdEzfyW.png)",
 				"att3": "¡El JSON que proporcionaste no tenía ningún dato! [Ejemplo](https://i.imgur.com/xdEzfyW.png)",
-				"att4": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado o faltaba alguno! [Ejemplo](https://i.imgur.com/xdEzfyW.png)",
-				"att5": "¡El JSON que proporcionaste no tenía ningún mensaje personalizado! [Ejemplo](https://i.imgur.com/xdEzfyW.png)",
+				"att4": "El JSON que has proporcionado no tenía ningún mensaje personalizado o faltaba alguno. [Ejemplo](https://i.imgur.com/xdEzfyW.png)",
+				"att5": "El JSON que has proporcionado no tenía ningún mensaje personalizado o faltaba alguno. [Ejemplo](https://i.imgur.com/xdEzfyW.png)",
 				"att15": "Se produjo un error al ejecutar este comando, por favor infórmelo al servidor de soporte.",
 				"att16": "El JSON que proporcionaste tenía demasiados datos para la categoría wouldyourather, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
 				"att17": "El JSON que proporcionaste tenía demasiados datos para la categoría neverhaveiever, solo aceptamos 30 mensajes personalizados. ¡Puedes ganar más votando por el bot!",
@@ -109,10 +109,10 @@
 			"paginator": {
 				"title": "Mensajes personalizados de Would You",
 				"descCatNHIE": "**Categoría**: Nunca lo he hecho nunca",
-				"descCatWYR": "**Categoría**: ¿Podrías más bien",
+				"descCatWYR": "**Categoría**: ¿Qué prefieres?",
 				"descCatTRUTH": "**Categoría**: Verdad",
 				"descCatDARE": "**Categoría**: Reto",
-				"descCatWWYD": "**Categoría**: ¿Qué harías tú"
+				"descCatWWYD": "**Categoría**: ¿Qué harías tú?"
 			}
 		}
 	},
@@ -238,6 +238,11 @@
 		"daysSelection": "Seleccione todos los días en los que **no** desea que aparezcan los mensajes diarios.",
 		"embed": {
 			"generalTitle": "Would You - Configuración general",
+			"utilityTitle": "Would You - Configuración de la utilidad",
+			"welcomeTitle": "Would You - Configuración de bienvenida",
+			"questionTitle": "Would You - Tipos de preguntas",
+			"cooldownsTitle": "Would You - Enfriamientos",
+			"dailyTitle": "Would You - Mensajes Diarios",
 			"replayCooldown": "**Tiempo de Repetición**",
 			"replayType": "**Tipo de reproducción**",
 			"replayBy": "**Reproducir Enfriamiento Por**",
@@ -246,7 +251,6 @@
 			"replayChannels": "**Canales de reproducción**",
 			"replayChannelsNone": "Nada",
 			"dailyInterval": "**Hora de publicación**",
-			"dailyTitle": "Would You - Mensajes Diarios",
 			"dailyType": "**Tipo**",
 			"dailyMsg": "**Habilitado**",
 			"autoPin": "<:crown:1256988872160710808> **Pin automático**",
@@ -254,7 +258,6 @@
 			"dailyChannel": "**Canal**",
 			"dailyTimezone": "**Zona Horaria**",
 			"dailyThread": "**Hilos**",
-			"welcomeTitle": "Would You - Bienvenidas",
 			"welcome": "**Habilitado**",
 			"welcomeChannel": "**Canal**",
 			"welcomePing": "**Pings de usuario**",
@@ -262,7 +265,10 @@
 			"error": "¡Te falta el permiso `Manage guild` para usar este comando!",
 			"username": "<:crown:1256988872160710808> **QOTD Username**",
 			"avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
-			"classicMode": "**Modo Clásico**"
+			"classicMode": "**Modo Clásico**",
+			"noChannel": "No hay ajustes de canal específicos",
+			"globalType": "**Tipo de pregunta global**:",
+			"channelType": "**Configuración por canal**:"
 		},
 		"button": {
 			"daySelect": "Excluir días",
@@ -284,7 +290,12 @@
 			"welcomePing": "Alternar ping de usuario",
 			"avatar": "Establecer avatar",
 			"name": "Establecer nombre de usuario",
-			"classicMode": "Activar el modo clásico"
+			"classicMode": "Activar el modo clásico",
+			"globalType": "Establecer tipo de pregunta global",
+			"channelType": "Configurar tipos por canal",
+			"setGlobal": "Haz clic en el tipo que deseas configurar globalmente.",
+			"setChannel": "Selecciona un canal al que deseas añadir un tipo de pregunta.",
+			"typeRegex": "Debes elegir un tipo válido: `regular`, `custom`, o `mixed`."
 		},
 		"modal": {
 			"dailyIntervalTitle": "Hora de publicación diaria",
@@ -351,7 +362,7 @@
 		}
 	},
 	"Premium": {
-		"message": "*Puedes [suscribirte a Would You Premium](https://wouldyoubot.gg/premium) para desbloquear más funciones y apoyar al bot!*",
+		"message": "*Puedes [subscribirte a Would You Premium](https://wouldyoubot.gg/premium) para desbloquear más características y apoyar al bot!*",
 		"tier": "Nivel: {type}",
 		"tier1": "Prémium",
 		"tier2": "Prémium + AI",
