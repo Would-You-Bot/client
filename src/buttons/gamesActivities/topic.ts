@@ -62,7 +62,7 @@ const button: Button = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result
+      premium.result,
     );
 
     const ratherEmbed = new DefaultGameEmbed(

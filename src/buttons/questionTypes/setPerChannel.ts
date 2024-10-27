@@ -17,8 +17,8 @@ const button: Button = {
         new ChannelSelectMenuBuilder()
           .setCustomId("selectMenuPerChannel")
           .setPlaceholder("Select a channel")
-          .addChannelTypes(ChannelType.GuildText)
-          );
+          .addChannelTypes(ChannelType.GuildText),
+      );
 
     interaction.update({
       embeds: [],
