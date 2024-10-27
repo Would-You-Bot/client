@@ -2,9 +2,11 @@ import type {
   ChatInputCommandInteraction,
   CommandInteraction,
   ContextMenuCommandBuilder,
+  CacheType,
   SlashCommandBuilder,
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder,
+  InteractionResponse,
 } from "discord.js";
 import type { IGuildModel } from "../util/Models/guildModel";
 import type WouldYou from "../util/wouldYou";
@@ -22,7 +24,7 @@ export interface Command {
     interaction: CommandInteraction,
     client: WouldYou,
     guildDb: IGuildModel,
-  ): Promise<void>;
+  ): Promise<void> | ChatInputCommandInteraction<CacheType> | InteractionResponse;
 }
 
 export interface ChatInputCommand extends Command {
@@ -34,5 +36,5 @@ export interface ChatInputCommand extends Command {
     interaction: ChatInputCommandInteraction,
     client: WouldYou,
     guildDb: IGuildModel,
-  ): Promise<void>;
+  ): any;
 }

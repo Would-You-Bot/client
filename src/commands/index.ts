@@ -92,13 +92,12 @@ const commandInteractionEvent: Event = {
           client,
           guildDb as IGuildModel,
         )
-        .catch((err) => {
+        .catch((err: Error) => {
           captureException(err);
-          interaction.reply({
+          return interaction.reply({
             content: "An error occurred while trying to execute that command.",
             ephemeral: true,
           });
-          return;
         });
     }
   },

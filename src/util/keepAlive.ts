@@ -17,6 +17,9 @@ export default class KeepAlive {
       const { route: path, limit, timeToReset: timeout } = log;
       captureMessage(
         `Rate limited on ${path} with a limit of ${limit} and a timeout of ${timeout}`,
+      ); 
+      captureMessage(
+        `Rate limited on ${path} with a limit of ${limit} and a timeout of ${timeout}`,
       );
     });
 

@@ -93,7 +93,6 @@ const command: ChatInputCommand = {
           embeds: [ratherEmbed],
           components: [mainRow],
         };
-
     interaction.reply(classicData).catch((err: Error) => {
       captureException(err);
     });
