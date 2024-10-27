@@ -214,11 +214,14 @@ export async function getQuestionsByType(
 				const mixedQuestions = shuffle([...questionDatabase.concat(newRandomCustomQuestion[0])]);
 
 				result = {
-					id: mixedQuestions[0].id,
-					question:
-						normalizedLanguage === "en"
-							? mixedQuestions[0].question || mixedQuestions[0].question
-							: mixedQuestions[0].question || mixedQuestions[0].translations[normalizedLanguage],
+					id: mixedQuestions[0] ? mixedQuestions[0]?.id : mixedQuestions[1]?.id,
+					question: mixedQuestions[0]
+						? normalizedLanguage === "en"
+							? mixedQuestions[0]?.question || mixedQuestions[0]?.question
+							: mixedQuestions[0]?.question || mixedQuestions[0]?.translations[normalizedLanguage]
+						: normalizedLanguage === "en"
+							? mixedQuestions[1]?.question || mixedQuestions[1]?.question
+							: mixedQuestions[1]?.question || mixedQuestions[1]?.translations[normalizedLanguage],
 				};
 				break;
 			}
