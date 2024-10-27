@@ -37,7 +37,7 @@ export default class WebhookHandler {
     channel: WebHookCompatibleChannel,
     content: WebhookMessageCreateOptions,
     message: IQueueMessage,
-    overwriteProfile: boolean
+    overwriteProfile: boolean,
   ): Promise<Result<any>> {
     if (message.webhook.id && message.webhook.token) {
       const webhookClient = new WebhookClient({
@@ -49,7 +49,7 @@ export default class WebhookHandler {
           webhookClient,
           content,
           overwriteProfile,
-          message
+          message,
         );
         if (result.success) {
           if (!message.thread && !message.autoPin) return result;
@@ -70,7 +70,7 @@ export default class WebhookHandler {
             newWebhook.result,
             content,
             overwriteProfile,
-            message
+            message,
           );
           if (result.success) {
             if (!message.thread && !message.autoPin) return result;
@@ -95,7 +95,7 @@ export default class WebhookHandler {
           newWebhook.result,
           content,
           overwriteProfile,
-          message
+          message,
         );
         if (result.success) {
           if (!message.thread && !message.autoPin) return result;
@@ -126,7 +126,7 @@ export default class WebhookHandler {
      * If true, it will overwrite the webhook to the bot's name and avatar.
      */
     overwriteProfile: boolean,
-    message: IQueueMessage
+    message: IQueueMessage,
   ): Promise<Result<APIMessage>> {
     if (overwriteProfile) {
       // Edit these if bot name/avatar ever changes
@@ -147,19 +147,19 @@ export default class WebhookHandler {
   }
   private async webhookFallBack(
     channel: WebHookCompatibleChannel,
-    message: IQueueMessage
+    message: IQueueMessage,
   ): Promise<Result<WebhookClient>> {
     const webhook = await this.createWebhook(
       channel,
       "Webhook token unavailable, creating new webhook",
       message.webhook.name,
-      message.webhook.avatar
+      message.webhook.avatar,
     );
     if (webhook.success) {
       const result = await this.updateCache(
         channel.id,
         message.guildId,
-        webhook.result
+        webhook.result,
       );
       if (result.success) {
         return webhook;
@@ -172,7 +172,7 @@ export default class WebhookHandler {
     channel: WebHookCompatibleChannel,
     reason: string,
     fallbackName?: string,
-    fallbackAvatarURL?: string
+    fallbackAvatarURL?: string,
   ): Promise<Result<WebhookClient>> {
     if (!channel.guild.members.me)
       return {
@@ -214,7 +214,7 @@ export default class WebhookHandler {
   private async updateCache(
     channelId: string,
     guildId: string,
-    webhook: WebhookClient
+    webhook: WebhookClient,
   ): Promise<Result<Document>> {
     try {
       const doc = await this.webhookModel.findOneAndUpdate(
@@ -223,7 +223,7 @@ export default class WebhookHandler {
           webhookToken: cryptr.encrypt(webhook.token),
           webhookId: webhook.id,
           guildId: guildId,
-        }
+        },
       );
       if (doc) {
         return { success: true, result: doc };
@@ -231,7 +231,7 @@ export default class WebhookHandler {
       const createdEntry = await this.createEntryInCache(
         channelId,
         guildId,
-        webhook
+        webhook,
       );
       return createdEntry;
     } catch (error) {
@@ -241,7 +241,7 @@ export default class WebhookHandler {
   private async createEntryInCache(
     channelId: string,
     guildId: string,
-    webhook: WebhookClient
+    webhook: WebhookClient,
   ): Promise<Result<Document>> {
     try {
       const doc = await this.webhookModel.create({
@@ -264,7 +264,7 @@ export default class WebhookHandler {
   }
   private async createThread(
     message: IQueueMessage,
-    apiReturnValue: APIMessage
+    apiReturnValue: APIMessage,
   ): Promise<Result<string>> {
     const date = new Date();
     try {
@@ -279,7 +279,7 @@ export default class WebhookHandler {
             ].join("/")} - Daily Message`,
             auto_archive_duration: "1440",
           },
-        }
+        },
       );
       return { success: true, result: "Thread created" };
     } catch (error) {
@@ -289,15 +289,15 @@ export default class WebhookHandler {
 
   private async autoPinMessage(
     message: IQueueMessage,
-    apiReturnValue: APIMessage
+    apiReturnValue: APIMessage,
   ): Promise<Result<string>> {
     let pinChannel: any = await this.client.rest.get(
-      `/channels/${message.channelId}/pins`
+      `/channels/${message.channelId}/pins`,
     );
 
     if (pinChannel) {
       pinChannel = pinChannel.filter(
-        (x: any) => x.application_id === this.client.user?.id
+        (x: any) => x.application_id === this.client.user?.id,
       );
     }
 
@@ -309,7 +309,7 @@ export default class WebhookHandler {
           `/channels/${pinChannel[0].channel_id}/pins/${pinChannel[0].id}`,
           {
             reason: "Automatic unpinning of daily message",
-          }
+          },
         );
       }
 
@@ -317,7 +317,7 @@ export default class WebhookHandler {
         `/channels/${message.channelId}/pins/${apiReturnValue?.id}`,
         {
           reason: "Automatic pinning of daily message",
-        }
+        },
       );
       console.log("Pinned message");
       return { success: true, result: "Pinned message" };
