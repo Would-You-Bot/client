@@ -3,8 +3,6 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
   type MessageActionRowComponentBuilder,
 } from "discord.js";
 import type { Button } from "../../interfaces";
@@ -21,37 +19,37 @@ const button: Button = {
     });
 
     const emb = new EmbedBuilder()
-      .setTitle("Would You - Question Types")
+      .setTitle(client.translation.get(guildDb?.language, "Settings.embed.questionTitle"))
       .setDescription(
-        `**Global Question Type**: ${value}\n**Per-Channel Settings**: \n${
+        `${client.translation.get(guildDb?.language, "Settings.embed.globalType")}  ${value}\n${client.translation.get(guildDb?.language, "Settings.embed.channelType")} \n${
           guildDb.channelTypes
             .map((ch) => `<#${ch.channelId}>: ${ch.questionType}`)
-            .join("\n") || "No specific channel settings"
+            .join("\n") || client.translation.get(guildDb?.language, "Settings.embed.noChannel")
         }`,
       )
       .setColor("#0598F6")
       .setFooter({
-        text: "Would You",
+        text: client.translation.get(guildDb?.language, "Settings.embed.footer"),
         iconURL: client.user?.displayAvatarURL() || undefined,
       });
 
     // Button to set the global question type
     const buttonGlobal =
-      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId("customTypes")
-          .setLabel("Set Global Question Type")
-          .setStyle(ButtonStyle.Primary),
-      );
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("customTypes")
+        .setLabel(client.translation.get(guildDb?.language, "Settings.button.globalType"))
+        .setStyle(ButtonStyle.Primary),
+    );
 
     // Button to configure per-channel types
     const buttonPerChannel =
-      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId("setPerChannel")
-          .setLabel("Configure Per-Channel Types")
-          .setStyle(ButtonStyle.Secondary),
-      );
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("setPerChannel")
+        .setLabel(client.translation.get(guildDb?.language, "Settings.button.channelType"))
+        .setStyle(ButtonStyle.Secondary),
+    );
 
     interaction.update({
       content: null,

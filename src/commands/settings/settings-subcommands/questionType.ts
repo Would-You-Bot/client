@@ -18,17 +18,17 @@ export default async function settingsGeneral(
   const channelSettings =
     guildDb.channelTypes
       .map((ch) => `<#${ch.channelId}>: ${ch.questionType}`)
-      .join("\n") || "No specific channel settings";
+      .join("\n") || client.translation.get(guildDb?.language, "Settings.embed.noChannel");
 
   // Embed with replaced translation strings and updated fields
   const emb = new EmbedBuilder()
-    .setTitle("Would You - Question Types")
+    .setTitle(client.translation.get(guildDb?.language, "Settings.embed.questionTitle"))
     .setDescription(
-      `**Global Question Type**: ${guildDb.customTypes}\n**Per-Channel Settings**: \n${channelSettings}`,
+      `${client.translation.get(guildDb?.language, "Settings.embed.globalType")} ${guildDb.customTypes}\n${client.translation.get(guildDb?.language, "Settings.embed.channelType")} \n${channelSettings}`,
     )
     .setColor("#0598F6")
     .setFooter({
-      text: "Would You",
+      text: client.translation.get(guildDb?.language, "Settings.embed.footer"),
       iconURL: client.user?.displayAvatarURL() || undefined,
     });
 
@@ -37,7 +37,7 @@ export default async function settingsGeneral(
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("customTypes")
-        .setLabel("Set Global Question Type")
+        .setLabel(client.translation.get(guildDb?.language, "Settings.button.globalType"))
         .setStyle(ButtonStyle.Primary),
     );
 
@@ -46,7 +46,7 @@ export default async function settingsGeneral(
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("setPerChannel")
-        .setLabel("Configure Per-Channel Types")
+        .setLabel(client.translation.get(guildDb?.language, "Settings.button.channelType"))
         .setStyle(ButtonStyle.Secondary),
     );
 

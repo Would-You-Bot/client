@@ -238,6 +238,11 @@
 		"daysSelection": "Select every day you **don't** want daily messages to be on.",
 		"embed": {
 			"generalTitle": "Would You - General Settings",
+			"utilityTitle": "Would You - Utility Settings",
+			"welcomeTitle": "Would You - Welcome Settings",
+			"questionTitle": "Would You - Question Types",
+			"cooldownsTitle": "Would You - Cooldowns",
+			"dailyTitle": "Would You - Daily Messages",
 			"replayCooldown": "**Replay Cooldown**",
 			"replayType": "**Replay Type**",
 			"replayBy": "**Replay Cooldown By**",
@@ -246,7 +251,6 @@
 			"replayChannels": "**Replay Channels**",
 			"replayChannelsNone": "None",
 			"dailyInterval": "**Post Time**",
-			"dailyTitle": "Would You - Daily Messages",
 			"dailyType": "**Type**",
 			"dailyMsg": "**Enabled**",
 			"autoPin": "<:crown:1256988872160710808> **Automatic Pin**",
@@ -254,7 +258,6 @@
 			"dailyChannel": "**Channel**",
 			"dailyTimezone": "**Timezone**",
 			"dailyThread": "**Thread**",
-			"welcomeTitle": "Would You - Welcomes",
 			"welcome": "**Enabled**",
 			"welcomeChannel": "**Channel**",
 			"welcomePing": "**User Pings**",
@@ -262,7 +265,10 @@
 			"error": "You are missing the `Manage Guild` permission to use this command!",
 			"username": "<:crown:1256988872160710808> **QOTD Username**",
 			"avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
-			"classicMode": "**Classic Mode **"
+			"classicMode": "**Classic Mode **",
+			"noChannel": "No specific channel settings",
+			"globalType": "**Global Question Type**:",
+			"channelType": "**Per-Channel Settings**:"
 		},
 		"button": {
 			"daySelect": "Exclude Days",
@@ -284,7 +290,12 @@
 			"welcomePing": "Toggle User Ping",
 			"avatar": "Set Avatar",
 			"name": "Set Username",
-			"classicMode": "Toggle Classic Mode"
+			"classicMode": "Toggle Classic Mode",
+			"globalType": "Set Global Question Type",
+			"channelType": "Configure Per-Channel Types",
+			"setGlobal": "Click on the type you want to set globally.",
+			"setChannel": "Select a channel you want to add a question type to.",
+			"typeRegex": "You must provide a valid type: `regular`, `custom`, or `mixed`."
 		},
 		"modal": {
 			"dailyIntervalTitle": "Daily Post Time",

@@ -17,7 +17,7 @@ export default async function settingsGeneral(
 ) {
   const emb = new EmbedBuilder()
     .setTitle(
-      client.translation.get(guildDb?.language, "Settings.embed.generalTitle"),
+      client.translation.get(guildDb?.language, "Settings.embed.cooldownsTitle"),
     )
     .setDescription(
       `${client.translation.get(

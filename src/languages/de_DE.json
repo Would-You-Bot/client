@@ -61,11 +61,11 @@
 			"limit": "Du hast mehr als 100 {type} in deinen benutzerdefinierten Nachrichten. Wenn du mehr hinzufügen möchtest, musst du Premium abonnieren.",
 			"addToLimit": "Die ersten 100 Fragen für alle Kategorien wurden automatisch hinzugefügt.",
 			"import": {
-				"att1": "Du musst eine JSON datei anheften!",
-				"att2": "Du musst eine JSON Datei anheften!",
-				"att3": "Die JSON Datei beinhaltet keine Nachrichten. [Beispiel](https://i.imgur.com/xdEzfyW.png)",
-				"att4": "Das JSON, das du bereitgestellt hast, enthielt keine oder fehlende benutzerdefinierte Nachrichten! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
-				"att5": "Die JSON Datei beinhaltet keine Nachrichten. [Beispiel](https://i.imgur.com/xdEzfyW.png)",
+				"att1": "Du musst eine gültige JSON-Datei angeben! [Example](https://i.imgur.com/xdEzfyW.png)",
+				"att2": "Du musst eine gültige JSON-Datei angeben! [Example](https://i.imgur.com/xdEzfyW.png)",
+				"att3": "Die von dir angegebene JSON-Datei enthält keine Daten! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
+				"att4": "Die von dir angegebene JSON-Datei enthält keine custom fragen! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
+				"att5": "Die von dir angegebene JSON-Datei enthält keine custom fragen! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
 				"att15": "Bei der Ausführung dieses Befehls ist ein Fehler aufgetreten. Bitte melde ihn dem Support-Server!",
 				"att16": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die wouldyourather Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
 				"att17": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die neverhaveiever Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
@@ -238,6 +238,11 @@
 		"daysSelection": "Wähle jeden Tag aus, an dem du **nicht** möchtest, dass tägliche Nachrichten gesendet werden.",
 		"embed": {
 			"generalTitle": "Would You - Generelle Einstellungen",
+			"utilityTitle": "Would You - Utility Einstellungen",
+			"welcomeTitle": "Would You - Willkommens-Einstellungen",
+			"questionTitle": "Would You - Fragentypen",
+			"cooldownsTitle": "Would You - Cooldowns",
+			"dailyTitle": "Would You - Tägliche Nachrichten",
 			"replayCooldown": "**Replay Cooldown**",
 			"replayType": "**Replay-Typ**",
 			"replayBy": "**Replay Cooldown von**",
@@ -246,7 +251,6 @@
 			"replayChannels": "**Replay-Kanäle**",
 			"replayChannelsNone": "Keine",
 			"dailyInterval": "**Veröffentlichungszeit**",
-			"dailyTitle": "Would You - Tägliche Nachrichten",
 			"dailyType": "**Typ**",
 			"dailyMsg": "**Aktiviert**",
 			"autoPin": "<:crown:1256988872160710808> **Automatische Pins**",
@@ -254,7 +258,6 @@
 			"dailyChannel": "**Kanal**",
 			"dailyTimezone": "**Zeitzone**",
 			"dailyThread": "**Threads**",
-			"welcomeTitle": "Would You - Wilkommen",
 			"welcome": "**Aktiviert**",
 			"welcomeChannel": "**Kanal**",
 			"welcomePing": "**Benutzer Pings**",
@@ -262,7 +265,10 @@
 			"error": "Dir fehlen die `Manage Guild` rechte um diesen Befehl auszuführen!",
 			"username": "<:crown:1256988872160710808> **QOTD Nutzername**",
 			"avatar": "<:crown:1256988872160710808> **QOTD Profilbild**",
-			"classicMode": "**Klassik Modus **"
+			"classicMode": "**Klassik Modus **",
+			"noChannel": "Keine spezifischen Kanaleinstellungen",
+			"globalType": "**Globaler Fragentyp**:",
+			"channelType": "**Einstellungen pro Kanal**:"
 		},
 		"button": {
 			"daySelect": "Tage ausschließen",
@@ -284,7 +290,12 @@
 			"welcomePing": "Nutzer Pings umschalten",
 			"avatar": "Avatar festlegen",
 			"name": "Benutzername festlegen",
-			"classicMode": "Klassik Modus umschalten"
+			"classicMode": "Klassik Modus umschalten",
+			"globalType": "Globalen Fragentyp setzen",
+			"channelType": "Per-Channel-Typen konfigurieren",
+			"setGlobal": "Klicke auf den Typ, den du global setzen möchten.",
+			"setChannel": "Wähle einen Kanal aus, dem du einen Fragentyp hinzufügen möchten.",
+			"typeRegex": "Du musst einen gültigen Typ angeben: `regular`, `custom` oder `mixed`."
 		},
 		"modal": {
 			"dailyIntervalTitle": "Tägliche Veröffentlichungszeit",

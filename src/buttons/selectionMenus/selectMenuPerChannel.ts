@@ -3,8 +3,6 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
   type MessageActionRowComponentBuilder,
 } from "discord.js";
 import type { Button } from "../../interfaces";
@@ -36,8 +34,7 @@ const button: Button = {
     if (!typeRegex.test(value as string)) {
       data?.modal.reply({
         ephemeral: true,
-        content:
-          "You must provide a valid type: `regular`, `custom`, or `mixed`.",
+        content: client.translation.get(guildDb?.language, "Settings.button.typeRegex"),
       });
       return;
     }
@@ -59,31 +56,33 @@ const button: Button = {
     });
 
     const emb = new EmbedBuilder()
-      .setTitle("Would You - Question Types")
+      .setTitle(client.translation.get(guildDb?.language, "Settings.embed.questionTitle"))
       .setDescription(
-        `**Global Question Type**: ${guildDb.customTypes}\n**Per-Channel Settings**: \n${guildDb.channelTypes.map((c) => `<#${c.channelId}>: ${c.questionType}`).join("\n")}`,
+        `${client.translation.get(guildDb?.language, "Settings.embed.globalType")}  ${guildDb.customTypes}\n${client.translation.get(guildDb?.language, "Settings.embed.channelType")} \n${guildDb.channelTypes.map((c) => `<#${c.channelId}>: ${c.questionType}`).join("\n")}`,
       )
       .setColor("#0598F6")
       .setFooter({
-        text: "Would You",
+        text: client.translation.get(guildDb?.language, "Settings.embed.footer"),
         iconURL: client.user?.displayAvatarURL() || undefined,
       });
 
-    const buttonGlobal =
-      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId("customTypes")
-          .setLabel("Set Global Question Type")
-          .setStyle(ButtonStyle.Primary),
-      );
+  // Button to set the global question type
+  const buttonGlobal =
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("customTypes")
+        .setLabel(client.translation.get(guildDb?.language, "Settings.button.globalType"))
+        .setStyle(ButtonStyle.Primary),
+    );
 
-    const buttonPerChannel =
-      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId("setPerChannel")
-          .setLabel("Configure Per-Channel Types")
-          .setStyle(ButtonStyle.Secondary),
-      );
+  // Button to configure per-channel types
+  const buttonPerChannel =
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("setPerChannel")
+        .setLabel(client.translation.get(guildDb?.language, "Settings.button.channelType"))
+        .setStyle(ButtonStyle.Secondary),
+    );
 
     await (data?.modal as any).update({
       content: null,
