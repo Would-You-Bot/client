@@ -32,6 +32,7 @@ const command: ChatInputCommand = {
     });
 
     const NHIE = await getQuestionsByType(
+      interaction.channelId,
       "neverhaveiever",
       guildDb,
       guildDb?.language != null

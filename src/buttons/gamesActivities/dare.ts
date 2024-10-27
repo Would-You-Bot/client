@@ -52,6 +52,7 @@ const button: Button = {
     });
 
     const DARE = await getQuestionsByType(
+      interaction.channelId,
       "dare",
       guildDb,
       guildDb?.language != null

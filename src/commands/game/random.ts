@@ -33,6 +33,7 @@ const command: ChatInputCommand = {
     });
 
     const RANDOM = await getRandomTod(
+      interaction.channelId,
       guildDb,
       guildDb?.language != null
         ? guildDb.language

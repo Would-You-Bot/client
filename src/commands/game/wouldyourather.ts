@@ -32,6 +32,7 @@ const command: ChatInputCommand = {
     });
 
     const WYR = await getQuestionsByType(
+      interaction.channelId,
       "wouldyourather",
       guildDb,
       guildDb?.language != null

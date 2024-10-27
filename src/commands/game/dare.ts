@@ -34,6 +34,7 @@ const command: ChatInputCommand = {
     });
 
     const DARE = await getQuestionsByType(
+      interaction.channelId,
       "dare",
       guildDb,
       guildDb?.language != null

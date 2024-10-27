@@ -34,6 +34,10 @@ export interface IGuildModel {
     type: string;
   }>;
   customTypes: string;
+  channelTypes: Array<{
+    channelId: string;
+    questionType: "regular" | "custom" | "mixed";
+  }>;
   debugMode: boolean;
   classicMode: boolean;
   autoPin: boolean;
@@ -145,6 +149,16 @@ const guildProfileSchema = new Schema<IGuildModel>(
       type: String,
       default: "mixed",
     },
+    channelTypes: [
+      {
+        channelId: { type: String, required: true },
+        questionType: {
+          type: String,
+          enum: ["regular", "custom", "mixed"],
+          default: "regular",
+        },
+      },
+    ],
     debugMode: {
       type: Boolean,
       default: false,

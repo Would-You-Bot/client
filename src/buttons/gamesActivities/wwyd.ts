@@ -54,6 +54,7 @@ const button: Button = {
     });
 
     const WWYD = await getQuestionsByType(
+      interaction.channelId,
       "whatwouldyoudo",
       guildDb,
       guildDb?.language != null

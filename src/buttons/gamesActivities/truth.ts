@@ -54,6 +54,7 @@ const button: Button = {
     });
 
     const TRUTH = await getQuestionsByType(
+      interaction.channelId,
       "truth",
       guildDb,
       guildDb?.language != null

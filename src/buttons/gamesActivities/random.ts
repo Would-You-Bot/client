@@ -53,6 +53,7 @@ const button: Button = {
     });
 
     const RANDOM = await getRandomTod(
+      interaction.channelId,
       guildDb,
       guildDb?.language != null
         ? guildDb.language

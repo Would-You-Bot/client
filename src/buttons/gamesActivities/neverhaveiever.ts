@@ -52,6 +52,7 @@ const button: Button = {
     });
 
     const NHIE = await getQuestionsByType(
+      interaction.channelId,
       "neverhaveiever",
       guildDb,
       guildDb?.language != null
