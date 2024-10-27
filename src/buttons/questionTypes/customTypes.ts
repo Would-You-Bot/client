@@ -27,7 +27,7 @@ const button: Button = {
             new StringSelectMenuOptionBuilder()
               .setLabel("Custom")
               .setValue("custom"),
-          )
+          ),
       );
 
     interaction.update({

@@ -44,7 +44,7 @@ const event: Event = {
       guildDb,
       guildDb?.language != null ? guildDb.language : "en_EN",
       premium.result,
-      false
+      false,
     );
     const WhatYouDo = await getQuestionsByType(
       guildDb.welcomeChannel,

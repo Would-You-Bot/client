@@ -151,7 +151,11 @@ const guildProfileSchema = new Schema<IGuildModel>(
     channelTypes: [
       {
         channelId: { type: String, required: true },
-        questionType: { type: String, enum: ["regular", "custom", "mixed"], default: "regular" },
+        questionType: {
+          type: String,
+          enum: ["regular", "custom", "mixed"],
+          default: "regular",
+        },
       },
     ],
     debugMode: {

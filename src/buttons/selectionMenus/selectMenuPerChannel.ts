@@ -44,7 +44,7 @@ const button: Button = {
 
     if (guildDb.channelTypes.find((c) => c.channelId === newChannel)) {
       guildDb.channelTypes = guildDb.channelTypes.filter(
-        (c) => c.channelId!== newChannel,
+        (c) => c.channelId !== newChannel,
       );
     }
 
@@ -61,7 +61,7 @@ const button: Button = {
     const emb = new EmbedBuilder()
       .setTitle("Would You - Question Types")
       .setDescription(
-        `**Global Question Type**: ${guildDb.customTypes}\n**Per-Channel Settings**: \n${guildDb.channelTypes.map((c) => `<#${c.channelId}>: ${c.questionType}`).join("\n")}`
+        `**Global Question Type**: ${guildDb.customTypes}\n**Per-Channel Settings**: \n${guildDb.channelTypes.map((c) => `<#${c.channelId}>: ${c.questionType}`).join("\n")}`,
       )
       .setColor("#0598F6")
       .setFooter({
@@ -74,7 +74,7 @@ const button: Button = {
         new ButtonBuilder()
           .setCustomId("customTypes")
           .setLabel("Set Global Question Type")
-          .setStyle(ButtonStyle.Primary)
+          .setStyle(ButtonStyle.Primary),
       );
 
     const buttonPerChannel =
@@ -82,7 +82,7 @@ const button: Button = {
         new ButtonBuilder()
           .setCustomId("setPerChannel")
           .setLabel("Configure Per-Channel Types")
-          .setStyle(ButtonStyle.Secondary)
+          .setStyle(ButtonStyle.Secondary),
       );
 
     await (data?.modal as any).update({

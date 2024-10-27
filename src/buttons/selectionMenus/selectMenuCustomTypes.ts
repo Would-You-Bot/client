@@ -27,7 +27,7 @@ const button: Button = {
           guildDb.channelTypes
             .map((ch) => `<#${ch.channelId}>: ${ch.questionType}`)
             .join("\n") || "No specific channel settings"
-        }`
+        }`,
       )
       .setColor("#0598F6")
       .setFooter({
@@ -41,7 +41,7 @@ const button: Button = {
         new ButtonBuilder()
           .setCustomId("customTypes")
           .setLabel("Set Global Question Type")
-          .setStyle(ButtonStyle.Primary)
+          .setStyle(ButtonStyle.Primary),
       );
 
     // Button to configure per-channel types
@@ -50,7 +50,7 @@ const button: Button = {
         new ButtonBuilder()
           .setCustomId("setPerChannel")
           .setLabel("Configure Per-Channel Types")
-          .setStyle(ButtonStyle.Secondary)
+          .setStyle(ButtonStyle.Secondary),
       );
 
     interaction.update({
