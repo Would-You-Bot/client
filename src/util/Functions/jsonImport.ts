@@ -195,7 +195,7 @@ export async function getQuestionsByType(
 
 		let types = guildDb.channelTypes.find((e) => e.channelId === channel)?.questionType || guildDb.customTypes;
 
-		if (guildDb.welcome) {
+		if (guildDb.welcome && guildDb.welcomeChannel === channel) {
 			types = guildDb.welcomeType;
 		}
 
