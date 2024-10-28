@@ -24,7 +24,10 @@ export interface Command {
     interaction: CommandInteraction,
     client: WouldYou,
     guildDb: IGuildModel,
-  ): Promise<void> | ChatInputCommandInteraction<CacheType> | InteractionResponse;
+  ):
+    | Promise<void>
+    | ChatInputCommandInteraction<CacheType>
+    | InteractionResponse;
 }
 
 export interface ChatInputCommand extends Command {
