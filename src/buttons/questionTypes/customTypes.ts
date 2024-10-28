@@ -14,7 +14,12 @@ const button: Button = {
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new StringSelectMenuBuilder()
           .setCustomId("selectMenuCustomTypes")
-          .setPlaceholder(client.translation.get(guildDb?.language, "Settings.button.setGlobal"))
+          .setPlaceholder(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.setGlobal",
+            ),
+          )
           .setMinValues(1)
           .setMaxValues(1)
           .addOptions(
@@ -32,7 +37,10 @@ const button: Button = {
 
     interaction.update({
       embeds: [],
-      content: client.translation.get(guildDb?.language, "Settings.button.setGlobal"),
+      content: client.translation.get(
+        guildDb?.language,
+        "Settings.button.setGlobal",
+      ),
       components: [inter],
       options: {
         ephemeral: true,

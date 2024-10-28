@@ -14,13 +14,21 @@ const button: Button = {
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ChannelSelectMenuBuilder()
           .setCustomId("selectMenuPerChannel")
-          .setPlaceholder(client.translation.get(guildDb?.language, "Settings.button.setChannel"))
+          .setPlaceholder(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.setChannel",
+            ),
+          )
           .addChannelTypes(ChannelType.GuildText),
       );
 
     interaction.update({
       embeds: [],
-      content: client.translation.get(guildDb?.language, "Settings.button.setChannel"),
+      content: client.translation.get(
+        guildDb?.language,
+        "Settings.button.setChannel",
+      ),
       components: [inter],
       options: {
         ephemeral: true,

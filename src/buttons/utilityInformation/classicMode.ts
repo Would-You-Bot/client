@@ -13,7 +13,12 @@ const button: Button = {
   execute: async (interaction, client, guildDb) => {
     const check = guildDb.classicMode;
     const emb = new EmbedBuilder()
-      .setTitle(client.translation.get(guildDb?.language, "Settings.embed.utilityTitle"))
+      .setTitle(
+        client.translation.get(
+          guildDb?.language,
+          "Settings.embed.utilityTitle",
+        ),
+      )
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
