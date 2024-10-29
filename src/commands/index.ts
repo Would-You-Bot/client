@@ -50,6 +50,7 @@ const commandInteractionEvent: Event = {
         truth: "truth.used.command",
         dare: "dare.used.command",
         random: "random.used.command",
+        topic: "topic.used.command",
       } as Record<string, string>;
       // Get the field path based on the command name
       const fieldPath = statsMap[interaction.commandName];
@@ -70,6 +71,7 @@ const commandInteractionEvent: Event = {
         "neverhaveiever",
         "higherlower",
         "whatwouldyoudo",
+        "topic",
         "leaderboard",
         "privacy",
         "language",

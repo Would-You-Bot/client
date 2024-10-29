@@ -53,6 +53,12 @@ export interface IUserModel {
       replay: number;
     };
   };
+  topic: {
+    used: {
+      command: number;
+      replay: number;
+    };
+  };
 }
 
 const userModelSchema = new Schema(
@@ -102,6 +108,12 @@ const userModelSchema = new Schema(
       },
     },
     random: {
+      used: {
+        command: { type: Number, default: 0 },
+        replay: { type: Number, default: 0 },
+      },
+    },
+    topic: {
       used: {
         command: { type: Number, default: 0 },
         replay: { type: Number, default: 0 },
