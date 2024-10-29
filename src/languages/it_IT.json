@@ -61,11 +61,11 @@
 			"limit": "Hai più di 100 {type} nei tuoi messaggi personalizzati. Se desideri aggiungerne di più, dovrai iscriverti a un livello premium.",
 			"addToLimit": "Le prime 100 domande per tutte le categorie sono state aggiunte automaticamente.",
 			"import": {
-				"att1": "È necessario fornire un file JSON valido!",
-				"att2": "È necessario fornire un file JSON valido!",
-				"att3": "Il file JSON che hai fornito non conteneva alcun dato! [Scopri come fare](https://i.imgur.com/xdEzfyW.png)",
-				"att4": "Il file JSON che hai fornito non conteneva alcun messaggio personalizzato! [Scopri come fare](https://i.imgur.com/xdEzfyW.png)",
-				"att5": "Il file JSON che hai fornito non conteneva alcun messaggio personalizzato! [Scopri come fare](https://i.imgur.com/xdEzfyW.png)",
+				"att1": "Devi fornire un file JSON valido! [Example](https://i.imgur.com/xdEzfyW.png)",
+				"att2": "Devi fornire un file JSON valido! [Example](https://i.imgur.com/xdEzfyW.png)",
+				"att3": "Il file JSON che hai fornito non conteneva alcun dato! [Example](https://i.imgur.com/xdEzfyW.png)",
+				"att4": "Il file JSON che hai fornito non conteneva alcun messaggio personalizzato! [Example](https://i.imgur.com/xdEzfyW.png)",
+				"att5": "Il file JSON che hai fornito non conteneva alcun messaggio personalizzato! [Example](https://i.imgur.com/xdEzfyW.png)",
 				"att15": "Si è verificato un errore durante l'esecuzione di questo comando, si prega di segnalarlo nel [server di supporto](https://discord.gg/vMyXAxEznS)!",
 				"att16": "Il file JSON che hai fornito conteneva troppi dati per la categoria wouldyourather, il limite è di 30 messaggi personalizzati. Puoi guadagnarne di più votando per il bot!",
 				"att17": "Il file JSON che hai fornito conteneva troppi dati per la categoria neverhaveiever, il limite è di 30 messaggi personalizzati. Puoi guadagnarne di più votando per il bot!",
@@ -238,6 +238,11 @@
 		"daysSelection": "Seleziona ogni giorno che **non** vuoi che i messaggi giornalieri siano attivi.",
 		"embed": {
 			"generalTitle": "Would You - Impostazioni generali",
+			"utilityTitle": "Would You - Impostazioni Utilità",
+			"welcomeTitle": "Would You - Impostazioni Di Benvenuto",
+			"questionTitle": "Would You - Tipi Di Domanda",
+			"cooldownsTitle": "Would You - Congelamenti",
+			"dailyTitle": "Would You - Messaggi Giornalieri",
 			"replayCooldown": "**Cooldown Gioca Ancora**",
 			"replayType": "**Tipo Gioca Ancora**",
 			"replayBy": "**Cooldown Gioca Ancora da**",
@@ -246,7 +251,6 @@
 			"replayChannels": "**Canali Gioca Ancora**",
 			"replayChannelsNone": "Nessuno",
 			"dailyInterval": "**Orario pubblicazione**",
-			"dailyTitle": "Would You - Messaggi Giornalieri",
 			"dailyType": "**Tipo**",
 			"dailyMsg": "**Attivato**",
 			"autoPin": "<:crown:1256988872160710808> **Perno automatico**",
@@ -254,7 +258,6 @@
 			"dailyChannel": "**Canale**",
 			"dailyTimezone": "**Fuso orario**",
 			"dailyThread": "**Thread**",
-			"welcomeTitle": "Would You - Benvenuti",
 			"welcome": "**Attivato**",
 			"welcomeChannel": "**Canale**",
 			"welcomePing": "**Menzioni utente**",
@@ -262,7 +265,10 @@
 			"error": "Hai bisogno del permesso `Gestire Server` per usare questo comando!",
 			"username": "<:crown:1256988872160710808> **Nome Utente QOTD**",
 			"avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
-			"classicMode": "**Modalità classica **"
+			"classicMode": "**Modalità classica **",
+			"noChannel": "Nessuna impostazione specifica del canale",
+			"globalType": "**Tipo Di Domanda Globale**:",
+			"channelType": "**Impostazioni Per-Canale**:"
 		},
 		"button": {
 			"daySelect": "Escludere giorni",
@@ -284,7 +290,12 @@
 			"welcomePing": "Attiva/disattiva menzioni utente",
 			"avatar": "Imposta Avatar",
 			"name": "Imposta Nome Utente",
-			"classicMode": "Alterna la modalità classica"
+			"classicMode": "Alterna la modalità classica",
+			"globalType": "Imposta Tipo Globale Domanda",
+			"channelType": "Configura Tipi Per-Canale",
+			"setGlobal": "Clicca sul tipo che vuoi impostare globalmente.",
+			"setChannel": "Seleziona un canale a cui vuoi aggiungere una domanda.",
+			"typeRegex": "Devi fornire un tipo valido: `regular`, `custom`, o `mixed`."
 		},
 		"modal": {
 			"dailyIntervalTitle": "Orario pubblicazione giornaliero",
@@ -351,7 +362,7 @@
 		}
 	},
 	"Premium": {
-		"message": "*Puoi [abbonarti a Would You Premium](https://wouldyoubot.gg/premium) per sbloccare altre funzioni e supportare il bot!*",
+		"message": "*Puoi [iscriverti a Would You Premium](https://would dyoubot.gg/premium) per sbloccare più funzioni e supportare il bot!*",
 		"tier": "Livello: {type}",
 		"tier1": "Premium",
 		"tier2": "Premium + AI",

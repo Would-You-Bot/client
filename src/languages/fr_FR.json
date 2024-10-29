@@ -61,10 +61,10 @@
 			"limit": "Vous avez plus de 100 {type} dans vos messages personnalisés. Si vous souhaitez en ajouter davantage, vous devrez vous abonner à un niveau premium.",
 			"addToLimit": "Les 100 premières questions pour toutes les catégories ont été ajoutées automatiquement.",
 			"import": {
-				"att1": "Vous devez fournir un fichier JSON valide !",
-				"att2": "Vous devez fournir un fichier JSON valide !",
+				"att1": "Vous devez fournir un fichier JSON valide ! [Exemple](https://i.imgur.com/xdEzfyW.png)",
+				"att2": "Vous devez fournir un fichier JSON valide ! [Exemple](https://i.imgur.com/xdEzfyW.png)",
 				"att3": "Le fichier JSON que vous avez fourni n'a aucune donnée ! [Exemple](https://i.imgur.com/xdEzfyW.png)",
-				"att4": "Le JSON que tu as fourni ne contenait pas de messages personnalisés ou en manquait ! [Exemple](https://i.imgur.com/xdEzfyW.png)",
+				"att4": "Le JSON que vous avez fourni ne contenait pas de messages personnalisés ou en manquait ! [Exemple](https://i.imgur.com/xdEzfyW.png)",
 				"att5": "Le JSON que vous avez fourni ne contient pas de messages personnalisés ! [Exemple](https://i.imgur.com/xdEzfyW.png)",
 				"att15": "Une erreur s'est produite lors de l'exécution de cette commande, veuillez la signaler au serveur de support s'il vous plait !",
 				"att16": "Le JSON que vous avez fourni a trop de données pour la catégorie \"wouldyourather\", nous n'acceptons que 30 messages personnalisés au maximum. Vous pouvez en gagner plus en votant pour le bot !",
@@ -238,6 +238,11 @@
 		"daysSelection": "Sélectionnez chaque jour que vous **ne voulez pas** que les messages quotidiens soient allumés.",
 		"embed": {
 			"generalTitle": "Would You - Paramètres généraux",
+			"utilityTitle": "Would You - Paramètres d'utilitaire",
+			"welcomeTitle": "Would You - Paramètres de bienvenus",
+			"questionTitle": "Would You - Types de questions",
+			"cooldownsTitle": "Would You - temps de recharge",
+			"dailyTitle": "Voulez-vous - Messages Quotidiens",
 			"replayCooldown": "**Rejouer le temps de recharge**",
 			"replayType": "**Type de rediffusion**",
 			"replayBy": "**Rejouer le temps de refroidissement par**",
@@ -246,7 +251,6 @@
 			"replayChannels": "**Salon de rediffusion**",
 			"replayChannelsNone": "Aucun",
 			"dailyInterval": "**Heure de publication**",
-			"dailyTitle": "Voulez-vous - Messages Quotidiens",
 			"dailyType": "**Type**",
 			"dailyMsg": "**Activé**",
 			"autoPin": "<:crown:1256988872160710808> **Epingler automatiquement**",
@@ -254,7 +258,6 @@
 			"dailyChannel": "**Canal**",
 			"dailyTimezone": "**Fuseau horaire**",
 			"dailyThread": "**Fils**",
-			"welcomeTitle": "Would You - Bienvenus",
 			"welcome": "**Activé**",
 			"welcomeChannel": "**Canal**",
 			"welcomePing": "**Pings de l'utilisateur**",
@@ -262,7 +265,10 @@
 			"error": "Vous avez besoin de la permission `Gérer le serveur` pour utiliser cette commande!",
 			"username": "<:crown:1256988872160710808> **Nom d'utilisateur QOTD**",
 			"avatar": "<:crown:1256988872160710808> **Avatar QOTD**",
-			"classicMode": "**Mode classique**"
+			"classicMode": "**Mode classique**",
+			"noChannel": "Aucun paramètre de salon spécifié",
+			"globalType": "**Type de Question Globale** :",
+			"channelType": "**Paramètres par salon**:"
 		},
 		"button": {
 			"daySelect": "Jours exclus",
@@ -284,7 +290,12 @@
 			"welcomePing": "Activer/désactiver le ping de l'utilisateur",
 			"avatar": "Définir l'avatar",
 			"name": "Définir le nom d'utilisateur",
-			"classicMode": "Activer/désactiver le mode classique"
+			"classicMode": "Activer/désactiver le mode classique",
+			"globalType": "Définir le type de question globale",
+			"channelType": "Configurer les types par salon",
+			"setGlobal": "Cliquez sur le type que vous voulez définir globalement.",
+			"setChannel": "Sélectionnez un salon auquel vous souhaitez ajouter un type de question.",
+			"typeRegex": "Vous devez fournir un type valide : `regular`, `custom`, ou `mixed`."
 		},
 		"modal": {
 			"dailyIntervalTitle": "Heure de publication quotidienne",
@@ -351,7 +362,7 @@
 		}
 	},
 	"Premium": {
-		"message": "*Tu peux [t'abonner à Would You Premium] (https://wouldyoubot.gg/premium) pour débloquer plus de fonctionnalités et soutenir le bot !*",
+		"message": "*Vous pouvez [vous abonner à Would You Premium](https://wouldyoubot.gg/premium) pour débloquer plus de fonctionnalités et soutenir le bot !*",
 		"tier": "Palier : {type}",
 		"tier1": "Premium",
 		"tier2": "Premium + IA",
