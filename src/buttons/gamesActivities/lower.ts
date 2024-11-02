@@ -30,7 +30,7 @@ const button: Button = {
             user: interaction.message.interaction?.user.username
               ? interaction.message.interaction?.user.username
               : interaction?.message.embeds[0]?.footer?.text.split(" | ")[0],
-          },
+          }
         ),
         ephemeral: true,
       });
@@ -101,8 +101,8 @@ const button: Button = {
               source2:
                 game.items.history[game.items.history.length - 1].link ||
                 "https://wouldyoubot.gg/nolink",
-            },
-          ),
+            }
+          )
         )
         .setColor("Green")
         .setImage("attachment://game.png")
@@ -122,7 +122,7 @@ const button: Button = {
             new ButtonBuilder()
               .setCustomId(`lower_${game.id}`)
               .setLabel("Lower")
-              .setStyle(ButtonStyle.Danger),
+              .setStyle(ButtonStyle.Danger)
           );
 
         interaction.editReply({
@@ -141,8 +141,8 @@ const button: Button = {
         .setTitle(
           client.translation.get(
             guildDb?.language != null ? guildDb.language : "en_EN",
-            "HigherLower.game.title",
-          ),
+            "HigherLower.game.title"
+          )
         )
         .setDescription(
           `${client.translation.get(
@@ -150,8 +150,8 @@ const button: Button = {
             "HigherLower.game.description",
             {
               score: game?.score,
-            },
-          )}`,
+            }
+          )}`
         )
         .setColor("Red")
         .setImage("attachment://game.png")
@@ -174,7 +174,7 @@ const button: Button = {
             .setStyle(5)
             .setEmoji("1009964111045607525")
             .setURL(
-              "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+              "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
             ),
         ]);
       } else if (!premium.result && randomValue >= 3 && randomValue < 5) {
@@ -200,10 +200,6 @@ const button: Button = {
 
       gameImage.build(game?.score || 0, client).then((image) => {
         interaction.editReply({
-          content:
-            !premium.result && randomValue >= 3 && randomValue < 5
-              ? client.translation.get(guildDb?.language, "Premium.message")
-              : undefined,
           embeds: [loseEmbed],
           components: [mainRow],
           files: [

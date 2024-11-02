@@ -40,14 +40,14 @@ const command: ChatInputCommand = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const ratherEmbed = new DefaultGameEmbed(
       interaction,
       WYR.id,
       WYR.question,
-      "wyr",
+      "wyr"
     );
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
@@ -61,7 +61,7 @@ const command: ChatInputCommand = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
           ),
       ]);
     } else if (!premium.result && randomValue >= 3 && randomValue < 5) {
@@ -92,16 +92,12 @@ const command: ChatInputCommand = {
       time < three_minutes
         ? new Date(0)
         : new Date(~~((Date.now() + time) / 1000)),
-      "wouldyourather",
+      "wouldyourather"
     );
 
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: WYR.question, fetchReply: true }
       : {
-          content:
-            !premium.result && randomValue >= 3 && randomValue < 5
-              ? client.translation.get(guildDb?.language, "Premium.message")
-              : undefined,
           embeds: [ratherEmbed],
           components: [row, mainRow],
         };

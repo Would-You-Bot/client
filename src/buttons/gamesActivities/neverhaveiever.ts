@@ -60,14 +60,14 @@ const button: Button = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const nhieEmbed = new DefaultGameEmbed(
       interaction,
       NHIE.id,
       NHIE.question,
-      "nhie",
+      "nhie"
     );
 
     const mainRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
@@ -81,7 +81,7 @@ const button: Button = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
           ),
       ]);
     } else if (!premium.result && randomValue >= 3 && randomValue < 5) {
@@ -111,16 +111,12 @@ const button: Button = {
       time < three_minutes
         ? new Date(0)
         : new Date(~~((Date.now() + time) / 1000)),
-      "neverhaveiever",
+      "neverhaveiever"
     );
 
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: NHIE.question, fetchReply: true }
       : {
-          content:
-            !premium.result && randomValue >= 3 && randomValue < 5
-              ? client.translation.get(guildDb?.language, "Premium.message")
-              : undefined,
           embeds: [nhieEmbed],
           components: [row, mainRow],
         };

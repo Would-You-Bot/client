@@ -60,14 +60,14 @@ const button: Button = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const randomEmbed = new DefaultGameEmbed(
       interaction,
       RANDOM.id,
       RANDOM.question,
-      "random",
+      "random"
     );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
@@ -83,7 +83,7 @@ const button: Button = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
           ),
       ]);
       components = [row, row2];
@@ -108,10 +108,6 @@ const button: Button = {
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: RANDOM.question }
       : {
-          content:
-            !premium.result && randomValue >= 3 && randomValue < 5
-              ? client.translation.get(guildDb?.language, "Premium.message")
-              : undefined,
           embeds: [randomEmbed],
           components: components,
         };
