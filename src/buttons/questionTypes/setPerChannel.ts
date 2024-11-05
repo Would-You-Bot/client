@@ -2,8 +2,6 @@ import {
   ActionRowBuilder,
   ChannelSelectMenuBuilder,
   ChannelType,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
   type MessageActionRowComponentBuilder,
 } from "discord.js";
 import type { Button } from "../../interfaces";
@@ -16,13 +14,21 @@ const button: Button = {
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ChannelSelectMenuBuilder()
           .setCustomId("selectMenuPerChannel")
-          .setPlaceholder("Select a channel")
+          .setPlaceholder(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.setChannel",
+            ),
+          )
           .addChannelTypes(ChannelType.GuildText),
       );
 
     interaction.update({
       embeds: [],
-      content: "Select a channel you want to add a question type to.",
+      content: client.translation.get(
+        guildDb?.language,
+        "Settings.button.setChannel",
+      ),
       components: [inter],
       options: {
         ephemeral: true,

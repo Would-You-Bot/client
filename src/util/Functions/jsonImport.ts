@@ -83,25 +83,39 @@ export async function getHigherLower(): Promise<any[]> {
 }
 
 export async function getRandomTod(
-	channel: string,
-	guildDb: IGuildModel,
-	language: string,
-	premium: boolean,
-	enabled = true,
+  channel: string,
+  guildDb: IGuildModel,
+  language: string,
+  premium: boolean,
+  enabled = true,
 ): Promise<QuestionResult> {
-	const truth = await getQuestionsByType(channel, "truth", guildDb, language, premium, enabled);
-	const dare = await getQuestionsByType(channel, "dare", guildDb, language, premium, enabled);
+  const truth = await getQuestionsByType(
+    channel,
+    "truth",
+    guildDb,
+    language,
+    premium,
+    enabled,
+  );
+  const dare = await getQuestionsByType(
+    channel,
+    "dare",
+    guildDb,
+    language,
+    premium,
+    enabled,
+  );
 
 	return Math.random() < 0.5 ? truth : dare;
 }
 
 export async function getQuestionsByType(
-	channel: string | undefined,
-	type: string,
-	guildDb: IGuildModel,
-	language: string,
-	premium: boolean,
-	enabled = true,
+  channel: string | undefined,
+  type: string,
+  guildDb: IGuildModel,
+  language: string,
+  premium: boolean,
+  enabled = true,
 ): Promise<QuestionResult> {
 	if (!validTypes.includes(type)) {
 		return Promise.reject("Invalid type");
@@ -193,21 +207,23 @@ export async function getQuestionsByType(
 			newRandomCustomQuestion = await getRandomCustom([]);
 		}
 
-		let types = guildDb.channelTypes.find((e) => e.channelId === channel)?.questionType || guildDb.customTypes;
+    let types =
+      guildDb.channelTypes.find((e) => e.channelId === channel)?.questionType ||
+      guildDb.customTypes;
 
-		if (guildDb.welcome) {
-			types = guildDb.welcomeType;
-		}
+    if (guildDb.welcome && guildDb.welcomeChannel === channel) {
+      types = guildDb.welcomeType;
+    }
 
-		switch (types) {
-			case "regular":
-				result = {
-					id: questionDatabase[0].id,
-					question:
-						normalizedLanguage === "en"
-							? questionDatabase[0].question
-							: questionDatabase[0].translations[normalizedLanguage],
-				};
+    switch (types) {
+      case "regular":
+        result = {
+          id: questionDatabase[0].id,
+          question:
+            normalizedLanguage === "en"
+              ? questionDatabase[0].question
+              : questionDatabase[0].translations[normalizedLanguage],
+        };
 
 				break;
 			case "mixed": {
@@ -235,19 +251,25 @@ export async function getQuestionsByType(
         break;
     }
 
-		if (premium && enabled) {
-			if (types === "custom") {
-				selectedModel = typeCheck[`custom${type}`];
-			} else if (types === "mixed") {
-				if (result.id === questionDatabase[0].id) selectedModel = typeCheck[type];
-				else selectedModel = typeCheck[`custom${type}`];
-			} else {
-				selectedModel = typeCheck[type];
-			}
-			await usedQuestionModel.updateOne({ guildID: guildDb.guildID }, { $push: { [selectedModel]: result.id } });
-		}
-	} else {
-		const questionDatabase = await selectedModel.aggregate([{ $sample: { size: 1 } }]);
+    if (premium && enabled) {
+      if (types === "custom") {
+        selectedModel = typeCheck[`custom${type}`];
+      } else if (types === "mixed") {
+        if (result.id === questionDatabase[0].id)
+          selectedModel = typeCheck[type];
+        else selectedModel = typeCheck[`custom${type}`];
+      } else {
+        selectedModel = typeCheck[type];
+      }
+      await usedQuestionModel.updateOne(
+        { guildID: guildDb.guildID },
+        { $push: { [selectedModel]: result.id } },
+      );
+    }
+  } else {
+    const questionDatabase = await selectedModel.aggregate([
+      { $sample: { size: 1 } },
+    ]);
 
 		result = {
 			id: questionDatabase[0].id,
