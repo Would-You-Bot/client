@@ -149,6 +149,7 @@ export default class WouldYou extends Client {
     this.commands = await fileToCollection<ChatInputCommand>(
       getPath("commands"),
     );
+
     this.buttons = await fileToCollection<Button>(getPath("buttons"));
     this.events = await fileToCollection<Event>(getPath("events"));
 

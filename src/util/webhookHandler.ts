@@ -301,8 +301,6 @@ export default class WebhookHandler {
       );
     }
 
-    console.log(pinChannel[0]);
-
     try {
       if (pinChannel && pinChannel.length > 0) {
         await this.client.rest.delete(
