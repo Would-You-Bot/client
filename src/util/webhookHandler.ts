@@ -60,9 +60,8 @@ export default class WebhookHandler {
             await this.autoPinMessage(message, result.result);
           }
           return result;
-        } else {
-          return result;
         }
+          return result;
       } catch (error) {
         const newWebhook = await this.webhookFallBack(channel, message);
         if (newWebhook.success) {
@@ -81,12 +80,10 @@ export default class WebhookHandler {
               await this.createThread(message, result.result);
             }
             return result; // (Skeleton) I think this is the fix for our unhandled case in the webhook. It moved on outside of the IF Statement without the return...
-          } else {
-            return result;
           }
-        } else {
-          return newWebhook;
+            return result;
         }
+          return newWebhook;
       }
     } else {
       const newWebhook = await this.webhookFallBack(channel, message);
@@ -107,17 +104,11 @@ export default class WebhookHandler {
             await this.createThread(message, result.result);
           }
           return result;
-        } else {
-          return result;
         }
-      } else {
-        return newWebhook;
+          return result;
       }
+        return newWebhook;
     }
-    return {
-      success: false,
-      error: new Error("Unhandled case in handleWebhook"),
-    };
   }
   private async send(
     webhook: WebhookClient,
@@ -300,8 +291,6 @@ export default class WebhookHandler {
         (x: any) => x.application_id === this.client.user?.id
       );
     }
-
-    console.log(pinChannel[0]);
 
     try {
       if (pinChannel && pinChannel.length > 0) {
