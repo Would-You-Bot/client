@@ -14,7 +14,7 @@ const button: Button = {
       interaction.reply({
         content: client.translation.get(
           guildDb?.language,
-          "Settings.replayChannelLimit",
+          "Settings.replayChannelLimit"
         ),
         ephemeral: true,
       });
@@ -26,14 +26,14 @@ const button: Button = {
         new ChannelSelectMenuBuilder()
           .setCustomId("selectMenuReplay")
           .setPlaceholder("Select a channel")
-          .addChannelTypes(ChannelType.GuildText),
+          .addChannelTypes(ChannelType.GuildText)
       );
 
     interaction.update({
       embeds: [],
       content: client.translation.get(
         guildDb?.language,
-        "Settings.replayChannel",
+        "Settings.replayChannel"
       ),
       components: [inter],
       options: {

@@ -10,6 +10,7 @@ import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Checks how fast the bot responds")
@@ -42,17 +43,17 @@ const command: ChatInputCommand = {
           name: client.translation.get(guildDb?.language, "Ping.embed.api"),
           value: `> **${Math.round(client.ws.ping)}**ms`,
           inline: false,
-        },
+        }
       );
     const button =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setLabel(
-            client.translation.get(guildDb?.language, "Ping.button.title"),
+            client.translation.get(guildDb?.language, "Ping.button.title")
           )
           .setStyle(5)
           .setEmoji("💻")
-          .setURL("https://discordstatus.com/"),
+          .setURL("https://discordstatus.com/")
       );
     await interaction
       .reply({

@@ -14,6 +14,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("whatwouldyoudo")
     .setDescription("Gives you a 'What Would You Do' question")
@@ -41,14 +42,14 @@ const command: ChatInputCommand = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const wwydEmbed = new DefaultGameEmbed(
       interaction,
       WWYD.id,
       WWYD.question,
-      "wwyd",
+      "wwyd"
     );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
@@ -62,7 +63,7 @@ const command: ChatInputCommand = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
           ),
       ]);
     } else if (!premium.result && randomValue >= 3 && randomValue < 5) {

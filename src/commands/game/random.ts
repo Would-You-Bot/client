@@ -13,6 +13,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("random")
     .setDescription("Gives you a random truth or dare question to answer")
@@ -40,14 +41,14 @@ const command: ChatInputCommand = {
         : userDb?.language
           ? userDb.language
           : "en_EN",
-      premium.result,
+      premium.result
     );
 
     const randomEmbed = new DefaultGameEmbed(
       interaction,
       RANDOM.id,
       RANDOM.question,
-      "random",
+      "random"
     );
 
     const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
@@ -63,7 +64,7 @@ const command: ChatInputCommand = {
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
           ),
       ]);
       components = [row, row2];

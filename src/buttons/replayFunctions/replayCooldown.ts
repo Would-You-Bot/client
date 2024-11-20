@@ -37,7 +37,7 @@ const button: Button = {
         ephemeral: true,
         content: client.translation.get(
           guildDb?.language,
-          "Settings.replaySame",
+          "Settings.replaySame"
         ),
       });
       return;
@@ -48,7 +48,7 @@ const button: Button = {
         ephemeral: true,
         content: client.translation.get(
           guildDb?.language,
-          "Settings.cooldownInvalid",
+          "Settings.cooldownInvalid"
         ),
       });
       return;
@@ -59,7 +59,7 @@ const button: Button = {
         ephemeral: true,
         content: client.translation.get(
           guildDb?.language,
-          "Settings.replayCooldownMin",
+          "Settings.replayCooldownMin"
         ),
       });
       return;
@@ -70,7 +70,7 @@ const button: Button = {
         ephemeral: true,
         content: client.translation.get(
           guildDb?.language,
-          "Settings.cooldownTooLong",
+          "Settings.cooldownTooLong"
         ),
       });
       return;
@@ -78,38 +78,35 @@ const button: Button = {
 
     const generalMsg = new EmbedBuilder()
       .setTitle(
-        client.translation.get(
-          guildDb?.language,
-          "Settings.embed.generalTitle",
-        ),
+        client.translation.get(guildDb?.language, "Settings.embed.generalTitle")
       )
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Settings.embed.replayType",
+          "Settings.embed.replayType"
         )}: ${guildDb.replayType}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.replayBy",
+          "Settings.embed.replayBy"
         )}: ${guildDb.replayBy}\n${
           guildDb.replayBy === "Guild"
             ? client.translation.get(
                 guildDb?.language,
-                "Settings.embed.replayBy2",
+                "Settings.embed.replayBy2"
               )
             : client.translation.get(
                 guildDb?.language,
-                "Settings.embed.replayBy1",
+                "Settings.embed.replayBy1"
               )
         }\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.replayCooldown",
-        )}: ${guildDb.replayCooldown ? `${value}s` : ":x:"}\n`,
+          "Settings.embed.replayCooldown"
+        )}: ${guildDb.replayCooldown ? `${value}s` : ":x:"}\n`
       )
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(
           guildDb?.language,
-          "Settings.embed.footer",
+          "Settings.embed.footer"
         ),
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
@@ -121,8 +118,8 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.replayType",
-            ),
+              "Settings.button.replayType"
+            )
           )
           .setStyle(ButtonStyle.Primary)
           .setEmoji("1207774450658050069"),
@@ -131,11 +128,11 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.replayBy",
-            ),
+              "Settings.button.replayBy"
+            )
           )
           .setStyle(ButtonStyle.Primary)
-          .setEmoji("1207778786976989244"),
+          .setEmoji("1207778786976989244")
       );
 
     const setDeleteButtons =
@@ -146,14 +143,23 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.replayCooldown",
-            ),
+              "Settings.button.replayCooldown"
+            )
           )
           .setStyle(
-            guildDb.replayCooldown
-              ? ButtonStyle.Success
-              : ButtonStyle.Secondary,
-          ),
+            guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary
+          )
+      );
+    
+    const goTo =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId("cooldownCommands")
+          .setLabel(
+            client.translation.get(guildDb?.language, "Settings.button.goToB")
+          )
+          .setStyle(ButtonStyle.Secondary)
+          .setEmoji("1308672399188820023")
       );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
@@ -164,7 +170,7 @@ const button: Button = {
     await (data?.modal as any).update({
       content: null,
       embeds: [generalMsg],
-      components: [generalButtons, setDeleteButtons],
+      components: [generalButtons, setDeleteButtons, goTo],
     });
     return;
   },

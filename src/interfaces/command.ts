@@ -18,13 +18,17 @@ export interface Command {
     | SlashCommandOptionsOnlyBuilder
     | ContextMenuCommandBuilder;
   requireGuild?: boolean;
+  cooldown?: boolean;
   integration_types?: number[];
   contexts?: number[];
   execute(
     interaction: CommandInteraction,
     client: WouldYou,
-    guildDb: IGuildModel,
-  ): Promise<void> | ChatInputCommandInteraction<CacheType> | InteractionResponse;
+    guildDb: IGuildModel
+  ):
+    | Promise<void>
+    | ChatInputCommandInteraction<CacheType>
+    | InteractionResponse;
 }
 
 export interface ChatInputCommand extends Command {
@@ -32,9 +36,10 @@ export interface ChatInputCommand extends Command {
     | SlashCommandBuilder
     | SlashCommandOptionsOnlyBuilder
     | SlashCommandSubcommandsOnlyBuilder;
+  cooldown?: boolean;
   execute(
     interaction: ChatInputCommandInteraction,
     client: WouldYou,
-    guildDb: IGuildModel,
+    guildDb: IGuildModel
   ): any;
 }

@@ -17,6 +17,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("higherlower")
     .setDescription("Starts a game of 'Higher or Lower'")
@@ -91,8 +92,8 @@ const command: ChatInputCommand = {
             source2:
               game.items.history[game.items.history.length - 1].link ||
               "https://wouldyoubot.gg/nolink",
-          },
-        )}`,
+          }
+        )}`
       )
       .setColor("White")
       .setImage("attachment://game.png")
@@ -112,7 +113,7 @@ const command: ChatInputCommand = {
           new ButtonBuilder()
             .setCustomId(`lower_${game.id}`)
             .setLabel("Lower")
-            .setStyle(ButtonStyle.Danger),
+            .setStyle(ButtonStyle.Danger)
         );
 
       interaction.editReply({

@@ -48,6 +48,9 @@ export interface IGuildModel {
   webhookName: string;
   webhookAvatar: string;
   lastUsageTimestamp: number;
+  commandCooldown: number;
+  commandBy: string;
+  commandType: string;
 }
 
 const guildProfileSchema = new Schema<IGuildModel>(
@@ -195,8 +198,20 @@ const guildProfileSchema = new Schema<IGuildModel>(
       type: Number,
       default: 0,
     },
+    commandCooldown: {
+      type: Number,
+      default: 3000,
+    },
+    commandBy: {
+      type: String,
+      default: "Guild",
+    },
+    commandType: {
+      type: String,
+      default: "Command",
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export const GuildModel = model<IGuildModel>(

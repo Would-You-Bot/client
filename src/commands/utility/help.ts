@@ -10,6 +10,7 @@ import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription("Shows a list of all the 'Would You' commands")
@@ -40,27 +41,27 @@ const command: ChatInputCommand = {
         truth: getCommandByName("truth"),
         dare: getCommandByName("dare"),
         privacy: getCommandByName("privacy"),
-      }),
+      })
     );
 
     const button =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setLabel(
-            client.translation.get(guildDb?.language, "Help.button.invite"),
+            client.translation.get(guildDb?.language, "Help.button.invite")
           )
           .setStyle(5)
           .setEmoji("1009964111045607525")
           .setURL(
-            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands",
+            "https://discord.com/oauth2/authorize?client_id=981649513427111957&permissions=275415247936&scope=bot%20applications.commands"
           ),
         new ButtonBuilder()
           .setLabel(
-            client.translation.get(guildDb?.language, "Help.button.commands"),
+            client.translation.get(guildDb?.language, "Help.button.commands")
           )
           .setCustomId("viewCommands")
           .setStyle(2)
-          .setEmoji("➡️"),
+          .setEmoji("➡️")
       );
     await interaction
       .reply({

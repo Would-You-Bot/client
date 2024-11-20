@@ -10,6 +10,7 @@ import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("support")
     .setDescription("Gives you a link to get help")
@@ -25,10 +26,10 @@ const command: ChatInputCommand = {
     const supportembed = new EmbedBuilder()
       .setColor("#F00505")
       .setTitle(
-        client.translation.get(guildDb?.language, "Support.embed.title"),
+        client.translation.get(guildDb?.language, "Support.embed.title")
       )
       .setDescription(
-        client.translation.get(guildDb?.language, "Support.embed.description"),
+        client.translation.get(guildDb?.language, "Support.embed.description")
       )
       .setFooter({
         text: client.translation.get(guildDb?.language, "Support.embed.footer"),
@@ -42,7 +43,7 @@ const command: ChatInputCommand = {
           .setLabel("Support Server")
           .setStyle(5)
           .setEmoji("💻")
-          .setURL("https://discord.gg/vMyXAxEznS"),
+          .setURL("https://discord.gg/vMyXAxEznS")
       );
 
     interaction
