@@ -54,8 +54,8 @@ importers:
         specifier: ^0.37.100
         version: 0.37.100
       discord-hybrid-sharding:
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^2.2.3
+        version: 2.2.3
       discord.js:
         specifier: 14.16.3
         version: 14.16.3
@@ -1235,8 +1235,8 @@ packages:
   discord-api-types@0.37.97:
     resolution: {integrity: sha512-No1BXPcVkyVD4ZVmbNgDKaBoqgeQ+FJpzZ8wqHkfmBnTZig1FcH3iPPersiK1TUIAzgClh2IvOuVUYfcWLQAOA==}
 
-  discord-hybrid-sharding@2.2.0:
-    resolution: {integrity: sha512-nI9iyqrrQvBR8HZjiNu8Tsb0HR9mqp0ZlSfiIxUaqiwaBzTtG2o4/yCZIMwnj3DnV4UZeuejuhPhr8vkz+uiwg==}
+  discord-hybrid-sharding@2.2.3:
+    resolution: {integrity: sha512-1s2UFiN3y9OmPQAqUXfHZLubmIce4FHWSK2Sdy6lOUQhZoVlfTASo/SyrbGalZfteLd3kVTp1ccbL54JGlmlIw==}
 
   discord.js@14.16.3:
     resolution: {integrity: sha512-EPCWE9OkA9DnFFNrO7Kl1WHHDYFXu3CNVFJg63bfU7hVtjZGyhShwZtSBImINQRWxWP2tgo2XI+QhdXx28r0aA==}
@@ -3552,7 +3552,7 @@ snapshots:
 
   discord-api-types@0.37.97: {}
 
-  discord-hybrid-sharding@2.2.0: {}
+  discord-hybrid-sharding@2.2.3: {}
 
   discord.js@14.16.3:
     dependencies:
