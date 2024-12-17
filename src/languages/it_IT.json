@@ -112,7 +112,8 @@
         "descCatWYR": "**Categoria**: Preferiresti",
         "descCatTRUTH": "**Categoria**: Verità",
         "descCatDARE": "**Categoria**: Obbligo",
-        "descCatWWYD": "**Categoria**: Cosa faresti?"
+        "descCatWWYD": "**Categoria**: Cosa faresti?",
+        "descCatTOPIC": "**Categoria**: Argomento"
       }
     }
   },

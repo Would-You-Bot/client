@@ -112,7 +112,8 @@
         "descCatWYR": "**Kategorie**: Würdest du eher",
         "descCatTRUTH": "**Kategorie**: Wahrheit",
         "descCatDARE": "**Kategorie**: Pflicht",
-        "descCatWWYD": "**Kategorie**: Was würdest du tun"
+        "descCatWWYD": "**Kategorie**: Was würdest du tun",
+        "descCatTOPIC":"**Kategorie**: Thema"
       }
     }
   },

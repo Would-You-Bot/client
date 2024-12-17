@@ -112,7 +112,8 @@
         "descCatWYR": "**Category**: Would You Rather",
         "descCatTRUTH": "**Category**: Truth",
         "descCatDARE": "**Category**: Dare",
-        "descCatWWYD": "**Category**: What Would You Do"
+        "descCatWWYD": "**Category**: What Would You Do",
+        "descCatTOPIC": "**Category**: Topic"
       }
     }
   },
