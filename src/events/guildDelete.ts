@@ -62,9 +62,6 @@ const event: Event = {
             { name: "Server Owner", value: guild.ownerId, inline: false },
             ...(features ? [{ name: "Features", value: features, inline: false }] : []),
           ])         
-          .setFooter({
-            text: "Main Bot",
-          }),
       ],
       allowedMentions: { parse: [] },
     });

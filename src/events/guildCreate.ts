@@ -51,17 +51,6 @@ const event: Event = {
             { name: "Server Owner", value: guild.ownerId, inline: false },
             ...(features ? [{ name: "Features", value: features, inline: false }] : [])
           )          
-          .setDescription(
-            `**Name**: ${guild.name}
-          **ID**: ${guild.id}
-          **Users**: ${guild.memberCount.toLocaleString()}
-          **Server Owner**: ${guild.ownerId}${
-            features ? `\n**Features**: ${features}` : ""
-          }`,
-          )
-          .setFooter({
-            text: "Main Bot",
-          }),
       ],
       allowedMentions: { parse: [] },
     });
