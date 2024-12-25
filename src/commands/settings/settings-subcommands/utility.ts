@@ -15,7 +15,9 @@ export default async function settingsGeneral(
   guildDb: IGuildModel,
 ) {
   const emb = new EmbedBuilder()
-    .setTitle(client.translation.get(guildDb?.language, "Settings.embed.utilityTitle"))
+    .setTitle(
+      client.translation.get(guildDb?.language, "Settings.embed.utilityTitle"),
+    )
     .setDescription(
       `${client.translation.get(
         guildDb?.language,

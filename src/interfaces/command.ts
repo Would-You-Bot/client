@@ -24,7 +24,7 @@ export interface Command {
   execute(
     interaction: CommandInteraction,
     client: WouldYou,
-    guildDb: IGuildModel
+    guildDb: IGuildModel,
   ):
     | Promise<void>
     | ChatInputCommandInteraction<CacheType>
@@ -40,6 +40,6 @@ export interface ChatInputCommand extends Command {
   execute(
     interaction: ChatInputCommandInteraction,
     client: WouldYou,
-    guildDb: IGuildModel
+    guildDb: IGuildModel,
   ): any;
 }

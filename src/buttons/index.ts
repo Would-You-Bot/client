@@ -9,7 +9,7 @@ const buttonInteractionEvent: Event = {
   event: "interactionCreate",
   execute: async (client: WouldYou, interaction: ButtonInteraction) => {
     console.log(
-      `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.username}) CLICKED ${interaction.customId}`
+      `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.username}) CLICKED ${interaction.customId}`,
     );
 
     let guildDb: IGuildModel | any;
@@ -32,7 +32,7 @@ const buttonInteractionEvent: Event = {
         // Increment the specified field using $inc
         await UserModel.updateOne(
           { userID: interaction.user?.id },
-          { $inc: { [fieldName]: 1 } }
+          { $inc: { [fieldName]: 1 } },
         );
       }
     }
@@ -53,7 +53,7 @@ const buttonInteractionEvent: Event = {
       // Increment the specified field using $inc
       await UserModel.updateOne(
         { userID: interaction.user?.id }, // Specify the query to find the user
-        { $inc: { [fieldPath]: 1 } } // Use computed fieldPath
+        { $inc: { [fieldPath]: 1 } }, // Use computed fieldPath
       );
     }
 
@@ -92,13 +92,17 @@ const buttonInteractionEvent: Event = {
     let cooldownKey: string | undefined;
     let cooldown: number;
 
-    
     const excludedButtons = await client.buttons
       .filter((button) => button.cooldown === false)
       .map((button) => button.name);
 
     const isExcludedButton = excludedButtons.includes(interaction.customId);
-    if (guildDb != null && !bypass && !isExcludedButton && guildDb.replayBy === "User") {
+    if (
+      guildDb != null &&
+      !bypass &&
+      !isExcludedButton &&
+      guildDb.replayBy === "User"
+    ) {
       if (
         guildDb.replayType === "Channels" &&
         guildDb.replayChannels.find((x: any) => x.id === interaction.channelId)
@@ -106,19 +110,24 @@ const buttonInteractionEvent: Event = {
         cooldownKey = `${interaction.user?.id}-${interaction.channelId}`;
         cooldown = Number(
           guildDb.replayChannels.find(
-            (x: any) => x.id === interaction.channelId
-          )?.cooldown
+            (x: any) => x.id === interaction.channelId,
+          )?.cooldown,
         );
       } else if (guildDb.replayType === "Guild") {
         cooldownKey = interaction.user?.id;
         cooldown = Number(
-          guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0
+          guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0,
         );
       }
-    } else if (guildDb != null && !bypass && !isExcludedButton && guildDb.replayBy === "Guild") {
+    } else if (
+      guildDb != null &&
+      !bypass &&
+      !isExcludedButton &&
+      guildDb.replayBy === "Guild"
+    ) {
       cooldownKey = interaction.guild?.id;
       cooldown = Number(
-        guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0
+        guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0,
       );
     }
 

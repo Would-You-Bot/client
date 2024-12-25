@@ -17,46 +17,46 @@ const button: Button = {
       .setTitle(
         client.translation.get(
           guildDb?.language,
-          "Settings.embed.cooldownsTitle"
-        )
+          "Settings.embed.cooldownsTitle",
+        ),
       )
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Settings.embed.commandType"
+          "Settings.embed.commandType",
         )}: ${guildDb.commandType}\n${
           guildDb.commandBy === "Command"
             ? client.translation.get(
                 guildDb?.language,
-                "Settings.embed.commandType1"
+                "Settings.embed.commandType1",
               )
             : client.translation.get(
                 guildDb?.language,
-                "Settings.embed.commandType2"
+                "Settings.embed.commandType2",
               )
         }\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.commandBy"
+          "Settings.embed.commandBy",
         )}: ${guildDb.commandBy}\n${
           guildDb.commandBy === "Guild"
             ? client.translation.get(
                 guildDb?.language,
-                "Settings.embed.replayBy2"
+                "Settings.embed.replayBy2",
               )
             : client.translation.get(
                 guildDb?.language,
-                "Settings.embed.replayBy1"
+                "Settings.embed.replayBy1",
               )
         }\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.command"
-        )}: ${guildDb.commandCooldown / 1000}s`
+          "Settings.embed.command",
+        )}: ${guildDb.commandCooldown / 1000}s`,
       )
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(
           guildDb?.language,
-          "Settings.embed.footer"
+          "Settings.embed.footer",
         ),
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
@@ -70,8 +70,8 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.commandType"
-            )
+              "Settings.button.commandType",
+            ),
           ),
         new ButtonBuilder()
           .setStyle(ButtonStyle.Primary)
@@ -80,9 +80,9 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.commandBy"
-            )
-          )
+              "Settings.button.commandBy",
+            ),
+          ),
       );
 
     const setCommandCooldownButton =
@@ -93,14 +93,14 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.commandCooldown"
-            )
+              "Settings.button.commandCooldown",
+            ),
           )
           .setStyle(
             guildDb.commandCooldown
               ? ButtonStyle.Success
-              : ButtonStyle.Secondary
-          )
+              : ButtonStyle.Secondary,
+          ),
       );
 
     const goTo =
@@ -108,10 +108,10 @@ const button: Button = {
         new ButtonBuilder()
           .setCustomId("cooldownButtons")
           .setLabel(
-            client.translation.get(guildDb?.language, "Settings.button.goToA")
+            client.translation.get(guildDb?.language, "Settings.button.goToA"),
           )
           .setStyle(ButtonStyle.Secondary)
-          .setEmoji("1308672399188820023")
+          .setEmoji("1308672399188820023"),
       );
 
     await interaction

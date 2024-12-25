@@ -211,7 +211,7 @@ const guildProfileSchema = new Schema<IGuildModel>(
       default: "Command",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const GuildModel = model<IGuildModel>(

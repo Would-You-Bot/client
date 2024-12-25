@@ -13,11 +13,11 @@ import type WouldYou from "../../../util/wouldYou";
 export default async function settingsGeneral(
   interaction: ChatInputCommandInteraction,
   client: WouldYou,
-  guildDb: IGuildModel
+  guildDb: IGuildModel,
 ) {
   const emb = new EmbedBuilder()
     .setTitle(
-      client.translation.get(guildDb?.language, "Settings.embed.beforeText")
+      client.translation.get(guildDb?.language, "Settings.embed.beforeText"),
     )
     .setColor("#0598F6")
     .setFooter({
@@ -34,8 +34,8 @@ export default async function settingsGeneral(
         .setLabel(
           client.translation.get(
             guildDb?.language,
-            "Settings.button.cooldownButtons"
-          )
+            "Settings.button.cooldownButtons",
+          ),
         ),
       new ButtonBuilder()
         .setEmoji("1308673732478238740")
@@ -44,9 +44,9 @@ export default async function settingsGeneral(
         .setLabel(
           client.translation.get(
             guildDb?.language,
-            "Settings.button.cooldownCommands"
-          )
-        )
+            "Settings.button.cooldownCommands",
+          ),
+        ),
     );
 
   await interaction

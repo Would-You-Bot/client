@@ -76,7 +76,7 @@ const command: ChatInputCommand = {
             })
               .sort({ "higherlower.highscore": -1 })
               .limit(10)
-              .lean();  // `.lean()` makes the query faster as it skips hydration
+              .lean(); // `.lean()` makes the query faster as it skips hydration
 
             data = await Promise.all(
               data2.map(async (u: any) => {
@@ -112,7 +112,9 @@ const command: ChatInputCommand = {
 
             page.add(
               new EmbedBuilder()
-                .setTitle(client.translation.get(language, "Leaderboard.global"))
+                .setTitle(
+                  client.translation.get(language, "Leaderboard.global"),
+                )
                 .setDescription(data.join("\n"))
                 .setColor("#0598F6"),
             );
@@ -127,7 +129,9 @@ const command: ChatInputCommand = {
             for (let i = 0; i < totalPages; i++) {
               page.add(
                 new EmbedBuilder()
-                  .setTitle(client.translation.get(language, "Leaderboard.global"))
+                  .setTitle(
+                    client.translation.get(language, "Leaderboard.global"),
+                  )
                   .setColor("#0598F6"),
               );
             }
@@ -183,7 +187,9 @@ const command: ChatInputCommand = {
             for (let i = 0; i < paginatedData.length; i++) {
               page.add(
                 new EmbedBuilder()
-                  .setTitle(client.translation.get(language, "Leaderboard.guild"))
+                  .setTitle(
+                    client.translation.get(language, "Leaderboard.guild"),
+                  )
                   .setDescription(paginatedData[i].join("\n"))
                   .setColor("#0598F6"),
               );
@@ -192,7 +198,11 @@ const command: ChatInputCommand = {
           }
         }
 
-        page.start(interaction, "leaderboard", interaction.options.getString("for"));
+        page.start(
+          interaction,
+          "leaderboard",
+          interaction.options.getString("for"),
+        );
         break;
       }
     }

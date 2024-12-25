@@ -18,11 +18,14 @@ export default async function settingsGeneral(
   const channelSettings =
     guildDb.channelTypes
       .map((ch) => `<#${ch.channelId}>: ${ch.questionType}`)
-      .join("\n") || client.translation.get(guildDb?.language, "Settings.embed.noChannel");
+      .join("\n") ||
+    client.translation.get(guildDb?.language, "Settings.embed.noChannel");
 
   // Embed with replaced translation strings and updated fields
   const emb = new EmbedBuilder()
-    .setTitle(client.translation.get(guildDb?.language, "Settings.embed.questionTitle"))
+    .setTitle(
+      client.translation.get(guildDb?.language, "Settings.embed.questionTitle"),
+    )
     .setDescription(
       `${client.translation.get(guildDb?.language, "Settings.embed.globalType")} ${guildDb.customTypes}\n${client.translation.get(guildDb?.language, "Settings.embed.channelType")} \n${channelSettings}`,
     )
@@ -37,7 +40,12 @@ export default async function settingsGeneral(
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("customTypes")
-        .setLabel(client.translation.get(guildDb?.language, "Settings.button.globalType"))
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.globalType",
+          ),
+        )
         .setStyle(ButtonStyle.Primary),
     );
 
@@ -46,7 +54,12 @@ export default async function settingsGeneral(
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("setPerChannel")
-        .setLabel(client.translation.get(guildDb?.language, "Settings.button.channelType"))
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.channelType",
+          ),
+        )
         .setStyle(ButtonStyle.Secondary),
     );
 

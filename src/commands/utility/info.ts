@@ -20,11 +20,11 @@ const command: ChatInputCommand = {
 
   execute: async (interaction, client, guildDb) => {
     const serverCount = await client.cluster.broadcastEval(
-      (c) => c.guilds.cache.size
+      (c) => c.guilds.cache.size,
     );
 
     const userCount = await client.cluster.broadcastEval((c) =>
-      c.guilds.cache.reduce((a, b) => a + b.memberCount, 0)
+      c.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
     );
     const ramUsage = await client.cluster.broadcastEval(() => {
       function round(num: number) {
@@ -83,7 +83,7 @@ const command: ChatInputCommand = {
           name: "Premium Server:",
           value: `${`${premiumEmoji} ${premium.result}`}`,
           inline: false,
-        }
+        },
       )
       .setThumbnail("https://wouldyoubot.gg/Logo.png")
       .setFooter({

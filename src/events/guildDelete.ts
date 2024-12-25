@@ -56,12 +56,14 @@ const event: Event = {
             }),
           )
           .setDescription(
-            `**Name**: ${
-              guild.name
-            }\n**Users**: ${guild.memberCount.toLocaleString()}\n**Server Owner**: ${guild.ownerId}${
-              features ? `\n**Features**: ${features}` : ""
-            }`,
+            `**Name**: ${guild.name}
+          **ID**: ${guild.id}
+          **Users**: ${guild.memberCount.toLocaleString()}
+          **Server Owner**: ${guild.ownerId}${
+            features ? `\n**Features**: ${features}` : ""
+          }`,
           )
+
           .setFooter({
             text: global?.devBot ? "Dev Bot" : "Main Bot",
           }),

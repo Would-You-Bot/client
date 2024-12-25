@@ -21,7 +21,7 @@ const commandInteractionEvent: Event = {
 
     if (interaction.isCommand()) {
       console.log(
-        `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.username}) COMMAND ${interaction.commandName}`
+        `[INFO] INTERACTION ${interaction.id} RUN BY (${interaction.user.id}, ${interaction.user.username}) COMMAND ${interaction.commandName}`,
       );
       const command = client.commands.get(interaction.commandName);
 
@@ -30,7 +30,7 @@ const commandInteractionEvent: Event = {
       if (interaction.guildId !== null) {
         guildDb = await client.database.getGuild(
           interaction.guildId as string,
-          true
+          true,
         );
         client.database
           .updateGuild(interaction.guildId as string, {
@@ -55,24 +55,24 @@ const commandInteractionEvent: Event = {
           if (guildDb.commandType == "Command") {
             cooldownKey = `${interaction.guild?.id}-${interaction.commandName}`;
             cooldown = Number(
-              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0
+              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
             );
           } else if (guildDb.commandType == "User") {
             cooldownKey = `${interaction.guild?.id}`;
             cooldown = Number(
-              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0
+              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
             );
           }
         } else if (guildDb?.commandBy == "User") {
           if (guildDb.commandType == "Command") {
             cooldownKey = `${interaction.user?.id}-${interaction.commandName}`;
             cooldown = Number(
-              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0
+              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
             );
           } else if (guildDb.commandType == "User") {
             cooldownKey = `${interaction.guild?.id}`;
             cooldown = Number(
-              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0
+              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
             );
           }
         }
@@ -113,7 +113,7 @@ const commandInteractionEvent: Event = {
         // Increment the specified field using $inc
         await UserModel.updateOne(
           { userID: interaction.user?.id }, // Specify the query to find the user
-          { $inc: { [fieldPath]: 1 } } // Use computed fieldPath
+          { $inc: { [fieldPath]: 1 } }, // Use computed fieldPath
         );
       }
 
@@ -147,7 +147,7 @@ const commandInteractionEvent: Event = {
         .execute(
           interaction as ChatInputCommandInteraction<CacheType>,
           client,
-          guildDb as IGuildModel
+          guildDb as IGuildModel,
         )
         .catch((err: Error) => {
           captureException(err);

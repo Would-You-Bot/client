@@ -31,7 +31,7 @@ const command: ChatInputCommand = {
           name: client.translation.get(guildDb?.language, "Guide.embed.name1"),
           value: client.translation.get(
             guildDb?.language,
-            "Guide.embed.value1"
+            "Guide.embed.value1",
           ),
           inline: false,
         },
@@ -39,7 +39,7 @@ const command: ChatInputCommand = {
           name: client.translation.get(guildDb?.language, "Guide.embed.name2"),
           value: client.translation.get(
             guildDb?.language,
-            "Guide.embed.value2"
+            "Guide.embed.value2",
           ),
           inline: false,
         },
@@ -47,14 +47,14 @@ const command: ChatInputCommand = {
           name: client.translation.get(guildDb?.language, "Guide.embed.name3"),
           value: client.translation.get(
             guildDb?.language,
-            "Guide.embed.value3"
+            "Guide.embed.value3",
           ),
           inline: false,
-        }
+        },
       )
       .setImage("https://i.imgur.com/nA0yA0V.png")
       .setDescription(
-        client.translation.get(guildDb?.language, "Guide.embed.description")
+        client.translation.get(guildDb?.language, "Guide.embed.description"),
       );
 
     await interaction
