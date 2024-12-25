@@ -42,7 +42,7 @@ const command: ChatInputCommand = {
 
     const premiumEmoji = premium.result ? "✅" : "❌";
 
-    const { dominik, sky, skelly, paul, paulos } = client.config.emojis.info;
+    const { dominik, sky, skelly, paulos, tee, woofer } = client.config.emojis.info;
 
     const infoEmbed = new EmbedBuilder()
       .setColor("#5865f4")
@@ -50,7 +50,7 @@ const command: ChatInputCommand = {
       .addFields(
         {
           name: "Developers:",
-          value: `${dominik + sky + skelly + paul + paulos}`,
+          value: `${dominik + sky + skelly + paulos + tee + woofer}`,
           inline: false,
         },
         {
