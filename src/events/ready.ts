@@ -22,10 +22,10 @@ const event: Event = {
         version: "10",
       }).setToken(process.env.DISCORD_TOKEN as string);
 
-      // const redis = new Redis({
-      //   url: process.env.REDIS_URL!,
-      //   token: process.env.REDIS_TOKEN!,
-      // });
+      const redis = new Redis({
+        url: process.env.REDIS_URL!,
+        token: process.env.REDIS_TOKEN!,
+      });
 
       setTimeout(async () => {
         try {
@@ -53,7 +53,7 @@ const event: Event = {
                 vanityURLCode: server.vanityURLCode,
               }));
 
-              //await redis.set("server_count", JSON.stringify(finalServer));
+              await redis.set("server_count", JSON.stringify(finalServer));
             };
 
             client.server.startServer();
