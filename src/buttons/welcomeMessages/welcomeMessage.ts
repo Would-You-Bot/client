@@ -22,10 +22,10 @@ const button: Button = {
 
     const value = data?.fieldValues[0].value;
 
-    if (!value || value.length > 300) {
+    if (!value || value.length > 650) {
       data?.modal.reply({
         embeds: [],
-        content: "The welcome message must be less than 300 characters.",
+        content: "The welcome message must be less than 650 characters.",
         options: {
           ephemeral: true,
         },
