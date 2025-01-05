@@ -17,6 +17,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("higherlower")
     .setDescription("Starts a game of 'Higher or Lower'")

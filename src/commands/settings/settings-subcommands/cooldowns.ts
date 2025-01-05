@@ -66,80 +66,34 @@ export default async function settingsGeneral(
       iconURL: client?.user?.displayAvatarURL() || undefined,
     });
 
-  // First button row
-  // Deals with: replay type, replay by
   const cooldownButtons =
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
-        .setCustomId("replayType")
+        .setEmoji("1308672399188820023")
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId("cooldownButtons")
         .setLabel(
           client.translation.get(
             guildDb?.language,
-            "Settings.button.replayType",
+            "Settings.button.cooldownButtons",
           ),
-        )
-        .setStyle(ButtonStyle.Primary)
-        .setEmoji("1207774450658050069"),
-      new ButtonBuilder()
-        .setCustomId("replayBy")
-        .setLabel(
-          client.translation.get(guildDb?.language, "Settings.button.replayBy"),
-        )
-        .setStyle(ButtonStyle.Primary)
-        .setEmoji("1207778786976989244"),
-    );
-
-  // Second button row
-  // Deals with replay cooldown, replay channels
-  const setDeleteButtons =
-    new ActionRowBuilder<MessageActionRowComponentBuilder>();
-
-  if (guildDb.replayType === "Channels") {
-    setDeleteButtons.addComponents(
-      new ButtonBuilder()
-        .setCustomId("replayChannels")
-        .setEmoji("1185973661736374405")
-        .setLabel(
-          client.translation.get(
-            guildDb?.language,
-            "Settings.button.replayCooldown",
-          ),
-        )
-        .setStyle(
-          guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary,
         ),
       new ButtonBuilder()
-        .setCustomId("replayDeleteChannels")
-        .setEmoji("1207774452230787182")
+        .setEmoji("1308673732478238740")
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId("cooldownCommands")
         .setLabel(
           client.translation.get(
             guildDb?.language,
-            "Settings.button.replayDeleteChannels",
+            "Settings.button.cooldownCommands",
           ),
-        )
-        .setStyle(ButtonStyle.Danger),
-    );
-  } else {
-    setDeleteButtons.addComponents(
-      new ButtonBuilder()
-        .setCustomId("replayCooldown")
-        .setEmoji("1185973661736374405")
-        .setLabel(
-          client.translation.get(
-            guildDb?.language,
-            "Settings.button.replayCooldown",
-          ),
-        )
-        .setStyle(
-          guildDb.replayCooldown ? ButtonStyle.Success : ButtonStyle.Secondary,
         ),
     );
-  }
 
   await interaction
     .reply({
       embeds: [emb],
-      components: [cooldownButtons, setDeleteButtons],
+      components: [cooldownButtons],
       ephemeral: true,
     })
     .catch((err) => {

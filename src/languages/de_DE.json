@@ -1,371 +1,394 @@
 {
-	"Ping": {
-		"embed": {
-			"title": "🏓 Pong!",
-			"api": "API Latenz",
-			"client": "Client Latenz",
-			"footer": "Would You"
-		},
-		"button": {
-			"title": "Discord Latenz"
-		}
-	},
-	"Language": {
-		"embed": {
-			"error": "Dir fehlt die `ManageGuild` permission!",
-			"footer": "Would You"
-		}
-	},
-	"Welcome": {
-		"embed": {
-			"title": "Willkommen"
-		}
-	},
-	"Wwyd": {
-		"embed": {
-			"title": "Was **würdest du** tuen?",
-			"footer": "Erkläre was und warum",
-			"option1": "Option 1",
-			"option2": "Option 2"
-		}
-	},
-	"Support": {
-		"embed": {
-			"title": "Would You",
-			"description": "Wenn du jemals hilfe brauchen solltest kontaktiere unser **support team** auf unserem **[Support Server](https://discord.gg/vMyXAxEznS)!**",
-			"footer": "Would You"
-		}
-	},
-	"Privacy": {
-		"settings": "Datenschutzeinstellungen",
-		"status": "**Status**:",
-		"turnOn": "Anschalten",
-		"turnOff": "Ausschalten",
-		"on": "Ein",
-		"off": "Aus",
-		"desc": "Wenn du die Privatsphäre aktivierst, wird dein Benutzername nicht mehr in den Wahl-Ergebnissen angezeigt! Wenn du diese Option aktivierst, sind deine Stimmen völlig anonym."
-	},
-	"Leaderboard": {
-		"none": "Es konnten keine Informationen zur Rangliste gefunden werden.",
-		"guild": "Server Rangliste",
-		"global": "Globale Rangliste",
-		"points": "Punkte"
-	},
-	"wyCustom": {
-		"error": {
-			"noPages": "Kann nicht fortfahren. Es gibt keine Seiten, zu denen du gehen kannst.",
-			"issue": "Diese Nachricht kann nicht abgerufen werden. Wiederhole den Befehl, um benutzerdefinierte Nachrichten anzuzeigen.",
-			"paginate": "Du kannst nichmehr weiter gehen :(",
-			"maximum": "Du hast die maximale Anzahl an benutzerdefinierten Nachrichten erreicht. Du kannst mehr hinzufügen wenn du für den bot votest!",
-			"empty": "Es gibt keine benutzerdefinierten nachrichten in diesem server!",
-			"limit": "Du hast mehr als 100 {type} in deinen benutzerdefinierten Nachrichten. Wenn du mehr hinzufügen möchtest, musst du Premium abonnieren.",
-			"addToLimit": "Die ersten 100 Fragen für alle Kategorien wurden automatisch hinzugefügt.",
-			"import": {
-				"att1": "Du musst eine gültige JSON-Datei angeben! [Example](https://i.imgur.com/xdEzfyW.png)",
-				"att2": "Du musst eine gültige JSON-Datei angeben! [Example](https://i.imgur.com/xdEzfyW.png)",
-				"att3": "Die von dir angegebene JSON-Datei enthält keine Daten! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
-				"att4": "Die von dir angegebene JSON-Datei enthält keine custom fragen! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
-				"att5": "Die von dir angegebene JSON-Datei enthält keine custom fragen! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
-				"att15": "Bei der Ausführung dieses Befehls ist ein Fehler aufgetreten. Bitte melde ihn dem Support-Server!",
-				"att16": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die wouldyourather Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
-				"att17": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die neverhaveiever Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
-				"att18": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die wwyd Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
-				"att19": "Du kannst nicht mehr als 30 benutzerdefinierte Nachrichten in einem Import für die Kategorie wouldyourather haben. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
-				"att20": "Du kannst nicht mehr als 30 benutzerdefinierte Nachrichten in einem Import für die Kategorie neverhaveiever haben. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
-				"att21": "Du kannst nicht mehr als 30 benutzerdefinierte Nachrichten in einem Import für die Kategorie wwyd haben. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
-				"att22": "Wenn du deine aktuellen **wouldyourather** benutzerdefinierten Nachrichten und die in deiner Datei zusammenzählst, werden es mehr als 30 sein, was das Limit ist. Du kannst mehr erreichen, indem du für den Bot abstimmst!",
-				"att23": "Wenn du deine aktuellen **neverhaveiever** benutzerdefinierten Nachrichten und die in deiner Datei zusammenzählst, werden es mehr als 30 sein, was das Limit ist. Du kannst mehr erreichen, indem du für den Bot abstimmst!",
-				"att24": "Wenn du deine aktuellen **wwyd** benutzerdefinierten Nachrichten und die in deiner Datei zusammenzählst, werden es mehr als 30 sein, was das Limit ist. Du kannst mehr erreichen, indem du für den Bot abstimmst!"
-			},
-			"export": {
-				"none": "Es gibt keine benutzerdefinierten Would You Nachrichten, die exportiert werden könnten!"
-			}
-		},
-		"success": {
-			"import": "Import erfolgreich!",
-			"export": "Export erfolgreich!",
-			"embedAdd": {
-				"title": "Would You Nachricht erfolgreich erstellt!",
-				"descID": "ID",
-				"descMsg": "Nachricht",
-				"descCat": "Kategorie",
-				"descCont": "Inhalt",
-				"descAccept": "Es scheint, als hättest du \"{type}\" nicht an den Anfang deines Textes gesetzt. Möchtest du, dass ich es automatisch hinzufüge?",
-				"descWYR": "Würdest du eher",
-				"descNHIE": "Ich habe noch nie",
-				"descWWYD": "Was würdest du tun",
-				"footerDisable": "Dieser Button wird in 30 Sekunden deaktiviert.",
-				"success": "Erfolgreich \"{type}\" zum Anfang des Textes hinzugefügt!"
-			},
-			"embedRemove": {
-				"title": "Diese Would You Nachricht wurde erfolgreich gelöscht!"
-			},
-			"embedRemoveAll": {
-				"title": "Bist du sicher, dass du jede benutzerdefinierte Would You Nachricht löschen möchtest?",
-				"accept": "Alle würdest du eher Nachrichten erfolgreich gelöscht!",
-				"decline": "Du hast das Löschen aller benutzerdefinierten Nachrichten abgelehnt.",
-				"none": "Du hast momentan keine benutzerdefinierten Would You Nachrichten zu löschen!"
-			},
-			"paginator": {
-				"title": "Would You benutzerdefinierte Nachrichten",
-				"descCatNHIE": "**Kategorie**: Nie habe ich jemals",
-				"descCatWYR": "**Kategorie**: Würdest du eher",
-				"descCatTRUTH": "**Kategorie**: Wahrheit",
-				"descCatDARE": "**Kategorie**: Pflicht",
-				"descCatWWYD": "**Kategorie**: Was würdest du tun"
-			}
-		}
-	},
-	"wyType": {
-		"embed": {
-			"title": "Would You Typ geändert!",
-			"descDef": "Für Would You Befehle werden nun Standartnachrichten verwendet.",
-			"descBoth": "Sowohl Standartnachrichten als auch benutzerdefinierte Nachrichten werden für Would You Befehle genutzt.",
-			"descCust": "Benutzerdefinierte Nachrichten werden nun für Would You Befehle verwendet."
-		}
-	},
-	"Custom": {
-		"embed": {
-			"title": "Würdest du diese Kraft haben wollen?",
-			"footer": "Would You"
-		}
-	},
-	"WouldYou": {
-		"embed": {
-			"Usefulname": "Würdest du diese Kraft haben wollen?",
-			"Uselessname": "Würdest du diese Kraft haben wollen?",
-			"footer": "Would You"
-		},
-		"replays": {
-			"disabled": "Wiederholung ist in diesem Server gerade ausgeschaltet!"
-		},
-		"stats": {
-			"of": "von",
-			"taking": " würden diese Kraft benutzen.",
-			"user": "Nutzer",
-			"users": "Nutzern"
-		}
-	},
-	"Help": {
-		"embed": {
-			"description": "## Was ist Would You? \n\n **Would You** ist ein Bot, der dir ermöglicht, mit deinen Freunden auf Discord Spiele zu spielen, dabei Spaß zu haben und sich gegenseitig kennenzulernen. \n## Hauptspielmodi \n Die Spielmodi von <:roundyou:1009964111045607525> **Would You** umfassen </wouldyourather:{wouldyourather}>, </neverhaveiever:{neverhaveiever}>, </whatwouldyoudo:{whatwouldyoudo}>, </higherlower:{higherlower}> und zu guter Letzt gibt es </truth:{truth}> oder </dare:{dare}>! \n## Konfiguriere den Bot \n Mit den **/settings** Befehlen kannst du die **Cooldowns** der Buttons ändern, die **Frage des Tages** oder die**Willkommens Nachrichten** aktivieren oder deaktivieren. \n## Privatsphäre \n Wenn du nicht in den Bestenlisten oder Abstimmungen auftauchen willst. Du kannst deine Privatsphäre-Einstellungen mit </privacy:{privacy}> anpassen. Um herauszufinden, welche Daten wir speichern, besuche unsere [**Datenschutzerklärung**](https://wouldyoubot.gg/privacy)"
-		},
-		"button": {
-			"discord": "Would You Support",
-			"invite": "Would You Einladen",
-			"commands": "Befehle anzeigen",
-			"help": "Hilfe anzeigen"
-		}
-	},
-	"Vote": {
-		"embed": {
-			"title": "Abstimmen hilft **Würdest du** mehr Popularität unter den Nutzern auf Discord zu gewinnen! Du kannst alle 12 Stunden abstimmen und den Bot unterstützen!",
-			"value": "Klicke um zu Voten",
-			"footer": "Would You"
-		}
-	},
-	"Rather": {
-		"embed": {
-			"uselessname": "Würdest du eher",
-			"uselessname2": "oder",
-			"usefulname": "Würdest du eher",
-			"usefulname2": "oder",
-			"footer": "Würdest du eher",
-			"thispower": "Nach der Abstimmung würde die Mehrheit der Nutzer bevorziehen:"
-		},
-		"replays": {
-			"disabled": "Wiederholungen sind in diesem Server momentan deaktiviert!"
-		},
-		"button": {
-			"nocustom": "Es gibt momentan keine benutzerdefinierten Would You Nachrichten, die angezeigt werden könnten. Erstelle welche oder ändere den Typen mit /type"
-		}
-	},
-	"REPLAY": {
-		"embed": {
-			"title": "Would You Wiederholungen",
-			"description": "Du hast Wiederholungen erfolgreich gesetzt auf",
-			"errorDesc": "Um diesen Befehl nutzen zu können musst du für den Bot voten!",
-			"errorAlready": "Wiederholungen sind bereits deaktiviert",
-			"errorAlready2": "Wiederholungen sind bereits aktiviert",
-			"cooldownSuccess": "Erfolgreich einen Abkühlzeit gesetzt für ",
-			"cooldownSuccess2": " sekunden!",
-			"success": "Wiederholung wurde erfolgreich deaktiviert",
-			"missingPerms": "Dir fehlen die `Manage_GUILD` Rechte, um diesen Befehl auszuführen."
-		}
-	},
-	"Guide": {
-		"embed": {
-			"title": "Would You | Anleitung",
-			"description": "Anleitung zur Nutzung des vollen Potenzials von Would You",
-			"name1": "Wie man Would You richtig benutzt!",
-			"value1": "Erstelle einen eigenen Kanal für den Bot oder erlaube deinen Nutzern, den Bot im Hauptchat zu verwenden. \n > Das Ziel von Would You ist es, Chats aktiver zu machen, es wäre also sehr ironisch, die Verwendung von Would You in Hauptkanälen zu verbieten \n > Wenn du das volle Potenzial des Bots ausschöpfen willst, verwende den Befehl </settings:1099463656124723304> und richte einen Willkommenskanal ein. Dieser Kanal wird verwendet, um eine Willkommensnachricht zu senden, sobald ein Benutzer dem server beitritt.",
-			"name2": "Warum brauche ich das?",
-			"value2": "> Die Absicht dahinter ist, neuen Benutzern zu helfen, Teil der Konversation zu werden, indem man den Mitgliedern ein Thema gibt, über das sie direkt nach dem Beitritt sprechen können! Dies macht den Server nicht nur aktiver, sondern bezieht neue Benutzer direkt mit ein sodass diese sich nach Beitritt des Servers einbezogen fühlen und ermutigt werden, länger zu bleiben!",
-			"name3": "Weitere Tipps?",
-			"value3": "> Na klar! Achte darauf, dass die Benutzer über das Thema sprechen, welches sie bekommen haben, anstatt die Befehle zu spammen. Dies wird den Mitgliedern helfen, ein Gespräch aufzubauen und macht den Server in wenigen Minuten aktiver! Unten haben wir dir eine Beispiel-Konversation angehängt!",
-			"footer": "Would You"
-		}
-	},
-	"inter": {
-		"error": "Beim Versuch, diesen Befehl auszuführen, ist ein Fehler aufgetreten.",
-		"wait": "Du musst 30 Sekunden warten, bevor du den Knopf erneut drücken kannst.",
-		"again": "Bitte nutze den Befehl erneut."
-	},
-	"webhookManager": {
-		"noWebhook": "Aufgrund einer notwendigen Änderung für die Leistung benötige ich die Berechtigung **Webhooks verwalten**, um diese Nachricht zu senden! (Wenn ich diese Berechtigungen habe und diese Nachricht trotzdem erscheint, stelle sicher, dass ich einen Webhook erstellen kann!"
-	},
-	"Settings": {
-		"errorSame": "Die gegebene Zeitzone ist die gleiche Zeitzone, die schon gesetzt ist. Stelle sicher, dass du eine andere Zeitzone wählst.",
-		"errorInvalid": "Die gegebene Zeitzone ist ungültig, du kannst eine gültige Zeitzone von diesen auswählen [Zeitzonenwähler](https://kevinnovak.github.io/Time-Zone-Picker/)",
-		"intervalSame": "Die angegebene Veröffentlichungszeit ist die gleiche wie die bereits gesetzte. Stelle sicher, dass du einen andere Veröffentlichungszeit wählst.",
-		"intervalInvalid": "Die angegebene Veröffentlichungszeit war ungültig. Stelle sicher, dass deine Veröffentlichungszeit im 24h-Format ist und entweder mit 00 oder einem 5-Minuten-Intervall endet!",
-		"dailyChannel": "Wähle einen Kanal, in dem du tägliche Nachrichten haben möchtest!",
-		"replayChannel": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
-		"replayChannelNone": "Du hast keine Replay-Kanäle gesetzt!",
-		"replayCooldownMin": "Der Cooldown ist zu kurz, stelle sicher, dass der Cooldown über 2 Sekunden liegt!",
-		"replayDelete": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
-		"cooldownTooLong": "Der Cooldown ist zu lang, stelle sicher, dass der Cooldown nicht über 6 stunden liegt! (21,600 Millisekunden)!",
-		"replayChannelLimit": "Du kannst dem Cooldown nur 15 Kanäle hinzufügen!",
-		"dailyType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",
-		"welcomeType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",
-		"dailyRole": "Wähle eine Rolle, die du in täglichen Nachrichten gepingt haben möchtest!",
-		"replaySame": "Die angegebene replay Cooldown ist derselbe Cooldown, der bereits gesetzt ist. Stelle sicher, dass du einen andere Cooldown wählst.",
-		"voteSame": "Die angegebene vote Cooldown ist derselbe Cooldown, der bereits gesetzt ist. Stelle sicher, dass du einen andere Cooldown wählst.",
-		"cooldownInvalid": "Der Cooldown ist ungültig. Stelle sicher, dass der Cooldown nur Zahlen enthält!",
-		"welcomeTestSuccess": "Dies ist eine Testnachricht, die zeigt, wie Willkommensnachrichten aussehen.",
-		"premium": "Um auf diese Funktion zuzugreifen, musst du ein [Would You Premium](https://wouldyoubot.gg/premium) Abo abschließen",
-		"invalidLink": "Bitte gib einen gültigen PNG, JPG (JPEG), WEBP oder GIF Discord Anhang an, um ihn als Avatar des Bots festzulegen.",
-		"daysSelection": "Wähle jeden Tag aus, an dem du **nicht** möchtest, dass tägliche Nachrichten gesendet werden.",
-		"embed": {
-			"generalTitle": "Would You - Generelle Einstellungen",
-			"utilityTitle": "Would You - Utility Einstellungen",
-			"welcomeTitle": "Would You - Willkommens-Einstellungen",
-			"questionTitle": "Would You - Fragentypen",
-			"cooldownsTitle": "Would You - Cooldowns",
-			"dailyTitle": "Would You - Tägliche Nachrichten",
-			"replayCooldown": "**Replay Cooldown**",
-			"replayType": "**Replay-Typ**",
-			"replayBy": "**Replay Cooldown von**",
-			"replayBy1": "• Jeder Benutzer hat einen persönliche Cooldown.",
-			"replayBy2": "• Der gesamte Server hat einen Cooldown.",
-			"replayChannels": "**Replay-Kanäle**",
-			"replayChannelsNone": "Keine",
-			"dailyInterval": "**Veröffentlichungszeit**",
-			"dailyType": "**Typ**",
-			"dailyMsg": "**Aktiviert**",
-			"autoPin": "<:crown:1256988872160710808> **Automatische Pins**",
-			"dailyRole": "**Rolle**",
-			"dailyChannel": "**Kanal**",
-			"dailyTimezone": "**Zeitzone**",
-			"dailyThread": "**Threads**",
-			"welcome": "**Aktiviert**",
-			"welcomeChannel": "**Kanal**",
-			"welcomePing": "**Benutzer Pings**",
-			"footer": "Would You",
-			"error": "Dir fehlen die `Manage Guild` rechte um diesen Befehl auszuführen!",
-			"username": "<:crown:1256988872160710808> **QOTD Nutzername**",
-			"avatar": "<:crown:1256988872160710808> **QOTD Profilbild**",
-			"classicMode": "**Klassik Modus **",
-			"noChannel": "Keine spezifischen Kanaleinstellungen",
-			"globalType": "**Globaler Fragentyp**:",
-			"channelType": "**Einstellungen pro Kanal**:"
-		},
-		"button": {
-			"daySelect": "Tage ausschließen",
-			"dailyInterval": "Veröffentlichungszeit festlegen",
-			"dailyChannel": "Kanal setzen",
-			"dailyRole": "Rolle setzen",
-			"dailyTimezone": "Zeitzone setzen",
-			"dailyType": "Typ setzen",
-			"welcomeTest": "Test senden",
-			"dailyThread": "Threads umschalten",
-			"dailyMsg": "Tägliche Nachrichten umschalten",
-			"autoPin": "Auto Pin umschalten",
-			"replayCooldown": "Replay Cooldown setzen",
-			"replayDeleteChannels": "Replay-Kanäle löschen",
-			"replayType": "Replay-Typ",
-			"replayBy": "Wiedergeben von",
-			"welcomeChannel": "Kanal setzen",
-			"welcome": "Begrüßungsnachrichten umschalten",
-			"welcomePing": "Nutzer Pings umschalten",
-			"avatar": "Avatar festlegen",
-			"name": "Benutzername festlegen",
-			"classicMode": "Klassik Modus umschalten",
-			"globalType": "Globalen Fragentyp setzen",
-			"channelType": "Per-Channel-Typen konfigurieren",
-			"setGlobal": "Klicke auf den Typ, den du global setzen möchten.",
-			"setChannel": "Wähle einen Kanal aus, dem du einen Fragentyp hinzufügen möchten.",
-			"typeRegex": "Du musst einen gültigen Typ angeben: `regular`, `custom` oder `mixed`."
-		},
-		"modal": {
-			"dailyIntervalTitle": "Tägliche Veröffentlichungszeit",
-			"dailyIntervalDescription": "Wann sollen wir die Nachricht senden? (HH:MM)"
-		},
-		"select": {
-			"monday": "Montag",
-			"tuesday": "Dienstag",
-			"wednesday": "Mittwoch",
-			"thursday": "Donnerstag",
-			"friday": "Freitag",
-			"saturday": "Samstag",
-			"sunday": "Sonntag"
-		}
-	},
-	"Debug": {
-		"permissions": "Du hast nicht die erforderlichen Berechtigungen, um diesen Befehl zu verwenden.",
-		"channelNotSet": "Der Kanal für die tägliche Nachricht ist nicht eingestellt oder ich kann nicht darauf zugreifen.",
-		"tryToSent": "Ich werde jetzt versuchen, eine Testnachricht zu senden! Wenn nichts passiert, überprüfe den Support-Server des Bots!",
-		"testMessage": "Ich werde jetzt versuchen, eine Testnachricht zu senden! Wenn nichts passiert, überprüfe den Support-Server des Bots.",
-		"enabled": "Der Debug-Modus ist jetzt **aktiviert**. Denke daran, dass die Entwickler von Would You jetzt auf Befehle zugreifen können, **ohne** die nötigen Rechte zu haben!",
-		"disabled": "Der Debug-Modus ist jetzt **deaktiviert**. Denke daran, dass die Entwickler von Would You nicht mehr auf Befehle zugreifen können, **ohne** die nötigen Rechte zu haben!",
-		"embed": {
-			"title": "Debug",
-			"settings": "Einstellungen",
-			"isChannel": "Dieser Kanal **{is}** der tägliche Nachrichtenkanal.",
-			"is": "ist",
-			"isnot": "ist nicht",
-			"channel": "Dieser Kanal",
-			"can": "kann",
-			"cannot": "kann nicht",
-			"manageWebhook": "Ich **{can}** Webhooks in diesem Kanal verwalten.",
-			"embedLinks": "Ich **{can}** in diesem Kanal Embeds senden.",
-			"sendMessages": "Ich **{can}** Nachrichten in diesem Kanal senden.",
-			"viewChannel": "Ich **{can}** diesen Kanal sehen.",
-			"readMessageHistory": "Ich **{can}** den Nachrichtenverlauf in diesem Kanal lesen.",
-			"global": "Global",
-			"g_manageWebhooks": "Ich **{can}** Webhooks auf diesem Server verwalten.",
-			"g_embedLinks": "Ich **{can}** auf diesem Server Einbettungen senden.",
-			"g_sendMessages": "Ich **{can}** Nachrichten auf diesem Server senden.",
-			"g_viewChannel": "Ich **{can}** Kanäle auf diesem Server anzeigen.",
-			"g_readMessageHistory": "Ich **{can}** den Nachrichtenverlauf auf diesem Server lesen."
-		}
-	},
-	"Voting": {
-		"Yes": "Ja",
-		"No": "Nein",
-		"Vote": "Vote: ",
-		"VotingResults": "Abstimmungsergebnis",
-		"VotingResultsError": "Ergebnisse konnten nicht abgerufen werden."
-	},
-	"HigherLower": {
-		"description": "Denkst du, dass **[{keyword}]({source})** mehr oder weniger Suchanfragen hat als **[{history}]({source2})**?",
-		"initial": {
-			"title": "Initialisierung",
-			"description": "Bitte warte einen Moment. Ich erstelle ein Spiel..."
-		},
-		"game": {
-			"title": "Du hast verloren!",
-			"description": "Du hast eine Punktzahl von **{score}** erreicht!"
-		},
-		"error": {
-			"user": "Dieses Spiel gehört nicht dir, es gehört **{user}**. Erstelle dein eigenes Spiel mit </higherlower:1153718305903890554>!"
-		}
-	},
-	"Premium": {
-		"message": "*Du kannst [Would You Premium](https://wouldyoubot.gg/premium) abonnieren, um mehr Funktionen freizuschalten und den Bot zu unterstützen!*",
-		"tier": "Stufe: {type}",
-		"tier1": "Premium",
-		"tier2": "Premium + AI",
-		"tier3": "Partner"
-	}
+  "Ping": {
+    "embed": {
+      "title": "🏓 Pong!",
+      "api": "API Latenz",
+      "client": "Client Latenz",
+      "footer": "Would You"
+    },
+    "button": {
+      "title": "Discord Latenz"
+    }
+  },
+  "Placeholders": {
+    "embed": {
+      "title": "Alle Verfügbaren Platzhalter",
+      "question": "Dies ist eine Platzhalterfrage!"
+    }
+  },
+  "Language": {
+    "embed": {
+      "error": "Dir fehlt die `ManageGuild` permission!",
+      "footer": "Would You"
+    }
+  },
+  "Welcome": {
+    "embed": {
+      "title": "Willkommen"
+    }
+  },
+  "Wwyd": {
+    "embed": {
+      "title": "Was **würdest du** tuen?",
+      "footer": "Erkläre was und warum",
+      "option1": "Option 1",
+      "option2": "Option 2"
+    }
+  },
+  "Support": {
+    "embed": {
+      "title": "Would You",
+      "description": "Wenn du jemals hilfe brauchen solltest kontaktiere unser **support team** auf unserem **[Support Server](https://discord.gg/vMyXAxEznS)!**",
+      "footer": "Would You"
+    }
+  },
+  "Privacy": {
+    "settings": "Datenschutzeinstellungen",
+    "status": "**Status**:",
+    "turnOn": "Anschalten",
+    "turnOff": "Ausschalten",
+    "on": "Ein",
+    "off": "Aus",
+    "desc": "Wenn du die Privatsphäre aktivierst, wird dein Benutzername nicht mehr in den Wahl-Ergebnissen angezeigt! Wenn du diese Option aktivierst, sind deine Stimmen völlig anonym."
+  },
+  "Leaderboard": {
+    "none": "Es konnten keine Informationen zur Rangliste gefunden werden.",
+    "guild": "Server Rangliste",
+    "global": "Globale Rangliste",
+    "points": "Punkte"
+  },
+  "wyCustom": {
+    "error": {
+      "noPages": "Kann nicht fortfahren. Es gibt keine Seiten, zu denen du gehen kannst.",
+      "issue": "Diese Nachricht kann nicht abgerufen werden. Wiederhole den Befehl, um benutzerdefinierte Nachrichten anzuzeigen.",
+      "paginate": "Du kannst nichmehr weiter gehen :(",
+      "maximum": "Du hast die maximale Anzahl an benutzerdefinierten Nachrichten erreicht. Du kannst mehr hinzufügen wenn du für den bot votest!",
+      "empty": "Es gibt keine benutzerdefinierten nachrichten in diesem server!",
+      "limit": "Du hast mehr als 100 {type} in deinen benutzerdefinierten Nachrichten. Wenn du mehr hinzufügen möchtest, musst du Premium abonnieren.",
+      "addToLimit": "Die ersten 100 Fragen für alle Kategorien wurden automatisch hinzugefügt.",
+      "import": {
+        "att1": "Du musst eine gültige JSON-Datei angeben! [Example](https://i.imgur.com/xdEzfyW.png)",
+        "att2": "Du musst eine gültige JSON-Datei angeben! [Example](https://i.imgur.com/xdEzfyW.png)",
+        "att3": "Die von dir angegebene JSON-Datei enthält keine Daten! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
+        "att4": "Die von dir angegebene JSON-Datei enthält keine custom fragen! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
+        "att5": "Die von dir angegebene JSON-Datei enthält keine custom fragen! [Beispiel](https://i.imgur.com/xdEzfyW.png)",
+        "att15": "Bei der Ausführung dieses Befehls ist ein Fehler aufgetreten. Bitte melde ihn dem Support-Server!",
+        "att16": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die wouldyourather Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
+        "att17": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die neverhaveiever Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
+        "att18": "Die JSON, die du uns zur Verfügung gestellt hast, hatte zu viele Daten für die wwyd Kategorie, denn wir akzeptieren nur 30 benutzerdefinierte Nachrichten. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
+        "att19": "Du kannst nicht mehr als 30 benutzerdefinierte Nachrichten in einem Import für die Kategorie wouldyourather haben. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
+        "att20": "Du kannst nicht mehr als 30 benutzerdefinierte Nachrichten in einem Import für die Kategorie neverhaveiever haben. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
+        "att21": "Du kannst nicht mehr als 30 benutzerdefinierte Nachrichten in einem Import für die Kategorie wwyd haben. Du kannst mehr erhalten, indem du für den Bot abstimmst!",
+        "att22": "Wenn du deine aktuellen **wouldyourather** benutzerdefinierten Nachrichten und die in deiner Datei zusammenzählst, werden es mehr als 30 sein, was das Limit ist. Du kannst mehr erreichen, indem du für den Bot abstimmst!",
+        "att23": "Wenn du deine aktuellen **neverhaveiever** benutzerdefinierten Nachrichten und die in deiner Datei zusammenzählst, werden es mehr als 30 sein, was das Limit ist. Du kannst mehr erreichen, indem du für den Bot abstimmst!",
+        "att24": "Wenn du deine aktuellen **wwyd** benutzerdefinierten Nachrichten und die in deiner Datei zusammenzählst, werden es mehr als 30 sein, was das Limit ist. Du kannst mehr erreichen, indem du für den Bot abstimmst!"
+      },
+      "export": {
+        "none": "Es gibt keine benutzerdefinierten Would You Nachrichten, die exportiert werden könnten!"
+      }
+    },
+    "success": {
+      "import": "Import erfolgreich!",
+      "export": "Export erfolgreich!",
+      "embedAdd": {
+        "title": "Would You Nachricht erfolgreich erstellt!",
+        "descID": "ID",
+        "descMsg": "Nachricht",
+        "descCat": "Kategorie",
+        "descCont": "Inhalt",
+        "descAccept": "Es scheint, als hättest du \"{type}\" nicht an den Anfang deines Textes gesetzt. Möchtest du, dass ich es automatisch hinzufüge?",
+        "descWYR": "Würdest du eher",
+        "descNHIE": "Ich habe noch nie",
+        "descWWYD": "Was würdest du tun",
+        "footerDisable": "Dieser Button wird in 30 Sekunden deaktiviert.",
+        "success": "Erfolgreich \"{type}\" zum Anfang des Textes hinzugefügt!"
+      },
+      "embedRemove": {
+        "title": "Diese Would You Nachricht wurde erfolgreich gelöscht!"
+      },
+      "embedRemoveAll": {
+        "title": "Bist du sicher, dass du jede benutzerdefinierte Would You Nachricht löschen möchtest?",
+        "accept": "Alle würdest du eher Nachrichten erfolgreich gelöscht!",
+        "decline": "Du hast das Löschen aller benutzerdefinierten Nachrichten abgelehnt.",
+        "none": "Du hast momentan keine benutzerdefinierten Would You Nachrichten zu löschen!"
+      },
+      "paginator": {
+        "title": "Would You benutzerdefinierte Nachrichten",
+        "descCatNHIE": "**Kategorie**: Nie habe ich jemals",
+        "descCatWYR": "**Kategorie**: Würdest du eher",
+        "descCatTRUTH": "**Kategorie**: Wahrheit",
+        "descCatDARE": "**Kategorie**: Pflicht",
+        "descCatWWYD": "**Kategorie**: Was würdest du tun",
+        "descCatTOPIC":"**Kategorie**: Thema"
+      }
+    }
+  },
+  "wyType": {
+    "embed": {
+      "title": "Would You Typ geändert!",
+      "descDef": "Für Would You Befehle werden nun Standartnachrichten verwendet.",
+      "descBoth": "Sowohl Standartnachrichten als auch benutzerdefinierte Nachrichten werden für Would You Befehle genutzt.",
+      "descCust": "Benutzerdefinierte Nachrichten werden nun für Would You Befehle verwendet."
+    }
+  },
+  "Custom": {
+    "embed": {
+      "title": "Würdest du diese Kraft haben wollen?",
+      "footer": "Would You"
+    }
+  },
+  "WouldYou": {
+    "embed": {
+      "Usefulname": "Würdest du diese Kraft haben wollen?",
+      "Uselessname": "Würdest du diese Kraft haben wollen?",
+      "footer": "Would You"
+    },
+    "replays": {
+      "disabled": "Wiederholung ist in diesem Server gerade ausgeschaltet!"
+    },
+    "stats": {
+      "of": "von",
+      "taking": " würden diese Kraft benutzen.",
+      "user": "Nutzer",
+      "users": "Nutzern"
+    }
+  },
+  "Help": {
+    "embed": {
+      "description": "## Was ist Would You? \n\n **Would You** ist ein Bot, der dir ermöglicht, mit deinen Freunden auf Discord Spiele zu spielen, dabei Spaß zu haben und sich gegenseitig kennenzulernen. \n## Hauptspielmodi \n Die Spielmodi von <:roundyou:1009964111045607525> **Would You** umfassen </wouldyourather:{wouldyourather}>, </neverhaveiever:{neverhaveiever}>, </whatwouldyoudo:{whatwouldyoudo}>, </higherlower:{higherlower}> und zu guter Letzt gibt es </truth:{truth}> oder </dare:{dare}>! \n## Konfiguriere den Bot \n Mit den **/settings** Befehlen kannst du die **Cooldowns** der Buttons ändern, die **Frage des Tages** oder die**Willkommens Nachrichten** aktivieren oder deaktivieren. \n## Privatsphäre \n Wenn du nicht in den Bestenlisten oder Abstimmungen auftauchen willst. Du kannst deine Privatsphäre-Einstellungen mit </privacy:{privacy}> anpassen. Um herauszufinden, welche Daten wir speichern, besuche unsere [**Datenschutzerklärung**](https://wouldyoubot.gg/privacy)"
+    },
+    "button": {
+      "discord": "Would You Support",
+      "invite": "Would You Einladen",
+      "commands": "Befehle anzeigen",
+      "help": "Hilfe anzeigen"
+    }
+  },
+  "Vote": {
+    "embed": {
+      "title": "Abstimmen hilft **Würdest du** mehr Popularität unter den Nutzern auf Discord zu gewinnen! Du kannst alle 12 Stunden abstimmen und den Bot unterstützen!",
+      "value": "Klicke um zu Voten",
+      "footer": "Would You"
+    }
+  },
+  "Rather": {
+    "embed": {
+      "uselessname": "Würdest du eher",
+      "uselessname2": "oder",
+      "usefulname": "Würdest du eher",
+      "usefulname2": "oder",
+      "footer": "Würdest du eher",
+      "thispower": "Nach der Abstimmung würde die Mehrheit der Nutzer bevorziehen:"
+    },
+    "replays": {
+      "disabled": "Wiederholungen sind in diesem Server momentan deaktiviert!"
+    },
+    "button": {
+      "nocustom": "Es gibt momentan keine benutzerdefinierten Would You Nachrichten, die angezeigt werden könnten. Erstelle welche oder ändere den Typen mit /type"
+    }
+  },
+  "REPLAY": {
+    "embed": {
+      "title": "Would You Wiederholungen",
+      "description": "Du hast Wiederholungen erfolgreich gesetzt auf",
+      "errorDesc": "Um diesen Befehl nutzen zu können musst du für den Bot voten!",
+      "errorAlready": "Wiederholungen sind bereits deaktiviert",
+      "errorAlready2": "Wiederholungen sind bereits aktiviert",
+      "cooldownSuccess": "Erfolgreich einen Abkühlzeit gesetzt für ",
+      "cooldownSuccess2": " sekunden!",
+      "success": "Wiederholung wurde erfolgreich deaktiviert",
+      "missingPerms": "Dir fehlen die `Manage_GUILD` Rechte, um diesen Befehl auszuführen."
+    }
+  },
+  "Guide": {
+    "embed": {
+      "title": "Would You | Anleitung",
+      "description": "Anleitung zur Nutzung des vollen Potenzials von Would You",
+      "name1": "Wie man Would You richtig benutzt!",
+      "value1": "Erstelle einen eigenen Kanal für den Bot oder erlaube deinen Nutzern, den Bot im Hauptchat zu verwenden. \n > Das Ziel von Would You ist es, Chats aktiver zu machen, es wäre also sehr ironisch, die Verwendung von Would You in Hauptkanälen zu verbieten \n > Wenn du das volle Potenzial des Bots ausschöpfen willst, verwende den Befehl </settings:1099463656124723304> und richte einen Willkommenskanal ein. Dieser Kanal wird verwendet, um eine Willkommensnachricht zu senden, sobald ein Benutzer dem server beitritt.",
+      "name2": "Warum brauche ich das?",
+      "value2": "> Die Absicht dahinter ist, neuen Benutzern zu helfen, Teil der Konversation zu werden, indem man den Mitgliedern ein Thema gibt, über das sie direkt nach dem Beitritt sprechen können! Dies macht den Server nicht nur aktiver, sondern bezieht neue Benutzer direkt mit ein sodass diese sich nach Beitritt des Servers einbezogen fühlen und ermutigt werden, länger zu bleiben!",
+      "name3": "Weitere Tipps?",
+      "value3": "> Na klar! Achte darauf, dass die Benutzer über das Thema sprechen, welches sie bekommen haben, anstatt die Befehle zu spammen. Dies wird den Mitgliedern helfen, ein Gespräch aufzubauen und macht den Server in wenigen Minuten aktiver! Unten haben wir dir eine Beispiel-Konversation angehängt!",
+      "footer": "Would You"
+    }
+  },
+  "inter": {
+    "error": "Beim Versuch, diesen Befehl auszuführen, ist ein Fehler aufgetreten.",
+    "wait": "Du musst 30 Sekunden warten, bevor du den Knopf erneut drücken kannst.",
+    "again": "Bitte nutze den Befehl erneut."
+  },
+  "webhookManager": {
+    "noWebhook": "Aufgrund einer notwendigen Änderung für die Leistung benötige ich die Berechtigung **Webhooks verwalten**, um diese Nachricht zu senden! (Wenn ich diese Berechtigungen habe und diese Nachricht trotzdem erscheint, stelle sicher, dass ich einen Webhook erstellen kann!"
+  },
+  "Settings": {
+    "errorSame": "Die gegebene Zeitzone ist die gleiche Zeitzone, die schon gesetzt ist. Stelle sicher, dass du eine andere Zeitzone wählst.",
+    "errorInvalid": "Die gegebene Zeitzone ist ungültig, du kannst eine gültige Zeitzone von diesen auswählen [Zeitzonenwähler](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "intervalSame": "Die angegebene Veröffentlichungszeit ist die gleiche wie die bereits gesetzte. Stelle sicher, dass du einen andere Veröffentlichungszeit wählst.",
+    "intervalInvalid": "Die angegebene Veröffentlichungszeit war ungültig. Stelle sicher, dass deine Veröffentlichungszeit im 24h-Format ist und entweder mit 00 oder einem 5-Minuten-Intervall endet!",
+    "dailyChannel": "Wähle einen Kanal, in dem du tägliche Nachrichten haben möchtest!",
+    "replayChannel": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
+    "replayChannelNone": "Du hast keine Replay-Kanäle gesetzt!",
+    "replayCooldownMin": "Der Cooldown ist zu kurz, stelle sicher, dass der Cooldown über 2 Sekunden liegt!",
+    "replayDelete": "Wähle einen Kanal, dem du einen Cooldown hinzufügen möchtest!",
+    "cooldownTooLong": "Der Cooldown ist zu lang, stelle sicher, dass der Cooldown nicht über 6 stunden liegt! (21,600 Millisekunden)!",
+    "replayChannelLimit": "Du kannst dem Cooldown nur 15 Kanäle hinzufügen!",
+    "dailyType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",
+    "welcomeType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",
+    "commandSame": "Die angegebene Abklingzeit des Befehls ist die gleiche, die bereits eingestellt ist. Stellen Sie sicher, dass Sie eine andere Abklingzeit wählen.",
+    "dailyRole": "Wähle eine Rolle, die du in täglichen Nachrichten gepingt haben möchtest!",
+    "replaySame": "Die angegebene replay Cooldown ist derselbe Cooldown, der bereits gesetzt ist. Stelle sicher, dass du einen andere Cooldown wählst.",
+    "voteSame": "Die angegebene vote Cooldown ist derselbe Cooldown, der bereits gesetzt ist. Stelle sicher, dass du einen andere Cooldown wählst.",
+    "cooldownInvalid": "Der Cooldown ist ungültig. Stelle sicher, dass der Cooldown nur Zahlen enthält!",
+    "welcomeTestSuccess": "Dies ist eine Testnachricht, die zeigt, wie Willkommensnachrichten aussehen.",
+    "premium": "Um auf diese Funktion zuzugreifen, musst du ein [Would You Premium](https://wouldyoubot.gg/premium) Abo abschließen",
+    "invalidLink": "Bitte gib einen gültigen PNG, JPG (JPEG), WEBP oder GIF Discord Anhang an, um ihn als Avatar des Bots festzulegen.",
+    "daysSelection": "Wähle jeden Tag aus, an dem du **nicht** möchtest, dass tägliche Nachrichten gesendet werden.",
+    "embed": {
+      "welcomeMessage": "**Willkommensnachricht**",
+      "generalTitle": "Would You - Generelle Einstellungen",
+      "utilityTitle": "Would You - Utility Einstellungen",
+      "welcomeTitle": "Would You - Willkommens-Einstellungen",
+      "questionTitle": "Would You - Fragentypen",
+      "cooldownsTitle": "Would You - Cooldowns",
+      "dailyTitle": "Would You - Tägliche Nachrichten",
+      "replayCooldown": "**Replay Cooldown**",
+      "replayType": "**Replay-Typ**",
+      "replayBy": "**Replay Cooldown von**",
+      "replayBy1": "• Jeder Benutzer hat einen persönliche Cooldown.",
+      "replayBy2": "• Der gesamte Server hat einen Cooldown.",
+      "replayChannels": "**Replay-Kanäle**",
+      "replayChannelsNone": "Keine",
+      "command": "**Befehl Abklingzeit**",
+      "commandBy": "**Befehl Abklingzeit um**",
+      "commandType": "**Befehlstyp**",
+      "commandType1": "• Jeder Benutzer hat eine Abklingzeit für jeden Befehl.",
+      "commandType2": "• Jeder Benutzer hat eine Abklingzeit für alle Befehle.",
+      "beforeText": "Wählen Sie die Einstellungen, die Sie bearbeiten/anzeigen möchten",
+      "dailyInterval": "**Veröffentlichungszeit**",
+      "dailyType": "**Typ**",
+      "dailyMsg": "**Aktiviert**",
+      "autoPin": "<:crown:1256988872160710808> **Automatische Pins**",
+      "dailyRole": "**Rolle**",
+      "dailyChannel": "**Kanal**",
+      "dailyTimezone": "**Zeitzone**",
+      "dailyThread": "**Threads**",
+      "welcome": "**Aktiviert**",
+      "welcomeChannel": "**Kanal**",
+      "welcomePing": "**Benutzer Pings**",
+      "footer": "Would You",
+      "error": "Dir fehlen die `Manage Guild` rechte um diesen Befehl auszuführen!",
+      "username": "<:crown:1256988872160710808> **QOTD Nutzername**",
+      "avatar": "<:crown:1256988872160710808> **QOTD Profilbild**",
+      "classicMode": "**Klassik Modus **",
+      "noChannel": "Keine spezifischen Kanaleinstellungen",
+      "globalType": "**Globaler Fragentyp**:",
+      "channelType": "**Einstellungen pro Kanal**:"
+    },
+    "button": {
+      "welcomeMessage": "Willkommensnachricht setzen",
+      "daySelect": "Tage ausschließen",
+      "dailyInterval": "Veröffentlichungszeit festlegen",
+      "dailyChannel": "Kanal setzen",
+      "dailyRole": "Rolle setzen",
+      "dailyTimezone": "Zeitzone setzen",
+      "dailyType": "Typ setzen",
+      "welcomeTest": "Test senden",
+      "dailyThread": "Threads umschalten",
+      "dailyMsg": "Tägliche Nachrichten umschalten",
+      "autoPin": "Auto Pin umschalten",
+      "replayCooldown": "Replay Cooldown setzen",
+      "replayDeleteChannels": "Replay-Kanäle löschen",
+      "replayType": "Replay-Typ",
+      "replayBy": "Wiedergeben von",
+      "commandCooldown": "Abklingzeit für Befehle festlegen",
+      "commandBy": "Befehl von",
+      "commandType": "Befehlstyp",
+      "cooldownCommands": "Kommando-Abklingzeiten",
+      "cooldownButtons": "Button Cooldowns",
+      "goToA": "Button Cooldowns",
+      "goToB": "Kommando-Abklingzeiten",
+      "welcomeChannel": "Kanal setzen",
+      "welcome": "Begrüßungsnachrichten umschalten",
+      "welcomePing": "Nutzer Pings umschalten",
+      "avatar": "Avatar festlegen",
+      "name": "Benutzername festlegen",
+      "classicMode": "Klassik Modus umschalten",
+      "globalType": "Globalen Fragentyp setzen",
+      "channelType": "Per-Channel-Typen konfigurieren",
+      "setGlobal": "Klicke auf den Typ, den du global setzen möchten.",
+      "setChannel": "Wähle einen Kanal aus, dem du einen Fragentyp hinzufügen möchten.",
+      "typeRegex": "Du musst einen gültigen Typ angeben: `regular`, `custom` oder `mixed`."
+    },
+    "modal": {
+      "dailyIntervalTitle": "Tägliche Veröffentlichungszeit",
+      "dailyIntervalDescription": "Wann sollen wir die Nachricht senden? (HH:MM)"
+    },
+    "select": {
+      "monday": "Montag",
+      "tuesday": "Dienstag",
+      "wednesday": "Mittwoch",
+      "thursday": "Donnerstag",
+      "friday": "Freitag",
+      "saturday": "Samstag",
+      "sunday": "Sonntag"
+    }
+  },
+  "Debug": {
+    "permissions": "Du hast nicht die erforderlichen Berechtigungen, um diesen Befehl zu verwenden.",
+    "channelNotSet": "Der Kanal für die tägliche Nachricht ist nicht eingestellt oder ich kann nicht darauf zugreifen.",
+    "tryToSent": "Ich werde jetzt versuchen, eine Testnachricht zu senden! Wenn nichts passiert, überprüfe den Support-Server des Bots!",
+    "testMessage": "Ich werde jetzt versuchen, eine Testnachricht zu senden! Wenn nichts passiert, überprüfe den Support-Server des Bots.",
+    "enabled": "Der Debug-Modus ist jetzt **aktiviert**. Denke daran, dass die Entwickler von Would You jetzt auf Befehle zugreifen können, **ohne** die nötigen Rechte zu haben!",
+    "disabled": "Der Debug-Modus ist jetzt **deaktiviert**. Denke daran, dass die Entwickler von Would You nicht mehr auf Befehle zugreifen können, **ohne** die nötigen Rechte zu haben!",
+    "embed": {
+      "title": "Debug",
+      "settings": "Einstellungen",
+      "isChannel": "Dieser Kanal **{is}** der tägliche Nachrichtenkanal.",
+      "is": "ist",
+      "isnot": "ist nicht",
+      "channel": "Dieser Kanal",
+      "can": "kann",
+      "cannot": "kann nicht",
+      "manageWebhook": "Ich **{can}** Webhooks in diesem Kanal verwalten.",
+      "embedLinks": "Ich **{can}** in diesem Kanal Embeds senden.",
+      "sendMessages": "Ich **{can}** Nachrichten in diesem Kanal senden.",
+      "viewChannel": "Ich **{can}** diesen Kanal sehen.",
+      "readMessageHistory": "Ich **{can}** den Nachrichtenverlauf in diesem Kanal lesen.",
+      "global": "Global",
+      "g_manageWebhooks": "Ich **{can}** Webhooks auf diesem Server verwalten.",
+      "g_embedLinks": "Ich **{can}** auf diesem Server Einbettungen senden.",
+      "g_sendMessages": "Ich **{can}** Nachrichten auf diesem Server senden.",
+      "g_viewChannel": "Ich **{can}** Kanäle auf diesem Server anzeigen.",
+      "g_readMessageHistory": "Ich **{can}** den Nachrichtenverlauf auf diesem Server lesen."
+    }
+  },
+  "Voting": {
+    "Yes": "Ja",
+    "No": "Nein",
+    "Vote": "Vote: ",
+    "VotingResults": "Abstimmungsergebnis",
+    "VotingResultsError": "Ergebnisse konnten nicht abgerufen werden."
+  },
+  "HigherLower": {
+    "description": "Denkst du, dass **[{keyword}]({source})** mehr oder weniger Suchanfragen hat als **[{history}]({source2})**?",
+    "initial": {
+      "title": "Initialisierung",
+      "description": "Bitte warte einen Moment. Ich erstelle ein Spiel..."
+    },
+    "game": {
+      "title": "Du hast verloren!",
+      "description": "Du hast eine Punktzahl von **{score}** erreicht!"
+    },
+    "error": {
+      "user": "Dieses Spiel gehört nicht dir, es gehört **{user}**. Erstelle dein eigenes Spiel mit </higherlower:1153718305903890554>!"
+    }
+  },
+  "Premium": {
+    "message": "*Du kannst [Would You Premium](https://wouldyoubot.gg/premium) abonnieren, um mehr Funktionen freizuschalten und den Bot zu unterstützen!*",
+    "tier": "Stufe: {type}",
+    "tier1": "Premium",
+    "tier2": "Premium + AI",
+    "tier3": "Partner"
+  }
 }

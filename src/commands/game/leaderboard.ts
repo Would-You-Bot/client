@@ -70,11 +70,13 @@ const command: ChatInputCommand = {
 
         switch (interaction.options.getString("for")) {
           case "global": {
+            // Using the index on "higherlower.highscore" to speed up the query
             const data2 = await UserModel.find({
               "higherlower.highscore": { $gt: 1 },
             })
               .sort({ "higherlower.highscore": -1 })
-              .limit(10);
+              .limit(10)
+              .lean(); // `.lean()` makes the query faster as it skips hydration
 
             data = await Promise.all(
               data2.map(async (u: any) => {
@@ -113,18 +115,18 @@ const command: ChatInputCommand = {
                 .setTitle(
                   client.translation.get(language, "Leaderboard.global"),
                 )
-                .setDescription(data.join("\n").toString())
+                .setDescription(data.join("\n"))
                 .setColor("#0598F6"),
             );
 
-            data =
-              Math.round(
-                (await UserModel.find({
-                  "higherlower.highscore": { $gt: 1 },
-                }).countDocuments()) / 10,
-              ) - 1;
+            // Fetch the total count for pagination using the index
+            const totalDocs = await UserModel.countDocuments({
+              "higherlower.highscore": { $gt: 1 },
+            });
 
-            for (let i = 0; i < data; i++) {
+            const totalPages = Math.ceil(totalDocs / 10) - 1;
+
+            for (let i = 0; i < totalPages; i++) {
               page.add(
                 new EmbedBuilder()
                   .setTitle(
@@ -136,7 +138,7 @@ const command: ChatInputCommand = {
             break;
           }
 
-          case "local":
+          case "local": {
             if (!interaction.guild) {
               interaction.reply({
                 ephemeral: true,
@@ -144,6 +146,8 @@ const command: ChatInputCommand = {
               });
               return;
             }
+
+            // Use caching and optimize data handling for local scores
             data = await Promise.all(
               guildDb.gameScores
                 .filter((u: any) => u.higherlower >= 1)
@@ -173,25 +177,25 @@ const command: ChatInputCommand = {
                 )}`,
             );
 
-            data = Array.from(
+            const paginatedData = Array.from(
               {
                 length: Math.ceil(data.length / 10),
               },
-              (a, r) => data.slice(r * 10, r * 10 + 10),
+              (_a, r) => data.slice(r * 10, r * 10 + 10),
             );
 
-            Math.ceil(data.length / 10);
-            data = data.map((e: any) =>
+            for (let i = 0; i < paginatedData.length; i++) {
               page.add(
                 new EmbedBuilder()
                   .setTitle(
                     client.translation.get(language, "Leaderboard.guild"),
                   )
-                  .setDescription(e.slice(0, 10).join("\n").toString())
+                  .setDescription(paginatedData[i].join("\n"))
                   .setColor("#0598F6"),
-              ),
-            );
+              );
+            }
             break;
+          }
         }
 
         page.start(

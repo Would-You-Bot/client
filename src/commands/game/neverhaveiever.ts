@@ -13,6 +13,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("neverhaveiever")
     .setDescription("Gives you a 'Never Have I Ever' question")

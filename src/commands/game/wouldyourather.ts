@@ -13,6 +13,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("wouldyourather")
     .setDescription("Gives you a 'Would You Rather' question")
@@ -98,10 +99,6 @@ const command: ChatInputCommand = {
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: WYR.question, fetchReply: true }
       : {
-          content:
-            !premium.result && randomValue >= 3 && randomValue < 5
-              ? client.translation.get(guildDb?.language, "Premium.message")
-              : undefined,
           embeds: [ratherEmbed],
           components: [row, mainRow],
         };

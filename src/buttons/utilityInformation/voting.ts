@@ -26,9 +26,9 @@ const button: Button = {
     let replyContent = `You've voted for **${optionChosen}**.`;
 
     if (optionChosen === "Option 1") {
-      replyContent += ` **Option 1** got ${option1Votes} vote(s) (${((option1Votes / totalVotes) * 100) | 0}%) and **Option 2** got ${option2Votes} vote(s) (${~~(option2Votes / totalVotes) * 100}%).`;
+      replyContent += ` **Option 1** got ${option1Votes} vote(s) (${~~((option1Votes / totalVotes) * 100)}%) and **Option 2** got ${option2Votes} vote(s) (${~~((option2Votes / totalVotes) * 100)}%).`;
     } else if (optionChosen === "Option 2") {
-      replyContent += ` **Option 2** got ${option2Votes} vote(s) (${((option2Votes / totalVotes) * 100) | 0}%) and **Option 1** got ${option1Votes} vote(s) (${~~(option1Votes / totalVotes) * 100}%).`;
+      replyContent += ` **Option 2** got ${option2Votes} vote(s) (${~~((option2Votes / totalVotes) * 100)}%) and **Option 1** got ${option1Votes} vote(s) (${~~((option1Votes / totalVotes) * 100)}%).`;
     } else {
       replyContent;
     }

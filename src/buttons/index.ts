@@ -100,17 +100,32 @@ const buttonInteractionEvent: Event = {
     if (
       guildDb != null &&
       !bypass &&
-      guildDb.replayType === "Channels" &&
-      guildDb.replayChannels.find((x: any) => x.id === interaction.channelId) &&
-      !isExcludedButton
+      !isExcludedButton &&
+      guildDb.replayBy === "User"
     ) {
-      cooldownKey = `${interaction.user?.id}-${interaction.channelId}`;
-      cooldown = Number(
+      if (
+        guildDb.replayType === "Channels" &&
         guildDb.replayChannels.find((x: any) => x.id === interaction.channelId)
-          ?.cooldown,
-      );
-    } else if (!isExcludedButton && !bypass) {
-      cooldownKey = interaction.user?.id;
+      ) {
+        cooldownKey = `${interaction.user?.id}-${interaction.channelId}`;
+        cooldown = Number(
+          guildDb.replayChannels.find(
+            (x: any) => x.id === interaction.channelId,
+          )?.cooldown,
+        );
+      } else if (guildDb.replayType === "Guild") {
+        cooldownKey = interaction.user?.id;
+        cooldown = Number(
+          guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0,
+        );
+      }
+    } else if (
+      guildDb != null &&
+      !bypass &&
+      !isExcludedButton &&
+      guildDb.replayBy === "Guild"
+    ) {
+      cooldownKey = interaction.guild?.id;
       cooldown = Number(
         guildDb?.replayCooldown != null ? guildDb.replayCooldown : 0,
       );

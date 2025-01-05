@@ -44,8 +44,8 @@ const event: Event = {
     }
 
     await webhookPrivate.send({
-      avatarURL: "https://wouldyoubot.gg/Logo.png", // Make sure to update this if you ever change the link thx <3
-      username: global?.devBot ? "Dev Bot" : "Main Bot",
+      avatarURL: "https://wouldyoubot.gg/Logo.png",
+      username: "Would You",
       embeds: [
         new EmbedBuilder()
           .setTitle("← Left Server")
@@ -55,16 +55,13 @@ const event: Event = {
               extension: "png",
             }),
           )
-          .setDescription(
-            `**Name**: ${
-              guild.name
-            }\n**Users**: ${guild.memberCount.toLocaleString()}\n**Server Owner**: ${guild.ownerId}${
-              features ? `\n**Features**: ${features}` : ""
-            }`,
-          )
-          .setFooter({
-            text: global?.devBot ? "Dev Bot" : "Main Bot",
-          }),
+          .addFields([
+            { name: "Name", value: guild.name, inline: false },
+            { name: "ID", value: guild.id, inline: false },
+            { name: "Users", value: guild.memberCount.toLocaleString(), inline: false },
+            { name: "Server Owner", value: guild.ownerId, inline: false },
+            ...(features ? [{ name: "Features", value: features, inline: false }] : []),
+          ])         
       ],
       allowedMentions: { parse: [] },
     });

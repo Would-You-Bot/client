@@ -13,6 +13,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("random")
     .setDescription("Gives you a random truth or dare question to answer")

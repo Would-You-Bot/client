@@ -117,10 +117,6 @@ const button: Button = {
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: NHIE.question, fetchReply: true }
       : {
-          content:
-            !premium.result && randomValue >= 3 && randomValue < 5
-              ? client.translation.get(guildDb?.language, "Premium.message")
-              : undefined,
           embeds: [nhieEmbed],
           components: [row, mainRow],
         };

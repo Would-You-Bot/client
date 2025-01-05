@@ -10,6 +10,7 @@ import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("support")
     .setDescription("Gives you a link to get help")

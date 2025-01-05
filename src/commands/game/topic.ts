@@ -13,6 +13,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("topic")
     .setDescription("Gives you a random topic to talk about")
@@ -86,10 +87,6 @@ const command: ChatInputCommand = {
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: TOPIC.question, fetchReply: true }
       : {
-          content:
-            !premium.result && randomValue >= 3 && randomValue < 5
-              ? client.translation.get(guildDb?.language, "Premium.message")
-              : undefined,
           embeds: [ratherEmbed],
           components: [mainRow],
         };

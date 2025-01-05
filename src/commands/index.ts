@@ -42,6 +42,61 @@ const commandInteractionEvent: Event = {
       }
 
       if (!command) return;
+      // Cooldown handling
+      let cooldownKey: string | undefined;
+      let cooldown: number;
+
+      if (
+        guildDb != null &&
+        command?.cooldown &&
+        guildDb?.commandCooldown != 0
+      ) {
+        if (guildDb?.commandBy == "Guild") {
+          if (guildDb.commandType == "Command") {
+            cooldownKey = `${interaction.guild?.id}-${interaction.commandName}`;
+            cooldown = Number(
+              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
+            );
+          } else if (guildDb.commandType == "User") {
+            cooldownKey = `${interaction.guild?.id}`;
+            cooldown = Number(
+              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
+            );
+          }
+        } else if (guildDb?.commandBy == "User") {
+          if (guildDb.commandType == "Command") {
+            cooldownKey = `${interaction.user?.id}-${interaction.commandName}`;
+            cooldown = Number(
+              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
+            );
+          } else if (guildDb.commandType == "User") {
+            cooldownKey = `${interaction.guild?.id}`;
+            cooldown = Number(
+              guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
+            );
+          }
+        }
+
+        if (cooldownKey && cooldown!) {
+          if (
+            client.used.has(cooldownKey) &&
+            client.used.get(cooldownKey)! > Date.now()
+          ) {
+            interaction
+              .reply({
+                content: `${guildDb.commandType == "Command" ? `You can use this command again` : `You can use commands again`} <t:${Math.floor(client.used.get(cooldownKey) / 1000)}:R>!`,
+                ephemeral: true,
+              })
+              .catch((err) => {
+                captureException(err);
+              });
+            return;
+          }
+          client.used.set(cooldownKey, Date.now() + cooldown);
+          setTimeout(() => client.used.delete(cooldownKey!), cooldown);
+        }
+      }
+
       const statsMap = {
         wouldyourather: "wouldyourather.used.command",
         neverhaveiever: "neverhaveiever.used.command",
@@ -50,6 +105,7 @@ const commandInteractionEvent: Event = {
         truth: "truth.used.command",
         dare: "dare.used.command",
         random: "random.used.command",
+        topic: "topic.used.command",
       } as Record<string, string>;
       // Get the field path based on the command name
       const fieldPath = statsMap[interaction.commandName];
@@ -70,6 +126,7 @@ const commandInteractionEvent: Event = {
         "neverhaveiever",
         "higherlower",
         "whatwouldyoudo",
+        "topic",
         "leaderboard",
         "privacy",
         "language",

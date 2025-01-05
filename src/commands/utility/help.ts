@@ -10,6 +10,7 @@ import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription("Shows a list of all the 'Would You' commands")

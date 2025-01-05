@@ -156,6 +156,17 @@ const button: Button = {
           ),
       );
 
+    const goTo =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId("cooldownCommands")
+          .setLabel(
+            client.translation.get(guildDb?.language, "Settings.button.goToB"),
+          )
+          .setStyle(ButtonStyle.Secondary)
+          .setEmoji("1308672399188820023"),
+      );
+
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
       replayCooldown: value * 1000,
@@ -164,7 +175,7 @@ const button: Button = {
     await (data?.modal as any).update({
       content: null,
       embeds: [generalMsg],
-      components: [generalButtons, setDeleteButtons],
+      components: [generalButtons, setDeleteButtons, goTo],
     });
     return;
   },

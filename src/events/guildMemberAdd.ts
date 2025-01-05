@@ -57,13 +57,29 @@ const event: Event = {
 
     const randomMessage = Math.random() > 0.5 ? General : WhatYouDo;
 
+    const placeholderMap: Record<string, string> = {
+      "{{user_displayname}}": member.user.displayName,
+      "{{user_tag}}": member.user.username,
+      "{{@mention}}": `<@${member.user.id}>`,
+      "{{guild_name}}": member.guild.name,
+      "{{guild_member_count}}": member.guild.memberCount.toString(),
+      "{{question}}": randomMessage.question,
+      "{{new_line}}": "\n",
+    };
+
+    const messageTemplate = guildDb.welcomeMessage ?? `${client.translation.get(guildDb?.language, "Welcome.embed.title")} ${
+      guildDb.welcomePing
+        ? `<@${member.user.id}>`
+        : `${member.user.username}`
+    }! ${randomMessage.question}`;
+
+    const message = Object.entries(placeholderMap).reduce((msg, [placeholder, value]) => {
+      return msg.replace(new RegExp(placeholder, "g"), value);
+    }, messageTemplate);
+    
     channel
       .send({
-        content: `${client.translation.get(guildDb?.language, "Welcome.embed.title")} ${
-          guildDb.welcomePing
-            ? `<@${member.user.id}>`
-            : `${member.user.username}`
-        }! ${randomMessage.question}`,
+        content: message,
       })
       .catch((err: Error) => {
         captureException(err);

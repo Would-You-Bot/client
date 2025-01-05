@@ -13,6 +13,12 @@ const button: Button = {
   execute: async (interaction, client, guildDb) => {
     const check = guildDb.welcome;
 
+    const truncateString = (str: string, maxLength: number) => {
+      // Remove line breaks first
+      const cleanedStr = str.replace(/\n/g, ' '); 
+      return cleanedStr.length > maxLength ? `${cleanedStr.substring(0, maxLength)}...` : cleanedStr;
+    };
+
     const welcomes = new EmbedBuilder()
       .setTitle(
         client.translation.get(
@@ -33,7 +39,14 @@ const button: Button = {
         )}: ${guildDb.welcomeType}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.welcomeChannel",
-        )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}`,
+        )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}\n${client.translation.get(
+        guildDb?.language,
+        "Settings.embed.welcomeMessage",
+      )}: ${
+        guildDb.welcomeMessage
+          ? truncateString(guildDb.welcomeMessage, 100)
+          : ":x:"
+      }`,
       )
       .setColor("#0598F6")
       .setFooter({
@@ -109,6 +122,19 @@ const button: Button = {
           ),
       );
 
+      const welcomeButtons3 =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId("welcomeMessage")
+          .setEmoji("1185973660465500180")
+          .setLabel(
+            client.translation.get(guildDb?.language, "Settings.button.welcomeMessage"),
+          )
+          .setStyle(
+            guildDb.welcomeMessage ? ButtonStyle.Primary : ButtonStyle.Secondary,
+          )
+      );
+
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
       welcome: !check,
@@ -117,7 +143,7 @@ const button: Button = {
     interaction.update({
       content: null,
       embeds: [welcomes],
-      components: [welcomeButtons2, welcomeButtons],
+      components: [welcomeButtons2, welcomeButtons, welcomeButtons3],
       options: {
         ephemeral: true,
       },

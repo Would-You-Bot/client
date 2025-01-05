@@ -94,8 +94,6 @@ export default async function settingsGeneral(
         .setEmoji("1207800685928910909")
     );
 
-  // Second button row
-  // Deals with type, channel, test
   const welcomeButtons2 =
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
@@ -130,18 +128,6 @@ export default async function settingsGeneral(
           client.translation.get(
             guildDb?.language,
             "Settings.button.welcomeMessage"
-          )
-        )
-        .setStyle(
-          guildDb.welcomeMessage ? ButtonStyle.Primary : ButtonStyle.Secondary
-        ),
-      new ButtonBuilder()
-        .setCustomId("welcomeEmbedEdit")
-        .setEmoji("1185973660465500180")
-        .setLabel(
-          client.translation.get(
-            guildDb?.language,
-            "Settings.button.welcomeEmbedEdit"
           )
         )
         .setStyle(

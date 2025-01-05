@@ -14,6 +14,7 @@ import { UserModel } from "../../util/Models/userModel";
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("whatwouldyoudo")
     .setDescription("Gives you a 'What Would You Do' question")

@@ -5,6 +5,7 @@ const { version } = require("../../../package.json");
 
 const command: ChatInputCommand = {
   requireGuild: true,
+  cooldown: true,
   data: new SlashCommandBuilder()
     .setName("info")
     .setDescription("Gives you information about the bot")
@@ -41,15 +42,15 @@ const command: ChatInputCommand = {
 
     const premiumEmoji = premium.result ? "✅" : "❌";
 
-    const { dominik, sky, skelly, paul, paulos } = client.config.emojis.info;
+    const { dominik, sky, skelly, paulos, tee, woofer } = client.config.emojis.info;
 
     const infoEmbed = new EmbedBuilder()
-      .setColor("#5865f4")
+      .setColor("#0598F6")
       .setTitle("Bot Info")
       .addFields(
         {
           name: "Developers:",
-          value: `${dominik + sky + skelly + paul + paulos}`,
+          value: `${dominik + sky + skelly + paulos + tee + woofer}`,
           inline: false,
         },
         {

@@ -18,6 +18,7 @@ export default class KeepAlive {
       captureMessage(
         `Rate limited on ${path} with a limit of ${limit} and a timeout of ${timeout}`,
       );
+      );
       captureMessage(
         `Rate limited on ${path} with a limit of ${limit} and a timeout of ${timeout}`,
       );

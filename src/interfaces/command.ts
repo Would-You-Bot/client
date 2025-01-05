@@ -18,6 +18,7 @@ export interface Command {
     | SlashCommandOptionsOnlyBuilder
     | ContextMenuCommandBuilder;
   requireGuild?: boolean;
+  cooldown?: boolean;
   integration_types?: number[];
   contexts?: number[];
   execute(
@@ -35,6 +36,7 @@ export interface ChatInputCommand extends Command {
     | SlashCommandBuilder
     | SlashCommandOptionsOnlyBuilder
     | SlashCommandSubcommandsOnlyBuilder;
+  cooldown?: boolean;
   execute(
     interaction: ChatInputCommandInteraction,
     client: WouldYou,

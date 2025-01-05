@@ -107,10 +107,6 @@ const button: Button = {
     const classicData: InteractionReplyOptions = guildDb?.classicMode
       ? { content: WWYD.question, fetchReply: true }
       : {
-          content:
-            !premium.result && randomValue >= 3 && randomValue < 5
-              ? client.translation.get(guildDb?.language, "Premium.message")
-              : undefined,
           embeds: [wwydEmbed],
           components: [row],
         };
