@@ -10,6 +10,12 @@
       "title": "Discord Latenz"
     }
   },
+  "Placeholders": {
+    "embed": {
+      "title": "Alle Verfügbaren Platzhalter",
+      "question": "Dies ist eine Platzhalterfrage!"
+    }
+  },
   "Language": {
     "embed": {
       "error": "Dir fehlt die `ManageGuild` permission!",
@@ -239,6 +245,7 @@
     "invalidLink": "Bitte gib einen gültigen PNG, JPG (JPEG), WEBP oder GIF Discord Anhang an, um ihn als Avatar des Bots festzulegen.",
     "daysSelection": "Wähle jeden Tag aus, an dem du **nicht** möchtest, dass tägliche Nachrichten gesendet werden.",
     "embed": {
+      "welcomeMessage": "**Willkommensnachricht**",
       "generalTitle": "Would You - Generelle Einstellungen",
       "utilityTitle": "Would You - Utility Einstellungen",
       "welcomeTitle": "Would You - Willkommens-Einstellungen",
@@ -279,6 +286,7 @@
       "channelType": "**Einstellungen pro Kanal**:"
     },
     "button": {
+      "welcomeMessage": "Willkommensnachricht setzen",
       "daySelect": "Tage ausschließen",
       "dailyInterval": "Veröffentlichungszeit festlegen",
       "dailyChannel": "Kanal setzen",

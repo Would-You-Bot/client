@@ -10,6 +10,12 @@
       "title": "Latencia de la API de Discord"
     }
   },
+  "Placeholders": {
+    "embed": {
+      "title": "Todos los marcadores de posición disponibles",
+      "question": "Esta pregunta es un marcador de posición."
+    }
+  },
   "Language": {
     "embed": {
       "error": "¡Te falta el permiso `Manage guild` para usar este comando!",
@@ -239,6 +245,7 @@
     "invalidLink": "Proporciona un archivo adjunto válido PNG, JPG (JPEG), WEBP o GIF de Discord para establecerlo como avatar del bot.",
     "daysSelection": "Seleccione todos los días en los que **no** desea que aparezcan los mensajes diarios.",
     "embed": {
+      "welcomeMessage": "**Mensaje de bienvenida**",
       "generalTitle": "Would You - Configuración general",
       "replayCooldown": "**Tiempo de Repetición**",
       "replayType": "**Tipo de reproducción**",
@@ -273,6 +280,7 @@
       "classicMode": "**Modo Clásico**"
     },
     "button": {
+      "welcomeMessage": "Configurar mensaje de bienvenida",
       "daySelect": "Excluir días",
       "dailyInterval": "Fijar la hora de publicación",
       "dailyChannel": "Establecer canal",

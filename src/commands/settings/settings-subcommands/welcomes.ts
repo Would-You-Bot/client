@@ -14,7 +14,14 @@ export default async function settingsGeneral(
   client: WouldYou,
   guildDb: IGuildModel,
 ) {
-  const emb = new EmbedBuilder()
+  const truncateString = (str: string, maxLength: number) => {
+    // Remove line breaks first
+    const cleanedStr = str.replace(/\n/g, ' '); 
+    return cleanedStr.length > maxLength ? `${cleanedStr.substring(0, maxLength)}...` : cleanedStr;
+  };
+  
+
+  const welcomeEmbed = new EmbedBuilder()
     .setTitle(
       client.translation.get(guildDb?.language, "Settings.embed.welcomeTitle"),
     )
@@ -31,7 +38,14 @@ export default async function settingsGeneral(
       )}: ${guildDb.welcomeType}\n${client.translation.get(
         guildDb?.language,
         "Settings.embed.welcomeChannel",
-      )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}`,
+      )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}\n${client.translation.get(
+        guildDb?.language,
+        "Settings.embed.welcomeMessage",
+      )}: ${
+        guildDb.welcomeMessage
+          ? truncateString(guildDb.welcomeMessage, 100)
+          : ":x:"
+      }`,
     )
     .setColor("#0598F6")
     .setFooter({
@@ -105,9 +119,22 @@ export default async function settingsGeneral(
         ),
     );
 
+    const welcomeButtons3 =
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("welcomeMessage")
+        .setEmoji("1185973660465500180")
+        .setLabel(
+          client.translation.get(guildDb?.language, "Settings.button.welcomeMessage"),
+        )
+        .setStyle(
+          guildDb.welcomeMessage ? ButtonStyle.Primary : ButtonStyle.Secondary,
+        )
+    );
+
   await interaction.reply({
-    embeds: [emb],
-    components: [welcomeButtons2, welcomeButtons1],
+    embeds: [welcomeEmbed],
+    components: [welcomeButtons2, welcomeButtons1, welcomeButtons3],
     ephemeral: true,
   });
 }

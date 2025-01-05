@@ -10,6 +10,12 @@
       "title": "Latence de l'API de Discord"
     }
   },
+  "Placeholders": {
+    "embed": {
+      "title": "Tous les espaces réservés disponibles",
+      "question": "Il s'agit là d'une question de remplacement !"
+    }
+  },
   "Language": {
     "embed": {
       "error": "Vous avez besoin de la permission `Gérer le serveur` pour utiliser cette commande !",
@@ -239,6 +245,7 @@
     "invalidLink": "Veuillez fournir une pièce jointe Discord valide PNG, JPG (JPEG), WEBP ou GIF à définir comme avatar du bot.",
     "daysSelection": "Sélectionnez chaque jour que vous **ne voulez pas** que les messages quotidiens soient allumés.",
     "embed": {
+      "welcomeMessage": "**Message de bienvenue**",
       "generalTitle": "Would You - Paramètres généraux",
       "replayCooldown": "**Rejouer le temps de recharge**",
       "replayType": "**Type de rediffusion**",
@@ -273,6 +280,7 @@
       "classicMode": "**Mode classique**"
     },
     "button": {
+      "welcomeMessage": "Définir le message de bienvenue",
       "daySelect": "Jours exclus",
       "dailyInterval": "Définir l'heure de publication",
       "dailyChannel": "Définir le salon",

@@ -10,6 +10,12 @@
       "title": "Discord API latency"
     }
   },
+  "Placeholders": {
+    "embed": {
+      "title": "All Placeholders Available",
+      "question": "This is a placeholder question!"
+    }
+  },
   "Language": {
     "embed": {
       "error": "You are missing the `Manage Guild` permission to use this command!",
@@ -242,6 +248,7 @@
       "generalTitle": "Would You - General Settings",
       "utilityTitle": "Would You - Utility Settings",
       "welcomeTitle": "Would You - Welcome Settings",
+      "welcomeMessage": "**Welcome Message**",
       "questionTitle": "Would You - Question Types",
       "cooldownsTitle": "Would You - Cooldowns",
       "dailyTitle": "Would You - Daily Messages",
@@ -279,6 +286,7 @@
       "channelType": "**Per-Channel Settings**:"
     },
     "button": {
+      "welcomeMessage": "Set Welcome Message",
       "daySelect": "Exclude Days",
       "dailyInterval": "Set Post Time",
       "dailyChannel": "Set Channel",

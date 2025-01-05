@@ -10,6 +10,12 @@
       "title": "Latenza API di Discord"
     }
   },
+  "Placeholders": {
+    "embed": {
+      "title": "Tutti i segnaposto disponibili",
+      "question": "Questa è una domanda segnaposto!"
+    }
+  },
   "Language": {
     "embed": {
       "error": "Hai bisogno del permesso `Gestire Server` per usare questo comando!",
@@ -239,6 +245,7 @@
     "invalidLink": "Fornisci un valido allegato PNG, JPG (JPEG), WEBP o GIF Discord da impostare come avatar del bot.",
     "daysSelection": "Seleziona ogni giorno che **non** vuoi che i messaggi giornalieri siano attivi.",
     "embed": {
+      "welcomeMessage": "**Messaggio di benvenuto**",
       "generalTitle": "Would You - Impostazioni generali",
       "replayCooldown": "**Cooldown Gioca Ancora**",
       "replayType": "**Tipo Gioca Ancora**",
@@ -273,6 +280,7 @@
       "classicMode": "**Modalità classica **"
     },
     "button": {
+      "welcomeMessage": "Impostazione del messaggio di benvenuto",
       "daySelect": "Escludere giorni",
       "dailyInterval": "Imposta ora di pubblicazione",
       "dailyChannel": "Imposta canale",

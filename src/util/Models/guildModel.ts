@@ -11,6 +11,7 @@ export interface IGuildModel {
   welcomeChannel: string;
   welcomePing: boolean;
   welcomeType: string;
+  welcomeMessage: string;
   dailyMsg: boolean;
   dailyChannel: string;
   dailyRole: string | null;
@@ -86,6 +87,10 @@ const guildProfileSchema = new Schema<IGuildModel>(
     welcomeType: {
       type: String,
       default: "mixed",
+    },
+    welcomeMessage: {
+      type: String,
+      default: null,
     },
     dailyMsg: {
       type: Boolean,
