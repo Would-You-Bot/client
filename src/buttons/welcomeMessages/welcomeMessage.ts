@@ -1,17 +1,43 @@
 import {
+  EmbedBuilder,
   ActionRowBuilder,
+  type MessageActionRowComponentBuilder,
   ButtonBuilder,
   ButtonStyle,
-  EmbedBuilder,
-  type MessageActionRowComponentBuilder,
 } from "discord.js";
 import type { Button } from "../../interfaces";
+import { Modal, type ModalData } from "../../util/modalHandler";
 
 const button: Button = {
-  name: "selectMenuWelcome",
+  name: "welcomeMessage",
   cooldown: false,
-  execute: async (interaction: any, client, guildDb) => {
-    const newChannel = interaction.values[0];
+  execute: async (interaction, client, guildDb) => {
+    const { data } = await new Modal({
+      title: "Set Welcome Message",
+      customId: "welcomeMessage",
+      fields: [
+        {
+          customId: "input",
+          style: "paragraph",
+          label: "What should the welcome message be?",
+          required: true,
+          placeholder: "Welcome to the server!",
+        },
+      ],
+    } as ModalData).getData(interaction);
+
+    const value = data?.fieldValues[0].value;
+
+    if (!value || value.length > 300) {
+      data?.modal.reply({
+        embeds: [],
+        content: "The welcome message must be less than 300 characters.",
+        options: {
+          ephemeral: true,
+        },
+      });
+      return;
+    }
 
     const truncateString = (str: string, maxLength: number) => {
       // Remove line breaks first
@@ -21,7 +47,7 @@ const button: Button = {
         : cleanedStr;
     };
 
-    const welcomes = new EmbedBuilder()
+    const welcomeEmbed = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.welcomeTitle")
       )
@@ -38,14 +64,10 @@ const button: Button = {
         )}: ${guildDb.welcomeType}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.welcomeChannel"
-        )}: <#${newChannel}>\n${client.translation.get(
+        )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.welcomeMessage"
-        )}: ${
-          guildDb.welcomeMessage
-            ? truncateString(guildDb.welcomeMessage, 100)
-            : ":x:"
-        }`
+        )}: ${truncateString(value, 100)}`
       )
       .setColor("#0598F6")
       .setFooter({
@@ -56,7 +78,9 @@ const button: Button = {
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
-    const welcomeButtons =
+    // First button row
+    // Deals with toggles
+    const welcomeButtons1 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId("welcomeType")
@@ -67,8 +91,7 @@ const button: Button = {
               "Settings.button.dailyType"
             )
           )
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji("1185973667973320775"),
+          .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
           .setCustomId("welcomeChannel")
           .setEmoji("1185973667973320775")
@@ -97,6 +120,9 @@ const button: Button = {
           )
           .setEmoji("1207800685928910909")
       );
+
+    // Second button row
+    // Deals with type, channel, test
     const welcomeButtons2 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
@@ -121,7 +147,7 @@ const button: Button = {
             guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary
           )
       );
-    
+
     const welcomeButtons3 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
@@ -138,18 +164,19 @@ const button: Button = {
           )
       );
 
-    await client.database.updateGuild(interaction.guild.id, {
+    await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
-      welcomeChannel: newChannel,
+      welcomeMessage: value,
     });
 
-    interaction.update({
+    await (data?.modal as any).update({
+      embeds: [welcomeEmbed],
+      components: [welcomeButtons2, welcomeButtons1, welcomeButtons3],
       content: null,
-      embeds: [welcomes],
-      components: [welcomeButtons2, welcomeButtons, welcomeButtons3],
-      ephemeral: true,
+      options: {
+        ephemeral: true,
+      },
     });
-    return;
   },
 };
 

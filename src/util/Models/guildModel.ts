@@ -11,6 +11,7 @@ export interface IGuildModel {
   welcomeChannel: string;
   welcomePing: boolean;
   welcomeType: string;
+  welcomeMessage: string;
   dailyMsg: boolean;
   dailyChannel: string;
   dailyRole: string | null;
@@ -48,6 +49,9 @@ export interface IGuildModel {
   webhookName: string;
   webhookAvatar: string;
   lastUsageTimestamp: number;
+  commandCooldown: number;
+  commandBy: string;
+  commandType: string;
 }
 
 const guildProfileSchema = new Schema<IGuildModel>(
@@ -83,6 +87,10 @@ const guildProfileSchema = new Schema<IGuildModel>(
     welcomeType: {
       type: String,
       default: "mixed",
+    },
+    welcomeMessage: {
+      type: String,
+      default: null,
     },
     dailyMsg: {
       type: Boolean,
@@ -195,11 +203,23 @@ const guildProfileSchema = new Schema<IGuildModel>(
       type: Number,
       default: 0,
     },
+    commandCooldown: {
+      type: Number,
+      default: 3000,
+    },
+    commandBy: {
+      type: String,
+      default: "Guild",
+    },
+    commandType: {
+      type: String,
+      default: "Command",
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export const GuildModel = model<IGuildModel>(
   "guildProfile",
-  guildProfileSchema,
+  guildProfileSchema
 );
