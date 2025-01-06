@@ -11,6 +11,7 @@ import {
 
 interface WelcomeEmbedData {
   welcomeEmbedTitle: string;
+  welcomeEmbedTitleURL: string;
   welcomeEmbedDescription: string;
   welcomeEmbedAuthorName: string;
   welcomeEmbedAuthorURL: string;
@@ -26,6 +27,7 @@ const valueToPropertyMap: { [key: string]: keyof WelcomeEmbedData } = {
   author: "welcomeEmbedAuthorName",
   authorURL: "welcomeEmbedAuthorURL",
   title: "welcomeEmbedTitle",
+  titleURL: "welcomeEmbedTitleURL",
   description: "welcomeEmbedDescription",
   content: "welcomeEmbedContent",
   thumbnail: "welcomeEmbedThumbnail",
