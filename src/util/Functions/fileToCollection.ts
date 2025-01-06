@@ -1,4 +1,4 @@
-import { readdirSync } from "node:fs";
+import { readdirSync, statSync } from "node:fs";
 import path from "node:path";
 import { Collection } from "discord.js";
 import type { Command, Event, Interaction } from "../../interfaces";
@@ -7,52 +7,44 @@ export async function fileToCollection<
   Type extends Command | Interaction | Event,
 >(dirPath: string): Promise<Collection<string, Type>> {
   const collection: Collection<string, Type> = new Collection();
-  const dirents = readdirSync(dirPath, { withFileTypes: true });
   const promises: Promise<void>[] = [];
 
-  const directories = dirents.filter((dirent) => dirent.isDirectory());
-  for (const dir of directories) {
-    const directoryPath = path.join(dirPath, dir.name);
-    const files = readdirSync(directoryPath).filter((file) =>
-      file.endsWith(".js"),
-    );
-
-    for (const file of files) {
-      const importPromise = import(path.join(directoryPath, file)).then(
-        (resp: { default: Type }) => {
-          collection.set(
-            (resp.default as Command).data !== undefined
-              ? (resp.default as Command).data.name
-              : (resp.default as Event).event
-                ? (resp.default as Event).event
-                : (resp.default as Interaction).name,
-            resp.default,
-          );
-        },
-      );
-      promises.push(importPromise);
+  function processDirectory(directory: string) {
+    const dirents = readdirSync(directory, { withFileTypes: true });
+    for (const dirent of dirents) {
+      const fullPath = path.join(directory, dirent.name);
+      if (dirent.isDirectory()) {
+        processDirectory(fullPath);
+      } else if (dirent.isFile() && dirent.name.endsWith(".js")) {
+        const importPromise = import(fullPath).then((resp: { default: Type }) => {
+          const key = getKey(resp.default);
+          if (key) {
+            collection.set(key, resp.default);
+          } else {
+            console.warn(`Could not determine key for file: ${fullPath}`);
+          }
+        }).catch(error => {
+          console.error(`Error importing file ${fullPath}:`, error);
+        });
+        promises.push(importPromise);
+      }
     }
   }
 
-  const rootFiles = dirents.filter(
-    (dirent) => !dirent.isDirectory() && dirent.name.endsWith(".js"),
-  );
-  for (const file of rootFiles) {
-    const importPromise = import(path.join(dirPath, file.name)).then(
-      (resp: { default: Type }) => {
-        collection.set(
-          (resp.default as Command).data !== undefined
-            ? (resp.default as Command).data.name
-            : (resp.default as Event).event
-              ? (resp.default as Event).event
-              : (resp.default as Interaction).name,
-          resp.default,
-        );
-      },
-    );
-    promises.push(importPromise);
+  //Helper function to extract the key
+  function getKey(item: Type): string | undefined {
+    if ((item as Command).data !== undefined) {
+      return (item as Command).data.name;
+    } else if ((item as Event).event) {
+      return (item as Event).event;
+    } else if ((item as Interaction).name) {
+      return (item as Interaction).name;
+    } else {
+      return undefined;
+    }
   }
 
+  processDirectory(dirPath);
   await Promise.all(promises);
   return collection;
 }

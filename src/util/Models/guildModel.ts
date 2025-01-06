@@ -12,6 +12,18 @@ export interface IGuildModel {
   welcomePing: boolean;
   welcomeType: string;
   welcomeMessage: string;
+  welcomeEmbed: boolean;
+  welcomeEmbedTitle: string;
+  welcomeEmbedDescription: string;
+  welcomeEmbedAuthorName: string;
+  welcomeEmbedAuthorURL: string;
+  welcomeEmbedThumbnail: string;
+  welcomeEmbedImage: string;
+  welcomeEmbedFooterText: string;
+  welcomeEmbedFooterURL: string;
+  welcomeEmbedColor: string;
+  welcomeEmbedTimestamp: boolean;
+  welcomeEmbedContent: string;
   dailyMsg: boolean;
   dailyChannel: string;
   dailyRole: string | null;
@@ -89,6 +101,54 @@ const guildProfileSchema = new Schema<IGuildModel>(
       default: "mixed",
     },
     welcomeMessage: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbed: {
+      type: Boolean,
+      default: false,
+    },
+    welcomeEmbedTitle: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedDescription: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedAuthorName: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedAuthorURL: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedThumbnail: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedImage: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedFooterText: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedFooterURL: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedColor: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedTimestamp: {
+      type: Boolean,
+      default: null,
+    },
+    welcomeEmbedContent: {
       type: String,
       default: null,
     },

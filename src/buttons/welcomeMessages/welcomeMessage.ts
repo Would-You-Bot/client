@@ -161,7 +161,17 @@ const button: Button = {
           )
           .setStyle(
             guildDb.welcomeMessage ? ButtonStyle.Primary : ButtonStyle.Secondary
+          ),
+        new ButtonBuilder()
+          .setCustomId("welcomeEmbedEdit")
+          .setEmoji("1308673732478238740")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.welcomeEmbedEdit"
+            )
           )
+          .setStyle(ButtonStyle.Primary)
       );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
