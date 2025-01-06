@@ -89,11 +89,9 @@ const button: Button = {
               "Settings.button.welcomeTest"
             )
           )
-          .setDisabled(!!(guildDb.welcome && guildDb.welcomeChannel))
+          .setDisabled(guildDb.welcome ? false : true)
           .setStyle(
-            guildDb.welcome && guildDb.welcomeChannel
-              ? ButtonStyle.Primary
-              : ButtonStyle.Secondary
+            guildDb.welcome ? ButtonStyle.Primary : ButtonStyle.Secondary
           )
           .setEmoji("1207800685928910909")
       );

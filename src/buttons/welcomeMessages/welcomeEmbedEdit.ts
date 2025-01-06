@@ -2,7 +2,9 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
+  ColorResolvable,
   EmbedBuilder,
+  StringSelectMenuBuilder,
   type MessageActionRowComponentBuilder,
 } from "discord.js";
 import type { Button } from "../../interfaces";
@@ -16,10 +18,11 @@ export function embed({
   authorURL = guildDb.welcomeEmbedAuthorURL || "❌",
   thumbnail = guildDb.welcomeEmbedThumbnail || "❌",
   image = guildDb.welcomeEmbedImage || "❌",
-  footerText = guildDb.welcomeEmbedFooterText || "❌",
+  footer = guildDb.welcomeEmbedFooterText || "❌",
   footerURL = guildDb.welcomeEmbedFooterURL || "❌",
   color = guildDb.welcomeEmbedColor || "❌",
-  timestamp = guildDb.welcomeEmbedTimestamp || "❌",
+  timestamp = guildDb.welcomeEmbedTimestamp,
+  toggle = guildDb.welcomeEmbed || "❌",
 }: {
   client: any;
   guildDb: any;
@@ -30,10 +33,11 @@ export function embed({
   authorURL?: string;
   thumbnail?: string;
   image?: string;
-  footerText?: string;
+  footer?: string;
   footerURL?: string;
-  color?: string;
+  color?: ColorResolvable;
   timestamp?: boolean;
+  toggle?: boolean;
 }) {
   return new EmbedBuilder()
     .setTitle(
@@ -93,7 +97,7 @@ export function embed({
           guildDb?.language,
           "Settings.embed.welcomeFooterText"
         ),
-        value: `\`\`\`${footerText.slice(0, 100)}\`\`\``,
+        value: `\`\`\`${footer.slice(0, 100)}\`\`\``,
         inline: false,
       },
       {
@@ -117,7 +121,7 @@ export function embed({
           guildDb?.language,
           "Settings.embed.welcomeColor"
         ),
-        value: `\`\`\`${color.slice(0, 8)}\`\`\``,
+        value: `\`\`\`${color}\`\`\``,
         inline: false,
       },
       {
@@ -125,7 +129,15 @@ export function embed({
           guildDb?.language,
           "Settings.embed.welcomeTimestamp"
         ),
-        value: `\`\`\`${timestamp ? "On" : "Off"}\`\`\``,
+        value: `\`\`\`${timestamp === true ? "✅" : "❌"}\`\`\``,
+        inline: true,
+      },
+      {
+        name: client.translation.get(
+          guildDb?.language,
+          "Settings.embed.welcomeToggle"
+        ),
+        value: `\`\`\`${toggle === true ? "✅" : "❌"}\`\`\``,
         inline: true,
       },
     ])
@@ -139,13 +151,24 @@ export function embed({
 export function Button1({
   client,
   guildDb,
-  title = ButtonStyle.Secondary,
-  author = ButtonStyle.Secondary,
-  authorURL = ButtonStyle.Secondary,
+  title = guildDb?.welcomeEmbedTitle
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
+  description = guildDb?.welcomeEmbedDescription
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
+
+  author = guildDb?.welcomeEmbedAuthorName
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
+  authorURL = guildDb?.welcomeEmbedAuthorURL
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
 }: {
   client: any;
   guildDb: any;
   title?: ButtonStyle;
+  description?: ButtonStyle;
   author?: ButtonStyle;
   authorURL?: ButtonStyle;
 }) {
@@ -161,6 +184,16 @@ export function Button1({
       )
       .setStyle(title)
       .setEmoji("1185973667973320775"),
+    new ButtonBuilder()
+      .setCustomId("welcomeEmbedDescription")
+      .setEmoji("1185973667973320775")
+      .setLabel(
+        client.translation.get(
+          guildDb?.language,
+          "Settings.button.welcomeEmbedDescription"
+        )
+      )
+      .setStyle(description),
     new ButtonBuilder()
       .setCustomId("welcomeEmbedAuthorName")
       .setEmoji("1185973667973320775")
@@ -187,27 +220,23 @@ export function Button1({
 export function Button2({
   client,
   guildDb,
-  description = ButtonStyle.Secondary,
-  thumbnail = ButtonStyle.Secondary,
-  image = ButtonStyle.Secondary,
+  thumbnail = guildDb?.welcomeEmbedThumbnail
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
+  image = guildDb?.welcomeEmbedImage
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
+  timestamp = guildDb?.welcomeEmbedTimestamp
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
 }: {
   client: any;
   guildDb: any;
-  description?: ButtonStyle;
   thumbnail?: ButtonStyle;
   image?: ButtonStyle;
+  timestamp?: ButtonStyle;
 }) {
   return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-    new ButtonBuilder()
-      .setCustomId("welcomeEmbedDescription")
-      .setEmoji("1185973667973320775")
-      .setLabel(
-        client.translation.get(
-          guildDb?.language,
-          "Settings.button.welcomeEmbedDescription"
-        )
-      )
-      .setStyle(description),
     new ButtonBuilder()
       .setCustomId("welcomeEmbedThumbnail")
       .setEmoji("1185973667973320775")
@@ -227,16 +256,32 @@ export function Button2({
           "Settings.button.welcomeEmbedImage"
         )
       )
-      .setStyle(image)
+      .setStyle(image),
+    new ButtonBuilder()
+      .setCustomId("welcomeEmbedTimestamp")
+      .setEmoji("1185973660465500180")
+      .setLabel(
+        client.translation.get(
+          guildDb?.language,
+          "Settings.button.welcomeEmbedTimestamp"
+        )
+      )
+      .setStyle(timestamp)
   );
 }
 
 export function Button3({
   client,
   guildDb,
-  footer = ButtonStyle.Secondary,
-  footerURL = ButtonStyle.Secondary,
-  color = ButtonStyle.Secondary,
+  footer = guildDb?.welcomeEmbedFooterText
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
+  footerURL = guildDb?.welcomeEmbedFooterURL
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
+  color = guildDb?.welcomeEmbedColor
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
 }: {
   client: any;
   guildDb: any;
@@ -281,25 +326,19 @@ export function Button3({
 export function Button4({
   client,
   guildDb,
-  timestamp = ButtonStyle.Secondary,
-  content = ButtonStyle.Secondary,
+  content = guildDb?.welcomeEmbedContent
+    ? ButtonStyle.Success
+    : ButtonStyle.Secondary,
+  toggle = guildDb?.welcomeEmbed ? ButtonStyle.Success : ButtonStyle.Secondary,
+  embed = ButtonStyle.Primary,
 }: {
   client: any;
   guildDb: any;
-  timestamp?: ButtonStyle;
   content?: ButtonStyle;
+  toggle?: ButtonStyle;
+  embed?: ButtonStyle;
 }) {
   return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
-    new ButtonBuilder()
-      .setCustomId("welcomeEmbedTimestamp")
-      .setEmoji("1185973667973320775")
-      .setLabel(
-        client.translation.get(
-          guildDb?.language,
-          "Settings.button.welcomeEmbedTimestamp"
-        )
-      )
-      .setStyle(timestamp),
     new ButtonBuilder()
       .setCustomId("welcomeEmbedContent")
       .setEmoji("1185973667973320775")
@@ -309,25 +348,10 @@ export function Button4({
           "Settings.button.welcomeEmbedContent"
         )
       )
-      .setStyle(content)
-  );
-}
-
-export function Button5({
-  client,
-  guildDb,
-  toggle = ButtonStyle.Secondary,
-  embed = ButtonStyle.Primary,
-}: {
-  client: any;
-  guildDb: any;
-  toggle?: ButtonStyle;
-  embed?: ButtonStyle;
-}) {
-  return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+      .setStyle(content),
     new ButtonBuilder()
       .setCustomId("welcomeEmbedToggle")
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973660465500180")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -348,17 +372,77 @@ export function Button5({
   );
 }
 
+export function SelectMenu() {
+  return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+    new StringSelectMenuBuilder()
+      .setCustomId("selectMenuWelcomeEmbed")
+      .setPlaceholder("Delete Embed Settings")
+      .addOptions([
+        {
+          label: "Author Name",
+          value: "author",
+          description: "Delete the author name.",
+        },
+        {
+          label: "Author URL",
+          value: "authorURL",
+          description: "Delete the author URL.",
+        },
+        {
+          label: "Title",
+          value: "title",
+          description: "Delete the title.",
+        },
+        {
+          label: "Description",
+          value: "description",
+          description: "Delete the description.",
+        },
+        {
+          label: "Content",
+          value: "content",
+          description: "Delete the content.",
+        },
+        {
+          label: "Thumbnail",
+          value: "thumbnail",
+          description: "Delete the thumbnail.",
+        },
+        {
+          label: "Image",
+          value: "image",
+          description: "Delete the image.",
+        },
+        {
+          label: "Footer Text",
+          value: "footer",
+          description: "Delete the footer text.",
+        },
+        {
+          label: "Footer URL",
+          value: "footerURL",
+          description: "Delete the footer URL.",
+        },
+        {
+          label: "Color",
+          value: "color",
+          description: "Delete the color.",
+        },
+      ])
+  );
+}
+
 const button: Button = {
   name: "welcomeEmbedEdit",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const welcomes = embed({ client: client, guildDb: guildDb });
 
-    const welcomeButtons = Button1({client: client, guildDb: guildDb});
+    const welcomeButtons = Button1({ client: client, guildDb: guildDb });
     const welcomeButtons2 = Button2({ client: client, guildDb: guildDb });
     const welcomeButtons3 = Button3({ client: client, guildDb: guildDb });
     const welcomeButtons4 = Button4({ client: client, guildDb: guildDb });
-    const welcomeButtons5 = Button5({ client: client, guildDb: guildDb });
+    const welcomeButtons5 = SelectMenu();
 
     interaction.update({
       content: null,

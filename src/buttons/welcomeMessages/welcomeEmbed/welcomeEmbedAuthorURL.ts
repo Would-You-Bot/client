@@ -1,8 +1,4 @@
-import {
-  ActionRowBuilder,
-  type MessageActionRowComponentBuilder,
-  StringSelectMenuBuilder,
-} from "discord.js";
+import { ButtonStyle } from "discord.js";
 import type { Button } from "../../../interfaces";
 import { Modal, type ModalData } from "../../../util/modalHandler";
 import { welcomeEmbed } from "../../../util/Models/zod/welcomeEmbed";
@@ -12,20 +8,20 @@ import {
   Button2,
   Button3,
   Button4,
-  Button5,
+  SelectMenu,
 } from "../welcomeEmbedEdit";
 const button: Button = {
   name: "welcomeEmbedAuthorURL",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const { data } = await new Modal({
-      title: "Set Embed Title",
+      title: "Set Author URL",
       customId: "WelcomeEmbedEdit",
       fields: [
         {
           customId: "input",
           style: "line",
-          label: "What should the embed title be?",
+          label: "What should the author URL be?",
           required: true,
           placeholder: "Welcome to the server!",
         },
@@ -42,7 +38,7 @@ const button: Button = {
       schema?.error?.errors.length! > 0
     ) {
       const errors = schema?.error?.errors;
-      interaction.reply({
+      await (data?.modal as any).reply({
         content: errors?.map((err) => `${err.path}: ${err.message}`).join("\n"),
         ephemeral: true,
       });
@@ -54,11 +50,15 @@ const button: Button = {
       guildDb: guildDb,
       authorURL: value,
     });
-    const welcomeButtons = Button1({ client: client, guildDb: guildDb });
+    const welcomeButtons = Button1({
+      client: client,
+      guildDb: guildDb,
+      authorURL: ButtonStyle.Success,
+    });
     const welcomeButtons2 = Button2({ client: client, guildDb: guildDb });
     const welcomeButtons3 = Button3({ client: client, guildDb: guildDb });
     const welcomeButtons4 = Button4({ client: client, guildDb: guildDb });
-    const welcomeButtons5 = Button5({ client: client, guildDb: guildDb });
+    const welcomeButtons5 = SelectMenu();
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,

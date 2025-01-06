@@ -14,20 +14,26 @@ const welcomeEmbedSchema = z.object({
     name: z
       .string()
       .min(3, "Make sure your author name is at least 3 characters long")
-      .max(100, "Make sure your author name is only 100 characters long")
-      .optional(),
-    url: z.string().url().optional(),
+      .max(100, "Make sure your author name is only 100 characters long"),
+    url: z.string().url(),
   }),
+  // .refine((val) => val.name && val.url, {
+  //   message: "Make sure your author name and url are both set!",
+  //   path: ["author"],
+  // }),
   thumbnail: z.string().url().optional(),
   image: z.string().url().optional(),
   footer: z.object({
     text: z
       .string()
       .min(3, "Make sure your footer text is at least 3 characters long")
-      .max(100, "Make sure your footer text is only 100 characters long")
-      .optional(),
-    iconURL: z.string().url().optional(),
+      .max(100, "Make sure your footer text is only 100 characters long"),
+    iconURL: z.string().url(),
   }),
+  // .refine((val) => val.text && val.iconURL, {
+  //   message: "Make sure your footer text and url are both set!",
+  //   path: ["footer"],
+  // }),
   color: z
     .string()
     .refine((value) => /\#([0-9a-f]{3}){1,2}\b/gi.test(value), {

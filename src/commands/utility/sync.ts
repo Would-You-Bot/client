@@ -24,52 +24,52 @@ const command: ChatInputCommand = {
     }),
   // TODO Add discord sub support
   execute: async (interaction, client, guildDb) => {
-    // if (
-    //   !(interaction.member?.permissions as Readonly<PermissionsBitField>).has(
-    //     PermissionFlagsBits.ManageGuild,
-    //   )
-    // ) {
-    //   return interaction.reply({
-    //     content:
-    //       "Sorry, you don't have the correct permission to run this command! Missing `MANAGE_GUILD`.",
-    //     ephemeral: true,
-    //   });
-    // }
+    if (
+      !(interaction.member?.permissions as Readonly<PermissionsBitField>).has(
+        PermissionFlagsBits.ManageGuild,
+      )
+    ) {
+      return interaction.reply({
+        content:
+          "Sorry, you don't have the correct permission to run this command! Missing `MANAGE_GUILD`.",
+        ephemeral: true,
+      });
+    }
 
-    // const subscription = await stripe.subscriptions.search({
-    //   query: `metadata['serverId']:'${interaction.guildId}'`,
-    // });
+    const subscription = await stripe.subscriptions.search({
+      query: `metadata['serverId']:'${interaction.guildId}'`,
+    });
 
-    // if (
-    //   !subscription?.data[0]?.current_period_end ||
-    //   subscription?.data[0]?.current_period_end < ~~(Date.now() / 1000)
-    // ) {
-    //   return interaction.reply({
-    //     content: "You currently don't have any active subscriptions to sync!",
-    //     ephemeral: true,
-    //   });
-    // }
+    if (
+      !subscription?.data[0]?.current_period_end ||
+      subscription?.data[0]?.current_period_end < ~~(Date.now() / 1000)
+    ) {
+      return interaction.reply({
+        content: "You currently don't have any active subscriptions to sync!",
+        ephemeral: true,
+      });
+    }
 
-    // await GuildModel.findOneAndUpdate(
-    //   { guildID: interaction.guildId },
-    //   {
-    //     guildID: interaction.guildId,
-    //     premiumUser: interaction.user.id,
-    //     premium: 1,
-    //     premiumExpiration: new Date(
-    //       subscription.data[0].current_period_end * 1000,
-    //     ),
-    //   },
-    // );
+    await GuildModel.findOneAndUpdate(
+      { guildID: interaction.guildId },
+      {
+        guildID: interaction.guildId,
+        premiumUser: interaction.user.id,
+        premium: 1,
+        premiumExpiration: new Date(
+          subscription.data[0].current_period_end * 1000,
+        ),
+      },
+    );
 
-    // await interaction
-    //   .reply({
-    //     content: "Successfully synced your premium subscription data!",
-    //     ephemeral: true,
-    //   })
-    //   .catch((err) => {
-    //     captureException(err);
-    //   });
+    await interaction
+      .reply({
+        content: "Successfully synced your premium subscription data!",
+        ephemeral: true,
+      })
+      .catch((err) => {
+        captureException(err);
+      });
   },
 };
 

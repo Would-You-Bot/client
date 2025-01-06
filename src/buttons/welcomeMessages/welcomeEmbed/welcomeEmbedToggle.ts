@@ -7,14 +7,14 @@ import {
   Button2,
   Button3,
   Button4,
-  Button5,
+  SelectMenu,
 } from "../welcomeEmbedEdit";
 const button: Button = {
   name: "welcomeEmbedToggle",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const value = guildDb.welcomeEmbed;
-    
+
     const schema = welcomeEmbed({ guildDb: guildDb });
     if (schema.error && schema?.error?.errors.length! > 0) {
       const errors = schema?.error?.errors;
@@ -25,20 +25,20 @@ const button: Button = {
       return;
     }
 
-    const welcome = embed({ client: client, guildDb: guildDb });
+    const welcome = embed({ client: client, guildDb: guildDb, toggle: !value });
     const welcomeButtons = Button1({ client: client, guildDb: guildDb });
     const welcomeButtons2 = Button2({ client: client, guildDb: guildDb });
     const welcomeButtons3 = Button3({ client: client, guildDb: guildDb });
-    const welcomeButtons4 = Button4({ client: client, guildDb: guildDb });
-    const welcomeButtons5 = Button5({
+    const welcomeButtons4 = Button4({
       client: client,
       guildDb: guildDb,
-      toggle: ButtonStyle.Success,
+      toggle: !value === true ? ButtonStyle.Success : ButtonStyle.Secondary,
     });
+    const welcomeButtons5 = SelectMenu();
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
-      welcomeEmbed: value,
+      welcomeEmbed: !value,
     });
 
     interaction.update({

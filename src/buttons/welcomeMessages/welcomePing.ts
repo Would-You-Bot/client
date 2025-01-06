@@ -89,9 +89,11 @@ const button: Button = {
               "Settings.button.welcomeTest"
             )
           )
-          .setDisabled(!!(guildDb.welcome && guildDb.welcomeChannel))
+          .setDisabled(
+            guildDb.welcomeChannel && guildDb?.welcome ? false : true
+          )
           .setStyle(
-            guildDb.welcome && guildDb.welcomeChannel
+            guildDb.welcomeChannel && guildDb?.welcome
               ? ButtonStyle.Primary
               : ButtonStyle.Secondary
           )

@@ -85,8 +85,12 @@ export default async function settingsGeneral(
             "Settings.button.welcomeTest"
           )
         )
-        .setDisabled(!guildDb.welcome)
-        .setStyle(guildDb.welcome ? ButtonStyle.Primary : ButtonStyle.Secondary)
+        .setDisabled(guildDb.welcomeChannel && guildDb?.welcome ? false : true)
+        .setStyle(
+          guildDb.welcomeChannel && guildDb?.welcome
+            ? ButtonStyle.Primary
+            : ButtonStyle.Secondary
+        )
         .setEmoji("1207800685928910909")
     );
 
