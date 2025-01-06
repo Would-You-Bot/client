@@ -15,8 +15,10 @@ const button: Button = {
 
     const truncateString = (str: string, maxLength: number) => {
       // Remove line breaks first
-      const cleanedStr = str.replace(/\n/g, ' '); 
-      return cleanedStr.length > maxLength ? `${cleanedStr.substring(0, maxLength)}...` : cleanedStr;
+      const cleanedStr = str.replace(/\n/g, " ");
+      return cleanedStr.length > maxLength
+        ? `${cleanedStr.substring(0, maxLength)}...`
+        : cleanedStr;
     };
 
     const welcomes = new EmbedBuilder()
@@ -40,13 +42,13 @@ const button: Button = {
           guildDb?.language,
           "Settings.embed.welcomeChannel",
         )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}\n${client.translation.get(
-        guildDb?.language,
-        "Settings.embed.welcomeMessage",
-      )}: ${
-        guildDb.welcomeMessage
-          ? truncateString(guildDb.welcomeMessage, 100)
-          : ":x:"
-      }`,
+          guildDb?.language,
+          "Settings.embed.welcomeMessage",
+        )}: ${
+          guildDb.welcomeMessage
+            ? truncateString(guildDb.welcomeMessage, 100)
+            : ":x:"
+        }`,
       )
       .setColor("#0598F6")
       .setFooter({

@@ -67,16 +67,19 @@ const event: Event = {
       "{{new_line}}": "\n",
     };
 
-    const messageTemplate = guildDb.welcomeMessage ?? `${client.translation.get(guildDb?.language, "Welcome.embed.title")} ${
-      guildDb.welcomePing
-        ? `<@${member.user.id}>`
-        : `${member.user.username}`
-    }! ${randomMessage.question}`;
+    const messageTemplate =
+      guildDb.welcomeMessage ??
+      `${client.translation.get(guildDb?.language, "Welcome.embed.title")} ${
+        guildDb.welcomePing ? `<@${member.user.id}>` : `${member.user.username}`
+      }! ${randomMessage.question}`;
 
-    const message = Object.entries(placeholderMap).reduce((msg, [placeholder, value]) => {
-      return msg.replace(new RegExp(placeholder, "g"), value);
-    }, messageTemplate);
-    
+    const message = Object.entries(placeholderMap).reduce(
+      (msg, [placeholder, value]) => {
+        return msg.replace(new RegExp(placeholder, "g"), value);
+      },
+      messageTemplate,
+    );
+
     channel
       .send({
         content: message,

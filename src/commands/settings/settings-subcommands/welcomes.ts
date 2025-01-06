@@ -16,10 +16,11 @@ export default async function settingsGeneral(
 ) {
   const truncateString = (str: string, maxLength: number) => {
     // Remove line breaks first
-    const cleanedStr = str.replace(/\n/g, ' '); 
-    return cleanedStr.length > maxLength ? `${cleanedStr.substring(0, maxLength)}...` : cleanedStr;
+    const cleanedStr = str.replace(/\n/g, " ");
+    return cleanedStr.length > maxLength
+      ? `${cleanedStr.substring(0, maxLength)}...`
+      : cleanedStr;
   };
-  
 
   const welcomeEmbed = new EmbedBuilder()
     .setTitle(
@@ -119,17 +120,20 @@ export default async function settingsGeneral(
         ),
     );
 
-    const welcomeButtons3 =
+  const welcomeButtons3 =
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("welcomeMessage")
         .setEmoji("1185973660465500180")
         .setLabel(
-          client.translation.get(guildDb?.language, "Settings.button.welcomeMessage"),
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeMessage",
+          ),
         )
         .setStyle(
           guildDb.welcomeMessage ? ButtonStyle.Primary : ButtonStyle.Secondary,
-        )
+        ),
     );
 
   await interaction.reply({
