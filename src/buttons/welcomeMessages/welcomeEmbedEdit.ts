@@ -13,6 +13,7 @@ export function embed({
   guildDb,
   content = guildDb.welcomeEmbedContent || "❌",
   title = guildDb.welcomeEmbedTitle || "❌",
+  titleURL = guildDb.welcomeEmbedTitleURL || "❌",
   description = guildDb.welcomeEmbedDescription || "❌",
   author = guildDb.welcomeEmbedAuthorName || "❌",
   authorURL = guildDb.welcomeEmbedAuthorURL || "❌",
@@ -28,6 +29,7 @@ export function embed({
   guildDb: any;
   content?: string;
   title?: string;
+  titleURL?: string;
   description?: string;
   author?: string;
   authorURL?: string;
@@ -58,7 +60,15 @@ export function embed({
           "Settings.embed.welcomeTitles"
         ),
         value: `\`\`\`${title.slice(0, 100)}\`\`\``,
-        inline: false,
+        inline: true,
+      },
+      {
+        name: client.translation.get(
+          guildDb?.language,
+          "Settings.embed.welcomeTitlesURL"
+        ),
+        value: `\`\`\`${titleURL.slice(0, 30)}\`\`\``,
+        inline: true,
       },
       {
         name: client.translation.get(
@@ -392,6 +402,11 @@ export function SelectMenu() {
           label: "Title",
           value: "title",
           description: "Delete the title.",
+        },
+        {
+          label: "Title URL",
+          value: "titleURL",
+          description: "Delete the title URL.",
         },
         {
           label: "Description",

@@ -25,12 +25,20 @@ const button: Button = {
           required: true,
           placeholder: "Welcome to the server!",
         },
+        {
+          customId: "footerURL",
+          style: "line",
+          label: "What should the title URL be? (Optional)",
+          required: false,
+          placeholder: "https://i.imgur.com/zw4yhxv.jpeg",
+        },
       ],
     } as ModalData).getData(interaction);
 
     const value = data?.fieldValues[0].value;
+    const valueURL = data?.fieldValues[1]?.value;
 
-    const schema = welcomeEmbed({ guildDb: guildDb, title: value });
+    const schema = welcomeEmbed({ guildDb: guildDb, title: value, titleURL: valueURL || undefined });
 
     if (
       guildDb.welcomeEmbed &&
@@ -45,7 +53,7 @@ const button: Button = {
       return;
     }
 
-    const welcome = embed({ client: client, guildDb: guildDb, title: value });
+    const welcome = embed({ client: client, guildDb: guildDb, title: value, titleURL: valueURL || undefined });
     const welcomeButtons = Button1({
       client: client,
       guildDb: guildDb,
@@ -59,6 +67,7 @@ const button: Button = {
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
       welcomeEmbedTitle: value,
+      welcomeEmbedTitleURL: valueURL || null,
     });
 
     await (data?.modal as any).update({

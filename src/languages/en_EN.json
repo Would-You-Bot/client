@@ -251,6 +251,7 @@
       "welcomeMessage": "**Welcome Message**",
       "welcomeContent": "**Content**",
       "welcomeTitles": "**Title**",
+      "welcomeTitlesURL": "**Title URL**",
       "welcomeDescription": "**Description**",
       "welcomeAuthorName": "**Author Name**",
       "welcomeAuthorURL": "**Author URL**",

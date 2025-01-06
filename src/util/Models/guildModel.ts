@@ -14,6 +14,7 @@ export interface IGuildModel {
   welcomeMessage: string;
   welcomeEmbed: boolean;
   welcomeEmbedTitle: string | null;
+  welcomeEmbedTitleURL: string | null;
   welcomeEmbedDescription: string | null;
   welcomeEmbedAuthorName: string | null;
   welcomeEmbedAuthorURL: string | null;
@@ -109,6 +110,10 @@ const guildProfileSchema = new Schema<IGuildModel>(
       default: false,
     },
     welcomeEmbedTitle: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedTitleURL: {
       type: String,
       default: null,
     },

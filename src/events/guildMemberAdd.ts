@@ -91,6 +91,7 @@ const event: Event = {
         .setTitle(
           guildDb?.welcomeEmbedTitle ? Message(guildDb.welcomeEmbedTitle) : null
         )
+        .setURL(guildDb.welcomeEmbedTitleURL || null)
         .setDescription(
           guildDb?.welcomeEmbedDescription
             ? Message(guildDb.welcomeEmbedDescription)
@@ -105,12 +106,20 @@ const event: Event = {
           text: Message(guildDb.welcomeEmbedFooterText),
           iconURL: guildDb.welcomeEmbedFooterURL,
         });
+      } else if (guildDb.welcomeEmbedFooterText) {
+        embed.setFooter({
+          text: Message(guildDb.welcomeEmbedFooterText),
+        });
       }
 
       if (guildDb.welcomeEmbedAuthorName && guildDb.welcomeEmbedAuthorURL) {
         embed.setAuthor({
           name: Message(guildDb.welcomeEmbedAuthorName),
           iconURL: guildDb.welcomeEmbedAuthorURL,
+        });
+      } else if (guildDb.welcomeEmbedAuthorName) {
+        embed.setAuthor({
+          name: Message(guildDb.welcomeEmbedAuthorName),
         });
       }
 
