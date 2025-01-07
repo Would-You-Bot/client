@@ -96,6 +96,7 @@ export default class Voting {
           new ButtonBuilder()
             .setCustomId(`result_${voteId}`)
             .setLabel("Results")
+            .setDisabled(true)
             .setStyle(ButtonStyle.Secondary),
           new ButtonBuilder()
             .setCustomId(`voting_${voteId}_${type}_0`)

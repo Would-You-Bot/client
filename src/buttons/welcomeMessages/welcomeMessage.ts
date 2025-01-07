@@ -13,7 +13,7 @@ const button: Button = {
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
     const { data } = await new Modal({
-      title: "Set Welcome Message",
+      title: "Edit Welcome Message",
       customId: "welcomeMessage",
       fields: [
         {
