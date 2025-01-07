@@ -16,7 +16,7 @@ const button: Button = {
   execute: async (interaction, client, guildDb) => {
     const { data } = await new Modal({
       title: "Set Embed Title",
-      customId: "WelcomeEmbedEdit",
+      customId: `WelcomeEmbedEdit-${Math.floor(Math.random() * (1000000 - 1 + 1)) + 1}`,
       fields: [
         {
           customId: "input",
@@ -38,7 +38,11 @@ const button: Button = {
     const value = data?.fieldValues[0].value;
     const valueURL = data?.fieldValues[1]?.value;
 
-    const schema = welcomeEmbed({ guildDb: guildDb, title: value, titleURL: valueURL || undefined });
+    const schema = welcomeEmbed({
+      guildDb: guildDb,
+      title: value,
+      titleURL: valueURL || undefined,
+    });
 
     if (
       guildDb.welcomeEmbed &&
@@ -53,7 +57,12 @@ const button: Button = {
       return;
     }
 
-    const welcome = embed({ client: client, guildDb: guildDb, title: value, titleURL: valueURL || undefined });
+    const welcome = embed({
+      client: client,
+      guildDb: guildDb,
+      title: value,
+      titleURL: valueURL || undefined,
+    });
     const welcomeButtons = Button1({
       client: client,
       guildDb: guildDb,

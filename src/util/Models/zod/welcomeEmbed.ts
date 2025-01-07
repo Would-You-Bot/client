@@ -44,7 +44,7 @@ const welcomeEmbedSchema = z.object({
 export function welcomeEmbed({
   guildDb,
   title = guildDb.welcomeEmbedTitle || "aaa",
-  titleURL = guildDb.welcomeEmbedTitleURL || "aaa",
+  titleURL = guildDb.welcomeEmbedTitleURL || "https://i.imgur.com/lEy6WEe.jpeg",
   description = guildDb.welcomeEmbedDescription || "aaa",
   author = guildDb.welcomeEmbedAuthor || "aaa",
   authorURL = guildDb.welcomeEmbedAuthorURL ||
