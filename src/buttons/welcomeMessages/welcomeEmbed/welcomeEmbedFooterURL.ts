@@ -16,7 +16,7 @@ const button: Button = {
   execute: async (interaction, client, guildDb) => {
     const { data } = await new Modal({
       title: "Set Footer URL",
-      customId: "WelcomeEmbedEdit",
+      customId: `WelcomeEmbedEdit-${Math.floor(Math.random() * (1000000 - 1 + 1)) + 1}`,
       fields: [
         {
           customId: "input",
