@@ -185,7 +185,6 @@ export function Button1({
   return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
     new ButtonBuilder()
       .setCustomId("welcomeEmbedTitle")
-      .setEmoji("1185973664538177557")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -193,10 +192,10 @@ export function Button1({
         )
       )
       .setStyle(title)
-      .setEmoji("1185973667973320775"),
+      .setEmoji("1185973664538177557"),
     new ButtonBuilder()
       .setCustomId("welcomeEmbedDescription")
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973664538177557")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -206,7 +205,7 @@ export function Button1({
       .setStyle(description),
     new ButtonBuilder()
       .setCustomId("welcomeEmbedAuthorName")
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973664538177557")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -223,7 +222,7 @@ export function Button1({
         )
       )
       .setStyle(authorURL)
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973664538177557")
   );
 }
 
@@ -249,7 +248,7 @@ export function Button2({
   return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
     new ButtonBuilder()
       .setCustomId("welcomeEmbedThumbnail")
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973664538177557")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -259,7 +258,7 @@ export function Button2({
       .setStyle(thumbnail),
     new ButtonBuilder()
       .setCustomId("welcomeEmbedImage")
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973664538177557")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -302,7 +301,7 @@ export function Button3({
   return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
     new ButtonBuilder()
       .setCustomId("welcomeEmbedFooterText")
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973664538177557")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -312,7 +311,7 @@ export function Button3({
       .setStyle(footer),
     new ButtonBuilder()
       .setCustomId("welcomeEmbedFooterURL")
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973664538177557")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -322,7 +321,7 @@ export function Button3({
       .setStyle(footerURL),
     new ButtonBuilder()
       .setCustomId("welcomeEmbedColor")
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973664538177557")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -351,7 +350,7 @@ export function Button4({
   return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
     new ButtonBuilder()
       .setCustomId("welcomeEmbedContent")
-      .setEmoji("1185973667973320775")
+      .setEmoji("1185973664538177557")
       .setLabel(
         client.translation.get(
           guildDb?.language,
@@ -382,64 +381,103 @@ export function Button4({
   );
 }
 
-export function SelectMenu() {
+export function SelectMenu(client: any, guildDb: any) {
   return new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
     new StringSelectMenuBuilder()
       .setCustomId("selectMenuWelcomeEmbed")
-      .setPlaceholder("Delete Embed Settings")
+      .setPlaceholder(
+        client.translation.get(
+          guildDb?.language,
+          "Settings.button.welcomeEmbedDeleteSettings"
+        )
+      )
       .addOptions([
         {
-          label: "Author Name",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedAuthorNameMenu"
+          ),
           value: "author",
           description: "Delete the author name.",
         },
         {
-          label: "Author URL",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedAuthorURLMenu"
+          ),
           value: "authorURL",
           description: "Delete the author URL.",
         },
         {
-          label: "Title",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedTitleMenu"
+          ),
           value: "title",
           description: "Delete the title.",
         },
         {
-          label: "Title URL",
+          label:
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.welcomeEmbedTitleMenu"
+            ) + " URL",
           value: "titleURL",
           description: "Delete the title URL.",
         },
         {
-          label: "Description",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedDescriptionMenu"
+          ),
           value: "description",
           description: "Delete the description.",
         },
         {
-          label: "Content",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedContentMenu"
+          ),
           value: "content",
           description: "Delete the content.",
         },
         {
-          label: "Thumbnail",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedThumbnailMenu"
+          ),
           value: "thumbnail",
           description: "Delete the thumbnail.",
         },
         {
-          label: "Image",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedImageMenu"
+          ),
           value: "image",
           description: "Delete the image.",
         },
         {
-          label: "Footer Text",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedFooterTextMenu"
+          ),
           value: "footer",
           description: "Delete the footer text.",
         },
         {
-          label: "Footer URL",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedFooterURLMenu"
+          ),
           value: "footerURL",
           description: "Delete the footer URL.",
         },
         {
-          label: "Color",
+          label: client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedColorMenu"
+          ),
           value: "color",
           description: "Delete the color.",
         },
@@ -457,7 +495,7 @@ const button: Button = {
     const welcomeButtons2 = Button2({ client: client, guildDb: guildDb });
     const welcomeButtons3 = Button3({ client: client, guildDb: guildDb });
     const welcomeButtons4 = Button4({ client: client, guildDb: guildDb });
-    const welcomeButtons5 = SelectMenu();
+    const welcomeButtons5 = SelectMenu(client, guildDb);
 
     interaction.update({
       content: null,

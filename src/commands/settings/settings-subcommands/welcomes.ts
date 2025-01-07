@@ -15,12 +15,13 @@ export default async function settingsGeneral(
   guildDb: IGuildModel
 ) {
   const truncateString = (str: string, maxLength: number) => {
-    // Remove line breaks first
     const cleanedStr = str.replace(/\n/g, " ");
     return cleanedStr.length > maxLength
       ? `${cleanedStr.substring(0, maxLength)}...`
       : cleanedStr;
   };
+
+  try {
 
   const welcomeEmbed = new EmbedBuilder()
     .setTitle(
@@ -152,4 +153,7 @@ export default async function settingsGeneral(
     components: [welcomeButtons2, welcomeButtons1, welcomeButtons3],
     ephemeral: true,
   });
+  } catch (e) {
+    console.log(e)
+  }
 }

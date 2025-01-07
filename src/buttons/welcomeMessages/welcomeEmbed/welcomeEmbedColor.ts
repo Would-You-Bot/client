@@ -58,7 +58,7 @@ const button: Button = {
       color: ButtonStyle.Success,
     });
     const welcomeButtons4 = Button4({ client: client, guildDb: guildDb });
-    const welcomeButtons5 = SelectMenu();
+    const welcomeButtons5 = SelectMenu(client, guildDb);
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,

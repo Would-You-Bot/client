@@ -34,7 +34,7 @@ const button: Button = {
       guildDb: guildDb,
       toggle: !value === true ? ButtonStyle.Success : ButtonStyle.Secondary,
     });
-    const welcomeButtons5 = SelectMenu();
+    const welcomeButtons5 = SelectMenu(client, guildDb);
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
