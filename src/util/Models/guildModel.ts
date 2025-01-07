@@ -12,6 +12,19 @@ export interface IGuildModel {
   welcomePing: boolean;
   welcomeType: string;
   welcomeMessage: string;
+  welcomeEmbed: boolean;
+  welcomeEmbedTitle: string | null;
+  welcomeEmbedTitleURL: string | null;
+  welcomeEmbedDescription: string | null;
+  welcomeEmbedAuthorName: string | null;
+  welcomeEmbedAuthorURL: string | null;
+  welcomeEmbedThumbnail: string | null;
+  welcomeEmbedImage: string | null;
+  welcomeEmbedFooterText: string | null;
+  welcomeEmbedFooterURL: string | null;
+  welcomeEmbedColor: string | null;
+  welcomeEmbedTimestamp: boolean;
+  welcomeEmbedContent: string | null;
   dailyMsg: boolean;
   dailyChannel: string;
   dailyRole: string | null;
@@ -89,6 +102,58 @@ const guildProfileSchema = new Schema<IGuildModel>(
       default: "mixed",
     },
     welcomeMessage: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbed: {
+      type: Boolean,
+      default: false,
+    },
+    welcomeEmbedTitle: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedTitleURL: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedDescription: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedAuthorName: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedAuthorURL: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedThumbnail: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedImage: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedFooterText: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedFooterURL: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedColor: {
+      type: String,
+      default: null,
+    },
+    welcomeEmbedTimestamp: {
+      type: Boolean,
+      default: null,
+    },
+    welcomeEmbedContent: {
       type: String,
       default: null,
     },
@@ -216,10 +281,10 @@ const guildProfileSchema = new Schema<IGuildModel>(
       default: "Command",
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export const GuildModel = model<IGuildModel>(
   "guildProfile",
-  guildProfileSchema,
+  guildProfileSchema
 );

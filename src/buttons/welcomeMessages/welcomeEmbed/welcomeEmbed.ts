@@ -5,23 +5,19 @@ import {
   EmbedBuilder,
   type MessageActionRowComponentBuilder,
 } from "discord.js";
-import type { Button } from "../../interfaces";
-
+import type { Button } from "../../../interfaces";
 const button: Button = {
-  name: "selectMenuWelcome",
+  name: "welcomeEmbed",
   cooldown: false,
-  execute: async (interaction: any, client, guildDb) => {
-    const newChannel = interaction.values[0];
-
+  execute: async (interaction, client, guildDb) => {
     const truncateString = (str: string, maxLength: number) => {
-      // Remove line breaks first
       const cleanedStr = str.replace(/\n/g, " ");
       return cleanedStr.length > maxLength
         ? `${cleanedStr.substring(0, maxLength)}...`
         : cleanedStr;
     };
 
-    const welcomes = new EmbedBuilder()
+    const welcomeEmbed = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.welcomeTitle")
       )
@@ -38,7 +34,7 @@ const button: Button = {
         )}: ${guildDb.welcomeType}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.welcomeChannel"
-        )}: <#${newChannel}>\n${client.translation.get(
+        )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.welcomeMessage"
         )}: ${
@@ -56,7 +52,7 @@ const button: Button = {
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
 
-    const welcomeButtons =
+    const welcomeButtons1 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId("welcomeType")
@@ -67,8 +63,7 @@ const button: Button = {
               "Settings.button.dailyType"
             )
           )
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji("1185973667973320775"),
+          .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
           .setCustomId("welcomeChannel")
           .setEmoji("1185973667973320775")
@@ -89,12 +84,19 @@ const button: Button = {
               "Settings.button.welcomeTest"
             )
           )
-          .setDisabled(guildDb.welcome ? false : true)
+          .setDisabled(
+            guildDb.welcomeChannel && guildDb?.welcome ? false : true
+          )
           .setStyle(
-            guildDb.welcome ? ButtonStyle.Primary : ButtonStyle.Secondary
+            guildDb.welcomeChannel && guildDb?.welcome
+              ? ButtonStyle.Primary
+              : ButtonStyle.Secondary
           )
           .setEmoji("1207800685928910909")
       );
+
+    // Second button row
+    // Deals with type, channel, test
     const welcomeButtons2 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
@@ -146,18 +148,10 @@ const button: Button = {
           .setStyle(ButtonStyle.Primary)
       );
 
-    await client.database.updateGuild(interaction.guild.id, {
-      ...guildDb,
-      welcomeChannel: newChannel,
+    await interaction.update({
+      embeds: [welcomeEmbed],
+      components: [welcomeButtons2, welcomeButtons1, welcomeButtons3],
     });
-
-    interaction.update({
-      content: null,
-      embeds: [welcomes],
-      components: [welcomeButtons2, welcomeButtons, welcomeButtons3],
-      ephemeral: true,
-    });
-    return;
   },
 };
 

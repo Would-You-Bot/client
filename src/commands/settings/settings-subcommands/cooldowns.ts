@@ -17,7 +17,48 @@ export default async function settingsGeneral(
 ) {
   const emb = new EmbedBuilder()
     .setTitle(
-      client.translation.get(guildDb?.language, "Settings.embed.beforeText"),
+      client.translation.get(
+        guildDb?.language,
+        "Settings.embed.cooldownsTitle",
+      ),
+    )
+    .setDescription(
+      `${client.translation.get(
+        guildDb?.language,
+        "Settings.embed.replayType",
+      )}: ${guildDb.replayType}\n${client.translation.get(
+        guildDb?.language,
+        "Settings.embed.replayBy",
+      )}: ${guildDb.replayBy}\n${
+        guildDb.replayBy === "Guild"
+          ? client.translation.get(
+              guildDb?.language,
+              "Settings.embed.replayBy2",
+            )
+          : client.translation.get(
+              guildDb?.language,
+              "Settings.embed.replayBy1",
+            )
+      }\n${
+        guildDb.replayType === "Channels"
+          ? `${client.translation.get(guildDb?.language, "Settings.embed.replayChannels")}: ${
+              guildDb.replayChannels.length > 0
+                ? `\n${guildDb.replayChannels
+                    .sort(
+                      (a: any, b: any) => b.cooldown / 1000 - a.cooldown / 1000,
+                    )
+                    .map((c) => `<#${c.id}>: ${Number(c.cooldown) / 1000}s`)
+                    .join("\n")}`
+                : client.translation.get(
+                    guildDb?.language,
+                    "Settings.embed.replayChannelsNone",
+                  )
+            }`
+          : `${client.translation.get(
+              guildDb?.language,
+              "Settings.embed.replayCooldown",
+            )}: ${guildDb.replayCooldown / 1000}s`
+      }`,
     )
     .setColor("#0598F6")
     .setFooter({
