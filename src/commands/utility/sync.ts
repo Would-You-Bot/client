@@ -35,7 +35,7 @@ const command: ChatInputCommand = {
         ephemeral: true,
       });
     }
-
+    
     const subscription = await stripe.subscriptions.search({
       query: `metadata['serverId']:'${interaction.guildId}'`,
     });
@@ -53,8 +53,7 @@ const command: ChatInputCommand = {
     await GuildModel.findOneAndUpdate(
       { guildID: interaction.guildId },
       {
-        guildID: interaction.guildId,
-        premiumUser: interaction.user.id,
+        premiumUser: subscription?.data[0]?.metadata.userId,
         premium: 1,
         premiumExpiration: new Date(
           subscription.data[0].current_period_end * 1000,
