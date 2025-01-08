@@ -299,7 +299,7 @@
       "channelType": "**Per-Channel Settings**:"
     },
     "button": {
-      "welcomeMessage": "Set Welcome Message",
+      "welcomeMessage": "Edit Welcome Message",
       "welcomeEmbedContent": "Edit Embed Content",
       "welcomeEmbedDeleteSettings": "Delete Embed Settings",
       "welcomeEmbedContentMenu": "Delete Content",

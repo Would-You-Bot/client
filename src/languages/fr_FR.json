@@ -293,7 +293,7 @@
       "classicMode": "**Mode classique**"
     },
     "button": {
-      "welcomeMessage": "Définir le message de bienvenue",
+      "welcomeMessage": "Modifier le message de bienvenue",
       "daySelect": "Jours exclus",
       "dailyInterval": "Définir l'heure de publication",
       "dailyChannel": "Définir le salon",

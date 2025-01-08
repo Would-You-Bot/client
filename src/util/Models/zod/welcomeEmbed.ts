@@ -18,14 +18,27 @@ const welcomeEmbedSchema = z.object({
       .max(100, "Make sure your author name is only 100 characters long"),
     url: z.string().url(),
   }),
-  thumbnail: z.string().url().optional(),
-  image: z.string().url().optional(),
+  thumbnail: z
+    .union([
+      z.string().url(),
+      z.enum(["{{user_avatarUrl}}", "{{guild_iconUrl}}"]),
+    ])
+    .optional(),
+  image: z
+    .union([
+      z.string().url(),
+      z.enum(["{{user_avatarUrl}}", "{{guild_iconUrl}}"]),
+    ])
+    .optional(),
   footer: z.object({
     text: z
       .string()
       .min(3, "Make sure your footer text is at least 3 characters long")
       .max(100, "Make sure your footer text is only 100 characters long"),
-    iconURL: z.string().url(),
+    iconURL: z.union([
+      z.string().url(),
+      z.enum(["{{user_avatarUrl}}", "{{guild_iconUrl}}"]),
+    ]),
   }),
   color: z
     .string()

@@ -299,7 +299,7 @@
       "channelType": "**Einstellungen pro Kanal**:"
     },
     "button": {
-      "welcomeMessage": "Willkommensnachricht setzen",
+      "welcomeMessage": "Willkommensnachricht ändern",
       "daySelect": "Tage ausschließen",
       "dailyInterval": "Veröffentlichungszeit festlegen",
       "dailyChannel": "Kanal setzen",

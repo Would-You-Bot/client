@@ -293,7 +293,7 @@
       "classicMode": "**Modo Clásico**"
     },
     "button": {
-      "welcomeMessage": "Configurar mensaje de bienvenida",
+      "welcomeMessage": "Editar el mensaje de bienvenida",
       "daySelect": "Excluir días",
       "dailyInterval": "Fijar la hora de publicación",
       "dailyChannel": "Establecer canal",
