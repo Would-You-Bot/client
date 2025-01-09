@@ -13,51 +13,38 @@ const command: ChatInputCommand = {
   cooldown: true,
   data: new SlashCommandBuilder()
     .setName("vote")
-    .setDescription("Checks how fast the bot responds")
+    .setDescription("Displays the link to vote for the bot")
     .setContexts([0])
     .setIntegrationTypes([0])
     .setDescriptionLocalizations({
-      de: "Zeigt den Ping des Clients an",
-      "es-ES": "Muestra el ping del cliente",
-      fr: "Affiche le ping du client",
-      it: "Mostra il ping del client",
+      de: "Zeigt den Link zum Abstimmen für den Bot an",
+      "es-ES": "Muestra el enlace para votar por el bot",
+      fr: "Affiche le lien pour voter pour le bot",
+      it: "Mostra il link per votare per il bot",
     }),
 
   execute: async (interaction, client, guildDb) => {
-    const pingembed = new EmbedBuilder()
-
-      .setColor("#0598F6")
-      .setFooter({
-        text: client.translation.get(guildDb?.language, "Ping.embed.footer"),
-        iconURL: client?.user?.displayAvatarURL() || undefined,
+    const { topgg } = client.config.emojis.vote
+    
+    const voteEmbed = new EmbedBuilder()
+      .setAuthor({
+        name: client.translation.get(guildDb?.language, "Vote.embed.name"),
+        iconURL: `https://cdn.discordapp.com/emojis/${topgg}.webp?size=512&quality=lossless`,
       })
-      .setTimestamp()
-      .setTitle(client.translation.get(guildDb?.language, "Ping.embed.title"))
-      .addFields(
-        {
-          name: client.translation.get(guildDb?.language, "Ping.embed.client"),
-          value: `> **${Math.abs(Date.now() - interaction.createdTimestamp)}**ms`,
-          inline: false,
-        },
-        {
-          name: client.translation.get(guildDb?.language, "Ping.embed.api"),
-          value: `> **${Math.round(client.ws.ping)}**ms`,
-          inline: false,
-        },
-      );
+      .setColor("#FF3366")
+      .setDescription(client.translation.get(guildDb?.language, "Vote.embed.description"),)
+
     const button =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
-          .setLabel(
-            client.translation.get(guildDb?.language, "Ping.button.title"),
-          )
+          .setLabel(client.translation.get(guildDb?.language, "Vote.button.label"),)
           .setStyle(5)
-          .setEmoji("💻")
+          .setEmoji(topgg)
           .setURL("https://discordstatus.com/"),
       );
     await interaction
       .reply({
-        embeds: [pingembed],
+        embeds: [voteEmbed],
         components: [button],
         ephemeral: true,
       })

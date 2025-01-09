@@ -166,9 +166,11 @@
   },
   "Vote": {
     "embed": {
-      "title": "¡Votar ayuda a **Would You** a ganar más popularidad entre los usuarios en discord! ¡Puedes votar cada 12 horas y apoyar al bot!",
-      "value": "Clica para votar",
-      "footer": "Would You"
+      "name": "Vota por Would You",
+      "description": "¡Puedes votar por **Would You** haciendo clic en el botón de abajo!"
+    },
+    "button": {
+      "label": "Votar en Top.gg"
     }
   },
   "Rather": {

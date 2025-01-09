@@ -1,11 +1,4 @@
-export interface IConfig {
-  status: string[];
-  emojis: {
-    info: Record<string, string>;
-  };
-}
-
-const Config: IConfig = {
+const Config = {
   status: [
     "Would You Rather",
     "Truth or Dare",
@@ -23,7 +16,10 @@ const Config: IConfig = {
       tee: "<:Tee:1321568802240204912>",
       woofer: "<:Woofer:1321568826458116267>",
     },
+    vote: {
+      topgg: "1326947352409276438"
+    }
   },
-};
+} as const;
 
 export default Config;
