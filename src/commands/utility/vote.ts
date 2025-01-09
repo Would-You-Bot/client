@@ -40,7 +40,7 @@ const command: ChatInputCommand = {
           .setLabel(client.translation.get(guildDb?.language, "Vote.button.label"),)
           .setStyle(5)
           .setEmoji(topgg)
-          .setURL("https://discordstatus.com/"),
+          .setURL("https://top.gg/bot/981649513427111957/vote/"),
       );
     await interaction
       .reply({
