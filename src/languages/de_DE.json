@@ -119,7 +119,7 @@
         "descCatTRUTH": "**Kategorie**: Wahrheit",
         "descCatDARE": "**Kategorie**: Pflicht",
         "descCatWWYD": "**Kategorie**: Was würdest du tun",
-        "descCatTOPIC":"**Kategorie**: Thema"
+        "descCatTOPIC": "**Kategorie**: Thema"
       }
     }
   },
@@ -166,9 +166,11 @@
   },
   "Vote": {
     "embed": {
-      "title": "Abstimmen hilft **Würdest du** mehr Popularität unter den Nutzern auf Discord zu gewinnen! Du kannst alle 12 Stunden abstimmen und den Bot unterstützen!",
-      "value": "Klicke um zu Voten",
-      "footer": "Would You"
+      "name": "Stimme für Would You ab",
+      "description": "You can vote for **Would You** by clicking the button below!"
+    },
+    "button": {
+      "label": "Stimme ab auf Top.gg"
     }
   },
   "Rather": {
