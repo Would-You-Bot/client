@@ -49,27 +49,27 @@ const commandInteractionEvent: Event = {
       if (
         guildDb != null &&
         command?.cooldown &&
-        guildDb?.commandCooldown != 0
+        guildDb?.commandCooldown !== 0
       ) {
-        if (guildDb?.commandBy == "Guild") {
-          if (guildDb.commandType == "Command") {
+        if (guildDb?.commandBy === "Guild") {
+          if (guildDb.commandType === "Command") {
             cooldownKey = `${interaction.guild?.id}-${interaction.commandName}`;
             cooldown = Number(
               guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
             );
-          } else if (guildDb.commandType == "User") {
+          } else if (guildDb.commandType === "User") {
             cooldownKey = `${interaction.guild?.id}`;
             cooldown = Number(
               guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
             );
           }
-        } else if (guildDb?.commandBy == "User") {
-          if (guildDb.commandType == "Command") {
+        } else if (guildDb?.commandBy === "User") {
+          if (guildDb.commandType === "Command") {
             cooldownKey = `${interaction.user?.id}-${interaction.commandName}`;
             cooldown = Number(
               guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
             );
-          } else if (guildDb.commandType == "User") {
+          } else if (guildDb.commandType === "User") {
             cooldownKey = `${interaction.guild?.id}`;
             cooldown = Number(
               guildDb?.commandCooldown != null ? guildDb.commandCooldown : 0,
@@ -84,7 +84,7 @@ const commandInteractionEvent: Event = {
           ) {
             interaction
               .reply({
-                content: `${guildDb.commandType == "Command" ? `You can use this command again` : `You can use commands again`} <t:${Math.floor(client.used.get(cooldownKey) / 1000)}:R>!`,
+                content: `${guildDb.commandType === "Command" ? "You can use this command again" : "You can use commands again"} <t:${Math.floor(client.used.get(cooldownKey) / 1000)}:R>!`,
                 ephemeral: true,
               })
               .catch((err) => {
@@ -158,6 +158,36 @@ const commandInteractionEvent: Event = {
         });
     }
   },
+  autocomplete: async (client, interaction) => {
+    const command = interaction.client.commands.get(interaction.commandName);
+
+		if (!command) {
+			console.error(`No command matching ${interaction.commandName} was found.`);
+			return;
+		}
+
+    let guildDb: IGuildModel | null;
+
+    if (interaction.guildId !== null) {
+      guildDb = await client.database.getGuild(
+        interaction.guildId as string,
+        true,
+      );
+      client.database
+        .updateGuild(interaction.guildId as string, {
+          lastUsageTimestamp: Date.now(),
+        })
+        .then(() => {});
+    } else {
+      guildDb = null;
+    }
+
+		try {
+			await command.autocomplete(interaction, guildDb);
+		} catch (error) {
+			console.error(error);
+		}
+	}
 };
 
 export default commandInteractionEvent;

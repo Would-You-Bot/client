@@ -10,8 +10,11 @@ const event: Event = {
     client: WouldYou,
     interaction: Interaction | ButtonInteraction,
   ) => {
-    if (interaction.isCommand()) {
+    if (interaction.isCommand() ) {
       await commandInteractionEvent.execute(client, interaction);
+    } else if (interaction.isAutocomplete()) {
+      if(!commandInteractionEvent.autocomplete) return;
+      await commandInteractionEvent.autocomplete(client, interaction);
     } else if (interaction.isButton() || interaction.isAnySelectMenu()) {
       await buttonInteractionEvent.execute(client, interaction);
     }

@@ -53,6 +53,26 @@ export interface IGuildModel {
     questionType: "regular" | "custom" | "mixed";
   }>;
   debugMode: boolean;
+  disabledQuestions: {
+    wouldyourather: {
+      questions: string[];
+    };
+    whatwouldyoudo: {
+      questions: string[];
+    };
+    neverhaveiever: {
+      questions: string[];
+    };
+    truth: {
+      questions: string[];
+    };
+    dare: {
+      questions: string[];
+    };
+    topic: {
+      questions: string[];
+    };
+  };
   classicMode: boolean;
   autoPin: boolean;
   premium: number;
@@ -280,6 +300,44 @@ const guildProfileSchema = new Schema<IGuildModel>(
       type: String,
       default: "Command",
     },
+    disabledQuestions: {
+     wouldyourather: {
+      questions: {
+        type: Array,
+        default: [],
+      },
+    },
+    whatwouldyoudo: {
+      questions: {
+        type: Array,
+        default: [],
+      },
+    },
+    neverhaveiever: {
+      questions: {
+        type: Array,
+        default: [],
+      },
+    },
+    truth: {
+      questions: {
+        type: Array,
+        default: [],
+      },
+    },
+    dare: {
+      questions: {
+        type: Array,
+        default: [],
+      },
+    },
+    topic: {
+      questions: {
+        type: Array,
+        default: [],
+      },
+    },
+  },
   },
   { timestamps: true }
 );

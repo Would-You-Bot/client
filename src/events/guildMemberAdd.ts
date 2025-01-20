@@ -1,6 +1,6 @@
 import { captureException } from "@sentry/node";
 import {
-  ColorResolvable,
+  type ColorResolvable,
   EmbedBuilder,
   type GuildMember,
   type GuildTextBasedChannel,
@@ -119,11 +119,10 @@ const event: Event = {
 
       channel
         .send({
-          content: !guildDb.welcomeEmbed
-            ? Message(messageTemplate)
-            : guildDb.welcomeEmbedContent
+          content: guildDb.welcomeEmbed
+            ? guildDb.welcomeEmbedContent
               ? Message(guildDb.welcomeEmbedContent)
-              : undefined,
+              : undefined : Message(messageTemplate),
           embeds: guildDb.welcomeEmbed ? [embed] : [],
         })
         .catch((err: Error) => {

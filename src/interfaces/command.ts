@@ -7,6 +7,7 @@ import type {
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder,
   InteractionResponse,
+  AutocompleteInteraction,
 } from "discord.js";
 import type { IGuildModel } from "../util/Models/guildModel";
 import type WouldYou from "../util/wouldYou";
@@ -40,6 +41,10 @@ export interface ChatInputCommand extends Command {
   execute(
     interaction: ChatInputCommandInteraction,
     client: WouldYou,
+    guildDb: IGuildModel,
+  ): any;
+  autocomplete?(
+    interaction: AutocompleteInteraction,
     guildDb: IGuildModel,
   ): any;
 }
