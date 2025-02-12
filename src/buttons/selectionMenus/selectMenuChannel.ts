@@ -7,23 +7,6 @@ import {
 } from "discord.js";
 import type { Button } from "../../interfaces";
 
-function convertType(type: string) {
-  switch (type) {
-    case "wouldyourather":
-      return "Would You Rather";
-    case "neverhaveiever":
-      return "Never Have I Ever";
-    case "wwyd":
-      return "What Would You Do";
-    case "truth":
-      return "Truth";
-    case "dare":
-      return "Dare";
-    case "topic":
-      return "Topic";
-  }
-}
-
 const button: Button = {
   name: "selectMenuChannel",
   cooldown: false,
@@ -39,7 +22,6 @@ const button: Button = {
             guildDb?.language,
             "Settings.embed.dailyRole"
           )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
-          `${client.translation.get(guildDb?.language, "Settings.embed.dailyQuestionType")}: ${convertType(guildDb.dailyQuestionType)}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${guildDb?.customTypes}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyTimezone")}: ${guildDb.dailyTimezone}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyInterval")}: ${guildDb.dailyInterval}\n` +

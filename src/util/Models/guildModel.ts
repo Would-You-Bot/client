@@ -28,7 +28,7 @@ export interface IGuildModel {
   dailyMsg: boolean;
   dailyChannel: string;
   dailyRole: string | null;
-  dailyQuestionType: string;
+  dailyQuestionType: string[];
   dailyTimezone: string;
   dailyInterval: string;
   dailyThread: boolean;
@@ -171,8 +171,8 @@ const guildProfileSchema = new Schema<IGuildModel>(
       default: null,
     },
     dailyQuestionType: {
-      type: String,
-      default: "whatwouldyoudo",
+      type: [String],
+      default: ['wouldyourather', 'whatwouldyoudo', 'neverhaveiever'],
     },
     dailyTimezone: {
       type: String,

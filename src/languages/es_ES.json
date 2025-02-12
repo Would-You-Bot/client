@@ -236,7 +236,7 @@
     "cooldownTooLong": "El tiempo de reutilización es demasiado largo. ¡Asegúrate de que sea inferior a 6 horas (21.600 segundos)!",
     "replayChannelLimit": "¡Sólo puedes añadir 15 canales al enfriamiento de la repetición!",
     "dailyType": "¡Selecciona un tipo de mensaje diario que quieres enviar!",
-    "dailyQuestionType": "Seleccione el tipo de pregunta que desea recibir!",
+    "dailyQuestionType": "Seleccione todos los tipos que desea que aparezcan en el Mensaje Diario.",
     "commandSame": "El tiempo de reutilización del comando proporcionado es el mismo que ya está configurado. Asegúrese de elegir un enfriamiento diferente.",
     "welcomeType": "Selecciona el tipo de Mensaje de Bienvenida que quieres que te envíen.",
     "dailyRole": "¡Selecciona un rol que quieres hacer ping en los Mensajes Diarios!",

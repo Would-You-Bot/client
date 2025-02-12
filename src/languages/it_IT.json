@@ -236,7 +236,7 @@
     "cooldownTooLong": "Il cooldown fornito è troppo lungo. Assicurati che sia inferiore a 6 secondi! (21,600 secondi)!",
     "replayChannelLimit": "Puoi aggiungere solo 15 canali al cooldown per Gioca Ancora!",
     "dailyType": "Seleziona il tipo di Messaggio Giornaliero che vuoi venga inviato!",
-    "dailyQuestionType": "Selezionate il tipo di domanda che volete ricevere!",
+    "dailyQuestionType": "Selezionare tutti i tipi che si desidera visualizzare nel Messaggio giornaliero.",
     "commandSame": "Il cooldown del comando fornito è lo stesso cooldown già impostato. Assicuratevi di scegliere un cooldown diverso.",
     "welcomeType": "Seleziona il tipo di Messaggio di Benvenuto che vuoi venga inviato!",
     "dailyRole": "Seleziona un ruolo che vuoi venga menzionato nei Messaggi Giornalieri!",

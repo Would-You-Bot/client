@@ -2,6 +2,7 @@ import {
   ActionRowBuilder,
   type MessageActionRowComponentBuilder,
   StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder,
 } from "discord.js";
 import type { Button } from "../../interfaces";
 
@@ -13,44 +14,31 @@ const button: Button = {
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new StringSelectMenuBuilder()
           .setCustomId("selectMenuQuestionType")
-          .setPlaceholder("Select a type")
-          .addOptions([
-            {
-              label: "Would You Rather",
-              value: "wouldyourather",
-              description:
-                "This changes Daily Messages to use Would You Rather questions.",
-            },
-            {
-              label: "Never Have I Ever",
-              value: "neverhaveiever",
-              description:
-                "This changes Daily Messages to use Never Have I Ever questions.",
-            },
-            {
-              label: "What Would You Do",
-              value: "wwyd",
-              description:
-                "This changes Daily Messages to use What Would You Do questions.",
-            },
-            {
-              label: "Truth",
-              value: "truth",
-              description:
-                "This changes Daily Messages to use Truth questions.",
-            },
-            {
-              label: "Dare",
-              value: "dare",
-              description: "This changes Daily Messages to use Dare questions.",
-            },
-            {
-              label: "Topic",
-              value: "topic",
-              description:
-                "This changes Daily Messages to use Topic questions.",
-            },
-          ])
+          .setPlaceholder("Enable/Disable Question Types")
+          .setMinValues(1)
+          .setMaxValues(5)
+          .addOptions(
+            new StringSelectMenuOptionBuilder()
+              .setLabel(`Would You Rather`)
+              .setDefault(guildDb.dailyQuestionType.includes("wyr"))
+              .setValue("wyr"),
+            new StringSelectMenuOptionBuilder()
+              .setLabel(`What Would You Do`)
+              .setDefault(guildDb.dailyQuestionType.includes("wwyd"))
+              .setValue("wwyd"),
+            new StringSelectMenuOptionBuilder()
+              .setLabel(`Never Have I Ever`)
+              .setDefault(guildDb.dailyQuestionType.includes("neverhaveiever"))
+              .setValue("neverhaveiever"),
+            new StringSelectMenuOptionBuilder()
+              .setLabel(`Truth`)
+              .setDefault(guildDb.dailyQuestionType.includes("truth"))
+              .setValue("truth"),
+            new StringSelectMenuOptionBuilder()
+              .setLabel(`Dare`)
+              .setDefault(guildDb.dailyQuestionType.includes("dare"))
+              .setValue("dare")
+          )
       );
 
     interaction.update({

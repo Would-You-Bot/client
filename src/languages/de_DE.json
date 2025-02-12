@@ -236,7 +236,7 @@
     "cooldownTooLong": "Der Cooldown ist zu lang, stelle sicher, dass der Cooldown nicht über 6 stunden liegt! (21,600 Millisekunden)!",
     "replayChannelLimit": "Du kannst dem Cooldown nur 15 Kanäle hinzufügen!",
     "dailyType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",
-    "dailyQuestionType": "Wählen Sie die Art der Frage aus, die Sie gesendet bekommen möchten!",
+    "dailyQuestionType": "Wählen Sie alle Typen aus, die Sie in der täglichen Nachricht anzeigen möchten.",
     "welcomeType": "Wähle eine Art der täglichen Nachricht aus, die du senden willst!",
     "commandSame": "Die angegebene Abklingzeit des Befehls ist die gleiche, die bereits eingestellt ist. Stellen Sie sicher, dass Sie eine andere Abklingzeit wählen.",
     "dailyRole": "Wähle eine Rolle, die du in täglichen Nachrichten gepingt haben möchtest!",

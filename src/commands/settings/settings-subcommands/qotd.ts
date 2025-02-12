@@ -9,23 +9,6 @@ import {
 import type { IGuildModel } from "../../../util/Models/guildModel";
 import type WouldYou from "../../../util/wouldYou";
 
-function convertType(type: string) {
-  switch (type) {
-    case "wouldyourather":
-      return "Would You Rather";
-    case "neverhaveiever":
-      return "Never Have I Ever";
-    case "wwyd":
-      return "What Would You Do";
-    case "truth":
-      return "Truth";
-    case "dare":
-      return "Dare";
-    case "topic":
-      return "Topic";
-  }
-}
-
 export default async function settingsGeneral(
   interaction: ChatInputCommandInteraction,
   client: WouldYou,
@@ -44,7 +27,6 @@ export default async function settingsGeneral(
           guildDb?.language,
           "Settings.embed.dailyRole"
         )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
-        `${client.translation.get(guildDb?.language, "Settings.embed.dailyQuestionType")}: ${convertType(guildDb.dailyQuestionType)}\n` +
         `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${guildDb?.customTypes}\n` +
         `${client.translation.get(guildDb?.language, "Settings.embed.dailyTimezone")}: ${guildDb.dailyTimezone}\n` +
         `${client.translation.get(guildDb?.language, "Settings.embed.dailyInterval")}: ${guildDb.dailyInterval}\n` +
