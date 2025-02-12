@@ -7,6 +7,23 @@ import {
 } from "discord.js";
 import type { Button } from "../../interfaces";
 
+function convertType(type: string) {
+  switch (type) {
+    case "wouldyourather":
+      return "Would You Rather";
+    case "neverhaveiever":
+      return "Never Have I Ever";
+    case "wwyd":
+      return "What Would You Do";
+    case "truth":
+      return "Truth";
+    case "dare":
+      return "Dare";
+    case "topic":
+      return "Topic";
+  }
+}
+
 const button: Button = {
   name: "autoPin",
   cooldown: false,
@@ -61,11 +78,11 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyChannel",
-            ),
+              "Settings.button.dailyChannel"
+            )
           )
           .setStyle(
-            guildDb.dailyChannel ? ButtonStyle.Primary : ButtonStyle.Secondary,
+            guildDb.dailyChannel ? ButtonStyle.Primary : ButtonStyle.Secondary
           ),
         new ButtonBuilder()
           .setCustomId("dailyRole")
@@ -73,11 +90,11 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyRole",
-            ),
+              "Settings.button.dailyRole"
+            )
           )
           .setStyle(
-            guildDb.dailyRole ? ButtonStyle.Primary : ButtonStyle.Secondary,
+            guildDb.dailyRole ? ButtonStyle.Primary : ButtonStyle.Secondary
           ),
         new ButtonBuilder()
           .setCustomId("dailyType")
@@ -85,10 +102,20 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyType",
-            ),
+              "Settings.button.dailyType"
+            )
           )
           .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("dailyQuestionType")
+          .setEmoji("1185973664538177557")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.dailyQuestionType"
+            )
+          )
+          .setStyle(ButtonStyle.Primary)
       );
     const dailyButtons2 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(

@@ -6,7 +6,6 @@ import {
   type MessageActionRowComponentBuilder,
 } from "discord.js";
 import type { Button } from "../../interfaces";
-import { Modal, type ModalData } from "../../util/modalHandler";
 
 function convertType(type: string) {
   switch (type) {
@@ -25,52 +24,11 @@ function convertType(type: string) {
   }
 }
 
-function isFormat(str: string) {
-  return /^(?:[01]\d|2[0-4]):(?:00|05|10|15|20|25|30|35|40|45|50|55)$/.test(
-    str
-  );
-}
-
 const button: Button = {
-  name: "dailyInterval",
+  name: "selectMenuQuestionType",
   cooldown: false,
-  execute: async (interaction, client, guildDb) => {
-    const { data } = await new Modal({
-      title: "Daily Post Time",
-      customId: "dailyInterval",
-      fields: [
-        {
-          customId: "input",
-          style: "line",
-          label: "When should the message be posted? (HH:MM)",
-          required: true,
-          placeholder: guildDb.dailyInterval,
-        },
-      ],
-    } as ModalData).getData(interaction);
-
-    const value = data?.fieldValues[0].value;
-
-    if (guildDb.dailyInterval === value) {
-      data?.modal.reply({
-        ephemeral: true,
-        content: client.translation.get(
-          guildDb?.language,
-          "Settings.intervalSame"
-        ),
-      });
-      return;
-    }
-    if (isFormat(value!) === false) {
-      data?.modal.reply({
-        ephemeral: true,
-        content: client.translation.get(
-          guildDb?.language,
-          "Settings.intervalInvalid"
-        ),
-      });
-      return;
-    }
+  execute: async (interaction: any, client, guildDb) => {
+    const newType = interaction.values[0];
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.dailyTitle")
@@ -84,10 +42,10 @@ const button: Button = {
             guildDb?.language,
             "Settings.embed.dailyRole"
           )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
-          `${client.translation.get(guildDb?.language, "Settings.embed.dailyQuestionType")}: ${convertType(guildDb.dailyQuestionType)}\n` +
-          `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${guildDb?.customTypes}\n` +
+          `${client.translation.get(guildDb?.language, "Settings.embed.dailyQuestionType")}: ${convertType(newType)}\n` +
+          `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${guildDb.customTypes}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyTimezone")}: ${guildDb.dailyTimezone}\n` +
-          `${client.translation.get(guildDb?.language, "Settings.embed.dailyInterval")}: ${value}\n` +
+          `${client.translation.get(guildDb?.language, "Settings.embed.dailyInterval")}: ${guildDb.dailyInterval}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyThread"
@@ -224,16 +182,18 @@ const button: Button = {
           )
       );
 
-    await client.database.updateGuild(interaction.guild?.id || "", {
+    await client.database.updateGuild(interaction.guild.id, {
       ...guildDb,
-      dailyInterval: value,
+      dailyQuestionType: newType,
     });
 
-    await (data?.modal as any).update({
+    interaction.update({
       content: null,
       embeds: [dailyMsgs],
       components: [dailyButtons, dailyButtons2, dailyButtons3],
+      ephemeral: true,
     });
+    return;
   },
 };
 
