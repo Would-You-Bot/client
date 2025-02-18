@@ -37,7 +37,11 @@ const button: Button = {
             new StringSelectMenuOptionBuilder()
               .setLabel(`Dare`)
               .setDefault(guildDb.dailyQuestionType.includes("dareModel"))
-              .setValue("dareModel")
+              .setValue("dareModel"),
+            new StringSelectMenuOptionBuilder()
+              .setLabel(`Topics`)
+              .setDefault(guildDb.dailyQuestionType.includes("topicModel"))
+              .setValue("topicModel")
           )
       );
 
