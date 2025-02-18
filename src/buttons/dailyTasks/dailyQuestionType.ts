@@ -20,24 +20,24 @@ const button: Button = {
           .addOptions(
             new StringSelectMenuOptionBuilder()
               .setLabel(`Would You Rather`)
-              .setDefault(guildDb.dailyQuestionType.includes("wyr"))
-              .setValue("wyr"),
+              .setDefault(guildDb.dailyQuestionType.includes("wyrModel"))
+              .setValue("wyrModel"),
             new StringSelectMenuOptionBuilder()
               .setLabel(`What Would You Do`)
-              .setDefault(guildDb.dailyQuestionType.includes("wwyd"))
-              .setValue("wwyd"),
+              .setDefault(guildDb.dailyQuestionType.includes("wwydModel"))
+              .setValue("wwydModel"),
             new StringSelectMenuOptionBuilder()
               .setLabel(`Never Have I Ever`)
-              .setDefault(guildDb.dailyQuestionType.includes("neverhaveiever"))
-              .setValue("neverhaveiever"),
+              .setDefault(guildDb.dailyQuestionType.includes("nhieModel"))
+              .setValue("nhieModel"),
             new StringSelectMenuOptionBuilder()
               .setLabel(`Truth`)
-              .setDefault(guildDb.dailyQuestionType.includes("truth"))
-              .setValue("truth"),
+              .setDefault(guildDb.dailyQuestionType.includes("truthModel"))
+              .setValue("truthModel"),
             new StringSelectMenuOptionBuilder()
               .setLabel(`Dare`)
-              .setDefault(guildDb.dailyQuestionType.includes("dare"))
-              .setValue("dare")
+              .setDefault(guildDb.dailyQuestionType.includes("dareModel"))
+              .setValue("dareModel")
           )
       );
 

@@ -172,7 +172,7 @@ const guildProfileSchema = new Schema<IGuildModel>(
     },
     dailyQuestionType: {
       type: [String],
-      default: ['wyr', 'wwyd', 'neverhaveiever'],
+      default: ['wyrModel', 'wwydModel', 'nhieModel'],
     },
     dailyTimezone: {
       type: String,
