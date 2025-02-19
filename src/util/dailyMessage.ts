@@ -15,8 +15,11 @@ export default class DailyMessage {
    * Start the daily message Schedule
    */
   async listen() {
-    const URL = process.env.RABBITMQ_URL || "fallback";
-    const connection = await amqplib.connect(URL, {
+    let username = process.env.RABBITMQ_DEFAULT_USER || ""
+    let password = process.env.RABBITMQ_DEFAULT_PASS || ""
+    username = encodeURIComponent(username)
+    password = encodeURIComponent(password)
+    const connection = await amqplib.connect(`amqp://${username}:${password}@${process.env.AMQP_HOST}:5672`, {
       clientProperties: {
         connection_name: `client-cluster-${this.client.cluster.id}`,
       },

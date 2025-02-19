@@ -22,7 +22,6 @@ const button: Button = {
           customId: "input",
           style: "line",
           label: "What should the embed title be?",
-          required: true,
           placeholder: "Welcome to the server!",
         },
         {
@@ -35,8 +34,16 @@ const button: Button = {
       ],
     } as ModalData).getData(interaction);
 
-    const value = data?.fieldValues[0].value;
-    const valueURL = data?.fieldValues[1]?.value;
+    const value = data?.fieldValues[0].value
+      ? data?.fieldValues[0].value
+      : guildDb.welcomeEmbedTitle
+        ? guildDb.welcomeEmbedTitle
+        : undefined;
+    const valueURL = data?.fieldValues[1]?.value
+      ? data?.fieldValues[1]?.value
+      : guildDb.welcomeEmbedTitleURL
+        ? guildDb.welcomeEmbedTitleURL
+        : undefined;
 
     const schema = welcomeEmbed({
       guildDb: guildDb,
@@ -75,7 +82,7 @@ const button: Button = {
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
-      welcomeEmbedTitle: value,
+      welcomeEmbedTitle: value || null,
       welcomeEmbedTitleURL: valueURL || null,
     });
 
