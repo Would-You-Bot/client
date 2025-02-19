@@ -20,7 +20,7 @@ export default class DailyMessage {
     username = encodeURIComponent(username)
     password = encodeURIComponent(password)
 
-    let URI = process.env.RABBITMQ_URI || "fallback";
+    let URI = process.env.RABBITMQ_URL || "fallback";
     const connection = await amqplib.connect(URI, {
       clientProperties: {
         connection_name: `client-cluster-${this.client.cluster.id}`,
