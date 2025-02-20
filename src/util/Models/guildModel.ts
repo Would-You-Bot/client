@@ -28,6 +28,7 @@ export interface IGuildModel {
   dailyMsg: boolean;
   dailyChannel: string;
   dailyRole: string | null;
+  dailyQuestionType: string[];
   dailyTimezone: string;
   dailyInterval: string;
   dailyThread: boolean;
@@ -168,6 +169,10 @@ const guildProfileSchema = new Schema<IGuildModel>(
     dailyRole: {
       type: String,
       default: null,
+    },
+    dailyQuestionType: {
+      type: [String],
+      default: ["wyrModel", "wwydModel", "nhieModel"],
     },
     dailyTimezone: {
       type: String,

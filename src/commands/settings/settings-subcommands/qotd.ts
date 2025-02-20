@@ -83,6 +83,16 @@ export default async function settingsGeneral(
           ),
         )
         .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId("dailyQuestionType")
+        .setEmoji("1185973664538177557")
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.dailyQuestionType",
+          ),
+        )
+        .setStyle(ButtonStyle.Primary),
     );
 
   // Second button row

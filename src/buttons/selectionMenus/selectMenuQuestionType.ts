@@ -8,21 +8,11 @@ import {
 import type { Button } from "../../interfaces";
 
 const button: Button = {
-  name: "autoPin",
+  name: "selectMenuQuestionType",
   cooldown: false,
-  execute: async (interaction, client, guildDb) => {
-    const premium = await client.premium.check(interaction.guildId);
-
-    if (!premium.result) {
-      interaction.reply({
-        content: client.translation.get(guildDb?.language, "Settings.premium"),
-        ephemeral: true,
-      });
-      return;
-    }
-
-    const check = guildDb.autoPin;
-    const autoPin = new EmbedBuilder()
+  execute: async (interaction: any, client, guildDb) => {
+    const newType = interaction.values;
+    const dailyMsgs = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.dailyTitle"),
       )
@@ -35,7 +25,7 @@ const button: Button = {
             guildDb?.language,
             "Settings.embed.dailyRole",
           )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
-          `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${guildDb?.customTypes}\n` +
+          `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${guildDb.customTypes}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyTimezone")}: ${guildDb.dailyTimezone}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyInterval")}: ${guildDb.dailyInterval}\n` +
           `${client.translation.get(
@@ -45,14 +35,14 @@ const button: Button = {
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.autoPin",
-          )}: ${check ? ":x:" : ":white_check_mark:"}\n` +
+          )}: ${guildDb.autoPin ? ":white_check_mark:" : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
             "Settings.embed.dailyMsg",
           )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
       )
-      .setColor("#0598F6");
 
+      .setColor("#0598F6");
     const dailyButtons =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
@@ -161,7 +151,7 @@ const button: Button = {
             ),
           )
           .setStyle(
-            guildDb.autoPin ? ButtonStyle.Secondary : ButtonStyle.Success,
+            guildDb.autoPin ? ButtonStyle.Success : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("dailyMsg")
@@ -177,18 +167,16 @@ const button: Button = {
           ),
       );
 
-    await client.database.updateGuild(interaction.guild?.id || "", {
+    await client.database.updateGuild(interaction.guild.id, {
       ...guildDb,
-      autoPin: !guildDb.autoPin,
+      dailyQuestionType: newType,
     });
 
     interaction.update({
       content: null,
-      embeds: [autoPin],
+      embeds: [dailyMsgs],
       components: [dailyButtons, dailyButtons2, dailyButtons3],
-      options: {
-        ephemeral: true,
-      },
+      ephemeral: true,
     });
     return;
   },

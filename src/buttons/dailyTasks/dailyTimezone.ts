@@ -149,6 +149,16 @@ const button: Button = {
             ),
           )
           .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("dailyQuestionType")
+          .setEmoji("1185973664538177557")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.dailyQuestionType",
+            ),
+          )
+          .setStyle(ButtonStyle.Primary),
       );
     const dailyButtons2 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
