@@ -4,7 +4,6 @@ import { Redis } from "@upstash/redis";
 import axios from "axios";
 import { gray, green, red, white } from "chalk-advanced";
 import { Routes } from "discord-api-types/v10";
-import { getInfo } from "discord-hybrid-sharding";
 import type { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
 import "dotenv/config";
 import type { Event } from "../interfaces/event";
@@ -77,7 +76,6 @@ const event: Event = {
                     (prev, val) => prev + val,
                     0,
                   ),
-                  shard_count: getInfo().TOTAL_SHARDS,
                 },
               }).catch((err) => {
                 captureException(err);
