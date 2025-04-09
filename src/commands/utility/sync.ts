@@ -35,7 +35,7 @@ const command: ChatInputCommand = {
         ephemeral: true,
       });
     }
-    
+
     const subscription = await stripe.subscriptions.search({
       query: `metadata['serverId']:'${interaction.guildId}'`,
     });
