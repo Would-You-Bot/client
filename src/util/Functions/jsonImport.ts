@@ -10,16 +10,16 @@ import {
 } from "../Models/questionModel";
 import { usedQuestionModel } from "../Models/usedModel";
 
-interface LanguageMapInterface {
-  [key: string]: string;
-}
+// interface LanguageMapInterface {
+//   [key: string]: string;
+// }
 
-const languageMap: LanguageMapInterface = {
-  en_EN: "en",
-  es_ES: "es",
-  de_DE: "de",
-  it_IT: "it",
-};
+// const languageMap: LanguageMapInterface = {
+//   en_EN: "en_EN",
+//   es_ES: "es",
+//   de_DE: "de",
+//   it_IT: "it",
+// };
 
 import type { UpdateWriteOpResult } from "mongoose";
 import shuffle from "../shuffle";
@@ -100,7 +100,7 @@ export async function getRandomTod(
   guildDb: IGuildModel,
   language: string,
   premium: boolean,
-  enabled = true,
+  enabled = true
 ): Promise<QuestionResult> {
   const truth = await getQuestionsByType(
     channel,
@@ -108,7 +108,7 @@ export async function getRandomTod(
     guildDb,
     language,
     premium,
-    enabled,
+    enabled
   );
   const dare = await getQuestionsByType(
     channel,
@@ -116,7 +116,7 @@ export async function getRandomTod(
     guildDb,
     language,
     premium,
-    enabled,
+    enabled
   );
 
   return Math.random() < 0.5 ? truth : dare;
@@ -128,14 +128,13 @@ export async function getQuestionsByType(
   guildDb: IGuildModel,
   language: string,
   premium: boolean,
-  enabled = true,
+  enabled = true
 ): Promise<QuestionResult> {
   if (!validTypes.includes(type)) {
     return Promise.reject("Invalid type");
   }
 
-  const normalizedLanguage = languageMap[language] || "en";
-
+  const normalizedLanguage = language || "en_EN";
   const models: { [key: string]: any } = {
     wouldyourather: wyrModel,
     neverhaveiever: nhieModel,
@@ -188,7 +187,7 @@ export async function getQuestionsByType(
     }
 
     let questionDatabase = await getDBQuestion(
-      premium && enabled ? usedQuestions[0][typeCheck[type]] : [],
+      premium && enabled ? usedQuestions[0][typeCheck[type]] : []
     );
 
     if (!questionDatabase[0]?.id && premium && enabled) {
@@ -220,7 +219,7 @@ export async function getQuestionsByType(
     }
 
     let newRandomCustomQuestion = await getRandomCustom(
-      premium && enabled ? usedQuestions[0][typeCheck[`custom${type}`]] : [],
+      premium && enabled ? usedQuestions[0][typeCheck[`custom${type}`]] : []
     );
 
     if (!newRandomCustomQuestion[0]?.id && premium && enabled) {
@@ -228,7 +227,7 @@ export async function getQuestionsByType(
         type as Quest,
         guildDb.customTypes,
         guildDb.guildID,
-        "custom",
+        "custom"
       );
       newRandomCustomQuestion = await getRandomCustom([]);
     }
@@ -246,7 +245,7 @@ export async function getQuestionsByType(
         result = {
           id: questionDatabase[0].id,
           question:
-            normalizedLanguage === "en"
+            normalizedLanguage === "en_EN"
               ? questionDatabase[0].question
               : questionDatabase[0].translations[normalizedLanguage],
         };
@@ -257,17 +256,19 @@ export async function getQuestionsByType(
           ...questionDatabase.concat(newRandomCustomQuestion[0]),
         ]);
 
+        let question = mixedQuestions[0]
+          ? mixedQuestions[0]
+          : mixedQuestions[1];
+        
+        
+
         result = {
-          id: mixedQuestions[0] ? mixedQuestions[0]?.id : mixedQuestions[1]?.id,
-          question: mixedQuestions[0]
-            ? normalizedLanguage === "en"
-              ? mixedQuestions[0]?.question || mixedQuestions[0]?.question
-              : mixedQuestions[0]?.question ||
-                mixedQuestions[0]?.translations[normalizedLanguage]
-            : normalizedLanguage === "en"
-              ? mixedQuestions[1]?.question || mixedQuestions[1]?.question
-              : mixedQuestions[1]?.question ||
-                mixedQuestions[1]?.translations[normalizedLanguage],
+          id: question?.id,
+          question:
+            normalizedLanguage === "en_EN"
+              ? question?.question
+              : question?.translations?.[normalizedLanguage] ||
+                question?.question,
         };
         break;
       }
@@ -291,7 +292,7 @@ export async function getQuestionsByType(
       }
       await usedQuestionModel.updateOne(
         { guildID: guildDb.guildID },
-        { $push: { [selectedModel]: result.id } },
+        { $push: { [selectedModel]: result.id } }
       );
     }
   } else {
@@ -302,7 +303,7 @@ export async function getQuestionsByType(
     result = {
       id: questionDatabase[0].id,
       question:
-        normalizedLanguage === "en"
+        normalizedLanguage === "en_EN"
           ? questionDatabase[0].question
           : questionDatabase[0].translations[normalizedLanguage],
     };
@@ -315,7 +316,7 @@ export async function reset(
   type: Quest,
   customType: string,
   guildID: string,
-  resetType: string,
+  resetType: string
 ): Promise<UpdateWriteOpResult> {
   let selectedModel: string;
   if (customType === "custom") {
@@ -333,6 +334,6 @@ export async function reset(
       $set: {
         [selectedModel]: [],
       },
-    },
+    }
   );
 }
