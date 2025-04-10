@@ -8,10 +8,10 @@ import {
 import type { Button } from "../../interfaces";
 
 const button: Button = {
-  name: "selectMenuType",
+  name: "selectMenuQuestionType",
   cooldown: false,
   execute: async (interaction: any, client, guildDb) => {
-    const newType = interaction.values[0];
+    const newType = interaction.values;
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.dailyTitle")
@@ -25,7 +25,7 @@ const button: Button = {
             guildDb?.language,
             "Settings.embed.dailyRole"
           )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
-          `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${newType}\n` +
+          `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${guildDb.customTypes}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyTimezone")}: ${guildDb.dailyTimezone}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyInterval")}: ${guildDb.dailyInterval}\n` +
           `${client.translation.get(
@@ -166,7 +166,7 @@ const button: Button = {
 
     await client.database.updateGuild(interaction.guild.id, {
       ...guildDb,
-      customTypes: newType,
+      dailyQuestionType: newType,
     });
 
     interaction.update({

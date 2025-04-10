@@ -28,9 +28,11 @@ const command: ChatInputCommand = {
     const placeholderMap: Record<string, string> = {
       "{{user_displayname}}": member.user.displayName,
       "{{user_tag}}": member.user.username,
+      "{{user_avatarUrl}}": member.user.avatarURL() ?? "https://cdn.discordapp.com/embed/avatars/5.png",
       "{{@mention}}": `<@${member.user.id}>`,
       "{{guild_name}}": member.guild.name,
       "{{guild_member_count}}": member.guild.memberCount.toString(),
+      "{{guild_iconUrl}}": member.guild.iconURL() ?? "https://cdn.discordapp.com/embed/avatars/5.png",
       "{{question}}": client.translation.get(guildDb.language, "Placeholders.embed.question"),
       "{{new_line}}": "\\n",
     };

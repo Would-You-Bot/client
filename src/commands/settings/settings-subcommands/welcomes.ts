@@ -12,40 +12,42 @@ import type WouldYou from "../../../util/wouldYou";
 export default async function settingsGeneral(
   interaction: ChatInputCommandInteraction,
   client: WouldYou,
-  guildDb: IGuildModel,
+  guildDb: IGuildModel
 ) {
   const truncateString = (str: string, maxLength: number) => {
-    // Remove line breaks first
-    const cleanedStr = str.replace(/\n/g, ' '); 
-    return cleanedStr.length > maxLength ? `${cleanedStr.substring(0, maxLength)}...` : cleanedStr;
+    const cleanedStr = str.replace(/\n/g, " ");
+    return cleanedStr.length > maxLength
+      ? `${cleanedStr.substring(0, maxLength)}...`
+      : cleanedStr;
   };
-  
+
+  try {
 
   const welcomeEmbed = new EmbedBuilder()
     .setTitle(
-      client.translation.get(guildDb?.language, "Settings.embed.welcomeTitle"),
+      client.translation.get(guildDb?.language, "Settings.embed.welcomeTitle")
     )
     .setDescription(
       `${client.translation.get(
         guildDb?.language,
-        "Settings.embed.welcome",
+        "Settings.embed.welcome"
       )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
         guildDb?.language,
-        "Settings.embed.welcomePing",
+        "Settings.embed.welcomePing"
       )}: ${guildDb.welcomePing ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
         guildDb?.language,
-        "Settings.embed.dailyType",
+        "Settings.embed.dailyType"
       )}: ${guildDb.welcomeType}\n${client.translation.get(
         guildDb?.language,
-        "Settings.embed.welcomeChannel",
+        "Settings.embed.welcomeChannel"
       )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}\n${client.translation.get(
         guildDb?.language,
-        "Settings.embed.welcomeMessage",
+        "Settings.embed.welcomeMessage"
       )}: ${
         guildDb.welcomeMessage
           ? truncateString(guildDb.welcomeMessage, 100)
           : ":x:"
-      }`,
+      }`
     )
     .setColor("#0598F6")
     .setFooter({
@@ -61,10 +63,7 @@ export default async function settingsGeneral(
         .setCustomId("welcomeType")
         .setEmoji("1185973664538177557")
         .setLabel(
-          client.translation.get(
-            guildDb?.language,
-            "Settings.button.dailyType",
-          ),
+          client.translation.get(guildDb?.language, "Settings.button.dailyType")
         )
         .setStyle(ButtonStyle.Primary),
       new ButtonBuilder()
@@ -73,23 +72,27 @@ export default async function settingsGeneral(
         .setLabel(
           client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeChannel",
-          ),
+            "Settings.button.welcomeChannel"
+          )
         )
         .setStyle(
-          guildDb.welcomeChannel ? ButtonStyle.Primary : ButtonStyle.Secondary,
+          guildDb.welcomeChannel ? ButtonStyle.Primary : ButtonStyle.Secondary
         ),
       new ButtonBuilder()
         .setCustomId("welcomeTest")
         .setLabel(
           client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeTest",
-          ),
+            "Settings.button.welcomeTest"
+          )
         )
-        .setDisabled(!guildDb.welcome)
-        .setStyle(guildDb.welcome ? ButtonStyle.Primary : ButtonStyle.Secondary)
-        .setEmoji("1207800685928910909"),
+        .setDisabled(guildDb.welcomeChannel && guildDb?.welcome ? false : true)
+        .setStyle(
+          guildDb.welcomeChannel && guildDb?.welcome
+            ? ButtonStyle.Primary
+            : ButtonStyle.Secondary
+        )
+        .setEmoji("1207800685928910909")
     );
 
   // Second button row
@@ -100,10 +103,10 @@ export default async function settingsGeneral(
         .setCustomId("welcome")
         .setEmoji("1185973660465500180")
         .setLabel(
-          client.translation.get(guildDb?.language, "Settings.button.welcome"),
+          client.translation.get(guildDb?.language, "Settings.button.welcome")
         )
         .setStyle(
-          guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary,
+          guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary
         ),
       new ButtonBuilder()
         .setCustomId("welcomePing")
@@ -111,25 +114,38 @@ export default async function settingsGeneral(
         .setLabel(
           client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomePing",
-          ),
+            "Settings.button.welcomePing"
+          )
         )
         .setStyle(
-          guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary,
-        ),
+          guildDb.welcomePing ? ButtonStyle.Success : ButtonStyle.Secondary
+        )
     );
 
-    const welcomeButtons3 =
+  const welcomeButtons3 =
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("welcomeMessage")
         .setEmoji("1185973660465500180")
         .setLabel(
-          client.translation.get(guildDb?.language, "Settings.button.welcomeMessage"),
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeMessage"
+          )
         )
         .setStyle(
-          guildDb.welcomeMessage ? ButtonStyle.Primary : ButtonStyle.Secondary,
+          guildDb.welcomeMessage ? ButtonStyle.Primary : ButtonStyle.Secondary
+        ),
+      new ButtonBuilder()
+        .setCustomId("welcomeEmbedEdit")
+        .setEmoji("1308673732478238740")
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomeEmbedEdit"
+          )
         )
+        .setStyle(ButtonStyle.Primary)
     );
 
   await interaction.reply({
@@ -137,4 +153,7 @@ export default async function settingsGeneral(
     components: [welcomeButtons2, welcomeButtons1, welcomeButtons3],
     ephemeral: true,
   });
+  } catch (e) {
+    console.log(e)
+  }
 }

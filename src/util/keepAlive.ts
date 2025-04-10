@@ -16,10 +16,10 @@ export default class KeepAlive {
     this.client.rest.on("rateLimited", (log) => {
       const { route: path, limit, timeToReset: timeout } = log;
       captureMessage(
-        `Rate limited on ${path} with a limit of ${limit} and a timeout of ${timeout}`,
+        `Rate limited on ${path} with a limit of ${limit} and a timeout of ${timeout}`
       );
       captureMessage(
-        `Rate limited on ${path} with a limit of ${limit} and a timeout of ${timeout}`,
+        `Rate limited on ${path} with a limit of ${limit} and a timeout of ${timeout}`
       );
     });
 

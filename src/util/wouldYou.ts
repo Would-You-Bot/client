@@ -14,7 +14,7 @@ import "dotenv/config";
 
 // Classes for the bot
 import path from "node:path";
-import Config, { type IConfig } from "../config";
+import Config from "../config";
 import type { Button, ChatInputCommand } from "../interfaces";
 import type { Event } from "../interfaces/event";
 import { fileToCollection } from "./Functions/fileToCollection";
@@ -44,7 +44,7 @@ export default class WouldYou extends Client {
   public keepAlive: KeepAlive;
   public dailyMessage: DailyMessage;
   public voting: Voting;
-  public config: IConfig;
+  public config: typeof Config;
   public server: ExpressServer;
   translate: any;
 
