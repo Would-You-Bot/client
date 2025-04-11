@@ -10,16 +10,16 @@ import {
 } from "../Models/questionModel";
 import { usedQuestionModel } from "../Models/usedModel";
 
-interface LanguageMapInterface {
-  [key: string]: string;
-}
+// interface LanguageMapInterface {
+//   [key: string]: string;
+// }
 
-const languageMap: LanguageMapInterface = {
-  en_EN: "en",
-  es_ES: "es",
-  de_DE: "de",
-  it_IT: "it",
-};
+// const languageMap: LanguageMapInterface = {
+//   en_EN: "en_EN",
+//   es_ES: "es",
+//   de_DE: "de",
+//   it_IT: "it",
+// };
 
 import type { UpdateWriteOpResult } from "mongoose";
 import shuffle from "../shuffle";
@@ -134,8 +134,7 @@ export async function getQuestionsByType(
     return Promise.reject("Invalid type");
   }
 
-  const normalizedLanguage = languageMap[language] || "en";
-
+  const normalizedLanguage = language || "en_EN";
   const models: { [key: string]: any } = {
     wouldyourather: wyrModel,
     neverhaveiever: nhieModel,
@@ -246,7 +245,7 @@ export async function getQuestionsByType(
         result = {
           id: questionDatabase[0].id,
           question:
-            normalizedLanguage === "en"
+            normalizedLanguage === "en_EN"
               ? questionDatabase[0].question
               : questionDatabase[0].translations[normalizedLanguage],
         };
@@ -257,17 +256,17 @@ export async function getQuestionsByType(
           ...questionDatabase.concat(newRandomCustomQuestion[0]),
         ]);
 
+        let question = mixedQuestions[0]
+          ? mixedQuestions[0]
+          : mixedQuestions[1];
+
         result = {
-          id: mixedQuestions[0] ? mixedQuestions[0]?.id : mixedQuestions[1]?.id,
-          question: mixedQuestions[0]
-            ? normalizedLanguage === "en"
-              ? mixedQuestions[0]?.question || mixedQuestions[0]?.question
-              : mixedQuestions[0]?.question ||
-                mixedQuestions[0]?.translations[normalizedLanguage]
-            : normalizedLanguage === "en"
-              ? mixedQuestions[1]?.question || mixedQuestions[1]?.question
-              : mixedQuestions[1]?.question ||
-                mixedQuestions[1]?.translations[normalizedLanguage],
+          id: question?.id,
+          question:
+            normalizedLanguage === "en_EN"
+              ? question?.question
+              : question?.translations?.[normalizedLanguage] ||
+                question?.question,
         };
         break;
       }
@@ -302,7 +301,7 @@ export async function getQuestionsByType(
     result = {
       id: questionDatabase[0].id,
       question:
-        normalizedLanguage === "en"
+        normalizedLanguage === "en_EN"
           ? questionDatabase[0].question
           : questionDatabase[0].translations[normalizedLanguage],
     };
