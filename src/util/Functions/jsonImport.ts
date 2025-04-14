@@ -100,7 +100,7 @@ export async function getRandomTod(
   guildDb: IGuildModel,
   language: string,
   premium: boolean,
-  enabled = true
+  enabled = true,
 ): Promise<QuestionResult> {
   const truth = await getQuestionsByType(
     channel,
@@ -108,7 +108,7 @@ export async function getRandomTod(
     guildDb,
     language,
     premium,
-    enabled
+    enabled,
   );
   const dare = await getQuestionsByType(
     channel,
@@ -116,7 +116,7 @@ export async function getRandomTod(
     guildDb,
     language,
     premium,
-    enabled
+    enabled,
   );
 
   return Math.random() < 0.5 ? truth : dare;
@@ -128,7 +128,7 @@ export async function getQuestionsByType(
   guildDb: IGuildModel,
   language: string,
   premium: boolean,
-  enabled = true
+  enabled = true,
 ): Promise<QuestionResult> {
   if (!validTypes.includes(type)) {
     return Promise.reject("Invalid type");
@@ -187,7 +187,7 @@ export async function getQuestionsByType(
     }
 
     let questionDatabase = await getDBQuestion(
-      premium && enabled ? usedQuestions[0][typeCheck[type]] : []
+      premium && enabled ? usedQuestions[0][typeCheck[type]] : [],
     );
 
     if (!questionDatabase[0]?.id && premium && enabled) {
@@ -219,7 +219,7 @@ export async function getQuestionsByType(
     }
 
     let newRandomCustomQuestion = await getRandomCustom(
-      premium && enabled ? usedQuestions[0][typeCheck[`custom${type}`]] : []
+      premium && enabled ? usedQuestions[0][typeCheck[`custom${type}`]] : [],
     );
 
     if (!newRandomCustomQuestion[0]?.id && premium && enabled) {
@@ -227,7 +227,7 @@ export async function getQuestionsByType(
         type as Quest,
         guildDb.customTypes,
         guildDb.guildID,
-        "custom"
+        "custom",
       );
       newRandomCustomQuestion = await getRandomCustom([]);
     }
@@ -259,8 +259,6 @@ export async function getQuestionsByType(
         let question = mixedQuestions[0]
           ? mixedQuestions[0]
           : mixedQuestions[1];
-        
-        
 
         result = {
           id: question?.id,
@@ -292,7 +290,7 @@ export async function getQuestionsByType(
       }
       await usedQuestionModel.updateOne(
         { guildID: guildDb.guildID },
-        { $push: { [selectedModel]: result.id } }
+        { $push: { [selectedModel]: result.id } },
       );
     }
   } else {
@@ -316,7 +314,7 @@ export async function reset(
   type: Quest,
   customType: string,
   guildID: string,
-  resetType: string
+  resetType: string,
 ): Promise<UpdateWriteOpResult> {
   let selectedModel: string;
   if (customType === "custom") {
@@ -334,6 +332,6 @@ export async function reset(
       $set: {
         [selectedModel]: [],
       },
-    }
+    },
   );
 }
