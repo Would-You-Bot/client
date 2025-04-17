@@ -10,16 +10,16 @@ import {
 } from "../Models/questionModel";
 import { usedQuestionModel } from "../Models/usedModel";
 
-// interface LanguageMapInterface {
-//   [key: string]: string;
-// }
+interface LanguageMapInterface {
+  [key: string]: string;
+}
 
-// const languageMap: LanguageMapInterface = {
-//   en_EN: "en_EN",
-//   es_ES: "es",
-//   de_DE: "de",
-//   it_IT: "it",
-// };
+const languageMap: LanguageMapInterface = {
+  en_EN: "en_EN",
+  es_ES: "es",
+  de_DE: "de",
+  it_IT: "it",
+};
 
 import type { UpdateWriteOpResult } from "mongoose";
 import shuffle from "../shuffle";
@@ -134,7 +134,7 @@ export async function getQuestionsByType(
     return Promise.reject("Invalid type");
   }
 
-  const normalizedLanguage = language || "en_EN";
+  const normalizedLanguage = languageMap[language] || "en_EN";
   const models: { [key: string]: any } = {
     wouldyourather: wyrModel,
     neverhaveiever: nhieModel,
@@ -256,12 +256,10 @@ export async function getQuestionsByType(
           ...questionDatabase.concat(newRandomCustomQuestion[0]),
         ]);
 
-        let question = mixedQuestions[0]
+        const question = mixedQuestions[0]
           ? mixedQuestions[0]
           : mixedQuestions[1];
         
-        
-
         result = {
           id: question?.id,
           question:
