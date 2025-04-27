@@ -43,13 +43,13 @@ export function embed({
 }) {
   return new EmbedBuilder()
     .setTitle(
-      client.translation.get(guildDb?.language, "Settings.embed.welcomeTitle")
+      client.translation.get(guildDb?.language, "Settings.embed.welcomeTitle"),
     )
     .setFields([
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeContent"
+          "Settings.embed.welcomeContent",
         ),
         value: `\`\`\`${content.slice(0, 400)}\`\`\``,
         inline: false,
@@ -57,7 +57,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeTitles"
+          "Settings.embed.welcomeTitles",
         ),
         value: `\`\`\`${title.slice(0, 100)}\`\`\``,
         inline: true,
@@ -65,7 +65,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeTitlesURL"
+          "Settings.embed.welcomeTitlesURL",
         ),
         value: `\`\`\`${titleURL.slice(0, 30)}\`\`\``,
         inline: true,
@@ -73,7 +73,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeDescription"
+          "Settings.embed.welcomeDescription",
         ),
         value: `\`\`\`${description.slice(0, 800)}\`\`\``,
         inline: false,
@@ -81,7 +81,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeAuthorName"
+          "Settings.embed.welcomeAuthorName",
         ),
         value: `\`\`\`${author.slice(0, 100)}\`\`\``,
         inline: false,
@@ -89,7 +89,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeAuthorURL"
+          "Settings.embed.welcomeAuthorURL",
         ),
         value: `\`\`\`${authorURL.slice(0, 30)}\`\`\``,
         inline: true,
@@ -97,7 +97,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeThumbnailURL"
+          "Settings.embed.welcomeThumbnailURL",
         ),
         value: `\`\`\`${thumbnail.slice(0, 30)}\`\`\``,
         inline: true,
@@ -105,7 +105,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeFooterText"
+          "Settings.embed.welcomeFooterText",
         ),
         value: `\`\`\`${footer.slice(0, 100)}\`\`\``,
         inline: false,
@@ -113,7 +113,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeFooterURL"
+          "Settings.embed.welcomeFooterURL",
         ),
         value: `\`\`\`${footerURL.slice(0, 50)}\`\`\``,
         inline: true,
@@ -121,7 +121,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeImageURL"
+          "Settings.embed.welcomeImageURL",
         ),
         value: `\`\`\`${image.slice(0, 50)}\`\`\``,
         inline: true,
@@ -129,7 +129,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeColor"
+          "Settings.embed.welcomeColor",
         ),
         value: `\`\`\`${color}\`\`\``,
         inline: false,
@@ -137,7 +137,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeTimestamp"
+          "Settings.embed.welcomeTimestamp",
         ),
         value: `\`\`\`${timestamp === true ? "✅" : "❌"}\`\`\``,
         inline: true,
@@ -145,7 +145,7 @@ export function embed({
       {
         name: client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeToggle"
+          "Settings.embed.welcomeToggle",
         ),
         value: `\`\`\`${toggle === true ? "✅" : "❌"}\`\`\``,
         inline: true,
@@ -188,8 +188,8 @@ export function Button1({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedTitle"
-        )
+          "Settings.button.welcomeEmbedTitle",
+        ),
       )
       .setStyle(title)
       .setEmoji("1185973664538177557"),
@@ -199,8 +199,8 @@ export function Button1({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedDescription"
-        )
+          "Settings.button.welcomeEmbedDescription",
+        ),
       )
       .setStyle(description),
     new ButtonBuilder()
@@ -209,8 +209,8 @@ export function Button1({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedAuthorName"
-        )
+          "Settings.button.welcomeEmbedAuthorName",
+        ),
       )
       .setStyle(author),
     new ButtonBuilder()
@@ -218,11 +218,11 @@ export function Button1({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedAuthorURL"
-        )
+          "Settings.button.welcomeEmbedAuthorURL",
+        ),
       )
       .setStyle(authorURL)
-      .setEmoji("1185973664538177557")
+      .setEmoji("1185973664538177557"),
   );
 }
 
@@ -252,8 +252,8 @@ export function Button2({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedThumbnail"
-        )
+          "Settings.button.welcomeEmbedThumbnail",
+        ),
       )
       .setStyle(thumbnail),
     new ButtonBuilder()
@@ -262,8 +262,8 @@ export function Button2({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedImage"
-        )
+          "Settings.button.welcomeEmbedImage",
+        ),
       )
       .setStyle(image),
     new ButtonBuilder()
@@ -272,10 +272,10 @@ export function Button2({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedTimestamp"
-        )
+          "Settings.button.welcomeEmbedTimestamp",
+        ),
       )
-      .setStyle(timestamp)
+      .setStyle(timestamp),
   );
 }
 
@@ -305,8 +305,8 @@ export function Button3({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedFooterText"
-        )
+          "Settings.button.welcomeEmbedFooterText",
+        ),
       )
       .setStyle(footer),
     new ButtonBuilder()
@@ -315,8 +315,8 @@ export function Button3({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedFooterURL"
-        )
+          "Settings.button.welcomeEmbedFooterURL",
+        ),
       )
       .setStyle(footerURL),
     new ButtonBuilder()
@@ -325,10 +325,10 @@ export function Button3({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedColor"
-        )
+          "Settings.button.welcomeEmbedColor",
+        ),
       )
-      .setStyle(color)
+      .setStyle(color),
   );
 }
 
@@ -354,8 +354,8 @@ export function Button4({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedContent"
-        )
+          "Settings.button.welcomeEmbedContent",
+        ),
       )
       .setStyle(content),
     new ButtonBuilder()
@@ -364,8 +364,8 @@ export function Button4({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedToggle"
-        )
+          "Settings.button.welcomeEmbedToggle",
+        ),
       )
       .setStyle(toggle),
     new ButtonBuilder()
@@ -374,10 +374,10 @@ export function Button4({
       .setLabel(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbed"
-        )
+          "Settings.button.welcomeEmbed",
+        ),
       )
-      .setStyle(embed)
+      .setStyle(embed),
   );
 }
 
@@ -388,14 +388,14 @@ export function SelectMenu(client: any, guildDb: any) {
       .setPlaceholder(
         client.translation.get(
           guildDb?.language,
-          "Settings.button.welcomeEmbedDeleteSettings"
-        )
+          "Settings.button.welcomeEmbedDeleteSettings",
+        ),
       )
       .addOptions([
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedAuthorNameMenu"
+            "Settings.button.welcomeEmbedAuthorNameMenu",
           ),
           value: "author",
           description: "Delete the author name.",
@@ -403,7 +403,7 @@ export function SelectMenu(client: any, guildDb: any) {
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedAuthorURLMenu"
+            "Settings.button.welcomeEmbedAuthorURLMenu",
           ),
           value: "authorURL",
           description: "Delete the author URL.",
@@ -411,7 +411,7 @@ export function SelectMenu(client: any, guildDb: any) {
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedTitleMenu"
+            "Settings.button.welcomeEmbedTitleMenu",
           ),
           value: "title",
           description: "Delete the title.",
@@ -420,7 +420,7 @@ export function SelectMenu(client: any, guildDb: any) {
           label:
             client.translation.get(
               guildDb?.language,
-              "Settings.button.welcomeEmbedTitleMenu"
+              "Settings.button.welcomeEmbedTitleMenu",
             ) + " URL",
           value: "titleURL",
           description: "Delete the title URL.",
@@ -428,7 +428,7 @@ export function SelectMenu(client: any, guildDb: any) {
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedDescriptionMenu"
+            "Settings.button.welcomeEmbedDescriptionMenu",
           ),
           value: "description",
           description: "Delete the description.",
@@ -436,7 +436,7 @@ export function SelectMenu(client: any, guildDb: any) {
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedContentMenu"
+            "Settings.button.welcomeEmbedContentMenu",
           ),
           value: "content",
           description: "Delete the content.",
@@ -444,7 +444,7 @@ export function SelectMenu(client: any, guildDb: any) {
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedThumbnailMenu"
+            "Settings.button.welcomeEmbedThumbnailMenu",
           ),
           value: "thumbnail",
           description: "Delete the thumbnail.",
@@ -452,7 +452,7 @@ export function SelectMenu(client: any, guildDb: any) {
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedImageMenu"
+            "Settings.button.welcomeEmbedImageMenu",
           ),
           value: "image",
           description: "Delete the image.",
@@ -460,7 +460,7 @@ export function SelectMenu(client: any, guildDb: any) {
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedFooterTextMenu"
+            "Settings.button.welcomeEmbedFooterTextMenu",
           ),
           value: "footer",
           description: "Delete the footer text.",
@@ -468,7 +468,7 @@ export function SelectMenu(client: any, guildDb: any) {
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedFooterURLMenu"
+            "Settings.button.welcomeEmbedFooterURLMenu",
           ),
           value: "footerURL",
           description: "Delete the footer URL.",
@@ -476,12 +476,12 @@ export function SelectMenu(client: any, guildDb: any) {
         {
           label: client.translation.get(
             guildDb?.language,
-            "Settings.button.welcomeEmbedColorMenu"
+            "Settings.button.welcomeEmbedColorMenu",
           ),
           value: "color",
           description: "Delete the color.",
         },
-      ])
+      ]),
   );
 }
 
