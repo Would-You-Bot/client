@@ -14,32 +14,32 @@ const button: Button = {
     const newType = interaction.values[0];
     const dailyMsgs = new EmbedBuilder()
       .setTitle(
-        client.translation.get(guildDb?.language, "Settings.embed.dailyTitle")
+        client.translation.get(guildDb?.language, "Settings.embed.dailyTitle"),
       )
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Settings.embed.dailyChannel"
+          "Settings.embed.dailyChannel",
         )}: ${guildDb.dailyChannel ? `<#${guildDb.dailyChannel}>` : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
-            "Settings.embed.dailyRole"
+            "Settings.embed.dailyRole",
           )}: ${guildDb.dailyRole ? `<@&${guildDb.dailyRole}>` : ":x:"}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyType")}: ${newType}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyTimezone")}: ${guildDb.dailyTimezone}\n` +
           `${client.translation.get(guildDb?.language, "Settings.embed.dailyInterval")}: ${guildDb.dailyInterval}\n` +
           `${client.translation.get(
             guildDb?.language,
-            "Settings.embed.dailyThread"
+            "Settings.embed.dailyThread",
           )}: ${guildDb.dailyThread ? ":white_check_mark:" : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
-            "Settings.embed.autoPin"
+            "Settings.embed.autoPin",
           )}: ${guildDb.autoPin ? ":white_check_mark:" : ":x:"}\n` +
           `${client.translation.get(
             guildDb?.language,
-            "Settings.embed.dailyMsg"
-          )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`
+            "Settings.embed.dailyMsg",
+          )}: ${guildDb.dailyMsg ? ":white_check_mark:" : ":x:"}`,
       )
 
       .setColor("#0598F6");
@@ -51,11 +51,11 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyChannel"
-            )
+              "Settings.button.dailyChannel",
+            ),
           )
           .setStyle(
-            guildDb.dailyChannel ? ButtonStyle.Primary : ButtonStyle.Secondary
+            guildDb.dailyChannel ? ButtonStyle.Primary : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("dailyRole")
@@ -63,11 +63,11 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyRole"
-            )
+              "Settings.button.dailyRole",
+            ),
           )
           .setStyle(
-            guildDb.dailyRole ? ButtonStyle.Primary : ButtonStyle.Secondary
+            guildDb.dailyRole ? ButtonStyle.Primary : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("dailyType")
@@ -75,8 +75,8 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyType"
-            )
+              "Settings.button.dailyType",
+            ),
           )
           .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
@@ -85,10 +85,10 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyQuestionType"
-            )
+              "Settings.button.dailyQuestionType",
+            ),
           )
-          .setStyle(ButtonStyle.Primary)
+          .setStyle(ButtonStyle.Primary),
       );
     const dailyButtons2 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -98,11 +98,11 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyTimezone"
-            )
+              "Settings.button.dailyTimezone",
+            ),
           )
           .setStyle(
-            guildDb.dailyTimezone ? ButtonStyle.Success : ButtonStyle.Secondary
+            guildDb.dailyTimezone ? ButtonStyle.Success : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("dailyInterval")
@@ -110,11 +110,11 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyInterval"
-            )
+              "Settings.button.dailyInterval",
+            ),
           )
           .setStyle(
-            guildDb.dailyInterval ? ButtonStyle.Success : ButtonStyle.Secondary
+            guildDb.dailyInterval ? ButtonStyle.Success : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("daySelection")
@@ -122,10 +122,10 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.daySelect"
-            )
+              "Settings.button.daySelect",
+            ),
           )
-          .setStyle(ButtonStyle.Success)
+          .setStyle(ButtonStyle.Success),
       );
     const dailyButtons3 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -135,20 +135,23 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyThread"
-            )
+              "Settings.button.dailyThread",
+            ),
           )
           .setStyle(
-            guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary
+            guildDb.dailyThread ? ButtonStyle.Success : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("autoPin")
           .setEmoji("1189521962318450698")
           .setLabel(
-            client.translation.get(guildDb?.language, "Settings.button.autoPin")
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.autoPin",
+            ),
           )
           .setStyle(
-            guildDb.autoPin ? ButtonStyle.Success : ButtonStyle.Secondary
+            guildDb.autoPin ? ButtonStyle.Success : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("dailyMsg")
@@ -156,12 +159,12 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyMsg"
-            )
+              "Settings.button.dailyMsg",
+            ),
           )
           .setStyle(
-            guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary
-          )
+            guildDb.dailyMsg ? ButtonStyle.Success : ButtonStyle.Secondary,
+          ),
       );
 
     await client.database.updateGuild(interaction.guild.id, {
