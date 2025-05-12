@@ -21,34 +21,48 @@ const button: Button = {
   cooldown: true,
   execute: async (interaction: any, client, guildDb) => {
     if (interaction.guild) {
-      await interaction.message.edit({
-        components: [],
-      });
+      await interaction.message
+        .edit({
+          components: [],
+        })
+        .catch((err: Error) => {
+          console.error("Error editing first message: ", err);
+        });
       if (interaction.channel.isThread()) {
         if (
           !interaction.channel
             ?.permissionsFor(interaction.user.id)
             .has(PermissionFlagsBits.SendMessagesInThreads)
         ) {
-          return interaction.reply({
-            content:
-              "You don't have permission to use this button in this channel!",
-            ephemeral: true,
-          });
+          return interaction
+            .reply({
+              content:
+                "You don't have permission to use this button in this channel!",
+              ephemeral: true,
+            })
+            .catch((err: Error) => {
+              console.error("Error permission thread message: ", err);
+            });
         }
       } else if (
         !interaction.channel
           ?.permissionsFor(interaction.user.id)
           .has(PermissionFlagsBits.SendMessages)
       ) {
-        return interaction.reply({
-          content:
-            "You don't have permission to use this button in this channel!",
-          ephemeral: true,
-        });
+        return interaction
+          .reply({
+            content:
+              "You don't have permission to use this button in this channel!",
+            ephemeral: true,
+          })
+          .catch((err: Error) => {
+            console.error("Error permission message: ", err);
+          });
       }
     }
-    await interaction.deferReply();
+    await interaction.deferReply().catch((err: Error) => {
+      console.error("Error deferring reply: ", err);
+    });
 
     const userDb = await UserModel.findOne({
       userID: interaction.user?.id,
