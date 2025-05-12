@@ -56,7 +56,9 @@ const button: Button = {
 
     const initembed = new HigherLowerEmbed(interaction, client, guildDb);
 
-    await interaction.editReply({ embeds: [initembed] });
+    await interaction.editReply({ embeds: [initembed] }).catch((err: Error) => {
+      console.error("Error editing message: ", err);
+    });
 
     const gameData = await getHigherLower();
 
@@ -109,8 +111,8 @@ const button: Button = {
             source2:
               game.items.history[game.items.history.length - 1].link ||
               "https://wouldyoubot.gg/nolink",
-          },
-        )}`,
+          }
+        )}`
       )
       .setColor("White")
       .setImage("attachment://game.png")
@@ -130,19 +132,23 @@ const button: Button = {
           new ButtonBuilder()
             .setCustomId(`lower_${game.id}`)
             .setLabel("Lower")
-            .setStyle(ButtonStyle.Danger),
+            .setStyle(ButtonStyle.Danger)
         );
 
-      interaction.editReply({
-        embeds: [gameEmbed],
-        files: [
-          new AttachmentBuilder(image)
-            .setFile(image)
-            .setName("game.png")
-            .setSpoiler(false),
-        ],
-        components: [guessRow],
-      });
+      interaction
+        .editReply({
+          embeds: [gameEmbed],
+          files: [
+            new AttachmentBuilder(image)
+              .setFile(image)
+              .setName("game.png")
+              .setSpoiler(false),
+          ],
+          components: [guessRow],
+        })
+        .catch((err: Error) => {
+          console.error("Error sending message: ", err);
+        });
     });
     return;
   },
