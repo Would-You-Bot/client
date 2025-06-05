@@ -100,7 +100,7 @@ export async function getRandomTod(
   guildDb: IGuildModel,
   language: string,
   premium: boolean,
-  enabled = true
+  enabled = true,
 ): Promise<QuestionResult> {
   const truth = await getQuestionsByType(
     channel,
@@ -108,7 +108,7 @@ export async function getRandomTod(
     guildDb,
     language,
     premium,
-    enabled
+    enabled,
   );
   const dare = await getQuestionsByType(
     channel,
@@ -116,7 +116,7 @@ export async function getRandomTod(
     guildDb,
     language,
     premium,
-    enabled
+    enabled,
   );
 
   return Math.random() < 0.5 ? truth : dare;
@@ -128,7 +128,7 @@ export async function getQuestionsByType(
   guildDb: IGuildModel,
   language: string,
   premium: boolean,
-  enabled = true
+  enabled = true,
 ): Promise<QuestionResult> {
   if (!validTypes.includes(type)) {
     return Promise.reject("Invalid type");
@@ -250,13 +250,13 @@ export async function getQuestionsByType(
         ]);
 
         const randomIndex = Math.floor(
-          Math.random() * allCustomQuestions.length
+          Math.random() * allCustomQuestions.length,
         );
         return [allCustomQuestions[randomIndex]];
       }
 
       const randomIndex = Math.floor(
-        Math.random() * availableCustomQuestions.length
+        Math.random() * availableCustomQuestions.length,
       );
       return [availableCustomQuestions[randomIndex]];
     }
@@ -276,7 +276,7 @@ export async function getQuestionsByType(
       const customQuestion = await getRandomCustom(
         premium && enabled
           ? usedQuestions[0]?.[typeCheck[`custom${type}`]] || []
-          : []
+          : [],
       );
 
       if (!customQuestion?.[0]) {
@@ -286,7 +286,7 @@ export async function getQuestionsByType(
       if (premium && enabled) {
         await usedQuestionModel.updateOne(
           { guildID: guildDb.guildID },
-          { $push: { [typeCheck[`custom${type}`]]: customQuestion[0].id } }
+          { $push: { [typeCheck[`custom${type}`]]: customQuestion[0].id } },
         );
       }
 
@@ -298,7 +298,7 @@ export async function getQuestionsByType(
 
     // Only get normal questions if there are no custom questions configured
     let questionDatabase = await getDBQuestion(
-      premium && enabled ? usedQuestions[0]?.[typeCheck[type]] || [] : []
+      premium && enabled ? usedQuestions[0]?.[typeCheck[type]] || [] : [],
     );
 
     if (!questionDatabase[0]?.id && premium && enabled) {
@@ -316,7 +316,7 @@ export async function getQuestionsByType(
     if (premium && enabled) {
       await usedQuestionModel.updateOne(
         { guildID: guildDb.guildID },
-        { $push: { [typeCheck[type]]: dbQuestion.id } }
+        { $push: { [typeCheck[type]]: dbQuestion.id } },
       );
     }
 
@@ -341,7 +341,7 @@ export async function getQuestionsByType(
         break;
       case "mixed": {
         const availableQuestions = questionDatabase.map(
-          (q: any) => ({ ...q }) as QuestionData
+          (q: any) => ({ ...q }) as QuestionData,
         );
         const mixedQuestions = shuffle(availableQuestions);
         const question = mixedQuestions[0] as QuestionData;
@@ -392,7 +392,7 @@ export async function reset(
   type: Quest,
   customType: string,
   guildID: string,
-  resetType: string
+  resetType: string,
 ): Promise<UpdateWriteOpResult> {
   let selectedModel: string;
   if (customType === "custom") {
@@ -410,6 +410,6 @@ export async function reset(
       $set: {
         [selectedModel]: [],
       },
-    }
+    },
   );
 }
