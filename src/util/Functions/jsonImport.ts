@@ -144,7 +144,7 @@ export async function getQuestionsByType(
     topic: topicModel,
   };
 
-  let selectedModel = models[type.toLowerCase()];
+  const selectedModel = models[type.toLowerCase()];
 
   let result: QuestionResult = { id: "", question: "" };
 
