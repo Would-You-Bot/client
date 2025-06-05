@@ -15,12 +15,12 @@ export default class DailyMessage {
    * Start the daily message Schedule
    */
   async listen() {
-    let username = process.env.RABBITMQ_DEFAULT_USER || ""
-    let password = process.env.RABBITMQ_DEFAULT_PASS || ""
+    let username = process.env.RABBITMQ_DEFAULT_USER!
+    let password = process.env.RABBITMQ_DEFAULT_PASS!
     username = encodeURIComponent(username)
     password = encodeURIComponent(password)
 
-    let URI = process.env.RABBITMQ_URL || "fallback";
+    const URI = process.env.RABBITMQ_URL!;
     const connection = await amqplib.connect(URI, {
       clientProperties: {
         connection_name: `client-cluster-${this.client.cluster.id}`,
@@ -211,12 +211,15 @@ export default class DailyMessage {
     type: string,
     qid: string,
   ): EmbedBuilder {
+    console.log(
+      `Building embed for daily message: ${question} | ID: ${id} | Type: ${type} | QID: ${qid}`,
+    );
     return new EmbedBuilder()
       .setColor("#0598F6")
       .setFooter({
         text: `Daily Message | Type: ${type.replace(/^\w/, (content) =>
           content.toUpperCase(),
-        )} | ID: ${id} QID: ${qid}`,
+        )} | ID: ${id}`,
       })
       .setDescription(bold(question) as string);
   }
