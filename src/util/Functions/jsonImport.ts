@@ -144,7 +144,9 @@ export async function getQuestionsByType(
     topic: topicModel,
   };
 
-  const selectedModel = models[type.toLowerCase()];
+  // const selectedModel = models[type.toLowerCase()];
+  let selectedModel = models[type.toLowerCase()];
+
 
   let result: QuestionResult = { id: "", question: "" };
 
@@ -188,38 +190,28 @@ export async function getQuestionsByType(
       ]);
     }
 
-    interface QuestionData {
-      id: string;
-      question: string;
-      translations?: { [key: string]: string };
-      type?: string;
+    let questionDatabase = await getDBQuestion(
+      premium && enabled ? usedQuestions[0][typeCheck[type]] : []
+    );
+
+    if (!questionDatabase[0]?.id && premium && enabled) {
+      await reset(type as Quest, guildDb.customTypes, guildDb.guildID, "db");
+      questionDatabase = await getDBQuestion([]);
     }
 
     async function getRandomCustom(nin: string[]) {
-      const customCount = await GuildModel.aggregate([
+      return await GuildModel.aggregate([
         { $match: { guildID: guildDb.guildID } },
         { $unwind: "$customMessages" },
         {
           $match: {
+            "customMessages.id": {
+              $nin: nin,
+            },
             "customMessages.type": type === "whatwouldyoudo" ? "wwyd" : type,
           },
         },
-        { $count: "total" },
-      ]);
-
-      if (!customCount[0]?.total) {
-        return null;
-      }
-
-      const availableCustomQuestions = await GuildModel.aggregate([
-        { $match: { guildID: guildDb.guildID } },
-        { $unwind: "$customMessages" },
-        {
-          $match: {
-            "customMessages.type": type === "whatwouldyoudo" ? "wwyd" : type,
-            "customMessages.id": { $nin: nin },
-          },
-        },
+        { $sample: { size: 1 } },
         {
           $project: {
             id: "$customMessages.id",
@@ -228,149 +220,269 @@ export async function getQuestionsByType(
           },
         },
       ]);
-
-      if (availableCustomQuestions.length === 0) {
-        await reset(type as Quest, "custom", guildDb.guildID, "custom");
-
-        const allCustomQuestions = await GuildModel.aggregate([
-          { $match: { guildID: guildDb.guildID } },
-          { $unwind: "$customMessages" },
-          {
-            $match: {
-              "customMessages.type": type === "whatwouldyoudo" ? "wwyd" : type,
-            },
-          },
-          {
-            $project: {
-              id: "$customMessages.id",
-              question: "$customMessages.question",
-              type: "$customMessages.type",
-            },
-          },
-        ]);
-
-        const randomIndex = Math.floor(
-          Math.random() * allCustomQuestions.length
-        );
-        return [allCustomQuestions[randomIndex]];
-      }
-
-      const randomIndex = Math.floor(
-        Math.random() * availableCustomQuestions.length
-      );
-      return [availableCustomQuestions[randomIndex]];
     }
 
-    const hasCustomQuestions = await GuildModel.aggregate([
-      { $match: { guildID: guildDb.guildID } },
-      { $unwind: "$customMessages" },
-      {
-        $match: {
-          "customMessages.type": type === "whatwouldyoudo" ? "wwyd" : type,
-        },
-      },
-      { $count: "total" },
-    ]);
-
-    if (hasCustomQuestions[0]?.total > 0) {
-      const customQuestion = await getRandomCustom(
-        premium && enabled
-          ? usedQuestions[0]?.[typeCheck[`custom${type}`]] || []
-          : []
-      );
-
-      if (!customQuestion?.[0]) {
-        return Promise.reject("Error getting custom question");
-      }
-
-      if (premium && enabled) {
-        await usedQuestionModel.updateOne(
-          { guildID: guildDb.guildID },
-          { $push: { [typeCheck[`custom${type}`]]: customQuestion[0].id } }
-        );
-      }
-
-      return {
-        id: customQuestion[0].id,
-        question: customQuestion[0].question,
-      };
-    }
-
-    // Only get normal questions if there are no custom questions configured
-    let questionDatabase = await getDBQuestion(
-      premium && enabled ? usedQuestions[0]?.[typeCheck[type]] || [] : []
+    let newRandomCustomQuestion = await getRandomCustom(
+      premium && enabled ? usedQuestions[0][typeCheck[`custom${type}`]] : []
     );
 
-    if (!questionDatabase[0]?.id && premium && enabled) {
-      await reset(type as Quest, "regular", guildDb.guildID, "db");
-      questionDatabase = await getDBQuestion([]);
-    }
-
-    if (!questionDatabase[0]) {
-      return Promise.reject("No questions available");
-    }
-
-    const dbQuestion = questionDatabase[0] as QuestionData;
-
-    // Track the used normal question for premium users
-    if (premium && enabled) {
-      await usedQuestionModel.updateOne(
-        { guildID: guildDb.guildID },
-        { $push: { [typeCheck[type]]: dbQuestion.id } }
+    if (!newRandomCustomQuestion[0]?.id && premium && enabled) {
+      await reset(
+        type as Quest,
+        guildDb.customTypes,
+        guildDb.guildID,
+        "custom"
       );
+      newRandomCustomQuestion = await getRandomCustom([]);
     }
 
     let types =
       guildDb.channelTypes.find((e) => e.channelId === channel)?.questionType ||
       guildDb.customTypes;
-
     if (guildDb.welcome && guildDb.welcomeChannel === channel) {
       types = guildDb.welcomeType;
     }
-
     switch (types) {
       case "regular":
         result = {
-          id: dbQuestion.id,
+          id: questionDatabase[0].id,
           question:
             normalizedLanguage === "en_EN"
-              ? dbQuestion.question
-              : dbQuestion.translations?.[normalizedLanguage] ||
-                dbQuestion.question,
+              ? questionDatabase[0].question
+              : questionDatabase[0].translations[normalizedLanguage],
         };
+
         break;
       case "mixed": {
-        const availableQuestions = questionDatabase.map(
-          (q: any) => ({ ...q }) as QuestionData
-        );
-        const mixedQuestions = shuffle(availableQuestions);
-        const question = mixedQuestions[0] as QuestionData;
+        const mixedQuestions = shuffle([
+          ...questionDatabase.concat(newRandomCustomQuestion[0]),
+        ]);
 
-        if (!question) {
-          return Promise.reject("No questions available");
-        }
+        const question = mixedQuestions[0]
+          ? mixedQuestions[0]
+          : mixedQuestions[1];
 
         result = {
-          id: question.id,
+          id: question?.id,
           question:
             normalizedLanguage === "en_EN"
-              ? question.question
-              : question.translations?.[normalizedLanguage] ||
-                question.question,
+              ? question?.question
+              : question?.translations?.[normalizedLanguage] ||
+                question?.question,
         };
         break;
       }
       case "custom":
         result = {
-          id: dbQuestion.id,
-          question:
-            normalizedLanguage === "en_EN"
-              ? dbQuestion.question
-              : dbQuestion.translations?.[normalizedLanguage] ||
-                dbQuestion.question,
+          id: newRandomCustomQuestion[0].id,
+          question: newRandomCustomQuestion[0].question,
         };
         break;
     }
+
+    if (premium && enabled) {
+      if (types === "custom") {
+        selectedModel = typeCheck[`custom${type}`];
+      } else if (types === "mixed") {
+        if (result.id === questionDatabase[0].id)
+          selectedModel = typeCheck[type];
+        else selectedModel = typeCheck[`custom${type}`];
+      } else {
+        selectedModel = typeCheck[type];
+      }
+      await usedQuestionModel.updateOne(
+        { guildID: guildDb.guildID },
+        { $push: { [selectedModel]: result.id } }
+      );
+    }
+
+    // @@ TODO: Make the below code work in the future, but currently it doesn't work - ForGetFulSkyBro
+
+    // interface QuestionData {
+    //   id: string;
+    //   question: string;
+    //   translations?: { [key: string]: string };
+    //   type?: string;
+    // }
+
+    // async function getRandomCustom(nin: string[]) {
+    //   const customCount = await GuildModel.aggregate([
+    //     { $match: { guildID: guildDb.guildID } },
+    //     { $unwind: "$customMessages" },
+    //     {
+    //       $match: {
+    //         "customMessages.type": type === "whatwouldyoudo" ? "wwyd" : type,
+    //       },
+    //     },
+    //     { $count: "total" },
+    //   ]);
+
+    //   if (!customCount[0]?.total) {
+    //     return null;
+    //   }
+
+    //   const availableCustomQuestions = await GuildModel.aggregate([
+    //     { $match: { guildID: guildDb.guildID } },
+    //     { $unwind: "$customMessages" },
+    //     {
+    //       $match: {
+    //         "customMessages.type": type === "whatwouldyoudo" ? "wwyd" : type,
+    //         "customMessages.id": { $nin: nin },
+    //       },
+    //     },
+    //     {
+    //       $project: {
+    //         id: "$customMessages.id",
+    //         question: "$customMessages.question",
+    //         type: "$customMessages.type",
+    //       },
+    //     },
+    //   ]);
+
+    //   if (availableCustomQuestions.length === 0) {
+    //     await reset(type as Quest, "custom", guildDb.guildID, "custom");
+
+    //     const allCustomQuestions = await GuildModel.aggregate([
+    //       { $match: { guildID: guildDb.guildID } },
+    //       { $unwind: "$customMessages" },
+    //       {
+    //         $match: {
+    //           "customMessages.type": type === "whatwouldyoudo" ? "wwyd" : type,
+    //         },
+    //       },
+    //       {
+    //         $project: {
+    //           id: "$customMessages.id",
+    //           question: "$customMessages.question",
+    //           type: "$customMessages.type",
+    //         },
+    //       },
+    //     ]);
+
+    //     const randomIndex = Math.floor(
+    //       Math.random() * allCustomQuestions.length
+    //     );
+    //     return [allCustomQuestions[randomIndex]];
+    //   }
+
+    //   const randomIndex = Math.floor(
+    //     Math.random() * availableCustomQuestions.length
+    //   );
+    //   return [availableCustomQuestions[randomIndex]];
+    // }
+
+    // const hasCustomQuestions = await GuildModel.aggregate([
+    //   { $match: { guildID: guildDb.guildID } },
+    //   { $unwind: "$customMessages" },
+    //   {
+    //     $match: {
+    //       "customMessages.type": type === "whatwouldyoudo" ? "wwyd" : type,
+    //     },
+    //   },
+    //   { $count: "total" },
+    // ]);
+
+    // if (hasCustomQuestions[0]?.total > 0) {
+    //   const customQuestion = await getRandomCustom(
+    //     premium && enabled
+    //       ? usedQuestions[0]?.[typeCheck[`custom${type}`]] || []
+    //       : []
+    //   );
+
+    //   if (!customQuestion?.[0]) {
+    //     return Promise.reject("Error getting custom question");
+    //   }
+
+    //   if (premium && enabled) {
+    //     await usedQuestionModel.updateOne(
+    //       { guildID: guildDb.guildID },
+    //       { $push: { [typeCheck[`custom${type}`]]: customQuestion[0].id } }
+    //     );
+    //   }
+
+    //   return {
+    //     id: customQuestion[0].id,
+    //     question: customQuestion[0].question,
+    //   };
+    // }
+
+    // // Only get normal questions if there are no custom questions configured
+    // let questionDatabase = await getDBQuestion(
+    //   premium && enabled ? usedQuestions[0]?.[typeCheck[type]] || [] : []
+    // );
+
+    // if (!questionDatabase[0]?.id && premium && enabled) {
+    //   await reset(type as Quest, "regular", guildDb.guildID, "db");
+    //   questionDatabase = await getDBQuestion([]);
+    // }
+
+    // if (!questionDatabase[0]) {
+    //   return Promise.reject("No questions available");
+    // }
+
+    // const dbQuestion = questionDatabase[0] as QuestionData;
+
+    // // Track the used normal question for premium users
+    // if (premium && enabled) {
+    //   await usedQuestionModel.updateOne(
+    //     { guildID: guildDb.guildID },
+    //     { $push: { [typeCheck[type]]: dbQuestion.id } }
+    //   );
+    // }
+
+    // let types =
+    //   guildDb.channelTypes.find((e) => e.channelId === channel)?.questionType ||
+    //   guildDb.customTypes;
+
+    // if (guildDb.welcome && guildDb.welcomeChannel === channel) {
+    //   types = guildDb.welcomeType;
+    // }
+
+    // switch (types) {
+    //   case "regular":
+    //     result = {
+    //       id: dbQuestion.id,
+    //       question:
+    //         normalizedLanguage === "en_EN"
+    //           ? dbQuestion.question
+    //           : dbQuestion.translations?.[normalizedLanguage] ||
+    //             dbQuestion.question,
+    //     };
+    //     break;
+    //   case "mixed": {
+    //     const availableQuestions = questionDatabase.map(
+    //       (q: any) => ({ ...q }) as QuestionData
+    //     );
+    //     const mixedQuestions = shuffle(availableQuestions);
+    //     const question = mixedQuestions[0] as QuestionData;
+
+    //     if (!question) {
+    //       return Promise.reject("No questions available");
+    //     }
+
+    //     result = {
+    //       id: question.id,
+    //       question:
+    //         normalizedLanguage === "en_EN"
+    //           ? question.question
+    //           : question.translations?.[normalizedLanguage] ||
+    //             question.question,
+    //     };
+    //     break;
+    //   }
+    //   case "custom":
+    //     result = {
+    //       id: dbQuestion.id,
+    //       question:
+    //         normalizedLanguage === "en_EN"
+    //           ? dbQuestion.question
+    //           : dbQuestion.translations?.[normalizedLanguage] ||
+    //             dbQuestion.question,
+    //     };
+    //     break;
+    // }
+
+    
   } else {
     const questionDatabase = await selectedModel.aggregate([
       { $sample: { size: 1 } },
