@@ -751,16 +751,15 @@ const command: ChatInputCommand = {
                     response.data[key].length >
                     100
                 ) {
-                  for (const key in response.data) {
-                    if (!response.data.hasOwnProperty(key)) continue;
-                    if (
-                      guildDb.customMessages.filter((e) => e.type === key)
-                        .length +
-                        response.data[key].length >
-                      100
-                    )
-                      all.push(key);
-                  }
+                  
+                  if (!response.data.hasOwnProperty(key)) continue;
+                  if (
+                    guildDb.customMessages.filter((e) => e.type === key)
+                      .length +
+                      response.data[key].length >
+                    100
+                  )
+                    all.push(key);
 
                   const premiumButton =
                     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
