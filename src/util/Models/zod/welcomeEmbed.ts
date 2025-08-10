@@ -10,7 +10,7 @@ const welcomeEmbedSchema = z.object({
   description: z
     .string()
     .min(3, "Make sure your description is at least 3 characters long")
-    .max(350, "Make sure your description is only 150 characters long"),
+    .max(1000, "Make sure your description is only 1000 characters long"),
   author: z.object({
     name: z
       .string()
