@@ -42,7 +42,7 @@ const command: ChatInputCommand = {
           option
             .setName("options")
             .setDescription(
-              "Select which category you want this custom message to be in."
+              "Select which category you want this custom message to be in.",
             )
             .setRequired(true)
             .addChoices(
@@ -51,17 +51,17 @@ const command: ChatInputCommand = {
               { name: "What Would You Do", value: "wwyd" },
               { name: "Truth", value: "truth" },
               { name: "Dare", value: "dare" },
-              { name: "Topic", value: "topic" }
-            )
+              { name: "Topic", value: "topic" },
+            ),
         )
         .addStringOption((option) =>
           option
             .setName("message")
             .setDescription(
-              "Input a message to create a custom WouldYou message."
+              "Input a message to create a custom WouldYou message.",
             )
-            .setRequired(true)
-        )
+            .setRequired(true),
+        ),
     )
     .addSubcommand((subcommand) =>
       subcommand
@@ -71,18 +71,18 @@ const command: ChatInputCommand = {
           option
             .setName("message")
             .setDescription("Input a custom WouldYou ID number to remove it.")
-            .setRequired(true)
-        )
+            .setRequired(true),
+        ),
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("removeall")
-        .setDescription("Removes all custom messages.")
+        .setDescription("Removes all custom messages."),
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("view")
-        .setDescription("Views all of your custom WouldYou messages")
+        .setDescription("Views all of your custom WouldYou messages"),
     )
     .addSubcommand((subcommand) =>
       subcommand
@@ -92,15 +92,15 @@ const command: ChatInputCommand = {
           option
             .setName("attachment")
             .setDescription(
-              "Import a JSON file containing useless or useful Would You custom messages."
+              "Import a JSON file containing useless or useful Would You custom messages.",
             )
-            .setRequired(true)
-        )
+            .setRequired(true),
+        ),
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("export")
-        .setDescription("Exports custom messages into a JSON file.")
+        .setDescription("Exports custom messages into a JSON file."),
     ),
 
   execute: async (interaction, client, guildDb) => {
@@ -110,7 +110,7 @@ const command: ChatInputCommand = {
 
     if (
       (interaction?.member?.permissions as Readonly<PermissionsBitField>).has(
-        PermissionFlagsBits.ManageGuild
+        PermissionFlagsBits.ManageGuild,
       )
     ) {
       switch (interaction.options.getSubcommand()) {
@@ -130,7 +130,7 @@ const command: ChatInputCommand = {
                 new ButtonBuilder()
                   .setLabel("Premium")
                   .setStyle(ButtonStyle.Link)
-                  .setURL("https://wouldyoubot.gg/premium")
+                  .setURL("https://wouldyoubot.gg/premium"),
               );
             interaction.reply({
               content: `:x: ${client.translation.get(
@@ -138,7 +138,7 @@ const command: ChatInputCommand = {
                 "wyCustom.error.limit",
                 {
                   type: `\`${option}\``,
-                }
+                },
               )}`,
               components: [premiumButton],
               ephemeral: true,
@@ -154,22 +154,22 @@ const command: ChatInputCommand = {
               client,
               message || "",
               newID,
-              guildDb
+              guildDb,
             );
           else if (option === "wwyd")
             generativeText = generateWWYD(
               client,
               message || "",
               newID,
-              guildDb
+              guildDb,
             );
           else generativeText = { value: true, type: option };
           typeEmbed = new EmbedBuilder()
             .setTitle(
               client.translation.get(
                 guildDb?.language,
-                "wyCustom.success.embedAdd.title"
-              )
+                "wyCustom.success.embedAdd.title",
+              ),
             )
             .setColor("#0598F4")
             .setDescription(
@@ -184,29 +184,29 @@ const command: ChatInputCommand = {
                           generativeText?.type === "wouldyourather"
                             ? client.translation.get(
                                 guildDb?.language,
-                                "wyCustom.success.embedAdd.descWYR"
+                                "wyCustom.success.embedAdd.descWYR",
                               )
                             : generativeText?.type === "wwyd"
                               ? client.translation.get(
                                   guildDb?.language,
-                                  "wyCustom.success.embedAdd.descWWYD"
+                                  "wyCustom.success.embedAdd.descWWYD",
                                 )
                               : client.translation.get(
                                   guildDb?.language,
-                                  "wyCustom.success.embedAdd.descNHIE"
+                                  "wyCustom.success.embedAdd.descNHIE",
                                 ),
-                      }
+                      },
                     )}\n\n`
               }**${client.translation.get(
                 guildDb?.language,
-                "wyCustom.success.embedAdd.descID"
+                "wyCustom.success.embedAdd.descID",
               )}**: ${newID}\n**${client.translation.get(
                 guildDb?.language,
-                "wyCustom.success.embedAdd.descCat"
+                "wyCustom.success.embedAdd.descCat",
               )}**: ${option}\n\n**${client.translation.get(
                 guildDb?.language,
-                "wyCustom.success.embedAdd.descCont"
-              )}**: \`${message}\``
+                "wyCustom.success.embedAdd.descCont",
+              )}**: \`${message}\``,
             )
             .setFooter({
               text: `Would You ${
@@ -229,7 +229,7 @@ const command: ChatInputCommand = {
               ...guildDb,
               customMessages: guildDb.customMessages,
             },
-            true
+            true,
           );
 
           const add =
@@ -241,7 +241,7 @@ const command: ChatInputCommand = {
               new ButtonBuilder()
                 .setLabel("Don't Add")
                 .setStyle(ButtonStyle.Secondary)
-                .setCustomId(`wycustom_remove-${newID}`)
+                .setCustomId(`wycustom_remove-${newID}`),
             );
 
           const addDisable =
@@ -255,7 +255,7 @@ const command: ChatInputCommand = {
                 .setLabel("Don't Add")
                 .setDisabled(true)
                 .setStyle(ButtonStyle.Secondary)
-                .setCustomId("wycustom_remove")
+                .setCustomId("wycustom_remove"),
             );
 
           interaction
@@ -269,7 +269,7 @@ const command: ChatInputCommand = {
                     embeds: [typeEmbed],
                     components: [add],
                     ephemeral: true,
-                  }
+                  },
             )
             .then((msg) =>
               setTimeout(() => {
@@ -277,7 +277,7 @@ const command: ChatInputCommand = {
                   msg.edit({ components: [addDisable] });
                   client.customAdd.delete(newID);
                 }
-              }, 30 * 1000)
+              }, 30 * 1000),
             )
             .catch((err) => {
               console.log(err);
@@ -291,8 +291,8 @@ const command: ChatInputCommand = {
             .setTitle(
               client.translation.get(
                 guildDb?.language,
-                "wyCustom.success.embedRemove.title"
-              )
+                "wyCustom.success.embedRemove.title",
+              ),
             )
             .setColor("#0598F4")
             .setFooter({
@@ -311,7 +311,7 @@ const command: ChatInputCommand = {
             ephemeral: true,
           });
           const filtered = guildDb.customMessages.filter(
-            (c) => c.id !== message
+            (c) => c.id !== message,
           );
 
           await client.database.updateGuild(
@@ -320,7 +320,7 @@ const command: ChatInputCommand = {
               ...guildDb,
               customMessages: filtered,
             },
-            true
+            true,
           );
           break;
         }
@@ -329,7 +329,7 @@ const command: ChatInputCommand = {
             interaction.reply({
               content: client.translation.get(
                 guildDb?.language,
-                "wyCustom.success.embedRemoveAll.none"
+                "wyCustom.success.embedRemoveAll.none",
               ),
               ephemeral: true,
             });
@@ -340,8 +340,8 @@ const command: ChatInputCommand = {
             .setTitle(
               client.translation.get(
                 guildDb?.language,
-                "wyCustom.success.embedRemoveAll.title"
-              )
+                "wyCustom.success.embedRemoveAll.title",
+              ),
             )
             .setColor("#0598F4")
             .setFooter({
@@ -358,7 +358,7 @@ const command: ChatInputCommand = {
               new ButtonBuilder()
                 .setLabel("Decline")
                 .setStyle(ButtonStyle.Secondary)
-                .setCustomId("wycustom_decline")
+                .setCustomId("wycustom_decline"),
             );
 
           interaction.reply({
@@ -374,7 +374,7 @@ const command: ChatInputCommand = {
               ephemeral: true,
               content: client.translation.get(
                 guildDb?.language,
-                "wyCustom.error.empty"
+                "wyCustom.error.empty",
               ),
             });
             return;
@@ -403,17 +403,17 @@ const command: ChatInputCommand = {
                 (s, i) =>
                   `${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descID"
+                    "wyCustom.success.embedAdd.descID",
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descMsg"
-                  )}: ${s.question}`
+                    "wyCustom.success.embedAdd.descMsg",
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
                 length: Math.ceil(data.length / 5),
               },
-              (a, r) => data.slice(r * 5, r * 5 + 5)
+              (a, r) => data.slice(r * 5, r * 5 + 5),
             );
 
             Math.ceil(data.length / 5);
@@ -423,17 +423,17 @@ const command: ChatInputCommand = {
                   .setTitle(
                     client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.title"
-                    )
+                      "wyCustom.success.paginator.title",
+                    ),
                   )
                   .setDescription(
                     `${client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.descCatNHIE"
-                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`
+                      "wyCustom.success.paginator.descCatNHIE",
+                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
-                  .setColor("#0795F6")
-              )
+                  .setColor("#0795F6"),
+              ),
             );
           }
 
@@ -448,17 +448,17 @@ const command: ChatInputCommand = {
                 (s, i) =>
                   `${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descID"
+                    "wyCustom.success.embedAdd.descID",
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descMsg"
-                  )}: ${s.question}`
+                    "wyCustom.success.embedAdd.descMsg",
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
                 length: Math.ceil(data.length / 5),
               },
-              (a, r) => data.slice(r * 5, r * 5 + 5)
+              (a, r) => data.slice(r * 5, r * 5 + 5),
             );
 
             Math.ceil(data.length / 5);
@@ -468,17 +468,17 @@ const command: ChatInputCommand = {
                   .setTitle(
                     client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.title"
-                    )
+                      "wyCustom.success.paginator.title",
+                    ),
                   )
                   .setDescription(
                     `${client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.descCatWYR"
-                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`
+                      "wyCustom.success.paginator.descCatWYR",
+                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
-                  .setColor("#0795F6")
-              )
+                  .setColor("#0795F6"),
+              ),
             );
           }
 
@@ -492,17 +492,17 @@ const command: ChatInputCommand = {
                 (s, i) =>
                   `${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descID"
+                    "wyCustom.success.embedAdd.descID",
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descMsg"
-                  )}: ${s.question}`
+                    "wyCustom.success.embedAdd.descMsg",
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
                 length: Math.ceil(data.length / 5),
               },
-              (a, r) => data.slice(r * 5, r * 5 + 5)
+              (a, r) => data.slice(r * 5, r * 5 + 5),
             );
 
             Math.ceil(data.length / 5);
@@ -512,17 +512,17 @@ const command: ChatInputCommand = {
                   .setTitle(
                     client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.title"
-                    )
+                      "wyCustom.success.paginator.title",
+                    ),
                   )
                   .setDescription(
                     `${client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.descCatTRUTH"
-                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`
+                      "wyCustom.success.paginator.descCatTRUTH",
+                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
-                  .setColor("#0795F6")
-              )
+                  .setColor("#0795F6"),
+              ),
             );
           }
 
@@ -536,17 +536,17 @@ const command: ChatInputCommand = {
                 (s, i) =>
                   `${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descID"
+                    "wyCustom.success.embedAdd.descID",
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descMsg"
-                  )}: ${s.question}`
+                    "wyCustom.success.embedAdd.descMsg",
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
                 length: Math.ceil(data.length / 5),
               },
-              (a, r) => data.slice(r * 5, r * 5 + 5)
+              (a, r) => data.slice(r * 5, r * 5 + 5),
             );
 
             Math.ceil(data.length / 5);
@@ -556,17 +556,17 @@ const command: ChatInputCommand = {
                   .setTitle(
                     client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.title"
-                    )
+                      "wyCustom.success.paginator.title",
+                    ),
                   )
                   .setDescription(
                     `${client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.descCatDARE"
-                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`
+                      "wyCustom.success.paginator.descCatDARE",
+                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
-                  .setColor("#0795F6")
-              )
+                  .setColor("#0795F6"),
+              ),
             );
           }
 
@@ -580,17 +580,17 @@ const command: ChatInputCommand = {
                 (s, i) =>
                   `${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descID"
+                    "wyCustom.success.embedAdd.descID",
                   )}: ${s.id}\n${client.translation.get(
                     guildDb?.language,
-                    "wyCustom.success.embedAdd.descMsg"
-                  )}: ${s.question}`
+                    "wyCustom.success.embedAdd.descMsg",
+                  )}: ${s.question}`,
               );
             data = Array.from(
               {
                 length: Math.ceil(data.length / 5),
               },
-              (a, r) => data.slice(r * 5, r * 5 + 5)
+              (a, r) => data.slice(r * 5, r * 5 + 5),
             );
 
             Math.ceil(data.length / 5);
@@ -600,17 +600,17 @@ const command: ChatInputCommand = {
                   .setTitle(
                     client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.title"
-                    )
+                      "wyCustom.success.paginator.title",
+                    ),
                   )
                   .setDescription(
                     `${client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.descCatWWYD"
-                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`
+                      "wyCustom.success.paginator.descCatWWYD",
+                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
-                  .setColor("#0795F6")
-              )
+                  .setColor("#0795F6"),
+              ),
             );
           }
 
@@ -622,7 +622,7 @@ const command: ChatInputCommand = {
               .filter((c) => c.type === "topic")
               .map((s, i) => `${s.id}: ${s.question}`);
             data = Array.from({ length: Math.ceil(data.length / 5) }, (a, r) =>
-              data.slice(r * 5, r * 5 + 5)
+              data.slice(r * 5, r * 5 + 5),
             );
 
             Math.ceil(data.length / 5);
@@ -632,17 +632,17 @@ const command: ChatInputCommand = {
                   .setTitle(
                     client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.title"
-                    )
+                      "wyCustom.success.paginator.title",
+                    ),
                   )
                   .setDescription(
                     `${client.translation.get(
                       guildDb?.language,
-                      "wyCustom.success.paginator.descCatTOPIC"
-                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`
+                      "wyCustom.success.paginator.descCatTOPIC",
+                    )}\n\n${e.slice(0, 5).join("\n\n").toString()}`,
                   )
-                  .setColor("#0795F6")
-              )
+                  .setColor("#0795F6"),
+              ),
             );
           }
 
@@ -657,7 +657,7 @@ const command: ChatInputCommand = {
               ephemeral: true,
               content: client.translation.get(
                 guildDb?.language,
-                "wyCustom.error.import.att1"
+                "wyCustom.error.import.att1",
               ),
             });
             return;
@@ -668,7 +668,7 @@ const command: ChatInputCommand = {
               ephemeral: true,
               content: client.translation.get(
                 guildDb?.language,
-                "wyCustom.error.import.att2"
+                "wyCustom.error.import.att2",
               ),
             });
             return;
@@ -691,7 +691,7 @@ const command: ChatInputCommand = {
                   },
                   content: client.translation.get(
                     guildDb?.language,
-                    "wyCustom.error.import.att3"
+                    "wyCustom.error.import.att3",
                   ),
                 });
                 return;
@@ -711,7 +711,7 @@ const command: ChatInputCommand = {
                   },
                   content: client.translation.get(
                     guildDb?.language,
-                    "wyCustom.error.import.att4"
+                    "wyCustom.error.import.att4",
                   ),
                 });
                 return;
@@ -731,7 +731,7 @@ const command: ChatInputCommand = {
                   },
                   content: client.translation.get(
                     guildDb?.language,
-                    "wyCustom.error.import.att4"
+                    "wyCustom.error.import.att4",
                   ),
                 });
                 return;
@@ -751,7 +751,6 @@ const command: ChatInputCommand = {
                     response.data[key].length >
                     100
                 ) {
-                  
                   if (!response.data.hasOwnProperty(key)) continue;
                   if (
                     guildDb.customMessages.filter((e) => e.type === key)
@@ -766,7 +765,7 @@ const command: ChatInputCommand = {
                       new ButtonBuilder()
                         .setLabel("Premium")
                         .setStyle(ButtonStyle.Link)
-                        .setURL("https://wouldyoubot.gg/premium")
+                        .setURL("https://wouldyoubot.gg/premium"),
                     );
 
                   interaction.editReply({
@@ -775,7 +774,7 @@ const command: ChatInputCommand = {
                       "wyCustom.error.limit",
                       {
                         type: all.map((e) => `\`${e}\``).join(", "),
-                      }
+                      },
                     )}\n\n${client.translation.get(guildDb?.language, "wyCustom.error.addToLimit")}`,
                     components: [premiumButton],
                   });
@@ -790,7 +789,7 @@ const command: ChatInputCommand = {
                     return interaction.editReply({
                       content: client.translation.get(
                         guildDb?.language,
-                        "wyCustom.error.import.att4"
+                        "wyCustom.error.import.att4",
                       ),
                       components: [],
                     });
@@ -800,7 +799,7 @@ const command: ChatInputCommand = {
 
               if (response.data.wouldyourather) {
                 let i = guildDb.customMessages.filter(
-                  (e) => e.type === "wouldyourather"
+                  (e) => e.type === "wouldyourather",
                 ).length;
                 response.data.wouldyourather.map((d: any) => {
                   if (prem.length > 0 && i === 100) return;
@@ -816,7 +815,7 @@ const command: ChatInputCommand = {
 
               if (response.data.truth) {
                 let i = guildDb.customMessages.filter(
-                  (e) => e.type === "truth"
+                  (e) => e.type === "truth",
                 ).length;
                 response.data.truth.map((d: any) => {
                   if (prem.length > 0 && i === 100) return;
@@ -832,7 +831,7 @@ const command: ChatInputCommand = {
 
               if (response.data.dare) {
                 let i = guildDb.customMessages.filter(
-                  (e) => e.type === "dare"
+                  (e) => e.type === "dare",
                 ).length;
                 response.data.dare.map((d: any) => {
                   if (prem.length > 0 && i === 100) return;
@@ -848,7 +847,7 @@ const command: ChatInputCommand = {
 
               if (response.data.neverhaveiever) {
                 let i = guildDb.customMessages.filter(
-                  (e) => e.type === "neverhaveiever"
+                  (e) => e.type === "neverhaveiever",
                 ).length;
                 response.data.neverhaveiever.map((d: any) => {
                   if (prem.length > 0 && i === 100) return;
@@ -865,7 +864,7 @@ const command: ChatInputCommand = {
 
               if (response.data.wwyd) {
                 let i = guildDb.customMessages.filter(
-                  (e) => e.type === "wwyd"
+                  (e) => e.type === "wwyd",
                 ).length;
                 response.data.wwyd.map((d: any) => {
                   if (prem.length > 0 && i === 100) return;
@@ -886,7 +885,7 @@ const command: ChatInputCommand = {
                   ...guildDb,
                   customMessages: guildDb.customMessages,
                 },
-                true
+                true,
               );
 
               if (all.length > 0) return;
@@ -896,7 +895,7 @@ const command: ChatInputCommand = {
                 },
                 content: client.translation.get(
                   guildDb?.language,
-                  "wyCustom.success.import"
+                  "wyCustom.success.import",
                 ),
               });
               return;
@@ -904,7 +903,7 @@ const command: ChatInputCommand = {
             .catch((err) => {
               captureException(err);
               interaction.editReply(
-                `${client.translation.get(guildDb?.language, "wyCustom.error.import.att15")}\n\nError: ${err}`
+                `${client.translation.get(guildDb?.language, "wyCustom.error.import.att15")}\n\nError: ${err}`,
               );
               return;
             });
@@ -916,7 +915,7 @@ const command: ChatInputCommand = {
               ephemeral: true,
               content: client.translation.get(
                 guildDb?.language,
-                "wyCustom.error.export.none"
+                "wyCustom.error.export.none",
               ),
             });
             return;
@@ -925,18 +924,18 @@ const command: ChatInputCommand = {
           await interaction.deferReply();
 
           const wouldyourather = guildDb.customMessages.filter(
-            (c) => c.type === "wouldyourather"
+            (c) => c.type === "wouldyourather",
           );
           const truth = guildDb.customMessages.filter(
-            (c) => c.type === "truth"
+            (c) => c.type === "truth",
           );
           const dare = guildDb.customMessages.filter((c) => c.type === "dare");
           const neverhaveiever = guildDb.customMessages.filter(
-            (c) => c.type === "neverhaveiever"
+            (c) => c.type === "neverhaveiever",
           );
           const wwyd = guildDb.customMessages.filter((c) => c.type === "wwyd");
           const topic = guildDb.customMessages.filter(
-            (c) => c.type === "topic"
+            (c) => c.type === "topic",
           );
 
           let text = "{\n";
@@ -1009,7 +1008,7 @@ const command: ChatInputCommand = {
           interaction.editReply({
             content: client.translation.get(
               guildDb?.language,
-              "wyCustom.success.export"
+              "wyCustom.success.export",
             ),
             files: [
               {
@@ -1026,7 +1025,7 @@ const command: ChatInputCommand = {
         .setColor("#F00505")
         .setTitle("Error!")
         .setDescription(
-          client.translation.get(guildDb?.language, "Language.embed.error")
+          client.translation.get(guildDb?.language, "Language.embed.error"),
         );
       interaction
         .reply({
