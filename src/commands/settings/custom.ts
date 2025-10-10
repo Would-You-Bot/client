@@ -109,9 +109,13 @@ const command: ChatInputCommand = {
     let generativeText: any;
 
     if (
-      (interaction?.member?.permissions as Readonly<PermissionsBitField>).has(
-        PermissionFlagsBits.ManageGuild
-      )
+      guildDb.customPerm
+        ? (interaction?.member?.roles as Readonly<any>).cache.has(
+            guildDb.customPerm
+          )
+        : (
+            interaction?.member?.permissions as Readonly<PermissionsBitField>
+          ).has(PermissionFlagsBits.ManageGuild)
     ) {
       switch (interaction.options.getSubcommand()) {
         case "add": {
@@ -751,7 +755,6 @@ const command: ChatInputCommand = {
                     response.data[key].length >
                     100
                 ) {
-                  
                   if (!response.data.hasOwnProperty(key)) continue;
                   if (
                     guildDb.customMessages.filter((e) => e.type === key)
@@ -1022,11 +1025,18 @@ const command: ChatInputCommand = {
         }
       }
     } else {
+      console.log(guildDb.customPerm);
       const errorembed = new EmbedBuilder()
         .setColor("#F00505")
         .setTitle("Error!")
         .setDescription(
-          client.translation.get(guildDb?.language, "Language.embed.error")
+          guildDb.customPerm
+            ? client.translation.get(
+                guildDb?.language,
+                "Language.embed.errorRole",
+                { role: `<@&${guildDb.customPerm}>` }
+              )
+            : client.translation.get(guildDb?.language, "Language.embed.error")
         );
       interaction
         .reply({

@@ -16,19 +16,22 @@ export default async function settingsGeneral(
 ) {
   const emb = new EmbedBuilder()
     .setTitle(
-      client.translation.get(guildDb?.language, "Settings.embed.utilityTitle"),
+      client.translation.get(guildDb?.language, "Settings.embed.utilityTitle")
     )
     .setDescription(
       `${client.translation.get(
         guildDb?.language,
-        "Settings.embed.username",
+        "Settings.embed.customPerm"
+      )}: ${guildDb.customPerm ? `<@&${guildDb.customPerm}>` : ":x:"}\n${client.translation.get(
+        guildDb?.language,
+        "Settings.embed.username"
       )}: ${guildDb.webhookName ? guildDb.webhookName : ":x:"}\n${client.translation.get(
         guildDb?.language,
-        "Settings.embed.avatar",
+        "Settings.embed.avatar"
       )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : ":x:"}\n${client.translation.get(
         guildDb?.language,
-        "Settings.embed.classicMode",
-      )}: ${guildDb.classicMode ? ":white_check_mark:" : ":x:"}`,
+        "Settings.embed.classicMode"
+      )}: ${guildDb.classicMode ? ":x:" : ":white_check_mark:"}`
     )
     .setColor("#0598F6")
     .setFooter({
@@ -42,20 +45,18 @@ export default async function settingsGeneral(
         .setCustomId("webhookName")
         .setEmoji("1185973660465500180")
         .setLabel(
-          client.translation.get(guildDb?.language, "Settings.button.name"),
+          client.translation.get(guildDb?.language, "Settings.button.name")
         )
-        .setStyle(
-          guildDb.webhookName ? ButtonStyle.Success : ButtonStyle.Secondary,
-        ),
+        .setStyle(ButtonStyle.Success),
       new ButtonBuilder()
         .setCustomId("webhookAvatar")
         .setEmoji("1207801424503644260")
         .setLabel(
-          client.translation.get(guildDb?.language, "Settings.button.avatar"),
+          client.translation.get(guildDb?.language, "Settings.button.avatar")
         )
         .setStyle(
-          guildDb.webhookAvatar ? ButtonStyle.Success : ButtonStyle.Secondary,
-        ),
+          guildDb.webhookAvatar ? ButtonStyle.Success : ButtonStyle.Secondary
+        )
     );
 
   const button2 =
@@ -66,12 +67,24 @@ export default async function settingsGeneral(
         .setLabel(
           client.translation.get(
             guildDb?.language,
-            "Settings.button.classicMode",
-          ),
+            "Settings.button.classicMode"
+          )
         )
         .setStyle(
-          guildDb.classicMode ? ButtonStyle.Success : ButtonStyle.Secondary,
+          guildDb.classicMode ? ButtonStyle.Secondary : ButtonStyle.Success
         ),
+      new ButtonBuilder()
+        .setCustomId("customPerm")
+        .setEmoji("1256977616242606091")
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.customPerm"
+          )
+        )
+        .setStyle(
+          guildDb.customPerm ? ButtonStyle.Success : ButtonStyle.Secondary
+        )
     );
 
   await interaction.reply({

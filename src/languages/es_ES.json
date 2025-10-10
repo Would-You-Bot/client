@@ -19,6 +19,7 @@
   "Language": {
     "embed": {
       "error": "¡Te falta el permiso `Manage guild` para usar este comando!",
+      "errorRole": "¡Necesitas tener el rol **{role}** para usar este comando!",
       "footer": "Would You"
     }
   },
@@ -247,6 +248,7 @@
     "premium": "Para acceder a esta función deberá suscribirse a [Would You Premium](https://wouldyoubot.gg/premium)",
     "invalidLink": "Proporciona un archivo adjunto válido PNG, JPG (JPEG), WEBP o GIF de Discord para establecerlo como avatar del bot.",
     "daysSelection": "Seleccione todos los días en los que **no** desea que aparezcan los mensajes diarios.",
+    "customPerm": "Seleccione el rol que se utilizará para añadir preguntas personalizadas.",
     "embed": {
       "welcomeMessage": "**Mensaje de bienvenida**",
       "generalTitle": "Would You - Configuración general",
@@ -294,7 +296,8 @@
       "error": "¡Te falta el permiso `Manage guild` para usar este comando!",
       "username": "<:crown:1256988872160710808> **QOTD Username**",
       "avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
-      "classicMode": "**Modo Clásico**"
+      "classicMode": "**Modo Clásico**",
+      "customPerm": "**Rol de permiso personalizado**"
     },
     "button": {
       "welcomeMessage": "Editar el mensaje de bienvenida",
@@ -351,6 +354,7 @@
       "welcomeEmbedTimestampMenu": "Borrar marca de tiempo",
       "avatar": "Establecer avatar",
       "name": "Establecer nombre de usuario",
+      "customPerm": "Establecer función de permisos personalizada",
       "classicMode": "Activar el modo clásico"
     },
     "modal": {

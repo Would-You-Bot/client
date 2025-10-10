@@ -19,6 +19,7 @@
   "Language": {
     "embed": {
       "error": "Vous avez besoin de la permission `Gérer le serveur` pour utiliser cette commande !",
+      "errorRole": "Vous devez avoir le rôle **{role}** pour utiliser cette commande !",
       "footer": "Would You"
     }
   },
@@ -247,6 +248,7 @@
     "premium": "Pour accéder à cette fonctionnalité, vous devrez vous abonner à [Would You Premium](https://wouldyoubot.gg/premium)",
     "invalidLink": "Veuillez fournir une pièce jointe Discord valide PNG, JPG (JPEG), WEBP ou GIF à définir comme avatar du bot.",
     "daysSelection": "Sélectionnez chaque jour que vous **ne voulez pas** que les messages quotidiens soient allumés.",
+    "customPerm": "Sélectionnez un rôle qui sera utilisé pour ajouter des questions personnalisées.",
     "embed": {
       "welcomeMessage": "**Message de bienvenue**",
       "generalTitle": "Would You - Paramètres généraux",
@@ -294,7 +296,8 @@
       "error": "Vous avez besoin de la permission `Gérer le serveur` pour utiliser cette commande!",
       "username": "<:crown:1256988872160710808> **Nom d'utilisateur QOTD**",
       "avatar": "<:crown:1256988872160710808> **Avatar QOTD**",
-      "classicMode": "**Mode classique**"
+      "classicMode": "**Mode classique**",
+      "customPerm": "**Rôle de permission personnalisé**"
     },
     "button": {
       "welcomeMessage": "Modifier le message de bienvenue",
@@ -351,6 +354,7 @@
       "welcomeEmbed": "Retour",
       "avatar": "Définir l'avatar",
       "name": "Définir le nom d'utilisateur",
+      "customPerm": "Définir un rôle d'autorisation personnalisé",
       "classicMode": "Activer/désactiver le mode classique"
     },
     "modal": {

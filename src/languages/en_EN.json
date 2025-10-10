@@ -18,7 +18,8 @@
   },
   "Language": {
     "embed": {
-      "error": "You are missing the `Manage Guild` permission to use this command!",
+      "error": "You are missing the `Manage Guild` permission to use this command.",
+      "errorRole": "You need to have the role **{role}** to use this command!",
       "footer": "Would You"
     }
   },
@@ -247,6 +248,7 @@
     "premium": "To access this feature you will need to subscribe to [Would You Premium](https://wouldyoubot.gg/premium)",
     "invalidLink": "Please provide a valid PNG, JPG (JPEG), WEBP or GIF Discord attachment to set as the bot's avatar.",
     "daysSelection": "Select every day you **don't** want daily messages to be on.",
+    "customPerm": "Select a role that will be used for adding custom questions.",
     "embed": {
       "generalTitle": "Would You - General Settings",
       "utilityTitle": "Would You - Utility Settings",
@@ -297,7 +299,8 @@
       "error": "You are missing the `Manage Guild` permission to use this command!",
       "username": "<:crown:1256988872160710808> **QOTD Username**",
       "avatar": "<:crown:1256988872160710808> **QOTD Avatar**",
-      "classicMode": "**Classic Mode **",
+      "classicMode": "**Classic Mode**",
+      "customPerm": "**Custom Permission Role**",
       "noChannel": "No specific channel settings",
       "globalType": "**Global Question Type**:",
       "channelType": "**Per-Channel Settings**:"
@@ -362,6 +365,7 @@
       "channelType": "Configure Per-Channel Types",
       "setGlobal": "Click on the type you want to set globally.",
       "setChannel": "Select a channel you want to add a question type to.",
+      "customPerm": "Set Custom Permission Role",
       "typeRegex": "You must provide a valid type: `regular`, `custom`, or `mixed`."
     },
     "modal": {

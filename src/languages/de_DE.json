@@ -19,6 +19,7 @@
   "Language": {
     "embed": {
       "error": "Dir fehlt die `ManageGuild` permission!",
+      "errorRole": "Sie müssen die Rolle **{role}** haben, um diesen Befehl zu benutzen!",
       "footer": "Would You"
     }
   },
@@ -247,6 +248,7 @@
     "premium": "Um auf diese Funktion zuzugreifen, musst du ein [Would You Premium](https://wouldyoubot.gg/premium) Abo abschließen",
     "invalidLink": "Bitte gib einen gültigen PNG, JPG (JPEG), WEBP oder GIF Discord Anhang an, um ihn als Avatar des Bots festzulegen.",
     "daysSelection": "Wähle jeden Tag aus, an dem du **nicht** möchtest, dass tägliche Nachrichten gesendet werden.",
+    "customPerm": "Wählen Sie eine Rolle aus, die für das Hinzufügen benutzerdefinierter Fragen verwendet werden soll.",
     "embed": {
       "welcomeMessage": "**Willkommensnachricht**",
       "generalTitle": "Would You - Generelle Einstellungen",
@@ -298,6 +300,7 @@
       "username": "<:crown:1256988872160710808> **QOTD Nutzername**",
       "avatar": "<:crown:1256988872160710808> **QOTD Profilbild**",
       "classicMode": "**Klassik Modus **",
+      "customPerm": "**Benutzerdefinierte Berechtigungsrolle**",
       "noChannel": "Keine spezifischen Kanaleinstellungen",
       "globalType": "**Globaler Fragentyp**:",
       "channelType": "**Einstellungen pro Kanal**:"
@@ -361,6 +364,7 @@
       "globalType": "Globalen Fragentyp setzen",
       "channelType": "Per-Channel-Typen konfigurieren",
       "setGlobal": "Klicke auf den Typ, den du global setzen möchten.",
+      "customPerm": "Benutzerdefinierte Berechtigungsrolle festlegen",
       "setChannel": "Wähle einen Kanal aus, dem du einen Fragentyp hinzufügen möchten.",
       "typeRegex": "Du musst einen gültigen Typ angeben: `regular`, `custom` oder `mixed`."
     },

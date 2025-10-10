@@ -66,6 +66,7 @@ export interface IGuildModel {
   commandCooldown: number;
   commandBy: string;
   commandType: string;
+  customPerm: string | null;
 }
 
 const guildProfileSchema = new Schema<IGuildModel>(
@@ -285,6 +286,10 @@ const guildProfileSchema = new Schema<IGuildModel>(
       type: String,
       default: "Command",
     },
+    customPerm: {
+      type: String,
+      default: null,
+    }
   },
   { timestamps: true }
 );

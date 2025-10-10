@@ -6,56 +6,11 @@ import {
   type MessageActionRowComponentBuilder,
 } from "discord.js";
 import type { Button } from "../../interfaces";
-import { Modal, type ModalData } from "../../util/modalHandler";
 
 const button: Button = {
-  name: "webhookName",
+  name: "deleteCustomPerm",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
-    const premium = await client.premium.check(interaction.guildId);
-
-    if (!premium.result) {
-      interaction.reply({
-        content: client.translation.get(guildDb?.language, "Settings.premium"),
-        ephemeral: true,
-      });
-      return;
-    }
-
-    const { data } = await new Modal({
-      title: "Custom Username",
-      customId: "webhookNameModal",
-      fields: [
-        {
-          customId: "input",
-          style: "line",
-          label: "Provide a username for QOTD webhooks",
-          required: true,
-          placeholder: "This username will be used for QOTD webhooks",
-        },
-      ],
-    } as ModalData).getData(interaction);
-
-    const value = data?.fieldValues[0].value;
-
-    const filter = [
-      "Discord",
-      "discord",
-      "Everyone",
-      "everyone",
-      "clyde",
-      "Clyde",
-    ];
-    for (let i = 0; filter.length > i; i++) {
-      if (value?.includes(filter[i])) {
-        data?.modal.reply({
-          content: client.translation.get(guildDb?.language, "Settings.filter"),
-          ephemeral: true,
-        });
-        return;
-      }
-    }
-
     const emb = new EmbedBuilder()
       .setTitle(
         client.translation.get(guildDb?.language, "Settings.embed.utilityTitle")
@@ -64,13 +19,16 @@ const button: Button = {
         `${client.translation.get(
           guildDb?.language,
           "Settings.embed.customPerm"
-        )}: ${guildDb.customPerm ? `<@&${guildDb.customPerm}>` : ":x:"}\n${client.translation.get(guildDb?.language, "Settings.embed.username")}: ${value}\n${client.translation.get(
+        )}: :x:\n${client.translation.get(
+          guildDb?.language,
+          "Settings.embed.username"
+        )}: ${guildDb.webhookName ? guildDb.webhookName : ":x:"}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.avatar"
         )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : ":x:"}\n${client.translation.get(
           guildDb?.language,
           "Settings.embed.classicMode"
-        )}: ${guildDb.classicMode ? ":white_check_mark:" : ":x:"}`
+        )}: ${guildDb.classicMode ? ":x:" : ":white_check_mark:"}`
       )
       .setColor("#0598F6")
       .setFooter({
@@ -113,7 +71,7 @@ const button: Button = {
             )
           )
           .setStyle(
-            guildDb.classicMode ? ButtonStyle.Success : ButtonStyle.Secondary
+            guildDb.classicMode ? ButtonStyle.Secondary : ButtonStyle.Success
           ),
         new ButtonBuilder()
           .setCustomId("customPerm")
@@ -124,23 +82,23 @@ const button: Button = {
               "Settings.button.customPerm"
             )
           )
-          .setStyle(
-            guildDb.customPerm ? ButtonStyle.Success : ButtonStyle.Secondary
-          )
+          .setStyle(ButtonStyle.Secondary)
       );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
       ...guildDb,
-      webhookName: value,
+      customPerm: null,
     });
 
-    await (data?.modal as any).update({
+    interaction.update({
+      content: null,
       embeds: [emb],
       components: [button, button2],
       options: {
         ephemeral: true,
       },
     });
+    return;
   },
 };
 
