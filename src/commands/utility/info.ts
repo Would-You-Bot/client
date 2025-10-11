@@ -47,8 +47,6 @@ const command: ChatInputCommand = {
     const { dominik, sky, skelly, paulos, tee, woofer } =
       client.config.emojis.info;
 
-    // change the shard information so it displays Each cluster and lists the shards in that cluster but make it so it doesn't take up much space
-    // Property 'totalClusters' does not exist on type 'ClusterClient<Client<boolean>>'.
     const infoEmbed = new EmbedBuilder()
       .setColor("#0598F6")
       .setDescription(
