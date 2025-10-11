@@ -47,33 +47,40 @@ const command: ChatInputCommand = {
     const { dominik, sky, skelly, paulos, tee, woofer } =
       client.config.emojis.info;
 
-    // make it so it uses shardClusterStoreModel and displays them in a box where it shows the shard, shard master, and cluster number
-
+    // change the shard information so it displays Each cluster and lists the shards in that cluster but make it so it doesn't take up much space
+    // Property 'totalClusters' does not exist on type 'ClusterClient<Client<boolean>>'.
     const infoEmbed = new EmbedBuilder()
       .setColor("#0598F6")
       .setDescription(
         `# Info about Would You
-- Devs: ${dominik + sky + skelly + paulos + tee + woofer}
-- Servers: ${serverCount.reduce((prev, val) => prev + val, 0).toLocaleString()}
-- Users: ${userCount.reduce((a, b) => a + b, 0).toLocaleString()}
-- Memory: ${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB
-- Last Restart: <t:${unixstamp}:R>
-
+Devs: ${dominik + sky + skelly + paulos + tee + woofer}
+Servers: ${serverCount.reduce((prev, val) => prev + val, 0).toLocaleString()}
+Users: ${userCount.reduce((a, b) => a + b, 0).toLocaleString()}
+Memory: ${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB
+Last Restart: <t:${unixstamp}:R>
 ## Shard Information
 \`\`\`ini
 ${await shardClusterStoreModel
   .find()
   .then((shards: IShardClusterStore[]) =>
-    shards
-      .map(
-        (s) =>
-          `[Shard ${s.shard}] Cluster: ${s.cluster} | Master: ${s.isMaster}`
-      )
-      .join("\n")
+    shards.reduce((acc, shard) => {
+      const clusters = new Map<number, IShardClusterStore[]>();
+      shards.forEach((s) => {
+        if (!clusters.has(s.cluster)) clusters.set(s.cluster, []);
+        clusters.get(s.cluster)?.push(s);
+      });
+
+      return Array.from(clusters.entries())
+        .map(([clusterId, clusterShards]) => {
+          const shardList = clusterShards.map((s) => s.shard).join(", ");
+          return `[Cluster ${clusterId}] | Shards: ${shardList}`;
+        })
+        .join("\n");
+    }, "")
   )
   .catch(() => "No Shard Data found")}
 \`\`\`
-
+## Useful Links
 -# [Support Server](https://wouldyoubot.gg/discord)
 -# [Website](https://wouldyoubot.gg)
 -# [Invite Link](https://wouldyoubot.gg/invite)
