@@ -1,7 +1,10 @@
 import { captureException } from "@sentry/node";
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import type { ChatInputCommand } from "../../interfaces";
-const { version } = require("../../../package.json");
+import {
+  type IShardClusterStore,
+  shardClusterStoreModel,
+} from "../../util/Models/ShardClusterStore";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -20,12 +23,13 @@ const command: ChatInputCommand = {
 
   execute: async (interaction, client, guildDb) => {
     const serverCount = await client.cluster.broadcastEval(
-      (c) => c.guilds.cache.size,
+      (c) => c.guilds.cache.size
     );
 
     const userCount = await client.cluster.broadcastEval((c) =>
-      c.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
+      c.guilds.cache.reduce((a, b) => a + b.memberCount, 0)
     );
+
     const ramUsage = await client.cluster.broadcastEval(() => {
       function round(num: number) {
         const m = Number((Math.abs(num) * 100).toPrecision(15));
@@ -40,54 +44,45 @@ const command: ChatInputCommand = {
 
     const premium = await client.premium.check(interaction.guildId);
 
-    const premiumEmoji = premium.result ? "✅" : "❌";
+    const { dominik, sky, skelly, paulos, tee, woofer } =
+      client.config.emojis.info;
 
-    const { dominik, sky, skelly, paulos, tee, woofer } = client.config.emojis.info;
+    // make it so it uses shardClusterStoreModel and displays them in a box where it shows the shard, shard master, and cluster number
 
     const infoEmbed = new EmbedBuilder()
       .setColor("#0598F6")
-      .setTitle("Bot Info")
-      .addFields(
-        {
-          name: "Developers:",
-          value: `${dominik + sky + skelly + paulos + tee + woofer}`,
-          inline: false,
-        },
-        {
-          name: "Servercount:",
-          value: `${serverCount.reduce((prev, val) => prev + val, 0).toLocaleString()}`,
-          inline: false,
-        },
-        {
-          name: "Users:",
-          value: `${userCount.reduce((a, b) => a + b, 0).toLocaleString()}`,
-          inline: false,
-        },
-        {
-          name: "Memory:",
-          value: `${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB`,
-          inline: false,
-        },
-        {
-          name: "Last Restart:",
-          value: `
-          <t:${unixstamp}:R>`,
-          inline: false,
-        },
-        {
-          name: "Bot Version:",
-          value: `v${version}`,
-          inline: false,
-        },
-        {
-          name: "Premium Server:",
-          value: `${`${premiumEmoji} ${premium.result}`}`,
-          inline: false,
-        },
+      .setDescription(
+        `# Info about Would You
+- Devs: ${dominik + sky + skelly + paulos + tee + woofer}
+- Servers: ${serverCount.reduce((prev, val) => prev + val, 0).toLocaleString()}
+- Users: ${userCount.reduce((a, b) => a + b, 0).toLocaleString()}
+- Memory: ${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB
+- Last Restart: <t:${unixstamp}:R>
+
+## Shard Information
+\`\`\`ini
+${await shardClusterStoreModel
+  .find()
+  .then((shards: IShardClusterStore[]) =>
+    shards
+      .map(
+        (s) =>
+          `[Shard ${s.shard}] Cluster: ${s.cluster} | Master: ${s.isMaster}`
       )
-      .setThumbnail("https://wouldyoubot.gg/Logo.png")
+      .join("\n")
+  )
+  .catch(() => "No Shard Data found")}
+\`\`\`
+
+-# [Support Server](https://wouldyoubot.gg/discord)
+-# [Website](https://wouldyoubot.gg)
+-# [Invite Link](https://wouldyoubot.gg/invite)
+-# [Privacy Policy](https://wouldyoubot.gg/privacy)
+-# [Terms of Service](https://wouldyoubot.gg/terms)
+-# [Legal](https://wouldyoubot.gg/legal)`
+      )
       .setFooter({
-        text: `${interaction.user.tag} | Shard #${interaction?.guild?.shardId} | Cluster #${client.cluster.id}`,
+        text: `Premium Status: ${premium.result ? premium.rawType : "Free"}`,
         iconURL: "https://wouldyoubot.gg/Logo.png",
       });
 
