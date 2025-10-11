@@ -42,7 +42,8 @@ const command: ChatInputCommand = {
 
     const premiumEmoji = premium.result ? "✅" : "❌";
 
-    const { dominik, sky, skelly, paulos, tee, woofer } = client.config.emojis.info;
+    const { dominik, sky, skelly, paulos, tee, woofer } =
+      client.config.emojis.info;
 
     const infoEmbed = new EmbedBuilder()
       .setColor("#0598F6")
