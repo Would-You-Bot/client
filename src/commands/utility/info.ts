@@ -83,7 +83,7 @@ ${await shardClusterStoreModel
             []
           );
 
-          return `[Cluster ${clusterId}]\n${shardGroups.join("\n  ")}`;
+          return `[Cluster ${clusterId}]\n${shardGroups.join("\n")}`;
         })
         .join("\n\n");
     }, "")
