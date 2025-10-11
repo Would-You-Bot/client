@@ -70,15 +70,27 @@ ${await shardClusterStoreModel
 
       return Array.from(clusters.entries())
         .map(([clusterId, clusterShards]) => {
-          const shardList = clusterShards.map((s) => s.shard).join(", ");
-          return `[Cluster ${clusterId}] | Shards: ${shardList}`;
+          const sortedShards = clusterShards
+            .map((s) => s.shard)
+            .sort((a, b) => a - b);
+          const shardGroups = sortedShards.reduce(
+            (groups: string[], shard, i) => {
+              const groupIndex = Math.floor(i / 8);
+              if (!groups[groupIndex]) groups[groupIndex] = "";
+              groups[groupIndex] += (groups[groupIndex] ? ", " : "") + shard;
+              return groups;
+            },
+            []
+          );
+
+          return `[Cluster ${clusterId}]\n${shardGroups.join("\n  ")}`;
         })
-        .join("\n");
+        .join("\n\n");
     }, "")
   )
   .catch(() => "No Shard Data found")}
 \`\`\`
-## Useful Links
+### Useful Links
 -# [Support Server](https://wouldyoubot.gg/discord)
 -# [Website](https://wouldyoubot.gg)
 -# [Invite Link](https://wouldyoubot.gg/invite)
