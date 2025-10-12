@@ -67,6 +67,7 @@ export interface IGuildModel {
   commandBy: string;
   commandType: string;
   customPerm: string | null;
+  dmsError?: string | null;
 }
 
 const guildProfileSchema = new Schema<IGuildModel>(
@@ -289,7 +290,11 @@ const guildProfileSchema = new Schema<IGuildModel>(
     customPerm: {
       type: String,
       default: null,
-    }
+    },
+    dmsError: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );

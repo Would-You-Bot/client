@@ -132,7 +132,7 @@ export default class WouldYou extends Client {
       this.keepAlive = new KeepAlive(this);
       this.keepAlive.start();
 
-      // Daily Message
+      // Daily Message - Turned off as DMS runs by itself now
       // this.dailyMessage = new DailyMessage(this);
       // this.dailyMessage.listen();
 
