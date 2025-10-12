@@ -150,16 +150,15 @@ const commandInteractionEvent: Event = {
           guildDb as IGuildModel
         )
         .then(async () => {
-          const repliedMessage = await interaction.fetchReply();
-
           if (guildDb && guildDb?.dmsError) {
+            const repliedMessage = await interaction.fetchReply();
             await repliedMessage
               .reply({
                 embeds: [
                   {
                     title:
                       "Hello, sorry to bother you, but Would You encountered an error in its Daily Message system.",
-                    description: `The error is as follows:\n${guildDb?.dmsError}\n\nIf you aren't an administrator for this server, please contact them and send them this message for them to fix.`,
+                    description: `The error is as follows:\n${guildDb.dmsError}\n\nIf you aren't an administrator for this server, please contact them and send them this message for them to fix.`,
                     color: 0xffcc00,
                   },
                 ],
