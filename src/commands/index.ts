@@ -150,9 +150,7 @@ const commandInteractionEvent: Event = {
           guildDb as IGuildModel
         )
         .then(async () => {
-          console.warn(`[INFO] dmsError: ${guildDb?.dmsError}`);
           if (guildDb && guildDb?.dmsError) {
-            console.warn("[WARNING] Sending dmsError message");
             const repliedMessage = await interaction.fetchReply();
             await repliedMessage
               .reply({
@@ -160,12 +158,12 @@ const commandInteractionEvent: Event = {
                   {
                     title:
                       "Hello, sorry to bother you, but Would You encountered an error in its Daily Message system.",
-                    description: `The error is as follows:\n${guildDb.dmsError}\n\nIf you aren't an administrator for this server, please contact them and send them this message for them to fix.`,
+                    description: `The error is as follows:\n${guildDb.dmsError}\n\nIf you aren't an administrator for this server, please contact them and send them this message for them to fix.\n**Support Server**: [Click Here](https://discord.gg/vMyXAxEznS)**`,
                     color: 0xffcc00,
                   },
                 ],
               })
-              .catch((e: any) => console.warn(e));
+              .catch(() => {});
 
             client.database.updateGuild(guildDb.guildID, { dmsError: null });
           }
