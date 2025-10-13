@@ -150,7 +150,9 @@ const commandInteractionEvent: Event = {
           guildDb as IGuildModel
         )
         .then(async () => {
+          console.warn(`[INFO] dmsError: ${guildDb?.dmsError}`);
           if (guildDb && guildDb?.dmsError) {
+            console.warn("[WARNING] Sending dmsError message");
             const repliedMessage = await interaction.fetchReply();
             await repliedMessage
               .reply({
@@ -163,7 +165,7 @@ const commandInteractionEvent: Event = {
                   },
                 ],
               })
-              .catch(() => {});
+              .catch((e: any) => console.warn(e));
 
             client.database.updateGuild(guildDb.guildID, { dmsError: null });
           }
