@@ -226,7 +226,7 @@
   },
   "Settings": {
     "errorSame": "The provided timezone is the same timezone that is already set. Make sure to choose a different timezone.",
-    "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "errorInvalid": "Provided timezone was invalid, you can pick a valid timezone from this [Time Zone Picker](https://zones.arilyn.cc/)",
     "intervalSame": "The provided post time is the same post time that is already set. Make sure to choose a different post time.",
     "intervalInvalid": "The provided post time was invalid. Make sure your post time is in the 24h format and minutes are either 00 or an interval of 5!",
     "dailyChannel": "Select a channel where you want Daily Messages to be!",

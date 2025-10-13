@@ -226,7 +226,7 @@
   },
   "Settings": {
     "errorSame": "Il fuso orario selezionato è lo stesso già impostato. Assicurati di scegliere un fuso orario diverso.",
-    "errorInvalid": "Il fuso orario fornito non è valido, puoi sceglierne uno da questa [Lista di Fusi Orari](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "errorInvalid": "Il fuso orario fornito non è valido, puoi sceglierne uno da questa [Lista di Fusi Orari](https://zones.arilyn.cc/)",
     "intervalSame": "L'orario di pubblicazione selezionato è lo stesso già impostato. Assicurati di scegliere un orario diverso.",
     "intervalInvalid": "L'orario del messaggio fornito non è valido. Assicurati che l'ora di invio sia nel formato 24h e che i minuti siano 00 o un intervallo di 5!",
     "dailyChannel": "Seleziona il canale dove vuoi che vengano inviati i Messaggi Giornalieri!",

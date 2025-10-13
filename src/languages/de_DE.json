@@ -226,7 +226,7 @@
   },
   "Settings": {
     "errorSame": "Die gegebene Zeitzone ist die gleiche Zeitzone, die schon gesetzt ist. Stelle sicher, dass du eine andere Zeitzone wählst.",
-    "errorInvalid": "Die gegebene Zeitzone ist ungültig, du kannst eine gültige Zeitzone von diesen auswählen [Zeitzonenwähler](https://kevinnovak.github.io/Time-Zone-Picker/)",
+    "errorInvalid": "Die gegebene Zeitzone ist ungültig, du kannst eine gültige Zeitzone von diesen auswählen [Zeitzonenwähler](https://zones.arilyn.cc/)",
     "intervalSame": "Die angegebene Veröffentlichungszeit ist die gleiche wie die bereits gesetzte. Stelle sicher, dass du einen andere Veröffentlichungszeit wählst.",
     "intervalInvalid": "Die angegebene Veröffentlichungszeit war ungültig. Stelle sicher, dass deine Veröffentlichungszeit im 24h-Format ist und entweder mit 00 oder einem 5-Minuten-Intervall endet!",
     "dailyChannel": "Wähle einen Kanal, in dem du tägliche Nachrichten haben möchtest!",
