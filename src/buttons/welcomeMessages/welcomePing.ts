@@ -23,35 +23,38 @@ const button: Button = {
 
     const welcomes = new EmbedBuilder()
       .setTitle(
-        client.translation.get(guildDb?.language, "Settings.embed.welcomeTitle")
+        client.translation.get(
+          guildDb?.language,
+          "Settings.embed.welcomeTitle",
+        ),
       )
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcome"
+          "Settings.embed.welcome",
         )}: ${guildDb.welcome ? ":white_check_mark:" : ":x:"}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomePing"
+          "Settings.embed.welcomePing",
         )}: ${check ? ":x:" : ":white_check_mark:"}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.dailyType"
+          "Settings.embed.dailyType",
         )}: ${guildDb.welcomeType}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeChannel"
+          "Settings.embed.welcomeChannel",
         )}: ${guildDb.welcomeChannel ? `<#${guildDb.welcomeChannel}>` : ":x:"}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.welcomeMessage"
+          "Settings.embed.welcomeMessage",
         )}: ${
           guildDb.welcomeMessage
             ? truncateString(guildDb.welcomeMessage, 100)
             : ":x:"
-        }`
+        }`,
       )
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(
           guildDb?.language,
-          "Settings.embed.footer"
+          "Settings.embed.footer",
         ),
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
@@ -64,8 +67,8 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.dailyType"
-            )
+              "Settings.button.dailyType",
+            ),
           )
           .setStyle(ButtonStyle.Primary)
           .setEmoji("1185973667973320775"),
@@ -75,29 +78,31 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.welcomeChannel"
-            )
+              "Settings.button.welcomeChannel",
+            ),
           )
           .setStyle(
-            guildDb.welcomeChannel ? ButtonStyle.Primary : ButtonStyle.Secondary
+            guildDb.welcomeChannel
+              ? ButtonStyle.Primary
+              : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("welcomeTest")
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.welcomeTest"
-            )
+              "Settings.button.welcomeTest",
+            ),
           )
           .setDisabled(
-            guildDb.welcomeChannel && guildDb?.welcome ? false : true
+            guildDb.welcomeChannel && guildDb?.welcome ? false : true,
           )
           .setStyle(
             guildDb.welcomeChannel && guildDb?.welcome
               ? ButtonStyle.Primary
-              : ButtonStyle.Secondary
+              : ButtonStyle.Secondary,
           )
-          .setEmoji("1207800685928910909")
+          .setEmoji("1207800685928910909"),
       );
     const welcomeButtons2 =
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
@@ -105,10 +110,13 @@ const button: Button = {
           .setCustomId("welcome")
           .setEmoji("1185973660465500180")
           .setLabel(
-            client.translation.get(guildDb?.language, "Settings.button.welcome")
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.welcome",
+            ),
           )
           .setStyle(
-            guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary
+            guildDb.welcome ? ButtonStyle.Success : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("welcomePing")
@@ -116,10 +124,10 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.welcomePing"
-            )
+              "Settings.button.welcomePing",
+            ),
           )
-          .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success)
+          .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success),
       );
 
     const welcomeButtons3 =
@@ -130,11 +138,13 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.welcomeMessage"
-            )
+              "Settings.button.welcomeMessage",
+            ),
           )
           .setStyle(
-            guildDb.welcomeMessage ? ButtonStyle.Primary : ButtonStyle.Secondary
+            guildDb.welcomeMessage
+              ? ButtonStyle.Primary
+              : ButtonStyle.Secondary,
           ),
         new ButtonBuilder()
           .setCustomId("welcomeEmbedEdit")
@@ -142,10 +152,10 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.welcomeEmbedEdit"
-            )
+              "Settings.button.welcomeEmbedEdit",
+            ),
           )
-          .setStyle(ButtonStyle.Primary)
+          .setStyle(ButtonStyle.Primary),
       );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
