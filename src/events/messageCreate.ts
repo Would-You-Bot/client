@@ -56,26 +56,26 @@ const event: Event = {
             .setURL("https://discord.gg/vMyXAxEznS"),
         );
 
-      Cooldown.add(message?.channel?.id);
-      setTimeout(() => {
-        Cooldown.delete(message?.channel?.id);
-      }, 10000);
+      // Cooldown.add(message?.channel?.id);
+      // setTimeout(() => {
+      //   Cooldown.delete(message?.channel?.id);
+      // }, 10000);
 
-      if (
-        message.content &&
-        new RegExp(`^(<@!?${client?.user?.id}>)`).test(message.content)
-      )
-        if (message.inGuild()) {
-          message.channel
-            .send({
-              embeds: [embed],
-              components: [supportbutton],
-            })
-            .catch((err: Error) => {
-              captureException(err);
-            });
-        }
-      return;
+      // if (
+      //   message.content &&
+      //   new RegExp(`^(<@!?${client?.user?.id}>)`).test(message.content)
+      // )
+      //   if (message.inGuild()) {
+      //     message.channel
+      //       .send({
+      //         embeds: [embed],
+      //         components: [supportbutton],
+      //       })
+      //       .catch((err: Error) => {
+      //         captureException(err);
+      //       });
+      //   }
+      // return;
     }
   },
 };
