@@ -16,6 +16,7 @@ const event: Event = {
   event: "messageCreate",
   execute: async (client: WouldYou, message: Message<boolean>) => {
     // Always check the permissions before doing any actions to avoid a ratelimit IP ban =)
+    if (message?.member?.user.bot) return;
     if (
       message.guild?.members.me &&
       (message?.channel as GuildTextBasedChannel)

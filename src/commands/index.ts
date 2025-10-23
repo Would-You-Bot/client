@@ -163,7 +163,7 @@ const commandInteractionEvent: Event = {
                   },
                 ],
               })
-              .catch(() => {});
+              .catch(() => {}); 
 
             client.database.updateGuild(guildDb.guildID, { dmsError: null });
           }
