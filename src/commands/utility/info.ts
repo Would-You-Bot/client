@@ -23,11 +23,11 @@ const command: ChatInputCommand = {
 
   execute: async (interaction, client, guildDb) => {
     const serverCount = await client.cluster.broadcastEval(
-      (c) => c.guilds.cache.size
+      (c) => c.guilds.cache.size,
     );
 
     const userCount = await client.cluster.broadcastEval((c) =>
-      c.guilds.cache.reduce((a, b) => a + b.memberCount, 0)
+      c.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
     );
 
     const ramUsage = await client.cluster.broadcastEval(() => {
@@ -80,13 +80,13 @@ ${await shardClusterStoreModel
               groups[groupIndex] += (groups[groupIndex] ? ", " : "") + shard;
               return groups;
             },
-            []
+            [],
           );
 
           return `[Cluster ${clusterId}]\n${shardGroups.join("\n")}`;
         })
         .join("\n\n");
-    }, "")
+    }, ""),
   )
   .catch(() => "No Shard Data found")}
 \`\`\`
@@ -96,7 +96,7 @@ ${await shardClusterStoreModel
 -# [Invite Link](https://wouldyoubot.gg/invite)
 -# [Privacy Policy](https://wouldyoubot.gg/privacy)
 -# [Terms of Service](https://wouldyoubot.gg/terms)
--# [Legal](https://wouldyoubot.gg/legal)`
+-# [Legal](https://wouldyoubot.gg/legal)`,
       )
       .setFooter({
         text: `Premium Status: ${premium.result ? premium.rawType : "Free"}`,
