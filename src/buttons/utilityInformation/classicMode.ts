@@ -14,28 +14,31 @@ const button: Button = {
     const check = guildDb.classicMode;
     const emb = new EmbedBuilder()
       .setTitle(
-        client.translation.get(guildDb?.language, "Settings.embed.utilityTitle")
+        client.translation.get(
+          guildDb?.language,
+          "Settings.embed.utilityTitle",
+        ),
       )
       .setDescription(
         `${client.translation.get(
           guildDb?.language,
-          "Settings.embed.customPerm"
+          "Settings.embed.customPerm",
         )}: ${guildDb.customPerm ? `<@&${guildDb.customPerm}>` : ":x:"}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.username"
+          "Settings.embed.username",
         )}: ${guildDb.webhookName ? guildDb.webhookName : ":x:"}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.avatar"
+          "Settings.embed.avatar",
         )}: ${guildDb.webhookAvatar ? `[Image](<${guildDb.webhookAvatar}>)` : ":x:"}\n${client.translation.get(
           guildDb?.language,
-          "Settings.embed.classicMode"
-        )}: ${check ? ":x:" : ":white_check_mark:"}`
+          "Settings.embed.classicMode",
+        )}: ${check ? ":x:" : ":white_check_mark:"}`,
       )
       .setColor("#0598F6")
       .setFooter({
         text: client.translation.get(
           guildDb?.language,
-          "Settings.embed.footer"
+          "Settings.embed.footer",
         ),
         iconURL: client?.user?.displayAvatarURL() || undefined,
       });
@@ -68,8 +71,8 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.classicMode"
-            )
+              "Settings.button.classicMode",
+            ),
           )
           .setStyle(check ? ButtonStyle.Secondary : ButtonStyle.Success),
         new ButtonBuilder()
@@ -78,12 +81,12 @@ const button: Button = {
           .setLabel(
             client.translation.get(
               guildDb?.language,
-              "Settings.button.customPerm"
-            )
+              "Settings.button.customPerm",
+            ),
           )
           .setStyle(
-            guildDb.customPerm ? ButtonStyle.Success : ButtonStyle.Secondary
-          )
+            guildDb.customPerm ? ButtonStyle.Success : ButtonStyle.Secondary,
+          ),
       );
 
     await client.database.updateGuild(interaction.guild?.id || "", {
