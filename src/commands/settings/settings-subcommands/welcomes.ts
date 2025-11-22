@@ -110,7 +110,7 @@ export default async function settingsGeneral(
         ),
       new ButtonBuilder()
         .setCustomId("welcomePing")
-        .setEmoji("1207801424503644260")
+        .setEmoji("1185973660465500180")
         .setLabel(
           client.translation.get(
             guildDb?.language,
@@ -126,7 +126,7 @@ export default async function settingsGeneral(
     new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("welcomeMessage")
-        .setEmoji("1185973660465500180")
+        .setEmoji("1207801424503644260")
         .setLabel(
           client.translation.get(
             guildDb?.language,
@@ -143,6 +143,16 @@ export default async function settingsGeneral(
           client.translation.get(
             guildDb?.language,
             "Settings.button.welcomeEmbedEdit"
+          )
+        )
+        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId("welcomePlaceholders")
+        .setEmoji("1207801424503644260")
+        .setLabel(
+          client.translation.get(
+            guildDb?.language,
+            "Settings.button.welcomePlaceholders"
           )
         )
         .setStyle(ButtonStyle.Primary)

@@ -138,7 +138,7 @@ const button: Button = {
           ),
         new ButtonBuilder()
           .setCustomId("welcomePing")
-          .setEmoji("1207801424503644260")
+          .setEmoji("1185973660465500180")
           .setLabel(
             client.translation.get(
               guildDb?.language,
@@ -154,7 +154,7 @@ const button: Button = {
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId("welcomeMessage")
-          .setEmoji("1185973660465500180")
+          .setEmoji("1207801424503644260")
           .setLabel(
             client.translation.get(
               guildDb?.language,
@@ -171,6 +171,16 @@ const button: Button = {
             client.translation.get(
               guildDb?.language,
               "Settings.button.welcomeEmbedEdit"
+            )
+          )
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("welcomePlaceholders")
+          .setEmoji("1207801424503644260")
+          .setLabel(
+            client.translation.get(
+              guildDb?.language,
+              "Settings.button.welcomePlaceholders"
             )
           )
           .setStyle(ButtonStyle.Primary)
