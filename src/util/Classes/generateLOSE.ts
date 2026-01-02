@@ -107,7 +107,7 @@ export default class LOSE {
 
     // Background
     const [image1] = await Promise.all([
-      Canvas.loadImage("https://cdn.wouldyoubot.gg/higherlower/lose.png"),
+      Canvas.loadImage("https://wouldyoubot.gg/cdn/higherlower/lose.png"),
     ]);
 
     ctx.drawImage(image1, 0, 0, 1424, 512);
