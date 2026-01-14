@@ -104,8 +104,8 @@ const button: Button = {
     const gameImage = new HOR();
     gameImage.setGame(game);
     gameImage.setImages([
-      `https://cdn.wouldyoubot.gg/higherlower/${game.items.history[game.items.history.length - 1].id}.png`,
-      `https://cdn.wouldyoubot.gg/higherlower/${game.items.current.id}.png`,
+      `https://wouldyoubot.gg/cdn/higherlower/${game.items.history[game.items.history.length - 1].id}.png`,
+      `https://wouldyoubot.gg/cdn/higherlower/${game.items.current.id}.png`,
     ]);
 
     const gameEmbed = new EmbedBuilder()
