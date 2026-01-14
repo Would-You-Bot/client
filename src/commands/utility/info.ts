@@ -1,10 +1,14 @@
 import { captureException } from "@sentry/node";
-import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import type { ChatInputCommand } from "../../interfaces";
 import {
-  type IShardClusterStore,
-  shardClusterStoreModel,
-} from "../../util/Models/ShardClusterStore";
+  ActionRowBuilder,
+  SlashCommandBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  type ChatInputCommandInteraction,
+  EmbedBuilder,
+  type MessageActionRowComponentBuilder,
+} from "discord.js";
+import type { ChatInputCommand } from "../../interfaces";
 
 const command: ChatInputCommand = {
   requireGuild: true,
@@ -23,11 +27,11 @@ const command: ChatInputCommand = {
 
   execute: async (interaction, client, guildDb) => {
     const serverCount = await client.cluster.broadcastEval(
-      (c) => c.guilds.cache.size
+      (c) => c.guilds.cache.size,
     );
 
     const userCount = await client.cluster.broadcastEval((c) =>
-      c.guilds.cache.reduce((a, b) => a + b.memberCount, 0)
+      c.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
     );
 
     const ramUsage = await client.cluster.broadcastEval(() => {
@@ -47,64 +51,37 @@ const command: ChatInputCommand = {
     const { dominik, sky, skelly, paulos, tee, woofer } =
       client.config.emojis.info;
 
+    const buttons =
+      new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
+          .setLabel("Website")
+          .setURL("https://wouldyoubot.gg")
+          .setStyle(ButtonStyle.Link),
+        new ButtonBuilder()
+          .setLabel("Support")
+          .setURL("https://discord.com/invite/vMyXAxEznS")
+          .setStyle(ButtonStyle.Link),
+        new ButtonBuilder()
+          .setLabel("Status")
+          .setURL("https://wouldyoubot.gg/status")
+          .setStyle(ButtonStyle.Link),
+      );
+
     const infoEmbed = new EmbedBuilder()
       .setColor("#0598F6")
       .setDescription(
         `# Info about Would You
 Devs: ${dominik + sky + skelly + paulos + tee + woofer}
-Servers: ${serverCount.reduce((prev, val) => prev + val, 0).toLocaleString()}
-Users: ${userCount.reduce((a, b) => a + b, 0).toLocaleString()}
-Memory: ${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB
-Last Restart: <t:${unixstamp}:R>
-## Shard Information
-\`\`\`ini
-${await shardClusterStoreModel
-  .find()
-  .then((shards: IShardClusterStore[]) =>
-    shards.reduce((acc, shard) => {
-      const clusters = new Map<number, IShardClusterStore[]>();
-      shards.forEach((s) => {
-        if (!clusters.has(s.cluster)) clusters.set(s.cluster, []);
-        clusters.get(s.cluster)?.push(s);
-      });
-
-      return Array.from(clusters.entries())
-        .map(([clusterId, clusterShards]) => {
-          const sortedShards = clusterShards
-            .map((s) => s.shard)
-            .sort((a, b) => a - b);
-          const shardGroups = sortedShards.reduce(
-            (groups: string[], shard, i) => {
-              const groupIndex = Math.floor(i / 8);
-              if (!groups[groupIndex]) groups[groupIndex] = "";
-              groups[groupIndex] += (groups[groupIndex] ? ", " : "") + shard;
-              return groups;
-            },
-            []
-          );
-
-          return `[Cluster ${clusterId}]\n${shardGroups.join("\n")}`;
-        })
-        .join("\n\n");
-    }, "")
-  )
-  .catch(() => "No Shard Data found")}
-\`\`\`
-### Useful Links
--# [Support Server](https://wouldyoubot.gg/discord)
--# [Website](https://wouldyoubot.gg)
--# [Invite Link](https://wouldyoubot.gg/invite)
--# [Privacy Policy](https://wouldyoubot.gg/privacy)
--# [Terms of Service](https://wouldyoubot.gg/terms)
--# [Legal](https://wouldyoubot.gg/legal)`
+Servers: ${serverCount.reduce((prev, val) => prev + val, 0).toLocaleString()} | Users: ${userCount.reduce((a, b) => a + b, 0).toLocaleString()}
+Memory: ${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB | Last Restart: <t:${unixstamp}:R>`,
       )
       .setFooter({
-        text: `Premium Status: ${premium.result ? premium.rawType : "Free"}`,
+        text: `Server Premium Status: ${premium.result ? premium.rawType : "Free"}`,
         iconURL: "https://wouldyoubot.gg/Logo.png",
       });
 
     interaction
-      .reply({ embeds: [infoEmbed], ephemeral: false })
+      .reply({ embeds: [infoEmbed], components: [buttons], ephemeral: false })
       .catch((err) => {
         captureException(err);
       });
