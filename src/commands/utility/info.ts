@@ -76,7 +76,7 @@ Servers: ${serverCount.reduce((prev, val) => prev + val, 0).toLocaleString()} | 
 Memory: ${ramUsage.reduce((acc, usage) => acc + usage, 0).toLocaleString()}GB | Last Restart: <t:${unixstamp}:R>`,
       )
       .setFooter({
-        text: `Server Premium Status: ${premium.result ? premium.rawType : "Free"}`,
+        text: `Server Premium Status: ${premium.result ? premium.type : "Free"}`,
         iconURL: "https://wouldyoubot.gg/Logo.png",
       });
 
