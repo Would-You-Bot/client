@@ -5,8 +5,7 @@ const button: Button = {
   name: "voting",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
-    try {
-      const customId = interaction.customId.split("_") as any;
+    const customId = interaction.customId.split("_") as any;
 
     client.voting.addVote(customId[1], interaction.user.id, customId[3]);
 
@@ -54,9 +53,6 @@ const button: Button = {
      content: replyContent,
      ephemeral: true,
    });
-    } catch (e) {
-      console.log(e)
-    }
   },
 };
 
