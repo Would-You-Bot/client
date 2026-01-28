@@ -5,7 +5,8 @@ const button: Button = {
   name: "voting",
   cooldown: false,
   execute: async (interaction, client, guildDb) => {
-    const customId = interaction.customId.split("_") as any;
+    try {
+      const customId = interaction.customId.split("_") as any;
 
     client.voting.addVote(customId[1], interaction.user.id, customId[3]);
 
@@ -33,21 +34,29 @@ const button: Button = {
     } else {
       replyContent;
     }
+      
     const unchangedRow = ActionRowBuilder.from(interaction.message.components[1])
     const updatedResult = ActionRowBuilder.from(interaction.message.components[0])
     
     const resultButton = updatedResult.components[0] as ButtonBuilder;
     resultButton.setDisabled(false);
 
-    // @ts-expect-error no clue why it complains but it works!
-    await interaction.update({
-      components: [updatedResult, unchangedRow]
-    })
+    if (interaction.message.components[1]) {
+      // @ts-expect-error no clue why it complains but it works!
+      await interaction.update({
+        components: [updatedResult, unchangedRow]
+      });
+    } else if (!interaction.message.components[1]) {
+      await interaction.deferUpdate();
+    }
 
    interaction.followUp({
      content: replyContent,
      ephemeral: true,
    });
+    } catch (e) {
+      console.log(e)
+    }
   },
 };
 
