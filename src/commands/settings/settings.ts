@@ -17,7 +17,6 @@ const command: ChatInputCommand = {
     .setContexts([0])
     .setIntegrationTypes([0])
     .setDescription("Change various settings throughout the bot")
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: "Ändere Einstellungen für täglichen Nachrichten und Willkommensnachrichten.",
       "es-ES":
@@ -91,27 +90,35 @@ const command: ChatInputCommand = {
       return cmd;
     }),
   execute: async (interaction, client, guildDb) => {
-    const memberHasPermissions = (
-      interaction.member?.permissions as Readonly<PermissionsBitField>
-    ).has(PermissionFlagsBits.ManageGuild);
-
-    if (!memberHasPermissions) {
-      const errorEmbed = new EmbedBuilder()
+    if (
+      guildDb.customPerm
+        ? !(interaction?.member?.roles as Readonly<any>).cache.has(
+            guildDb.customPerm,
+          )
+        : !(
+            interaction?.member?.permissions as Readonly<PermissionsBitField>
+          ).has(PermissionFlagsBits.ManageGuild)
+    ) {
+      const errorembed = new EmbedBuilder()
         .setColor("#F00505")
         .setTitle("Error!")
         .setDescription(
-          client.translation.get(guildDb?.language, "Settings.embed.error"),
+          guildDb.customPerm
+            ? client.translation.get(
+                guildDb?.language,
+                "Language.embed.errorRole",
+                { role: `<@&${guildDb.customPerm}>` },
+              )
+            : client.translation.get(guildDb?.language, "Language.embed.error"),
         );
-      await interaction
+      return interaction
         .reply({
-          embeds: [errorEmbed],
+          embeds: [errorembed],
           ephemeral: true,
         })
         .catch((err) => {
           captureException(err);
         });
-
-      return;
     }
 
     const subCommands = {

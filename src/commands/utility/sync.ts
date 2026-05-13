@@ -3,6 +3,7 @@ import {
   PermissionFlagsBits,
   type PermissionsBitField,
   SlashCommandBuilder,
+  EmbedBuilder,
 } from "discord.js";
 import { stripe } from "../../util/stripeHandler";
 import type { ChatInputCommand } from "../../interfaces";
@@ -15,7 +16,6 @@ const command: ChatInputCommand = {
     .setDescription("Sync the current servers permium status")
     .setContexts([0])
     .setIntegrationTypes([0])
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: "Synchronisiere den aktuellen Permium-Status des Servers",
       "es-ES": "Sincronizar el estado actual de la prima de los servidores",
@@ -25,15 +25,34 @@ const command: ChatInputCommand = {
   // TODO Add discord sub support
   execute: async (interaction, client, guildDb) => {
     if (
-      !(interaction.member?.permissions as Readonly<PermissionsBitField>).has(
-        PermissionFlagsBits.ManageGuild,
-      )
+      guildDb.customPerm
+        ? !(interaction?.member?.roles as Readonly<any>).cache.has(
+            guildDb.customPerm,
+          )
+        : !(
+            interaction?.member?.permissions as Readonly<PermissionsBitField>
+          ).has(PermissionFlagsBits.ManageGuild)
     ) {
-      return interaction.reply({
-        content:
-          "Sorry, you don't have the correct permission to run this command! Missing `MANAGE_GUILD`.",
-        ephemeral: true,
-      });
+      const errorembed = new EmbedBuilder()
+        .setColor("#F00505")
+        .setTitle("Error!")
+        .setDescription(
+          guildDb.customPerm
+            ? client.translation.get(
+                guildDb?.language,
+                "Language.embed.errorRole",
+                { role: `<@&${guildDb.customPerm}>` },
+              )
+            : client.translation.get(guildDb?.language, "Language.embed.error"),
+        );
+      return interaction
+        .reply({
+          embeds: [errorembed],
+          ephemeral: true,
+        })
+        .catch((err) => {
+          captureException(err);
+        });
     }
     
     const subscription = await stripe.subscriptions.search({

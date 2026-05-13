@@ -15,7 +15,6 @@ const command: ChatInputCommand = {
     .setDescription("Changes the language for your server")
     .setContexts([0, 1, 2])
     .setIntegrationTypes([0, 1])
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: "Ändere die Sprache für den aktuellen Server",
       "es-ES": "Cambiar el idioma del bot en el servidor",
@@ -121,45 +120,60 @@ const command: ChatInputCommand = {
           });
           return;
         }
-        if (
-          (interaction.memberPermissions as Readonly<PermissionsBitField>).has(
-            PermissionFlagsBits.ManageGuild,
-          )
-        ) {
-          await client.database.updateGuild(
-            interaction.guildId as string,
-            {
-              ...guildDb,
-              language: interaction.options.getString("language") || "en_EN",
-            },
-            true,
-          );
 
-          interaction
+        if (
+          guildDb.customPerm
+            ? !(interaction?.member?.roles as Readonly<any>).cache.has(
+                guildDb.customPerm,
+              )
+            : !(
+                interaction?.member
+                  ?.permissions as Readonly<PermissionsBitField>
+              ).has(PermissionFlagsBits.ManageGuild)
+        ) {
+          const errorembed = new EmbedBuilder()
+            .setColor("#F00505")
+            .setTitle("Error!")
+            .setDescription(
+              guildDb.customPerm
+                ? client.translation.get(
+                    guildDb?.language,
+                    "Language.embed.errorRole",
+                    { role: `<@&${guildDb.customPerm}>` },
+                  )
+                : client.translation.get(
+                    guildDb?.language,
+                    "Language.embed.error",
+                  ),
+            );
+          return interaction
             .reply({
-              embeds: [languageembed as EmbedBuilder],
+              embeds: [errorembed],
               ephemeral: true,
             })
             .catch((err) => {
               captureException(err);
             });
-          break;
         }
-        const errorembed = new EmbedBuilder()
-          .setColor("#F00505")
-          .setTitle("Error!")
-          .setDescription(
-            client.translation.get(guildDb?.language, "Language.embed.error"),
-          );
+
+        await client.database.updateGuild(
+          interaction.guildId as string,
+          {
+            ...guildDb,
+            language: interaction.options.getString("language") || "en_EN",
+          },
+          true,
+        );
+
         interaction
           .reply({
-            embeds: [errorembed],
+            embeds: [languageembed as EmbedBuilder],
             ephemeral: true,
           })
           .catch((err) => {
             captureException(err);
           });
-        return;
+        break;
       }
     }
   },

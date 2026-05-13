@@ -14,7 +14,6 @@ const command: ChatInputCommand = {
     .setDescription("Changes the kind of questions you get")
     .setContexts([0])
     .setIntegrationTypes([0])
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDescriptionLocalizations({
       de: "Ändert den Typ der Nachrichten, die verwendet werden",
       "es-ES": "Cambia el tipo de mensajes que se utilizarán",
@@ -42,93 +41,96 @@ const command: ChatInputCommand = {
   execute: async (interaction, client, guildDb) => {
     let typeEmbed: EmbedBuilder = new EmbedBuilder();
     if (
-      (interaction.member?.permissions as Readonly<PermissionsBitField>).has(
-        PermissionFlagsBits.ManageGuild,
-      )
+      guildDb.customPerm
+        ? !(interaction?.member?.roles as Readonly<any>).cache.has(
+            guildDb.customPerm,
+          )
+        : !(
+            interaction?.member?.permissions as Readonly<PermissionsBitField>
+          ).has(PermissionFlagsBits.ManageGuild)
     ) {
-      switch (interaction.options.getSubcommand()) {
-        case "regular":
-          await client.database.updateGuild(
-            interaction.guildId || "",
-            {
-              ...guildDb,
-              customTypes: "regular",
-            },
-            true,
-          );
-
-          typeEmbed = new EmbedBuilder()
-            .setTitle(
-              client.translation.get(guildDb?.language, "wyType.embed.title"),
-            )
-            .setDescription(
-              client.translation.get(guildDb?.language, "wyType.embed.descDef"),
-            );
-          break;
-        case "mixed":
-          await client.database.updateGuild(
-            interaction.guildId || "",
-            {
-              ...guildDb,
-              customTypes: "mixed",
-            },
-            true,
-          );
-
-          typeEmbed = new EmbedBuilder()
-            .setTitle(
-              client.translation.get(guildDb?.language, "wyType.embed.title"),
-            )
-            .setDescription(
-              client.translation.get(
+      const errorembed = new EmbedBuilder()
+        .setColor("#F00505")
+        .setTitle("Error!")
+        .setDescription(
+          guildDb.customPerm
+            ? client.translation.get(
                 guildDb?.language,
-                "wyType.embed.descBoth",
-              ),
-            );
-          break;
-        case "custom":
-          await client.database.updateGuild(
-            interaction.guildId || "",
-            {
-              ...guildDb,
-              customTypes: "custom",
-            },
-            true,
-          );
-
-          typeEmbed = new EmbedBuilder()
-            .setTitle(
-              client.translation.get(guildDb?.language, "wyType.embed.title"),
-            )
-            .setDescription(
-              client.translation.get(
-                guildDb?.language,
-                "wyType.embed.descCust",
-              ),
-            );
-          break;
-      }
-
-      interaction
+                "Language.embed.errorRole",
+                { role: `<@&${guildDb.customPerm}>` },
+              )
+            : client.translation.get(guildDb?.language, "Language.embed.error"),
+        );
+      return interaction
         .reply({
-          embeds: [typeEmbed],
+          embeds: [errorembed],
           ephemeral: true,
         })
         .catch((err) => {
           captureException(err);
         });
-      return;
     }
-    const errorembed = new EmbedBuilder()
-      .setColor("#F00505")
-      .setTitle("Error!")
-      .setDescription(
-        client.translation.get(guildDb?.language, "Settings.embed.error"),
-      );
+
+    switch (interaction.options.getSubcommand()) {
+      case "regular":
+        await client.database.updateGuild(
+          interaction.guildId || "",
+          {
+            ...guildDb,
+            customTypes: "regular",
+          },
+          true,
+        );
+
+        typeEmbed = new EmbedBuilder()
+          .setTitle(
+            client.translation.get(guildDb?.language, "wyType.embed.title"),
+          )
+          .setDescription(
+            client.translation.get(guildDb?.language, "wyType.embed.descDef"),
+          );
+        break;
+      case "mixed":
+        await client.database.updateGuild(
+          interaction.guildId || "",
+          {
+            ...guildDb,
+            customTypes: "mixed",
+          },
+          true,
+        );
+
+        typeEmbed = new EmbedBuilder()
+          .setTitle(
+            client.translation.get(guildDb?.language, "wyType.embed.title"),
+          )
+          .setDescription(
+            client.translation.get(guildDb?.language, "wyType.embed.descBoth"),
+          );
+        break;
+      case "custom":
+        await client.database.updateGuild(
+          interaction.guildId || "",
+          {
+            ...guildDb,
+            customTypes: "custom",
+          },
+          true,
+        );
+
+        typeEmbed = new EmbedBuilder()
+          .setTitle(
+            client.translation.get(guildDb?.language, "wyType.embed.title"),
+          )
+          .setDescription(
+            client.translation.get(guildDb?.language, "wyType.embed.descCust"),
+          );
+        break;
+    }
 
     interaction
       .reply({
-        embeds: [errorembed],
+        embeds: [typeEmbed],
         ephemeral: true,
       })
       .catch((err) => {
