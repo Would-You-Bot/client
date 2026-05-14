@@ -54,7 +54,7 @@ const command: ChatInputCommand = {
           captureException(err);
         });
     }
-    
+
     const subscription = await stripe.subscriptions.search({
       query: `metadata['serverId']:'${interaction.guildId}'`,
     });

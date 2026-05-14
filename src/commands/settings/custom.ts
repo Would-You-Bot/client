@@ -137,7 +137,7 @@ const command: ChatInputCommand = {
           captureException(err);
         });
     }
-    
+
     switch (interaction.options.getSubcommand()) {
       case "add": {
         const option =
