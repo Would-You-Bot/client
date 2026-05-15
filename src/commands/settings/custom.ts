@@ -111,7 +111,10 @@ const command: ChatInputCommand = {
       guildDb.customPerm
         ? !(interaction?.member?.roles as Readonly<any>).cache.has(
             guildDb.customPerm,
-          )
+          ) ||
+          !(
+            interaction?.member?.permissions as Readonly<PermissionsBitField>
+          ).has(PermissionFlagsBits.ManageGuild)
         : !(
             interaction?.member?.permissions as Readonly<PermissionsBitField>
           ).has(PermissionFlagsBits.ManageGuild)
@@ -128,6 +131,7 @@ const command: ChatInputCommand = {
               )
             : client.translation.get(guildDb?.language, "Language.embed.error"),
         );
+
       return interaction
         .reply({
           embeds: [errorembed],
@@ -137,7 +141,7 @@ const command: ChatInputCommand = {
           captureException(err);
         });
     }
-    
+
     switch (interaction.options.getSubcommand()) {
       case "add": {
         const option =
