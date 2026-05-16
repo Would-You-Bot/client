@@ -40,7 +40,8 @@ const event: Event = {
 
       const premium = await client.premium.check(member?.guild.id);
 
-      const randomType = Math.random() > 0.5 ? "wouldyourather" : "whatwouldyoudo";
+      const randomType =
+        Math.random() > 0.5 ? "wouldyourather" : "whatwouldyoudo";
 
       const randomMessage = await await getQuestionsByType(
         guildDb.welcomeChannel,
@@ -48,17 +49,21 @@ const event: Event = {
         guildDb,
         guildDb?.language != null ? guildDb.language : "en_EN",
         premium.result,
-        false
+        false,
       );
 
       const placeholderMap: Record<string, string> = {
         "{{user_displayname}}": member.user.displayName,
         "{{user_tag}}": member.user.username,
-        "{{user_avatarUrl}}": member.user.avatarURL() ?? "https://cdn.discordapp.com/embed/avatars/5.png",
+        "{{user_avatarUrl}}":
+          member.user.avatarURL() ??
+          "https://cdn.discordapp.com/embed/avatars/5.png",
         "{{@mention}}": `<@${member.user.id}>`,
         "{{guild_name}}": member.guild.name,
         "{{guild_member_count}}": member.guild.memberCount.toString(),
-        "{{guild_iconUrl}}": member.guild.iconURL() ?? "https://cdn.discordapp.com/embed/avatars/5.png",
+        "{{guild_iconUrl}}":
+          member.guild.iconURL() ??
+          "https://cdn.discordapp.com/embed/avatars/5.png",
         "{{question}}": randomMessage.question,
         "{{new_line}}": "\n",
       };
@@ -68,7 +73,7 @@ const event: Event = {
           (msg, [placeholder, value]) => {
             return msg.replace(new RegExp(placeholder, "g"), value);
           },
-          message
+          message,
         );
       }
 
@@ -83,13 +88,15 @@ const event: Event = {
       const embed = new EmbedBuilder()
         .setColor((guildDb.welcomeEmbedColor as ColorResolvable) || null)
         .setTitle(
-          guildDb?.welcomeEmbedTitle ? Message(guildDb.welcomeEmbedTitle) : null
+          guildDb?.welcomeEmbedTitle
+            ? Message(guildDb.welcomeEmbedTitle)
+            : null,
         )
         .setURL(guildDb.welcomeEmbedTitleURL || null)
         .setDescription(
           guildDb?.welcomeEmbedDescription
             ? Message(guildDb.welcomeEmbedDescription)
-            : null
+            : null,
         )
         .setThumbnail(guildDb.welcomeEmbedThumbnail || null)
         .setImage(guildDb.welcomeEmbedImage || null)
