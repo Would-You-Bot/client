@@ -107,39 +107,24 @@ const command: ChatInputCommand = {
     let message: string | null;
     let generativeText: any;
 
-    if (
-      guildDb.customPerm
-        ? !(interaction?.member?.roles as Readonly<any>).cache.has(
-            guildDb.customPerm,
-          ) ||
-          !(
-            interaction?.member?.permissions as Readonly<PermissionsBitField>
-          ).has(PermissionFlagsBits.ManageGuild)
-        : !(
-            interaction?.member?.permissions as Readonly<PermissionsBitField>
-          ).has(PermissionFlagsBits.ManageGuild)
-    ) {
-      const errorembed = new EmbedBuilder()
-        .setColor("#F00505")
-        .setTitle("Error!")
-        .setDescription(
-          guildDb.customPerm
-            ? client.translation.get(
-                guildDb?.language,
-                "Language.embed.errorRole",
-                { role: `<@&${guildDb.customPerm}>` },
-              )
-            : client.translation.get(guildDb?.language, "Language.embed.error"),
-        );
-
-      return interaction
-        .reply({
-          embeds: [errorembed],
-          ephemeral: true,
-        })
-        .catch((err) => {
-          captureException(err);
-        });
+    const perms = interaction.member?.permissions as Readonly<PermissionsBitField>;
+    const hasManage = perms.has(PermissionFlagsBits.ManageGuild);
+    const hasCustom = guildDb.customPerm && (interaction?.member?.roles as Readonly<any>).cache.has(guildDb.customPerm);
+    
+    if (guildDb.customPerm ? !(hasManage || hasCustom) : !hasManage) {
+        const errorembed = new EmbedBuilder()
+            .setColor("#F00505")
+            .setTitle("Error!")
+            .setDescription(
+                guildDb.customPerm
+                    ? client.translation.get(guildDb?.language, "Language.embed.errorRole", {
+                        role: `<@&${guildDb.customPerm}>`,
+                      })
+                    : client.translation.get(guildDb?.language, "Language.embed.error"),
+            );
+    
+        return interaction.reply({ embeds: [errorembed], ephemeral: true })
+            .catch((err) => captureException(err));
     }
 
     switch (interaction.options.getSubcommand()) {
