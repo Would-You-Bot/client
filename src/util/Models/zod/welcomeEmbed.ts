@@ -18,14 +18,18 @@ const welcomeEmbedSchema = z.object({
       .max(100, "Make sure your author name is only 100 characters long"),
     url: z.string().url(),
   }),
-  thumbnail: z.union([
-    z.string().url(),
-    z.enum(['{{user_avatarUrl}}', '{{guild_iconUrl}}'])
-  ]).optional(),
-  image: z.union([
-    z.string().url(),
-    z.enum(['{{user_avatarUrl}}', '{{guild_iconUrl}}'])
-  ]).optional(),
+  thumbnail: z
+    .union([
+      z.string().url(),
+      z.enum(["{{user_avatarUrl}}", "{{guild_iconUrl}}"]),
+    ])
+    .optional(),
+  image: z
+    .union([
+      z.string().url(),
+      z.enum(["{{user_avatarUrl}}", "{{guild_iconUrl}}"]),
+    ])
+    .optional(),
   footer: z.object({
     text: z
       .string()
@@ -33,7 +37,7 @@ const welcomeEmbedSchema = z.object({
       .max(100, "Make sure your footer text is only 100 characters long"),
     iconURL: z.union([
       z.string().url(),
-      z.enum(['{{user_avatarUrl}}', '{{guild_iconUrl}}'])
+      z.enum(["{{user_avatarUrl}}", "{{guild_iconUrl}}"]),
     ]),
   }),
   color: z

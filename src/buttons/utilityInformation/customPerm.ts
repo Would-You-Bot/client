@@ -15,7 +15,7 @@ const button: Button = {
       new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new RoleSelectMenuBuilder()
           .setCustomId("selectMenuCustomRole")
-          .setPlaceholder("Select a role that can add custom messages.")
+          .setPlaceholder("Select a role that can add custom messages."),
       );
 
     const inter2 =
@@ -23,7 +23,7 @@ const button: Button = {
         new ButtonBuilder()
           .setCustomId("deleteCustomPerm")
           .setLabel("Delete Custom Permission Role")
-          .setStyle(ButtonStyle.Danger)
+          .setStyle(ButtonStyle.Danger),
       );
 
     interaction.update({

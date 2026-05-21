@@ -174,7 +174,7 @@ const guildProfileSchema = new Schema<IGuildModel>(
     },
     dailyQuestionType: {
       type: [String],
-      default: ['wyrModel', 'wwydModel', 'nhieModel'],
+      default: ["wyrModel", "wwydModel", "nhieModel"],
     },
     dailyTimezone: {
       type: String,
@@ -296,10 +296,10 @@ const guildProfileSchema = new Schema<IGuildModel>(
       default: null,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const GuildModel = model<IGuildModel>(
   "guildProfile",
-  guildProfileSchema
+  guildProfileSchema,
 );

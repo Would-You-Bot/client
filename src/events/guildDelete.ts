@@ -58,10 +58,16 @@ const event: Event = {
           .addFields([
             { name: "Name", value: guild.name, inline: false },
             { name: "ID", value: guild.id, inline: false },
-            { name: "Users", value: guild.memberCount.toLocaleString(), inline: false },
+            {
+              name: "Users",
+              value: guild.memberCount.toLocaleString(),
+              inline: false,
+            },
             { name: "Server Owner", value: guild.ownerId, inline: false },
-            ...(features ? [{ name: "Features", value: features, inline: false }] : []),
-          ])         
+            ...(features
+              ? [{ name: "Features", value: features, inline: false }]
+              : []),
+          ]),
       ],
       allowedMentions: { parse: [] },
     });
