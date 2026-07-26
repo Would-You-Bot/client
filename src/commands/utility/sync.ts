@@ -24,26 +24,36 @@ const command: ChatInputCommand = {
     }),
   // TODO Add discord sub support
   execute: async (interaction, client, guildDb) => {
-    const perms = interaction.member?.permissions as Readonly<PermissionsBitField>;
+    const perms = interaction.member
+      ?.permissions as Readonly<PermissionsBitField>;
     const hasManage = perms.has(PermissionFlagsBits.ManageGuild);
-    const hasCustom = guildDb.customPerm && (interaction?.member?.roles as Readonly<any>).cache.has(guildDb.customPerm);
-    
+    const hasCustom =
+      guildDb.customPerm &&
+      (interaction?.member?.roles as Readonly<any>).cache.has(
+        guildDb.customPerm,
+      );
+
     if (guildDb.customPerm ? !(hasManage || hasCustom) : !hasManage) {
-        const errorembed = new EmbedBuilder()
-            .setColor("#F00505")
-            .setTitle("Error!")
-            .setDescription(
-                guildDb.customPerm
-                    ? client.translation.get(guildDb?.language, "Language.embed.errorRole", {
-                        role: `<@&${guildDb.customPerm}>`,
-                      })
-                    : client.translation.get(guildDb?.language, "Language.embed.error"),
-            );
-    
-        return interaction.reply({ embeds: [errorembed], ephemeral: true })
-            .catch((err) => captureException(err));
+      const errorembed = new EmbedBuilder()
+        .setColor("#F00505")
+        .setTitle("Error!")
+        .setDescription(
+          guildDb.customPerm
+            ? client.translation.get(
+                guildDb?.language,
+                "Language.embed.errorRole",
+                {
+                  role: `<@&${guildDb.customPerm}>`,
+                },
+              )
+            : client.translation.get(guildDb?.language, "Language.embed.error"),
+        );
+
+      return interaction
+        .reply({ embeds: [errorembed], ephemeral: true })
+        .catch((err) => captureException(err));
     }
-    
+
     const subscription = await stripe.subscriptions.search({
       query: `metadata['serverId']:'${interaction.guildId}'`,
     });
