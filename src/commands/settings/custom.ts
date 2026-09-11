@@ -912,109 +912,55 @@ const command: ChatInputCommand = {
       }
       case "export": {
         if (guildDb.customMessages.length === 0) {
-          interaction.reply({
+          return interaction.reply({
             ephemeral: true,
             content: client.translation.get(
               guildDb?.language,
               "wyCustom.error.export.none",
             ),
           });
-          return;
         }
-
+      
         await interaction.deferReply();
-
-        const wouldyourather = guildDb.customMessages.filter(
-          (c) => c.type === "wouldyourather",
-        );
-        const truth = guildDb.customMessages.filter((c) => c.type === "truth");
-        const dare = guildDb.customMessages.filter((c) => c.type === "dare");
-        const neverhaveiever = guildDb.customMessages.filter(
-          (c) => c.type === "neverhaveiever",
-        );
-        const wwyd = guildDb.customMessages.filter((c) => c.type === "wwyd");
-        const topic = guildDb.customMessages.filter((c) => c.type === "topic");
-
-        let text = "{\n";
-        const arrays = [];
-
-        if (wouldyourather.length > 0) {
-          let arrayText = `"wouldyourather": [`;
-          arrayText += wouldyourather
-            .map((a, index) => {
-              const i = index + 1;
-              return `\n{ "question": "${a.question}", "id": "${a.id}" }${wouldyourather.length !== i ? "," : ""}`;
-            })
-            .join("");
-          arrayText += "\n]";
-          arrays.push(arrayText);
+      
+        const exportData: Record<string, { question: string; id: string }[]> = {};
+      
+        const types = [
+          "wouldyourather",
+          "neverhaveiever",
+          "truth",
+          "dare",
+          "wwyd",
+          "topic",
+        ] as const;
+      
+        for (const type of types) {
+          const messages = guildDb.customMessages
+            .filter((c) => c.type === type)
+            .map((c) => ({
+              question: c.question,
+              id: c.id,
+            }));
+      
+          if (messages.length > 0) {
+            exportData[type] = messages;
+          }
         }
-        if (truth.length > 0) {
-          let arrayText = `"truth": [`;
-          truth.map((a, index) => {
-            const i = index + 1;
-            arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${truth.length !== i ? "," : ""}`;
-          });
-          arrayText += "\n]";
-          arrays.push(arrayText);
-        }
-
-        if (dare.length > 0) {
-          let arrayText = `"dare": [`;
-          dare.map((a, index) => {
-            const i = index + 1;
-            arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${dare.length !== i ? "," : ""}`;
-          });
-          arrayText += "\n]";
-          arrays.push(arrayText);
-        }
-
-        if (neverhaveiever.length > 0) {
-          let arrayText = `"neverhaveiever": [`;
-          neverhaveiever.map((a, index) => {
-            const i = index + 1;
-            arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${neverhaveiever.length !== i ? "," : ""}`;
-          });
-          arrayText += "\n]";
-          arrays.push(arrayText);
-        }
-
-        if (wwyd.length > 0) {
-          let arrayText = `"wwyd": [`;
-          wwyd.map((a, index) => {
-            const i = index + 1;
-            arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${wwyd.length !== i ? "," : ""}`;
-          });
-          arrayText += "\n]";
-          arrays.push(arrayText);
-        }
-
-        if (topic.length > 0) {
-          let arrayText = `"topic": [`;
-          topic.map((a, index) => {
-            const i = index + 1;
-            arrayText += `\n{ "question": "${a.question}", "id": "${a.id}" }${topic.length !== i ? "," : ""}`;
-          });
-          arrayText += "\n]";
-          arrays.push(arrayText);
-        }
-
-        text += arrays.join(",\n");
-        text += "\n}";
-
-        interaction.editReply({
+      
+        const json = JSON.stringify(exportData, null, 2);
+      
+        return interaction.editReply({
           content: client.translation.get(
             guildDb?.language,
             "wyCustom.success.export",
           ),
           files: [
             {
-              attachment: Buffer.from(text),
+              attachment: Buffer.from(json, "utf-8"),
               name: `Custom_Messages_${interaction.guild?.id}.json`,
             },
           ],
         });
-        return;
       }
     }
   },
