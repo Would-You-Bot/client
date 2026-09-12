@@ -16,16 +16,18 @@ export async function fileToCollection<
       if (dirent.isDirectory()) {
         processDirectory(fullPath);
       } else if (dirent.isFile() && dirent.name.endsWith(".js")) {
-        const importPromise = import(fullPath).then((resp: { default: Type }) => {
-          const key = getKey(resp.default);
-          if (key) {
-            collection.set(key, resp.default);
-          } else {
-            console.warn(`Could not determine key for file: ${fullPath}`);
-          }
-        }).catch(error => {
-          console.error(`Error importing file ${fullPath}:`, error);
-        });
+        const importPromise = import(fullPath)
+          .then((resp: { default: Type }) => {
+            const key = getKey(resp.default);
+            if (key) {
+              collection.set(key, resp.default);
+            } else {
+              console.warn(`Could not determine key for file: ${fullPath}`);
+            }
+          })
+          .catch((error) => {
+            console.error(`Error importing file ${fullPath}:`, error);
+          });
         promises.push(importPromise);
       }
     }
