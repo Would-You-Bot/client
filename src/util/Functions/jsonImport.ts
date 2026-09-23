@@ -18,6 +18,7 @@ const languageMap: LanguageMapInterface = {
   en_EN: "en_EN",
   es_ES: "es",
   de_DE: "de",
+  fr_FR: "fr",
   it_IT: "it",
 };
 
