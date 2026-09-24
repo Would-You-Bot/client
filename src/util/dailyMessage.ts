@@ -15,10 +15,10 @@ export default class DailyMessage {
    * Start the daily message Schedule
    */
   async listen() {
-    let username = process.env.RABBITMQ_DEFAULT_USER!
-    let password = process.env.RABBITMQ_DEFAULT_PASS!
-    username = encodeURIComponent(username)
-    password = encodeURIComponent(password)
+    let username = process.env.RABBITMQ_DEFAULT_USER!;
+    let password = process.env.RABBITMQ_DEFAULT_PASS!;
+    username = encodeURIComponent(username);
+    password = encodeURIComponent(password);
 
     const URI = process.env.RABBITMQ_URL!;
     const connection = await amqplib.connect(URI, {

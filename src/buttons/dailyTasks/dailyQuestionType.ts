@@ -41,15 +41,15 @@ const button: Button = {
             new StringSelectMenuOptionBuilder()
               .setLabel(`Topics`)
               .setDefault(guildDb.dailyQuestionType.includes("topicModel"))
-              .setValue("topicModel")
-          )
+              .setValue("topicModel"),
+          ),
       );
 
     interaction.update({
       embeds: [],
       content: client.translation.get(
         guildDb?.language,
-        "Settings.dailyQuestionType"
+        "Settings.dailyQuestionType",
       ),
       components: [inter],
       options: {

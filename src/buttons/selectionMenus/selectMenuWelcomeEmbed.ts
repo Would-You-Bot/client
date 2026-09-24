@@ -70,7 +70,7 @@ const button: Button = {
         guildDb: guildDb,
         [interaction.values[0]]: ButtonStyle.Secondary,
       });
-    const welcomeButtons5 = SelectMenu(client, guildDb);
+      const welcomeButtons5 = SelectMenu(client, guildDb);
 
       await client.database.updateGuild(interaction.guild?.id || "", {
         ...guildDb,

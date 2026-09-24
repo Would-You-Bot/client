@@ -107,24 +107,34 @@ const command: ChatInputCommand = {
     let message: string | null;
     let generativeText: any;
 
-    const perms = interaction.member?.permissions as Readonly<PermissionsBitField>;
+    const perms = interaction.member
+      ?.permissions as Readonly<PermissionsBitField>;
     const hasManage = perms.has(PermissionFlagsBits.ManageGuild);
-    const hasCustom = guildDb.customPerm && (interaction?.member?.roles as Readonly<any>).cache.has(guildDb.customPerm);
-    
+    const hasCustom =
+      guildDb.customPerm &&
+      (interaction?.member?.roles as Readonly<any>).cache.has(
+        guildDb.customPerm,
+      );
+
     if (guildDb.customPerm ? !(hasManage || hasCustom) : !hasManage) {
-        const errorembed = new EmbedBuilder()
-            .setColor("#F00505")
-            .setTitle("Error!")
-            .setDescription(
-                guildDb.customPerm
-                    ? client.translation.get(guildDb?.language, "Language.embed.errorRole", {
-                        role: `<@&${guildDb.customPerm}>`,
-                      })
-                    : client.translation.get(guildDb?.language, "Language.embed.error"),
-            );
-    
-        return interaction.reply({ embeds: [errorembed], ephemeral: true })
-            .catch((err) => captureException(err));
+      const errorembed = new EmbedBuilder()
+        .setColor("#F00505")
+        .setTitle("Error!")
+        .setDescription(
+          guildDb.customPerm
+            ? client.translation.get(
+                guildDb?.language,
+                "Language.embed.errorRole",
+                {
+                  role: `<@&${guildDb.customPerm}>`,
+                },
+              )
+            : client.translation.get(guildDb?.language, "Language.embed.error"),
+        );
+
+      return interaction
+        .reply({ embeds: [errorembed], ephemeral: true })
+        .catch((err) => captureException(err));
     }
 
     switch (interaction.options.getSubcommand()) {
@@ -920,11 +930,12 @@ const command: ChatInputCommand = {
             ),
           });
         }
-      
+
         await interaction.deferReply();
-      
-        const exportData: Record<string, { question: string; id: string }[]> = {};
-      
+
+        const exportData: Record<string, { question: string; id: string }[]> =
+          {};
+
         const types = [
           "wouldyourather",
           "neverhaveiever",
@@ -933,7 +944,7 @@ const command: ChatInputCommand = {
           "wwyd",
           "topic",
         ] as const;
-      
+
         for (const type of types) {
           const messages = guildDb.customMessages
             .filter((c) => c.type === type)
@@ -941,14 +952,14 @@ const command: ChatInputCommand = {
               question: c.question,
               id: c.id,
             }));
-      
+
           if (messages.length > 0) {
             exportData[type] = messages;
           }
         }
-      
+
         const json = JSON.stringify(exportData, null, 2);
-      
+
         return interaction.editReply({
           content: client.translation.get(
             guildDb?.language,

@@ -1,4 +1,9 @@
-import { ActionRowBuilder, AnyComponentBuilder, ButtonBuilder, ButtonComponentData } from "discord.js";
+import {
+  ActionRowBuilder,
+  AnyComponentBuilder,
+  ButtonBuilder,
+  ButtonComponentData,
+} from "discord.js";
 import type { Button } from "../../interfaces";
 
 const button: Button = {
@@ -33,26 +38,30 @@ const button: Button = {
     } else {
       replyContent;
     }
-      
-    const unchangedRow = ActionRowBuilder.from(interaction.message.components[1])
-    const updatedResult = ActionRowBuilder.from(interaction.message.components[0])
-    
+
+    const unchangedRow = ActionRowBuilder.from(
+      interaction.message.components[1],
+    );
+    const updatedResult = ActionRowBuilder.from(
+      interaction.message.components[0],
+    );
+
     const resultButton = updatedResult.components[0] as ButtonBuilder;
     resultButton.setDisabled(false);
 
     if (interaction.message.components[1]) {
       // @ts-expect-error no clue why it complains but it works!
       await interaction.update({
-        components: [updatedResult, unchangedRow]
+        components: [updatedResult, unchangedRow],
       });
     } else if (!interaction.message.components[1]) {
       await interaction.deferUpdate();
     }
 
-   interaction.followUp({
-     content: replyContent,
-     ephemeral: true,
-   });
+    interaction.followUp({
+      content: replyContent,
+      ephemeral: true,
+    });
   },
 };
 
